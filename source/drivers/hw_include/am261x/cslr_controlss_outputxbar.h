@@ -45,6 +45,163 @@ extern "C"
 * Hardware Region  :
 **************************************************************************/
 
+/**************************************************************************
+    XBAR INPUT Macros
+**************************************************************************/
+
+/******************* G0 *********************/
+#define OUTPUTXBAR_EPWM0_TRIPOUT    (0x00000001)
+#define OUTPUTXBAR_EPWM1_TRIPOUT    (0x00000002)
+#define OUTPUTXBAR_EPWM2_TRIPOUT    (0x00000004)
+#define OUTPUTXBAR_EPWM3_TRIPOUT    (0x00000008)
+#define OUTPUTXBAR_EPWM4_TRIPOUT    (0x00000010)
+#define OUTPUTXBAR_EPWM5_TRIPOUT    (0x00000020)
+#define OUTPUTXBAR_EPWM6_TRIPOUT    (0x00000040)
+#define OUTPUTXBAR_EPWM7_TRIPOUT    (0x00000080)
+#define OUTPUTXBAR_EPWM8_TRIPOUT    (0x00000100)
+#define OUTPUTXBAR_EPWM9_TRIPOUT    (0x00000200)
+
+/******************* G1 *********************/
+#define OUTPUTXBAR_EPWM0_SOCA    (0x00000001)
+#define OUTPUTXBAR_EPWM1_SOCA    (0x00000002)
+#define OUTPUTXBAR_EPWM2_SOCA    (0x00000004)
+#define OUTPUTXBAR_EPWM3_SOCA    (0x00000008)
+#define OUTPUTXBAR_EPWM4_SOCA    (0x00000010)
+#define OUTPUTXBAR_EPWM5_SOCA    (0x00000020)
+#define OUTPUTXBAR_EPWM6_SOCA    (0x00000040)
+#define OUTPUTXBAR_EPWM7_SOCA    (0x00000080)
+#define OUTPUTXBAR_EPWM8_SOCA    (0x00000100)
+#define OUTPUTXBAR_EPWM9_SOCA    (0x00000200)
+
+/******************* G2 *********************/
+#define OUTPUTXBAR_EPWM0_SOCB    (0x00000001)
+#define OUTPUTXBAR_EPWM1_SOCB    (0x00000002)
+#define OUTPUTXBAR_EPWM2_SOCB    (0x00000004)
+#define OUTPUTXBAR_EPWM3_SOCB    (0x00000008)
+#define OUTPUTXBAR_EPWM4_SOCB    (0x00000010)
+#define OUTPUTXBAR_EPWM5_SOCB    (0x00000020)
+#define OUTPUTXBAR_EPWM6_SOCB    (0x00000040)
+#define OUTPUTXBAR_EPWM7_SOCB    (0x00000080)
+#define OUTPUTXBAR_EPWM8_SOCB    (0x00000100)
+#define OUTPUTXBAR_EPWM9_SOCB    (0x00000200)
+
+/******************* G3 *********************/
+#define OUTPUTXBAR_DEL0_ACTIVE    (0x00000001)
+#define OUTPUTXBAR_DEL1_ACTIVE    (0x00000002)
+#define OUTPUTXBAR_DEL2_ACTIVE    (0x00000004)
+#define OUTPUTXBAR_DEL3_ACTIVE    (0x00000008)
+#define OUTPUTXBAR_DEL4_ACTIVE    (0x00000010)
+#define OUTPUTXBAR_DEL5_ACTIVE    (0x00000020)
+#define OUTPUTXBAR_DEL6_ACTIVE    (0x00000040)
+#define OUTPUTXBAR_DEL7_ACTIVE    (0x00000080)
+#define OUTPUTXBAR_DEL8_ACTIVE    (0x00000100)
+#define OUTPUTXBAR_DEL9_ACTIVE    (0x00000200)
+
+/******************* G4 *********************/
+#define OUTPUTXBAR_DEL0_TRIP    (0x00000001)
+#define OUTPUTXBAR_DEL1_TRIP    (0x00000002)
+#define OUTPUTXBAR_DEL2_TRIP    (0x00000004)
+#define OUTPUTXBAR_DEL3_TRIP    (0x00000008)
+#define OUTPUTXBAR_DEL4_TRIP    (0x00000010)
+#define OUTPUTXBAR_DEL5_TRIP    (0x00000020)
+#define OUTPUTXBAR_DEL6_TRIP    (0x00000040)
+#define OUTPUTXBAR_DEL7_TRIP    (0x00000080)
+#define OUTPUTXBAR_DEL8_TRIP    (0x00000100)
+#define OUTPUTXBAR_DEL9_TRIP    (0x00000200)
+
+/******************* G5 *********************/
+#define OUTPUTXBAR_SD0_FILT0_CEVT1    (0x00000001)
+#define OUTPUTXBAR_SD0_FILT0_CEVT2    (0x00000002)
+#define OUTPUTXBAR_SD0_FILT0_CMPHZ    (0x00000004)
+#define OUTPUTXBAR_SD0_FILT1_CEVT1    (0x00000008)
+#define OUTPUTXBAR_SD0_FILT1_CEVT2    (0x00000010)
+#define OUTPUTXBAR_SD0_FILT1_CMPHZ    (0x00000020)
+#define OUTPUTXBAR_SD0_FILT2_CEVT1    (0x00000040)
+#define OUTPUTXBAR_SD0_FILT2_CEVT2    (0x00000080)
+#define OUTPUTXBAR_SD0_FILT2_CMPHZ    (0x00000100)
+#define OUTPUTXBAR_SD0_FILT3_CEVT1    (0x00000200)
+#define OUTPUTXBAR_SD0_FILT3_CEVT2    (0x00000400)
+#define OUTPUTXBAR_SD0_FILT3_CMPHZ    (0x00000800)
+#define OUTPUTXBAR_SD1_FILT0_CEVT1    (0x00001000)
+#define OUTPUTXBAR_SD1_FILT0_CEVT2    (0x00002000)
+#define OUTPUTXBAR_SD1_FILT0_CMPHZ    (0x00004000)
+#define OUTPUTXBAR_SD1_FILT1_CEVT1    (0x00008000)
+#define OUTPUTXBAR_SD1_FILT1_CEVT2    (0x00010000)
+#define OUTPUTXBAR_SD1_FILT1_CMPHZ    (0x00020000)
+#define OUTPUTXBAR_SD1_FILT2_CEVT1    (0x00040000)
+#define OUTPUTXBAR_SD1_FILT2_CEVT2    (0x00080000)
+#define OUTPUTXBAR_SD1_FILT2_CMPHZ    (0x00100000)
+#define OUTPUTXBAR_SD1_FILT3_CEVT1    (0x00200000)
+#define OUTPUTXBAR_SD1_FILT3_CEVT2    (0x00400000)
+#define OUTPUTXBAR_SD1_FILT3_CMPHZ    (0x00800000)
+
+/******************* G6 *********************/
+#define OUTPUTXBAR_CMPSSA0_CTRIPL    (0x00000001)
+#define OUTPUTXBAR_CMPSSA0_CTRIPH    (0x00000002)
+#define OUTPUTXBAR_CMPSSA1_CTRIPL    (0x00000004)
+#define OUTPUTXBAR_CMPSSA1_CTRIPH    (0x00000008)
+#define OUTPUTXBAR_CMPSSA2_CTRIPL    (0x00000010)
+#define OUTPUTXBAR_CMPSSA2_CTRIPH    (0x00000020)
+#define OUTPUTXBAR_CMPSSA3_CTRIPL    (0x00000040)
+#define OUTPUTXBAR_CMPSSA3_CTRIPH    (0x00000080)
+#define OUTPUTXBAR_CMPSSA4_CTRIPL    (0x00000100)
+#define OUTPUTXBAR_CMPSSA4_CTRIPH    (0x00000200)
+#define OUTPUTXBAR_CMPSSA5_CTRIPL    (0x00000400)
+#define OUTPUTXBAR_CMPSSA5_CTRIPH    (0x00000800)
+#define OUTPUTXBAR_CMPSSA6_CTRIPL    (0x00001000)
+#define OUTPUTXBAR_CMPSSA6_CTRIPH    (0x00002000)
+#define OUTPUTXBAR_CMPSSA7_CTRIPL    (0x00004000)
+#define OUTPUTXBAR_CMPSSA7_CTRIPH    (0x00008000)
+#define OUTPUTXBAR_CMPSSA8_CTRIPL    (0x00010000)
+#define OUTPUTXBAR_CMPSSA8_CTRIPH    (0x00020000)
+#define OUTPUTXBAR_CMPSSA9_CTRIPL    (0x00040000)
+#define OUTPUTXBAR_CMPSSA9_CTRIPH    (0x00080000)
+
+/******************* G7 *********************/
+#define OUTPUTXBAR_ADC0_EVT1    (0x00000001)
+#define OUTPUTXBAR_ADC0_EVT2    (0x00000002)
+#define OUTPUTXBAR_ADC0_EVT3    (0x00000004)
+#define OUTPUTXBAR_ADC0_EVT4    (0x00000008)
+#define OUTPUTXBAR_ADC1_EVT1    (0x00000010)
+#define OUTPUTXBAR_ADC1_EVT2    (0x00000020)
+#define OUTPUTXBAR_ADC1_EVT3    (0x00000040)
+#define OUTPUTXBAR_ADC1_EVT4    (0x00000080)
+#define OUTPUTXBAR_ADC2_EVT1    (0x00000100)
+#define OUTPUTXBAR_ADC2_EVT2    (0x00000200)
+#define OUTPUTXBAR_ADC2_EVT3    (0x00000400)
+#define OUTPUTXBAR_ADC2_EVT4    (0x00000800)
+
+/******************* G8 *********************/
+#define OUTPUTXBAR_EPWM_SYNCOUT_XBAR0   (0x00000001)
+#define OUTPUTXBAR_EPWM_SYNCOUT_XBAR1   (0x00000002)
+#define OUTPUTXBAR_EPWM_SYNCOUT_XBAR2   (0x00000004)
+#define OUTPUTXBAR_EPWM_SYNCOUT_XBAR3   (0x00000008)
+#define OUTPUTXBAR_EQEP0_I_OUT          (0x00000010)
+#define OUTPUTXBAR_EQEP0_S_OUT          (0x00000020)
+#define OUTPUTXBAR_EQEP1_I_OUT          (0x00000040)
+#define OUTPUTXBAR_EQEP1_S_OUT          (0x00000080)
+#define OUTPUTXBAR_ECAP0_OUT            (0x00000400)
+#define OUTPUTXBAR_ECAP1_OUT            (0x00000800)
+#define OUTPUTXBAR_ECAP2_OUT            (0x00001000)
+#define OUTPUTXBAR_ECAP3_OUT            (0x00002000)
+#define OUTPUTXBAR_ECAP4_OUT            (0x00004000)
+#define OUTPUTXBAR_ECAP5_OUT            (0x00008000)
+#define OUTPUTXBAR_ECAP6_OUT            (0x00010000)
+#define OUTPUTXBAR_ECAP7_OUT            (0x00020000)
+
+/******************* G9 *********************/
+#define OUTPUTXBAR_FSIRX0_RX_TRIG0    (0x00000001)
+#define OUTPUTXBAR_FSIRX0_RX_TRIG1    (0x00000002)
+#define OUTPUTXBAR_FSIRX0_RX_TRIG2    (0x00000004)
+#define OUTPUTXBAR_FSIRX0_RX_TRIG3    (0x00000008)
+#define OUTPUTXBAR_INPUTXBAR_OUT7     (0x00010000)
+#define OUTPUTXBAR_INPUTXBAR_OUT15    (0x00020000)
+#define OUTPUTXBAR_INPUTXBAR_OUT23    (0x00040000)
+#define OUTPUTXBAR_INPUTXBAR_OUT31    (0x00080000)
+#define OUTPUTXBAR_INTXBAR_OUT7       (0x01000000)
+#define OUTPUTXBAR_INTXBAR_OUT15      (0x02000000)
+    
+
 
 /**************************************************************************
 * Register Overlay Structure
@@ -73,8 +230,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR0_G7;
     volatile uint32_t OUTPUTXBAR0_G8;
     volatile uint32_t OUTPUTXBAR0_G9;
-    volatile uint32_t OUTPUTXBAR0_G10;
-    volatile uint8_t  Resv_320[20];
+    volatile uint8_t  Resv_320[24];
     volatile uint32_t OUTPUTXBAR1_G0;
     volatile uint32_t OUTPUTXBAR1_G1;
     volatile uint32_t OUTPUTXBAR1_G2;
@@ -85,8 +241,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR1_G7;
     volatile uint32_t OUTPUTXBAR1_G8;
     volatile uint32_t OUTPUTXBAR1_G9;
-    volatile uint32_t OUTPUTXBAR1_G10;
-    volatile uint8_t  Resv_384[20];
+    volatile uint8_t  Resv_384[24];
     volatile uint32_t OUTPUTXBAR2_G0;
     volatile uint32_t OUTPUTXBAR2_G1;
     volatile uint32_t OUTPUTXBAR2_G2;
@@ -97,8 +252,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR2_G7;
     volatile uint32_t OUTPUTXBAR2_G8;
     volatile uint32_t OUTPUTXBAR2_G9;
-    volatile uint32_t OUTPUTXBAR2_G10;
-    volatile uint8_t  Resv_448[20];
+    volatile uint8_t  Resv_448[24];
     volatile uint32_t OUTPUTXBAR3_G0;
     volatile uint32_t OUTPUTXBAR3_G1;
     volatile uint32_t OUTPUTXBAR3_G2;
@@ -109,8 +263,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR3_G7;
     volatile uint32_t OUTPUTXBAR3_G8;
     volatile uint32_t OUTPUTXBAR3_G9;
-    volatile uint32_t OUTPUTXBAR3_G10;
-    volatile uint8_t  Resv_512[20];
+    volatile uint8_t  Resv_512[24];
     volatile uint32_t OUTPUTXBAR4_G0;
     volatile uint32_t OUTPUTXBAR4_G1;
     volatile uint32_t OUTPUTXBAR4_G2;
@@ -121,8 +274,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR4_G7;
     volatile uint32_t OUTPUTXBAR4_G8;
     volatile uint32_t OUTPUTXBAR4_G9;
-    volatile uint32_t OUTPUTXBAR4_G10;
-    volatile uint8_t  Resv_576[20];
+    volatile uint8_t  Resv_576[24];
     volatile uint32_t OUTPUTXBAR5_G0;
     volatile uint32_t OUTPUTXBAR5_G1;
     volatile uint32_t OUTPUTXBAR5_G2;
@@ -133,8 +285,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR5_G7;
     volatile uint32_t OUTPUTXBAR5_G8;
     volatile uint32_t OUTPUTXBAR5_G9;
-    volatile uint32_t OUTPUTXBAR5_G10;
-    volatile uint8_t  Resv_640[20];
+    volatile uint8_t  Resv_640[24];
     volatile uint32_t OUTPUTXBAR6_G0;
     volatile uint32_t OUTPUTXBAR6_G1;
     volatile uint32_t OUTPUTXBAR6_G2;
@@ -145,8 +296,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR6_G7;
     volatile uint32_t OUTPUTXBAR6_G8;
     volatile uint32_t OUTPUTXBAR6_G9;
-    volatile uint32_t OUTPUTXBAR6_G10;
-    volatile uint8_t  Resv_704[20];
+    volatile uint8_t  Resv_704[24];
     volatile uint32_t OUTPUTXBAR7_G0;
     volatile uint32_t OUTPUTXBAR7_G1;
     volatile uint32_t OUTPUTXBAR7_G2;
@@ -157,8 +307,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR7_G7;
     volatile uint32_t OUTPUTXBAR7_G8;
     volatile uint32_t OUTPUTXBAR7_G9;
-    volatile uint32_t OUTPUTXBAR7_G10;
-    volatile uint8_t  Resv_768[20];
+    volatile uint8_t  Resv_768[24];
     volatile uint32_t OUTPUTXBAR8_G0;
     volatile uint32_t OUTPUTXBAR8_G1;
     volatile uint32_t OUTPUTXBAR8_G2;
@@ -169,8 +318,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR8_G7;
     volatile uint32_t OUTPUTXBAR8_G8;
     volatile uint32_t OUTPUTXBAR8_G9;
-    volatile uint32_t OUTPUTXBAR8_G10;
-    volatile uint8_t  Resv_832[20];
+    volatile uint8_t  Resv_832[24];
     volatile uint32_t OUTPUTXBAR9_G0;
     volatile uint32_t OUTPUTXBAR9_G1;
     volatile uint32_t OUTPUTXBAR9_G2;
@@ -181,8 +329,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR9_G7;
     volatile uint32_t OUTPUTXBAR9_G8;
     volatile uint32_t OUTPUTXBAR9_G9;
-    volatile uint32_t OUTPUTXBAR9_G10;
-    volatile uint8_t  Resv_896[20];
+    volatile uint8_t  Resv_896[24];
     volatile uint32_t OUTPUTXBAR10_G0;
     volatile uint32_t OUTPUTXBAR10_G1;
     volatile uint32_t OUTPUTXBAR10_G2;
@@ -193,8 +340,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR10_G7;
     volatile uint32_t OUTPUTXBAR10_G8;
     volatile uint32_t OUTPUTXBAR10_G9;
-    volatile uint32_t OUTPUTXBAR10_G10;
-    volatile uint8_t  Resv_960[20];
+    volatile uint8_t  Resv_960[24];
     volatile uint32_t OUTPUTXBAR11_G0;
     volatile uint32_t OUTPUTXBAR11_G1;
     volatile uint32_t OUTPUTXBAR11_G2;
@@ -205,8 +351,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR11_G7;
     volatile uint32_t OUTPUTXBAR11_G8;
     volatile uint32_t OUTPUTXBAR11_G9;
-    volatile uint32_t OUTPUTXBAR11_G10;
-    volatile uint8_t  Resv_1024[20];
+    volatile uint8_t  Resv_1024[24];
     volatile uint32_t OUTPUTXBAR12_G0;
     volatile uint32_t OUTPUTXBAR12_G1;
     volatile uint32_t OUTPUTXBAR12_G2;
@@ -217,8 +362,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR12_G7;
     volatile uint32_t OUTPUTXBAR12_G8;
     volatile uint32_t OUTPUTXBAR12_G9;
-    volatile uint32_t OUTPUTXBAR12_G10;
-    volatile uint8_t  Resv_1088[20];
+    volatile uint8_t  Resv_1088[24];
     volatile uint32_t OUTPUTXBAR13_G0;
     volatile uint32_t OUTPUTXBAR13_G1;
     volatile uint32_t OUTPUTXBAR13_G2;
@@ -229,8 +373,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR13_G7;
     volatile uint32_t OUTPUTXBAR13_G8;
     volatile uint32_t OUTPUTXBAR13_G9;
-    volatile uint32_t OUTPUTXBAR13_G10;
-    volatile uint8_t  Resv_1152[20];
+    volatile uint8_t  Resv_1152[24];
     volatile uint32_t OUTPUTXBAR14_G0;
     volatile uint32_t OUTPUTXBAR14_G1;
     volatile uint32_t OUTPUTXBAR14_G2;
@@ -241,8 +384,7 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR14_G7;
     volatile uint32_t OUTPUTXBAR14_G8;
     volatile uint32_t OUTPUTXBAR14_G9;
-    volatile uint32_t OUTPUTXBAR14_G10;
-    volatile uint8_t  Resv_1216[20];
+    volatile uint8_t  Resv_1216[24];
     volatile uint32_t OUTPUTXBAR15_G0;
     volatile uint32_t OUTPUTXBAR15_G1;
     volatile uint32_t OUTPUTXBAR15_G2;
@@ -253,7 +395,6 @@ typedef struct {
     volatile uint32_t OUTPUTXBAR15_G7;
     volatile uint32_t OUTPUTXBAR15_G8;
     volatile uint32_t OUTPUTXBAR15_G9;
-    volatile uint32_t OUTPUTXBAR15_G10;
 } CSL_controlss_outputxbarRegs;
 
 
@@ -281,7 +422,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7                                (0x0000011CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8                                (0x00000120U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9                                (0x00000124U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10                               (0x00000128U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0                                (0x00000140U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1                                (0x00000144U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2                                (0x00000148U)
@@ -292,7 +432,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7                                (0x0000015CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8                                (0x00000160U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9                                (0x00000164U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10                               (0x00000168U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0                                (0x00000180U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1                                (0x00000184U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2                                (0x00000188U)
@@ -303,7 +442,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7                                (0x0000019CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8                                (0x000001A0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9                                (0x000001A4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10                               (0x000001A8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0                                (0x000001C0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1                                (0x000001C4U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2                                (0x000001C8U)
@@ -314,7 +452,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7                                (0x000001DCU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8                                (0x000001E0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9                                (0x000001E4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10                               (0x000001E8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0                                (0x00000200U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1                                (0x00000204U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2                                (0x00000208U)
@@ -325,7 +462,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7                                (0x0000021CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8                                (0x00000220U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9                                (0x00000224U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10                               (0x00000228U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0                                (0x00000240U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1                                (0x00000244U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2                                (0x00000248U)
@@ -336,7 +472,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7                                (0x0000025CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8                                (0x00000260U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9                                (0x00000264U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10                               (0x00000268U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0                                (0x00000280U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1                                (0x00000284U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2                                (0x00000288U)
@@ -347,7 +482,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7                                (0x0000029CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8                                (0x000002A0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9                                (0x000002A4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10                               (0x000002A8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0                                (0x000002C0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1                                (0x000002C4U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2                                (0x000002C8U)
@@ -358,7 +492,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7                                (0x000002DCU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8                                (0x000002E0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9                                (0x000002E4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10                               (0x000002E8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0                                (0x00000300U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1                                (0x00000304U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2                                (0x00000308U)
@@ -369,7 +502,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7                                (0x0000031CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8                                (0x00000320U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9                                (0x00000324U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10                               (0x00000328U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0                                (0x00000340U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1                                (0x00000344U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2                                (0x00000348U)
@@ -380,7 +512,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7                                (0x0000035CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8                                (0x00000360U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9                                (0x00000364U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10                               (0x00000368U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0                               (0x00000380U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1                               (0x00000384U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2                               (0x00000388U)
@@ -391,7 +522,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7                               (0x0000039CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8                               (0x000003A0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9                               (0x000003A4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10                              (0x000003A8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0                               (0x000003C0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1                               (0x000003C4U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2                               (0x000003C8U)
@@ -402,7 +532,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7                               (0x000003DCU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8                               (0x000003E0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9                               (0x000003E4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10                              (0x000003E8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0                               (0x00000400U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1                               (0x00000404U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2                               (0x00000408U)
@@ -413,7 +542,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7                               (0x0000041CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8                               (0x00000420U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9                               (0x00000424U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10                              (0x00000428U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0                               (0x00000440U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1                               (0x00000444U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2                               (0x00000448U)
@@ -424,7 +552,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7                               (0x0000045CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8                               (0x00000460U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9                               (0x00000464U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10                              (0x00000468U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0                               (0x00000480U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1                               (0x00000484U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2                               (0x00000488U)
@@ -435,7 +562,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7                               (0x0000049CU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8                               (0x000004A0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9                               (0x000004A4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10                              (0x000004A8U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0                               (0x000004C0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1                               (0x000004C4U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2                               (0x000004C8U)
@@ -446,7 +572,6 @@ typedef struct {
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7                               (0x000004DCU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8                               (0x000004E0U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9                               (0x000004E4U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10                              (0x000004E8U)
 
 /**************************************************************************
 * Field Definition Macros
@@ -715,46 +840,46 @@ typedef struct {
 
 /* OUTPUTXBAR0_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G4_RESETVAL                       (0x00000000U)
 
@@ -769,91 +894,82 @@ typedef struct {
 
 /* OUTPUTXBAR0_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_MASK                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_MASK                       (0x0003FCFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_SEL_MAX                        (0x0003FCFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR0_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_MASK                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_MASK                       (0x030F000FU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_SEL_MAX                        (0x030F000FU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR0_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR1_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_OUTPUTXBAR1_G0_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_OUTPUTXBAR1_G0_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_OUTPUTXBAR1_G0_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_OUTPUTXBAR1_G0_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G4_RESETVAL                       (0x00000000U)
 
@@ -868,91 +984,102 @@ typedef struct {
 
 /* OUTPUTXBAR1_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR1_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR1_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR1_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR2_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_OUTPUTXBAR2_G3_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_OUTPUTXBAR2_G3_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_OUTPUTXBAR2_G3_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_OUTPUTXBAR2_G3_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G4_RESETVAL                       (0x00000000U)
 
@@ -967,91 +1094,102 @@ typedef struct {
 
 /* OUTPUTXBAR2_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR2_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_OUTPUTXBAR2_G9_SEL_INTXBAR_MASK (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_OUTPUTXBAR2_G9_SEL_INTXBAR_SHIFT (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_OUTPUTXBAR2_G9_SEL_INTXBAR_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_OUTPUTXBAR2_G9_SEL_INTXBAR_MAX (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR2_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR2_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR3_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G4_RESETVAL                       (0x00000000U)
 
@@ -1066,91 +1204,102 @@ typedef struct {
 
 /* OUTPUTXBAR3_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR3_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_OUTPUTXBAR3_G9_SEL_FSIRX_MASK  (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_OUTPUTXBAR3_G9_SEL_FSIRX_SHIFT (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_OUTPUTXBAR3_G9_SEL_FSIRX_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_OUTPUTXBAR3_G9_SEL_FSIRX_MAX   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR3_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR3_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR4_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_OUTPUTXBAR4_G1_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_OUTPUTXBAR4_G1_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_OUTPUTXBAR4_G1_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_OUTPUTXBAR4_G1_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_OUTPUTXBAR4_G4_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_OUTPUTXBAR4_G4_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_OUTPUTXBAR4_G4_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_OUTPUTXBAR4_G4_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G4_RESETVAL                       (0x00000000U)
 
@@ -1165,91 +1314,102 @@ typedef struct {
 
 /* OUTPUTXBAR4_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR4_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_OUTPUTXBAR4_G9_SEL_INPUTXBAR_MASK (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_OUTPUTXBAR4_G9_SEL_INPUTXBAR_SHIFT (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_OUTPUTXBAR4_G9_SEL_INPUTXBAR_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_OUTPUTXBAR4_G9_SEL_INPUTXBAR_MAX (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR4_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR4_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR5_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_OUTPUTXBAR5_G4_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_OUTPUTXBAR5_G4_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_OUTPUTXBAR5_G4_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_OUTPUTXBAR5_G4_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G4_RESETVAL                       (0x00000000U)
 
@@ -1264,91 +1424,102 @@ typedef struct {
 
 /* OUTPUTXBAR5_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR5_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_OUTPUTXBAR5_G9_SEL_INPUTXBAR_MASK (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_OUTPUTXBAR5_G9_SEL_INPUTXBAR_SHIFT (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_OUTPUTXBAR5_G9_SEL_INPUTXBAR_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_OUTPUTXBAR5_G9_SEL_INPUTXBAR_MAX (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR5_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR5_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR6_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_SEL_MASK                       (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_OUTPUTXBAR6_G3_SEL_MASK        (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_OUTPUTXBAR6_G3_SEL_SHIFT       (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_OUTPUTXBAR6_G3_SEL_RESETVAL    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_OUTPUTXBAR6_G3_SEL_MAX         (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G4_RESETVAL                       (0x00000000U)
 
@@ -1363,91 +1534,102 @@ typedef struct {
 
 /* OUTPUTXBAR6_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_OUTPUTXBAR6_G8_SEL_EQEP_MASK   (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_OUTPUTXBAR6_G8_SEL_EQEP_SHIFT  (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_OUTPUTXBAR6_G8_SEL_EQEP_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_OUTPUTXBAR6_G8_SEL_EQEP_MAX    (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR6_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INPUTXBAR_MASK (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INPUTXBAR_SHIFT (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INPUTXBAR_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INPUTXBAR_MAX (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INTXBAR_MASK (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INTXBAR_SHIFT (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INTXBAR_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_OUTPUTXBAR6_G9_SEL_INTXBAR_MAX (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR6_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR6_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR7_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G4_RESETVAL                       (0x00000000U)
 
@@ -1462,91 +1644,102 @@ typedef struct {
 
 /* OUTPUTXBAR7_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR7_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR7_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR7_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR8_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G4_RESETVAL                       (0x00000000U)
 
@@ -1561,91 +1754,102 @@ typedef struct {
 
 /* OUTPUTXBAR8_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR8_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR8_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR8_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR9_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G0_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G1_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G2_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G3_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_MASK                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_MASK                       (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_MAX                        (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_SEL_MAX                        (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G4_RESETVAL                       (0x00000000U)
 
@@ -1660,190 +1864,212 @@ typedef struct {
 
 /* OUTPUTXBAR9_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_MASK                       (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_SEL_MAX                        (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G6_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_MASK                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_MASK                       (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_MAX                        (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_SEL_MAX                        (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G7_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_MASK                       (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_MAX                        (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_SYNCOUT_MASK               (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_SYNCOUT_SHIFT              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_SYNCOUT_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_SYNCOUT_MAX                (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_EQEP_MASK                  (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_EQEP_SHIFT                 (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_EQEP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_EQEP_MAX                   (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_ECAP_MASK                  (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_ECAP_SHIFT                 (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_ECAP_RESETVAL              (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_SEL_ECAP_MAX                   (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G8_RESETVAL                       (0x00000000U)
 
 /* OUTPUTXBAR9_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_MASK                       (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_MAX                        (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_FSIRX_MASK                 (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_FSIRX_SHIFT                (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_FSIRX_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_FSIRX_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INPUTXBAR_MASK             (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INPUTXBAR_SHIFT            (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INPUTXBAR_RESETVAL         (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INPUTXBAR_MAX              (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INTXBAR_MASK               (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INTXBAR_SHIFT              (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INTXBAR_RESETVAL           (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_SEL_INTXBAR_MAX                (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G9_RESETVAL                       (0x00000000U)
 
-/* OUTPUTXBAR9_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10_SEL_MASK                      (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10_SEL_MAX                       (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR9_G10_RESETVAL                      (0x00000000U)
-
 /* OUTPUTXBAR10_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0_SEL_MASK                      (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0__SEL_MASK                     (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0__SEL_MAX                      (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1_SEL_MASK                      (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1__SEL_MASK                     (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1__SEL_MAX                      (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2_SEL_MASK                      (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2__SEL_MASK                     (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2__SEL_MAX                      (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3_SEL_MASK                      (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3__SEL_MASK                     (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3__SEL_MAX                      (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4_SEL_MASK                      (0xFFFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4__SEL_MASK                     (0x000003FFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4__SEL_MAX                      (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G4_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G5 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5_SEL_MASK                      (0x00FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5_SEL_MAX                       (0x00FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5__SEL_MASK                     (0x00FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5__SEL_MAX                      (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G5_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7_SEL_MASK                      (0x000FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7__SEL_MASK                     (0x00000FFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7__SEL_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7__SEL_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7__SEL_MAX                      (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_EQEP_MASK                 (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_EQEP_SHIFT                (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_EQEP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_EQEP_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR10_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G9_RESETVAL                      (0x00000000U)
 
-/* OUTPUTXBAR10_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR10_G10_RESETVAL                     (0x00000000U)
-
 /* OUTPUTXBAR11_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G4_RESETVAL                      (0x00000000U)
 
@@ -1858,91 +2084,102 @@ typedef struct {
 
 /* OUTPUTXBAR11_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_MASK                      (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_SEL_MAX                       (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_OUTPUTXBAR11_G8_SEL_EQEP_MASK (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_OUTPUTXBAR11_G8_SEL_EQEP_SHIFT (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_OUTPUTXBAR11_G8_SEL_EQEP_RESETVAL (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_OUTPUTXBAR11_G8_SEL_EQEP_MAX  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR11_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G9_RESETVAL                      (0x00000000U)
 
-/* OUTPUTXBAR11_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR11_G10_RESETVAL                     (0x00000000U)
-
 /* OUTPUTXBAR12_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G4_RESETVAL                      (0x00000000U)
 
@@ -1957,91 +2194,102 @@ typedef struct {
 
 /* OUTPUTXBAR12_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_MASK                      (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_SEL_MAX                       (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_EQEP_MASK                 (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_EQEP_SHIFT                (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_EQEP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_EQEP_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR12_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G9_RESETVAL                      (0x00000000U)
 
-/* OUTPUTXBAR12_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR12_G10_RESETVAL                     (0x00000000U)
-
 /* OUTPUTXBAR13_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G4_RESETVAL                      (0x00000000U)
 
@@ -2056,91 +2304,102 @@ typedef struct {
 
 /* OUTPUTXBAR13_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_MASK                      (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_SEL_MAX                       (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_EQEP_MASK                 (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_EQEP_SHIFT                (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_EQEP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_EQEP_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR13_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G9_RESETVAL                      (0x00000000U)
 
-/* OUTPUTXBAR13_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR13_G10_RESETVAL                     (0x00000000U)
-
 /* OUTPUTXBAR14_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G4_RESETVAL                      (0x00000000U)
 
@@ -2155,91 +2414,102 @@ typedef struct {
 
 /* OUTPUTXBAR14_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_MASK                      (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_SEL_MAX                       (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_EQEP_MASK                 (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_EQEP_SHIFT                (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_EQEP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_EQEP_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR14_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G9_RESETVAL                      (0x00000000U)
 
-/* OUTPUTXBAR14_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR14_G10_RESETVAL                     (0x00000000U)
-
 /* OUTPUTXBAR15_G0 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G0_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G1 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G1_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G2 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G2_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G3 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G3_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G4 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_MASK                      (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_MASK                      (0x000003FFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_MAX                       (0xFFFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_SEL_MAX                       (0x000003FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G4_RESETVAL                      (0x00000000U)
 
@@ -2254,48 +2524,59 @@ typedef struct {
 
 /* OUTPUTXBAR15_G6 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_MASK                      (0x0003FFFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_SEL_MAX                       (0x0003FFFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G6_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G7 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_MASK                      (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_MASK                      (0x00000FFFU)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_SHIFT                     (0x00000000U)
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_MAX                       (0x000FFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_SEL_MAX                       (0x00000FFFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G7_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G8 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_MASK                      (0x0FFFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_MAX                       (0x0FFFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_SYNCOUT_MASK              (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_SYNCOUT_SHIFT             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_SYNCOUT_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_SYNCOUT_MAX               (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_EQEP_MASK                 (0x000000F0U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_EQEP_SHIFT                (0x00000004U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_EQEP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_EQEP_MAX                  (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_ECAP_MASK                 (0x0003FC00U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_ECAP_SHIFT                (0x0000000AU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_ECAP_RESETVAL             (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_SEL_ECAP_MAX                  (0x000000FFU)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G8_RESETVAL                      (0x00000000U)
 
 /* OUTPUTXBAR15_G9 */
 
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_MASK                      (0x03FFFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_MAX                       (0x03FFFFFFU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_FSIRX_MASK                (0x0000000FU)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_FSIRX_SHIFT               (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_FSIRX_RESETVAL            (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_FSIRX_MAX                 (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INPUTXBAR_MASK            (0x000F0000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INPUTXBAR_SHIFT           (0x00000010U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INPUTXBAR_RESETVAL        (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INPUTXBAR_MAX             (0x0000000FU)
+
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INTXBAR_MASK              (0x03000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INTXBAR_SHIFT             (0x00000018U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INTXBAR_RESETVAL          (0x00000000U)
+#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_SEL_INTXBAR_MAX               (0x00000003U)
 
 #define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G9_RESETVAL                      (0x00000000U)
-
-/* OUTPUTXBAR15_G10 */
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10_SEL_MASK                     (0x003FFFFFU)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10_SEL_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10_SEL_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10_SEL_MAX                      (0x003FFFFFU)
-
-#define CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR15_G10_RESETVAL                     (0x00000000U)
 
 #ifdef __cplusplus
 }

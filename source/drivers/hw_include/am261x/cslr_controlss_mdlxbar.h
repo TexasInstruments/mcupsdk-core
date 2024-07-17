@@ -44,7 +44,67 @@ extern "C"
 /**************************************************************************
 * Hardware Region  :
 **************************************************************************/
+/**************************************************************************
+    XBAR INPUT Macros
+**************************************************************************/
 
+/******************* GO *********************/
+#define MDLXBAR_EPWM0A_SCLK         (0x00000001)
+#define MDLXBAR_EPWM1A_SCLK         (0x00000002)
+#define MDLXBAR_EPWM2A_SCLK         (0x00000004)
+#define MDLXBAR_EPWM3A_SCLK         (0x00000008)
+#define MDLXBAR_EPWM4A_SCLK         (0x00000010)
+#define MDLXBAR_EPWM5A_SCLK         (0x00000020)
+#define MDLXBAR_EPWM6A_SCLK         (0x00000040)
+#define MDLXBAR_EPWM7A_SCLK         (0x00000080)
+#define MDLXBAR_EPWM8A_SCLK         (0x00000100)
+#define MDLXBAR_EPWM9A_SCLK         (0x00000200)
+
+/******************* G1 *********************/
+#define MDLXBAR_EPWM0B_SCLK         (0x00000001)
+#define MDLXBAR_EPWM1B_SCLK         (0x00000002)
+#define MDLXBAR_EPWM2B_SCLK         (0x00000004)
+#define MDLXBAR_EPWM3B_SCLK         (0x00000008)
+#define MDLXBAR_EPWM4B_SCLK         (0x00000010)
+#define MDLXBAR_EPWM5B_SCLK         (0x00000020)
+#define MDLXBAR_EPWM6B_SCLK         (0x00000040)
+#define MDLXBAR_EPWM7B_SCLK         (0x00000080)
+#define MDLXBAR_EPWM8B_SCLK         (0x00000100)
+#define MDLXBAR_EPWM9B_SCLK         (0x00000200)
+
+/******************* G2 *********************/
+#define MDLXBAR_ICSS0_PORT0_GPO0    (0x00000001)
+#define MDLXBAR_ICSS0_PORT0_GPO1    (0x00000002)
+#define MDLXBAR_ICSS0_PORT0_GPO2    (0x00000004)
+#define MDLXBAR_ICSS0_PORT0_GPO3    (0x00000008)
+#define MDLXBAR_ICSS0_PORT0_GPO4    (0x00000010)
+#define MDLXBAR_ICSS0_PORT0_GPO5    (0x00000020)
+#define MDLXBAR_ICSS0_PORT0_GPO6    (0x00000040)
+#define MDLXBAR_ICSS0_PORT0_GPO7    (0x00000080)
+#define MDLXBAR_ICSS0_PORT0_GPO8    (0x00000100)
+#define MDLXBAR_ICSS0_PORT0_GPO9    (0x00000200)
+#define MDLXBAR_ICSS0_PORT0_GPO10   (0x00000400)
+#define MDLXBAR_ICSS0_PORT0_GPO11   (0x00000800)
+#define MDLXBAR_ICSS0_PORT0_GPO12   (0x00001000)
+#define MDLXBAR_ICSS0_PORT0_GPO13   (0x00002000)
+#define MDLXBAR_ICSS0_PORT0_GPO14   (0x00004000)
+#define MDLXBAR_ICSS0_PORT0_GPO15   (0x00008000)
+#define MDLXBAR_ICSS0_PORT1_GPO0    (0x00010000)
+#define MDLXBAR_ICSS0_PORT1_GPO1    (0x00020000)
+#define MDLXBAR_ICSS0_PORT1_GPO2    (0x00040000)
+#define MDLXBAR_ICSS0_PORT1_GPO3    (0x00080000)
+#define MDLXBAR_ICSS0_PORT1_GPO4    (0x00100000)
+#define MDLXBAR_ICSS0_PORT1_GPO5    (0x00200000)
+#define MDLXBAR_ICSS0_PORT1_GPO6    (0x00400000)
+#define MDLXBAR_ICSS0_PORT1_GPO7    (0x00800000)
+#define MDLXBAR_ICSS0_PORT1_GPO8    (0x01000000)
+#define MDLXBAR_ICSS0_PORT1_GPO9    (0x02000000)
+#define MDLXBAR_ICSS0_PORT1_GPO10   (0x04000000)
+#define MDLXBAR_ICSS0_PORT1_GPO11   (0x08000000)
+#define MDLXBAR_ICSS0_PORT1_GPO12   (0x10000000)
+#define MDLXBAR_ICSS0_PORT1_GPO13   (0x20000000)
+#define MDLXBAR_ICSS0_PORT1_GPO14   (0x40000000)
+#define MDLXBAR_ICSS0_PORT1_GPO15   (0x80000000)
 
 /**************************************************************************
 * Register Overlay Structure
@@ -209,19 +269,19 @@ typedef struct {
 
 /* MDLXBAR0_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR0_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR0_G1_RESETVAL                             (0x00000000U)
 
@@ -236,19 +296,19 @@ typedef struct {
 
 /* MDLXBAR1_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR1_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR1_G1_RESETVAL                             (0x00000000U)
 
@@ -263,19 +323,19 @@ typedef struct {
 
 /* MDLXBAR2_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR2_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR2_G1_RESETVAL                             (0x00000000U)
 
@@ -290,19 +350,19 @@ typedef struct {
 
 /* MDLXBAR3_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR3_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR3_G1_RESETVAL                             (0x00000000U)
 
@@ -317,19 +377,19 @@ typedef struct {
 
 /* MDLXBAR4_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR4_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR4_G1_RESETVAL                             (0x00000000U)
 
@@ -344,19 +404,19 @@ typedef struct {
 
 /* MDLXBAR5_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR5_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR5_G1_RESETVAL                             (0x00000000U)
 
@@ -371,19 +431,19 @@ typedef struct {
 
 /* MDLXBAR6_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR6_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR6_G1_RESETVAL                             (0x00000000U)
 
@@ -398,19 +458,19 @@ typedef struct {
 
 /* MDLXBAR7_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR7_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR7_G1_RESETVAL                             (0x00000000U)
 
@@ -425,19 +485,19 @@ typedef struct {
 
 /* MDLXBAR8_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR8_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR8_G1_RESETVAL                             (0x00000000U)
 
@@ -452,19 +512,19 @@ typedef struct {
 
 /* MDLXBAR9_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G0_RESETVAL                             (0x00000000U)
 
 /* MDLXBAR9_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR9_G1_RESETVAL                             (0x00000000U)
 
@@ -479,19 +539,19 @@ typedef struct {
 
 /* MDLXBAR10_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR10_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR10_G1_RESETVAL                            (0x00000000U)
 
@@ -506,19 +566,19 @@ typedef struct {
 
 /* MDLXBAR11_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR11_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR11_G1_RESETVAL                            (0x00000000U)
 
@@ -533,19 +593,19 @@ typedef struct {
 
 /* MDLXBAR12_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR12_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR12_G1_RESETVAL                            (0x00000000U)
 
@@ -560,19 +620,19 @@ typedef struct {
 
 /* MDLXBAR13_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR13_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR13_G1_RESETVAL                            (0x00000000U)
 
@@ -587,19 +647,19 @@ typedef struct {
 
 /* MDLXBAR14_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR14_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR14_G1_RESETVAL                            (0x00000000U)
 
@@ -614,19 +674,19 @@ typedef struct {
 
 /* MDLXBAR15_G0 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G0_RESETVAL                            (0x00000000U)
 
 /* MDLXBAR15_G1 */
 
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_MDLXBAR_MDLXBAR15_G1_RESETVAL                            (0x00000000U)
 

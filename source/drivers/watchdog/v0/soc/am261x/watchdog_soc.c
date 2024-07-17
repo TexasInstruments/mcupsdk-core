@@ -79,24 +79,6 @@ void Watchdog_reset(Watchdog_Handle handle)
                          0x7U);
             }
             break;
-        case WATCHDOG_INST_ID_2:
-            if (CSL_FEXT(ptrRCMRegs->WDT2_RST_CTRL,
-                 MSS_RCM_WDT2_RST_CTRL_ASSERT) != 0)
-            {
-                CSL_FINS(ptrRCMRegs->WDT2_RST_CTRL,
-                         MSS_RCM_WDT2_RST_CTRL_ASSERT,
-                         0x7U);
-            }
-            break;
-        case WATCHDOG_INST_ID_3:
-            if (CSL_FEXT(ptrRCMRegs->WDT3_RST_CTRL,
-                 MSS_RCM_WDT3_RST_CTRL_ASSERT) != 0)
-            {
-                CSL_FINS(ptrRCMRegs->WDT3_RST_CTRL,
-                         MSS_RCM_WDT3_RST_CTRL_ASSERT,
-                         0x7U);
-            }
-            break;
     }
 
 }
@@ -126,16 +108,6 @@ void Watchdog_configureWarmReset(Watchdog_Handle handle)
         case WATCHDOG_INST_ID_1:
             CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
              TOP_RCM_WARM_RESET_CONFIG_WDOG1_RST_EN,
-             0x7U);
-            break;
-        case WATCHDOG_INST_ID_2:
-            CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
-             TOP_RCM_WARM_RESET_CONFIG_WDOG2_RST_EN,
-             0x7U);
-            break;
-        case WATCHDOG_INST_ID_3:
-            CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
-             TOP_RCM_WARM_RESET_CONFIG_WDOG3_RST_EN,
              0x7U);
             break;
     }

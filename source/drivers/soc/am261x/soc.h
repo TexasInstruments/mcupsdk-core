@@ -343,13 +343,6 @@ void SOC_gateFsirxClock(uint32_t fsirxInstance);
 void SOC_gateCmpssaClock(uint32_t cmpssaInstance);
 
 /**
- * \brief Gate the CMPSS-B clock
- *
- * \param cmpssbInstance [in] CMPSS-B instance number [0 - 9]
- */
-void SOC_gateCmpssbClock(uint32_t cmpssbInstance);
-
-/**
  * \brief Gate the ECAP clock
  *
  * \param ecapInstance [in] ECAP instance number [0 - 9]
@@ -439,13 +432,6 @@ void SOC_generateFsiRxReset(uint32_t fsirxInstance);
 void SOC_generateCmpssaReset(uint32_t cmpssaInstance);
 
 /**
- * \brief Generate CMPSS-B reset
- *
- * \param cmpssbInstance [in] CMPSS-B instance number [0 - 9]
- */
-void SOC_generateCmpssbReset(uint32_t cmpssbInstance);
-
-/**
  * \brief Generate ECAP reset
  *
  * \param ecapInstance [in] ECAP instance number [0 - 9]
@@ -506,7 +492,7 @@ void SOC_generateOttoReset(uint32_t ottoInstance);
  * \param pru_instance [in] PRU instance number [0 - 1]
  * \param mask [in] Bitwise selection of ICSSM GPI source. GPI or PWMXBar select for ICSSM port 0/1. 0-GPI, 1-PWMXBAR
  */
-void SOC_selectIcssGpiMux(uint8_t pru_instance, uint32_t mask);
+void SOC_selectIcssGpiMux(uint8_t icssm_instance, uint8_t pru_instance, uint32_t mask);
 
 /**
  *  \brief SOC Virtual (CPU) to Physical address translation function.

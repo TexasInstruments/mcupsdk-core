@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 /** @brief Number of UART instances */
-#define CSL_FW_CNT                (23U)
+#define CSL_FW_CNT                (18U)
 
 
 /* SLAVE FIREWALLS */
@@ -62,13 +62,13 @@ extern "C" {
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_REGION      (8)
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_PROTECTED   (4)
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR0     (0x78000000)
-#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE0    (64*1024)
+#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE0    (64K)
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR1     (0x78100000)
-#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE1    (64*1024)
+#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE1    (64K)
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR2     (0x74000000)
-#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE2    (8*1024*1024)
+#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE2    (8M)
 #define CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR3     (0x74800000)
-#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE3    (8*1024*1024)
+#define CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE3    (8M)
 
 /***********************************************************************
  * FW R5SS0_CORE1_AXIS_SLV
@@ -79,48 +79,13 @@ extern "C" {
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_REGION      (8)
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_PROTECTED   (4)
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR0     (0x78200000)
-#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE0    (32*1024)
+#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE0    (32K)
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR1     (0x78300000)
-#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE1    (32*1024)
+#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE1    (32K)
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR2     (0x75000000)
-#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE2    (8*1024*1024)
+#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE2    (8M)
 #define CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR3     (0x75800000)
-#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE3    (8*1024*1024)
-
-/***********************************************************************
- * FW R5SS1_CORE0_AXIS_SLV
- ***********************************************************************/
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_ID              (2U)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_CFG_ADDR        (0x400E0000)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_NUM_REGION      (8)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_NUM_PROTECTED   (4)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR0     (0x78400000)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE0    (64*1024)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR1     (0x78500000)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE1    (64*1024)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR2     (0x76000000)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE2    (8*1024*1024)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR3     (0x76800000)
-#define CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE3    (8*1024*1024)
-
-
-/***********************************************************************
- * FW R5SS1_CORE1_AXIS_SLV
- ***********************************************************************/
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_ID              (3U)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_CFG_ADDR        (0x40100000)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_NUM_REGION      (8)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_NUM_PROTECTED   (4)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR0     (0x78600000)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE0    (32*1024)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR1     (0x78700000)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE1    (32*1024)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR2     (0x77000000)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE2    (8*1024*1024)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR3     (0x77800000)
-#define CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE3    (8*1024*1024)
+#define CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE3    (8M)
 
 /***********************************************************************
  * FW L2OCRAM_BANK0_SLV
@@ -131,7 +96,7 @@ extern "C" {
 #define CSL_FW_L2OCRAM_BANK0_SLV_NUM_REGION      (8)
 #define CSL_FW_L2OCRAM_BANK0_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_L2OCRAM_BANK0_SLV_START_ADDR0     (0x70000000)
-#define CSL_FW_L2OCRAM_BANK0_SLV_REGION_SIZE0    (512*1024)
+#define CSL_FW_L2OCRAM_BANK0_SLV_REGION_SIZE0    (512K)
 
 /***********************************************************************
  * FW L2OCRAM_BANK1_SLV
@@ -142,7 +107,7 @@ extern "C" {
 #define CSL_FW_L2OCRAM_BANK1_SLV_NUM_REGION      (8)
 #define CSL_FW_L2OCRAM_BANK1_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_L2OCRAM_BANK1_SLV_START_ADDR0     (0x70080000)
-#define CSL_FW_L2OCRAM_BANK1_SLV_REGION_SIZE0    (512*1024)
+#define CSL_FW_L2OCRAM_BANK1_SLV_REGION_SIZE0    (512K)
 
 /***********************************************************************
  * FW L2OCRAM_BANK2_SLV
@@ -153,43 +118,7 @@ extern "C" {
 #define CSL_FW_L2OCRAM_BANK2_SLV_NUM_REGION      (8)
 #define CSL_FW_L2OCRAM_BANK2_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_L2OCRAM_BANK2_SLV_START_ADDR0     (0x70100000)
-#define CSL_FW_L2OCRAM_BANK2_SLV_REGION_SIZE0    (512*1024)
-
-/***********************************************************************
- * FW L2OCRAM_BANK3_SLV
- ***********************************************************************/
-#define CSL_FW_L2OCRAM_BANK3_SLV_ID              (7U)
-#define CSL_FW_L2OCRAM_BANK3_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_L2OCRAM_BANK3_SLV_CFG_ADDR        (0x40080000)
-#define CSL_FW_L2OCRAM_BANK3_SLV_NUM_REGION      (8)
-#define CSL_FW_L2OCRAM_BANK3_SLV_NUM_PROTECTED   (1)
-#define CSL_FW_L2OCRAM_BANK3_SLV_START_ADDR0     (0x70180000)
-#define CSL_FW_L2OCRAM_BANK3_SLV_REGION_SIZE0    (512*1024)
-
-
-/***********************************************************************
- * FW L2OCRAM_BANK4_SLV
- ***********************************************************************/
-#define CSL_FW_L2OCRAM_BANK4_SLV_ID              (18U)
-#define CSL_FW_L2OCRAM_BANK4_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_L2OCRAM_BANK4_SLV_CFG_ADDR        (0x402C0000)
-#define CSL_FW_L2OCRAM_BANK4_SLV_NUM_REGION      (8)
-#define CSL_FW_L2OCRAM_BANK4_SLV_NUM_PROTECTED   (1)
-#define CSL_FW_L2OCRAM_BANK4_SLV_START_ADDR0     (0x70300000)
-#define CSL_FW_L2OCRAM_BANK4_SLV_REGION_SIZE0    (512*1024)
-
-
-/***********************************************************************
- * FW L2OCRAM_BANK5_SLV
- ***********************************************************************/
-#define CSL_FW_L2OCRAM_BANK5_SLV_ID              (19U)
-#define CSL_FW_L2OCRAM_BANK5_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_L2OCRAM_BANK5_SLV_CFG_ADDR        (0x402E0000)
-#define CSL_FW_L2OCRAM_BANK5_SLV_NUM_REGION      (8)
-#define CSL_FW_L2OCRAM_BANK5_SLV_NUM_PROTECTED   (1)
-#define CSL_FW_L2OCRAM_BANK5_SLV_START_ADDR0     (0x70380000)
-#define CSL_FW_L2OCRAM_BANK5_SLV_REGION_SIZE0    (512*1024)
-
+#define CSL_FW_L2OCRAM_BANK2_SLV_REGION_SIZE0    (512K)
 
 /***********************************************************************
  * FW MBOX_RAM_SLV
@@ -200,7 +129,7 @@ extern "C" {
 #define CSL_FW_MBOX_RAM_SLV_NUM_REGION      (8)
 #define CSL_FW_MBOX_RAM_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_MBOX_RAM_SLV_START_ADDR0     (0x72000000)
-#define CSL_FW_MBOX_RAM_SLV_REGION_SIZE0    (16*1024)
+#define CSL_FW_MBOX_RAM_SLV_REGION_SIZE0    (16K)
 
 /***********************************************************************
  * FW HSM_SLV
@@ -211,9 +140,9 @@ extern "C" {
 #define CSL_FW_HSM_SLV_NUM_REGION      (8)
 #define CSL_FW_HSM_SLV_NUM_PROTECTED   (2)
 #define CSL_FW_HSM_SLV_START_ADDR0     (0x20000000)
-#define CSL_FW_HSM_SLV_REGION_SIZE0    (128*1024*1024)
+#define CSL_FW_HSM_SLV_REGION_SIZE0    (128M)
 #define CSL_FW_HSM_SLV_START_ADDR1     (0x40000000)
-#define CSL_FW_HSM_SLV_REGION_SIZE1    (128*1024*1024)
+#define CSL_FW_HSM_SLV_REGION_SIZE1    (128M)
 
 /***********************************************************************
  * FW DTHE_SLV
@@ -224,7 +153,7 @@ extern "C" {
 #define CSL_FW_DTHE_SLV_NUM_REGION      (8)
 #define CSL_FW_DTHE_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_DTHE_SLV_START_ADDR0     (0xCE000000)
-#define CSL_FW_DTHE_SLV_REGION_SIZE0    (16*1024*1024)
+#define CSL_FW_DTHE_SLV_REGION_SIZE0    (16M)
 
 /***********************************************************************
  * FW OSPI0_SLV
@@ -235,28 +164,26 @@ extern "C" {
 #define CSL_FW_OSPI0_SLV_NUM_REGION      (8)
 #define CSL_FW_OSPI0_SLV_NUM_PROTECTED   (5)
 #define CSL_FW_OSPI0_SLV_START_ADDR0     (0x48200000)
-#define CSL_FW_OSPI0_SLV_REGION_SIZE0    (256*1024)
+#define CSL_FW_OSPI0_SLV_REGION_SIZE0    (256K)
 #define CSL_FW_OSPI0_SLV_START_ADDR1     (0x60000000)
-#define CSL_FW_OSPI0_SLV_REGION_SIZE1    (32*1024*1024)
+#define CSL_FW_OSPI0_SLV_REGION_SIZE1    (32M)
 #define CSL_FW_OSPI0_SLV_START_ADDR2     (0x62000000)
-#define CSL_FW_OSPI0_SLV_REGION_SIZE2    (32*1024*1024)
+#define CSL_FW_OSPI0_SLV_REGION_SIZE2    (32M)
 #define CSL_FW_OSPI0_SLV_START_ADDR3     (0x64000000)
-#define CSL_FW_OSPI0_SLV_REGION_SIZE3    (32*1024*1024)
+#define CSL_FW_OSPI0_SLV_REGION_SIZE3    (32M)
 #define CSL_FW_OSPI0_SLV_START_ADDR4     (0x66000000)
-#define CSL_FW_OSPI0_SLV_REGION_SIZE4    (32*1024*1024)
+#define CSL_FW_OSPI0_SLV_REGION_SIZE4    (32M)
 
 /***********************************************************************
  * FW OSPI0_CONFIG_SLV
  ***********************************************************************/
-#define CSL_FW_OSPI0_CFG_SLV_ID              (20U)
+#define CSL_FW_OSPI0_CFG_SLV_ID              (7U)
 #define CSL_FW_OSPI0_CFG_SLV_TYPE            (CSL_FW_SLV)
 #define CSL_FW_OSPI0_CFG_SLV_CFG_ADDR        (0x40260000)
 #define CSL_FW_OSPI0_CFG_SLV_NUM_REGION      (4)
 #define CSL_FW_OSPI0_CFG_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_OSPI0_CFG_SLV_START_ADDR0     (0x53800000)
-#define CSL_FW_OSPI0_CFG_SLV_REGION_SIZE0    (512*1024)
-
-
+#define CSL_FW_OSPI0_CFG_SLV_REGION_SIZE0    (512KB)
 
 /***********************************************************************
  * FW SCRM2SCRP0
@@ -267,7 +194,7 @@ extern "C" {
 #define CSL_FW_SCRM2SCRP0_SLV_NUM_REGION      (16)
 #define CSL_FW_SCRM2SCRP0_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_SCRM2SCRP0_SLV_START_ADDR0     (0x50000000)
-#define CSL_FW_SCRM2SCRP0_SLV_REGION_SIZE0    (256*1024*1024)
+#define CSL_FW_SCRM2SCRP0_SLV_REGION_SIZE0    (256M)
 
 /***********************************************************************
  * FW SCRM2SCRP1
@@ -278,7 +205,7 @@ extern "C" {
 #define CSL_FW_SCRM2SCRP1_SLV_NUM_REGION      (16)
 #define CSL_FW_SCRM2SCRP1_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_SCRM2SCRP1_SLV_START_ADDR0     (0x50000000)
-#define CSL_FW_SCRM2SCRP1_SLV_REGION_SIZE0    (256*1024*1024)
+#define CSL_FW_SCRM2SCRP1_SLV_REGION_SIZE0    (256M)
 
 
 
@@ -293,9 +220,7 @@ extern "C" {
 #define CSL_FW_R5SS0_CORE0_AHB_MST_NUM_REGION      (16)
 #define CSL_FW_R5SS0_CORE0_AHB_MST_NUM_PROTECTED   (1)
 #define CSL_FW_R5SS0_CORE0_AHB_MST_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS0_CORE0_AHB_MST_REGION_SIZE0    (256*1024*1024)
-
-
+#define CSL_FW_R5SS0_CORE0_AHB_MST_REGION_SIZE0    (256M)
 
 /***********************************************************************
  * FW  R5SS0_CORE1_MST
@@ -306,55 +231,18 @@ extern "C" {
 #define CSL_FW_R5SS0_CORE1_AHB_MST_NUM_REGION      (16)
 #define CSL_FW_R5SS0_CORE1_AHB_MST_NUM_PROTECTED   (1)
 #define CSL_FW_R5SS0_CORE1_AHB_MST_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS0_CORE1_AHB_MST_REGION_SIZE0    (256*1024*1024)
-
-
-
-/***********************************************************************
- * FW  R5SS1_CORE0_MST
- ***********************************************************************/
-#define CSL_FW_R5SS1_CORE0_AHB_MST_ID              (16U)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_TYPE            (CSL_FW_MST)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_CFG_ADDR        (0x40200000)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_NUM_REGION      (16)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_NUM_PROTECTED   (1)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS1_CORE0_AHB_MST_REGION_SIZE0    (256*1024*1024)
-
-/***********************************************************************
- * FW  R5SS1_CORE1_MST
- ***********************************************************************/
-#define CSL_FW_R5SS1_CORE1_AHB_MST_ID              (17U)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_TYPE            (CSL_FW_MST)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_CFG_ADDR        (0x40220000)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_NUM_REGION      (16)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_NUM_PROTECTED   (1)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS1_CORE1_AHB_MST_REGION_SIZE0    (256*1024*1024)
+#define CSL_FW_R5SS0_CORE1_AHB_MST_REGION_SIZE0    (256M)
 
 /***********************************************************************
  * FW R5SS0_CONFIG_SLV
  ***********************************************************************/
-#define CSL_FW_R5SS0_SLV_ID              (21U)
+#define CSL_FW_R5SS0_SLV_ID              (7U)
 #define CSL_FW_R5SS0_SLV_TYPE            (CSL_FW_SLV)
 #define CSL_FW_R5SS0_SLV_CFG_ADDR        (0x40280000)
 #define CSL_FW_R5SS0_SLV_NUM_REGION      (8)
 #define CSL_FW_R5SS0_SLV_NUM_PROTECTED   (1)
 #define CSL_FW_R5SS0_SLV_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS0_SLV_REGION_SIZE0    (256*1024*1024)
-
-
-/***********************************************************************
- * FW R5SS1_CONFIG_SLV
- ***********************************************************************/
-#define CSL_FW_R5SS1_SLV_ID              (22U)
-#define CSL_FW_R5SS1_SLV_TYPE            (CSL_FW_SLV)
-#define CSL_FW_R5SS1_SLV_CFG_ADDR        (0x402A0000)
-#define CSL_FW_R5SS1_SLV_NUM_REGION      (8)
-#define CSL_FW_R5SS1_SLV_NUM_PROTECTED   (1)
-#define CSL_FW_R5SS1_SLV_START_ADDR0     (0x50000000)
-#define CSL_FW_R5SS1_SLV_REGION_SIZE0    (256*1024*1024)
-
+#define CSL_FW_R5SS0_SLV_REGION_SIZE0    (256M)
 
 #ifdef __cplusplus
 }

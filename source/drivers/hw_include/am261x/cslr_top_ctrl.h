@@ -119,16 +119,7 @@ typedef struct {
     volatile uint32_t EFUSE1_ROW_53;
     volatile uint32_t EFUSE1_ROW_54;
     volatile uint32_t EFUSE1_ROW_55;
-    volatile uint32_t EFUSE1_ROW_56;
-    volatile uint32_t EFUSE1_ROW_57;
-    volatile uint32_t EFUSE1_ROW_58;
-    volatile uint32_t EFUSE1_ROW_59;
-    volatile uint32_t EFUSE1_ROW_60;
-    volatile uint32_t EFUSE1_ROW_61;
-    volatile uint32_t EFUSE1_ROW_62;
-    volatile uint32_t EFUSE1_ROW_63;
-    volatile uint32_t EFUSE2_ROW_5;
-    volatile uint32_t EFUSE2_ROW_6;
+    volatile uint8_t  Resv_1280[40];
     volatile uint32_t MAC_ID0;
     volatile uint32_t MAC_ID1;
     volatile uint8_t  Resv_1296[8];
@@ -151,31 +142,29 @@ typedef struct {
     volatile uint32_t EFUSE_OVERRIDE_ADC0_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_ADC1_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_ADC2_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_ADC3_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_ADC4_TRIM;
+    volatile uint8_t  Resv_2076[8];
     volatile uint32_t EFUSE_OVERRIDE_ADC_CFG_CTRL;
     volatile uint32_t EFUSE_OVERRIDE_ADC_CFG0;
     volatile uint32_t EFUSE_OVERRIDE_ADC_CFG1;
     volatile uint32_t EFUSE_OVERRIDE_ADC_CFG2;
-    volatile uint32_t EFUSE_OVERRIDE_CSS01_TRIM_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_CSS01_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_CSS23_TRIM_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_CSS23_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_CSS45_TRIM_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_CSS45_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_CSS67_TRIM_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_CSS67_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_CSS89_TRIM_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_CSS89_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA0_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA0_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA1_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA1_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA2_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA2_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA3_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA3_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA4_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA4_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_CSS_CFG_CTRL;
     volatile uint32_t EFUSE_OVERRIDE_CSS_CFG0;
-    volatile uint32_t EFUSE_OVERRIDE_CSS_CFG1;
+    volatile uint8_t  Resv_2144[4];
     volatile uint32_t EFUSE_OVERRIDE_DAC_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_DAC_CFG;
     volatile uint32_t EFUSE_OVERRIDE_REFBUF0_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_REFBUF0_CFG;
-    volatile uint32_t EFUSE_OVERRIDE_REFBUF1_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_REFBUF1_CFG;
+    volatile uint8_t  Resv_2168[8];
     volatile uint32_t EFUSE_OVERRIDE_PMU_CFG;
     volatile uint32_t EFUSE_OVERRIDE_PMU_SPARE_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_LDO_TRIM;
@@ -195,17 +184,25 @@ typedef struct {
     volatile uint32_t EFUSE_OVERRIDE_TSENSE_TRIM_CTRL;
     volatile uint32_t EFUSE_OVERRIDE_TSENSE_TRIM;
     volatile uint32_t EFUSE_OVERRIDE_PLL_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_REFBUF2_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_REFBUF2_CFG;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR0_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR1_TRIM;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR_CFG_CTRL;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR_CFG0;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR_CFG1;
-    volatile uint32_t EFUSE_OVERRIDE_ADCR_CFG2;
-    volatile uint8_t  Resv_3072[796];
+    volatile uint8_t  Resv_2276[32];
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_CFG0;
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_CFG1;
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_CFG_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL;
+    volatile uint32_t EFUSE_OVERRIDE_ADC_SD_REF_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA5_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA5_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA6_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA6_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA7_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA7_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA8_TRIM_CTRL;
+    volatile uint32_t EFUSE_OVERRIDE_CSSA8_TRIM;
+    volatile uint32_t EFUSE_OVERRIDE_RCOSC_CFG;
+    volatile uint8_t  Resv_3072[736];
     volatile uint32_t ADC_REFBUF0_CTRL;
-    volatile uint32_t ADC_REFBUF1_CTRL;
+    volatile uint8_t  Resv_3080[4];
     volatile uint32_t ADC_REF_COMP_CTRL;
     volatile uint32_t ADC_REF_GOOD_STATUS;
     volatile uint32_t VMON_CTRL;
@@ -222,22 +219,18 @@ typedef struct {
     volatile uint32_t ADC0_OSD_CHEN;
     volatile uint32_t ADC1_OSD_CHEN;
     volatile uint32_t ADC2_OSD_CHEN;
-    volatile uint32_t ADC3_OSD_CHEN;
-    volatile uint32_t ADC4_OSD_CHEN;
+    volatile uint8_t  Resv_3160[8];
     volatile uint32_t ADC0_OSD_CTRL;
     volatile uint32_t ADC1_OSD_CTRL;
     volatile uint32_t ADC2_OSD_CTRL;
-    volatile uint32_t ADC3_OSD_CTRL;
-    volatile uint32_t ADC4_OSD_CTRL;
-    volatile uint8_t  Resv_3200[20];
+    volatile uint8_t  Resv_3200[28];
     volatile uint32_t ADC_LOOPBACK_CTRL;
     volatile uint32_t CMPSSA_LOOPBACK_CTRL;
-    volatile uint32_t CMPSSB_LOOPBACK_CTRL;
-    volatile uint32_t ADCR01_OSD_CHEN;
-    volatile uint32_t ADCR01_OSD_CTRL;
-    volatile uint32_t ADC_REFBUF2_CTRL;
-    volatile uint32_t TB_CTRL_ADC5_ADC6_RESERVED;
-    volatile uint8_t  Resv_3328[100];
+    volatile uint8_t  Resv_3228[20];
+    volatile uint32_t ADC_SD_CTRL;
+    volatile uint32_t ADC_SD_CAL_CTRL;
+    volatile uint32_t ADC_SD_CLKBUF_CFG;
+    volatile uint8_t  Resv_3328[88];
     volatile uint32_t TSENSE_CFG;
     volatile uint32_t TSENSE_STATUS;
     volatile uint32_t TSENSE_STATUS_RAW;
@@ -288,23 +281,32 @@ typedef struct {
     volatile uint32_t DFT_CTRL_3;
     volatile uint32_t DFT_CTRL_4;
     volatile uint32_t DFT_CTRL_5;
-    volatile uint8_t  Resv_3844[172];
+    volatile uint8_t  Resv_3680[8];
+    volatile uint32_t DFT_ADC0_CTRL;
+    volatile uint32_t DFT_ADC1_CTRL;
+    volatile uint32_t DFT_ADC2_CTRL;
+    volatile uint32_t DFT_ADC_SD_CLKBUF_CTRL;
+    volatile uint32_t DFT_ADC_SD_REF_SEL;
+    volatile uint32_t DFT_ADC_SD;
+    volatile uint8_t  Resv_3844[140];
     volatile uint32_t PROBE_BUS_SEL0;
     volatile uint32_t PROBE_BUS_SEL1;
-    volatile uint8_t  Resv_4048[196];
+    volatile uint8_t  Resv_3904[52];
     volatile uint32_t HW_SPARE_RW0;
     volatile uint32_t HW_SPARE_RW1;
     volatile uint32_t HW_SPARE_RW2;
     volatile uint32_t HW_SPARE_RW3;
+    volatile uint8_t  Resv_3968[48];
     volatile uint32_t HW_SPARE_RO0;
     volatile uint32_t HW_SPARE_RO1;
     volatile uint32_t HW_SPARE_RO2;
     volatile uint32_t HW_SPARE_RO3;
+    volatile uint8_t  Resv_4032[48];
     volatile uint32_t HW_SPARE_WPH;
     volatile uint32_t HW_SPARE_REC;
     volatile uint32_t HW_SPARE_REC0;
     volatile uint32_t HW_SPARE_REC1;
-    volatile uint8_t  Resv_4104[8];
+    volatile uint8_t  Resv_4104[56];
     volatile uint32_t LOCK0_KICK0;
     volatile uint32_t LOCK0_KICK1;
     volatile uint32_t INTR_RAW_STATUS;
@@ -389,16 +391,6 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE1_ROW_53                                             (0x000004CCU)
 #define CSL_TOP_CTRL_EFUSE1_ROW_54                                             (0x000004D0U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_55                                             (0x000004D4U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_56                                             (0x000004D8U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_57                                             (0x000004DCU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_58                                             (0x000004E0U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_59                                             (0x000004E4U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_60                                             (0x000004E8U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_61                                             (0x000004ECU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_62                                             (0x000004F0U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_63                                             (0x000004F4U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_5                                              (0x000004F8U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6                                              (0x000004FCU)
 #define CSL_TOP_CTRL_MAC_ID0                                                   (0x00000500U)
 #define CSL_TOP_CTRL_MAC_ID1                                                   (0x00000504U)
 #define CSL_TOP_CTRL_TRIM_TEMP_M40C                                            (0x00000510U)
@@ -419,31 +411,26 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM                                  (0x00000808U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM                                  (0x0000080CU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM                                  (0x00000810U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM                                  (0x00000814U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM                                  (0x00000818U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG_CTRL                               (0x0000081CU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG0                                   (0x00000820U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1                                   (0x00000824U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2                                   (0x00000828U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL                            (0x0000082CU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM                                 (0x00000830U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL                            (0x00000834U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM                                 (0x00000838U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL                            (0x0000083CU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM                                 (0x00000840U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL                            (0x00000844U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM                                 (0x00000848U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL                            (0x0000084CU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM                                 (0x00000850U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL                            (0x0000082CU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM                                 (0x00000830U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL                            (0x00000834U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM                                 (0x00000838U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL                            (0x0000083CU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM                                 (0x00000840U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL                            (0x00000844U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM                                 (0x00000848U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL                            (0x0000084CU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM                                 (0x00000850U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL                               (0x00000854U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0                                   (0x00000858U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1                                   (0x0000085CU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_DAC_TRIM                                   (0x00000860U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_DAC_CFG                                    (0x00000864U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF0_TRIM                               (0x00000868U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF0_CFG                                (0x0000086CU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM                               (0x00000870U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG                                (0x00000874U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PMU_CFG                                    (0x00000878U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PMU_SPARE_TRIM                             (0x0000087CU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_LDO_TRIM                                   (0x00000880U)
@@ -463,16 +450,22 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_TSENSE_TRIM_CTRL                           (0x000008B8U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_TSENSE_TRIM                                (0x000008BCU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM                                   (0x000008C0U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM                               (0x000008C4U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG                                (0x000008C8U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM                                 (0x000008CCU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM                                 (0x000008D0U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL                              (0x000008D4U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0                                  (0x000008D8U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1                                  (0x000008DCU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2                                  (0x000008E0U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM                                (0x000008E4U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0                                (0x000008E8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1                                (0x000008ECU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL                            (0x000008F0U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL                        (0x000008F4U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM                            (0x000008F8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL                            (0x000008FCU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM                                 (0x00000900U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL                            (0x00000904U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM                                 (0x00000908U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL                            (0x0000090CU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM                                 (0x00000910U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL                            (0x00000914U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM                                 (0x00000918U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG                                  (0x0000091CU)
 #define CSL_TOP_CTRL_ADC_REFBUF0_CTRL                                          (0x00000C00U)
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL                                          (0x00000C04U)
 #define CSL_TOP_CTRL_ADC_REF_COMP_CTRL                                         (0x00000C08U)
 #define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS                                       (0x00000C0CU)
 #define CSL_TOP_CTRL_VMON_CTRL                                                 (0x00000C10U)
@@ -486,20 +479,14 @@ typedef struct {
 #define CSL_TOP_CTRL_ADC0_OSD_CHEN                                             (0x00000C44U)
 #define CSL_TOP_CTRL_ADC1_OSD_CHEN                                             (0x00000C48U)
 #define CSL_TOP_CTRL_ADC2_OSD_CHEN                                             (0x00000C4CU)
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN                                             (0x00000C50U)
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN                                             (0x00000C54U)
 #define CSL_TOP_CTRL_ADC0_OSD_CTRL                                             (0x00000C58U)
 #define CSL_TOP_CTRL_ADC1_OSD_CTRL                                             (0x00000C5CU)
 #define CSL_TOP_CTRL_ADC2_OSD_CTRL                                             (0x00000C60U)
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL                                             (0x00000C64U)
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL                                             (0x00000C68U)
 #define CSL_TOP_CTRL_ADC_LOOPBACK_CTRL                                         (0x00000C80U)
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL                                      (0x00000C84U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL                                      (0x00000C88U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN                                           (0x00000C8CU)
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL                                           (0x00000C90U)
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL                                          (0x00000C94U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED                                (0x00000C98U)
+#define CSL_TOP_CTRL_ADC_SD_CTRL                                               (0x00000C9CU)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL                                           (0x00000CA0U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG                                         (0x00000CA4U)
 #define CSL_TOP_CTRL_TSENSE_CFG                                                (0x00000D00U)
 #define CSL_TOP_CTRL_TSENSE_STATUS                                             (0x00000D04U)
 #define CSL_TOP_CTRL_TSENSE_STATUS_RAW                                         (0x00000D08U)
@@ -545,20 +532,26 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_CTRL_3                                                (0x00000E4CU)
 #define CSL_TOP_CTRL_DFT_CTRL_4                                                (0x00000E50U)
 #define CSL_TOP_CTRL_DFT_CTRL_5                                                (0x00000E54U)
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL                                             (0x00000E60U)
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL                                             (0x00000E64U)
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL                                             (0x00000E68U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL                                    (0x00000E6CU)
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL                                        (0x00000E70U)
+#define CSL_TOP_CTRL_DFT_ADC_SD                                                (0x00000E74U)
 #define CSL_TOP_CTRL_PROBE_BUS_SEL0                                            (0x00000F04U)
 #define CSL_TOP_CTRL_PROBE_BUS_SEL1                                            (0x00000F08U)
-#define CSL_TOP_CTRL_HW_SPARE_RW0                                              (0x00000FD0U)
-#define CSL_TOP_CTRL_HW_SPARE_RW1                                              (0x00000FD4U)
-#define CSL_TOP_CTRL_HW_SPARE_RW2                                              (0x00000FD8U)
-#define CSL_TOP_CTRL_HW_SPARE_RW3                                              (0x00000FDCU)
-#define CSL_TOP_CTRL_HW_SPARE_RO0                                              (0x00000FE0U)
-#define CSL_TOP_CTRL_HW_SPARE_RO1                                              (0x00000FE4U)
-#define CSL_TOP_CTRL_HW_SPARE_RO2                                              (0x00000FE8U)
-#define CSL_TOP_CTRL_HW_SPARE_RO3                                              (0x00000FECU)
-#define CSL_TOP_CTRL_HW_SPARE_WPH                                              (0x00000FF0U)
-#define CSL_TOP_CTRL_HW_SPARE_REC                                              (0x00000FF4U)
-#define CSL_TOP_CTRL_HW_SPARE_REC0                                             (0x00000FF8U)
-#define CSL_TOP_CTRL_HW_SPARE_REC1                                             (0x00000FFCU)
+#define CSL_TOP_CTRL_HW_SPARE_RW0                                              (0x00000F40U)
+#define CSL_TOP_CTRL_HW_SPARE_RW1                                              (0x00000F44U)
+#define CSL_TOP_CTRL_HW_SPARE_RW2                                              (0x00000F48U)
+#define CSL_TOP_CTRL_HW_SPARE_RW3                                              (0x00000F4CU)
+#define CSL_TOP_CTRL_HW_SPARE_RO0                                              (0x00000F80U)
+#define CSL_TOP_CTRL_HW_SPARE_RO1                                              (0x00000F84U)
+#define CSL_TOP_CTRL_HW_SPARE_RO2                                              (0x00000F88U)
+#define CSL_TOP_CTRL_HW_SPARE_RO3                                              (0x00000F8CU)
+#define CSL_TOP_CTRL_HW_SPARE_WPH                                              (0x00000FC0U)
+#define CSL_TOP_CTRL_HW_SPARE_REC                                              (0x00000FC4U)
+#define CSL_TOP_CTRL_HW_SPARE_REC0                                             (0x00000FC8U)
+#define CSL_TOP_CTRL_HW_SPARE_REC1                                             (0x00000FCCU)
 #define CSL_TOP_CTRL_LOCK0_KICK0                                               (0x00001008U)
 #define CSL_TOP_CTRL_LOCK0_KICK1                                               (0x0000100CU)
 #define CSL_TOP_CTRL_INTR_RAW_STATUS                                           (0x00001010U)
@@ -811,50 +804,30 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS0_DUAL_CORE_DISABLE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS0_DUAL_CORE_DISABLE_MAX   (0x00000001U)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_FORCE_DUAL_CORE_MASK    (0x00000040U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_FORCE_DUAL_CORE_SHIFT   (0x00000006U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_FORCE_DUAL_CORE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_FORCE_DUAL_CORE_MAX     (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DUAL_CORE_DISABLE_MASK  (0x00000080U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DUAL_CORE_DISABLE_SHIFT (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DUAL_CORE_DISABLE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DUAL_CORE_DISABLE_MAX   (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DISABLE_MASK            (0x00000100U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DISABLE_SHIFT           (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DISABLE_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS1_DISABLE_MAX             (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MASK                (0x00000200U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_SHIFT               (0x00000009U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MASK                (0x00000040U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_SHIFT               (0x00000006U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_RESETVAL            (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MAX                 (0x00000001U)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_TWOX_CTRL_PERIP_DISABLE_MASK  (0x00000400U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_TWOX_CTRL_PERIP_DISABLE_SHIFT (0x0000000AU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_TWOX_CTRL_PERIP_DISABLE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_TWOX_CTRL_PERIP_DISABLE_MAX   (0x00000001U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM0_HW_DIS_MASK            (0x00007F80U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM0_HW_DIS_SHIFT           (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM0_HW_DIS_RESETVAL        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM0_HW_DIS_MAX             (0x000000FFU)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_DIS_MASK                (0x00000800U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_DIS_SHIFT               (0x0000000BU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_DIS_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_DIS_MAX                 (0x00000001U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM1_HW_DIS_MASK            (0x007F8000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM1_HW_DIS_SHIFT           (0x0000000FU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM1_HW_DIS_RESETVAL        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM1_HW_DIS_MAX             (0x000000FFU)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_HW_DIS_MASK             (0x000FF000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_HW_DIS_SHIFT            (0x0000000CU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_HW_DIS_RESETVAL         (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_ICSSM_HW_DIS_MAX              (0x000000FFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_MASK                (0x00F00000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_SHIFT               (0x00000014U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_MASK                (0x01800000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_SHIFT               (0x00000017U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_MAX                 (0x0000000FU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CANFD_DIS_MAX                 (0x00000003U)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_EPWM_FEATURE_DISABLE_MASK     (0x01000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_EPWM_FEATURE_DISABLE_SHIFT    (0x00000018U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_EPWM_FEATURE_DISABLE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_EPWM_FEATURE_DISABLE_MAX      (0x00000001U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CONTROLSS_FEATURE_DISABLE_MASK (0x02000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CONTROLSS_FEATURE_DISABLE_SHIFT (0x00000019U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CONTROLSS_FEATURE_DISABLE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_CONTROLSS_FEATURE_DISABLE_MAX (0x00000001U)
 
 #define CSL_TOP_CTRL_EFUSE1_ROW_12_RESETVAL                                    (0x00000000U)
 
@@ -875,35 +848,10 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_AES_DISABLE_RESETVAL          (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_AES_DISABLE_MAX               (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_CANFD_DIS_MASK                (0x000003C0U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_CANFD_DIS_SHIFT               (0x00000006U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_CANFD_DIS_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_CANFD_DIS_MAX                 (0x0000000FU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_IP_DISABLE_MASK      (0x00000400U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_IP_DISABLE_SHIFT     (0x0000000AU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_IP_DISABLE_RESETVAL  (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_IP_DISABLE_MAX       (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_ADC_DISABLE_MASK     (0x00000800U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_ADC_DISABLE_SHIFT    (0x0000000BU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_ADC_DISABLE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_RESOLVER_ADC_DISABLE_MAX      (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_MASK      (0x00001000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_SHIFT     (0x0000000CU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_MASK      (0x00000040U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_SHIFT     (0x00000006U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_RESETVAL  (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS0_CORE1_DISABLE_MAX       (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS1_CORE1_DISABLE_MASK      (0x00002000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS1_CORE1_DISABLE_SHIFT     (0x0000000DU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS1_CORE1_DISABLE_RESETVAL  (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_R5SS1_CORE1_DISABLE_MAX       (0x00000001U)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_FLASH_SIP_PACKAGE_MASK        (0x00004000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_FLASH_SIP_PACKAGE_SHIFT       (0x0000000EU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_FLASH_SIP_PACKAGE_RESETVAL    (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_13_EFUSE1_ROW_13_FLASH_SIP_PACKAGE_MAX         (0x00000001U)
 
 #define CSL_TOP_CTRL_EFUSE1_ROW_13_RESETVAL                                    (0x00000000U)
 
@@ -995,20 +943,30 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_RESETVAL      (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_MAX           (0x0000001FU)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_MASK           (0x000003E0U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_SHIFT          (0x00000005U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_RESETVAL       (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_MAX            (0x0000001FU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_MASK          (0x000003E0U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_SHIFT         (0x00000005U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_RESETVAL      (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_MAX           (0x0000001FU)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_MASK    (0x00000400U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_SHIFT   (0x0000000AU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_MASK          (0x00007C00U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_SHIFT         (0x0000000AU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_RESETVAL      (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_MAX           (0x0000001FU)
+
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_MASK    (0x00008000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_SHIFT   (0x0000000FU)
 #define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_CORE_ADPLL_TRIM_VALID_MAX     (0x00000001U)
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_VALID_MASK     (0x00000800U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_VALID_SHIFT    (0x0000000BU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_VALID_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER_ADPLL_TRIM_VALID_MAX      (0x00000001U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_VALID_MASK    (0x00010000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_VALID_SHIFT   (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_VALID_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER0_ADPLL_TRIM_VALID_MAX     (0x00000001U)
+
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_VALID_MASK    (0x00020000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_VALID_SHIFT   (0x00000011U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_VALID_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_23_EFUSE1_ROW_23_PER1_ADPLL_TRIM_VALID_MAX     (0x00000001U)
 
 #define CSL_TOP_CTRL_EFUSE1_ROW_23_RESETVAL                                    (0x00000000U)
 
@@ -1293,107 +1251,17 @@ typedef struct {
 
 /* EFUSE1_ROW_55 */
 
-#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_EFUSE1_ROW_55_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_EFUSE1_ROW_55_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_EFUSE1_ROW_55_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_EFUSE1_ROW_55_MAX             (0x03FFFFFFU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_BOOTROM_CFG_MASK              (0x000000FFU)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_BOOTROM_CFG_SHIFT             (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_BOOTROM_CFG_RESETVAL          (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_BOOTROM_CFG_MAX               (0x000000FFU)
+
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_SPARE_MASK                    (0x03FFFF00U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_SPARE_SHIFT                   (0x00000008U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_SPARE_RESETVAL                (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE1_ROW_55_EFUSE1_ROW_55_SPARE_MAX                     (0x0003FFFFU)
 
 #define CSL_TOP_CTRL_EFUSE1_ROW_55_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_56 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_56_EFUSE1_ROW_56_EFUSE1_ROW_56_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_56_EFUSE1_ROW_56_EFUSE1_ROW_56_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_56_EFUSE1_ROW_56_EFUSE1_ROW_56_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_56_EFUSE1_ROW_56_EFUSE1_ROW_56_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_56_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_57 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_57_EFUSE1_ROW_57_EFUSE1_ROW_57_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_57_EFUSE1_ROW_57_EFUSE1_ROW_57_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_57_EFUSE1_ROW_57_EFUSE1_ROW_57_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_57_EFUSE1_ROW_57_EFUSE1_ROW_57_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_57_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_58 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_58_EFUSE1_ROW_58_EFUSE1_ROW_58_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_58_EFUSE1_ROW_58_EFUSE1_ROW_58_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_58_EFUSE1_ROW_58_EFUSE1_ROW_58_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_58_EFUSE1_ROW_58_EFUSE1_ROW_58_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_58_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_59 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_59_EFUSE1_ROW_59_EFUSE1_ROW_59_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_59_EFUSE1_ROW_59_EFUSE1_ROW_59_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_59_EFUSE1_ROW_59_EFUSE1_ROW_59_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_59_EFUSE1_ROW_59_EFUSE1_ROW_59_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_59_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_60 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_60_EFUSE1_ROW_60_EFUSE1_ROW_60_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_60_EFUSE1_ROW_60_EFUSE1_ROW_60_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_60_EFUSE1_ROW_60_EFUSE1_ROW_60_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_60_EFUSE1_ROW_60_EFUSE1_ROW_60_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_60_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_61 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_61_EFUSE1_ROW_61_EFUSE1_ROW_61_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_61_EFUSE1_ROW_61_EFUSE1_ROW_61_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_61_EFUSE1_ROW_61_EFUSE1_ROW_61_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_61_EFUSE1_ROW_61_EFUSE1_ROW_61_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_61_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_62 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_62_EFUSE1_ROW_62_EFUSE1_ROW_62_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_62_EFUSE1_ROW_62_EFUSE1_ROW_62_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_62_EFUSE1_ROW_62_EFUSE1_ROW_62_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_62_EFUSE1_ROW_62_EFUSE1_ROW_62_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_62_RESETVAL                                    (0x00000000U)
-
-/* EFUSE1_ROW_63 */
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_63_EFUSE1_ROW_63_EFUSE1_ROW_63_MASK            (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE1_ROW_63_EFUSE1_ROW_63_EFUSE1_ROW_63_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_63_EFUSE1_ROW_63_EFUSE1_ROW_63_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE1_ROW_63_EFUSE1_ROW_63_EFUSE1_ROW_63_MAX             (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE1_ROW_63_RESETVAL                                    (0x00000000U)
-
-/* EFUSE2_ROW_5 */
-
-#define CSL_TOP_CTRL_EFUSE2_ROW_5_EFUSE2_ROW_5_EFUSE2_ROW_5_MASK               (0x03FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE2_ROW_5_EFUSE2_ROW_5_EFUSE2_ROW_5_SHIFT              (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_5_EFUSE2_ROW_5_EFUSE2_ROW_5_RESETVAL           (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_5_EFUSE2_ROW_5_EFUSE2_ROW_5_MAX                (0x03FFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE2_ROW_5_RESETVAL                                     (0x00000000U)
-
-/* EFUSE2_ROW_6 */
-
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK                (0x000000FFU)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT               (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MAX                 (0x000000FFU)
-
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_SPARE_MASK                      (0x03FFFF00U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_SPARE_SHIFT                     (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_SPARE_RESETVAL                  (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_SPARE_MAX                       (0x0003FFFFU)
-
-#define CSL_TOP_CTRL_EFUSE2_ROW_6_RESETVAL                                     (0x00000000U)
 
 /* MAC_ID0 */
 
@@ -1595,10 +1463,10 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_OVERRIDE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_MASK (0x7FFF0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_SHIFT (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_MASK (0x00FFFFF8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_SHIFT (0x00000003U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_MAX (0x00007FFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_EFUSE_OVERRIDE_ADC0_TRIM_ADC0_TRIM_MAX (0x001FFFFFU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC0_TRIM_RESETVAL                         (0x00000000U)
 
@@ -1609,10 +1477,10 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_OVERRIDE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_MASK (0x7FFF0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_SHIFT (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_MASK (0x00FFFFF8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_SHIFT (0x00000003U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_MAX (0x00007FFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_EFUSE_OVERRIDE_ADC1_TRIM_ADC1_TRIM_MAX (0x001FFFFFU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC1_TRIM_RESETVAL                         (0x00000000U)
 
@@ -1623,40 +1491,12 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_OVERRIDE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_MASK (0x7FFF0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_SHIFT (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_MASK (0x00FFFFF8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_SHIFT (0x00000003U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_MAX (0x00007FFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_EFUSE_OVERRIDE_ADC2_TRIM_ADC2_TRIM_MAX (0x001FFFFFU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC2_TRIM_RESETVAL                         (0x00000000U)
-
-/* EFUSE_OVERRIDE_ADC3_TRIM */
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_OVERRIDE_MAX (0x00000007U)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_ADC3_TRIM_MASK (0x7FFF0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_ADC3_TRIM_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_ADC3_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_EFUSE_OVERRIDE_ADC3_TRIM_ADC3_TRIM_MAX (0x00007FFFU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC3_TRIM_RESETVAL                         (0x00000000U)
-
-/* EFUSE_OVERRIDE_ADC4_TRIM */
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_OVERRIDE_MAX (0x00000007U)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_ADC4_TRIM_MASK (0x7FFF0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_ADC4_TRIM_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_ADC4_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_EFUSE_OVERRIDE_ADC4_TRIM_ADC4_TRIM_MAX (0x00007FFFU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC4_TRIM_RESETVAL                         (0x00000000U)
 
 /* EFUSE_OVERRIDE_ADC_CFG_CTRL */
 
@@ -1685,136 +1525,132 @@ typedef struct {
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_EFUSE_OVERRIDE_ADC_CFG1_ADC_CFG_63_32_MASK (0xFFFFFFFFU)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_EFUSE_OVERRIDE_ADC_CFG1_ADC_CFG_63_32_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_EFUSE_OVERRIDE_ADC_CFG1_ADC_CFG_63_32_RESETVAL (0xA21B2908U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_EFUSE_OVERRIDE_ADC_CFG1_ADC_CFG_63_32_RESETVAL (0x21B32908U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_EFUSE_OVERRIDE_ADC_CFG1_ADC_CFG_63_32_MAX (0xFFFFFFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_RESETVAL                          (0xA21B2908U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG1_RESETVAL                          (0x21B32908U)
 
 /* EFUSE_OVERRIDE_ADC_CFG2 */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_87_64_MASK (0x00FFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_87_64_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_87_64_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_87_64_MAX (0x00FFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_85_64_MASK (0x003FFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_85_64_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_85_64_RESETVAL (0x0000000AU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_EFUSE_OVERRIDE_ADC_CFG2_ADC_CFG_85_64_MAX (0x003FFFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_RESETVAL                          (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_CFG2_RESETVAL                          (0x0000000AU)
 
-/* EFUSE_OVERRIDE_CSS01_TRIM_CTRL */
+/* EFUSE_OVERRIDE_CSSA0_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS01_TRIM */
+/* EFUSE_OVERRIDE_CSSA0_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_EFUSE_OVERRIDE_CSS01_TRIM_CSS01_TRIM_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_EFUSE_OVERRIDE_CSS01_TRIM_CSS01_TRIM_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_EFUSE_OVERRIDE_CSS01_TRIM_CSS01_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_EFUSE_OVERRIDE_CSS01_TRIM_CSS01_TRIM_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_EFUSE_OVERRIDE_CSSA0_TRIM_CSSA0_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_EFUSE_OVERRIDE_CSSA0_TRIM_CSSA0_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_EFUSE_OVERRIDE_CSSA0_TRIM_CSSA0_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_EFUSE_OVERRIDE_CSSA0_TRIM_CSSA0_TRIM_MAX (0x0000FFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS01_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA0_TRIM_RESETVAL                        (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS23_TRIM_CTRL */
+/* EFUSE_OVERRIDE_CSSA1_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS23_TRIM */
+/* EFUSE_OVERRIDE_CSSA1_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_EFUSE_OVERRIDE_CSS23_TRIM_CSS23_TRIM_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_EFUSE_OVERRIDE_CSS23_TRIM_CSS23_TRIM_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_EFUSE_OVERRIDE_CSS23_TRIM_CSS23_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_EFUSE_OVERRIDE_CSS23_TRIM_CSS23_TRIM_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_EFUSE_OVERRIDE_CSSA1_TRIM_CSSA1_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_EFUSE_OVERRIDE_CSSA1_TRIM_CSSA1_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_EFUSE_OVERRIDE_CSSA1_TRIM_CSSA1_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_EFUSE_OVERRIDE_CSSA1_TRIM_CSSA1_TRIM_MAX (0x0000FFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS23_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA1_TRIM_RESETVAL                        (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS45_TRIM_CTRL */
+/* EFUSE_OVERRIDE_CSSA2_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS45_TRIM */
+/* EFUSE_OVERRIDE_CSSA2_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_EFUSE_OVERRIDE_CSS45_TRIM_CSS45_TRIM_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_EFUSE_OVERRIDE_CSS45_TRIM_CSS45_TRIM_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_EFUSE_OVERRIDE_CSS45_TRIM_CSS45_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_EFUSE_OVERRIDE_CSS45_TRIM_CSS45_TRIM_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_EFUSE_OVERRIDE_CSSA2_TRIM_CSSA2_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_EFUSE_OVERRIDE_CSSA2_TRIM_CSSA2_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_EFUSE_OVERRIDE_CSSA2_TRIM_CSSA2_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_EFUSE_OVERRIDE_CSSA2_TRIM_CSSA2_TRIM_MAX (0x0000FFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS45_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA2_TRIM_RESETVAL                        (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS67_TRIM_CTRL */
+/* EFUSE_OVERRIDE_CSSA3_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS67_TRIM */
+/* EFUSE_OVERRIDE_CSSA3_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_EFUSE_OVERRIDE_CSS67_TRIM_CSS67_TRIM_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_EFUSE_OVERRIDE_CSS67_TRIM_CSS67_TRIM_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_EFUSE_OVERRIDE_CSS67_TRIM_CSS67_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_EFUSE_OVERRIDE_CSS67_TRIM_CSS67_TRIM_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_EFUSE_OVERRIDE_CSSA3_TRIM_CSSA3_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_EFUSE_OVERRIDE_CSSA3_TRIM_CSSA3_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_EFUSE_OVERRIDE_CSSA3_TRIM_CSSA3_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_EFUSE_OVERRIDE_CSSA3_TRIM_CSSA3_TRIM_MAX (0x0000FFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS67_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA3_TRIM_RESETVAL                        (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS89_TRIM_CTRL */
+/* EFUSE_OVERRIDE_CSSA4_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-/* EFUSE_OVERRIDE_CSS89_TRIM */
+/* EFUSE_OVERRIDE_CSSA4_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_EFUSE_OVERRIDE_CSS89_TRIM_CSS89_TRIM_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_EFUSE_OVERRIDE_CSS89_TRIM_CSS89_TRIM_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_EFUSE_OVERRIDE_CSS89_TRIM_CSS89_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_EFUSE_OVERRIDE_CSS89_TRIM_CSS89_TRIM_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_EFUSE_OVERRIDE_CSSA4_TRIM_CSSA4_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_EFUSE_OVERRIDE_CSSA4_TRIM_CSSA4_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_EFUSE_OVERRIDE_CSSA4_TRIM_CSSA4_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_EFUSE_OVERRIDE_CSSA4_TRIM_CSSA4_TRIM_MAX (0x0000FFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS89_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA4_TRIM_RESETVAL                        (0x00000000U)
 
 /* EFUSE_OVERRIDE_CSS_CFG_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_CFG_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_CFG_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_CFG_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_CFG_OVERRIDE_MAX (0x00000007U)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_DFT_OVERRIDE_MASK (0x00000038U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_DFT_OVERRIDE_SHIFT (0x00000003U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_DFT_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_DFT_OVERRIDE_MAX (0x00000007U)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG_CTRL_RESETVAL                      (0x00000000U)
 
 /* EFUSE_OVERRIDE_CSS_CFG0 */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_31_0_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_31_0_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_31_0_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_31_0_MAX (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_16_0_MASK (0x0001FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_16_0_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_16_0_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_EFUSE_OVERRIDE_CSS_CFG0_CSS_CFG_16_0_MAX (0x0001FFFFU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG0_RESETVAL                          (0x00000000U)
-
-/* EFUSE_OVERRIDE_CSS_CFG1 */
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1_EFUSE_OVERRIDE_CSS_CFG1_CSS_CFG_0_63_32_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1_EFUSE_OVERRIDE_CSS_CFG1_CSS_CFG_0_63_32_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1_EFUSE_OVERRIDE_CSS_CFG1_CSS_CFG_0_63_32_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1_EFUSE_OVERRIDE_CSS_CFG1_CSS_CFG_0_63_32_MAX (0xFFFFFFFFU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSS_CFG1_RESETVAL                          (0x00000000U)
 
 /* EFUSE_OVERRIDE_DAC_TRIM */
 
@@ -1911,54 +1747,6 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF0_CFG_EFUSE_OVERRIDE_REFBUF0_CFG_ROK0B_VSEL_MAX (0x0000000FU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF0_CFG_RESETVAL                       (0x0DDD2A00U)
-
-/* EFUSE_OVERRIDE_REFBUF1_TRIM */
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_OVERRIDE_MAX (0x00000007U)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_REF_TRIM_MASK (0x0000FF00U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_REF_TRIM_SHIFT (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_REF_TRIM_RESETVAL (0x0000001FU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_REF_TRIM_MAX (0x000000FFU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_OV_TRIM_MASK (0x000F0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_OV_TRIM_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_OV_TRIM_RESETVAL (0x0000000FU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_OV_TRIM_MAX (0x0000000FU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_UV_TRIM_MASK (0x00F00000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_UV_TRIM_SHIFT (0x00000014U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_UV_TRIM_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_EFUSE_OVERRIDE_REFBUF1_TRIM_ROK1_UV_TRIM_MAX (0x0000000FU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_TRIM_RESETVAL                      (0x001F1F00U)
-
-/* EFUSE_OVERRIDE_REFBUF1_CFG */
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_OVERRIDE_MAX (0x00000007U)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_REFBUF1_CFG_MASK (0x00007F00U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_REFBUF1_CFG_SHIFT (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_REFBUF1_CFG_RESETVAL (0x0000002AU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_REFBUF1_CFG_MAX (0x0000007FU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ADCREF_VSEL_MASK (0x000F0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ADCREF_VSEL_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ADCREF_VSEL_RESETVAL (0x0000000DU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ADCREF_VSEL_MAX (0x0000000FU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ROK1_VSEL_MASK (0x00F00000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ROK1_VSEL_SHIFT (0x00000014U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ROK1_VSEL_RESETVAL (0x0000000DU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_EFUSE_OVERRIDE_REFBUF1_CFG_ROK1_VSEL_MAX (0x0000000FU)
-
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF1_CFG_RESETVAL                       (0x00DD2A00U)
 
 /* EFUSE_OVERRIDE_PMU_CFG */
 
@@ -2105,10 +1893,10 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_OVERRIDE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_MASK (0x007F0000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_MASK (0x00FF0000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_SHIFT (0x00000010U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_MAX (0x0000007FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_EFUSE_OVERRIDE_RCOSC_TRIM_FREQ_TRIM_MAX (0x000000FFU)
 
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_TRIM_RESETVAL                        (0x00000000U)
 
@@ -2269,144 +2057,187 @@ typedef struct {
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_MASK (0x00001F00U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_SHIFT (0x00000008U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_MASK (0x000000F8U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_SHIFT (0x00000003U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_RESETVAL (0x00000009U)
 #define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_CORE_NWELLTRIM_OVERRIDE_VAL_MAX (0x0000001FU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_MASK (0x00070000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_MASK (0x00000700U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_SHIFT (0x00000008U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_VAL_MASK (0x1F000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_VAL_SHIFT (0x00000018U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_VAL_RESETVAL (0x00000009U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER_NWELLTRIM_OVERRIDE_VAL_MAX (0x0000001FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_VAL_MASK (0x0000F800U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_VAL_SHIFT (0x0000000BU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_VAL_RESETVAL (0x00000009U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER0_NWELLTRIM_OVERRIDE_VAL_MAX (0x0000001FU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_RESETVAL                          (0x09000900U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_MASK (0x00070000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_SHIFT (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_MAX (0x00000007U)
 
-/* EFUSE_OVERRIDE_REFBUF2_TRIM */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_VAL_MASK (0x00F80000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_VAL_SHIFT (0x00000013U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_VAL_RESETVAL (0x00000009U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_EFUSE_OVERRIDE_PLL_TRIM_PER1_NWELLTRIM_OVERRIDE_VAL_MAX (0x0000001FU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_PLL_TRIM_RESETVAL                          (0x00484848U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_REF_TRIM_MASK (0x0000FF00U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_REF_TRIM_SHIFT (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_REF_TRIM_RESETVAL (0x0000001FU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_REF_TRIM_MAX (0x000000FFU)
+/* EFUSE_OVERRIDE_ADC_SD_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_OV_TRIM_MASK (0x000F0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_OV_TRIM_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_OV_TRIM_RESETVAL (0x0000000FU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_OV_TRIM_MAX (0x0000000FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_UV_TRIM_MASK (0x00F00000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_UV_TRIM_SHIFT (0x00000014U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_UV_TRIM_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_EFUSE_OVERRIDE_REFBUF2_TRIM_ROK2_UV_TRIM_MAX (0x0000000FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_ADC_SD_TRIM_MASK (0x00000FF0U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_ADC_SD_TRIM_SHIFT (0x00000004U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_ADC_SD_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_EFUSE_OVERRIDE_ADC_SD_TRIM_ADC_SD_TRIM_MAX (0x000000FFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_TRIM_RESETVAL                      (0x001F1F00U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_TRIM_RESETVAL                       (0x00000000U)
 
-/* EFUSE_OVERRIDE_REFBUF2_CFG */
+/* EFUSE_OVERRIDE_ADC_SD_CFG0 */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0_EFUSE_OVERRIDE_ADC_SD_CFG0_ADC_SD_CFG_MASK (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0_EFUSE_OVERRIDE_ADC_SD_CFG0_ADC_SD_CFG_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0_EFUSE_OVERRIDE_ADC_SD_CFG0_ADC_SD_CFG_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0_EFUSE_OVERRIDE_ADC_SD_CFG0_ADC_SD_CFG_MAX (0xFFFFFFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_REFBUF2_CFG_MASK (0x00007F00U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_REFBUF2_CFG_SHIFT (0x00000008U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_REFBUF2_CFG_RESETVAL (0x0000002AU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_REFBUF2_CFG_MAX (0x0000007FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG0_RESETVAL                       (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ADCREF_VSEL_MASK (0x000F0000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ADCREF_VSEL_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ADCREF_VSEL_RESETVAL (0x0000000DU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ADCREF_VSEL_MAX (0x0000000FU)
+/* EFUSE_OVERRIDE_ADC_SD_CFG1 */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ROK2_VSEL_MASK (0x00F00000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ROK2_VSEL_SHIFT (0x00000014U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ROK2_VSEL_RESETVAL (0x0000000DU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_ROK2_VSEL_MAX (0x0000000FU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1_EFUSE_OVERRIDE_ADC_SD_CFG1_ADC_SD_CFG_MASK (0xFFFFFFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1_EFUSE_OVERRIDE_ADC_SD_CFG1_ADC_SD_CFG_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1_EFUSE_OVERRIDE_ADC_SD_CFG1_ADC_SD_CFG_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1_EFUSE_OVERRIDE_ADC_SD_CFG1_ADC_SD_CFG_MAX (0xFFFFFFFFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_SIG_5_U_BG_REF_TRIM_DONE_MASK (0x01000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_SIG_5_U_BG_REF_TRIM_DONE_SHIFT (0x00000018U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_SIG_5_U_BG_REF_TRIM_DONE_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_EFUSE_OVERRIDE_REFBUF2_CFG_SIG_5_U_BG_REF_TRIM_DONE_MAX (0x00000001U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG1_RESETVAL                       (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_REFBUF2_CFG_RESETVAL                       (0x01DD2A00U)
+/* EFUSE_OVERRIDE_ADC_SD_CFG_CTRL */
 
-/* EFUSE_OVERRIDE_ADCR0_TRIM */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_OVERRIDE_MAX (0x00000007U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_CFG_CTRL_RESETVAL                   (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_ADCR0_TRIM_MASK (0x00FFFFF8U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_ADCR0_TRIM_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_ADCR0_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_EFUSE_OVERRIDE_ADCR0_TRIM_ADCR0_TRIM_MAX (0x001FFFFFU)
+/* EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR0_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_OVERRIDE_MAX (0x00000007U)
 
-/* EFUSE_OVERRIDE_ADCR1_TRIM */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_VAL_MASK (0x00000030U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_VAL_SHIFT (0x00000004U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_VAL_RESETVAL (0x00000002U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_VAL_MAX (0x00000003U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_CFG_VSEL_RESETVAL               (0x00000020U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_ADCR1_TRIM_MASK (0x00FFFFF8U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_ADCR1_TRIM_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_ADCR1_TRIM_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_EFUSE_OVERRIDE_ADCR1_TRIM_ADCR1_TRIM_MAX (0x001FFFFFU)
+/* EFUSE_OVERRIDE_ADC_SD_REF_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR1_TRIM_RESETVAL                        (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_OVERRIDE_MAX (0x00000007U)
 
-/* EFUSE_OVERRIDE_ADCR_CFG_CTRL */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_VAL_MASK (0x00000FF0U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_VAL_SHIFT (0x00000004U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_VAL_RESETVAL (0x00000020U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_VAL_MAX (0x000000FFU)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_MASK (0x00000007U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_MAX (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADC_SD_REF_TRIM_RESETVAL                   (0x00000200U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_RANGE_CTRL_MASK (0x00000038U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_RANGE_CTRL_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_RANGE_CTRL_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_OVERRIDE_RANGE_CTRL_MAX (0x00000007U)
+/* EFUSE_OVERRIDE_CSSA5_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG_CTRL_RESETVAL                     (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-/* EFUSE_OVERRIDE_ADCR_CFG0 */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0_EFUSE_OVERRIDE_ADCR_CFG0_ADCR_CFG_31_0_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0_EFUSE_OVERRIDE_ADCR_CFG0_ADCR_CFG_31_0_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0_EFUSE_OVERRIDE_ADCR_CFG0_ADCR_CFG_31_0_RESETVAL (0x514554C9U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0_EFUSE_OVERRIDE_ADCR_CFG0_ADCR_CFG_31_0_MAX (0xFFFFFFFFU)
+/* EFUSE_OVERRIDE_CSSA5_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG0_RESETVAL                         (0x514554C9U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_EFUSE_OVERRIDE_CSSA5_TRIM_CSSA5_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_EFUSE_OVERRIDE_CSSA5_TRIM_CSSA5_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_EFUSE_OVERRIDE_CSSA5_TRIM_CSSA5_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_EFUSE_OVERRIDE_CSSA5_TRIM_CSSA5_TRIM_MAX (0x0000FFFFU)
 
-/* EFUSE_OVERRIDE_ADCR_CFG1 */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA5_TRIM_RESETVAL                        (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1_EFUSE_OVERRIDE_ADCR_CFG1_ADCR_CFG_63_32_MASK (0xFFFFFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1_EFUSE_OVERRIDE_ADCR_CFG1_ADCR_CFG_63_32_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1_EFUSE_OVERRIDE_ADCR_CFG1_ADCR_CFG_63_32_RESETVAL (0x219F2908U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1_EFUSE_OVERRIDE_ADCR_CFG1_ADCR_CFG_63_32_MAX (0xFFFFFFFFU)
+/* EFUSE_OVERRIDE_CSSA6_TRIM_CTRL */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG1_RESETVAL                         (0x219F2908U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
 
-/* EFUSE_OVERRIDE_ADCR_CFG2 */
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_CTRL_RESETVAL                   (0x00000000U)
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2_EFUSE_OVERRIDE_ADCR_CFG2_ADCR_CFG_86_64_MASK (0x007FFFFFU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2_EFUSE_OVERRIDE_ADCR_CFG2_ADCR_CFG_86_64_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2_EFUSE_OVERRIDE_ADCR_CFG2_ADCR_CFG_86_64_RESETVAL (0x0000000AU)
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2_EFUSE_OVERRIDE_ADCR_CFG2_ADCR_CFG_86_64_MAX (0x007FFFFFU)
+/* EFUSE_OVERRIDE_CSSA6_TRIM */
 
-#define CSL_TOP_CTRL_EFUSE_OVERRIDE_ADCR_CFG2_RESETVAL                         (0x0000000AU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_EFUSE_OVERRIDE_CSSA6_TRIM_CSSA6_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_EFUSE_OVERRIDE_CSSA6_TRIM_CSSA6_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_EFUSE_OVERRIDE_CSSA6_TRIM_CSSA6_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_EFUSE_OVERRIDE_CSSA6_TRIM_CSSA6_TRIM_MAX (0x0000FFFFU)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA6_TRIM_RESETVAL                        (0x00000000U)
+
+/* EFUSE_OVERRIDE_CSSA7_TRIM_CTRL */
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_CTRL_RESETVAL                   (0x00000000U)
+
+/* EFUSE_OVERRIDE_CSSA7_TRIM */
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_EFUSE_OVERRIDE_CSSA7_TRIM_CSSA7_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_EFUSE_OVERRIDE_CSSA7_TRIM_CSSA7_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_EFUSE_OVERRIDE_CSSA7_TRIM_CSSA7_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_EFUSE_OVERRIDE_CSSA7_TRIM_CSSA7_TRIM_MAX (0x0000FFFFU)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA7_TRIM_RESETVAL                        (0x00000000U)
+
+/* EFUSE_OVERRIDE_CSSA8_TRIM_CTRL */
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_OVERRIDE_MAX (0x00000007U)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_CTRL_RESETVAL                   (0x00000000U)
+
+/* EFUSE_OVERRIDE_CSSA8_TRIM */
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_EFUSE_OVERRIDE_CSSA8_TRIM_CSSA8_TRIM_MASK (0x0000FFFFU)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_EFUSE_OVERRIDE_CSSA8_TRIM_CSSA8_TRIM_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_EFUSE_OVERRIDE_CSSA8_TRIM_CSSA8_TRIM_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_EFUSE_OVERRIDE_CSSA8_TRIM_CSSA8_TRIM_MAX (0x0000FFFFU)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_CSSA8_TRIM_RESETVAL                        (0x00000000U)
+
+/* EFUSE_OVERRIDE_RCOSC_CFG */
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_OVERRIDE_MASK (0x00000007U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_OVERRIDE_MAX (0x00000007U)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_FREQ_SEL_MASK (0x00030000U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_FREQ_SEL_SHIFT (0x00000010U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_FREQ_SEL_RESETVAL (0x00000002U)
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_EFUSE_OVERRIDE_RCOSC_CFG_FREQ_SEL_MAX (0x00000003U)
+
+#define CSL_TOP_CTRL_EFUSE_OVERRIDE_RCOSC_CFG_RESETVAL                         (0x00020000U)
 
 /* ADC_REFBUF0_CTRL */
 
@@ -2416,15 +2247,6 @@ typedef struct {
 #define CSL_TOP_CTRL_ADC_REFBUF0_CTRL_ADC_REFBUF0_CTRL_ENABLE_MAX              (0x00000007U)
 
 #define CSL_TOP_CTRL_ADC_REFBUF0_CTRL_RESETVAL                                 (0x00000000U)
-
-/* ADC_REFBUF1_CTRL */
-
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL_ADC_REFBUF1_CTRL_ENABLE_MASK             (0x00000007U)
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL_ADC_REFBUF1_CTRL_ENABLE_SHIFT            (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL_ADC_REFBUF1_CTRL_ENABLE_RESETVAL         (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL_ADC_REFBUF1_CTRL_ENABLE_MAX              (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC_REFBUF1_CTRL_RESETVAL                                 (0x00000000U)
 
 /* ADC_REF_COMP_CTRL */
 
@@ -2437,16 +2259,6 @@ typedef struct {
 #define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC12_REFOK_EN_SHIFT  (0x00000004U)
 #define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC12_REFOK_EN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC12_REFOK_EN_MAX    (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC34_REFOK_EN_MASK   (0x00000700U)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC34_REFOK_EN_SHIFT  (0x00000008U)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC34_REFOK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADC34_REFOK_EN_MAX    (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADCR01_REFOK_EN_MASK  (0x00007000U)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADCR01_REFOK_EN_SHIFT (0x0000000CU)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADCR01_REFOK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC_REF_COMP_CTRL_ADCR01_REFOK_EN_MAX   (0x00000007U)
 
 #define CSL_TOP_CTRL_ADC_REF_COMP_CTRL_RESETVAL                                (0x00000000U)
 
@@ -2472,27 +2284,7 @@ typedef struct {
 #define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC12_REF_UV_GOOD_RESETVAL (0x00000001U)
 #define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC12_REF_UV_GOOD_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_OV_GOOD_MASK (0x00000010U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_OV_GOOD_SHIFT (0x00000004U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_OV_GOOD_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_OV_GOOD_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_UV_GOOD_MASK (0x00000020U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_UV_GOOD_SHIFT (0x00000005U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_UV_GOOD_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADC34_REF_UV_GOOD_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_OV_GOOD_MASK (0x00000040U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_OV_GOOD_SHIFT (0x00000006U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_OV_GOOD_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_OV_GOOD_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_UV_GOOD_MASK (0x00000080U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_UV_GOOD_SHIFT (0x00000007U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_UV_GOOD_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC_REF_GOOD_STATUS_ADCR01_REF_UV_GOOD_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_RESETVAL                              (0x000000FFU)
+#define CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_RESETVAL                              (0x0000000FU)
 
 /* VMON_CTRL */
 
@@ -2693,27 +2485,7 @@ typedef struct {
 #define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC12_REF_UV_MASK_RESETVAL (0x00000001U)
 #define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC12_REF_UV_MASK_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_OV_MASK_MASK (0x00008000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_OV_MASK_SHIFT (0x0000000FU)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_OV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_OV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_UV_MASK_MASK (0x00010000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_UV_MASK_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_UV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADC34_REF_UV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_OV_MASK_MASK (0x00020000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_OV_MASK_SHIFT (0x00000011U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_OV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_OV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_UV_MASK_MASK (0x00040000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_UV_MASK_SHIFT (0x00000012U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_UV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_MASK_VMON_ERROR_ESM_H_ADCR01_REF_UV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_RESETVAL                            (0x0007FFFFU)
+#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_H_RESETVAL                            (0x00007FFFU)
 
 /* MASK_VMON_ERROR_ESM_L */
 
@@ -2792,27 +2564,7 @@ typedef struct {
 #define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC12_REF_UV_MASK_RESETVAL (0x00000001U)
 #define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC12_REF_UV_MASK_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_OV_MASK_MASK (0x00008000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_OV_MASK_SHIFT (0x0000000FU)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_OV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_OV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_UV_MASK_MASK (0x00010000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_UV_MASK_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_UV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADC34_REF_UV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_OV_MASK_MASK (0x00020000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_OV_MASK_SHIFT (0x00000011U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_OV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_OV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_UV_MASK_MASK (0x00040000U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_UV_MASK_SHIFT (0x00000012U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_UV_MASK_RESETVAL (0x00000001U)
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_MASK_VMON_ERROR_ESM_L_ADCR01_REF_UV_MASK_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_RESETVAL                            (0x0007FFFFU)
+#define CSL_TOP_CTRL_MASK_VMON_ERROR_ESM_L_RESETVAL                            (0x00007FFFU)
 
 /* MASK_ANA_ISO */
 
@@ -2834,62 +2586,44 @@ typedef struct {
 
 /* ADC_RNG_CTRL */
 
-#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_MASK                       (0x0000007FU)
+#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_MASK                       (0x00000007U)
 #define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_SHIFT                      (0x00000000U)
 #define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_RESETVAL                   (0x00000000U)
-#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_MAX                        (0x0000007FU)
+#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_MODE_MAX                        (0x00000007U)
 
-#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_MASK                (0x00000300U)
+#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_MASK                (0x00000700U)
 #define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_SHIFT               (0x00000008U)
 #define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_MAX                 (0x00000003U)
+#define CSL_TOP_CTRL_ADC_RNG_CTRL_ADC_RNG_CTRL_SCALED_MODE_MAX                 (0x00000007U)
 
 #define CSL_TOP_CTRL_ADC_RNG_CTRL_RESETVAL                                     (0x00000000U)
 
 /* ADC0_OSD_CHEN */
 
-#define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MASK                (0x0000003FU)
+#define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MASK                (0x0000007FU)
 #define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_SHIFT               (0x00000000U)
 #define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000003FU)
+#define CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000007FU)
 
 #define CSL_TOP_CTRL_ADC0_OSD_CHEN_RESETVAL                                    (0x00000000U)
 
 /* ADC1_OSD_CHEN */
 
-#define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_MASK                (0x0000003FU)
+#define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_MASK                (0x0000007FU)
 #define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_SHIFT               (0x00000000U)
 #define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000003FU)
+#define CSL_TOP_CTRL_ADC1_OSD_CHEN_ADC1_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000007FU)
 
 #define CSL_TOP_CTRL_ADC1_OSD_CHEN_RESETVAL                                    (0x00000000U)
 
 /* ADC2_OSD_CHEN */
 
-#define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_MASK                (0x0000003FU)
+#define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_MASK                (0x0000007FU)
 #define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_SHIFT               (0x00000000U)
 #define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000003FU)
+#define CSL_TOP_CTRL_ADC2_OSD_CHEN_ADC2_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000007FU)
 
 #define CSL_TOP_CTRL_ADC2_OSD_CHEN_RESETVAL                                    (0x00000000U)
-
-/* ADC3_OSD_CHEN */
-
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN_ADC3_OSD_CHEN_CH_OSD_EN_MASK                (0x0000003FU)
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN_ADC3_OSD_CHEN_CH_OSD_EN_SHIFT               (0x00000000U)
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN_ADC3_OSD_CHEN_CH_OSD_EN_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN_ADC3_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000003FU)
-
-#define CSL_TOP_CTRL_ADC3_OSD_CHEN_RESETVAL                                    (0x00000000U)
-
-/* ADC4_OSD_CHEN */
-
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN_ADC4_OSD_CHEN_CH_OSD_EN_MASK                (0x0000003FU)
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN_ADC4_OSD_CHEN_CH_OSD_EN_SHIFT               (0x00000000U)
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN_ADC4_OSD_CHEN_CH_OSD_EN_RESETVAL            (0x00000000U)
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN_ADC4_OSD_CHEN_CH_OSD_EN_MAX                 (0x0000003FU)
-
-#define CSL_TOP_CTRL_ADC4_OSD_CHEN_RESETVAL                                    (0x00000000U)
 
 /* ADC0_OSD_CTRL */
 
@@ -2917,24 +2651,6 @@ typedef struct {
 #define CSL_TOP_CTRL_ADC2_OSD_CTRL_ADC2_OSD_CTRL_FUNCTION_MAX                  (0x00000007U)
 
 #define CSL_TOP_CTRL_ADC2_OSD_CTRL_RESETVAL                                    (0x00000000U)
-
-/* ADC3_OSD_CTRL */
-
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL_ADC3_OSD_CTRL_FUNCTION_MASK                 (0x00000007U)
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL_ADC3_OSD_CTRL_FUNCTION_SHIFT                (0x00000000U)
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL_ADC3_OSD_CTRL_FUNCTION_RESETVAL             (0x00000000U)
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL_ADC3_OSD_CTRL_FUNCTION_MAX                  (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC3_OSD_CTRL_RESETVAL                                    (0x00000000U)
-
-/* ADC4_OSD_CTRL */
-
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL_ADC4_OSD_CTRL_FUNCTION_MASK                 (0x00000007U)
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL_ADC4_OSD_CTRL_FUNCTION_SHIFT                (0x00000000U)
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL_ADC4_OSD_CTRL_FUNCTION_RESETVAL             (0x00000000U)
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL_ADC4_OSD_CTRL_FUNCTION_MAX                  (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC4_OSD_CTRL_RESETVAL                                    (0x00000000U)
 
 /* ADC_LOOPBACK_CTRL */
 
@@ -2992,11 +2708,6 @@ typedef struct {
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_MASK (0x00000200U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_SHIFT (0x00000009U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_MAX (0x00000001U)
-
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_MASK (0x00010000U)
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_SHIFT (0x00000010U)
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_RESETVAL (0x00000000U)
@@ -3042,157 +2753,34 @@ typedef struct {
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_MASK (0x02000000U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_SHIFT (0x00000019U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_MAX (0x00000001U)
-
 #define CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_RESETVAL                             (0x00000000U)
 
-/* CMPSSB_LOOPBACK_CTRL */
+/* ADC_SD_CTRL */
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_MASK (0x00000001U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_MAX (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CTRL_ADC_SD_CTRL_CTRL_MASK                         (0x0000000FU)
+#define CSL_TOP_CTRL_ADC_SD_CTRL_ADC_SD_CTRL_CTRL_SHIFT                        (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CTRL_ADC_SD_CTRL_CTRL_RESETVAL                     (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CTRL_ADC_SD_CTRL_CTRL_MAX                          (0x0000000FU)
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL1_LOOPBACK_EN_MASK (0x00000002U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL1_LOOPBACK_EN_SHIFT (0x00000001U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL1_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL1_LOOPBACK_EN_MAX (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CTRL_RESETVAL                                      (0x00000000U)
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL2_LOOPBACK_EN_MASK (0x00000004U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL2_LOOPBACK_EN_SHIFT (0x00000002U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL2_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL2_LOOPBACK_EN_MAX (0x00000001U)
+/* ADC_SD_CAL_CTRL */
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL3_LOOPBACK_EN_MASK (0x00000008U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL3_LOOPBACK_EN_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL3_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL3_LOOPBACK_EN_MAX (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL_ADC_SD_CAL_CTRL_CAL_CTRL_MASK             (0x000000FFU)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL_ADC_SD_CAL_CTRL_CAL_CTRL_SHIFT            (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL_ADC_SD_CAL_CTRL_CAL_CTRL_RESETVAL         (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL_ADC_SD_CAL_CTRL_CAL_CTRL_MAX              (0x000000FFU)
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL4_LOOPBACK_EN_MASK (0x00000010U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL4_LOOPBACK_EN_SHIFT (0x00000004U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL4_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL4_LOOPBACK_EN_MAX (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CAL_CTRL_RESETVAL                                  (0x00000000U)
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL5_LOOPBACK_EN_MASK (0x00000020U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL5_LOOPBACK_EN_SHIFT (0x00000005U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL5_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL5_LOOPBACK_EN_MAX (0x00000001U)
+/* ADC_SD_CLKBUF_CFG */
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL6_LOOPBACK_EN_MASK (0x00000040U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL6_LOOPBACK_EN_SHIFT (0x00000006U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL6_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL6_LOOPBACK_EN_MAX (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG_ADC_SD_CLKBUF_CFG_CFG_MASK              (0x00000001U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG_ADC_SD_CLKBUF_CFG_CFG_SHIFT             (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG_ADC_SD_CLKBUF_CFG_CFG_RESETVAL          (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG_ADC_SD_CLKBUF_CFG_CFG_MAX               (0x00000001U)
 
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL7_LOOPBACK_EN_MASK (0x00000080U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL7_LOOPBACK_EN_SHIFT (0x00000007U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL7_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL7_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_MASK (0x00000100U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_SHIFT (0x00000008U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL8_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_MASK (0x00000200U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_SHIFT (0x00000009U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL9_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_MASK (0x00010000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_SHIFT (0x00000010U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH1_LOOPBACK_EN_MASK (0x00020000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH1_LOOPBACK_EN_SHIFT (0x00000011U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH1_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH1_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH2_LOOPBACK_EN_MASK (0x00040000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH2_LOOPBACK_EN_SHIFT (0x00000012U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH2_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH2_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH3_LOOPBACK_EN_MASK (0x00080000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH3_LOOPBACK_EN_SHIFT (0x00000013U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH3_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH3_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH4_LOOPBACK_EN_MASK (0x00100000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH4_LOOPBACK_EN_SHIFT (0x00000014U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH4_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH4_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH5_LOOPBACK_EN_MASK (0x00200000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH5_LOOPBACK_EN_SHIFT (0x00000015U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH5_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH5_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH6_LOOPBACK_EN_MASK (0x00400000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH6_LOOPBACK_EN_SHIFT (0x00000016U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH6_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH6_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH7_LOOPBACK_EN_MASK (0x00800000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH7_LOOPBACK_EN_SHIFT (0x00000017U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH7_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH7_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_MASK (0x01000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_SHIFT (0x00000018U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH8_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_MASK (0x02000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_SHIFT (0x00000019U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH9_LOOPBACK_EN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_RESETVAL                             (0x00000000U)
-
-/* ADCR01_OSD_CHEN */
-
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_MASK            (0x000000FFU)
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_SHIFT           (0x00000000U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_RESETVAL        (0x00000000U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_MAX             (0x000000FFU)
-
-#define CSL_TOP_CTRL_ADCR01_OSD_CHEN_RESETVAL                                  (0x00000000U)
-
-/* ADCR01_OSD_CTRL */
-
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL_ADCR01_OSD_CTRL_FUNCTION_MASK             (0x00000007U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL_ADCR01_OSD_CTRL_FUNCTION_SHIFT            (0x00000000U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL_ADCR01_OSD_CTRL_FUNCTION_RESETVAL         (0x00000000U)
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL_ADCR01_OSD_CTRL_FUNCTION_MAX              (0x00000007U)
-
-#define CSL_TOP_CTRL_ADCR01_OSD_CTRL_RESETVAL                                  (0x00000000U)
-
-/* ADC_REFBUF2_CTRL */
-
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL_ADC_REFBUF2_CTRL_ENABLE_MASK             (0x00000007U)
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL_ADC_REFBUF2_CTRL_ENABLE_SHIFT            (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL_ADC_REFBUF2_CTRL_ENABLE_RESETVAL         (0x00000000U)
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL_ADC_REFBUF2_CTRL_ENABLE_MAX              (0x00000007U)
-
-#define CSL_TOP_CTRL_ADC_REFBUF2_CTRL_RESETVAL                                 (0x00000000U)
-
-/* TB_CTRL_ADC5_ADC6_RESERVED */
-
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT0_MASK (0x00000001U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT0_SHIFT (0x00000000U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT0_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT0_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT1_MASK (0x00000002U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT1_SHIFT (0x00000001U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT1_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_TB_CTRL_ADC5_ADC6_RESERVED_BIT1_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_TB_CTRL_ADC5_ADC6_RESERVED_RESETVAL                       (0x00000000U)
+#define CSL_TOP_CTRL_ADC_SD_CLKBUF_CFG_RESETVAL                                (0x00000000U)
 
 /* TSENSE_CFG */
 
@@ -3638,21 +3226,6 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC2_CSS_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC2_CSS_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC3_CSS_MASK (0x00000008U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC3_CSS_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC3_CSS_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC3_CSS_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC4_CSS_MASK (0x00000010U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC4_CSS_SHIFT (0x00000004U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC4_CSS_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADC4_CSS_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADCR01_MASK (0x00000020U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADCR01_SHIFT (0x00000005U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADCR01_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_DFT_ATB_GLOBALEN_ADC_CSS_ATB_GLOBALEN_ADCR01_MAX (0x00000001U)
-
 #define CSL_TOP_CTRL_DFT_ATB_GLOBALEN_ADC_CSS_RESETVAL                         (0x00000000U)
 
 /* DFT_ATB0_MASTEREN_ADC_CSS_DAC */
@@ -3671,16 +3244,6 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC2_ATB0_MASTEREN_SHIFT (0x00000002U)
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC2_ATB0_MASTEREN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC2_ATB0_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC3_ATB0_MASTEREN_MASK (0x00000008U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC3_ATB0_MASTEREN_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC3_ATB0_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC3_ATB0_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC4_ATB0_MASTEREN_MASK (0x00000010U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC4_ATB0_MASTEREN_SHIFT (0x00000004U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC4_ATB0_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADC4_ATB0_MASTEREN_MAX (0x00000001U)
 
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_CSS0A0_ATB0_MASTEREN_MASK (0x00000020U)
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_CSS0A0_ATB0_MASTEREN_SHIFT (0x00000005U)
@@ -3786,16 +3349,6 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DAC_ATB0_MASTEREN_SHIFT (0x00000019U)
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DAC_ATB0_MASTEREN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DAC_ATB0_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR0_ATB0_MASTEREN_MASK (0x04000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR0_ATB0_MASTEREN_SHIFT (0x0000001AU)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR0_ATB0_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR0_ATB0_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR1_ATB0_MASTEREN_MASK (0x08000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR1_ATB0_MASTEREN_SHIFT (0x0000001BU)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR1_ATB0_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_DFT_ATB0_MASTEREN_ADC_CSS_DAC_ADCR1_ATB0_MASTEREN_MAX (0x00000001U)
 
 #define CSL_TOP_CTRL_DFT_ATB0_MASTEREN_ADC_CSS_DAC_RESETVAL                    (0x00000000U)
 
@@ -3984,16 +3537,6 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC2_DTB_MASTEREN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC2_DTB_MASTEREN_MAX (0x00000001U)
 
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC3_DTB_MASTEREN_MASK (0x00000008U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC3_DTB_MASTEREN_SHIFT (0x00000003U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC3_DTB_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC3_DTB_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC4_DTB_MASTEREN_MASK (0x00000010U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC4_DTB_MASTEREN_SHIFT (0x00000004U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC4_DTB_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADC4_DTB_MASTEREN_MAX (0x00000001U)
-
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_CSS0A0_DTB_MASTEREN_MASK (0x00000020U)
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_CSS0A0_DTB_MASTEREN_SHIFT (0x00000005U)
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_CSS0A0_DTB_MASTEREN_RESETVAL (0x00000000U)
@@ -4098,16 +3641,6 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_DAC_DTB_MASTEREN_SHIFT (0x00000019U)
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_DAC_DTB_MASTEREN_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_DAC_DTB_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR0_DTB_MASTEREN_MASK (0x04000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR0_DTB_MASTEREN_SHIFT (0x0000001AU)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR0_DTB_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR0_DTB_MASTEREN_MAX (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR1_DTB_MASTEREN_MASK (0x08000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR1_DTB_MASTEREN_SHIFT (0x0000001BU)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR1_DTB_MASTEREN_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_DFT_ANA_DTB_ENABLES_ADCR1_DTB_MASTEREN_MAX (0x00000001U)
 
 #define CSL_TOP_CTRL_DFT_ANA_DTB_ENABLES_RESETVAL                              (0x00000000U)
 
@@ -4570,40 +4103,10 @@ typedef struct {
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATBEN_RESETVAL    (0x00000000U)
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATBEN_MAX         (0x00000001U)
 
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_ROK1_MASK   (0x00000008U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_ROK1_SHIFT  (0x00000003U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_ROK1_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_ROK1_MAX    (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_MASK        (0x00000010U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_SHIFT       (0x00000004U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_RESETVAL    (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATBEN_MAX         (0x00000001U)
-
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATB_MUX_SEL_MASK  (0x00000060U)
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATB_MUX_SEL_SHIFT (0x00000005U)
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATB_MUX_SEL_RESETVAL (0x00000000U)
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF0_ATB_MUX_SEL_MAX   (0x00000003U)
-
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATB_MUX_SEL_MASK  (0x00000180U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATB_MUX_SEL_SHIFT (0x00000007U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATB_MUX_SEL_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF1_ATB_MUX_SEL_MAX   (0x00000003U)
-
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_MASK        (0x00000200U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_SHIFT       (0x00000009U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_RESETVAL    (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_MAX         (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_ROK2_MASK   (0x00000400U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_ROK2_SHIFT  (0x0000000AU)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_ROK2_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATBEN_ROK2_MAX    (0x00000001U)
-
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATB_MUX_SEL_MASK  (0x00001800U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATB_MUX_SEL_SHIFT (0x0000000BU)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATB_MUX_SEL_RESETVAL (0x00000000U)
-#define CSL_TOP_CTRL_DFT_REFBUF_CTRL_DFT_REFBUF_CTRL_REFBUF2_ATB_MUX_SEL_MAX   (0x00000003U)
 
 #define CSL_TOP_CTRL_DFT_REFBUF_CTRL_RESETVAL                                  (0x00000000U)
 
@@ -4687,6 +4190,60 @@ typedef struct {
 
 /* DFT_CTRL_5 */
 
+
+/* DFT_ADC0_CTRL */
+
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL_DFT_ADC0_CTRL_DFT_SEL_MASK                  (0x000FFFFFU)
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL_DFT_ADC0_CTRL_DFT_SEL_SHIFT                 (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL_DFT_ADC0_CTRL_DFT_SEL_RESETVAL              (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL_DFT_ADC0_CTRL_DFT_SEL_MAX                   (0x000FFFFFU)
+
+#define CSL_TOP_CTRL_DFT_ADC0_CTRL_RESETVAL                                    (0x00000000U)
+
+/* DFT_ADC1_CTRL */
+
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL_DFT_ADC1_CTRL_DFT_SEL_MASK                  (0x000FFFFFU)
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL_DFT_ADC1_CTRL_DFT_SEL_SHIFT                 (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL_DFT_ADC1_CTRL_DFT_SEL_RESETVAL              (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL_DFT_ADC1_CTRL_DFT_SEL_MAX                   (0x000FFFFFU)
+
+#define CSL_TOP_CTRL_DFT_ADC1_CTRL_RESETVAL                                    (0x00000000U)
+
+/* DFT_ADC2_CTRL */
+
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL_DFT_ADC2_CTRL_DFT_SEL_MASK                  (0x000FFFFFU)
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL_DFT_ADC2_CTRL_DFT_SEL_SHIFT                 (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL_DFT_ADC2_CTRL_DFT_SEL_RESETVAL              (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL_DFT_ADC2_CTRL_DFT_SEL_MAX                   (0x000FFFFFU)
+
+#define CSL_TOP_CTRL_DFT_ADC2_CTRL_RESETVAL                                    (0x00000000U)
+
+/* DFT_ADC_SD_CLKBUF_CTRL */
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL_DFT_ADC_SD_CLKBUF_CTRL_CLKBUF_SEL_MASK (0x000000FFU)
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL_DFT_ADC_SD_CLKBUF_CTRL_CLKBUF_SEL_SHIFT (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL_DFT_ADC_SD_CLKBUF_CTRL_CLKBUF_SEL_RESETVAL (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL_DFT_ADC_SD_CLKBUF_CTRL_CLKBUF_SEL_MAX (0x000000FFU)
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_CLKBUF_CTRL_RESETVAL                           (0x00000000U)
+
+/* DFT_ADC_SD_REF_SEL */
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL_DFT_ADC_SD_REF_SEL_REF_SEL_MASK        (0x00000003U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL_DFT_ADC_SD_REF_SEL_REF_SEL_SHIFT       (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL_DFT_ADC_SD_REF_SEL_REF_SEL_RESETVAL    (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL_DFT_ADC_SD_REF_SEL_REF_SEL_MAX         (0x00000003U)
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_REF_SEL_RESETVAL                               (0x00000000U)
+
+/* DFT_ADC_SD */
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_DFT_ADC_SD_SDADC_DFT_MASK                      (0x0007FFFFU)
+#define CSL_TOP_CTRL_DFT_ADC_SD_DFT_ADC_SD_SDADC_DFT_SHIFT                     (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_DFT_ADC_SD_SDADC_DFT_RESETVAL                  (0x00000000U)
+#define CSL_TOP_CTRL_DFT_ADC_SD_DFT_ADC_SD_SDADC_DFT_MAX                       (0x0007FFFFU)
+
+#define CSL_TOP_CTRL_DFT_ADC_SD_RESETVAL                                       (0x00000000U)
 
 /* PROBE_BUS_SEL0 */
 

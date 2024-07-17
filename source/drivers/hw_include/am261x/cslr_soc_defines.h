@@ -37,9 +37,8 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include <stdint.h>
 
-
+/* None */
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,40 +48,40 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 /** @brief Number of UART instances */
-#define CSL_UART_PER_CNT                (6U)
+#define CSL_UART_PER_CNT                (4U)
 
 /** @brief Number of SPI instances */
-#define CSL_SPI_PER_CNT                (5U)
+#define CSL_SPI_PER_CNT                (4U)
 
 /** @brief Number of LIN instances */
-#define CSL_LIN_PER_CNT                (5U)
+#define CSL_LIN_PER_CNT                (3U)
 
 /** @brief Number of I2C instances */
-#define CSL_I2C_PER_CNT                (4U)
+#define CSL_I2C_PER_CNT                (2U)
 
 /** @brief Number of MCAN instances */
-#define CSL_MCAN_PER_CNT                (4U)
+#define CSL_MCAN_PER_CNT                (2U)
 
 /** @brief Number of ETPWM instances */
-#define CSL_ETPWM_PER_CNT                (32U)
+#define CSL_ETPWM_PER_CNT                (10U)
 
 /** @brief Number of ECAP instances */
-#define CSL_ECAP_PER_CNT                (10U)
+#define CSL_ECAP_PER_CNT                (8U)
 
 /** @brief Number of EQEP instances */
-#define CSL_EQEP_PER_CNT                (3U)
+#define CSL_EQEP_PER_CNT                (2U)
 
 /** @brief Number of SDFM instances */
 #define CSL_SDFM_PER_CNT                (2U)
 
 /** @brief Number of ADC instances */
-#define CSL_ADC_PER_CNT                (5U)
+#define CSL_ADC_PER_CNT                (3U)
 
 /** @brief Number of CMPSSA instances */
 #define CSL_CMPSSA_PER_CNT                (10U)
 
 /** @brief Number of CMPSSB instances */
-#define CSL_CMPSSB_PER_CNT                (10U)
+#define CSL_CMPSSB_PER_CNT                (0U)
 
 /** @brief Number of DMA Channels */
 #define SOC_EDMA_NUM_DMACH                 (64U)
@@ -109,9 +108,7 @@ extern "C" {
  */
 #define CSL_CORE_ID_R5FSS0_0         (0U)
 #define CSL_CORE_ID_R5FSS0_1         (1U)
-#define CSL_CORE_ID_R5FSS1_0         (2U)
-#define CSL_CORE_ID_R5FSS1_1         (3U)
-#define CSL_CORE_ID_MAX              (4U)
+#define CSL_CORE_ID_MAX              (2U)
 /** @} */
 
 /**
@@ -120,13 +117,13 @@ extern "C" {
  *
  * @{
  */
-#define PRIV_ID_M4FSS0_0         (1U)
+#define PRIV_ID_HSM              (1U)
 #define PRIV_ID_R5FSS0_0         (4U)
 #define PRIV_ID_R5FSS0_1         (5U)
-#define PRIV_ID_R5FSS1_0         (6U)
-#define PRIV_ID_R5FSS1_1         (7U)
-#define PRIV_ID_ICSSM            (9U)
+#define PRIV_ID_ICSSM0           (9U)
+#define PRIV_ID_ICSSM1           (11U)
 #define PRIV_ID_CPSW             (10U)
+#define PRIV_ID_USB              (12U)
 
 /** @} */
 
@@ -137,6 +134,13 @@ extern "C" {
 #define MSS_SYS_VCLK                  200000000U
 #define R5F_CLOCK_MHZ                 400U
 
+//#define EDMA_MSS_TPCC_A_NUM_PARAM_SETS  (128U)
+//#define EDMA_MSS_TPCC_A_NUM_DMA_CHANS   (64U)
+//#define EDMA_MSS_TPCC_A_NUM_TC          (2U)
+//
+//#define EDMA_HSM_TPCC_A_NUM_PARAM_SETS  (128U)
+//#define EDMA_HSM_TPCC_A_NUM_TC          (2U)
+
 /**
  *  \anchor CSL_ArmR5ClusterGroupID
  *  \name R5 Cluster Group IDs
@@ -145,8 +149,6 @@ extern "C" {
  */
 /** \brief R5 Cluster Group ID0 */
 #define CSL_ARM_R5_CLUSTER_GROUP_ID_0                 ((uint32_t) 0x00U)
-/** \brief R5 Cluster Group ID1 */
-#define CSL_ARM_R5_CLUSTER_GROUP_ID_1                 ((uint32_t) 0x01U)
 /** @} */
 
 /**

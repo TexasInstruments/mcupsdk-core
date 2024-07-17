@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2020 Texas Instruments Incorporated.
+ * Copyright (C) 2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,6 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  Name        : cslr_mss_ecc_agg_mss.h
+ *  VPVERSION   : 3.0.358 - 2023.07.24.16.08.29
+ *  VPREV       : 2.3.4.5
 */
 #ifndef CSLR_MSS_ECC_AGG_MSS_H_
 #define CSLR_MSS_ECC_AGG_MSS_H_
@@ -55,7 +57,7 @@ typedef struct {
     volatile uint8_t  Resv_8[4];
     volatile uint32_t ECC_VECTOR;
     volatile uint32_t MISC_STATUS;
-    volatile uint32_t ECC_WRAP_REVISION;
+    volatile uint8_t  Resv_20[4];
     volatile uint32_t CONTROL;
     volatile uint32_t ERROR_CTRL1;
     volatile uint32_t ERROR_CTRL2;
@@ -91,7 +93,6 @@ typedef struct {
 #define CSL_MSS_ECC_AGG_MSS_AGGR_REVISION                                      (0x00000000U)
 #define CSL_MSS_ECC_AGG_MSS_ECC_VECTOR                                         (0x00000008U)
 #define CSL_MSS_ECC_AGG_MSS_MISC_STATUS                                        (0x0000000CU)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION                                  (0x00000010U)
 #define CSL_MSS_ECC_AGG_MSS_CONTROL                                            (0x00000014U)
 #define CSL_MSS_ECC_AGG_MSS_ERROR_CTRL1                                        (0x00000018U)
 #define CSL_MSS_ECC_AGG_MSS_ERROR_CTRL2                                        (0x0000001CU)
@@ -187,45 +188,6 @@ typedef struct {
 #define CSL_MSS_ECC_AGG_MSS_MISC_STATUS_NUM_RAMS_MAX                           (0x000007FFU)
 
 #define CSL_MSS_ECC_AGG_MSS_MISC_STATUS_RESETVAL                               (0x00000009U)
-
-/* ECC_WRAP_REVISION */
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_SCHEME_MASK                      (0xC0000000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_SCHEME_SHIFT                     (0x0000001EU)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_SCHEME_RESETVAL                  (0x00000001U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_SCHEME_MAX                       (0x00000003U)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_BU_MASK                          (0x30000000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_BU_SHIFT                         (0x0000001CU)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_BU_RESETVAL                      (0x00000002U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_BU_MAX                           (0x00000003U)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_MODULE_ID_MASK                   (0x0FFF0000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_MODULE_ID_SHIFT                  (0x00000010U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_MODULE_ID_RESETVAL               (0x000006A4U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_MODULE_ID_MAX                    (0x00000FFFU)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVRTL_MASK                      (0x0000F800U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVRTL_SHIFT                     (0x0000000BU)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVRTL_RESETVAL                  (0x00000000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVRTL_MAX                       (0x0000001FU)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMAJ_MASK                      (0x00000700U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMAJ_SHIFT                     (0x00000008U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMAJ_RESETVAL                  (0x00000002U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMAJ_MAX                       (0x00000007U)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_CUSTOM_MASK                      (0x000000C0U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_CUSTOM_SHIFT                     (0x00000006U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_CUSTOM_RESETVAL                  (0x00000000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_CUSTOM_MAX                       (0x00000003U)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMIN_MASK                      (0x0000003FU)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMIN_SHIFT                     (0x00000000U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMIN_RESETVAL                  (0x00000002U)
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_REVMIN_MAX                       (0x0000003FU)
-
-#define CSL_MSS_ECC_AGG_MSS_ECC_WRAP_REVISION_RESETVAL                         (0x66A40202U)
 
 /* CONTROL */
 

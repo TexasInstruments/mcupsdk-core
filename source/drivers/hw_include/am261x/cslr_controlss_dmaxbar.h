@@ -44,7 +44,97 @@ extern "C"
 /**************************************************************************
 * Hardware Region  :
 **************************************************************************/
+/**************************************************************************
+    XBAR INPUT Macros
+**************************************************************************/
 
+/******************* G0 *********************/
+#define DMAXBAR_EPWM0_SOCA         (0)
+#define DMAXBAR_EPWM1_SOCA         (1)
+#define DMAXBAR_EPWM2_SOCA         (2)
+#define DMAXBAR_EPWM3_SOCA         (3)
+#define DMAXBAR_EPWM4_SOCA         (4)
+#define DMAXBAR_EPWM5_SOCA         (5)
+#define DMAXBAR_EPWM6_SOCA         (6)
+#define DMAXBAR_EPWM7_SOCA         (7)
+#define DMAXBAR_EPWM8_SOCA         (8)
+#define DMAXBAR_EPWM9_SOCA         (9)
+
+/******************* G1 *********************/
+#define DMAXBAR_EPWM0_SOCB         (0)
+#define DMAXBAR_EPWM1_SOCB         (1)
+#define DMAXBAR_EPWM2_SOCB         (2)
+#define DMAXBAR_EPWM3_SOCB         (3)
+#define DMAXBAR_EPWM4_SOCB         (4)
+#define DMAXBAR_EPWM5_SOCB         (5)
+#define DMAXBAR_EPWM6_SOCB         (6)
+#define DMAXBAR_EPWM7_SOCB         (7)
+#define DMAXBAR_EPWM8_SOCB         (8)
+#define DMAXBAR_EPWM9_SOCB         (9)
+
+/******************* G2 *********************/
+#define DMAXBAR_ADC0_INT1          (0)
+#define DMAXBAR_ADC0_INT2          (1)
+#define DMAXBAR_ADC0_INT3          (2)
+#define DMAXBAR_ADC0_INT4          (3)
+#define DMAXBAR_ADC0_EVTINT        (4)
+#define DMAXBAR_ADC1_INT1          (5)
+#define DMAXBAR_ADC1_INT2          (6)
+#define DMAXBAR_ADC1_INT3          (7)
+#define DMAXBAR_ADC1_INT4          (8)
+#define DMAXBAR_ADC1_EVTINT        (9)
+#define DMAXBAR_ADC2_INT1          (10)
+#define DMAXBAR_ADC2_INT2          (11)
+#define DMAXBAR_ADC2_INT3          (12)
+#define DMAXBAR_ADC2_INT4          (13)
+#define DMAXBAR_ADC2_EVTINT        (14)
+
+/******************* G3 *********************/
+#define DMAXBAR_FSI0_RX_DMA_EVT    (0)
+#define DMAXBAR_FSI0_DMA_TRIG1     (1)
+#define DMAXBAR_FSI0_DMA_TRIG2     (2)
+#define DMAXBAR_FSI0_TX_DMA_EVT    (16)
+
+/******************* G4 *********************/
+#define DMAXBAR_SD0_FILT0_DRINT    (0)
+#define DMAXBAR_SD0_FILT1_DRINT    (1)
+#define DMAXBAR_SD0_FILT2_DRINT    (2)
+#define DMAXBAR_SD0_FILT3_DRINT    (3)
+#define DMAXBAR_SD1_FILT0_DRINT    (4)
+#define DMAXBAR_SD1_FILT1_DRINT    (5)
+#define DMAXBAR_SD1_FILT2_DRINT    (6)
+#define DMAXBAR_SD1_FILT3_DRINT    (7)
+
+/******************* G5 *********************/
+#define DMAXBAR_ECAP0_DMA_INT    (0)
+#define DMAXBAR_ECAP1_DMA_INT    (1)
+#define DMAXBAR_ECAP2_DMA_INT    (2)
+#define DMAXBAR_ECAP3_DMA_INT    (3)
+#define DMAXBAR_ECAP4_DMA_INT    (4)
+#define DMAXBAR_ECAP5_DMA_INT    (5)
+#define DMAXBAR_ECAP6_DMA_INT    (6)
+#define DMAXBAR_ECAP7_DMA_INT    (7)
+
+/**************************************************************************
+    XBAR OUTPUT Macros
+**************************************************************************/
+
+#define DMAXBAR_OUT0              0
+#define DMAXBAR_OUT1              1
+#define DMAXBAR_OUT2              2
+#define DMAXBAR_OUT3              3
+#define DMAXBAR_OUT4              4
+#define DMAXBAR_OUT5              5
+#define DMAXBAR_OUT6              6
+#define DMAXBAR_OUT7              7
+#define DMAXBAR_OUT8              8
+#define DMAXBAR_OUT9              9
+#define DMAXBAR_OUT10             10
+#define DMAXBAR_OUT11             11
+#define DMAXBAR_OUT12             12
+#define DMAXBAR_OUT13             13
+#define DMAXBAR_OUT14             14
+#define DMAXBAR_OUT15             15
 
 /**************************************************************************
 * Register Overlay Structure
@@ -60,8 +150,7 @@ typedef struct {
     volatile uint32_t DMAXBAR0_G3;
     volatile uint32_t DMAXBAR0_G4;
     volatile uint32_t DMAXBAR0_G5;
-    volatile uint32_t DMAXBAR0_G6;
-    volatile uint8_t  Resv_320[32];
+    volatile uint8_t  Resv_320[36];
     volatile uint32_t DMAXBAR1_GSEL;
     volatile uint32_t DMAXBAR1_G0;
     volatile uint32_t DMAXBAR1_G1;
@@ -69,8 +158,7 @@ typedef struct {
     volatile uint32_t DMAXBAR1_G3;
     volatile uint32_t DMAXBAR1_G4;
     volatile uint32_t DMAXBAR1_G5;
-    volatile uint32_t DMAXBAR1_G6;
-    volatile uint8_t  Resv_384[32];
+    volatile uint8_t  Resv_384[36];
     volatile uint32_t DMAXBAR2_GSEL;
     volatile uint32_t DMAXBAR2_G0;
     volatile uint32_t DMAXBAR2_G1;
@@ -78,8 +166,7 @@ typedef struct {
     volatile uint32_t DMAXBAR2_G3;
     volatile uint32_t DMAXBAR2_G4;
     volatile uint32_t DMAXBAR2_G5;
-    volatile uint32_t DMAXBAR2_G6;
-    volatile uint8_t  Resv_448[32];
+    volatile uint8_t  Resv_448[36];
     volatile uint32_t DMAXBAR3_GSEL;
     volatile uint32_t DMAXBAR3_G0;
     volatile uint32_t DMAXBAR3_G1;
@@ -87,8 +174,7 @@ typedef struct {
     volatile uint32_t DMAXBAR3_G3;
     volatile uint32_t DMAXBAR3_G4;
     volatile uint32_t DMAXBAR3_G5;
-    volatile uint32_t DMAXBAR3_G6;
-    volatile uint8_t  Resv_512[32];
+    volatile uint8_t  Resv_512[36];
     volatile uint32_t DMAXBAR4_GSEL;
     volatile uint32_t DMAXBAR4_G0;
     volatile uint32_t DMAXBAR4_G1;
@@ -96,8 +182,7 @@ typedef struct {
     volatile uint32_t DMAXBAR4_G3;
     volatile uint32_t DMAXBAR4_G4;
     volatile uint32_t DMAXBAR4_G5;
-    volatile uint32_t DMAXBAR4_G6;
-    volatile uint8_t  Resv_576[32];
+    volatile uint8_t  Resv_576[36];
     volatile uint32_t DMAXBAR5_GSEL;
     volatile uint32_t DMAXBAR5_G0;
     volatile uint32_t DMAXBAR5_G1;
@@ -105,8 +190,7 @@ typedef struct {
     volatile uint32_t DMAXBAR5_G3;
     volatile uint32_t DMAXBAR5_G4;
     volatile uint32_t DMAXBAR5_G5;
-    volatile uint32_t DMAXBAR5_G6;
-    volatile uint8_t  Resv_640[32];
+    volatile uint8_t  Resv_640[36];
     volatile uint32_t DMAXBAR6_GSEL;
     volatile uint32_t DMAXBAR6_G0;
     volatile uint32_t DMAXBAR6_G1;
@@ -114,8 +198,7 @@ typedef struct {
     volatile uint32_t DMAXBAR6_G3;
     volatile uint32_t DMAXBAR6_G4;
     volatile uint32_t DMAXBAR6_G5;
-    volatile uint32_t DMAXBAR6_G6;
-    volatile uint8_t  Resv_704[32];
+    volatile uint8_t  Resv_704[36];
     volatile uint32_t DMAXBAR7_GSEL;
     volatile uint32_t DMAXBAR7_G0;
     volatile uint32_t DMAXBAR7_G1;
@@ -123,8 +206,7 @@ typedef struct {
     volatile uint32_t DMAXBAR7_G3;
     volatile uint32_t DMAXBAR7_G4;
     volatile uint32_t DMAXBAR7_G5;
-    volatile uint32_t DMAXBAR7_G6;
-    volatile uint8_t  Resv_768[32];
+    volatile uint8_t  Resv_768[36];
     volatile uint32_t DMAXBAR8_GSEL;
     volatile uint32_t DMAXBAR8_G0;
     volatile uint32_t DMAXBAR8_G1;
@@ -132,8 +214,7 @@ typedef struct {
     volatile uint32_t DMAXBAR8_G3;
     volatile uint32_t DMAXBAR8_G4;
     volatile uint32_t DMAXBAR8_G5;
-    volatile uint32_t DMAXBAR8_G6;
-    volatile uint8_t  Resv_832[32];
+    volatile uint8_t  Resv_832[36];
     volatile uint32_t DMAXBAR9_GSEL;
     volatile uint32_t DMAXBAR9_G0;
     volatile uint32_t DMAXBAR9_G1;
@@ -141,8 +222,7 @@ typedef struct {
     volatile uint32_t DMAXBAR9_G3;
     volatile uint32_t DMAXBAR9_G4;
     volatile uint32_t DMAXBAR9_G5;
-    volatile uint32_t DMAXBAR9_G6;
-    volatile uint8_t  Resv_896[32];
+    volatile uint8_t  Resv_896[36];
     volatile uint32_t DMAXBAR10_GSEL;
     volatile uint32_t DMAXBAR10_G0;
     volatile uint32_t DMAXBAR10_G1;
@@ -150,8 +230,7 @@ typedef struct {
     volatile uint32_t DMAXBAR10_G3;
     volatile uint32_t DMAXBAR10_G4;
     volatile uint32_t DMAXBAR10_G5;
-    volatile uint32_t DMAXBAR10_G6;
-    volatile uint8_t  Resv_960[32];
+    volatile uint8_t  Resv_960[36];
     volatile uint32_t DMAXBAR11_GSEL;
     volatile uint32_t DMAXBAR11_G0;
     volatile uint32_t DMAXBAR11_G1;
@@ -159,8 +238,7 @@ typedef struct {
     volatile uint32_t DMAXBAR11_G3;
     volatile uint32_t DMAXBAR11_G4;
     volatile uint32_t DMAXBAR11_G5;
-    volatile uint32_t DMAXBAR11_G6;
-    volatile uint8_t  Resv_1024[32];
+    volatile uint8_t  Resv_1024[36];
     volatile uint32_t DMAXBAR12_GSEL;
     volatile uint32_t DMAXBAR12_G0;
     volatile uint32_t DMAXBAR12_G1;
@@ -168,8 +246,7 @@ typedef struct {
     volatile uint32_t DMAXBAR12_G3;
     volatile uint32_t DMAXBAR12_G4;
     volatile uint32_t DMAXBAR12_G5;
-    volatile uint32_t DMAXBAR12_G6;
-    volatile uint8_t  Resv_1088[32];
+    volatile uint8_t  Resv_1088[36];
     volatile uint32_t DMAXBAR13_GSEL;
     volatile uint32_t DMAXBAR13_G0;
     volatile uint32_t DMAXBAR13_G1;
@@ -177,8 +254,7 @@ typedef struct {
     volatile uint32_t DMAXBAR13_G3;
     volatile uint32_t DMAXBAR13_G4;
     volatile uint32_t DMAXBAR13_G5;
-    volatile uint32_t DMAXBAR13_G6;
-    volatile uint8_t  Resv_1152[32];
+    volatile uint8_t  Resv_1152[36];
     volatile uint32_t DMAXBAR14_GSEL;
     volatile uint32_t DMAXBAR14_G0;
     volatile uint32_t DMAXBAR14_G1;
@@ -186,8 +262,7 @@ typedef struct {
     volatile uint32_t DMAXBAR14_G3;
     volatile uint32_t DMAXBAR14_G4;
     volatile uint32_t DMAXBAR14_G5;
-    volatile uint32_t DMAXBAR14_G6;
-    volatile uint8_t  Resv_1216[32];
+    volatile uint8_t  Resv_1216[36];
     volatile uint32_t DMAXBAR15_GSEL;
     volatile uint32_t DMAXBAR15_G0;
     volatile uint32_t DMAXBAR15_G1;
@@ -195,7 +270,6 @@ typedef struct {
     volatile uint32_t DMAXBAR15_G3;
     volatile uint32_t DMAXBAR15_G4;
     volatile uint32_t DMAXBAR15_G5;
-    volatile uint32_t DMAXBAR15_G6;
 } CSL_controlss_dmaxbarRegs;
 
 
@@ -211,7 +285,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3                                      (0x00000110U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G4                                      (0x00000114U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5                                      (0x00000118U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6                                      (0x0000011CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_GSEL                                    (0x00000140U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0                                      (0x00000144U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1                                      (0x00000148U)
@@ -219,7 +292,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3                                      (0x00000150U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G4                                      (0x00000154U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5                                      (0x00000158U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6                                      (0x0000015CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_GSEL                                    (0x00000180U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0                                      (0x00000184U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1                                      (0x00000188U)
@@ -227,7 +299,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3                                      (0x00000190U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G4                                      (0x00000194U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5                                      (0x00000198U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6                                      (0x0000019CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_GSEL                                    (0x000001C0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0                                      (0x000001C4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1                                      (0x000001C8U)
@@ -235,7 +306,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3                                      (0x000001D0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G4                                      (0x000001D4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5                                      (0x000001D8U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6                                      (0x000001DCU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_GSEL                                    (0x00000200U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0                                      (0x00000204U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1                                      (0x00000208U)
@@ -243,7 +313,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3                                      (0x00000210U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G4                                      (0x00000214U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5                                      (0x00000218U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6                                      (0x0000021CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_GSEL                                    (0x00000240U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0                                      (0x00000244U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1                                      (0x00000248U)
@@ -251,7 +320,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3                                      (0x00000250U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G4                                      (0x00000254U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5                                      (0x00000258U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6                                      (0x0000025CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_GSEL                                    (0x00000280U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0                                      (0x00000284U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1                                      (0x00000288U)
@@ -259,7 +327,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3                                      (0x00000290U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G4                                      (0x00000294U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5                                      (0x00000298U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6                                      (0x0000029CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_GSEL                                    (0x000002C0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0                                      (0x000002C4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1                                      (0x000002C8U)
@@ -267,7 +334,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3                                      (0x000002D0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G4                                      (0x000002D4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5                                      (0x000002D8U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6                                      (0x000002DCU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_GSEL                                    (0x00000300U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0                                      (0x00000304U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1                                      (0x00000308U)
@@ -275,7 +341,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3                                      (0x00000310U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G4                                      (0x00000314U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5                                      (0x00000318U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6                                      (0x0000031CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_GSEL                                    (0x00000340U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0                                      (0x00000344U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1                                      (0x00000348U)
@@ -283,7 +348,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3                                      (0x00000350U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G4                                      (0x00000354U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5                                      (0x00000358U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6                                      (0x0000035CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_GSEL                                   (0x00000380U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0                                     (0x00000384U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1                                     (0x00000388U)
@@ -291,7 +355,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3                                     (0x00000390U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G4                                     (0x00000394U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5                                     (0x00000398U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6                                     (0x0000039CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_GSEL                                   (0x000003C0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0                                     (0x000003C4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1                                     (0x000003C8U)
@@ -299,7 +362,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3                                     (0x000003D0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G4                                     (0x000003D4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5                                     (0x000003D8U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6                                     (0x000003DCU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_GSEL                                   (0x00000400U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0                                     (0x00000404U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1                                     (0x00000408U)
@@ -307,7 +369,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3                                     (0x00000410U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G4                                     (0x00000414U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5                                     (0x00000418U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6                                     (0x0000041CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_GSEL                                   (0x00000440U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0                                     (0x00000444U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1                                     (0x00000448U)
@@ -315,7 +376,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3                                     (0x00000450U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G4                                     (0x00000454U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5                                     (0x00000458U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6                                     (0x0000045CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_GSEL                                   (0x00000480U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0                                     (0x00000484U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1                                     (0x00000488U)
@@ -323,7 +383,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3                                     (0x00000490U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G4                                     (0x00000494U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5                                     (0x00000498U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6                                     (0x0000049CU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_GSEL                                   (0x000004C0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0                                     (0x000004C4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1                                     (0x000004C8U)
@@ -331,7 +390,6 @@ typedef struct {
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3                                     (0x000004D0U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G4                                     (0x000004D4U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5                                     (0x000004D8U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6                                     (0x000004DCU)
 
 /**************************************************************************
 * Field Definition Macros
@@ -378,37 +436,37 @@ typedef struct {
 
 /* DMAXBAR0_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR0_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR0_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR0_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_RESETVAL                             (0x00000000U)
 
@@ -423,21 +481,12 @@ typedef struct {
 
 /* DMAXBAR0_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR0_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR1_GSEL */
 
@@ -450,37 +499,37 @@ typedef struct {
 
 /* DMAXBAR1_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR1_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR1_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR1_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G3_RESETVAL                             (0x00000000U)
 
@@ -495,21 +544,12 @@ typedef struct {
 
 /* DMAXBAR1_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR1_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR1_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR2_GSEL */
 
@@ -522,37 +562,37 @@ typedef struct {
 
 /* DMAXBAR2_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR2_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR2_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR2_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G3_RESETVAL                             (0x00000000U)
 
@@ -567,21 +607,12 @@ typedef struct {
 
 /* DMAXBAR2_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR2_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR2_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR3_GSEL */
 
@@ -594,37 +625,37 @@ typedef struct {
 
 /* DMAXBAR3_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR3_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR3_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR3_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G3_RESETVAL                             (0x00000000U)
 
@@ -639,21 +670,12 @@ typedef struct {
 
 /* DMAXBAR3_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR3_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR3_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR4_GSEL */
 
@@ -666,37 +688,37 @@ typedef struct {
 
 /* DMAXBAR4_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR4_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR4_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR4_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G3_RESETVAL                             (0x00000000U)
 
@@ -711,21 +733,12 @@ typedef struct {
 
 /* DMAXBAR4_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR4_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR4_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR5_GSEL */
 
@@ -738,37 +751,37 @@ typedef struct {
 
 /* DMAXBAR5_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR5_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR5_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR5_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G3_RESETVAL                             (0x00000000U)
 
@@ -783,21 +796,12 @@ typedef struct {
 
 /* DMAXBAR5_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR5_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR5_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR6_GSEL */
 
@@ -810,37 +814,37 @@ typedef struct {
 
 /* DMAXBAR6_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR6_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR6_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR6_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G3_RESETVAL                             (0x00000000U)
 
@@ -855,21 +859,12 @@ typedef struct {
 
 /* DMAXBAR6_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR6_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR6_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR7_GSEL */
 
@@ -882,37 +877,37 @@ typedef struct {
 
 /* DMAXBAR7_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR7_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR7_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR7_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G3_RESETVAL                             (0x00000000U)
 
@@ -927,21 +922,12 @@ typedef struct {
 
 /* DMAXBAR7_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR7_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR7_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR8_GSEL */
 
@@ -954,37 +940,37 @@ typedef struct {
 
 /* DMAXBAR8_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR8_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR8_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR8_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G3_RESETVAL                             (0x00000000U)
 
@@ -999,21 +985,12 @@ typedef struct {
 
 /* DMAXBAR8_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR8_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR8_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR9_GSEL */
 
@@ -1026,37 +1003,37 @@ typedef struct {
 
 /* DMAXBAR9_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G0_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR9_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G1_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR9_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_MASK                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_MASK                             (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_MAX                              (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_SEL_MAX                              (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G2_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR9_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_MASK                             (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_SEL_MAX                              (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G3_RESETVAL                             (0x00000000U)
 
@@ -1071,21 +1048,12 @@ typedef struct {
 
 /* DMAXBAR9_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_MASK                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_MASK                             (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_MAX                              (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_SEL_MAX                              (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G5_RESETVAL                             (0x00000000U)
-
-/* DMAXBAR9_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6_SEL_MASK                             (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6_SEL_MAX                              (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR9_G6_RESETVAL                             (0x00000000U)
 
 /* DMAXBAR10_GSEL */
 
@@ -1098,37 +1066,37 @@ typedef struct {
 
 /* DMAXBAR10_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR10_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR10_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR10_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G3_RESETVAL                            (0x00000000U)
 
@@ -1143,21 +1111,12 @@ typedef struct {
 
 /* DMAXBAR10_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR10_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR10_G6_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR11_GSEL */
 
@@ -1170,37 +1129,37 @@ typedef struct {
 
 /* DMAXBAR11_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR11_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR11_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR11_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G3_RESETVAL                            (0x00000000U)
 
@@ -1215,21 +1174,12 @@ typedef struct {
 
 /* DMAXBAR11_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR11_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR11_G6_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR12_GSEL */
 
@@ -1242,37 +1192,37 @@ typedef struct {
 
 /* DMAXBAR12_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR12_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR12_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR12_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G3_RESETVAL                            (0x00000000U)
 
@@ -1287,21 +1237,12 @@ typedef struct {
 
 /* DMAXBAR12_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR12_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR12_G6_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR13_GSEL */
 
@@ -1314,37 +1255,37 @@ typedef struct {
 
 /* DMAXBAR13_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR13_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR13_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR13_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G3_RESETVAL                            (0x00000000U)
 
@@ -1359,21 +1300,12 @@ typedef struct {
 
 /* DMAXBAR13_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR13_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR13_G6_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR14_GSEL */
 
@@ -1386,37 +1318,37 @@ typedef struct {
 
 /* DMAXBAR14_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR14_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR14_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR14_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G3_RESETVAL                            (0x00000000U)
 
@@ -1431,21 +1363,12 @@ typedef struct {
 
 /* DMAXBAR14_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR14_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR14_G6_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR15_GSEL */
 
@@ -1458,37 +1381,37 @@ typedef struct {
 
 /* DMAXBAR15_G0 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G0_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR15_G1 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G1_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR15_G2 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_MASK                            (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_MASK                            (0x0000000FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_MAX                             (0x0000001FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_SEL_MAX                             (0x0000000FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G2_RESETVAL                            (0x00000000U)
 
 /* DMAXBAR15_G3 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_MASK                            (0x0000001FU)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_SEL_MAX                             (0x0000001FU)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G3_RESETVAL                            (0x00000000U)
 
@@ -1503,21 +1426,12 @@ typedef struct {
 
 /* DMAXBAR15_G5 */
 
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_MASK                            (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_MASK                            (0x00000007U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_MAX                             (0x0000000FU)
+#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_SEL_MAX                             (0x00000007U)
 
 #define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G5_RESETVAL                            (0x00000000U)
-
-/* DMAXBAR15_G6 */
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6_SEL_MASK                            (0x0000000FU)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6_SEL_MAX                             (0x0000000FU)
-
-#define CSL_CONTROLSS_DMAXBAR_DMAXBAR15_G6_RESETVAL                            (0x00000000U)
 
 #ifdef __cplusplus
 }

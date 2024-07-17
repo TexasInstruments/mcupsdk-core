@@ -2266,10 +2266,10 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
             break;
 #elif defined (SOC_AM261X)
         case CSL_MCAN0_MSG_RAM_U_BASE:
-            eccAggrBase = CSL_MCAN0_ECC_U_BASE;
+            //eccAggrBase = CSL_MCAN0_ECC_U_BASE;
             break;
         case CSL_MCAN1_MSG_RAM_U_BASE:
-            eccAggrBase = CSL_MCAN1_ECC_U_BASE;
+            //eccAggrBase = CSL_MCAN1_ECC_U_BASE;
             break;
 #elif defined (SOC_AM62X)
         /*

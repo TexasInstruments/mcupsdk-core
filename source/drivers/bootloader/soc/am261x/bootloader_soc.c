@@ -124,7 +124,7 @@ uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)
     uint32_t cslCoreId = CSL_CORE_ID_MAX;
     uint32_t rprcCoreIds[CSL_CORE_ID_MAX] =
     {
-        0U, 1U, 2U, 3U
+        0U, 1U
     };
     uint32_t i;
 
@@ -168,8 +168,7 @@ uint64_t Bootloader_socCpuGetClock(uint32_t cpuId)
 {
     int32_t status = SystemP_FAILURE;
     uint64_t clkRate = 0;
-    if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1) ||
-        (cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
+    if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1))
     {
         clkRate = SOC_rcmGetR5Clock(cpuId);
     }
@@ -201,8 +200,6 @@ int32_t Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz)
     {
         case CSL_CORE_ID_R5FSS0_0:
         case CSL_CORE_ID_R5FSS0_1:
-        case CSL_CORE_ID_R5FSS1_0:
-        case CSL_CORE_ID_R5FSS1_1:
             status = SOC_rcmSetR5Clock(cpuHz, cpuHz/2, cpuId);
             break;
     }
@@ -249,48 +246,6 @@ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
             gR5ss0Core1ImagePresent = TRUE;
             Bootloader_socMemInitCpu(cpuId);
             break;
-        case CSL_CORE_ID_R5FSS1_0:
-            if (gR5ss1Core1ImagePresent == FALSE)
-            {
-            /* Core 1 image is not present or not booted yet.
-               ConfigureR5 in lock step mode. */
-                if (socCoreOpMode != NULL){
-                    Bootloader_socCoreOpModeConfig *config = (Bootloader_socCoreOpModeConfig *)socCoreOpMode;
-                    if (config->r5fss1_opMode == BOOTLOADER_OPMODE_LOCKSTEP){
-                        SOC_rcmR5ConfigLockStep(cpuId);
-                        Bootloader_socMemInitCpu(cpuId);
-                    }
-                    else
-                    {
-                    /* ConfigureR5 in Standalone mode as set in syscfg*/
-                        SOC_rcmR5ConfigDualCore(CSL_CORE_ID_R5FSS1_1);
-                        if (gR5ss1PORDone == FALSE)
-                        {
-                            SOC_rcmR5SS1PowerOnReset();
-                            SOC_rcmR5SS1TriggerReset();
-                            gR5ss1PORDone = TRUE;
-                        }
-                        Bootloader_socMemInitCpu(CSL_CORE_ID_R5FSS1_1);
-                        Bootloader_socCpuResetRelease(CSL_CORE_ID_R5FSS1_1, 0);
-                    }
-                }
-                else{
-                    SOC_rcmR5ConfigLockStep(cpuId);
-                    Bootloader_socMemInitCpu(cpuId);
-                }
-            }
-        break;
-        case CSL_CORE_ID_R5FSS1_1:
-            SOC_rcmR5ConfigDualCore(cpuId);
-            gR5ss1Core1ImagePresent = TRUE;
-            if (gR5ss1PORDone == FALSE)
-            {
-                SOC_rcmR5SS1PowerOnReset();
-                SOC_rcmR5SS1TriggerReset();
-                gR5ss1PORDone = TRUE;
-            }
-            Bootloader_socMemInitCpu(cpuId);
-            break;
     }
     return status;
 }
@@ -311,17 +266,6 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
                 gR5ss0MemInitDone = TRUE;
             }
             break;
-        case CSL_CORE_ID_R5FSS1_0:
-        case CSL_CORE_ID_R5FSS1_1:
-            if (gR5ss1MemInitDone == FALSE)
-            {
-                SOC_rcmStartMemInitTCMA(cpuId);
-                SOC_rcmWaitMemInitTCMA(cpuId);
-                SOC_rcmStartMemInitTCMB(cpuId);
-                SOC_rcmWaitMemInitTCMB(cpuId);
-                gR5ss1MemInitDone = TRUE;
-            }
-            break;
         default:
             break;
     }
@@ -336,10 +280,6 @@ int32_t Bootloader_socCpuResetRelease(uint32_t cpuId, uintptr_t entryPoint)
     switch (cpuId)
     {
         case CSL_CORE_ID_R5FSS0_1:
-            SOC_rcmCoreR5FUnhalt(cpuId);
-            break;
-        case CSL_CORE_ID_R5FSS1_0:
-        case CSL_CORE_ID_R5FSS1_1:
             SOC_rcmCoreR5FUnhalt(cpuId);
             break;
         default:

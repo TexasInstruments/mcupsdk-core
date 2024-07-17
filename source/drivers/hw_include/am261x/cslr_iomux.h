@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2023 Texas Instruments Incorporated.
+ * Copyright (C) 2021 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,170 +51,8 @@ extern "C"
 **************************************************************************/
 
 typedef struct {
-    volatile uint32_t QSPI0_CSN0_CFG_REG;
-    volatile uint32_t QSPI0_CSN1_CFG_REG;
-    volatile uint32_t QSPI0_CLK_CFG_REG;
-    volatile uint32_t QSPI0_D0_CFG_REG;
-    volatile uint32_t QSPI0_D1_CFG_REG;
-    volatile uint32_t QSPI0_D2_CFG_REG;
-    volatile uint32_t QSPI0_D3_CFG_REG;
-    volatile uint32_t MCAN0_RX_CFG_REG;
-    volatile uint32_t MCAN0_TX_CFG_REG;
-    volatile uint32_t MCAN1_RX_CFG_REG;
-    volatile uint32_t MCAN1_TX_CFG_REG;
-    volatile uint32_t SPI0_CS0_CFG_REG;
-    volatile uint32_t SPI0_CLK_CFG_REG;
-    volatile uint32_t SPI0_D0_CFG_REG;
-    volatile uint32_t SPI0_D1_CFG_REG;
-    volatile uint32_t SPI1_CS0_CFG_REG;
-    volatile uint32_t SPI1_CLK_CFG_REG;
-    volatile uint32_t SPI1_D0_CFG_REG;
-    volatile uint32_t SPI1_D1_CFG_REG;
-    volatile uint32_t LIN1_RXD_CFG_REG;
-    volatile uint32_t LIN1_TXD_CFG_REG;
-    volatile uint32_t LIN2_RXD_CFG_REG;
-    volatile uint32_t LIN2_TXD_CFG_REG;
-    volatile uint32_t I2C1_SCL_CFG_REG;
-    volatile uint32_t I2C1_SDA_CFG_REG;
-    volatile uint32_t UART0_RTSN_CFG_REG;
-    volatile uint32_t UART0_CTSN_CFG_REG;
-    volatile uint32_t UART0_RXD_CFG_REG;
-    volatile uint32_t UART0_TXD_CFG_REG;
-    volatile uint32_t RGMII1_RXC_CFG_REG;
-    volatile uint32_t RGMII1_RX_CTL_CFG_REG;
-    volatile uint32_t RGMII1_RD0_CFG_REG;
-    volatile uint32_t RGMII1_RD1_CFG_REG;
-    volatile uint32_t RGMII1_RD2_CFG_REG;
-    volatile uint32_t RGMII1_RD3_CFG_REG;
-    volatile uint32_t RGMII1_TXC_CFG_REG;
-    volatile uint32_t RGMII1_TX_CTL_CFG_REG;
-    volatile uint32_t RGMII1_TD0_CFG_REG;
-    volatile uint32_t RGMII1_TD1_CFG_REG;
-    volatile uint32_t RGMII1_TD2_CFG_REG;
-    volatile uint32_t RGMII1_TD3_CFG_REG;
-    volatile uint32_t MDIO0_MDIO_CFG_REG;
-    volatile uint32_t MDIO0_MDC_CFG_REG;
-    volatile uint32_t EPWM0_A_CFG_REG;
-    volatile uint32_t EPWM0_B_CFG_REG;
-    volatile uint32_t EPWM1_A_CFG_REG;
-    volatile uint32_t EPWM1_B_CFG_REG;
-    volatile uint32_t EPWM2_A_CFG_REG;
-    volatile uint32_t EPWM2_B_CFG_REG;
-    volatile uint32_t EPWM3_A_CFG_REG;
-    volatile uint32_t EPWM3_B_CFG_REG;
-    volatile uint32_t EPWM4_A_CFG_REG;
-    volatile uint32_t EPWM4_B_CFG_REG;
-    volatile uint32_t EPWM5_A_CFG_REG;
-    volatile uint32_t EPWM5_B_CFG_REG;
-    volatile uint32_t EPWM6_A_CFG_REG;
-    volatile uint32_t EPWM6_B_CFG_REG;
-    volatile uint32_t EPWM7_A_CFG_REG;
-    volatile uint32_t EPWM7_B_CFG_REG;
-    volatile uint32_t EPWM8_A_CFG_REG;
-    volatile uint32_t EPWM8_B_CFG_REG;
-    volatile uint32_t EPWM9_A_CFG_REG;
-    volatile uint32_t EPWM9_B_CFG_REG;
-    volatile uint32_t EPWM10_A_CFG_REG;
-    volatile uint32_t EPWM10_B_CFG_REG;
-    volatile uint32_t EPWM11_A_CFG_REG;
-    volatile uint32_t EPWM11_B_CFG_REG;
-    volatile uint32_t EPWM12_A_CFG_REG;
-    volatile uint32_t EPWM12_B_CFG_REG;
-    volatile uint32_t EPWM13_A_CFG_REG;
-    volatile uint32_t EPWM13_B_CFG_REG;
-    volatile uint32_t EPWM14_A_CFG_REG;
-    volatile uint32_t EPWM14_B_CFG_REG;
-    volatile uint32_t EPWM15_A_CFG_REG;
-    volatile uint32_t EPWM15_B_CFG_REG;
-    volatile uint32_t UART1_RXD_CFG_REG;
-    volatile uint32_t UART1_TXD_CFG_REG;
-    volatile uint32_t MMC0_CLK_CFG_REG;
-    volatile uint32_t MMC0_CMD_CFG_REG;
-    volatile uint32_t MMC0_D0_CFG_REG;
-    volatile uint32_t MMC0_D1_CFG_REG;
-    volatile uint32_t MMC0_D2_CFG_REG;
-    volatile uint32_t MMC0_D3_CFG_REG;
-    volatile uint32_t MMC0_WP_CFG_REG;
-    volatile uint32_t MMC0_CD_CFG_REG;
-    volatile uint32_t PR0_MDIO0_MDIO_CFG_REG;
-    volatile uint32_t PR0_MDIO0_MDC_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO5_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO9_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO10_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO8_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO6_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO4_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO0_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO1_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO2_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO3_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO16_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO15_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO11_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO12_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO13_CFG_REG;
-    volatile uint32_t PR0_PRU0_GPO14_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO5_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO9_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO10_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO8_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO6_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO4_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO0_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO1_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO2_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO3_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO16_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO15_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO11_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO12_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO13_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO14_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO19_CFG_REG;
-    volatile uint32_t PR0_PRU1_GPO18_CFG_REG;
-    volatile uint32_t EXT_REFCLK0_CFG_REG;
-    volatile uint32_t SDFM0_CLK0_CFG_REG;
-    volatile uint32_t SDFM0_D0_CFG_REG;
-    volatile uint32_t SDFM0_CLK1_CFG_REG;
-    volatile uint32_t SDFM0_D1_CFG_REG;
-    volatile uint32_t SDFM0_CLK2_CFG_REG;
-    volatile uint32_t SDFM0_D2_CFG_REG;
-    volatile uint32_t SDFM0_CLK3_CFG_REG;
-    volatile uint32_t SDFM0_D3_CFG_REG;
-    volatile uint32_t EQEP0_A_CFG_REG;
-    volatile uint32_t EQEP0_B_CFG_REG;
-    volatile uint32_t EQEP0_STROBE_CFG_REG;
-    volatile uint32_t EQEP0_INDEX_CFG_REG;
-    volatile uint32_t I2C0_SDA_CFG_REG;
-    volatile uint32_t I2C0_SCL_CFG_REG;
-    volatile uint32_t MCAN2_TX_CFG_REG;
-    volatile uint32_t MCAN2_RX_CFG_REG;
-    volatile uint32_t CLKOUT0_CFG_REG;
-    volatile uint32_t WARMRSTN_CFG_REG;
-    volatile uint32_t SAFETY_ERRORN_CFG_REG;
-    volatile uint32_t TDI_CFG_REG;
-    volatile uint32_t TDO_CFG_REG;
-    volatile uint32_t TMS_CFG_REG;
-    volatile uint32_t TCK_CFG_REG;
-    volatile uint32_t OSPI0_CLKLB_CFG_REG;
-    volatile uint32_t QUAL_GRP_0_CFG_REG;
-    volatile uint32_t QUAL_GRP_1_CFG_REG;
-    volatile uint32_t QUAL_GRP_2_CFG_REG;
-    volatile uint32_t QUAL_GRP_3_CFG_REG;
-    volatile uint32_t QUAL_GRP_4_CFG_REG;
-    volatile uint32_t QUAL_GRP_5_CFG_REG;
-    volatile uint32_t QUAL_GRP_6_CFG_REG;
-    volatile uint32_t QUAL_GRP_7_CFG_REG;
-    volatile uint32_t QUAL_GRP_8_CFG_REG;
-    volatile uint32_t QUAL_GRP_9_CFG_REG;
-    volatile uint32_t QUAL_GRP_10_CFG_REG;
-    volatile uint32_t QUAL_GRP_11_CFG_REG;
-    volatile uint32_t QUAL_GRP_12_CFG_REG;
-    volatile uint32_t QUAL_GRP_13_CFG_REG;
-    volatile uint32_t QUAL_GRP_14_CFG_REG;
-    volatile uint32_t QUAL_GRP_15_CFG_REG;
-    volatile uint32_t QUAL_GRP_16_CFG_REG;
-    volatile uint32_t QUAL_GRP_17_CFG_REG;
+    volatile uint32_t PAD_CFG_REG[146];
+    volatile uint32_t QUAL_GRP_CFG_REG[18];
     volatile uint32_t USER_MODE_EN;
     volatile uint32_t PADGLBL_CFG_REG;
     volatile uint32_t IO_CFG_KICK0;
@@ -371,7 +209,7 @@ typedef struct {
 #define CSL_IOMUX_TDO_CFG_REG                                                  (0x00000238U)
 #define CSL_IOMUX_TMS_CFG_REG                                                  (0x0000023CU)
 #define CSL_IOMUX_TCK_CFG_REG                                                  (0x00000240U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG                                          (0x00000244U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG                                          (0x00000244U)
 #define CSL_IOMUX_QUAL_GRP_0_CFG_REG                                           (0x00000248U)
 #define CSL_IOMUX_QUAL_GRP_1_CFG_REG                                           (0x0000024CU)
 #define CSL_IOMUX_QUAL_GRP_2_CFG_REG                                           (0x00000250U)
@@ -457,16 +295,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_CSN0_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_QSPI0_CSN0_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_QSPI0_CSN0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_QSPI0_CSN0_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_QSPI0_CSN0_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_QSPI0_CSN0_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -535,16 +363,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_CSN1_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_QSPI0_CSN1_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_QSPI0_CSN1_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_QSPI0_CSN1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_QSPI0_CSN1_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_QSPI0_CSN1_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -615,16 +433,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_CLK_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_QSPI0_CLK_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
 
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_QSPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
-
 #define CSL_IOMUX_QSPI0_CLK_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_QSPI0_CLK_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
 #define CSL_IOMUX_QSPI0_CLK_CFG_REG_HSMODE_RESETVAL                            (0x00000000U)
@@ -693,16 +501,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_D0_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_QSPI0_D0_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_QSPI0_D0_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_QSPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_QSPI0_D0_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_QSPI0_D0_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -773,16 +571,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_D1_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_QSPI0_D1_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_QSPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_QSPI0_D1_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_QSPI0_D1_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_QSPI0_D1_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -851,16 +639,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_D2_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_QSPI0_D2_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_QSPI0_D2_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_QSPI0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_QSPI0_D2_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_QSPI0_D2_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -931,16 +709,6 @@ typedef struct {
 #define CSL_IOMUX_QSPI0_D3_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_QSPI0_D3_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_QSPI0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_QSPI0_D3_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_QSPI0_D3_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_QSPI0_D3_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -1009,16 +777,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN0_RX_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_MCAN0_RX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN0_RX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN0_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_MCAN0_RX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN0_RX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -1089,16 +847,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN0_TX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN0_TX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN0_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_MCAN0_TX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN0_TX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_MCAN0_TX_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -1167,16 +915,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN1_RX_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_MCAN1_RX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN1_RX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN1_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_MCAN1_RX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN1_RX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -1247,16 +985,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN1_TX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN1_TX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN1_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_MCAN1_TX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN1_TX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_MCAN1_TX_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -1325,16 +1053,6 @@ typedef struct {
 #define CSL_IOMUX_SPI0_CS0_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SPI0_CS0_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SPI0_CS0_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SPI0_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SPI0_CS0_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SPI0_CS0_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -1405,16 +1123,6 @@ typedef struct {
 #define CSL_IOMUX_SPI0_CLK_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SPI0_CLK_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SPI0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_SPI0_CLK_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SPI0_CLK_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_SPI0_CLK_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -1483,16 +1191,6 @@ typedef struct {
 #define CSL_IOMUX_SPI0_D0_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_SPI0_D0_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_SPI0_D0_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_SPI0_D0_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_SPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_SPI0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_SPI0_D0_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_SPI0_D0_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -1563,16 +1261,6 @@ typedef struct {
 #define CSL_IOMUX_SPI0_D1_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_SPI0_D1_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_SPI0_D1_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_SPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_SPI0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_SPI0_D1_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_SPI0_D1_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_SPI0_D1_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -1641,16 +1329,6 @@ typedef struct {
 #define CSL_IOMUX_SPI1_CS0_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SPI1_CS0_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SPI1_CS0_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SPI1_CS0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SPI1_CS0_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SPI1_CS0_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -1721,16 +1399,6 @@ typedef struct {
 #define CSL_IOMUX_SPI1_CLK_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SPI1_CLK_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SPI1_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_SPI1_CLK_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SPI1_CLK_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_SPI1_CLK_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -1799,16 +1467,6 @@ typedef struct {
 #define CSL_IOMUX_SPI1_D0_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_SPI1_D0_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_SPI1_D0_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_SPI1_D0_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_SPI1_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_SPI1_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_SPI1_D0_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_SPI1_D0_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -1879,16 +1537,6 @@ typedef struct {
 #define CSL_IOMUX_SPI1_D1_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_SPI1_D1_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_SPI1_D1_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_SPI1_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_SPI1_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_SPI1_D1_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_SPI1_D1_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_SPI1_D1_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -1957,16 +1605,6 @@ typedef struct {
 #define CSL_IOMUX_LIN1_RXD_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_LIN1_RXD_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_LIN1_RXD_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_LIN1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_LIN1_RXD_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_LIN1_RXD_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -2037,16 +1675,6 @@ typedef struct {
 #define CSL_IOMUX_LIN1_TXD_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_LIN1_TXD_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_LIN1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_LIN1_TXD_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_LIN1_TXD_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_LIN1_TXD_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -2115,16 +1743,6 @@ typedef struct {
 #define CSL_IOMUX_LIN2_RXD_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_LIN2_RXD_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_LIN2_RXD_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_LIN2_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_LIN2_RXD_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_LIN2_RXD_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -2195,16 +1813,6 @@ typedef struct {
 #define CSL_IOMUX_LIN2_TXD_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_LIN2_TXD_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_LIN2_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_LIN2_TXD_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_LIN2_TXD_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_LIN2_TXD_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -2273,16 +1881,6 @@ typedef struct {
 #define CSL_IOMUX_I2C1_SCL_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_I2C1_SCL_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_I2C1_SCL_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_I2C1_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_I2C1_SCL_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_I2C1_SCL_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -2353,16 +1951,6 @@ typedef struct {
 #define CSL_IOMUX_I2C1_SDA_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_I2C1_SDA_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_I2C1_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_I2C1_SDA_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_I2C1_SDA_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_I2C1_SDA_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -2431,16 +2019,6 @@ typedef struct {
 #define CSL_IOMUX_UART0_RTSN_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_UART0_RTSN_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_UART0_RTSN_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_UART0_RTSN_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_UART0_RTSN_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_UART0_RTSN_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -2511,16 +2089,6 @@ typedef struct {
 #define CSL_IOMUX_UART0_CTSN_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_UART0_CTSN_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_UART0_CTSN_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_UART0_CTSN_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_UART0_CTSN_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_UART0_CTSN_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -2589,16 +2157,6 @@ typedef struct {
 #define CSL_IOMUX_UART0_RXD_CFG_REG_INP_INV_SEL_SHIFT                          (0x00000014U)
 #define CSL_IOMUX_UART0_RXD_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_UART0_RXD_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
-
-#define CSL_IOMUX_UART0_RXD_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_UART0_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_UART0_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
 
 #define CSL_IOMUX_UART0_RXD_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_UART0_RXD_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
@@ -2669,16 +2227,6 @@ typedef struct {
 #define CSL_IOMUX_UART0_TXD_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_UART0_TXD_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
 
-#define CSL_IOMUX_UART0_TXD_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_UART0_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_UART0_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
-
 #define CSL_IOMUX_UART0_TXD_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_UART0_TXD_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
 #define CSL_IOMUX_UART0_TXD_CFG_REG_HSMODE_RESETVAL                            (0x00000000U)
@@ -2747,16 +2295,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RXC_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_RXC_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_RXC_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_RXC_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_RXC_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_RXC_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -2827,16 +2365,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_RGMII1_RX_CTL_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -2905,16 +2433,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RD0_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_RD0_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_RD0_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_RD0_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_RD0_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -2985,16 +2503,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RD1_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_RD1_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_RD1_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_RD1_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_RGMII1_RD1_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -3063,16 +2571,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RD2_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_RD2_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_RD2_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_RD2_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_RD2_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -3143,16 +2641,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_RD3_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_RD3_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_RD3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_RD3_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_RD3_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_RGMII1_RD3_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -3221,16 +2709,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TXC_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_TXC_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_TXC_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_TXC_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_TXC_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_TXC_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -3301,16 +2779,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_RGMII1_TX_CTL_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -3379,16 +2847,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TD0_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_TD0_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_TD0_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_TD0_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_TD0_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -3459,16 +2917,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TD1_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_TD1_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_TD1_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_TD1_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_RGMII1_TD1_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -3537,16 +2985,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TD2_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_RGMII1_TD2_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_TD2_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_RGMII1_TD2_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_TD2_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -3617,16 +3055,6 @@ typedef struct {
 #define CSL_IOMUX_RGMII1_TD3_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_RGMII1_TD3_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_RGMII1_TD3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_RGMII1_TD3_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_RGMII1_TD3_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_RGMII1_TD3_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -3695,16 +3123,6 @@ typedef struct {
 #define CSL_IOMUX_MDIO0_MDIO_CFG_REG_INP_INV_SEL_SHIFT                         (0x00000014U)
 #define CSL_IOMUX_MDIO0_MDIO_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_MDIO0_MDIO_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
 
 #define CSL_IOMUX_MDIO0_MDIO_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_MDIO0_MDIO_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
@@ -3775,16 +3193,6 @@ typedef struct {
 #define CSL_IOMUX_MDIO0_MDC_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_MDIO0_MDC_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
 
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
-
 #define CSL_IOMUX_MDIO0_MDC_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_MDIO0_MDC_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
 #define CSL_IOMUX_MDIO0_MDC_CFG_REG_HSMODE_RESETVAL                            (0x00000000U)
@@ -3853,16 +3261,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM0_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM0_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM0_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM0_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM0_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM0_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM0_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM0_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -3933,16 +3331,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM0_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM0_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM0_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM0_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM0_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM0_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM0_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM0_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4011,16 +3399,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM1_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM1_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM1_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM1_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM1_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM1_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM1_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM1_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4091,16 +3469,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM1_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM1_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM1_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM1_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM1_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM1_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM1_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM1_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4169,16 +3537,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM2_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM2_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM2_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM2_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM2_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM2_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM2_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM2_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4249,16 +3607,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM2_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM2_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM2_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM2_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM2_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM2_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM2_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM2_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4327,16 +3675,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM3_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM3_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM3_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM3_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM3_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM3_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM3_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM3_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4407,16 +3745,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM3_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM3_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM3_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM3_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM3_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM3_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM3_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM3_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4485,16 +3813,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM4_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM4_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM4_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM4_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM4_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM4_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM4_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM4_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4565,16 +3883,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM4_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM4_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM4_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM4_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM4_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM4_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM4_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM4_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4643,16 +3951,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM5_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM5_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM5_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM5_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM5_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM5_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM5_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM5_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4723,16 +4021,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM5_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM5_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM5_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM5_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM5_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM5_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM5_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM5_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4801,16 +4089,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM6_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM6_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM6_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM6_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM6_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM6_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM6_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM6_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -4881,16 +4159,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM6_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM6_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM6_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM6_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM6_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM6_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM6_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM6_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -4959,16 +4227,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM7_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM7_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM7_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM7_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM7_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM7_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM7_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM7_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -5039,16 +4297,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM7_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM7_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM7_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM7_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM7_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM7_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM7_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM7_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -5117,16 +4365,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM8_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM8_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM8_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM8_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM8_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM8_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM8_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM8_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -5197,16 +4435,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM8_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM8_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM8_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM8_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM8_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM8_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM8_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM8_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -5275,16 +4503,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM9_A_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EPWM9_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM9_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EPWM9_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM9_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM9_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EPWM9_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM9_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -5355,16 +4573,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM9_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EPWM9_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EPWM9_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EPWM9_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EPWM9_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EPWM9_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EPWM9_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EPWM9_B_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -5433,16 +4641,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM10_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM10_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM10_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM10_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM10_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM10_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM10_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM10_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -5513,16 +4711,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM10_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM10_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM10_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM10_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM10_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM10_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM10_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM10_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -5591,16 +4779,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM11_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM11_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM11_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM11_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM11_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM11_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM11_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM11_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -5671,16 +4849,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM11_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM11_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM11_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM11_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM11_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM11_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM11_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM11_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -5749,16 +4917,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM12_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM12_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM12_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM12_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM12_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM12_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM12_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM12_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -5829,16 +4987,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM12_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM12_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM12_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM12_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM12_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM12_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM12_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM12_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -5907,16 +5055,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM13_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM13_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM13_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM13_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM13_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM13_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM13_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM13_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -5987,16 +5125,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM13_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM13_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM13_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM13_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM13_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM13_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM13_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM13_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -6065,16 +5193,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM14_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM14_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM14_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM14_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM14_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM14_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM14_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM14_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -6145,16 +5263,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM14_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM14_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM14_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM14_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM14_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM14_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM14_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM14_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -6223,16 +5331,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM15_A_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_EPWM15_A_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM15_A_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_EPWM15_A_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM15_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM15_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_EPWM15_A_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM15_A_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -6303,16 +5401,6 @@ typedef struct {
 #define CSL_IOMUX_EPWM15_B_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_EPWM15_B_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_EPWM15_B_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EPWM15_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_EPWM15_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_EPWM15_B_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_EPWM15_B_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_EPWM15_B_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -6381,16 +5469,6 @@ typedef struct {
 #define CSL_IOMUX_UART1_RXD_CFG_REG_INP_INV_SEL_SHIFT                          (0x00000014U)
 #define CSL_IOMUX_UART1_RXD_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_UART1_RXD_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
-
-#define CSL_IOMUX_UART1_RXD_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_UART1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_UART1_RXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
 
 #define CSL_IOMUX_UART1_RXD_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_UART1_RXD_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
@@ -6461,16 +5539,6 @@ typedef struct {
 #define CSL_IOMUX_UART1_TXD_CFG_REG_INP_INV_SEL_RESETVAL                       (0x00000000U)
 #define CSL_IOMUX_UART1_TXD_CFG_REG_INP_INV_SEL_MAX                            (0x00000001U)
 
-#define CSL_IOMUX_UART1_TXD_CFG_REG_ICSSM_GPIO_SEL_MASK                        (0x00200000U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                       (0x00000015U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                    (0x00000000U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_ICSSM_GPIO_SEL_MAX                         (0x00000001U)
-
-#define CSL_IOMUX_UART1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                   (0x00400000U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                  (0x00000016U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_UART1_TXD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                    (0x00000001U)
-
 #define CSL_IOMUX_UART1_TXD_CFG_REG_HSMODE_MASK                                (0x40000000U)
 #define CSL_IOMUX_UART1_TXD_CFG_REG_HSMODE_SHIFT                               (0x0000001EU)
 #define CSL_IOMUX_UART1_TXD_CFG_REG_HSMODE_RESETVAL                            (0x00000000U)
@@ -6539,16 +5607,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_CLK_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_MMC0_CLK_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MMC0_CLK_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MMC0_CLK_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_MMC0_CLK_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MMC0_CLK_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -6619,16 +5677,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_CMD_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MMC0_CMD_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MMC0_CMD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_MMC0_CMD_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MMC0_CMD_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_MMC0_CMD_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -6697,16 +5745,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_D0_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_MMC0_D0_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_D0_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D0_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_MMC0_D0_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_D0_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -6777,16 +5815,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_D1_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_D1_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_MMC0_D1_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_MMC0_D1_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_D1_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_MMC0_D1_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -6855,16 +5883,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_D2_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_MMC0_D2_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_D2_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D2_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_MMC0_D2_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_D2_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -6935,16 +5953,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_D3_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_D3_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_MMC0_D3_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_MMC0_D3_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_D3_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_MMC0_D3_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -7013,16 +6021,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_WP_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_MMC0_WP_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_WP_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_MMC0_WP_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_WP_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_WP_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_MMC0_WP_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_WP_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -7093,16 +6091,6 @@ typedef struct {
 #define CSL_IOMUX_MMC0_CD_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_MMC0_CD_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_MMC0_CD_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_MMC0_CD_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_MMC0_CD_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_MMC0_CD_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_MMC0_CD_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_MMC0_CD_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -7171,16 +6159,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_MDIO0_MDIO_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -7251,16 +6229,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_MDIO0_MDC_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -7329,16 +6297,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO5_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -7409,16 +6367,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO9_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -7487,16 +6435,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO10_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -7567,16 +6505,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO8_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -7645,16 +6573,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO6_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -7725,16 +6643,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO4_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -7803,16 +6711,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO0_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -7883,16 +6781,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO1_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -7961,16 +6849,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO2_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -8041,16 +6919,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO3_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -8119,16 +6987,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO16_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -8199,16 +7057,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO15_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -8277,16 +7125,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO11_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -8357,16 +7195,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO12_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -8435,16 +7263,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO13_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -8515,16 +7333,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU0_GPO14_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -8593,16 +7401,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO5_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -8673,16 +7471,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO9_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -8751,16 +7539,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO10_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -8831,16 +7609,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO8_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -8909,16 +7677,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO6_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -8989,16 +7747,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO4_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -9067,16 +7815,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO0_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -9147,16 +7885,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO1_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -9225,16 +7953,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_INP_INV_SEL_SHIFT                      (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO2_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
@@ -9305,16 +8023,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_INP_INV_SEL_RESETVAL                   (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_INP_INV_SEL_MAX                        (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_ICSSM_GPIO_SEL_MASK                    (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                   (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_ICSSM_GPIO_SEL_MAX                     (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK               (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT              (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_HSMODE_MASK                            (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_HSMODE_SHIFT                           (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO3_CFG_REG_HSMODE_RESETVAL                        (0x00000000U)
@@ -9383,16 +8091,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO16_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -9463,16 +8161,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO15_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -9541,16 +8229,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO11_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -9621,16 +8299,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO12_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -9699,16 +8367,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO13_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -9779,16 +8437,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO14_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -9857,16 +8505,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_INP_INV_SEL_SHIFT                     (0x00000014U)
 #define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
 
 #define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO19_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
@@ -9937,16 +8575,6 @@ typedef struct {
 #define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_INP_INV_SEL_RESETVAL                  (0x00000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_INP_INV_SEL_MAX                       (0x00000001U)
 
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_ICSSM_GPIO_SEL_MASK                   (0x00200000U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_ICSSM_GPIO_SEL_SHIFT                  (0x00000015U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_ICSSM_GPIO_SEL_RESETVAL               (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_ICSSM_GPIO_SEL_MAX                    (0x00000001U)
-
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_SAFETY_OVERRIDE_SEL_MASK              (0x00400000U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT             (0x00000016U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_SAFETY_OVERRIDE_SEL_MAX               (0x00000001U)
-
 #define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_HSMODE_MASK                           (0x40000000U)
 #define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_HSMODE_SHIFT                          (0x0000001EU)
 #define CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG_HSMODE_RESETVAL                       (0x00000000U)
@@ -10015,16 +8643,6 @@ typedef struct {
 #define CSL_IOMUX_EXT_REFCLK0_CFG_REG_INP_INV_SEL_SHIFT                        (0x00000014U)
 #define CSL_IOMUX_EXT_REFCLK0_CFG_REG_INP_INV_SEL_RESETVAL                     (0x00000000U)
 #define CSL_IOMUX_EXT_REFCLK0_CFG_REG_INP_INV_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_ICSSM_GPIO_SEL_MASK                      (0x00200000U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                     (0x00000015U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                  (0x00000000U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_ICSSM_GPIO_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                 (0x00400000U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                (0x00000016U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL             (0x00000000U)
-#define CSL_IOMUX_EXT_REFCLK0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                  (0x00000001U)
 
 #define CSL_IOMUX_EXT_REFCLK0_CFG_REG_HSMODE_MASK                              (0x40000000U)
 #define CSL_IOMUX_EXT_REFCLK0_CFG_REG_HSMODE_SHIFT                             (0x0000001EU)
@@ -10095,16 +8713,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_CLK0_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_SDFM0_CLK0_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_SDFM0_CLK0_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_SDFM0_CLK0_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_SDFM0_CLK0_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -10173,16 +8781,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_D0_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SDFM0_D0_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SDFM0_D0_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SDFM0_D0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SDFM0_D0_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SDFM0_D0_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -10253,16 +8851,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_CLK1_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_SDFM0_CLK1_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_SDFM0_CLK1_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_SDFM0_CLK1_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_SDFM0_CLK1_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -10331,16 +8919,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_D1_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SDFM0_D1_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SDFM0_D1_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SDFM0_D1_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SDFM0_D1_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SDFM0_D1_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -10411,16 +8989,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_CLK2_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_SDFM0_CLK2_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_SDFM0_CLK2_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_SDFM0_CLK2_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_SDFM0_CLK2_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -10489,16 +9057,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_D2_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SDFM0_D2_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SDFM0_D2_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SDFM0_D2_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SDFM0_D2_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SDFM0_D2_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -10569,16 +9127,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_CLK3_CFG_REG_INP_INV_SEL_RESETVAL                      (0x00000000U)
 #define CSL_IOMUX_SDFM0_CLK3_CFG_REG_INP_INV_SEL_MAX                           (0x00000001U)
 
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_ICSSM_GPIO_SEL_MASK                       (0x00200000U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                      (0x00000015U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_ICSSM_GPIO_SEL_MAX                        (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                  (0x00400000U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                 (0x00000016U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_SDFM0_CLK3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                   (0x00000001U)
-
 #define CSL_IOMUX_SDFM0_CLK3_CFG_REG_HSMODE_MASK                               (0x40000000U)
 #define CSL_IOMUX_SDFM0_CLK3_CFG_REG_HSMODE_SHIFT                              (0x0000001EU)
 #define CSL_IOMUX_SDFM0_CLK3_CFG_REG_HSMODE_RESETVAL                           (0x00000000U)
@@ -10647,16 +9195,6 @@ typedef struct {
 #define CSL_IOMUX_SDFM0_D3_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_SDFM0_D3_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_SDFM0_D3_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_SDFM0_D3_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_SDFM0_D3_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_SDFM0_D3_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -10727,16 +9265,6 @@ typedef struct {
 #define CSL_IOMUX_EQEP0_A_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EQEP0_A_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_EQEP0_A_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_A_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EQEP0_A_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_EQEP0_A_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EQEP0_A_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_EQEP0_A_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -10805,16 +9333,6 @@ typedef struct {
 #define CSL_IOMUX_EQEP0_B_CFG_REG_INP_INV_SEL_SHIFT                            (0x00000014U)
 #define CSL_IOMUX_EQEP0_B_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_EQEP0_B_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_B_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_B_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EQEP0_B_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
 
 #define CSL_IOMUX_EQEP0_B_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_EQEP0_B_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
@@ -10885,16 +9403,6 @@ typedef struct {
 #define CSL_IOMUX_EQEP0_STROBE_CFG_REG_INP_INV_SEL_RESETVAL                    (0x00000000U)
 #define CSL_IOMUX_EQEP0_STROBE_CFG_REG_INP_INV_SEL_MAX                         (0x00000001U)
 
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_ICSSM_GPIO_SEL_MASK                     (0x00200000U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_ICSSM_GPIO_SEL_SHIFT                    (0x00000015U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_ICSSM_GPIO_SEL_MAX                      (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                (0x00400000U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT               (0x00000016U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL            (0x00000000U)
-#define CSL_IOMUX_EQEP0_STROBE_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                 (0x00000001U)
-
 #define CSL_IOMUX_EQEP0_STROBE_CFG_REG_HSMODE_MASK                             (0x40000000U)
 #define CSL_IOMUX_EQEP0_STROBE_CFG_REG_HSMODE_SHIFT                            (0x0000001EU)
 #define CSL_IOMUX_EQEP0_STROBE_CFG_REG_HSMODE_RESETVAL                         (0x00000000U)
@@ -10963,16 +9471,6 @@ typedef struct {
 #define CSL_IOMUX_EQEP0_INDEX_CFG_REG_INP_INV_SEL_SHIFT                        (0x00000014U)
 #define CSL_IOMUX_EQEP0_INDEX_CFG_REG_INP_INV_SEL_RESETVAL                     (0x00000000U)
 #define CSL_IOMUX_EQEP0_INDEX_CFG_REG_INP_INV_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_ICSSM_GPIO_SEL_MASK                      (0x00200000U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                     (0x00000015U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                  (0x00000000U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_ICSSM_GPIO_SEL_MAX                       (0x00000001U)
-
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                 (0x00400000U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                (0x00000016U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL             (0x00000000U)
-#define CSL_IOMUX_EQEP0_INDEX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                  (0x00000001U)
 
 #define CSL_IOMUX_EQEP0_INDEX_CFG_REG_HSMODE_MASK                              (0x40000000U)
 #define CSL_IOMUX_EQEP0_INDEX_CFG_REG_HSMODE_SHIFT                             (0x0000001EU)
@@ -11043,16 +9541,6 @@ typedef struct {
 #define CSL_IOMUX_I2C0_SDA_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_I2C0_SDA_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_I2C0_SDA_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_I2C0_SDA_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_I2C0_SDA_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_I2C0_SDA_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -11121,16 +9609,6 @@ typedef struct {
 #define CSL_IOMUX_I2C0_SCL_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_I2C0_SCL_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_I2C0_SCL_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_I2C0_SCL_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_I2C0_SCL_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_I2C0_SCL_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -11201,16 +9679,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN2_TX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN2_TX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
 
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN2_TX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
-
 #define CSL_IOMUX_MCAN2_TX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN2_TX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
 #define CSL_IOMUX_MCAN2_TX_CFG_REG_HSMODE_RESETVAL                             (0x00000000U)
@@ -11279,16 +9747,6 @@ typedef struct {
 #define CSL_IOMUX_MCAN2_RX_CFG_REG_INP_INV_SEL_SHIFT                           (0x00000014U)
 #define CSL_IOMUX_MCAN2_RX_CFG_REG_INP_INV_SEL_RESETVAL                        (0x00000000U)
 #define CSL_IOMUX_MCAN2_RX_CFG_REG_INP_INV_SEL_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_ICSSM_GPIO_SEL_MASK                         (0x00200000U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_ICSSM_GPIO_SEL_SHIFT                        (0x00000015U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                     (0x00000000U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_ICSSM_GPIO_SEL_MAX                          (0x00000001U)
-
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                    (0x00400000U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                   (0x00000016U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                (0x00000000U)
-#define CSL_IOMUX_MCAN2_RX_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                     (0x00000001U)
 
 #define CSL_IOMUX_MCAN2_RX_CFG_REG_HSMODE_MASK                                 (0x40000000U)
 #define CSL_IOMUX_MCAN2_RX_CFG_REG_HSMODE_SHIFT                                (0x0000001EU)
@@ -11359,16 +9817,6 @@ typedef struct {
 #define CSL_IOMUX_CLKOUT0_CFG_REG_INP_INV_SEL_RESETVAL                         (0x00000000U)
 #define CSL_IOMUX_CLKOUT0_CFG_REG_INP_INV_SEL_MAX                              (0x00000001U)
 
-#define CSL_IOMUX_CLKOUT0_CFG_REG_ICSSM_GPIO_SEL_MASK                          (0x00200000U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_ICSSM_GPIO_SEL_SHIFT                         (0x00000015U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_ICSSM_GPIO_SEL_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_ICSSM_GPIO_SEL_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_CLKOUT0_CFG_REG_SAFETY_OVERRIDE_SEL_MASK                     (0x00400000U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_SAFETY_OVERRIDE_SEL_SHIFT                    (0x00000016U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_SAFETY_OVERRIDE_SEL_RESETVAL                 (0x00000000U)
-#define CSL_IOMUX_CLKOUT0_CFG_REG_SAFETY_OVERRIDE_SEL_MAX                      (0x00000001U)
-
 #define CSL_IOMUX_CLKOUT0_CFG_REG_HSMODE_MASK                                  (0x40000000U)
 #define CSL_IOMUX_CLKOUT0_CFG_REG_HSMODE_SHIFT                                 (0x0000001EU)
 #define CSL_IOMUX_CLKOUT0_CFG_REG_HSMODE_RESETVAL                              (0x00000000U)
@@ -11383,563 +9831,438 @@ typedef struct {
 
 /* WARMRSTN_CFG_REG */
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_MASK                       (0x00000010U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                      (0x00000004U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                   (0x00000001U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_MAX                        (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_MASK                       (0x0010U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                      (0x0004U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                   (0x0001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_CTRL_MAX                        (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_MASK                            (0x00000020U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_SHIFT                           (0x00000005U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_MAX                             (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_MASK                            (0x0020U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_SHIFT                           (0x0005U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_RESETVAL                        (0x0000U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_IE_OVERRIDE_MAX                             (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_MASK                       (0x00000040U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                      (0x00000006U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_MAX                        (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_MASK                       (0x0040U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                      (0x0006U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                   (0x0000U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_CTRL_MAX                        (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_MASK                            (0x00000080U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_SHIFT                           (0x00000007U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_MAX                             (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_MASK                            (0x0080U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_SHIFT                           (0x0007U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_RESETVAL                        (0x0000U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_OE_OVERRIDE_MAX                             (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_MASK                                     (0x00000100U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_SHIFT                                    (0x00000008U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_RESETVAL                                 (0x00000001U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_MAX                                      (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_MASK                                     (0x0100U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_SHIFT                                    (0x0008U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_RESETVAL                                 (0x0001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PI_MAX                                      (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_MASK                                (0x00000200U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_SHIFT                               (0x00000009U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_RESETVAL                            (0x00000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_MAX                                 (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_MASK                                (0x0200U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_SHIFT                               (0x0009U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_RESETVAL                            (0x0000U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_PUPDSEL_MAX                                 (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_MASK                                    (0x00000400U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_SHIFT                                   (0x0000000AU)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_RESETVAL                                (0x00000001U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_MAX                                     (0x00000001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_MASK                                    (0x0400U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_SHIFT                                   (0x000AU)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_RESETVAL                                (0x0001U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_SC1_MAX                                     (0x0001U)
 
-#define CSL_IOMUX_WARMRSTN_CFG_REG_RESERVED_MASK                               (0x80000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_RESERVED_SHIFT                              (0x0000001FU)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_RESERVED_RESETVAL                           (0x00000000U)
-#define CSL_IOMUX_WARMRSTN_CFG_REG_RESERVED_MAX                                (0x00000001U)
-
-#define CSL_IOMUX_WARMRSTN_CFG_REG_RESETVAL                                    (0x00000510U)
+#define CSL_IOMUX_WARMRSTN_CFG_REG_RESETVAL                                    (0x0510U)
 
 /* SAFETY_ERRORN_CFG_REG */
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_MASK                  (0x00000010U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                 (0x00000004U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL              (0x00000001U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_MAX                   (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_MASK                  (0x0010U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                 (0x0004U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL              (0x0001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_CTRL_MAX                   (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_MASK                       (0x00000020U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_SHIFT                      (0x00000005U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_MAX                        (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_MASK                       (0x0020U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_SHIFT                      (0x0005U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_RESETVAL                   (0x0000U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_IE_OVERRIDE_MAX                        (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_MASK                  (0x00000040U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                 (0x00000006U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL              (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_MAX                   (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_MASK                  (0x0040U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                 (0x0006U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL              (0x0000U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_CTRL_MAX                   (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_MASK                       (0x00000080U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_SHIFT                      (0x00000007U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_RESETVAL                   (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_MAX                        (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_MASK                       (0x0080U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_SHIFT                      (0x0007U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_RESETVAL                   (0x0000U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_OE_OVERRIDE_MAX                        (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_MASK                                (0x00000100U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_SHIFT                               (0x00000008U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_RESETVAL                            (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_MAX                                 (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_MASK                                (0x0100U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_SHIFT                               (0x0008U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_RESETVAL                            (0x0000U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PI_MAX                                 (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_MASK                           (0x00000200U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_SHIFT                          (0x00000009U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_RESETVAL                       (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_MAX                            (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_MASK                           (0x0200U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_SHIFT                          (0x0009U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_RESETVAL                       (0x0000U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_PUPDSEL_MAX                            (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_MASK                               (0x00000400U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_SHIFT                              (0x0000000AU)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_RESETVAL                           (0x00000001U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_MAX                                (0x00000001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_MASK                               (0x0400U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_SHIFT                              (0x000AU)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_RESETVAL                           (0x0001U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_SC1_MAX                                (0x0001U)
 
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESERVED_MASK                          (0x80000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESERVED_SHIFT                         (0x0000001FU)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESERVED_RESETVAL                      (0x00000000U)
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESERVED_MAX                           (0x00000001U)
-
-#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESETVAL                               (0x00000410U)
+#define CSL_IOMUX_SAFETY_ERRORN_CFG_REG_RESETVAL                               (0x0410U)
 
 /* TDI_CFG_REG */
 
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x00000010U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x00000004U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x00000001U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x0010U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x0004U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x0001U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_MASK                                 (0x00000020U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_SHIFT                                (0x00000005U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_MASK                                 (0x0020U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_SHIFT                                (0x0005U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TDI_CFG_REG_IE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x00000040U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x00000006U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x00000001U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x0040U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x0006U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x0001U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_MASK                                 (0x00000080U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_SHIFT                                (0x00000007U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x00000001U)
-#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_MASK                                 (0x0080U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_SHIFT                                (0x0007U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x0001U)
+#define CSL_IOMUX_TDI_CFG_REG_OE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_PI_MASK                                          (0x00000100U)
-#define CSL_IOMUX_TDI_CFG_REG_PI_SHIFT                                         (0x00000008U)
-#define CSL_IOMUX_TDI_CFG_REG_PI_RESETVAL                                      (0x00000000U)
-#define CSL_IOMUX_TDI_CFG_REG_PI_MAX                                           (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_PI_MASK                                          (0x0100U)
+#define CSL_IOMUX_TDI_CFG_REG_PI_SHIFT                                         (0x0008U)
+#define CSL_IOMUX_TDI_CFG_REG_PI_RESETVAL                                      (0x0000U)
+#define CSL_IOMUX_TDI_CFG_REG_PI_MAX                                           (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_MASK                                     (0x00000200U)
-#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_SHIFT                                    (0x00000009U)
-#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_RESETVAL                                 (0x00000001U)
-#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_MAX                                      (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_MASK                                     (0x0200U)
+#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_SHIFT                                    (0x0009U)
+#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_RESETVAL                                 (0x0001U)
+#define CSL_IOMUX_TDI_CFG_REG_PUPDSEL_MAX                                      (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_SC1_MASK                                         (0x00000400U)
-#define CSL_IOMUX_TDI_CFG_REG_SC1_SHIFT                                        (0x0000000AU)
-#define CSL_IOMUX_TDI_CFG_REG_SC1_RESETVAL                                     (0x00000001U)
-#define CSL_IOMUX_TDI_CFG_REG_SC1_MAX                                          (0x00000001U)
+#define CSL_IOMUX_TDI_CFG_REG_SC1_MASK                                         (0x0400U)
+#define CSL_IOMUX_TDI_CFG_REG_SC1_SHIFT                                        (0x000AU)
+#define CSL_IOMUX_TDI_CFG_REG_SC1_RESETVAL                                     (0x0001U)
+#define CSL_IOMUX_TDI_CFG_REG_SC1_MAX                                          (0x0001U)
 
-#define CSL_IOMUX_TDI_CFG_REG_RESERVED_MASK                                    (0x80000000U)
-#define CSL_IOMUX_TDI_CFG_REG_RESERVED_SHIFT                                   (0x0000001FU)
-#define CSL_IOMUX_TDI_CFG_REG_RESERVED_RESETVAL                                (0x00000000U)
-#define CSL_IOMUX_TDI_CFG_REG_RESERVED_MAX                                     (0x00000001U)
-
-#define CSL_IOMUX_TDI_CFG_REG_RESETVAL                                         (0x000006D0U)
+#define CSL_IOMUX_TDI_CFG_REG_RESETVAL                                         (0x06D0U)
 
 /* TDO_CFG_REG */
 
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x00000010U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x00000004U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x00000001U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x0010U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x0004U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x0001U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_MASK                                 (0x00000020U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_SHIFT                                (0x00000005U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x00000001U)
-#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_MASK                                 (0x0020U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_SHIFT                                (0x0005U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x0001U)
+#define CSL_IOMUX_TDO_CFG_REG_IE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x00000040U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x00000006U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x0040U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x0006U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x0000U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_MASK                                 (0x00000080U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_SHIFT                                (0x00000007U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_MASK                                 (0x0080U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_SHIFT                                (0x0007U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TDO_CFG_REG_OE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_PI_MASK                                          (0x00000100U)
-#define CSL_IOMUX_TDO_CFG_REG_PI_SHIFT                                         (0x00000008U)
-#define CSL_IOMUX_TDO_CFG_REG_PI_RESETVAL                                      (0x00000000U)
-#define CSL_IOMUX_TDO_CFG_REG_PI_MAX                                           (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_PI_MASK                                          (0x0100U)
+#define CSL_IOMUX_TDO_CFG_REG_PI_SHIFT                                         (0x0008U)
+#define CSL_IOMUX_TDO_CFG_REG_PI_RESETVAL                                      (0x0000U)
+#define CSL_IOMUX_TDO_CFG_REG_PI_MAX                                           (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_MASK                                     (0x00000200U)
-#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_SHIFT                                    (0x00000009U)
-#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_RESETVAL                                 (0x00000001U)
-#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_MAX                                      (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_MASK                                     (0x0200U)
+#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_SHIFT                                    (0x0009U)
+#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_RESETVAL                                 (0x0001U)
+#define CSL_IOMUX_TDO_CFG_REG_PUPDSEL_MAX                                      (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_SC1_MASK                                         (0x00000400U)
-#define CSL_IOMUX_TDO_CFG_REG_SC1_SHIFT                                        (0x0000000AU)
-#define CSL_IOMUX_TDO_CFG_REG_SC1_RESETVAL                                     (0x00000001U)
-#define CSL_IOMUX_TDO_CFG_REG_SC1_MAX                                          (0x00000001U)
+#define CSL_IOMUX_TDO_CFG_REG_SC1_MASK                                         (0x0400U)
+#define CSL_IOMUX_TDO_CFG_REG_SC1_SHIFT                                        (0x000AU)
+#define CSL_IOMUX_TDO_CFG_REG_SC1_RESETVAL                                     (0x0001U)
+#define CSL_IOMUX_TDO_CFG_REG_SC1_MAX                                          (0x0001U)
 
-#define CSL_IOMUX_TDO_CFG_REG_RESERVED_MASK                                    (0x80000000U)
-#define CSL_IOMUX_TDO_CFG_REG_RESERVED_SHIFT                                   (0x0000001FU)
-#define CSL_IOMUX_TDO_CFG_REG_RESERVED_RESETVAL                                (0x00000000U)
-#define CSL_IOMUX_TDO_CFG_REG_RESERVED_MAX                                     (0x00000001U)
-
-#define CSL_IOMUX_TDO_CFG_REG_RESETVAL                                         (0x00000630U)
+#define CSL_IOMUX_TDO_CFG_REG_RESETVAL                                         (0x0630U)
 
 /* TMS_CFG_REG */
 
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x00000010U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x00000004U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x00000001U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x0010U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x0004U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x0001U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_MASK                                 (0x00000020U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_SHIFT                                (0x00000005U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_MASK                                 (0x0020U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_SHIFT                                (0x0005U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TMS_CFG_REG_IE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x00000040U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x00000006U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x0040U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x0006U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x0000U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_MASK                                 (0x00000080U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_SHIFT                                (0x00000007U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_MASK                                 (0x0080U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_SHIFT                                (0x0007U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TMS_CFG_REG_OE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_PI_MASK                                          (0x00000100U)
-#define CSL_IOMUX_TMS_CFG_REG_PI_SHIFT                                         (0x00000008U)
-#define CSL_IOMUX_TMS_CFG_REG_PI_RESETVAL                                      (0x00000000U)
-#define CSL_IOMUX_TMS_CFG_REG_PI_MAX                                           (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_PI_MASK                                          (0x0100U)
+#define CSL_IOMUX_TMS_CFG_REG_PI_SHIFT                                         (0x0008U)
+#define CSL_IOMUX_TMS_CFG_REG_PI_RESETVAL                                      (0x0000U)
+#define CSL_IOMUX_TMS_CFG_REG_PI_MAX                                           (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_MASK                                     (0x00000200U)
-#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_SHIFT                                    (0x00000009U)
-#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_RESETVAL                                 (0x00000001U)
-#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_MAX                                      (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_MASK                                     (0x0200U)
+#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_SHIFT                                    (0x0009U)
+#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_RESETVAL                                 (0x0001U)
+#define CSL_IOMUX_TMS_CFG_REG_PUPDSEL_MAX                                      (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_SC1_MASK                                         (0x00000400U)
-#define CSL_IOMUX_TMS_CFG_REG_SC1_SHIFT                                        (0x0000000AU)
-#define CSL_IOMUX_TMS_CFG_REG_SC1_RESETVAL                                     (0x00000001U)
-#define CSL_IOMUX_TMS_CFG_REG_SC1_MAX                                          (0x00000001U)
+#define CSL_IOMUX_TMS_CFG_REG_SC1_MASK                                         (0x0400U)
+#define CSL_IOMUX_TMS_CFG_REG_SC1_SHIFT                                        (0x000AU)
+#define CSL_IOMUX_TMS_CFG_REG_SC1_RESETVAL                                     (0x0001U)
+#define CSL_IOMUX_TMS_CFG_REG_SC1_MAX                                          (0x0001U)
 
-#define CSL_IOMUX_TMS_CFG_REG_RESERVED_MASK                                    (0x80000000U)
-#define CSL_IOMUX_TMS_CFG_REG_RESERVED_SHIFT                                   (0x0000001FU)
-#define CSL_IOMUX_TMS_CFG_REG_RESERVED_RESETVAL                                (0x00000000U)
-#define CSL_IOMUX_TMS_CFG_REG_RESERVED_MAX                                     (0x00000001U)
-
-#define CSL_IOMUX_TMS_CFG_REG_RESETVAL                                         (0x00000610U)
+#define CSL_IOMUX_TMS_CFG_REG_RESETVAL                                         (0x0610U)
 
 /* TCK_CFG_REG */
 
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x00000010U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x00000004U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x00000001U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_MASK                            (0x0010U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                           (0x0004U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                        (0x0001U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_MASK                                 (0x00000020U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_SHIFT                                (0x00000005U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_MASK                                 (0x0020U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_SHIFT                                (0x0005U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TCK_CFG_REG_IE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x00000040U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x00000006U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_MASK                            (0x0040U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                           (0x0006U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                        (0x0000U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_CTRL_MAX                             (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_MASK                                 (0x00000080U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_SHIFT                                (0x00000007U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_MAX                                  (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_MASK                                 (0x0080U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_SHIFT                                (0x0007U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_RESETVAL                             (0x0000U)
+#define CSL_IOMUX_TCK_CFG_REG_OE_OVERRIDE_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_PI_MASK                                          (0x00000100U)
-#define CSL_IOMUX_TCK_CFG_REG_PI_SHIFT                                         (0x00000008U)
-#define CSL_IOMUX_TCK_CFG_REG_PI_RESETVAL                                      (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_PI_MAX                                           (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_PI_MASK                                          (0x0100U)
+#define CSL_IOMUX_TCK_CFG_REG_PI_SHIFT                                         (0x0008U)
+#define CSL_IOMUX_TCK_CFG_REG_PI_RESETVAL                                      (0x0000U)
+#define CSL_IOMUX_TCK_CFG_REG_PI_MAX                                           (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_MASK                                     (0x00000200U)
-#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_SHIFT                                    (0x00000009U)
-#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_RESETVAL                                 (0x00000001U)
-#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_MAX                                      (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_MASK                                     (0x0200U)
+#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_SHIFT                                    (0x0009U)
+#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_RESETVAL                                 (0x0001U)
+#define CSL_IOMUX_TCK_CFG_REG_PUPDSEL_MAX                                      (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_SC1_MASK                                         (0x00000400U)
-#define CSL_IOMUX_TCK_CFG_REG_SC1_SHIFT                                        (0x0000000AU)
-#define CSL_IOMUX_TCK_CFG_REG_SC1_RESETVAL                                     (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_SC1_MAX                                          (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_SC1_MASK                                         (0x0400U)
+#define CSL_IOMUX_TCK_CFG_REG_SC1_SHIFT                                        (0x000AU)
+#define CSL_IOMUX_TCK_CFG_REG_SC1_RESETVAL                                     (0x0000U)
+#define CSL_IOMUX_TCK_CFG_REG_SC1_MAX                                          (0x0001U)
 
-#define CSL_IOMUX_TCK_CFG_REG_RESERVED_MASK                                    (0x80000000U)
-#define CSL_IOMUX_TCK_CFG_REG_RESERVED_SHIFT                                   (0x0000001FU)
-#define CSL_IOMUX_TCK_CFG_REG_RESERVED_RESETVAL                                (0x00000000U)
-#define CSL_IOMUX_TCK_CFG_REG_RESERVED_MAX                                     (0x00000001U)
+#define CSL_IOMUX_TCK_CFG_REG_RESETVAL                                         (0x0210U)
 
-#define CSL_IOMUX_TCK_CFG_REG_RESETVAL                                         (0x00000210U)
+/* QSPI0_CLKLB_CFG_REG */
 
-/* OSPI0_CLKLB_CFG_REG */
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_MASK                    (0x0010U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                   (0x0004U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_MAX                     (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_MASK                    (0x00000010U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_SHIFT                   (0x00000004U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_RESETVAL                (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_CTRL_MAX                     (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_MASK                         (0x0020U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_SHIFT                        (0x0005U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_RESETVAL                     (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_IE_OVERRIDE_MAX                          (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_MASK                         (0x00000020U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_SHIFT                        (0x00000005U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_RESETVAL                     (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_IE_OVERRIDE_MAX                          (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_MASK                    (0x0040U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                   (0x0006U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_MAX                     (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_MASK                    (0x00000040U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_SHIFT                   (0x00000006U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_RESETVAL                (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_CTRL_MAX                     (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_MASK                         (0x0080U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_SHIFT                        (0x0007U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_RESETVAL                     (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_OE_OVERRIDE_MAX                          (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_MASK                         (0x00000080U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_SHIFT                        (0x00000007U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_RESETVAL                     (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_OE_OVERRIDE_MAX                          (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PI_MASK                                  (0x0100U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PI_SHIFT                                 (0x0008U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PI_RESETVAL                              (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PI_MAX                                   (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PI_MASK                                  (0x00000100U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PI_SHIFT                                 (0x00000008U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PI_RESETVAL                              (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PI_MAX                                   (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PUPDSEL_MASK                             (0x0200U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PUPDSEL_SHIFT                            (0x0009U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PUPDSEL_RESETVAL                         (0x0000U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_PUPDSEL_MAX                              (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PUPDSEL_MASK                             (0x00000200U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PUPDSEL_SHIFT                            (0x00000009U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PUPDSEL_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_PUPDSEL_MAX                              (0x00000001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_SC1_MASK                                 (0x0400U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_SC1_SHIFT                                (0x000AU)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_SC1_RESETVAL                             (0x0001U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_SC1_MAX                                  (0x0001U)
 
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_SC1_MASK                                 (0x00000400U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_SC1_SHIFT                                (0x0000000AU)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_SC1_RESETVAL                             (0x00000001U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_SC1_MAX                                  (0x00000001U)
-
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_OSPI0_CLKLB_CFG_REG_RESETVAL                                 (0x000005F0U)
+#define CSL_IOMUX_QSPI0_CLKLB_CFG_REG_RESETVAL                                 (0x05F0U)
 
 /* QUAL_GRP_0_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_0_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_1_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_1_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_2_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_2_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_3_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_3_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_4_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_4_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_5_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_5_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_6_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_6_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_7_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_7_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_8_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_8_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_9_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK               (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT              (0x00U)
+#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL           (0x00U)
+#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX                (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESERVED_MASK                             (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESERVED_SHIFT                            (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESERVED_RESETVAL                         (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESERVED_MAX                              (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESETVAL                                  (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_9_CFG_REG_RESETVAL                                  (0x00U)
 
 /* QUAL_GRP_10_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_10_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_11_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_11_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_12_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_12_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_13_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_13_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_14_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_14_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_15_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_15_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_16_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_16_CFG_REG_RESETVAL                                 (0x00U)
 
 /* QUAL_GRP_17_CFG_REG */
 
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0x000000FFU)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0x000000FFU)
+#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MASK              (0xFFU)
+#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_SHIFT             (0x00U)
+#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_RESETVAL          (0x00U)
+#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_QUAL_PERIOD_PER_SAMPLE_MAX               (0xFFU)
 
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESERVED_MASK                            (0x80000000U)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESERVED_SHIFT                           (0x0000001FU)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESERVED_RESETVAL                        (0x00000000U)
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESERVED_MAX                             (0x00000001U)
-
-#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESETVAL                                 (0x00000000U)
+#define CSL_IOMUX_QUAL_GRP_17_CFG_REG_RESETVAL                                 (0x00U)
 
 /* USER_MODE_EN */
 

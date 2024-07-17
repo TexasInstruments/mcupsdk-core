@@ -2,7 +2,7 @@
 *
 * MCU_R5 MEMORYMAP header file
 *
-* Copyright (C) 2020 Texas Instruments Incorporated.
+* Copyright (C) 2023 Texas Instruments Incorporated.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -37,8 +37,8 @@
 #define CSLR_SOC_R5_BASEADDRESS_H_
 
 #include <drivers/hw_include/cslr.h>
-
-#include <ti/csl/soc/am261x/src/cslr_soc_baseaddress.h>
+#include <ti/csl/tistdtypes.h>
+#include <ti/csl/soc/am261/src/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {

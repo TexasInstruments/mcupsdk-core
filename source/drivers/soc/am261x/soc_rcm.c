@@ -786,12 +786,6 @@ static uint8_t CSL_TopCtrl_dualCoreBootEnableEfuse (const CSL_top_ctrlRegs * ptr
                               DUALCOREBOOTENABLE_END_BIT_R5FSS0, \
                               DUALCOREBOOTENABLE_START_BIT_R5FSS0);
     }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        retVal = SOC_rcmExtract8 (ptrTopCtrlRegs->EFUSE1_ROW_12, \
-                              DUALCOREBOOTENABLE_END_BIT_R5FSS1, \
-                              DUALCOREBOOTENABLE_START_BIT_R5FSS1);
-    }
     else
     {
         DebugP_logError("CPU Dual Core Boot Enable failed\r\n");
@@ -808,15 +802,6 @@ static uint8_t CSL_TopCtrl_dualCoreSwitchDisableEfuse (const CSL_top_ctrlRegs * 
         retVal = SOC_rcmExtract8 (ptrTopCtrlRegs->EFUSE1_ROW_12, \
                               DUALCORESWITCHDISABLE_END_BIT_R5FSS0, \
                               DUALCORESWITCHDISABLE_START_BIT_R5FSS0);
-    }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        retVal = SOC_rcmExtract8 (ptrTopCtrlRegs->EFUSE1_ROW_12, \
-                              DUALCORESWITCHDISABLE_END_BIT_R5FSS1, \
-                              DUALCORESWITCHDISABLE_START_BIT_R5FSS1);
-        retVal |= SOC_rcmExtract8 (ptrTopCtrlRegs->EFUSE1_ROW_12, \
-                              DUALCOREDISABLE_END_BIT_R5FSS1, \
-                              DUALCOREDISABLE_START_BIT_R5FSS1);
     }
     else
     {
@@ -893,20 +878,6 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gMcanClkSrcValMap[clkSource];
             break;
         }
-        case SOC_RcmPeripheralId_MCAN2:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN2_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN2_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN3:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN3_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN3_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
-            break;
-        }
         case SOC_RcmPeripheralId_OSPI0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->OSPI0_CLK_SRC_SEL);
@@ -956,20 +927,6 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gWdtClkSrcValMap[clkSource];
             break;
         }
-        case SOC_RcmPeripheralId_WDT2:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->WDT2_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->WDT2_CLK_DIV_VAL);
-            *clkSrcVal = gWdtClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_WDT3:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->WDT3_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->WDT3_CLK_DIV_VAL);
-            *clkSrcVal = gWdtClkSrcValMap[clkSource];
-            break;
-        }
         case SOC_RcmPeripheralId_MCSPI0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI0_CLK_SRC_SEL);
@@ -995,34 +952,6 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI3_CLK_SRC_SEL);
             *clkdDivReg = &(ptrMSSRCMRegs->MCSPI3_CLK_DIV_VAL);
-            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI4:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI4_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI4_CLK_DIV_VAL);
-            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI5:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI5_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI5_CLK_DIV_VAL);
-            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI6:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI6_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI6_CLK_DIV_VAL);
-            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI7:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI7_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI7_CLK_DIV_VAL);
             *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
             break;
         }
@@ -1087,48 +1016,6 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcReg  = &(ptrMSSRCMRegs->LIN3_UART3_CLK_SRC_SEL);
             *clkdDivReg = &(ptrMSSRCMRegs->LIN3_UART3_CLK_DIV_VAL);
             *clkSrcVal = gLinUartClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_LIN4_UART4:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->LIN4_UART4_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->LIN4_UART4_CLK_DIV_VAL);
-            *clkSrcVal = gLinUartClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_LIN5_UART5:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->LIN5_UART5_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->LIN5_UART5_CLK_DIV_VAL);
-            *clkSrcVal = gLinUartClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN4:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN4_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN4_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN5:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN5_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN5_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN6:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN6_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN6_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN7:
-        {
-            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN7_CLK_SRC_SEL);
-            *clkdDivReg = &(ptrMSSRCMRegs->MCAN7_CLK_DIV_VAL);
-            *clkSrcVal = gMcanClkSrcValMap[clkSource];
             break;
         }
         default:
@@ -1700,19 +1587,6 @@ uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId)
             retVal = FALSE;
         }
     }
-    if (r5fClusterGroupId == CSL_ARM_R5_CLUSTER_GROUP_ID_1)
-    {
-		if (CSL_FEXT(mssCtrl->R5SS1_STATUS_REG, MSS_CTRL_R5SS1_STATUS_REG_LOCK_STEP) == 1U)
-        {
-            /* Lockstep Mode */
-            retVal = TRUE;
-        }
-        else
-        {
-            /* Dualcore Mode */
-            retVal = FALSE;
-        }
-    }
 
     return retVal;
 }
@@ -1983,10 +1857,6 @@ void SOC_rcmsetR5SysClock(uint32_t cr5FreqHz, uint32_t sysClkFreqHz, uint32_t cp
     {
         ptrTopRCMRegs->R5SS0_CLK_DIV_SEL = SOC_rcmInsert16 (ptrTopRCMRegs->R5SS0_CLK_DIV_SEL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
     }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        ptrTopRCMRegs->R5SS1_CLK_DIV_SEL = SOC_rcmInsert16 (ptrTopRCMRegs->R5SS1_CLK_DIV_SEL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
-    }
     else
     {
         /* Nothing to be done here */
@@ -2112,13 +1982,6 @@ SOC_RcmResetCause SOC_rcmGetResetCause (SOC_Rcmr5fssNum r5fssNum)
     {
         resetCauseBits = SOC_rcmExtract16 (ptrRCMRegs->R5SS0_RST_STATUS, 10U, 0U);
     }
-    else
-    {
-        if(r5fssNum==r5fss1)
-        {
-            resetCauseBits = SOC_rcmExtract16 (ptrRCMRegs->R5SS1_RST_STATUS, 10U, 0U);
-        }
-    }
 
     if (resetCauseBits == 0x0U)
     {
@@ -2138,13 +2001,6 @@ SOC_RcmResetCause SOC_rcmGetResetCause (SOC_Rcmr5fssNum r5fssNum)
         if(r5fssNum==r5fss0)
         {
             ptrRCMRegs->R5SS0_RST_CAUSE_CLR = SOC_rcmInsert8 (ptrRCMRegs->R5SS0_RST_CAUSE_CLR, 2U, 0U, 0x7U);
-        }
-        else
-        {
-            if(r5fssNum==r5fss1)
-            {
-                ptrRCMRegs->R5SS1_RST_CAUSE_CLR = SOC_rcmInsert8 (ptrRCMRegs->R5SS1_RST_CAUSE_CLR, 2U, 0U, 0x7U);
-            }
         }
     }
 
@@ -2187,43 +2043,16 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
-        case SOC_RcmPeripheralId_MCAN2:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN2_CLK_GATE = CSL_MSS_RCM_MCAN2_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN2_CLK_GATE = CSL_MSS_RCM_MCAN2_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN3:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN3_CLK_GATE = CSL_MSS_RCM_MCAN3_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN3_CLK_GATE = CSL_MSS_RCM_MCAN3_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        //FIXME: Change OSPI TO OSPI. ADD OTHER OSPI RELATED DATA
         case SOC_RcmPeripheralId_OSPI0:
         {
             if(enable==1)
             {
-                ptrMSSRCMRegs->OSPI_CLK_GATE = CSL_MSS_RCM_OSPI_CLK_GATE_RESETVAL;
+                ptrMSSRCMRegs->OSPI0_CLK_GATE = CSL_MSS_RCM_OSPI0_CLK_GATE_RESETVAL;
             }
             else
             if(enable==0)
             {
-                ptrMSSRCMRegs->OSPI_CLK_GATE = CSL_MSS_RCM_OSPI_CLK_GATE_OSPI_CLK_GATE_GATED_MASK;
+                ptrMSSRCMRegs->OSPI0_CLK_GATE = CSL_MSS_RCM_OSPI0_CLK_GATE_GATED_MASK;
             }
             break;
         }
@@ -2305,32 +2134,6 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
-        case SOC_RcmPeripheralId_WDT2:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->WDT2_CLK_GATE = CSL_MSS_RCM_WDT2_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->WDT2_CLK_GATE = CSL_MSS_RCM_WDT2_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_WDT3:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->WDT3_CLK_GATE = CSL_MSS_RCM_WDT3_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->WDT3_CLK_GATE = CSL_MSS_RCM_WDT3_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
         case SOC_RcmPeripheralId_MCSPI0:
         {
             if(enable==1)
@@ -2380,58 +2183,6 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             if(enable==0)
             {
                 ptrMSSRCMRegs->MCSPI3_CLK_GATE = CSL_MSS_RCM_MCSPI3_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI4:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCSPI4_CLK_GATE = CSL_MSS_RCM_MCSPI4_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCSPI4_CLK_GATE = CSL_MSS_RCM_MCSPI4_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI5:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCSPI5_CLK_GATE = CSL_MSS_RCM_MCSPI5_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCSPI5_CLK_GATE = CSL_MSS_RCM_MCSPI5_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI6:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCSPI6_CLK_GATE = CSL_MSS_RCM_MCSPI6_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCSPI6_CLK_GATE = CSL_MSS_RCM_MCSPI6_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCSPI7:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCSPI7_CLK_GATE = CSL_MSS_RCM_MCSPI7_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCSPI7_CLK_GATE = CSL_MSS_RCM_MCSPI7_CLK_GATE_GATED_MASK;
             }
             break;
         }
@@ -2508,7 +2259,6 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
                 ptrMSSRCMRegs->I2C0_CLK_GATE = CSL_MSS_RCM_I2C0_CLK_GATE_GATED_RESETVAL;
                 ptrMSSRCMRegs->I2C1_CLK_GATE = CSL_MSS_RCM_I2C1_CLK_GATE_GATED_RESETVAL;
                 ptrMSSRCMRegs->I2C2_CLK_GATE = CSL_MSS_RCM_I2C2_CLK_GATE_GATED_RESETVAL;
-                ptrMSSRCMRegs->I2C3_CLK_GATE = CSL_MSS_RCM_I2C3_CLK_GATE_GATED_RESETVAL;
             }
             else
             if(enable==0)
@@ -2516,7 +2266,6 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
                 ptrMSSRCMRegs->I2C0_CLK_GATE = CSL_MSS_RCM_I2C0_CLK_GATE_GATED_MASK;
                 ptrMSSRCMRegs->I2C1_CLK_GATE = CSL_MSS_RCM_I2C1_CLK_GATE_GATED_MASK;
                 ptrMSSRCMRegs->I2C2_CLK_GATE = CSL_MSS_RCM_I2C2_CLK_GATE_GATED_MASK;
-                ptrMSSRCMRegs->I2C3_CLK_GATE = CSL_MSS_RCM_I2C3_CLK_GATE_GATED_MASK;
             }
             break;
         }
@@ -2569,94 +2318,12 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
         {
             if(enable==1)
             {
-                ptrMSSRCMRegs->LIN3_CLK_GATE = CSL_MSS_RCM_LIN3_CLK_GATE_GATED_RESETVAL;
                 ptrMSSRCMRegs->UART3_CLK_GATE = CSL_MSS_RCM_UART3_CLK_GATE_GATED_RESETVAL;
             }
             else
             if(enable==0)
             {
-                ptrMSSRCMRegs->LIN3_CLK_GATE = CSL_MSS_RCM_LIN3_CLK_GATE_GATED_MASK;
                 ptrMSSRCMRegs->UART3_CLK_GATE = CSL_MSS_RCM_UART3_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_LIN4_UART4:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->LIN4_CLK_GATE = CSL_MSS_RCM_LIN4_CLK_GATE_GATED_RESETVAL;
-                ptrMSSRCMRegs->UART4_CLK_GATE = CSL_MSS_RCM_UART4_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->LIN4_CLK_GATE = CSL_MSS_RCM_LIN4_CLK_GATE_GATED_MASK;
-                ptrMSSRCMRegs->UART4_CLK_GATE = CSL_MSS_RCM_UART4_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_LIN5_UART5:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->UART5_CLK_GATE = CSL_MSS_RCM_UART5_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->UART5_CLK_GATE = CSL_MSS_RCM_UART5_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN4:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN4_CLK_GATE = CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN4_CLK_GATE = CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN5:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN5_CLK_GATE = CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN5_CLK_GATE = CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN6:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN6_CLK_GATE = CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN6_CLK_GATE = CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_MASK;
-            }
-            break;
-        }
-        case SOC_RcmPeripheralId_MCAN7:
-        {
-            if(enable==1)
-            {
-                ptrMSSRCMRegs->MCAN7_CLK_GATE = CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_RESETVAL;
-            }
-            else
-            if(enable==0)
-            {
-                ptrMSSRCMRegs->MCAN7_CLK_GATE = CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_MASK;
             }
             break;
         }
@@ -2691,10 +2358,6 @@ uint32_t SOC_rcmGetR5Clock(uint32_t cpuId)
     {
         moduleClkDivRegVal = ptrTopRCMRegs->R5SS0_CLK_DIV_SEL;
     }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        moduleClkDivRegVal = ptrTopRCMRegs->R5SS1_CLK_DIV_SEL;
-    }
     else
     {
         /* Nothing to be done here */
@@ -2714,13 +2377,6 @@ void SOC_rcmR5ConfigLockStep(uint32_t cpuId)
         CSL_FINS(regVal, MSS_CTRL_R5SS0_CONTROL_LOCK_STEP, 0x7);
         CSL_FINS(regVal, MSS_CTRL_R5SS0_CONTROL_LOCK_STEP_SWITCH_WAIT, 0x7);
         mssCtrl->R5SS0_CONTROL = regVal;
-    }
-    else if (cpuId == CSL_CORE_ID_R5FSS1_0)
-    {
-        regVal = mssCtrl->R5SS1_CONTROL;
-        CSL_FINS(regVal, MSS_CTRL_R5SS1_CONTROL_LOCK_STEP, 0x7);
-        CSL_FINS(regVal, MSS_CTRL_R5SS1_CONTROL_LOCK_STEP_SWITCH_WAIT, 0x7);
-        mssCtrl->R5SS1_CONTROL = regVal;
     }
     else
     {
@@ -2750,23 +2406,6 @@ void SOC_rcmR5ConfigDualCore(uint32_t cpuId)
             }
         }
     }
-    else if (cpuId == CSL_CORE_ID_R5FSS1_1)
-    {
-        if (SBL_rcmIsDualCoreSwitchSupported(cpuId) == TRUE)
-        {
-            regVal = mssCtrl->R5SS1_CONTROL;
-            if ((regVal & CSL_MSS_CTRL_R5SS1_CONTROL_LOCK_STEP_MASK) == 0x0)
-            {
-                /* It is already in dual core mode. Skip programming LOCK STEP Bit. */
-            }
-            else
-            {
-                CSL_FINS(regVal, MSS_CTRL_R5SS1_CONTROL_LOCK_STEP, 0x0);
-                CSL_FINS(regVal, MSS_CTRL_R5SS1_CONTROL_LOCK_STEP_SWITCH_WAIT, 0x7);
-                mssCtrl->R5SS1_CONTROL = regVal;
-            }
-        }
-    }
     else
     {
         DebugP_logError("Dual Config mode failed\r\n");
@@ -2788,17 +2427,6 @@ void SOC_rcmStartMemInitTCMA(uint32_t cpuId)
 
         CSL_FINS(mssCtrl->R5SS0_ATCM_MEM_INIT, MSS_CTRL_R5SS0_ATCM_MEM_INIT_MEM_INIT, 1);
     }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        /* Check MEMINIT STATUS is zero to confirm no inprogress MEM INIT */
-        while (CSL_FEXT(mssCtrl->R5SS1_ATCM_MEM_INIT_STATUS, MSS_CTRL_R5SS1_ATCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
-
-        /* Clear MEMINIT DONE before initiating MEMINIT */
-        CSL_FINS(mssCtrl->R5SS1_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_ATCM_MEM_INIT_DONE_MEM_INIT_DONE, 1);
-        while (CSL_FEXT(mssCtrl->R5SS1_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_ATCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
-
-        CSL_FINS(mssCtrl->R5SS1_ATCM_MEM_INIT, MSS_CTRL_R5SS1_ATCM_MEM_INIT_MEM_INIT, 1);
-    }
     else
     {
         DebugP_logError("CPU TCM Init failed\r\n");
@@ -2817,15 +2445,6 @@ void SOC_rcmWaitMemInitTCMA(uint32_t cpuId)
         /* Check MEMINIT STATUS is zero to confirm no inprogress MEM INIT */
         while (CSL_FEXT(mssCtrl->R5SS0_ATCM_MEM_INIT_STATUS, MSS_CTRL_R5SS0_ATCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
         while (CSL_FEXT(mssCtrl->R5SS0_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS0_ATCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
-    }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        while (CSL_FEXT(mssCtrl->R5SS1_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_ATCM_MEM_INIT_DONE_MEM_INIT_DONE) != 1);
-        CSL_FINS(mssCtrl->R5SS1_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_ATCM_MEM_INIT_DONE_MEM_INIT_DONE, 1);
-        /* Check MEMINIT STATUS is zero to confirm no inprogress MEM INIT */
-        while (CSL_FEXT(mssCtrl->R5SS1_ATCM_MEM_INIT_STATUS, MSS_CTRL_R5SS1_ATCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
-        while (CSL_FEXT(mssCtrl->R5SS1_ATCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_ATCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
-
     }
     else
     {
@@ -2846,16 +2465,6 @@ void SOC_rcmStartMemInitTCMB(uint32_t cpuId)
         while (CSL_FEXT(mssCtrl->R5SS0_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS0_BTCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
 
         CSL_FINS(mssCtrl->R5SS0_BTCM_MEM_INIT, MSS_CTRL_R5SS0_BTCM_MEM_INIT_MEM_INIT, 1);
-    }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        while (CSL_FEXT(mssCtrl->R5SS1_BTCM_MEM_INIT_STATUS, MSS_CTRL_R5SS1_BTCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
-
-        /* Check MEMINIT STATUS is zero to confirm no in progress MEM INIT */
-        CSL_FINS(mssCtrl->R5SS1_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_BTCM_MEM_INIT_DONE_MEM_INIT_DONE, 1);
-        while (CSL_FEXT(mssCtrl->R5SS1_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_BTCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
-
-        CSL_FINS(mssCtrl->R5SS1_BTCM_MEM_INIT, MSS_CTRL_R5SS1_BTCM_MEM_INIT_MEM_INIT, 1);
     }
     else
     {
@@ -2878,16 +2487,6 @@ void SOC_rcmWaitMemInitTCMB(uint32_t cpuId)
         while (CSL_FEXT(mssCtrl->R5SS0_BTCM_MEM_INIT_STATUS, MSS_CTRL_R5SS0_BTCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
         while (CSL_FEXT(mssCtrl->R5SS0_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS0_BTCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
     }
-    else if ((cpuId == CSL_CORE_ID_R5FSS1_0) || (cpuId == CSL_CORE_ID_R5FSS1_1))
-    {
-        while (CSL_FEXT(mssCtrl->R5SS1_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_BTCM_MEM_INIT_DONE_MEM_INIT_DONE) != 1);
-        /* Clear MEMINIT DONE before initiating MEMINIT */
-        CSL_FINS(mssCtrl->R5SS1_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_BTCM_MEM_INIT_DONE_MEM_INIT_DONE, 1);
-
-        /* Check MEMINIT STATUS is zero to confirm no inprogress MEM INIT */
-        while (CSL_FEXT(mssCtrl->R5SS1_BTCM_MEM_INIT_STATUS, MSS_CTRL_R5SS1_BTCM_MEM_INIT_STATUS_MEM_STATUS) != 0);
-        while (CSL_FEXT(mssCtrl->R5SS1_BTCM_MEM_INIT_DONE, MSS_CTRL_R5SS1_BTCM_MEM_INIT_DONE_MEM_INIT_DONE) != 0);
-    }
     else
     {
         DebugP_logError("CPU TCM Init failed\r\n");
@@ -2909,22 +2508,6 @@ void SOC_rcmMemInitL2Memory(void)
     CSL_FINS(mssCtrl->L2IOCRAM_MEM_INIT, MSS_CTRL_L2IOCRAM_MEM_INIT_PARTITION2, 1);
     while (CSL_FEXT(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION2) != 1);
     CSL_FINS(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION2, 1);
-
-    /* MemInit for L2-Bank3 */
-    CSL_FINS(mssCtrl->L2IOCRAM_MEM_INIT, MSS_CTRL_L2IOCRAM_MEM_INIT_PARTITION3, 1);
-    while (CSL_FEXT(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION3) != 1);
-    CSL_FINS(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION3, 1);
-
-    /* MemInit for L2-Bank4 */
-    CSL_FINS(mssCtrl->L2IOCRAM_MEM_INIT, MSS_CTRL_L2IOCRAM_MEM_INIT_PARTITION4, 1);
-    while (CSL_FEXT(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION4) != 1);
-    CSL_FINS(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION4, 1);
-
-    /* MemInit for L2-Bank5 */
-    CSL_FINS(mssCtrl->L2IOCRAM_MEM_INIT, MSS_CTRL_L2IOCRAM_MEM_INIT_PARTITION5, 1);
-    while (CSL_FEXT(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION5) != 1);
-    CSL_FINS(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION5, 1);
-
 }
 
 void SOC_rcmCoreR5FUnhalt(uint32_t cpuId)
@@ -2935,16 +2518,6 @@ void SOC_rcmCoreR5FUnhalt(uint32_t cpuId)
     {
         /* Core R5SS0_CORE1 unhalt */
         CSL_FINS(mssCtrl->R5SS0_CORE1_HALT, MSS_CTRL_R5SS0_CORE1_HALT_HALT, 0x0);
-    }
-    else if (cpuId == CSL_CORE_ID_R5FSS1_0)
-    {
-        /* Core R5SS1_CORE0 unhalt */
-        CSL_FINS(mssCtrl->R5SS1_CORE0_HALT, MSS_CTRL_R5SS1_CORE0_HALT_HALT, 0x0);
-    }
-    else if (cpuId == CSL_CORE_ID_R5FSS1_1)
-    {
-        /* Core R5SS1_CORE1 unhalt */
-        CSL_FINS(mssCtrl->R5SS1_CORE1_HALT, MSS_CTRL_R5SS1_CORE1_HALT_HALT, 0x0);
     }
     else
     {
@@ -2959,51 +2532,19 @@ void SOC_rcmR5SS0PowerOnReset(void)
     ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
 
     regVal = ptrRCMRegs->R5SS0_RST2ASSERTDLY;
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE1_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE0_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE1_COUNT, 0x0);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE1_COUNT, 0x0);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE0_COUNT, 0x0);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE1_COUNT, 0x0);
     ptrRCMRegs->R5SS0_RST2ASSERTDLY = regVal;
 
     /* WR_MEM_32(MSS_RCM_U_BASE+RST_WFICHECK, 0x00000707); */ //RSTWFI CHECK
     regVal = ptrRCMRegs->R5SS0_RST_WFICHECK;
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE0, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE1, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE0, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE1, 0x7);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE0, 0x7);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE1, 0x7);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE0, 0x7);
+    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE1, 0x7);
     ptrRCMRegs->R5SS0_RST_WFICHECK = regVal;
-}
-
-void SOC_rcmR5SS1PowerOnReset(void)
-{
-    uint32_t regVal;
-    CSL_mss_rcmRegs *ptrRCMRegs;
-    ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
-
-    regVal = ptrRCMRegs->R5SS1_RST2ASSERTDLY;
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST2ASSERTDLY_R5SS_CORE1_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST2ASSERTDLY_R5_CORE0_COUNT, 0x0);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST2ASSERTDLY_R5_CORE1_COUNT, 0x0);
-    ptrRCMRegs->R5SS1_RST2ASSERTDLY = regVal;
-
-    /* WR_MEM_32(MSS_RCM_U_BASE+RST_WFICHECK, 0x00000707); */ //RSTWFI CHECK
-    regVal = ptrRCMRegs->R5SS1_RST_WFICHECK;
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST_WFICHECK_EN_R5SS_CORE0, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST_WFICHECK_EN_R5SS_CORE1, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST_WFICHECK_EN_R5_CORE0, 0x7);
-    CSL_FINS(regVal, MSS_RCM_R5SS1_RST_WFICHECK_EN_R5_CORE1, 0x7);
-    ptrRCMRegs->R5SS1_RST_WFICHECK = regVal;
-}
-
-void SOC_rcmR5SS1TriggerReset(void)
-{
-    uint32_t regVal;
-    CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
-
-    regVal = mssCtrl->R5SS1_CONTROL;
-    CSL_FINS(regVal, MSS_CTRL_R5SS1_CONTROL_RESET_FSM_TRIGGER, 0x7);
-    mssCtrl->R5SS1_CONTROL = regVal;
 }
 
 void SOC_rcmR5SS0TriggerReset(void)
@@ -3061,19 +2602,19 @@ void SOC_configureWarmResetSource(uint32_t source)
 
 SOC_WarmResetCause SOC_getWarmResetCause(void)
 {
-    CSL_top_rcmRegs *ptrTOPRCMRegs;
+    //CSL_top_rcmRegs *ptrTOPRCMRegs;
     uint16_t     resetCause = 0U;
 
-    ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
+    //ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
     /* Read the Reset Cause Register bits */
-    resetCause = SOC_rcmExtract16 (ptrTOPRCMRegs->WARM_RST_CAUSE, 11U, 0U);
+    //resetCause = SOC_rcmExtract16 (ptrTOPRCMRegs->WARM_RST_CAUSE, 11U, 0U);
 
     /* clear the reset cause */
-    CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
+    //CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
@@ -3083,14 +2624,14 @@ SOC_WarmResetCause SOC_getWarmResetCause(void)
 
 void SOC_clearWarmResetCause(void)
 {
-    CSL_top_rcmRegs *ptrTOPRCMRegs;
+    //CSL_top_rcmRegs *ptrTOPRCMRegs;
 
-    ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
+    //ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
-    CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
+    //CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);

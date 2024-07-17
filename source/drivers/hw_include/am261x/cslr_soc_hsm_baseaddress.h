@@ -2,7 +2,7 @@
 *
 * MCU_R5 MEMORYMAP header file
 *
-* Copyright (C) 2020 Texas Instruments Incorporated.
+* Copyright (C) 2023 Texas Instruments Incorporated.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -37,18 +37,32 @@
 #define CSLR_SOC_R5_BASEADDRESS_H_
 
 #include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/tistdtypes.h>
-#include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
+#include <ti/csl/tistdtypes.h>
+#include <ti/csl/soc/am261/src/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#define CSL_MSS_TCMA_RAM_BASE               (0x00000000U)
-#define CSL_MSS_TCMA_RAM_SIZE               (0x00008000ul)   /* 32KB */
+#define CSL_HSM_M4_ROM_BASE               (0x00000000U)
+#define CSL_HSM_M4_ROM_SIZE               (0x0000C000ul)  /* 48 KB */
 
-#define CSL_MSS_TCMB_RAM_BASE               (0x00080000U)
-#define CSL_MSS_TCMB_RAM_SIZE               (0x00008000ul)   /* 32KB */
+#define CSL_HSM_M4_SEC_ROM_BASE           (0x00010000U)
+#define CSL_HSM_M4_SEC_ROM_SIZE           (0x0000C000ul)  /* 48 KB */
+
+#define CSL_HSM_M4_RAM_BASE               (0x00020000U)
+#define CSL_HSM_M4_RRM_SIZE               (0x00030000ul) /* 192 KB */
+
+#define CSL_CM4_ICFG_BASE                 (0xE0000000U)
+
+#define CSL_HSM_R5SS0_CORE0_PREECLIPSE_ROM_BASE                     (0x78000000U)
+#define CSL_HSM_R5SS0_CORE0_PREECLIPSE_ROM_SIZE                     (0x00020000ul)  /* 128 KB */
+
+#define CSL_HSM_R5SS0_CORE0_TCMA_PREECLIPSE_RAM_BASE               (0x78020000U)
+#define CSL_HSM_R5SS0_CORE0_TCMA_PREECLIPSE_RAM_SIZE               (0x00010000ul)  /* 64KB */
+
+
+
 
 
 #ifdef __cplusplus

@@ -59,8 +59,6 @@ extern "C"
 #include <drivers/hw_include/am261x/cslr_icssm_intr_xbar.h>
 #include <drivers/hw_include/am261x/cslr_intr_r5fss0_core0.h>
 #include <drivers/hw_include/am261x/cslr_intr_r5fss0_core1.h>
-#include <drivers/hw_include/am261x/cslr_intr_r5fss1_core0.h>
-#include <drivers/hw_include/am261x/cslr_intr_r5fss1_core1.h>
 #include <drivers/hw_include/am261x/cslr_intr_tpcc0_dmatrigger_xbar.h>
 #include <drivers/hw_include/am261x/cslr_iomux.h>
 #include <drivers/hw_include/am261x/cslr_mss_ctrl.h>
@@ -76,17 +74,13 @@ extern "C"
 #include <drivers/hw_include/am261x/cslr_mss_mcrc.h>
 #include <drivers/hw_include/am261x/cslr_mss_rcm.h>
 #include <drivers/hw_include/am261x/cslr_mss_tcma_cr5a.h>
-#include <drivers/hw_include/am261x/cslr_mss_tcma_cr5b.h>
 #include <drivers/hw_include/am261x/cslr_mss_tcma_rom.h>
 #include <drivers/hw_include/am261x/cslr_mss_tcmb_cr5a.h>
-#include <drivers/hw_include/am261x/cslr_mss_tcmb_cr5b.h>
 #include <drivers/hw_include/am261x/cslr_mss_tcm.h>
 #include <drivers/hw_include/am261x/cslr_mss_vim.h>
 #include <drivers/hw_include/am261x/cslr_pbist.h>
 #include <drivers/hw_include/am261x/cslr_rl2_of_r5fss0_core0.h>
 #include <drivers/hw_include/am261x/cslr_rl2_of_r5fss0_core1.h>
-#include <drivers/hw_include/am261x/cslr_rl2_of_r5fss1_core0.h>
-#include <drivers/hw_include/am261x/cslr_rl2_of_r5fss1_core1.h>
 #include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
 #include <drivers/hw_include/am261x/cslr_soc_defines.h>
 #include <drivers/hw_include/am261x/cslr_soc_r5_baseaddress.h>
@@ -99,7 +93,6 @@ extern "C"
 #include <drivers/hw_include/am261x/cslr_tmu_rom.h>
 #include <drivers/hw_include/am261x/cslr_top_ctrl.h>
 #include <drivers/hw_include/am261x/cslr_top_rcm.h>
-#include <drivers/hw_include/am261x/cslr_xbar_integration_data.h>
 #include <drivers/hw_include/am261x/soc_config.h>
 
 #ifdef __cplusplus

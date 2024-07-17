@@ -37,22 +37,14 @@
 #define R5FSS0_0_MBOX_READ_REQ      (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS0_CORE0_MBOX_READ_REQ)
 #define R5FSS0_1_MBOX_WRITE_DONE    (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS0_CORE1_MBOX_WRITE_DONE)
 #define R5FSS0_1_MBOX_READ_REQ      (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS0_CORE1_MBOX_READ_REQ)
-#define R5FSS1_0_MBOX_WRITE_DONE    (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS1_CORE0_MBOX_WRITE_DONE)
-#define R5FSS1_0_MBOX_READ_REQ      (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS1_CORE0_MBOX_READ_REQ)
-#define R5FSS1_1_MBOX_WRITE_DONE    (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS1_CORE1_MBOX_WRITE_DONE)
-#define R5FSS1_1_MBOX_READ_REQ      (CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_R5SS1_CORE1_MBOX_READ_REQ)
 
 /* CPU bit positions within the mailbox registers */
 #define R5FSS0_0_MBOX_PROC_BIT_POS  ( 0U)
 #define R5FSS0_1_MBOX_PROC_BIT_POS  ( 4U)
-#define R5FSS1_0_MBOX_PROC_BIT_POS  ( 8U)
-#define R5FSS1_1_MBOX_PROC_BIT_POS  (12U)
 
 /* mailbox interrupts */
 #define R5FSS0_0_MBOX_READ_REQ_INTR ( 136U)
 #define R5FSS0_1_MBOX_READ_REQ_INTR ( 136U)
-#define R5FSS1_0_MBOX_READ_REQ_INTR ( 136U)
-#define R5FSS1_1_MBOX_READ_REQ_INTR ( 136U)
 
 /* dedicated mailbox memories address and size */
 #define MSS_MBOX_MEM                (CSL_MBOX_SRAM_U_BASE)
@@ -69,26 +61,14 @@
  *
  * Rest of the mailbox memory cna be used for ipc_rpmessage or custom message passing.
  */
-#define R5FSS0_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*12U))
-#define R5FSS0_0_TO_R5FSS1_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*11U))
-#define R5FSS0_0_TO_R5FSS1_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*10U))
-#define R5FSS0_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*9U))
-#define R5FSS0_1_TO_R5FSS1_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*8U))
-#define R5FSS0_1_TO_R5FSS1_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*7U))
-#define R5FSS1_0_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*6U))
-#define R5FSS1_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*5U))
-#define R5FSS1_0_TO_R5FSS1_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*4U))
-#define R5FSS1_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*3U))
-#define R5FSS1_1_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*2U))
-#define R5FSS1_1_TO_R5FSS1_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*1U))
+#define R5FSS0_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*2U))
+#define R5FSS0_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*1U))
 
 /* shift to apply in mailbox addr to get to core specific status */
 uint32_t gIpcNotifyCoreIntrBitPos[] =
 {
     R5FSS0_0_MBOX_PROC_BIT_POS,
     R5FSS0_1_MBOX_PROC_BIT_POS,
-    R5FSS1_0_MBOX_PROC_BIT_POS,
-    R5FSS1_1_MBOX_PROC_BIT_POS
 };
 
 /* Pre-defined mailbox config to allow any CPU to send and receive messages from any CPU on this SOC
@@ -115,18 +95,6 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
             .swQ = R5FSS0_0_TO_R5FSS0_1_SW_QUEUE,
         },
-        { /* with R5FSS1_0 */
-            .writeDoneMailboxBaseAddr = R5FSS0_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS0_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_0_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS0_0_TO_R5FSS1_0_SW_QUEUE,
-        },
-        { /* with R5FSS1_1 */
-            .writeDoneMailboxBaseAddr = R5FSS0_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS0_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_1_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS0_0_TO_R5FSS1_1_SW_QUEUE,
-        },
     },
     /* R5FSS0-1 */
     {
@@ -142,72 +110,6 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
             .swQ = NULL,
         },
-        { /* with R5FSS1_0 */
-            .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS0_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_0_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS0_1_TO_R5FSS1_0_SW_QUEUE,
-        },
-        { /* with R5FSS1_1 */
-            .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS0_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_1_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS0_1_TO_R5FSS1_1_SW_QUEUE,
-        },
-    },
-        /* R5FSS1-0 */
-    {
-        { /* with R5FSS0_0 */
-            .writeDoneMailboxBaseAddr = R5FSS1_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS0_0_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_0_TO_R5FSS0_0_SW_QUEUE,
-        },
-        { /* with R5FSS0_1 */
-            .writeDoneMailboxBaseAddr = R5FSS1_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_0_TO_R5FSS0_1_SW_QUEUE,
-        },
-        { /* with R5FSS1_0 */
-            .writeDoneMailboxBaseAddr = R5FSS1_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
-        },
-        { /* with R5FSS1_1 */
-            .writeDoneMailboxBaseAddr = R5FSS1_0_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_0_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_1_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_0_TO_R5FSS1_1_SW_QUEUE,
-        },
-    },
-        /* R5FSS1-1 */
-    {
-        { /* with R5FSS0_0 */
-            .writeDoneMailboxBaseAddr = R5FSS1_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS0_0_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_1_TO_R5FSS0_0_SW_QUEUE,
-        },
-        { /* with R5FSS0_1 */
-            .writeDoneMailboxBaseAddr = R5FSS1_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_1_TO_R5FSS0_1_SW_QUEUE,
-        },
-        { /* with R5FSS1_0 */
-            .writeDoneMailboxBaseAddr = R5FSS1_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_0_MBOX_PROC_BIT_POS,
-            .swQ = R5FSS1_1_TO_R5FSS1_0_SW_QUEUE,
-        },
-        { /* with R5FSS1_1 */
-            .writeDoneMailboxBaseAddr = R5FSS1_1_MBOX_WRITE_DONE,
-            .readReqMailboxBaseAddr = R5FSS1_1_MBOX_READ_REQ,
-            .intrBitPos = R5FSS1_1_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
-        },
     },
 };
 
@@ -217,11 +119,9 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
     {
         .intNum = R5FSS0_0_MBOX_READ_REQ_INTR,   /* interrupt line on R5FSS0-0 */
         .eventId = 0U,   /* not used */
-        .numCores = 3U,  /* number of cores that send messages which tied to this interrupt line */
+        .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_1,
-            CSL_CORE_ID_R5FSS1_0,
-            CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_MAX,
         },
     }
@@ -234,50 +134,14 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
     {
         .intNum = R5FSS0_1_MBOX_READ_REQ_INTR,   /* interrupt line on R5FSS0-1 */
         .eventId = 0U,   /* not used */
-        .numCores = 3U,  /* number of cores that send messages which tied to this interrupt line */
+        .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_0,
-            CSL_CORE_ID_R5FSS1_0,
-            CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_MAX,
         },
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss0_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_1_NUM;
-
-/* Interrupt config for R5FSS1-0 */
-#define IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_0_NUM   (1u)
-IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_0[IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_0_NUM] = {
-    {
-        .intNum = R5FSS1_0_MBOX_READ_REQ_INTR,   /* interrupt line on R5FSS1-0 */
-        .eventId = 0U,   /* not used */
-        .numCores = 3U,  /* number of cores that send messages which tied to this interrupt line */
-        .coreIdList = { /* core ID's tied to this interrupt line */
-            CSL_CORE_ID_R5FSS0_0,
-            CSL_CORE_ID_R5FSS0_1,
-            CSL_CORE_ID_R5FSS1_1,
-            CSL_CORE_ID_MAX,
-        },
-    }
-};
-uint32_t gIpcNotifyInterruptConfigNum_r5fss1_0 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_0_NUM;
-
-/* Interrupt config for R5FSS1-1 */
-#define IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_1_NUM   (1u)
-IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_1[IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_1_NUM] = {
-    {
-        .intNum = R5FSS1_1_MBOX_READ_REQ_INTR,   /* interrupt line on R5FSS1-1 */
-        .eventId = 0U,   /* not used */
-        .numCores = 3U,  /* number of cores that send messages which tied to this interrupt line */
-        .coreIdList = { /* core ID's tied to this interrupt line */
-            CSL_CORE_ID_R5FSS0_0,
-            CSL_CORE_ID_R5FSS0_1,
-            CSL_CORE_ID_R5FSS1_0,
-            CSL_CORE_ID_MAX,
-        },
-    }
-};
-uint32_t gIpcNotifyInterruptConfigNum_r5fss1_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_1_NUM;
 
 void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
 {

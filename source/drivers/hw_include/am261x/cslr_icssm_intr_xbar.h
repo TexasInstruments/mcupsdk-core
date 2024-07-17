@@ -61,7 +61,7 @@ typedef struct {
 **************************************************************************/
 
 #define CSL_ICSSM_INTR_XBAR_PID                                                (0x00000000U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL(INTR_MUXCNTL)                         (0x00000004U+((INTR_MUXCNTL)*0x4U))
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL(INTR_MUXCNTL)                              (0x00000004U+((INTR_MUXCNTL)*0x4U))
 
 /**************************************************************************
 * Field Definition Macros
@@ -109,17 +109,17 @@ typedef struct {
 
 /* INTR_MUXCNTL */
 
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_MASK                       (0x00010000U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_SHIFT                      (0x00000010U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_RESETVAL                   (0x00000000U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_MAX                        (0x00000001U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_MASK                            (0x00010000U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_SHIFT                           (0x00000010U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_RESETVAL                        (0x00000000U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_INT_ENABLE_MAX                             (0x00000001U)
 
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_MASK                         (0x0000007FU)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_SHIFT                        (0x00000000U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_RESETVAL                     (0x00000000U)
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_MAX                          (0x0000007FU)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_MASK                                (0x0000003FU)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_SHIFT                               (0x00000000U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_RESETVAL                            (0x00000000U)
+#define CSL_ICSSM_INTR_XBAR_MUXCNTL_ENABLE_MAX                                 (0x0000003FU)
 
-#define CSL_ICSSM_INTR_XBAR_MUXCNTL_RESETVAL                              (0x00000000U)
+#define CSL_ICSSM_INTR_XBAR_INTR_MUXCNTL_RESETVAL                              (0x00000000U)
 
 #ifdef __cplusplus
 }

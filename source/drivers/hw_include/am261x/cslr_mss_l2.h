@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2020 Texas Instruments Incorporated.
+ * Copyright (C) 2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,6 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  Name        : cslr_mss_l2.h
+ *  VPVERSION   : 3.0.358 - 2023.07.24.16.08.29
+ *  VPREV       : 2.3.4.5
 */
 #ifndef CSLR_MSS_L2_H_
 #define CSLR_MSS_L2_H_
@@ -52,7 +54,7 @@ extern "C"
 
 typedef struct {
     volatile uint32_t START;
-    volatile uint8_t  Resv_2097148[2097144];
+    volatile uint8_t  Resv_1572860[1572856];
     volatile uint32_t END;
 } CSL_mss_l2Regs;
 
@@ -62,7 +64,7 @@ typedef struct {
 **************************************************************************/
 
 #define CSL_MSS_L2_START                                                       (0x00000000U)
-#define CSL_MSS_L2_END                                                         (0x001FFFFCU)
+#define CSL_MSS_L2_END                                                         (0x0017FFFCU)
 
 /**************************************************************************
 * Field Definition Macros

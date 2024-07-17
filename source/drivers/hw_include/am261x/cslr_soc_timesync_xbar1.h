@@ -45,27 +45,28 @@ extern "C"
 * Hardware Region  :
 **************************************************************************/
 
-
 /**************************************************************************
     XBAR INPUT Macros
 **************************************************************************/
 
-#define SOC_TIMESYNC_XBAR1_CPTS_COMP   0
-#define SOC_TIMESYNC_XBAR1_CPTS_GENF0  1
-#define SOC_TIMESYNC_XBAR1_CPTS_GENF1  2
-#define SOC_TIMESYNC_XBAR1_CPTS_SYNC   3
-#define SOC_TIMESYNC_XBAR1_PR1_EDC0_SYNC_OUT_0     4
-#define SOC_TIMESYNC_XBAR1_PR1_EDC0_SYNC_OUT_1     5
-#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_0  6
-#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_1  7
-#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_2  8
-#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_3  9
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_0     10
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_1     11
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_2    12
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_3    13
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_4    14
-#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_5    15
+#define SOC_TIMESYNC_XBAR1_CPTS_COMP                    0
+#define SOC_TIMESYNC_XBAR1_CPTS_GENF0                   1
+#define SOC_TIMESYNC_XBAR1_CPTS_GENF1                   2
+#define SOC_TIMESYNC_XBAR1_CPTS_SYNC                    3
+#define SOC_TIMESYNC_XBAR1_ICSSM0_EDC0_SYNC_OUT_0       4
+#define SOC_TIMESYNC_XBAR1_ICSSM0_EDC0_SYNC_OUT_1       5
+#define SOC_TIMESYNC_XBAR1_ICSSM1_EDC0_SYNC_OUT_0       6
+#define SOC_TIMESYNC_XBAR1_ICSSM1_EDC0_SYNC_OUT_1       7
+#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_0       8
+#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_1       9
+#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_2       10
+#define SOC_TIMESYNC_XBAR1_PWM_SYNCOUT_XBAR_OUT_3       11
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_8          12
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_9          13
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_10         14
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_11         15
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_12         16
+#define SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_13         17
 
 /**************************************************************************
     XBAR OUTPUT Macros
@@ -112,7 +113,7 @@ extern "C"
 
 typedef struct {
     volatile uint32_t PID;
-    volatile uint32_t MUXCNTL[34];
+    volatile uint32_t MUXCNTL[12];
 } CSL_soc_timesync_xbar1Regs;
 
 
@@ -121,7 +122,7 @@ typedef struct {
 **************************************************************************/
 
 #define CSL_SOC_TIMESYNC_XBAR1_PID                                             (0x00000000U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL(MUXCNTL)                      (0x00000004U+((MUXCNTL)*0x4U))
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL(MUXCNTL)                                (0x00000004U+((MUXCNTL)*0x4U))
 
 /**************************************************************************
 * Field Definition Macros
@@ -169,17 +170,17 @@ typedef struct {
 
 /* MUXCNTL */
 
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_MASK                    (0x00010000U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_SHIFT                   (0x00000010U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_RESETVAL                (0x00000000U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_MAX                     (0x00000001U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_MASK                         (0x00010000U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_SHIFT                        (0x00000010U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_RESETVAL                     (0x00000000U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_INT_ENABLE_MAX                          (0x00000001U)
 
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_MASK                      (0x0000000FU)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_SHIFT                     (0x00000000U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_RESETVAL                  (0x00000000U)
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_MAX                       (0x0000000FU)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_MASK                             (0x0000003FU)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_SHIFT                            (0x00000000U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_RESETVAL                         (0x00000000U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_ENABLE_MAX                              (0x0000003FU)
 
-#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_RESETVAL                           (0x00000000U)
+#define CSL_SOC_TIMESYNC_XBAR1_MUXCNTL_RESETVAL                                (0x00000000U)
 
 #ifdef __cplusplus
 }

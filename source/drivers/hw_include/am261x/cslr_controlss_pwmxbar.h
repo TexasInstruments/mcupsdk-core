@@ -44,7 +44,156 @@ extern "C"
 /**************************************************************************
 * Hardware Region  :
 **************************************************************************/
+/**************************************************************************
+    XBAR INPUT Macros
+**************************************************************************/
 
+/******************* GO *********************/
+#define PWMXBAR_CMPSSA0_CTRIPL      (0x00000001)
+#define PWMXBAR_CMPSSA0_CTRIPH      (0x00000002)
+#define PWMXBAR_CMPSSA1_CTRIPL      (0x00000004)
+#define PWMXBAR_CMPSSA1_CTRIPH      (0x00000008)
+#define PWMXBAR_CMPSSA2_CTRIPL      (0x00000010)
+#define PWMXBAR_CMPSSA2_CTRIPH      (0x00000020)
+#define PWMXBAR_CMPSSA3_CTRIPL      (0x00000040)
+#define PWMXBAR_CMPSSA3_CTRIPH      (0x00000080)
+#define PWMXBAR_CMPSSA4_CTRIPL      (0x00000100)
+#define PWMXBAR_CMPSSA4_CTRIPH      (0x00000200)
+#define PWMXBAR_CMPSSA5_CTRIPL      (0x00000400)
+#define PWMXBAR_CMPSSA5_CTRIPH      (0x00000800)
+#define PWMXBAR_CMPSSA6_CTRIPL      (0x00001000)
+#define PWMXBAR_CMPSSA6_CTRIPH      (0x00002000)
+#define PWMXBAR_CMPSSA7_CTRIPL      (0x00004000)
+#define PWMXBAR_CMPSSA7_CTRIPH      (0x00008000)
+#define PWMXBAR_CMPSSA8_CTRIPL      (0x00010000)
+#define PWMXBAR_CMPSSA8_CTRIPH      (0x00020000)
+#define PWMXBAR_CMPSSA9_CTRIPL      (0x00040000)
+#define PWMXBAR_CMPSSA9_CTRIPH      (0x00080000)
+
+/******************* G1 *********************/
+#define PWMXBAR_SD0_FILT0_EVT1      (0x00000001)
+#define PWMXBAR_SD0_FILT0_EVT2      (0x00000002)
+#define PWMXBAR_SD0_FILT0_CMPHZ     (0x00000004)
+#define PWMXBAR_SD0_FILT1_EVT1      (0x00000008)
+#define PWMXBAR_SD0_FILT1_EVT2      (0x00000010)
+#define PWMXBAR_SD0_FILT1_CMPHZ     (0x00000020)
+#define PWMXBAR_SD0_FILT2_EVT1      (0x00000040)
+#define PWMXBAR_SD0_FILT2_EVT2      (0x00000080)
+#define PWMXBAR_SD0_FILT2_CMPHZ     (0x00000100)
+#define PWMXBAR_SD0_FILT3_EVT1      (0x00000200)
+#define PWMXBAR_SD0_FILT3_EVT2      (0x00000400)
+#define PWMXBAR_SD0_FILT3_CMPHZ     (0x00000800)
+#define PWMXBAR_SD1_FILT0_EVT1      (0x00001000)
+#define PWMXBAR_SD1_FILT0_EVT2      (0x00002000)
+#define PWMXBAR_SD1_FILT0_CMPHZ     (0x00004000)
+#define PWMXBAR_SD1_FILT1_EVT1      (0x00008000)
+#define PWMXBAR_SD1_FILT1_EVT2      (0x00010000)
+#define PWMXBAR_SD1_FILT1_CMPHZ     (0x00020000)
+#define PWMXBAR_SD1_FILT2_EVT1      (0x00040000)
+#define PWMXBAR_SD1_FILT2_EVT2      (0x00080000)
+#define PWMXBAR_SD1_FILT2_CMPHZ     (0x00100000)
+#define PWMXBAR_SD1_FILT3_EVT1      (0x00200000)
+#define PWMXBAR_SD1_FILT3_EVT2      (0x00400000)
+#define PWMXBAR_SD1_FILT3_CMPHZ     (0x00800000)
+/******************* G2 *********************/
+#define PWMXBAR_ADC0_EVT1           (0x00000001)
+#define PWMXBAR_ADC0_EVT2           (0x00000002)
+#define PWMXBAR_ADC0_EVT3           (0x00000004)
+#define PWMXBAR_ADC0_EVT4           (0x00000008)
+#define PWMXBAR_ADC1_EVT1           (0x00000010)
+#define PWMXBAR_ADC1_EVT2           (0x00000020)
+#define PWMXBAR_ADC1_EVT3           (0x00000040)
+#define PWMXBAR_ADC1_EVT4           (0x00000080)
+#define PWMXBAR_EVENTAGG_CHECKEVT0  (0x10000000)
+#define PWMXBAR_EVENTAGG_CHECKEVT1  (0x20000000)
+#define PWMXBAR_EVENTAGG_CHECKEVT2  (0x40000000)
+#define PWMXBAR_EVENTAGG_CHECKEVT3  (0x80000000)
+/******************* G3 *********************/
+#define PWMXBAR_INPUT_XBAR0         (0x00000001)
+#define PWMXBAR_INPUT_XBAR1         (0x00000002)
+#define PWMXBAR_INPUT_XBAR2         (0x00000004)
+#define PWMXBAR_INPUT_XBAR3         (0x00000008)
+#define PWMXBAR_INPUT_XBAR4         (0x00000010)
+#define PWMXBAR_INPUT_XBAR5         (0x00000020)
+#define PWMXBAR_INPUT_XBAR6         (0x00000040)
+#define PWMXBAR_INPUT_XBAR7         (0x00000080)
+#define PWMXBAR_INPUT_XBAR8         (0x00000100)
+#define PWMXBAR_INPUT_XBAR9         (0x00000200)
+#define PWMXBAR_INPUT_XBAR10        (0x00000400)
+#define PWMXBAR_INPUT_XBAR11        (0x00000800)
+#define PWMXBAR_INPUT_XBAR12        (0x00001000)
+#define PWMXBAR_INPUT_XBAR13        (0x00002000)
+#define PWMXBAR_INPUT_XBAR14        (0x00004000)
+#define PWMXBAR_INPUT_XBAR15        (0x00008000)
+#define PWMXBAR_INPUT_XBAR16        (0x00010000)
+#define PWMXBAR_INPUT_XBAR17        (0x00020000)
+#define PWMXBAR_INPUT_XBAR18        (0x00040000)
+#define PWMXBAR_INPUT_XBAR19        (0x00080000)
+#define PWMXBAR_INPUT_XBAR20        (0x00100000)
+#define PWMXBAR_INPUT_XBAR21        (0x00200000)
+#define PWMXBAR_INPUT_XBAR22        (0x00400000)
+#define PWMXBAR_INPUT_XBAR23        (0x00800000)
+#define PWMXBAR_INPUT_XBAR24        (0x01000000)
+#define PWMXBAR_INPUT_XBAR25        (0x02000000)
+#define PWMXBAR_INPUT_XBAR26        (0x04000000)
+#define PWMXBAR_INPUT_XBAR27        (0x08000000)
+#define PWMXBAR_INPUT_XBAR28        (0x10000000)
+#define PWMXBAR_INPUT_XBAR29        (0x20000000)
+#define PWMXBAR_INPUT_XBAR30        (0x40000000)
+#define PWMXBAR_INPUT_XBAR31        (0x80000000)
+/******************* G4 *********************/
+#define PWMXBAR_EPWM0_TRIPOUT       (0x00000001)
+#define PWMXBAR_EPWM1_TRIPOUT       (0x00000002)
+#define PWMXBAR_EPWM2_TRIPOUT       (0x00000004)
+#define PWMXBAR_EPWM3_TRIPOUT       (0x00000008)
+#define PWMXBAR_EPWM4_TRIPOUT       (0x00000010)
+#define PWMXBAR_EPWM5_TRIPOUT       (0x00000020)
+#define PWMXBAR_EPWM6_TRIPOUT       (0x00000040)
+#define PWMXBAR_EPWM7_TRIPOUT       (0x00000080)
+#define PWMXBAR_EPWM8_TRIPOUT       (0x00000100)
+#define PWMXBAR_EPWM9_TRIPOUT       (0x00000200)
+/******************* G5 *********************/
+#define PWMXBAR_DEL0_TRIP           (0x00000001)
+#define PWMXBAR_DEL1_TRIP           (0x00000002)
+#define PWMXBAR_DEL2_TRIP           (0x00000004)
+#define PWMXBAR_DEL3_TRIP           (0x00000008)
+#define PWMXBAR_DEL4_TRIP           (0x00000010)
+#define PWMXBAR_DEL5_TRIP           (0x00000020)
+#define PWMXBAR_DEL6_TRIP           (0x00000040)
+#define PWMXBAR_DEL7_TRIP           (0x00000080)
+#define PWMXBAR_DEL8_TRIP           (0x00000100)
+#define PWMXBAR_DEL9_TRIP           (0x00000200)
+/******************* G6 *********************/
+#define PWMXBAR_DEL0_ACTIVE         (0x00000001)
+#define PWMXBAR_DEL1_ACTIVE         (0x00000002)
+#define PWMXBAR_DEL2_ACTIVE         (0x00000004)
+#define PWMXBAR_DEL3_ACTIVE         (0x00000008)
+#define PWMXBAR_DEL4_ACTIVE         (0x00000010)
+#define PWMXBAR_DEL5_ACTIVE         (0x00000020)
+#define PWMXBAR_DEL6_ACTIVE         (0x00000040)
+#define PWMXBAR_DEL7_ACTIVE         (0x00000080)
+#define PWMXBAR_DEL8_ACTIVE         (0x00000100)
+#define PWMXBAR_DEL9_ACTIVE         (0x00000200)
+/******************* G7 *********************/
+#define PWMXBAR_EQEP0_ERR           (0x00000001)
+#define PWMXBAR_EQEP1_ERR           (0x00000002)
+#define PWMXBAR_FSIRX0_RX_TRIG0     (0x00000100)
+#define PWMXBAR_FSIRX0_RX_TRIG1     (0x00000200)
+#define PWMXBAR_FSIRX0_RX_TRIG2     (0x00000400)
+#define PWMXBAR_FSIRX0_RX_TRIG3     (0x00000800)
+#define PWMXBAR_ECAP0_TRIPOUT       (0x00010000)
+#define PWMXBAR_ECAP1_TRIPOUT       (0x00020000)
+#define PWMXBAR_ECAP2_TRIPOUT       (0x00040000)
+#define PWMXBAR_ECAP3_TRIPOUT       (0x00080000)
+#define PWMXBAR_ECAP4_TRIPOUT       (0x00100000)
+#define PWMXBAR_ECAP5_TRIPOUT       (0x00200000)
+#define PWMXBAR_ECAP6_TRIPOUT       (0x00400000)
+#define PWMXBAR_ECAP7_TRIPOUT       (0x00800000)
+/******************* G8 *********************/
+#define PWMXBAR_SYNCOUTXBAR_Out0    (0x00000001)
+#define PWMXBAR_SYNCOUTXBAR_Out1    (0x00000002)
+#define PWMXBAR_ADCSOCA_SEL         (0x00010000)
+#define PWMXBAR_ADCSOCB_SEL         (0x00020000)
 
 /**************************************************************************
 * Register Overlay Structure
@@ -67,8 +216,7 @@ typedef struct {
     volatile uint32_t PWMXBAR0_G6;
     volatile uint32_t PWMXBAR0_G7;
     volatile uint32_t PWMXBAR0_G8;
-    volatile uint32_t PWMXBAR0_G9;
-    volatile uint8_t  Resv_320[24];
+    volatile uint8_t  Resv_320[28];
     volatile uint32_t PWMXBAR1_G0;
     volatile uint32_t PWMXBAR1_G1;
     volatile uint32_t PWMXBAR1_G2;
@@ -78,8 +226,7 @@ typedef struct {
     volatile uint32_t PWMXBAR1_G6;
     volatile uint32_t PWMXBAR1_G7;
     volatile uint32_t PWMXBAR1_G8;
-    volatile uint32_t PWMXBAR1_G9;
-    volatile uint8_t  Resv_384[24];
+    volatile uint8_t  Resv_384[28];
     volatile uint32_t PWMXBAR2_G0;
     volatile uint32_t PWMXBAR2_G1;
     volatile uint32_t PWMXBAR2_G2;
@@ -89,8 +236,7 @@ typedef struct {
     volatile uint32_t PWMXBAR2_G6;
     volatile uint32_t PWMXBAR2_G7;
     volatile uint32_t PWMXBAR2_G8;
-    volatile uint32_t PWMXBAR2_G9;
-    volatile uint8_t  Resv_448[24];
+    volatile uint8_t  Resv_448[28];
     volatile uint32_t PWMXBAR3_G0;
     volatile uint32_t PWMXBAR3_G1;
     volatile uint32_t PWMXBAR3_G2;
@@ -100,8 +246,7 @@ typedef struct {
     volatile uint32_t PWMXBAR3_G6;
     volatile uint32_t PWMXBAR3_G7;
     volatile uint32_t PWMXBAR3_G8;
-    volatile uint32_t PWMXBAR3_G9;
-    volatile uint8_t  Resv_512[24];
+    volatile uint8_t  Resv_512[28];
     volatile uint32_t PWMXBAR4_G0;
     volatile uint32_t PWMXBAR4_G1;
     volatile uint32_t PWMXBAR4_G2;
@@ -111,8 +256,7 @@ typedef struct {
     volatile uint32_t PWMXBAR4_G6;
     volatile uint32_t PWMXBAR4_G7;
     volatile uint32_t PWMXBAR4_G8;
-    volatile uint32_t PWMXBAR4_G9;
-    volatile uint8_t  Resv_576[24];
+    volatile uint8_t  Resv_576[28];
     volatile uint32_t PWMXBAR5_G0;
     volatile uint32_t PWMXBAR5_G1;
     volatile uint32_t PWMXBAR5_G2;
@@ -122,8 +266,7 @@ typedef struct {
     volatile uint32_t PWMXBAR5_G6;
     volatile uint32_t PWMXBAR5_G7;
     volatile uint32_t PWMXBAR5_G8;
-    volatile uint32_t PWMXBAR5_G9;
-    volatile uint8_t  Resv_640[24];
+    volatile uint8_t  Resv_640[28];
     volatile uint32_t PWMXBAR6_G0;
     volatile uint32_t PWMXBAR6_G1;
     volatile uint32_t PWMXBAR6_G2;
@@ -133,8 +276,7 @@ typedef struct {
     volatile uint32_t PWMXBAR6_G6;
     volatile uint32_t PWMXBAR6_G7;
     volatile uint32_t PWMXBAR6_G8;
-    volatile uint32_t PWMXBAR6_G9;
-    volatile uint8_t  Resv_704[24];
+    volatile uint8_t  Resv_704[28];
     volatile uint32_t PWMXBAR7_G0;
     volatile uint32_t PWMXBAR7_G1;
     volatile uint32_t PWMXBAR7_G2;
@@ -144,8 +286,7 @@ typedef struct {
     volatile uint32_t PWMXBAR7_G6;
     volatile uint32_t PWMXBAR7_G7;
     volatile uint32_t PWMXBAR7_G8;
-    volatile uint32_t PWMXBAR7_G9;
-    volatile uint8_t  Resv_768[24];
+    volatile uint8_t  Resv_768[28];
     volatile uint32_t PWMXBAR8_G0;
     volatile uint32_t PWMXBAR8_G1;
     volatile uint32_t PWMXBAR8_G2;
@@ -155,8 +296,7 @@ typedef struct {
     volatile uint32_t PWMXBAR8_G6;
     volatile uint32_t PWMXBAR8_G7;
     volatile uint32_t PWMXBAR8_G8;
-    volatile uint32_t PWMXBAR8_G9;
-    volatile uint8_t  Resv_832[24];
+    volatile uint8_t  Resv_832[28];
     volatile uint32_t PWMXBAR9_G0;
     volatile uint32_t PWMXBAR9_G1;
     volatile uint32_t PWMXBAR9_G2;
@@ -166,8 +306,7 @@ typedef struct {
     volatile uint32_t PWMXBAR9_G6;
     volatile uint32_t PWMXBAR9_G7;
     volatile uint32_t PWMXBAR9_G8;
-    volatile uint32_t PWMXBAR9_G9;
-    volatile uint8_t  Resv_896[24];
+    volatile uint8_t  Resv_896[28];
     volatile uint32_t PWMXBAR10_G0;
     volatile uint32_t PWMXBAR10_G1;
     volatile uint32_t PWMXBAR10_G2;
@@ -177,8 +316,7 @@ typedef struct {
     volatile uint32_t PWMXBAR10_G6;
     volatile uint32_t PWMXBAR10_G7;
     volatile uint32_t PWMXBAR10_G8;
-    volatile uint32_t PWMXBAR10_G9;
-    volatile uint8_t  Resv_960[24];
+    volatile uint8_t  Resv_960[28];
     volatile uint32_t PWMXBAR11_G0;
     volatile uint32_t PWMXBAR11_G1;
     volatile uint32_t PWMXBAR11_G2;
@@ -188,8 +326,7 @@ typedef struct {
     volatile uint32_t PWMXBAR11_G6;
     volatile uint32_t PWMXBAR11_G7;
     volatile uint32_t PWMXBAR11_G8;
-    volatile uint32_t PWMXBAR11_G9;
-    volatile uint8_t  Resv_1024[24];
+    volatile uint8_t  Resv_1024[28];
     volatile uint32_t PWMXBAR12_G0;
     volatile uint32_t PWMXBAR12_G1;
     volatile uint32_t PWMXBAR12_G2;
@@ -199,8 +336,7 @@ typedef struct {
     volatile uint32_t PWMXBAR12_G6;
     volatile uint32_t PWMXBAR12_G7;
     volatile uint32_t PWMXBAR12_G8;
-    volatile uint32_t PWMXBAR12_G9;
-    volatile uint8_t  Resv_1088[24];
+    volatile uint8_t  Resv_1088[28];
     volatile uint32_t PWMXBAR13_G0;
     volatile uint32_t PWMXBAR13_G1;
     volatile uint32_t PWMXBAR13_G2;
@@ -210,8 +346,7 @@ typedef struct {
     volatile uint32_t PWMXBAR13_G6;
     volatile uint32_t PWMXBAR13_G7;
     volatile uint32_t PWMXBAR13_G8;
-    volatile uint32_t PWMXBAR13_G9;
-    volatile uint8_t  Resv_1152[24];
+    volatile uint8_t  Resv_1152[28];
     volatile uint32_t PWMXBAR14_G0;
     volatile uint32_t PWMXBAR14_G1;
     volatile uint32_t PWMXBAR14_G2;
@@ -221,8 +356,7 @@ typedef struct {
     volatile uint32_t PWMXBAR14_G6;
     volatile uint32_t PWMXBAR14_G7;
     volatile uint32_t PWMXBAR14_G8;
-    volatile uint32_t PWMXBAR14_G9;
-    volatile uint8_t  Resv_1216[24];
+    volatile uint8_t  Resv_1216[28];
     volatile uint32_t PWMXBAR15_G0;
     volatile uint32_t PWMXBAR15_G1;
     volatile uint32_t PWMXBAR15_G2;
@@ -232,8 +366,7 @@ typedef struct {
     volatile uint32_t PWMXBAR15_G6;
     volatile uint32_t PWMXBAR15_G7;
     volatile uint32_t PWMXBAR15_G8;
-    volatile uint32_t PWMXBAR15_G9;
-    volatile uint8_t  Resv_1280[24];
+    volatile uint8_t  Resv_1280[28];
     volatile uint32_t PWMXBAR16_G0;
     volatile uint32_t PWMXBAR16_G1;
     volatile uint32_t PWMXBAR16_G2;
@@ -243,8 +376,7 @@ typedef struct {
     volatile uint32_t PWMXBAR16_G6;
     volatile uint32_t PWMXBAR16_G7;
     volatile uint32_t PWMXBAR16_G8;
-    volatile uint32_t PWMXBAR16_G9;
-    volatile uint8_t  Resv_1344[24];
+    volatile uint8_t  Resv_1344[28];
     volatile uint32_t PWMXBAR17_G0;
     volatile uint32_t PWMXBAR17_G1;
     volatile uint32_t PWMXBAR17_G2;
@@ -254,8 +386,7 @@ typedef struct {
     volatile uint32_t PWMXBAR17_G6;
     volatile uint32_t PWMXBAR17_G7;
     volatile uint32_t PWMXBAR17_G8;
-    volatile uint32_t PWMXBAR17_G9;
-    volatile uint8_t  Resv_1408[24];
+    volatile uint8_t  Resv_1408[28];
     volatile uint32_t PWMXBAR18_G0;
     volatile uint32_t PWMXBAR18_G1;
     volatile uint32_t PWMXBAR18_G2;
@@ -265,8 +396,7 @@ typedef struct {
     volatile uint32_t PWMXBAR18_G6;
     volatile uint32_t PWMXBAR18_G7;
     volatile uint32_t PWMXBAR18_G8;
-    volatile uint32_t PWMXBAR18_G9;
-    volatile uint8_t  Resv_1472[24];
+    volatile uint8_t  Resv_1472[28];
     volatile uint32_t PWMXBAR19_G0;
     volatile uint32_t PWMXBAR19_G1;
     volatile uint32_t PWMXBAR19_G2;
@@ -276,8 +406,7 @@ typedef struct {
     volatile uint32_t PWMXBAR19_G6;
     volatile uint32_t PWMXBAR19_G7;
     volatile uint32_t PWMXBAR19_G8;
-    volatile uint32_t PWMXBAR19_G9;
-    volatile uint8_t  Resv_1536[24];
+    volatile uint8_t  Resv_1536[28];
     volatile uint32_t PWMXBAR20_G0;
     volatile uint32_t PWMXBAR20_G1;
     volatile uint32_t PWMXBAR20_G2;
@@ -287,8 +416,7 @@ typedef struct {
     volatile uint32_t PWMXBAR20_G6;
     volatile uint32_t PWMXBAR20_G7;
     volatile uint32_t PWMXBAR20_G8;
-    volatile uint32_t PWMXBAR20_G9;
-    volatile uint8_t  Resv_1600[24];
+    volatile uint8_t  Resv_1600[28];
     volatile uint32_t PWMXBAR21_G0;
     volatile uint32_t PWMXBAR21_G1;
     volatile uint32_t PWMXBAR21_G2;
@@ -298,8 +426,7 @@ typedef struct {
     volatile uint32_t PWMXBAR21_G6;
     volatile uint32_t PWMXBAR21_G7;
     volatile uint32_t PWMXBAR21_G8;
-    volatile uint32_t PWMXBAR21_G9;
-    volatile uint8_t  Resv_1664[24];
+    volatile uint8_t  Resv_1664[28];
     volatile uint32_t PWMXBAR22_G0;
     volatile uint32_t PWMXBAR22_G1;
     volatile uint32_t PWMXBAR22_G2;
@@ -309,8 +436,7 @@ typedef struct {
     volatile uint32_t PWMXBAR22_G6;
     volatile uint32_t PWMXBAR22_G7;
     volatile uint32_t PWMXBAR22_G8;
-    volatile uint32_t PWMXBAR22_G9;
-    volatile uint8_t  Resv_1728[24];
+    volatile uint8_t  Resv_1728[28];
     volatile uint32_t PWMXBAR23_G0;
     volatile uint32_t PWMXBAR23_G1;
     volatile uint32_t PWMXBAR23_G2;
@@ -320,8 +446,7 @@ typedef struct {
     volatile uint32_t PWMXBAR23_G6;
     volatile uint32_t PWMXBAR23_G7;
     volatile uint32_t PWMXBAR23_G8;
-    volatile uint32_t PWMXBAR23_G9;
-    volatile uint8_t  Resv_1792[24];
+    volatile uint8_t  Resv_1792[28];
     volatile uint32_t PWMXBAR24_G0;
     volatile uint32_t PWMXBAR24_G1;
     volatile uint32_t PWMXBAR24_G2;
@@ -331,8 +456,7 @@ typedef struct {
     volatile uint32_t PWMXBAR24_G6;
     volatile uint32_t PWMXBAR24_G7;
     volatile uint32_t PWMXBAR24_G8;
-    volatile uint32_t PWMXBAR24_G9;
-    volatile uint8_t  Resv_1856[24];
+    volatile uint8_t  Resv_1856[28];
     volatile uint32_t PWMXBAR25_G0;
     volatile uint32_t PWMXBAR25_G1;
     volatile uint32_t PWMXBAR25_G2;
@@ -342,8 +466,7 @@ typedef struct {
     volatile uint32_t PWMXBAR25_G6;
     volatile uint32_t PWMXBAR25_G7;
     volatile uint32_t PWMXBAR25_G8;
-    volatile uint32_t PWMXBAR25_G9;
-    volatile uint8_t  Resv_1920[24];
+    volatile uint8_t  Resv_1920[28];
     volatile uint32_t PWMXBAR26_G0;
     volatile uint32_t PWMXBAR26_G1;
     volatile uint32_t PWMXBAR26_G2;
@@ -353,8 +476,7 @@ typedef struct {
     volatile uint32_t PWMXBAR26_G6;
     volatile uint32_t PWMXBAR26_G7;
     volatile uint32_t PWMXBAR26_G8;
-    volatile uint32_t PWMXBAR26_G9;
-    volatile uint8_t  Resv_1984[24];
+    volatile uint8_t  Resv_1984[28];
     volatile uint32_t PWMXBAR27_G0;
     volatile uint32_t PWMXBAR27_G1;
     volatile uint32_t PWMXBAR27_G2;
@@ -364,8 +486,7 @@ typedef struct {
     volatile uint32_t PWMXBAR27_G6;
     volatile uint32_t PWMXBAR27_G7;
     volatile uint32_t PWMXBAR27_G8;
-    volatile uint32_t PWMXBAR27_G9;
-    volatile uint8_t  Resv_2048[24];
+    volatile uint8_t  Resv_2048[28];
     volatile uint32_t PWMXBAR28_G0;
     volatile uint32_t PWMXBAR28_G1;
     volatile uint32_t PWMXBAR28_G2;
@@ -375,8 +496,7 @@ typedef struct {
     volatile uint32_t PWMXBAR28_G6;
     volatile uint32_t PWMXBAR28_G7;
     volatile uint32_t PWMXBAR28_G8;
-    volatile uint32_t PWMXBAR28_G9;
-    volatile uint8_t  Resv_2112[24];
+    volatile uint8_t  Resv_2112[28];
     volatile uint32_t PWMXBAR29_G0;
     volatile uint32_t PWMXBAR29_G1;
     volatile uint32_t PWMXBAR29_G2;
@@ -386,7 +506,6 @@ typedef struct {
     volatile uint32_t PWMXBAR29_G6;
     volatile uint32_t PWMXBAR29_G7;
     volatile uint32_t PWMXBAR29_G8;
-    volatile uint32_t PWMXBAR29_G9;
 } CSL_controlss_pwmxbarRegs;
 
 
@@ -408,7 +527,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6                                      (0x00000118U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7                                      (0x0000011CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8                                      (0x00000120U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9                                      (0x00000124U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0                                      (0x00000140U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1                                      (0x00000144U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2                                      (0x00000148U)
@@ -418,7 +536,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6                                      (0x00000158U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7                                      (0x0000015CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8                                      (0x00000160U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9                                      (0x00000164U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0                                      (0x00000180U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1                                      (0x00000184U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2                                      (0x00000188U)
@@ -428,7 +545,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6                                      (0x00000198U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7                                      (0x0000019CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8                                      (0x000001A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9                                      (0x000001A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0                                      (0x000001C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1                                      (0x000001C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2                                      (0x000001C8U)
@@ -438,7 +554,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6                                      (0x000001D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7                                      (0x000001DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8                                      (0x000001E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9                                      (0x000001E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0                                      (0x00000200U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1                                      (0x00000204U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2                                      (0x00000208U)
@@ -448,7 +563,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6                                      (0x00000218U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7                                      (0x0000021CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8                                      (0x00000220U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9                                      (0x00000224U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0                                      (0x00000240U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1                                      (0x00000244U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2                                      (0x00000248U)
@@ -458,7 +572,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6                                      (0x00000258U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7                                      (0x0000025CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8                                      (0x00000260U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9                                      (0x00000264U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0                                      (0x00000280U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1                                      (0x00000284U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2                                      (0x00000288U)
@@ -468,7 +581,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6                                      (0x00000298U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7                                      (0x0000029CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8                                      (0x000002A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9                                      (0x000002A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0                                      (0x000002C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1                                      (0x000002C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2                                      (0x000002C8U)
@@ -478,7 +590,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6                                      (0x000002D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7                                      (0x000002DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8                                      (0x000002E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9                                      (0x000002E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0                                      (0x00000300U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1                                      (0x00000304U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2                                      (0x00000308U)
@@ -488,7 +599,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6                                      (0x00000318U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7                                      (0x0000031CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8                                      (0x00000320U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9                                      (0x00000324U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0                                      (0x00000340U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1                                      (0x00000344U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2                                      (0x00000348U)
@@ -498,7 +608,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6                                      (0x00000358U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7                                      (0x0000035CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8                                      (0x00000360U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9                                      (0x00000364U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0                                     (0x00000380U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1                                     (0x00000384U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2                                     (0x00000388U)
@@ -508,7 +617,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6                                     (0x00000398U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7                                     (0x0000039CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8                                     (0x000003A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9                                     (0x000003A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0                                     (0x000003C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1                                     (0x000003C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2                                     (0x000003C8U)
@@ -518,7 +626,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6                                     (0x000003D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7                                     (0x000003DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8                                     (0x000003E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9                                     (0x000003E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0                                     (0x00000400U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1                                     (0x00000404U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2                                     (0x00000408U)
@@ -528,7 +635,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6                                     (0x00000418U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7                                     (0x0000041CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8                                     (0x00000420U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9                                     (0x00000424U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0                                     (0x00000440U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1                                     (0x00000444U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2                                     (0x00000448U)
@@ -538,7 +644,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6                                     (0x00000458U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7                                     (0x0000045CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8                                     (0x00000460U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9                                     (0x00000464U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0                                     (0x00000480U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1                                     (0x00000484U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2                                     (0x00000488U)
@@ -548,7 +653,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6                                     (0x00000498U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7                                     (0x0000049CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8                                     (0x000004A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9                                     (0x000004A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0                                     (0x000004C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1                                     (0x000004C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2                                     (0x000004C8U)
@@ -558,7 +662,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6                                     (0x000004D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7                                     (0x000004DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8                                     (0x000004E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9                                     (0x000004E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0                                     (0x00000500U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1                                     (0x00000504U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2                                     (0x00000508U)
@@ -568,7 +671,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6                                     (0x00000518U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7                                     (0x0000051CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8                                     (0x00000520U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9                                     (0x00000524U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0                                     (0x00000540U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1                                     (0x00000544U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2                                     (0x00000548U)
@@ -578,7 +680,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6                                     (0x00000558U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7                                     (0x0000055CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8                                     (0x00000560U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9                                     (0x00000564U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0                                     (0x00000580U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1                                     (0x00000584U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2                                     (0x00000588U)
@@ -588,7 +689,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6                                     (0x00000598U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7                                     (0x0000059CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8                                     (0x000005A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9                                     (0x000005A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0                                     (0x000005C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1                                     (0x000005C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2                                     (0x000005C8U)
@@ -598,7 +698,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6                                     (0x000005D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7                                     (0x000005DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8                                     (0x000005E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9                                     (0x000005E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0                                     (0x00000600U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1                                     (0x00000604U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2                                     (0x00000608U)
@@ -608,7 +707,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6                                     (0x00000618U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7                                     (0x0000061CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8                                     (0x00000620U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9                                     (0x00000624U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0                                     (0x00000640U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1                                     (0x00000644U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2                                     (0x00000648U)
@@ -618,7 +716,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6                                     (0x00000658U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7                                     (0x0000065CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8                                     (0x00000660U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9                                     (0x00000664U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0                                     (0x00000680U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1                                     (0x00000684U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2                                     (0x00000688U)
@@ -628,7 +725,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6                                     (0x00000698U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7                                     (0x0000069CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8                                     (0x000006A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9                                     (0x000006A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0                                     (0x000006C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1                                     (0x000006C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2                                     (0x000006C8U)
@@ -638,7 +734,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6                                     (0x000006D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7                                     (0x000006DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8                                     (0x000006E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9                                     (0x000006E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0                                     (0x00000700U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1                                     (0x00000704U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2                                     (0x00000708U)
@@ -648,7 +743,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6                                     (0x00000718U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7                                     (0x0000071CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8                                     (0x00000720U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9                                     (0x00000724U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0                                     (0x00000740U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1                                     (0x00000744U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2                                     (0x00000748U)
@@ -658,7 +752,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6                                     (0x00000758U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7                                     (0x0000075CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8                                     (0x00000760U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9                                     (0x00000764U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0                                     (0x00000780U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1                                     (0x00000784U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2                                     (0x00000788U)
@@ -668,7 +761,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6                                     (0x00000798U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7                                     (0x0000079CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8                                     (0x000007A0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9                                     (0x000007A4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0                                     (0x000007C0U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1                                     (0x000007C4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2                                     (0x000007C8U)
@@ -678,7 +770,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6                                     (0x000007D8U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7                                     (0x000007DCU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8                                     (0x000007E0U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9                                     (0x000007E4U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0                                     (0x00000800U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1                                     (0x00000804U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2                                     (0x00000808U)
@@ -688,7 +779,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6                                     (0x00000818U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7                                     (0x0000081CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8                                     (0x00000820U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9                                     (0x00000824U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0                                     (0x00000840U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1                                     (0x00000844U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2                                     (0x00000848U)
@@ -698,7 +788,6 @@ typedef struct {
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6                                     (0x00000858U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7                                     (0x0000085CU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8                                     (0x00000860U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9                                     (0x00000864U)
 
 /**************************************************************************
 * Field Definition Macros
@@ -1062,28 +1151,28 @@ typedef struct {
 
 /* PWMXBAR0_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_MASK                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_MASK                             (0xF0000FFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_MAX                              (0xF0000FFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_RESETVAL                             (0x00000000U)
 
@@ -1098,82 +1187,78 @@ typedef struct {
 
 /* PWMXBAR0_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_MASK                             (0x00FF0F03U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_MAX                              (0x00FF0F03U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR0_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MASK                             (0x00030003U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MAX                              (0x00030003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR0_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR1_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G2_RESETVAL                             (0x00000000U)
 
@@ -1188,82 +1273,93 @@ typedef struct {
 
 /* PWMXBAR1_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR1_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR1_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR1_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR2_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G2_RESETVAL                             (0x00000000U)
 
@@ -1278,82 +1374,93 @@ typedef struct {
 
 /* PWMXBAR2_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR2_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR2_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR2_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR3_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G2_RESETVAL                             (0x00000000U)
 
@@ -1368,82 +1475,93 @@ typedef struct {
 
 /* PWMXBAR3_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR3_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR3_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR3_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR4_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G2_RESETVAL                             (0x00000000U)
 
@@ -1458,82 +1576,93 @@ typedef struct {
 
 /* PWMXBAR4_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR4_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR4_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR4_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR5_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G2_RESETVAL                             (0x00000000U)
 
@@ -1548,82 +1677,93 @@ typedef struct {
 
 /* PWMXBAR5_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR5_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR5_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR5_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR6_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G2_RESETVAL                             (0x00000000U)
 
@@ -1638,82 +1778,93 @@ typedef struct {
 
 /* PWMXBAR6_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR6_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR6_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR6_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR7_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G2_RESETVAL                             (0x00000000U)
 
@@ -1728,82 +1879,93 @@ typedef struct {
 
 /* PWMXBAR7_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR7_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR7_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR7_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR8_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G2_RESETVAL                             (0x00000000U)
 
@@ -1818,82 +1980,93 @@ typedef struct {
 
 /* PWMXBAR8_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR8_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR8_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR8_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR9_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_MASK                             (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_SEL_MAX                              (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G0_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_MASK                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_MASK                             (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_MAX                              (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_SEL_MAX                              (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G1_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_MASK                             (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_MAX                              (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_ADC_MASK                         (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_ADC_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_ADC_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_ADC_MAX                          (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_EVTAGG_MASK                      (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_EVTAGG_SHIFT                     (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_EVTAGG_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_SEL_EVTAGG_MAX                       (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G2_RESETVAL                             (0x00000000U)
 
@@ -1908,82 +2081,93 @@ typedef struct {
 
 /* PWMXBAR9_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G4_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G5_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_MASK                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_MASK                             (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_SHIFT                            (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_SEL_MAX                              (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G6_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_EQEP_MASK                        (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_EQEP_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_EQEP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_EQEP_MAX                         (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_FSIRX_MASK                       (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_FSIRX_SHIFT                      (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_FSIRX_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_FSIRX_MAX                        (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_ECAP_MASK                        (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_ECAP_SHIFT                       (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_ECAP_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_SEL_ECAP_MAX                         (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G7_RESETVAL                             (0x00000000U)
 
 /* PWMXBAR9_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_MASK                             (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_MAX                              (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SYNCOUT_MASK                     (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SYNCOUT_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SYNCOUT_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SYNCOUT_MAX                      (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SOCAB_MASK                       (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SOCAB_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SOCAB_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_SEL_SOCAB_MAX                        (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G8_RESETVAL                             (0x00000000U)
 
-/* PWMXBAR9_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9_SEL_MASK                             (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9_SEL_MAX                              (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR9_G9_RESETVAL                             (0x00000000U)
-
 /* PWMXBAR10_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G2_RESETVAL                            (0x00000000U)
 
@@ -1998,82 +2182,93 @@ typedef struct {
 
 /* PWMXBAR10_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR10_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR10_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR10_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR11_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G2_RESETVAL                            (0x00000000U)
 
@@ -2088,82 +2283,93 @@ typedef struct {
 
 /* PWMXBAR11_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR11_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR11_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR11_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR12_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G2_RESETVAL                            (0x00000000U)
 
@@ -2178,82 +2384,93 @@ typedef struct {
 
 /* PWMXBAR12_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR12_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR12_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR12_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR13_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G2_RESETVAL                            (0x00000000U)
 
@@ -2268,82 +2485,93 @@ typedef struct {
 
 /* PWMXBAR13_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR13_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR13_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR13_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR14_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G2_RESETVAL                            (0x00000000U)
 
@@ -2358,82 +2586,93 @@ typedef struct {
 
 /* PWMXBAR14_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR14_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR14_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR14_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR15_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G2_RESETVAL                            (0x00000000U)
 
@@ -2448,82 +2687,93 @@ typedef struct {
 
 /* PWMXBAR15_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR15_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR15_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR15_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR16_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G2_RESETVAL                            (0x00000000U)
 
@@ -2538,82 +2788,93 @@ typedef struct {
 
 /* PWMXBAR16_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR16_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR16_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR16_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR17_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G2_RESETVAL                            (0x00000000U)
 
@@ -2628,82 +2889,93 @@ typedef struct {
 
 /* PWMXBAR17_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR17_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR17_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR17_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR18_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G2_RESETVAL                            (0x00000000U)
 
@@ -2718,82 +2990,93 @@ typedef struct {
 
 /* PWMXBAR18_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR18_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR18_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR18_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR19_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G2_RESETVAL                            (0x00000000U)
 
@@ -2808,82 +3091,93 @@ typedef struct {
 
 /* PWMXBAR19_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR19_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR19_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR19_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR20_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G2_RESETVAL                            (0x00000000U)
 
@@ -2898,82 +3192,93 @@ typedef struct {
 
 /* PWMXBAR20_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR20_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR20_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR20_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR21_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G2_RESETVAL                            (0x00000000U)
 
@@ -2988,82 +3293,93 @@ typedef struct {
 
 /* PWMXBAR21_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR21_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR21_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR21_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR22_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G2_RESETVAL                            (0x00000000U)
 
@@ -3078,82 +3394,93 @@ typedef struct {
 
 /* PWMXBAR22_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR22_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR22_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR22_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR23_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G2_RESETVAL                            (0x00000000U)
 
@@ -3168,82 +3495,93 @@ typedef struct {
 
 /* PWMXBAR23_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR23_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR23_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR23_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR24_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G2_RESETVAL                            (0x00000000U)
 
@@ -3258,82 +3596,93 @@ typedef struct {
 
 /* PWMXBAR24_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR24_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR24_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR24_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR25_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G2_RESETVAL                            (0x00000000U)
 
@@ -3348,82 +3697,93 @@ typedef struct {
 
 /* PWMXBAR25_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR25_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR25_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR25_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR26_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G2_RESETVAL                            (0x00000000U)
 
@@ -3438,82 +3798,93 @@ typedef struct {
 
 /* PWMXBAR26_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR26_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR26_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR26_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR27_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G2_RESETVAL                            (0x00000000U)
 
@@ -3528,82 +3899,93 @@ typedef struct {
 
 /* PWMXBAR27_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR27_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR27_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR27_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR28_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G2_RESETVAL                            (0x00000000U)
 
@@ -3618,82 +4000,93 @@ typedef struct {
 
 /* PWMXBAR28_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR28_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G8_RESETVAL                            (0x00000000U)
 
-/* PWMXBAR28_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR28_G9_RESETVAL                            (0x00000000U)
-
 /* PWMXBAR29_G0 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_MASK                            (0x0003FFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_SEL_MAX                             (0x0003FFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G0_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G1 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_MASK                            (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_MASK                            (0x00FFFFFFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_MAX                             (0x000FFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_SEL_MAX                             (0x00FFFFFFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G1_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G2 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_MASK                            (0x00FFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_MAX                             (0x00FFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_ADC_MASK                        (0x00000FFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_ADC_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_ADC_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_ADC_MAX                         (0x00000FFFU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_EVTAGG_MASK                     (0xF0000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_EVTAGG_SHIFT                    (0x0000001CU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_EVTAGG_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_SEL_EVTAGG_MAX                      (0x0000000FU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G2_RESETVAL                            (0x00000000U)
 
@@ -3708,57 +4101,63 @@ typedef struct {
 
 /* PWMXBAR29_G4 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G4_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G5 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G5_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G6 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_MASK                            (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_MASK                            (0x000003FFU)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_SHIFT                           (0x00000000U)
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_SEL_MAX                             (0x000003FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G6_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G7 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_EQEP_MASK                       (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_EQEP_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_EQEP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_EQEP_MAX                        (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_FSIRX_MASK                      (0x00000F00U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_FSIRX_SHIFT                     (0x00000008U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_FSIRX_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_FSIRX_MAX                       (0x0000000FU)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_ECAP_MASK                       (0x00FF0000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_ECAP_SHIFT                      (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_ECAP_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_SEL_ECAP_MAX                        (0x000000FFU)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G7_RESETVAL                            (0x00000000U)
 
 /* PWMXBAR29_G8 */
 
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_MASK                            (0xFFFFFFFFU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_MAX                             (0xFFFFFFFFU)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SYNCOUT_MASK                    (0x00000003U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SYNCOUT_SHIFT                   (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SYNCOUT_RESETVAL                (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SYNCOUT_MAX                     (0x00000003U)
+
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SOCAB_MASK                      (0x00030000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SOCAB_SHIFT                     (0x00000010U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SOCAB_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_SEL_SOCAB_MAX                       (0x00000003U)
 
 #define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G8_RESETVAL                            (0x00000000U)
-
-/* PWMXBAR29_G9 */
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9_SEL_MASK                            (0x0000007FU)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9_SEL_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9_SEL_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9_SEL_MAX                             (0x0000007FU)
-
-#define CSL_CONTROLSS_PWMXBAR_PWMXBAR29_G9_RESETVAL                            (0x00000000U)
 
 #ifdef __cplusplus
 }
