@@ -12,6 +12,7 @@ const component_file_list = [
     "source/networking/enet/.project/project_cpsw.js",
     "source/networking/enet/.project/project_cpsw_lwipif_freertos.js",
     "source/networking/enet/.project/project_cpsw_lwipif_nortos.js",
+    "source/networking/icss_timesync/.project/project.js",
     "source/networking/lwip/.project/project_stack_freertos.js",
     "source/networking/lwip/.project/project_stack_freertos_icss_emac.js",
     "source/networking/lwip/.project/project_stack_nortos.js",
