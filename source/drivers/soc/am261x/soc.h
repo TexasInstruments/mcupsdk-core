@@ -98,6 +98,9 @@ extern "C"
 #define ADC_EXTCHSELCT_DELAY_3_CYCLES            (0U)
 #define ADC_EXTCHSELCT_DELAY_6_CYCLES            (1U)
 
+#define CMPSS_LOOP_BACK_INH                     (0U)
+#define CMPSS_LOOP_BACK_INL                     (1U)
+
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
@@ -194,6 +197,31 @@ void SOC_setMultipleEpwmTbClk(uint32_t epwmMask, uint32_t enable);
  * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
  */
 void SOC_enableAdcReference(uint32_t adcInstance);
+
+/**
+ * \brief Enables the ADC internal reference
+ *
+ * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \param enable      [in] TRUE to enable internal reference - FALSE to disable.
+ */
+void SOC_enableAdcInternalReference(uint32_t adcInstance, uint32_t enable);
+
+/**
+ * \brief Enable ADC reference Monitors by writing to Control MMR
+ *
+ * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \param enable      [in] TRUE to enable internal reference Monitor - FALSE to disable.
+ */
+void SOC_enableAdcReferenceMonitor(uint32_t adcInstance, uint32_t enable);
+
+/**
+ * \brief Gets the Reference status
+ *
+ * \param adcInstance  [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \return                  TRUE - reference OK. FALSE - reference NOT OK.
+ */
+uint32_t SOC_getAdcReferenceStatus(uint32_t adcInstance);
+
 /**
  * @brief Enable or disable the OSD circuit over the ADC channels
  *
@@ -287,6 +315,30 @@ void SOC_selextAdcExtChDelay(uint32_t delay);
 void SOC_enableAdcDacLoopback(uint32_t enable);
 
 /**
+ * @brief Enable or disable the CMPSS - DAC Loop Back configuration
+ *
+ * @param cmpssaInstance Instance number of CMPSS TYPE A
+ * @param dacType determines which CMPSS input line
+ * Valid values are
+ * CMPSS_LOOP_BACK_INH
+ * CMPSS_LOOP_BACK_INL
+ * @param enable
+ */
+void SOC_enableCmpssaDacLoopBack(uint32_t cmpssaInstance, uint32_t dacType, uint32_t enable);
+
+/**
+ * @brief Enable or disable the CMPSS - DAC Loop Back configuration
+ *
+ * @param cmpssbInstance  Instance number of CMPSS TYPE B
+ * @param dacType determines which CMPSS input line
+ * Valid values are
+ * CMPSS_LOOP_BACK_INH
+ * CMPSS_LOOP_BACK_INL
+ * @param enable
+ */
+void SOC_enableCmpssbDacLoopBack(uint32_t cmpssbInstance, uint32_t dacType, uint32_t enable);
+
+/**
  * \brief Configure the ePWM group
  *
  * \param epwmInstance [in] ePWM instance number [0 - (CSL_EPWM_PER_CNT-1)]
@@ -322,6 +374,13 @@ void SOC_sdfmClkLoopBackConfig(uint32_t sdfmInstance, uint32_t clkInstance, uint
 void SOC_gateEpwmClock(uint32_t epwmInstance);
 
 /**
+ * \brief Ungate the ePWM clock
+ *
+ * \param epwmInstance [in] ePWM instance number [0 - (CSL_EPWM_PER_CNT-1)]
+ */
+void SOC_ungateEpwmClock(uint32_t epwmInstance);
+
+/**
  * \brief Gate the FSI-TX clock
  *
  * \param fsitxInstance [in] FSITX instance number [0 - 3]
@@ -343,11 +402,39 @@ void SOC_gateFsirxClock(uint32_t fsirxInstance);
 void SOC_gateCmpssaClock(uint32_t cmpssaInstance);
 
 /**
+ * \brief Ungate the CMPSS-A clock
+ *
+ * \param cmpssaInstance [in] CMPSS-A instance number [0 - 9]
+ */
+void SOC_ungateCmpssaClock(uint32_t cmpssaInstance);
+
+/**
+ * \brief Gate the CMPSS-B clock
+ *
+ * \param cmpssbInstance [in] CMPSS-B instance number [0 - 9]
+ */
+void SOC_gateCmpssbClock(uint32_t cmpssbInstance);
+
+/**
+ * \brief Ungate the CMPSS-B clock
+ *
+ * \param cmpssbInstance [in] CMPSS-B instance number [0 - 9]
+ */
+void SOC_ungateCmpssbClock(uint32_t cmpssbInstance);
+
+/**
  * \brief Gate the ECAP clock
  *
  * \param ecapInstance [in] ECAP instance number [0 - 9]
  */
 void SOC_gateEcapClock(uint32_t ecapInstance);
+
+/**
+ * \brief Ungate the ECAP clock
+ *
+ * \param ecapInstance [in] ECAP instance number [0 - 9]
+ */
+void SOC_ungateEcapClock(uint32_t ecapInstance);
 
 /**
  * \brief Gate the EQEP clock
@@ -357,6 +444,13 @@ void SOC_gateEcapClock(uint32_t ecapInstance);
 void SOC_gateEqepClock(uint32_t eqepInstance);
 
 /**
+ * \brief Ungate the EQEP clock
+ *
+ * \param eqepInstance [in] EQEP instance number [0 - 2]
+ */
+void SOC_ungateEqepClock(uint32_t eqepInstance);
+
+/**
  * \brief Gate the SDFM clock
  *
  * \param sdfmInstance [in] SDFM instance number [0 - 1]
@@ -364,9 +458,21 @@ void SOC_gateEqepClock(uint32_t eqepInstance);
 void SOC_gateSdfmClock(uint32_t sdfmInstance);
 
 /**
+ * \brief Ungate the SDFM clock
+ *
+ * \param sdfmInstance [in] SDFM instance number [0 - 1]
+ */
+void SOC_ungateSdfmClock(uint32_t sdfmInstance);
+
+/**
  * \brief Gate the DAC clock
  */
 void SOC_gateDacClock(void);
+
+/**
+ * \brief Ungate the DAC clock
+ */
+void SOC_ungateDacClock(void);
 
 /**
  * \brief Gate the ADC clock
@@ -374,6 +480,13 @@ void SOC_gateDacClock(void);
  * \param adcInstance [in] ADC instance number [0 - 4] or ADC_R instance [0 - 1]
  */
 void SOC_gateAdcClock(uint32_t adcInstance);
+
+/**
+ * \brief ungate the ADC clock
+ *
+ * \param adcInstance [in] ADC instance number [0 - 4] or ADC_R instance [5 - 6]
+ */
+void SOC_ungateAdcClock(uint32_t adcInstance);
 
 /**
  * @brief Gate the HW_RESOLVER clock
@@ -390,11 +503,25 @@ void SOC_gateRdcClock(uint32_t rdcInstance);
 void SOC_gateOttoClock(uint32_t ottoInstance);
 
 /**
+ * \brief Ungate the OTTO clock
+ *
+ * \param ottoInstance [in] OTTO instance number [0 - 3]
+ */
+void SOC_ungateOttoClock(uint32_t ottoInstance);
+
+/**
  * \brief Gate the SDFM PLL clock
  *
  * \param sdfmInstance [in] SDFM instance number [0 - 1]
  */
 void SOC_gateSdfmPllClock(uint32_t sdfmInstance);
+
+/**
+ * \brief Ungate the SDFM PLL clock
+ *
+ * \param sdfmInstance [in] SDFM instance number [0 - 1]
+ */
+void SOC_ungateSdfmPllClock(uint32_t sdfmInstance);
 
 /**
  * \brief Gate the FSI-TX PLL clock
@@ -478,6 +605,14 @@ void SOC_generateRdcReset(uint32_t rdcInstance);
  */
 
 void Soc_enableEPWMHalt (uint32_t epwmInstance);
+
+/**
+ * \brief Halt EPWM with corresponding cPU
+ *
+ * \param epwmInstance [in] EPWM instance number [0 - 31]
+ */
+
+void Soc_disableEPWMHalt (uint32_t epwmInstance);
 
 /**
  * \brief Generate OTTO reset
