@@ -117,6 +117,7 @@ const example_file_list = [
 	"examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
 	"examples/drivers/eqep/eqep_position_speed/.project/project.js",
     "examples/drivers/flc/.project/project_am263px.js",
+    "examples/drivers/fss/swap_to_b/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_dma/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_interrupt/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_polling/.project/project.js",

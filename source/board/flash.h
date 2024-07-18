@@ -307,7 +307,7 @@ typedef struct Flash_Attrs_s {
     uint32_t sectorCount;    /**< Number of sectors in the flash, if flash supports sectors */
     uint32_t sectorSize;     /**< Size of each flash sector, in bytes */
     uint32_t spareAreaSize;  /**< Size of spare area in flash*/
-    uint32_t phyTuningOffset;
+    uint32_t phyTuningOffset;/**< Flash offset at which phy tuning vector will be written*/
 } Flash_Attrs;
 
 /**
@@ -320,7 +320,7 @@ typedef struct Flash_Config_s
     Flash_DevConfig            *devConfig;  /**< Flash device specific config, like command ID for read, erase, etc */
     void                       *object;      /**< Flash driver object, used to maintain driver implementation state */
     uint32_t                   skipHwInit;  /**< Option to skip the HW initialization of the flash */
-    uint32_t                   rwOffset;
+    uint32_t                   rwOffset;    /**< Global read write offset*/
 } Flash_Config;
 
 /* Flash specific includes */
