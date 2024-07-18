@@ -75,6 +75,12 @@ ICSS-EMAC (Industrial Communications Subsystem Ethernet Media Access Controller)
 
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX
+### ICSS TimeSync
+\subpage ICSS_TIMESYNC is a separate driver based on ICSS-EMAC, which provides APIs for PTP/1588 v2 receiver implementation on PRU-ICSS.
+
+\endcond
+
 \cond SOC_AM273X || SOC_AWR294X
 ## Overview
 Advances in automated factories and smart vehicles require advanced networking capabilities, real-time processing and more advanced motor-control topologies. TI Networking solution packaged with the SDK provide a rapidly growing need for Sitara MCU to outpace traditional MCUs and deliver processor-like capabilities. Networking is a broad terms used to cover Ethernet (IEEE 802.3) communication protocol used in industrial, automotive and other general use cases.
