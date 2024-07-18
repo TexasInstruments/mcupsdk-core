@@ -55,6 +55,7 @@ Bootloader_Fxns gBootloaderBufIoFxns = {
     .imgOffsetFxn = BufIo_imgGetCurOffset,
     .imgSeekFxn   = BufIo_imgSeek,
     .imgCloseFxn  = BufIo_imgClose,
+    .imgCustomFxn = NULL,
 };
 
 static int32_t BufIo_imgOpen(void *args, Bootloader_Params *params)

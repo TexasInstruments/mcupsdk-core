@@ -604,6 +604,19 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             config->fxns->imgSeekFxn(0, config->args);
 
             certLen = Bootloader_getX509CertLen(x509Header);
+            
+            if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
+            {
+                Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
+                
+                /* Enable DAC mode as Flash is accessed in memory mapped mode */
+                flashArgs->enableDacMode = TRUE;
+                if(config->fxns->imgCustomFxn)
+                {
+                    config->fxns->imgCustomFxn(config->args);                    
+                }
+            }
+            
             imageLen = Bootloader_getMsgLen((uint8_t *)certLoadAddr, certLen);
         }
         /* Get the 128B cache-line aligned image length */
@@ -688,7 +701,18 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
         {
             status = SystemP_FAILURE;
         }
-
+        
+        if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
+        {
+            Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
+            
+            /* Disable DAC mode for Flash */
+            flashArgs->enableDacMode = FALSE;
+            if(config->fxns->imgCustomFxn)
+            {
+                config->fxns->imgCustomFxn(config->args);                    
+            }
+        }
     }
 
     return status;

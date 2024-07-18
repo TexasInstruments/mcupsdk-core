@@ -286,3 +286,26 @@ uint32_t Flash_getPhyTuningOffset(Flash_Handle handle)
     return offset;
 }
 
+int32_t Flash_enableDacMode(Flash_Handle handle)
+{
+    Flash_Config *config = (Flash_Config*)handle;
+    int32_t status = SystemP_FAILURE;
+
+    if(config && config->fxns && config->fxns->enableDacModeFxn)
+    {
+        status = config->fxns->enableDacModeFxn(config);
+    }
+    return status;
+}
+
+int32_t Flash_disableDacMode(Flash_Handle handle)
+{
+    Flash_Config *config = (Flash_Config*)handle;
+    int32_t status = SystemP_FAILURE;
+
+    if(config && config->fxns && config->fxns->disableDacModeFxn)
+    {
+        status = config->fxns->disableDacModeFxn(config);
+    }
+    return status;
+}

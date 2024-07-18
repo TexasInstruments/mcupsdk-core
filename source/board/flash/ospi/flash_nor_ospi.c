@@ -42,6 +42,8 @@ static int32_t Flash_norOspiWrite(Flash_Config *config, uint32_t offset, uint8_t
 static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params);
 static void Flash_norOspiClose(Flash_Config *config);
 static int32_t Flash_norOspiReset(Flash_Config *config);
+static int32_t Flash_norOspiDacModeEnable(Flash_Config *config);
+static int32_t Flash_norOspiDacModeDisable(Flash_Config *config);
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -71,6 +73,8 @@ Flash_Fxns gFlashNorOspiFxns = {
     .eraseFxn = Flash_norOspiErase,
     .eraseSectorFxn = Flash_norOspiEraseSector,
     .resetFxn = Flash_norOspiReset,
+    .enableDacModeFxn = Flash_norOspiDacModeEnable,
+    .disableDacModeFxn = Flash_norOspiDacModeDisable,
 };
 
 static int32_t Flash_norOspiCmdWrite(Flash_Config *config, uint8_t cmd, uint32_t cmdAddr,
@@ -1333,3 +1337,28 @@ int32_t Flash_quirkSpansionUNHYSADisable(Flash_Config *config)
     return status;
 }
 
+static int32_t Flash_norOspiDacModeEnable(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
+
+    if(obj && obj->ospiHandle)
+    {
+        status = OSPI_enableDacMode(obj->ospiHandle);
+    }
+
+    return status;
+}
+
+static int32_t Flash_norOspiDacModeDisable(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
+
+    if(obj && obj->ospiHandle)
+    {
+        status = OSPI_disableDacMode(obj->ospiHandle);
+    }    
+
+    return status;
+}

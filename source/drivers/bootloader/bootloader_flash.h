@@ -47,6 +47,7 @@ typedef struct Bootloader_FlashArgs_s
     uint32_t flashIndex;
     uint32_t curOffset;
     uint32_t appImageOffset;
+    uint32_t enableDacMode;
 
 } Bootloader_FlashArgs;
 

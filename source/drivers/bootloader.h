@@ -180,6 +180,18 @@ typedef void (*Bootloader_imgSeekFxn)(uint32_t location, void *args);
  */
 typedef void (*Bootloader_imgCloseFxn)(void* handle, void *args);
 
+/**
+ * \brief Driver implementation to enable a custom function for a specific bootloader driver - Memory, OSPI, UART, MMCSD etc
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new boot media needs to be supported.
+ *
+ * \param args   [in] Boot media specific arguments, obtained from the config
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+typedef int32_t (*Bootloader_imgCustomFxn)(void *args);
+
 /** @} */
 
 
@@ -193,7 +205,8 @@ typedef struct Bootloader_Fxns_s
     Bootloader_imgOffsetFxn imgOffsetFxn;
     Bootloader_imgSeekFxn   imgSeekFxn;
     Bootloader_imgCloseFxn  imgCloseFxn;
-
+    Bootloader_imgCustomFxn imgCustomFxn;
+    
 } Bootloader_Fxns;
 
 /**

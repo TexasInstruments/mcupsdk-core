@@ -48,6 +48,7 @@ Bootloader_Fxns gBootloaderMmcsdFxns = {
     .imgOffsetFxn = MMCSDRaw_imgGetCurOffset,
     .imgSeekFxn   = MMCSDRaw_imgSeek,
     .imgCloseFxn  = MMCSDRaw_imgClose,
+    .imgCustomFxn = NULL,
 };
 
 static int32_t MMCSDRaw_imgOpen(void *args, Bootloader_Params *params)

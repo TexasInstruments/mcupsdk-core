@@ -48,6 +48,7 @@ Bootloader_Fxns gBootloaderMemFxns = {
     .imgOffsetFxn = Mem_imgGetCurOffset,
     .imgSeekFxn   = Mem_imgSeek,
     .imgCloseFxn  = Mem_imgClose,
+    .imgCustomFxn = NULL,
 };
 
 static int32_t Mem_imgOpen(void *args, Bootloader_Params *params)

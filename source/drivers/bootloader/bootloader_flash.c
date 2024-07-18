@@ -40,6 +40,7 @@ static int32_t Flash_imgRead(void *dst, uint32_t len, void *args);
 static uint32_t Flash_imgGetCurOffset(void *args);
 static void Flash_imgSeek(uint32_t location, void *args);
 static void Flash_imgClose(void *handle, void *args);
+static int32_t Flash_imgDacModeToggle(void *args);
 
 Bootloader_Fxns gBootloaderFlashFxns = {
     .imgOpenFxn   = Flash_imgOpen,
@@ -47,6 +48,7 @@ Bootloader_Fxns gBootloaderFlashFxns = {
     .imgOffsetFxn = Flash_imgGetCurOffset,
     .imgSeekFxn   = Flash_imgSeek,
     .imgCloseFxn  = Flash_imgClose,
+    .imgCustomFxn = Flash_imgDacModeToggle,
 };
 
 static int32_t Flash_imgOpen(void *args, Bootloader_Params *params)
@@ -92,4 +94,27 @@ static void Flash_imgSeek(uint32_t location, void *args)
 static void Flash_imgClose(void *handle, void *args)
 {
     return;
+}
+
+static int32_t Flash_imgDacModeToggle(void *args)
+{
+    int32_t status = SystemP_FAILURE;
+
+    Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)args;
+
+    /* Get Flash handle */
+    Flash_Handle flashHandle = Flash_getHandle(flashArgs->flashIndex);
+
+    if(TRUE == flashArgs->enableDacMode)
+    {
+        /* Enable DAC Mode */
+        status = Flash_enableDacMode(flashHandle);
+    }
+    else
+    {
+        /* Disable DAC Mode */
+        status = Flash_disableDacMode(flashHandle);
+    }
+
+    return status;
 }
