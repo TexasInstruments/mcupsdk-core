@@ -123,6 +123,7 @@ const example_file_list = [
     "examples/drivers/i2c/i2c_memory_read_interrupt_lld/.project/project.js",
     "examples/drivers/i2c/i2c_temperature_polling_lld/.project/project.js",
     "examples/drivers/i2c/i2c_temperature_interrupt_lld/.project/project.js",
+    "examples/drivers/i2c/i2c_peripheral_transfer/.project/project.js",
     "examples/drivers/ipc/ipc_notify_echo/.project/project.js",
     "examples/drivers/ipc/ipc_rpmsg_echo/.project/project.js",
     "examples/drivers/ipc/ipc_safeipc_echo/.project/project.js",

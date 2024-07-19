@@ -6599,6 +6599,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A I2c Peripheral Transfer Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "i2c_peripheral_transfer",
+        "location": "../../examples/drivers/i2c/i2c_peripheral_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_peripheral_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Peripheral Transfer Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "i2c_peripheral_transfer",
+        "location": "../../examples/drivers/i2c/i2c_peripheral_transfer/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_peripheral_transfer",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -15748,6 +15814,36 @@
             "hsmclient",
             "mpu_firewall_services_demo",
             "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Peripheral Transfer System Example.",
+        "name": "i2c_peripheral_transfer",
+        "location": "../../examples/drivers/i2c/i2c_peripheral_transfer/am263px-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_peripheral_transfer",
+            "system_freertos_nortos"
         ],
         "mainCategories": [
             [

@@ -1433,7 +1433,6 @@ void I2C_lld_targetIsr(void* args)
                         I2CControllerDataPut(handle->baseAddr, *(handle->writeBufIdx));
                         handle->writeCountIdx--;
                         handle->writeBufIdx++;
-
                     }
                 }
                 else if (handle->state == I2C_TARGET_XFER_STATE)
@@ -1525,7 +1524,6 @@ void I2C_lld_targetIsr(void* args)
             case I2C_IVR_INTCODE_SCD:
                 /* stop condition detected, end of current transfer */
                 I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
-                handle->state = I2C_STATE_IDLE;
                 handle->currentTargetTransaction->readCount -= handle->readCountIdx;
                 handle->currentTargetTransaction->writeCount -= handle->writeCountIdx;
 
