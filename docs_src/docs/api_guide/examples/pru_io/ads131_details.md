@@ -17,6 +17,7 @@ In example, the interfacing with ADS131M08 operates in following configuration:
 
 <!-- ### R5F Role/Job?: -->
 ### R5F Function:
+- Write PRU firmware instructions into IRAM of PRU 
 - Configure the IO Expander to connect the PRU IOs to HSE
 - Send ADC register configuration information to the PRU core
 - Send instructions to PRU core

@@ -14,6 +14,7 @@ In example, the interfacing with ADS127L11 operates in following configuration:
 
 <!-- ### R5F Role/Job?: -->
 ### R5F Function:
+- Write PRU firmware instructions into IRAM of PRU 
 - Send ADC register configuration information to the PRU core
 - Send instructions to PRU core
 - Wait for interrupt from PRU indicating 1 block of adc samples has been received

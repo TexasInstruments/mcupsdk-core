@@ -20,6 +20,7 @@ The current interfacing with ADS 85xx operates in following configuration:
 
 <!-- ### R5F Role/Job?: -->
 ### R5F Function:
+- Write PRU firmware instructions into IRAM of PRU 
 - Initialize ADC and PRU
 - Send instructions to PRU core
 - Wait for interrupt from PRU indicating 1 block of adc samples has been received
