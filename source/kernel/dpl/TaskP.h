@@ -85,7 +85,11 @@ typedef struct {
 /**
  * \brief Max size of task object across all OS's
  */
+#ifdef INCLUDE_FREERTOS_FAT
+#define TaskP_OBJECT_SIZE_MAX       (172u) /* Minimun requirement for FreeRTOS FATFS to work */
+#else
 #define TaskP_OBJECT_SIZE_MAX       (160u)
+#endif 
 /**
  * \brief Opaque task object used with the task APIs
  */
