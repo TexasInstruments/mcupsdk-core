@@ -214,7 +214,7 @@ int32_t SOC_moduleSetClockFrequencyWithParent(uint32_t moduleId, uint32_t clkId,
     if (status == SystemP_SUCCESS)
     {
         /* Check if given parent is valid */
-        if (clkParent > numParents)
+        if (clkParent > (clkId + numParents))
         {
             status = SystemP_FAILURE;
         }
