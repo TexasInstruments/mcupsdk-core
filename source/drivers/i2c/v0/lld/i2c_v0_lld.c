@@ -1432,14 +1432,30 @@ void I2C_lld_controllerIsr(void *args)
                 I2CSetDataCount(object->baseAddr, 0);
                 /* Store interrupt status in driver object */
                 object->intStatusErr |= intErr;
-                /* Finish current transfer */
-                I2C_lld_completeCurrTransfer(object, xferStatus);
                 /* Breat out of the interrpt Loop */
                 break;
             }
 
             if(rawStat & I2C_INT_STOP_CONDITION)
             {
+                if ((object->intStatusErr & I2C_INT_NO_ACK) != 0U)
+                {
+                    xferStatus = I2C_STS_ERR_NO_ACK;
+                }
+
+                if ((object->intStatusErr & I2C_INT_ARBITRATION_LOST) != 0U)
+                {
+                    xferStatus = I2C_STS_ERR_ARBITRATION_LOST;
+                }
+
+                if ((object->intStatusErr & I2C_INT_ACCESS_ERROR) != 0U)
+                {
+                    xferStatus = I2C_STS_ERR_ACCESS_ERROR;
+                }
+
+                /* Finish current transfer */
+                I2C_lld_completeCurrTransfer(object, xferStatus);
+
                 if(object->intStatusErr != 0)
                 {
                     /* Disable all interrupts */
