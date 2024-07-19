@@ -95,15 +95,23 @@ void *mcspi_performance_main(void *args)
     baseAddr = MCSPI_getBaseAddr(gMcspiHandle[CONFIG_MCSPI0]);
     DebugP_assert(baseAddr != 0U); /* MCSPI baseAddr Invalid!! */
 
+#if !defined(SOC_AM65X)
     /* Set dataWidth */
     dataWidth  = 8;
     MCSPI_setDataWidth(baseAddr, chNum, dataWidth);
+#endif
 
     /* Enable the transmitter FIFO of McSPI peripheral. */
     MCSPI_enableTxFIFO(baseAddr, chNum, MCSPI_TX_FIFO_ENABLE);
 
     /* Disable the receiver FIFO of McSPI peripheral for Tx only mode. */
     MCSPI_enableRxFIFO(baseAddr, chNum, MCSPI_RX_FIFO_ENABLE);
+
+#if defined(SOC_AM65X)
+    /* Set dataWidth */
+    dataWidth  = 8;
+    MCSPI_setDataWidth(baseAddr, chNum, dataWidth);
+#endif
 
     /*
      * Channel Control and config registers are updated after Open/Reconfigure.
