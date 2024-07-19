@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 export PROFILE?=Release
 
-PROJECT_NAME=ipc_notify_echo_am263x-lp_system_freertos_nortos
+PROJECT_NAME=ipc_notify_threeCores_am263x-lp_system_freertos_nortos
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

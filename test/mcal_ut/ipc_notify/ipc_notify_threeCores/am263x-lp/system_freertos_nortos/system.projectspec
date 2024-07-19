@@ -4,7 +4,7 @@
     <import spec="../r5fss0-1_nortos/ti-arm-clang/example.projectspec"/>
     <import spec="../r5fss1-0_nortos/ti-arm-clang/example.projectspec"/>
     <project
-        name="ipc_notify_echo_am263x-lp_system_freertos_nortos"
+        name="ipc_notify_threeCores_am263x-lp_system_freertos_nortos"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,

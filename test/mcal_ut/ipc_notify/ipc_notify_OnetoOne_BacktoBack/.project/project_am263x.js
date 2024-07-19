@@ -105,7 +105,7 @@ const buildOptionCombos = [
 
 const systemProjects = [
     {
-        name: "ipc_notify_echo",
+        name: "ipc_notify_OnetoOne_BacktoBack",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -118,7 +118,7 @@ const systemProjects = [
         ],
     },
     {
-        name: "ipc_notify_echo",
+        name: "ipc_notify_OnetoOne_BacktoBack",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -137,7 +137,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ipc_notify__echo";
+    property.name = "ipc_notify_OnetoOne_BacktoBack";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
