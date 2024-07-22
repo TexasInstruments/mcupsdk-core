@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.999+157"}
  */
 
 /**
@@ -12,7 +12,7 @@ const hsmclient         = scripting.addModule("/drivers/hsmclient/hsmclient", {}
 const hsmclient1        = hsmclient.addInstance();
 const clock             = scripting.addModule("/kernel/dpl/clock");
 const debug_log         = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg           = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7         = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71        = mpu_armv7.addInstance();
 const mpu_armv72        = mpu_armv7.addInstance();
@@ -324,4 +324,4 @@ firewall_service2.mpu_region[0].$name      = "CONFIG_MPU_FIREWALL_REGION6";
 firewall_service2.mpu_region[0].firewallId = "MBOX_RAM_SLV";
 firewall_service2.mpu_region[0].startAddr  = 0x72000400;
 firewall_service2.mpu_region[0].endAddr    = 0x720007FF;
-firewall_service2.mpu_region[0].aidConfig  = ["R5FSS0_1","R5FSS1_0","R5FSS1_1"];
+firewall_service2.mpu_region[0].aidConfig  = ["R5FSS0_1"];
