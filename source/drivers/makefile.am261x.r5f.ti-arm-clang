@@ -32,6 +32,7 @@ FILES_common := \
     ecap.c \
     edma.c \
     eqep.c \
+    etpwm.c \
     flc.c \
     fsi_rx.c \
     fsi_tx.c \
@@ -49,6 +50,8 @@ FILES_common := \
     mcspi_v0_lld.c \
     mdio_v0.c \
     mmcsd_v1.c \
+    mpu_firewall.c \
+    mpu_firewall_v0_cfg.c \
     ospi_dma.c \
     ospi_dma_edma.c \
     ospi_nor_flash.c \
