@@ -49,6 +49,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <unity.h>
+#include <kernel/dpl/AddrTranslateP.h>
 #include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
@@ -109,6 +110,25 @@
 #define MCSPI3_INT_NUM                  (CSLR_GICSS0_SPI_MCSPI3_INTR_SPI_0)
 #define MCSPI4_INT_NUM                  (CSLR_GICSS0_SPI_MCSPI4_INTR_SPI_0)
 #endif
+
+#elif defined(SOC_AM65X)
+
+#define MCSPI0_BASE_ADDRESS             (CSL_MCSPI0_CFG_BASE)
+#define MCSPI1_BASE_ADDRESS             (CSL_MCSPI1_CFG_BASE)
+#define MCSPI2_BASE_ADDRESS             (CSL_MCSPI2_CFG_BASE)
+#define MCSPI3_BASE_ADDRESS             (CSL_MCU_MCSPI0_CFG_BASE)
+#define MCSPI4_BASE_ADDRESS             (CSL_MCU_MCSPI1_CFG_BASE)
+
+#define MCSPI0_INT_NUM                  (168U)
+#define MCSPI1_INT_NUM                  (169U)
+#define MCSPI2_INT_NUM                  (170U)
+#define MCSPI3_INT_NUM                  (20U)
+#define MCSPI4_INT_NUM                  (21U)
+/* define the unlock and lock values */
+#define CTRLMMR_KICK_LOCK_VAL           (0x00000000U)
+#define CTRLMMR_KICK0_UNLOCK_VAL        (0x68EF3490U)
+#define CTRLMMR_KICK1_UNLOCK_VAL        (0xD172BC5AU)
+#define MCU_MCSPI1_LINK_DISABLE         (0x01)
 
 #else
 
@@ -216,6 +236,11 @@ void test_mcspi_loopback_multi_word_access(void *args);
 void test_mcspi_loopback_dma(void *args);
 void test_mcspi_loopback_multimaster_dma(void *args);
 #endif
+#if defined(SOC_AM65X)
+void test_mcspi_mcu_mcspi1_detach(void);
+extern void MCSPI_intr_router_configInit(void);
+extern void MCSPI_intr_router_configDeinit(void);
+#endif
 
 #define TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, transaction) \
     do { \
@@ -239,6 +264,10 @@ void test_main(void *args)
 
     Drivers_open();
     Board_driversOpen();
+#if defined(SOC_AM65X)
+    MCSPI_intr_router_configInit();
+    test_mcspi_mcu_mcspi1_detach();
+#endif
 
     UNITY_BEGIN();
 
@@ -297,8 +326,11 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 11722);
     RUN_TEST(test_mcspi_loopback_cs_disable,  11722, (void*)&testParams);
 
+#if !defined(SOC_AM65X)
+    /* AM65x completes the first MCSPI_transfer() before the next/second MCSPI_transfer() initiates */
     test_mcspi_set_params(&testParams, 985);
     RUN_TEST(test_mcspi_loopback_back2back,  985, (void*)&testParams);
+#endif
     test_mcspi_set_params(&testParams, 991);
     RUN_TEST(test_mcspi_loopback,  991, (void*)&testParams);
     test_mcspi_set_params(&testParams, 992);
@@ -1871,7 +1903,10 @@ void test_mcspi_transfer_cancel(void *args)
     SemaphoreP_pend(&gMcspiTransferCancelTaskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
 
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
-
+#if defined(SOC_AM65X)
+    /* Requires delay to wait for the created task "MCSPI Transfer Task" to exit */
+    ClockP_usleep(1000);
+#endif
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
 }
@@ -2690,12 +2725,22 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
 #if !(defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X))
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
         case 970:
+#if defined(SOC_AM65X)
+            attrParams->baseAddr           = CSL_MCU_MCSPI0_CFG_BASE;
+            attrParams->intrNum            = MCSPI3_INT_NUM;
+#else
             attrParams->baseAddr           = CSL_MCU_MCSPI0_CFG_BASE;
             attrParams->intrNum            = 208U;
+#endif
             break;
         case 971:
+#if defined(SOC_AM65X)
+            attrParams->baseAddr           = CSL_MCU_MCSPI1_CFG_BASE;
+            attrParams->intrNum            = MCSPI4_INT_NUM;
+#else
             attrParams->baseAddr           = CSL_MCU_MCSPI1_CFG_BASE;
             attrParams->intrNum            = 209U;
+#endif
             testParams->dataSize           = 8;
             break;
 #endif
@@ -2820,6 +2865,10 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
             chConfig->frameFormat        = MCSPI_FF_POL1_PHA0;
             chConfig->txFifoTrigLvl      = 8U;
             chConfig->rxFifoTrigLvl      = 8U;
+#if defined(SOC_AM65X)
+            attrParams->baseAddr           = CSL_MCU_MCSPI0_CFG_BASE;
+            attrParams->intrNum            = MCSPI3_INT_NUM;
+#endif
             break;
         case 11418:
             chConfig->frameFormat        = MCSPI_FF_POL1_PHA1;
@@ -2912,3 +2961,39 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
 
     return;
 }
+
+#if defined(SOC_AM65X)
+void test_mcspi_mcu_mcspi1_detach(void){
+    uint32_t            baseAddr;
+    volatile uint32_t  *kickAddr;
+
+    baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_MCU_CTRL_MMR0_CFG0_BASE);
+
+   /* Lock 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + CSL_MCU_CTRL_MMR_CFG0_LOCK0_KICK0);
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK0_UNLOCK_VAL);   /* KICK 0 */
+    kickAddr++;
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK1_UNLOCK_VAL);   /* KICK 1 */
+
+    /* Lock 1 */
+    kickAddr = (volatile uint32_t *) (baseAddr + CSL_MCU_CTRL_MMR_CFG0_LOCK1_KICK0);
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK0_UNLOCK_VAL);   /* KICK 0 */
+    kickAddr++;
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK1_UNLOCK_VAL);   /* KICK 1 */
+
+    /* Disable direct conncetion of main domain MCSPI3 and MCU_MCSPI1 instances */
+    CSL_REG32_WR((baseAddr + CSL_MCU_CTRL_MMR_CFG0_MCU_SPI1_CTRL), MCU_MCSPI1_LINK_DISABLE);
+
+    /* Lock 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + CSL_MCU_CTRL_MMR_CFG0_LOCK0_KICK0);
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 0 */
+    kickAddr++;
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 1 */
+
+    /* Lock 1 */
+    kickAddr = (volatile uint32_t *) (baseAddr + CSL_MCU_CTRL_MMR_CFG0_LOCK1_KICK0);
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 0 */
+    kickAddr++;
+    CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 1 */
+}
+#endif
