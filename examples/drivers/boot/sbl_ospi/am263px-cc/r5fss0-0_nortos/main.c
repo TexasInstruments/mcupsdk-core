@@ -37,12 +37,33 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
+#include <drivers/ospi.h>
+#include <drivers/fss.h>
+
+#define FLASH_SECTOR_SIZE (4096U)
+
+#define BOOT_REGION_A (0U)
+
+#define BOOT_REGION_B (1U)
+typedef struct bootinfo_sector_s_t
+{
+    uint8_t phyTuningVector[OSPI_FLASH_ATTACK_VECTOR_SIZE];
+    uint32_t bootRegion;
+}bootinfo_sector_fields_t;
+
+typedef union bootinfo_sector_u_t
+{
+    bootinfo_sector_fields_t fields;
+    uint8_t bin[FLASH_SECTOR_SIZE];
+}bootinfo_sector_t;
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
+
+extern char __TI_SBL_FLASH_BOOTINFO_SECTOR_START[];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 void i2c_flash_reset(void);
@@ -69,6 +90,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 
 int main(void)
 {
+
     int32_t status;
 
     Bootloader_profileReset();
@@ -116,9 +138,53 @@ int main(void)
         if (bootHandle != NULL)
         {
 
+#ifdef FOTA_IN_USE
+			volatile uint8_t bootrgn;
+            bootinfo_sector_t *bootinfo;
+            Flash_Attrs *flashAttr = Flash_getAttrs(CONFIG_FLASH0);
+            bootinfo = (bootinfo_sector_t *)__TI_SBL_FLASH_BOOTINFO_SECTOR_START;
+            fssConf.extFlashSize = flashAttr->flashSize;
+            /*
+                save this to internal memory
+                as bootinfo->fields.bootRegion value will change when
+                bootseg will switch to different region
+            */
+            bootrgn = bootinfo->fields.bootRegion;
+
+            if (bootrgn == BOOT_REGION_B)
+            {
+                FSS_selectRegionB((FSS_Handle)&fssConf);
+            }
+            else
+            {
+                FSS_selectRegionA((FSS_Handle)&fssConf);
+            }
+#endif
+
+
 #ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+#ifdef FOTA_IN_USE
+            /*
+                Bootloader_parseMultiCoreAppImage might have failed cuz of right image is
+                present in other region
+            */
+            if(status == SystemP_FAILURE)
+            {
+                if (bootrgn == BOOT_REGION_B)
+                {
+                    FSS_selectRegionA((FSS_Handle)&fssConf);
+                }
+                else
+                {
+                    FSS_selectRegionB((FSS_Handle)&fssConf);
+                }
+
+                status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            }
+#endif
+
 
             /* Initialize CPUs and Load RPRC Image */
             if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
@@ -161,6 +227,24 @@ int main(void)
 
 #ifdef BOOTLOADER_IMAGE_MCELF
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
+#ifdef FOTA_IN_USE
+            /*
+                Bootloader_parseAndLoadMultiCoreELF might have failed cuz of right image is
+                present in other region
+            */
+            if(status == SystemP_FAILURE)
+            {
+                if (bootrgn == BOOT_REGION_B)
+                {
+                    FSS_selectRegionA((FSS_Handle)&fssConf);
+                }
+                else
+                {
+                    FSS_selectRegionB((FSS_Handle)&fssConf);
+                }
+                status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
+            }
+#endif
 #endif
 
             Bootloader_profileAddProfilePoint("CPU load");

@@ -20,13 +20,15 @@ const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1        = i2c.addInstance();
 const i2c2        = i2c.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
 const mpu_armv73  = mpu_armv7.addInstance();
 const mpu_armv74  = mpu_armv7.addInstance();
 const mpu_armv75  = mpu_armv7.addInstance();
+const mpu_armv76  = mpu_armv7.addInstance();
+const mpu_armv77  = mpu_armv7.addInstance();
 const general     = scripting.addModule("/memory_configurator/general", {}, false);
 const general1    = general.addInstance();
 const region      = scripting.addModule("/memory_configurator/region", {}, false);
@@ -39,6 +41,8 @@ const section4    = section.addInstance();
 const section5    = section.addInstance();
 const section6    = section.addInstance();
 const section7    = section.addInstance();
+const fota        = scripting.addModule("/optiflash/fota/fota", {}, false);
+const fota1       = fota.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -46,7 +50,7 @@ const section7    = section.addInstance();
 eeprom1.$name = "CONFIG_EEPROM0";
 
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.appImageOffset = "0x00081000";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
@@ -102,6 +106,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -130,12 +135,23 @@ mpu_armv75.attributes   = "Device";
 mpu_armv75.baseAddr     = 0xCE000000;
 mpu_armv75.size         = 24;
 
+mpu_armv76.$name             = "FLASH_RGN";
+mpu_armv76.baseAddr          = 0x80000000;
+mpu_armv76.size              = 27;
+mpu_armv76.attributes        = "Device";
+mpu_armv76.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv77.$name      = "CONFIG_MPU_REGION5";
+mpu_armv77.baseAddr   = 0x88000000;
+mpu_armv77.attributes = "Device";
+mpu_armv77.size       = 27;
+
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(8);
+region1.memory_region.create(10);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -171,6 +187,17 @@ region1.memory_region[7].size               = 0x3CE;
 region1.memory_region[7].$name              = "MAILBOX_R5F";
 region1.memory_region[7].auto               = false;
 region1.memory_region[7].manualStartAddress = 0x44000400;
+region1.memory_region[8].type               = "FLASH";
+region1.memory_region[8].auto               = false;
+region1.memory_region[8].manualStartAddress = 0x60080000;
+region1.memory_region[8].size               = 0x1000;
+region1.memory_region[8].$name              = "FLASH_BOOTINFO_SECTOR";
+region1.memory_region[9].last_sym           = "__TI_SBL_FLASH_BOOTINFO_SECTOR_START";
+region1.memory_region[9].auto               = false;
+region1.memory_region[9].type               = "CUSTOM";
+region1.memory_region[9].$name              = "BOOT_SECTOR_INFO";
+region1.memory_region[9].manualStartAddress = 0x80080000;
+region1.memory_region[9].size               = 0x1000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -262,6 +289,8 @@ section7.$name                       = "SIPC R5F Queue Memory";
 section7.output_section.create(1);
 section7.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section7.output_section[0].alignment = 0;
+
+fota1.$name = "fota0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
