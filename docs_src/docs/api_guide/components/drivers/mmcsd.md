@@ -10,7 +10,11 @@ Multi-Media Card Secure Digital (MMCSD) peripheral is a driver which provides an
 
 ## Features Supported
 
+\if SOC_AM65X
+- Integrated DMA Controller supporting SD Advanced DMA - SDMA, ADMA2
+\else
 - Integrated DMA Controller supporting SD Advanced DMA - SDMA, ADMA2 and ADMA3
+\endif
 - 64-bit data, address width System Bus Interface
 - MMCSD0 supports eMMC 5.1, and also backward compatible withe earlier eMMC standards
 - MMCSD1 supports SD card HC 4.10 and SD Physical Layer v3.01, SDIO v3.00

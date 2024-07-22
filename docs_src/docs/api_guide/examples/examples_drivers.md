@@ -422,6 +422,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_I2C_TEMPERATURE
 -# IPC
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO
+-# MMCSD
+   -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
+   -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_EP

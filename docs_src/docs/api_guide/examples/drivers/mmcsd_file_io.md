@@ -27,6 +27,17 @@ When the comparison match, test result is passed otherwise failed.
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/mmcsd/mmcsd_file_io
+
+\endcond
+
 \cond SOC_AM243X
 
  Parameter      | Value

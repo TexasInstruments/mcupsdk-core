@@ -205,6 +205,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE
 - \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+- \subpage DRIVERS_MMCSD_PAGE
 - \subpage DRIVERS_PINMUX_PAGE
 - \subpage DRIVERS_PCIE_PAGE
 - \subpage DRIVERS_SCICLIENT_PAGE
