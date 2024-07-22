@@ -18,6 +18,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am65x-idk_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_32bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_build
@@ -97,6 +98,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -200,6 +204,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am65x-idk_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_32bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
@@ -279,6 +284,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -382,6 +390,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am65x-idk_r5fss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_32bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_export
@@ -461,6 +470,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  mcspi_loopback_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  mcspi_performance_8bit_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -580,6 +592,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
