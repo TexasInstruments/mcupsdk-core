@@ -25,7 +25,7 @@
 
     \imageStyle{setup_type.png,width:50%}
     \image html setup_type.png "CCS Setup Type"
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
 - Follow the steps and at below screen, select the component as "Sitara AM2x MCUs" to install @VAR_SOC_NAME related emulation and GELs
 
     \imageStyle{select_components_sitara.png,width:50%}
@@ -79,7 +79,7 @@
     \imageStyle{ccs_setup_02.png,width:50%}
     \image html ccs_setup_02.png "CCS Compilers"
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ## Update CSP {#CSP_UPDATE}
 \note AM263Px now supports one-click XIP .out application debugging with CSP 1.2.7. Refer to the guide below to update CSP and check for its availability.
 
@@ -380,12 +380,12 @@
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
 \cond SOC_AM263X
 ### AM263X-CC / AM263X-LP
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ### AM263PX-CC
 \endcond
 
@@ -412,7 +412,7 @@
 \cond SOC_AM263X
 - In "Board or Device" type "@VAR_SOC_NAME" and select "AM263x"
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - In "Board or Device" type "@VAR_SOC_NAME" and select "AM263Px"
 \endcond
     \imageStyle{ccs_target_config_00.png,width:50%}

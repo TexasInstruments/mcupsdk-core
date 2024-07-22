@@ -24,7 +24,7 @@ To build applications using this SDK, one needs below host PC machine
   - Linux, ${HOME}/ti
 - `${SDK_INSTALL_PATH}` in this user guide refers to the path, including the SDK folder name, where the SDK is installed.
   Example, in Windows, `${SDK_INSTALL_PATH}` will refer to the path `C:/ti/mcu_plus_sdk_{soc}_{version}`
-\cond !SOC_AM263PX
+\cond !(SOC_AM263PX || SOC_AM261X)
 - You can also browse, download and install the SDK using TIREX as shown here, \ref TIREX_INTRO_PAGE.
 \endcond
 
@@ -37,7 +37,7 @@ To build applications using this SDK, one needs below host PC machine
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
 ### Uniflash
 - The TI Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
 - Download the latest Uniflash @VAR_UNIFLASH_VERSION and install at below path,

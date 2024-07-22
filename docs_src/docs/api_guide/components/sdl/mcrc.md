@@ -51,7 +51,7 @@ SDL_MCRC_InstType instance = MCU_MCRC64_0;
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \code{.c}
 SDL_MCRC_InstType instance = MCRC0;
 \endcode

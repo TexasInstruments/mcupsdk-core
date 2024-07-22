@@ -3,7 +3,7 @@
 
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 # Changes in linker/Memory Configurator for Smart Placement {#SMART_PLACEMENT_LINKER_CHANGE}
 
 \endcond
@@ -14,7 +14,7 @@
 
 To make smart placement functional (\ref SMART_PLACEMENT), linker script needs to be changed to account new section that compiler generates.
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 If linker script is generated using Memory Configurator (\ref MEMORY_CONFIGURATOR) then memory configurator needs to changed.
 \endcond
 This page will show what changes needs to be done.
@@ -48,7 +48,7 @@ Also, all functions which are marked `offchip`, should be placed in external FLA
 
 It should be noted that although annotating using assembler directive is convenient, one short-coming is that static functions cannot be annotated or if annotated, no effect of it is on its placement. To solve this, C/C++ based annotation has to be used in the definition/declaration of that static function.
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ## Memory Configurator Changes
 
 Memory configurator generated the linker script only, therefore, goal is such that the generated linker script would also have same changes.

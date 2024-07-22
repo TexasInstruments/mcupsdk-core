@@ -3,7 +3,7 @@
 [TOC]
 
 # Introduction
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
 
 ## Getting started
 The HSM or Hardware security Module is a subsystem that acts as the secure
@@ -43,7 +43,7 @@ int main()
 #### HSMRt Firewall Configurations {#SECURITY_HSFS_BOOTTIME_FIREWALL}
 
 HSMRt does the following firewall configurations. These configurations gives necessary access of various memory regions to host cores.
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 \note
 Following configurations are done considering **R5FSS0_0** as *secure host 0*
@@ -106,7 +106,7 @@ A secure host refers specifically to a host that is configured to communicate wi
 \endcond
 
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
 | **Firewall/MPU**          | **Programmable Region Num.** | **Start Address** | **End Address** | **AID/privID permissions**                          | **SR** | **SW** | **SX** | **UR** | **UW** | **UX** | **NS** | **Debug** | **Comments**                                |
 |---------------------------|------------------------------|-------------------|-----------------|-----------------------------------------------------|--------|--------|--------|--------|--------|--------|--------|-----------|---------------------------------------------|
@@ -177,7 +177,7 @@ the SDK:
         - Description of PKA engine and APIs available to use it.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Cryptography Modules
     - \subpage DRIVERS_DTHE_PAGE (Data Transform and Hashing Engine)
         - Description of DTHE architecture and APIs available to use AES and SHA engine.

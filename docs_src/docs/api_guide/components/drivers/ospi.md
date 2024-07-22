@@ -29,10 +29,10 @@ status registers.
 - Input clock frequency to be used for OSPI module
 - Input clock divider which decides the baud-rate at which the flash will be read
 - Chip Select
-\cond !(SOC_AM263PX)
+\cond !(SOC_AM263PX || SOC_AM261X)
 - Enabling of various features like DMA, PHY mode(not supported yet), XIP(not supported yet)
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - Enabling of various features like DMA and PHY mode.
     - PHY configuration allows to
         -  Configuring window tuning parameters.

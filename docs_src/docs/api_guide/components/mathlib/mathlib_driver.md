@@ -60,7 +60,7 @@ NA
 
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
 ## TMU library
 

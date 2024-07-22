@@ -105,7 +105,7 @@ There are changes in functions names, structure names and macro names. The chang
 ## Important Notes
 
 - In MCU+ SDK, users are recommended to use SysConfig as this will greatly simplify the task of driver configuration.
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - In MCU+ SDK, \ref UART_ReadReturnMode is introduced as compared to UART_ReturnMode in PDK.
 \endcond
 - In MCU+ SDK, UART_DataMode is not supported.

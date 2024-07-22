@@ -52,7 +52,7 @@ The IP supports the following features:
 \note On GP devices, AES, PKA and TRNG are not supported. SHA examples will work as is.
 \endcond
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage DRIVERS_DTHE_SHA_PAGE
 	- <b>S</b>ecure <b>h</b>ash <b>a</b>lgorithms)
         - <b>SHA256</b>, <b>SHA512</b>

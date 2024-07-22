@@ -1,6 +1,6 @@
 # MMCSD {#DRIVERS_MMCSD_PAGE}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \note EMMC Flash card is not available in AM263x board.
 \endcond
 

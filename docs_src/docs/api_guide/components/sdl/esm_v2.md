@@ -142,7 +142,7 @@ In order to readback the static config:
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \code{.c}
 
         ret = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &esmInitConfig, SDL_ESM_applicationCallbackFunction,ptr);

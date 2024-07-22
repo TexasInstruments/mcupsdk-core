@@ -137,7 +137,7 @@ POSIX                   | FreeRTOS+POSIX        | Similar features, see details 
 \cond SOC_AM64X
   - Stack size in units of “stack words”, i.e 32b or 4 bytes in case of R5F, M4F and 8 bytes in case of A53
 \endcond
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x || SOC_AM261X
   - Stack size in units of “stack words”, i.e 32b or 4 bytes in case of R5F and M4F
 \endcond
 \cond SOC_AM62X
@@ -162,7 +162,7 @@ POSIX                   | FreeRTOS+POSIX        | Similar features, see details 
 \cond SOC_AM64X
   - SDK default config is shown below, `vApplicationIdleHook` calls `wfi` instruction for R5F, M4F, A53.
 \endcond
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x || SOC_AM261X
   - SDK default config is shown below, `vApplicationIdleHook` calls `wfi` instruction for R5F, M4F.
 \endcond
 \cond SOC_AM62X
@@ -237,7 +237,7 @@ POSIX                   | FreeRTOS+POSIX        | Similar features, see details 
 \cond SOC_AM64X
   - For R5F, A53, we use one of the SOC level general purpose DM timers.
 \endcond
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x || SOC_AM261X
   - For R5F we use one of the SOC level general purpose DM timers.
 \endcond
   - For M4F, we use the M4F internal SysTick timer.

@@ -36,7 +36,7 @@ A quick recap of the steps that need to have been done before you proceed
   - With this change, CCS always configures the device in "Dual Core Mode" and all four R5 cores can be used.
   - To revert to Lockstep Mode, undo this change.
 \endcond
-\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X
+\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM261X
 - Make sure you have done the steps for a SOC initialization method
   - **RECOMMENDED** method is \ref EVM_FLASH_SOC_INIT
   - Other options, if recommended method cannot be used, are mentioned in \ref EVM_SOC_INIT
@@ -48,7 +48,7 @@ A quick recap of the steps that need to have been done before you proceed
 - Make sure EVM boot mode switch is setup correctly based on the SOC initilization method
   - For the **RECOMMENDED** method, \ref EVM_SOC_INIT, the boot mode should be \ref BOOTMODE_NOBOOT
 \endcond
-\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
   - For the **RECOMMENDED** method, \ref EVM_FLASH_SOC_INIT, the boot mode should be \ref BOOTMODE_QSPI
 \endcond
 \cond SOC_AM243X || SOC_AM64X
@@ -108,7 +108,7 @@ continue debugging or reload application of interest on the cores.
 - **POWER-ON** the EVM
 \endif
 
-\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X
+\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM261X
 - If you dont see the expected SOC initialization logs on UART or CCS console, then recheck your \ref EVM_SETUP_PAGE
 \endcond
 
@@ -127,7 +127,7 @@ continue debugging or reload application of interest on the cores.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - This should initialize the device and initialize R5 to be able to connect
     \imageStyle{ccs_gel_output_1.PNG,width:50%}
     \image html ccs_gel_output_1.PNG " "

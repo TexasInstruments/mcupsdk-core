@@ -13,7 +13,7 @@ FSI is used to transfer/receive data frame with several available configurations
 - Supports programmable data-lines( 1-or-2) for communication
 - Supports Double Data Rate (DDR) communication
 - Supports programmable interrupts via 2 interrupt lines per FSI core
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Supports DMA mode. The DMA event will only be generated for data frames.
 - Supports programmable TX delay line control
 \endcond
@@ -29,7 +29,7 @@ FSI is used to transfer/receive data frame with several available configurations
 
 - Selection of instances present in the device
 - Configuring pinmux based on selected instance and pin configuration
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Interrupt Crossbar configuration for FSI RX and TX.
 \endcond
 
@@ -37,7 +37,7 @@ FSI is used to transfer/receive data frame with several available configurations
 
 - Note: FSI-RX and FSI-TX are completely independent and separate module.
 For communication, both needs to be configured separately.
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Interrupt Crossbar configuration should be done to route FSI RX and TX interrupts if SysCfg is not used.
 \endcond
 

@@ -115,7 +115,7 @@ The other fields which we have for configuring a memory region are:
    - In the linker.cmd of R5FSS0_1 we can see all those shared regions appearing with the LOG_MEM_SHM name changed.
     The section redirecting to this memory region also gets updated accordingly.
 
-\cond  SOC_AM263PX || SOC_AM263X
+\cond  SOC_AM263PX || SOC_AM263X || SOC_AM261X
 
 #### Shared Memory Region Configuration
 

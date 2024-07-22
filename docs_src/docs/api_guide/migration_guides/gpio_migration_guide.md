@@ -35,7 +35,7 @@ There are changes in functions names, structure names and macro names. The chang
         <td>\ref GPIO_pinRead
         <td>API rename along with interface parameter changes.
     </tr>
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
     <tr>
         <td>None
         <td>\ref GPIO_pinOutValueRead
@@ -47,7 +47,7 @@ There are changes in functions names, structure names and macro names. The chang
         <td>\ref GPIO_setTrigType
         <td>In MCU+SDK, this GPIO_setConfig is separated into sub APIs such as \ref GPIO_setTrigType, \ref GPIO_setDirMode.
     </tr>
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
     <tr>
         <td>None
         <td>\ref GPIO_bankIntrEnable

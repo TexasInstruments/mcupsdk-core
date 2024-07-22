@@ -21,7 +21,7 @@ Memory Name| Memory Start Address | Memory Size
  FLASH     |0x60000000            | External Flash
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Memory Name|Memory Start Address | Memory Size
  -----------|---------------------|---------------
@@ -75,7 +75,7 @@ TCM is tightly coupled memory and is fastest. This memory is also non-cached. Th
 \cond SOC_AM243X
 \image html smart_placement_am243x_0.png
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \image html smart_placement_am263x_0.png
 \endcond
 

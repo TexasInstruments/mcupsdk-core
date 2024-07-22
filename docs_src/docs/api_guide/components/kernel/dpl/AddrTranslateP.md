@@ -8,7 +8,7 @@
 \cond SOC_AM64X || SOC_AM243X || SOC_AM62X
 - APIs to translate 48b SOC view system addr to 32b local CPU view address.
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - APIs to translate SOC view `system address` (or virtual address in OptiShare context) to CPU view `local address` (or physical address in context of OptiShare).
 \endcond
 - When no address mapping is specified, no translation is done.

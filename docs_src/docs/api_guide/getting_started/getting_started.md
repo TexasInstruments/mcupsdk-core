@@ -13,7 +13,7 @@
 
 \note In Windows, use the `cmd.exe` as command prompt and in Linux, use the bash shell as the command prompt.
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \note For performance measurements, use compiler optimization level -Os. Refer developer guide \ref PERFORMANCE_OPTIMIZATIONS_GUIDE for more details
 \endcond
 
@@ -39,7 +39,7 @@ On successful completion of below steps, you would have achieved the following
 \if !SOC_AM65X
 - One SDK example has been flashed to the EVM flash and the application booted from the flash without CCS.
 \endif
-\cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
+\cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
 - Use \htmllink{https://www.ti.com/lit/an/spradf0a/spradf0a.pdf, TI OptiFlah memory technology} along with [Smart Placement](\ref SMART_PLACEMENT_GETTING_STARTED) tool to improve system level performance with external flash.
 \endcond
 
@@ -64,7 +64,7 @@ IO-Link Controller      | IO-Link device which provides the interface to the hig
 IO-Link Device          | IO-Link device is a short distance, bi-directional, digital, point-to-point, wired (or wireless), industrial communications networking standard (IEC 61131-9) used for connecting digital sensors and actuators to either a type of industrial fieldbus or a type of industrial Ethernet
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 Term                    | Description
 ------------------------|------------
 McSPI Controller        | McSPI in communication which generates the clock and initiates the transfer
@@ -112,7 +112,7 @@ I2C Target              | I2C device which responds to I2C Controller
 \else
 - **Step 3:** Setup EVM for program execution, see \subpage EVM_SETUP_PAGE
 
-\cond SOC_AM273X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - **Step 4:** Loading and running the example, see \subpage LOAD_RUN_EXAMPLE
 
 - **Step 5:** Additional Details, see \subpage ADDITIONAL_DETAILS_PAGE
@@ -129,7 +129,7 @@ I2C Target              | I2C device which responds to I2C Controller
 
 \endcond
 
-\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - **Step 6:** Flash the "hello world" example on the EVM and boot without CCS, see \subpage GETTING_STARTED_FLASH [**OPTIONAL and is typically needed after all development via CCS is done**]
 \endcond
 
@@ -142,7 +142,7 @@ I2C Target              | I2C device which responds to I2C Controller
 
 \endcond
 
-\cond  SOC_AM263X || SOC_AM263PX || SOC_AM243X
+\cond  SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM261X
 - **Step 7:** Optimized system level performance using Smart Placement. See \subpage SMART_PLACEMENT_GETTING_STARTED.
 \endcond
 \endif

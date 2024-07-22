@@ -7,11 +7,11 @@
 When all libraries and application is compiled in instrumentation mode, some extra ELF sections are created by the compiler. In any examples, these additional section handling needs to be done in linker script.
 
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 If custom linker command file is used then changes in `Memory Configurator` (\ref MEMORY_CONFIGURATOR) is not required.
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ### Using Memory Configurator
 
 Open `Memory Configurator`. And under that, open "`Section`". Something like following will be shown:

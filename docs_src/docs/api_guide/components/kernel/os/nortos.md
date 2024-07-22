@@ -149,7 +149,7 @@ SysConfig can be used to configure below modules with NORTOS
 Please also refer to below documents from ARM Ltd. to understand more about R5F, M4F, A53 CPUs including
 features like MPU, MMU, cache and interrupts.
 \endcond
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294x || SOC_AM261X
 Please also refer to below documents from ARM Ltd. to understand more about R5F, M4F CPUs including
 features like MPU, MMU, cache and interrupts.
 \endcond

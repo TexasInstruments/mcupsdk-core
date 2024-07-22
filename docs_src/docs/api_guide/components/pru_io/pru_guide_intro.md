@@ -31,7 +31,7 @@ Refer to latest AM64x TRM (Technical Reference Manual) for complete details. (Ca
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## PRU_ICSSM Subsystem
 
 The Programmable Real-Time Unit Subsystem and Industrial Communication Subsystem (PRU_ICSSM)
@@ -123,7 +123,7 @@ PRU_ICSSG supports a broadside interface, which uses the XFR (XIN, XOUT, or XCHG
   \image html Pru_broadside.png " "
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 PRU_ICSSM supports a broadside interface, which uses the XFR (XIN, XOUT, or XCHG) instruction to transfer the contents of PRUn(where n = 0 or 1) registers to or from accelerators. This interface enables up to 30 registers (R0-R29, or 120 bytes) to be transferred in a single instruction.
 
 Data processing accelerators

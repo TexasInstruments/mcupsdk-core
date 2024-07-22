@@ -35,10 +35,12 @@ help:
 	@echo  Library build targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am261x unity_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x doxy_samples_r5f.ti-arm-clang
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am261x unity_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x doxy_samples_r5f.ti-arm-clang_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -200,10 +202,11 @@ help:
 
 # Various Component Targets
 BUILD_COMBO_unity = unity_r5f.ti-arm-clang
+BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_unity)
+BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 
 
 # Combine all Pre-built Components
@@ -223,14 +226,18 @@ libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 $(BUILD_COMBO_unity):
 	$(MAKE) -C unity -f makefile.am261x.$(subst unity_,,$@) all
 
+$(BUILD_COMBO_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am261x.$(subst doxy_samples_,,$@) all
+
 
 
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
 
 
 # Combine all Pre-built Components Clean
@@ -244,14 +251,18 @@ libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 $(BUILD_COMBO_CLEAN_unity):
 	$(MAKE) -C unity -f makefile.am261x.$(subst unity_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am261x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
+
 
 
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -263,6 +274,9 @@ libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
 $(BUILD_COMBO_SCRUB_unity):
 	$(MAKE) -C unity -f makefile.am261x.$(subst unity_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am261x.$(subst doxy_samples_,,$(subst _scrub,,$@)) scrub
 
 
 BUILD_COMBO_EXAMPLE_ALL =

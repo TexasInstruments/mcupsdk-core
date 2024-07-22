@@ -16,7 +16,7 @@ It consists of below sub-modules
 \cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 - \subpage TOOLS_SYSFW
 \endcond
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage SMART_PLACEMENT
 - \subpage SW_INSTRUMENT_SMART_PLACEMENT
 - \subpage MANUAL_SMART_PLACEMENT
@@ -28,6 +28,6 @@ It consists of below sub-modules
 - \subpage TI_UNIFLASH_TOOL
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage MEMORY_CONFIGURATOR
 \endcond

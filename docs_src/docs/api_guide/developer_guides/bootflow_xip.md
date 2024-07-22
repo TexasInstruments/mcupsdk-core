@@ -21,7 +21,7 @@ See also these additional pages for more details and examples about XIP,
   - \ref EXAMPLES_KERNEL_DPL_XIP_BENCHMARK
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - To understand and run a example in XIP mode see
   - \ref BENCHMARK_SMART_PLACEMENT_COMBOS
 \endcond

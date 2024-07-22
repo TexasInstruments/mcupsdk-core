@@ -157,6 +157,41 @@ const files_am263px = {
     ],
 };
 
+const files_am261x = {
+    common: [
+        "AddrTranslateP_sample.c",
+        "Resolver_sample.c",
+        "Bootloader_sample_v3.c",
+        "CacheP_sample.c",
+        "CpuIdP_sample.c",
+        "ClockP_sample.c",
+        "Cmpss_sample.c",
+        "Dac_sample.c",
+        "DebugP_sample.c",
+        "Edma_sample.c",
+        "Ethphy_sample.c",
+        "EventP_sample.c",
+        "HeapP_sample.c",
+        "HwiP_sample.c",
+        "IpcNotify_sample.c",
+        "IpcRPMessage_sample.c",
+        "Mcspi_sample.c",
+        "Mcspi_lld_sample.c",
+        "Mdio_sample.c",
+        "MpuP_arm_v7_sample.c",
+		"Pmu_sample.c",
+        "Pruicss_sample_m_v0.c",
+        "QueueP_sample.c",
+        "Sdfm_sample.c",
+        "SemaphoreP_sample.c",
+        "TaskP_sample.c",
+        "TimerP_sample.c",
+        "Uart_sample.c",
+        "Uart_lld_sample.c",
+        "Watchdog_sample.c",
+    ],
+};
+
 const files_am62x = {
     common: [
         "AddrTranslateP_sample.c",
@@ -233,6 +268,12 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.device=="am263px")
     {
         build_property.files = files_am263px;
+        build_property.files.common.push("I2c_lld_sample_v1.c");
+        build_property.includes = includes;
+    }
+    if(buildOption.device=="am261x")
+    {
+        build_property.files = files_am261x;
         build_property.files.common.push("I2c_lld_sample_v1.c");
         build_property.includes = includes;
     }

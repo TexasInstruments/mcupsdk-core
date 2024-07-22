@@ -75,7 +75,7 @@ After setting up one of the above session launch type, Click the Start button to
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ### JTAG Session
 1.  Set the board in \ref BOOTMODE_NOBOOT mode and do a power cycle prior to loading.
 
@@ -138,7 +138,7 @@ After setting up one of the above session launch type, Click the Start button to
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ### Serial (UART) Session
 1.  Set the board in \ref BOOTMODE_UART mode and do a power cycle.
 
@@ -179,7 +179,7 @@ After setting up one of the above session launch type, Click the Start button to
 \endcond
 
 ## Custom Flash Support{#CUSTOM_FLASH}
-\cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
+\cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
  - JTAG
      - Please use \ref TOOLS_UNIFLASH_CUSTOM_FLASHER guide to build the flasher app and input the path of the .out file in the tool. The custom flasher input field is found at Settings & Utilities page.
     \imageStyle{jtag_flasher_path.png,width:70%}

@@ -36,7 +36,7 @@ Also, in Linux, `gmake` is to be replaced by `make`. The above commands assumes 
 ### 2. Recompilation of Application
 
 Application is also required to be compiled with those flags.
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 \note
 The binary that is generated is an instrumented binary and its size is going to be more than the size of original application size. Therefore, it might be the case that linker.cmd file needs to be changed or if memory configurator is used then memory size needs to be changed.
 

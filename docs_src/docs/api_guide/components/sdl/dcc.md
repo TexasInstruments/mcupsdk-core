@@ -96,7 +96,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MCU =
 SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &DCC_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, NULL);
 \endcode
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \code{.c}
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
@@ -294,7 +294,7 @@ SDL_DCC_enable(SDL_DCC_INST_MCU_DCC0);
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X || SOC_AM261X
 Configure MAIN DCC Instance 0 seed values and clocks
 
 \code{.c}

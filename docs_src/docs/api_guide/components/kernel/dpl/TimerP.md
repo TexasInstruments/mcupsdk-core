@@ -16,7 +16,7 @@ NA
 \cond SOC_AM64X || SOC_AM243X
 - Support configuration for DM timer
 \endcond
-\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Support configuration for RTI timer
 - Value for 'inputPreScaler' should be set to 1
  - RTI timer does not have a clock prescaler. However, RTI supports two 32 bit counters (UC and FRC) per block, out of which UC can be used as a prescaler to run FRC.

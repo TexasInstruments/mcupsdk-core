@@ -33,7 +33,7 @@ the board. It accesses the PHY registers using the MDIO module.
         - CUSTOM
         - NONE
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
         - DP83869
         - DP83826E
         - CUSTOM

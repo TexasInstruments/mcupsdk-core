@@ -2,7 +2,7 @@
 
 [TOC]
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 ## Overview
 Advances in automated factories and smart vehicles require advanced networking capabilities, real-time processing and more advanced motor-control topologies. TI Networking solution packaged with the SDK provide a rapidly growing need for Sitara MCU to out space traditional MCUs and deliver processor-like capabilities. Networking is a broad terms used to cover Ethernet (IEEE 802.3), EtherCAT Profinet and other ethernet-like communication protocols used in industrial, automotive and other general use cases.
@@ -19,7 +19,7 @@ This document covers driver software architecture, Application Programming Inter
 - Programmable Real-Time Unit and Industrial Communication Subsystem - Gigabit (**PRU-ICSSG**) : PRU-ICSSG is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSSG supports RGMII and MII modes.
 \endcond
 
-\cond  SOC_AM263X || SOC_AM263PX
+\cond  SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Programmable Real-Time Unit and Industrial Communication Subsystem (PRU-ICSS) : PRU-ICSS is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSS supports MII mode.
 \endcond
 
@@ -42,7 +42,7 @@ Below is the software components overview highlighting mainly the components use
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html cpdma_networking_block_diagram.png Figure: Networking Software Components Overview
 \endcond
@@ -54,7 +54,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
@@ -66,7 +66,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing the
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ### ICSS-EMAC Driver
 ICSS-EMAC (Industrial Communications Subsystem Ethernet Media Access Controller) driver provide APIs to transmit and receive packets with a firmware based MAC and Ethernet Switch that has been implemented on PRUICSS cores.
 - \subpage ICSS_EMAC describes the driver features and debugging guide.
@@ -107,7 +107,7 @@ To know more about the hardware peripherals, please refer to datasheet and Techn
 
 Below is the software components overview highlighting mainly the components used in the Networking software development.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
   \imageStyle{networking_layer_with_mbedtls.png,width:50%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
@@ -120,7 +120,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
@@ -134,7 +134,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 ### TCP/IP Stack
 -\subpage NETWORKING_LWIP
 
-\cond SOC_AM64X ||  SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM64X ||  SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
 ### Time Sensitive Networking (TSN) Stack
 - \subpage ENET_CPSW_TSN_GPTP
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP

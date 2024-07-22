@@ -2,7 +2,7 @@
 
 [TOC]
 
-\cond SOC_AM243X || SOC_AM273X || SOC_AM64X || SOC_AWR294X || SOC_AM263PX
+\cond SOC_AM243X || SOC_AM273X || SOC_AM64X || SOC_AWR294X || SOC_AM263PX || SOC_AM261X
 The Flash driver provides API to read and write to xSPI based flash devices present in the board.
 \endcond
 \cond SOC_AM263X
@@ -16,7 +16,7 @@ the application need not take care of the programming intricacies.
 - APIs to read and write to a flash offset
 - Provides API to return flash attributes like block size, page size etc
 - API for block erases
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - Supports Nand Flash
 \endcond
 ## SysConfig Features
@@ -34,7 +34,7 @@ the application need not take care of the programming intricacies.
 - Supported flash devices
     - S25FL128SA
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - Supported flash devices
     - IS25LX256
     - W25N01GVZEJ
@@ -46,11 +46,11 @@ the application need not take care of the programming intricacies.
 
 ## Features NOT Supported
 
-\cond !(SOC_AM263PX)
+\cond !(SOC_AM263PX || SOC_AM261X)
 NA
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 - DMA for NAND FLASH
 \endcond
 
@@ -66,7 +66,7 @@ NA
   In such cases the way erase sizes supported will be subject to this configuration. Take care in the flash configuration
   and the application to make sure the erase APIs are called only with the right configuration.
 - Flash writes can only be done to a page size aligned offset, otherwise the write API returns an error
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX || SOC_AM261X
 - The `sbl_ospi` will be typically flashed at location 0x00000000 in the flash memory. So applications using flash should refrain from using this offset. Similarly, the starting of the last block of the flash is used for storing attackVector patterns later used for PHY tuning. So avoid using this offset as well.
 \endcond
 \cond SOC_AM263X

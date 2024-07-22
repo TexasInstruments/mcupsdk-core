@@ -11,7 +11,7 @@ The RTI modules include the following main features:
 * Ability to read Status of the configuration.
 * Ability to read back static register.
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 There are Four RTI Timer instances, implemented by the Real-time Interrupt function of the RTI/WWDT module.
 Four Windowed Watchdog Timer (WWDT) instances, implemented by the Digital Windowed Watchdog
 (DWWD) function of the RTI/WWDT module
@@ -98,7 +98,7 @@ Include the below file to access the APIs
 #include <sdl/sdl_rti.h>
 \endcode
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM64X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM64X || SOC_AM243X || SOC_AM261X
 Config an RTI Instance
 \code{.c}
 SDL_RTI_configParms pConfig;

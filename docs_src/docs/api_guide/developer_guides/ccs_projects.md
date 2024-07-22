@@ -460,7 +460,7 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## 1 Click Debug with CCS Projects {#CCS_PROJECTS_1CLICK_DEBUG}
 
  - Projects imported in CCS can be loaded and run on the EVM with single click.

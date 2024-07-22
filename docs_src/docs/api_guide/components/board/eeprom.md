@@ -20,7 +20,7 @@ the application need not take care of the programming intricacies.
 \cond SOC_AM64X || SOC_AM243X
         - AT24C
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
         - CAT24M
 \endcond
 \cond SOC_AM273X || SOC_AWR294X

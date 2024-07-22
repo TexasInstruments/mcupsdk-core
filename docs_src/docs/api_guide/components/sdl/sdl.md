@@ -50,7 +50,7 @@ SDL consists of below sub-modules
 - \subpage SDL_LBIST_PAGE
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X || SOC_AM261X
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ESM_PAGE
 - \subpage SDL_DCC_PAGE
@@ -75,10 +75,15 @@ SDL consists of below sub-modules
 - \subpage SDL_ECC_BUS_SAFETY_PAGE
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage SDL_R5FCPU_PAGE
 \endcond
 \cond SOC_AM263PX
+- \subpage SDL_TMU_ROM_CHECKSUM_PAGE
+- \subpage SDL_STOG_PAGE
+- \subpage SDL_VTM_PAGE
+\endcond
+\cond SOC_AM261X
 - \subpage SDL_TMU_ROM_CHECKSUM_PAGE
 - \subpage SDL_STOG_PAGE
 - \subpage SDL_VTM_PAGE

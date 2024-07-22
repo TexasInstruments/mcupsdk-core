@@ -61,7 +61,7 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - Next, we need to list the files to flash in a flash configuration file. A default configuration file can be found at below path.
   You can edit this file directly or take a copy and edit this file.
-\cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 \endcond
 \if (SOC_AM64X || SOC_AM243X)
@@ -595,7 +595,7 @@ number of lines used in the protocol is indeed 8.
 \endcond
 
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## Flashing the application
 
 - **POWER-OFF** the EVM
@@ -620,7 +620,7 @@ number of lines used in the protocol is indeed 8.
 \cond SOC_AM263x
         python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_qspi.cfg
 \endcond
-\cond SOC_AM263Px
+\cond SOC_AM263Px || SOC_AM261X
         python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_ospi.cfg
 \endcond
   - Here COM<x> is the port name of the identified UART port in Windows.
@@ -669,7 +669,7 @@ number of lines used in the protocol is indeed 8.
 
 - Congratulations now the AM263X-CC is flashed with your application and you dont need CCS anymore to run the application.
 \endcond
-\cond SOC_AM263Px
+\cond SOC_AM263Px || SOC_AM261X
 
 - You should see output like below on the UART terminal
 

@@ -164,7 +164,7 @@ m4fss0-0    | 14
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 - In case of @VAR_SOC_NAME, `DEV_ID` is `55`.
 - The various core ID to be used are as below.
@@ -210,7 +210,7 @@ r4          | 3
 
 - To run these scripts, one needs `openssl` installed as mentioned here, \ref INSTALL_OPENSSL
 - Signing scripts are a collection of scripts needed to sign ROM images (image booted by ROM - mostly the SBL) and application images (image booted by the SBL)
-\cond SOC_AM263X || SOC_AM263PX||SOC_AM273X||SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX||SOC_AM273X||SOC_AWR294X || SOC_AM261X
 ### Signing SBL
 \endcond
 - The RBL requires the boot image (mostly SBL), to be signed always, even if we are not using secure boot.
@@ -246,7 +246,7 @@ r4          | 3
 - These scripts are invoked in makefiles, and the image generation happens automatically along with the example build. So mostly these scripts need not be manually run.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 
 For SBL images, the script `/source/security/security_common/tools/boot/signing/mcu_rom_image_gen.py`.
 
@@ -510,7 +510,7 @@ The default debug privilege used in SDK is `DBG_SOC_DEFAULT`.
 To enable debug on public cores on HS-SE device, one can use the following command
 to compile SBL examples.
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \code
 make -s -C examples/drivers/boot/sbl_qspi/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS DEBUG_TIFS=no DEBUG_OPTION=DBG_PUBLIC_ENABLE
 \endcode
@@ -536,7 +536,7 @@ make -s -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-cla
   - In the case of GP device, `BOOTIMAGE_CERT_KEY` is `rom_degenerateKey.pem`
   - In the case of HS device, `BOOTIMAGE_CERT_KEY` is `custMpk_am64x_am243x.pem`. For more details about this see \ref SECURE_BOOT
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
   - `SBL_RUN_ADDRESS` is `0x70002000`
   - In the case of HS-FS devices, the key value is disregarded. A degenerate RSA public key is used to sign the certificate. The image integrity is checked in ROM, nevertheless.
   - In the case of HS-SE device, more details can be found at \ref SECURE_BOOT
@@ -552,7 +552,7 @@ be ensured that the same is followed as part of the post build steps.
 The devconfig has ENC_SBL_ENABLED=yes and that is why for HS-SE devices, the SBL
 image is encrypted by default.
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X ||SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X ||SOC_AWR294X || SOC_AM261X
 ### Application Signing
 
 For Application images, the script `/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py`.
@@ -884,7 +884,7 @@ and waits for 5 seconds before running the application binary
 - The Linux appimage wil be generated at {SDK_INSTALL_PATH}/tools/boot/linuxAppimageGen after running the makefile
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 ## SoC ID parser Python Script {#SOC_ID_PARSER}
 
@@ -944,7 +944,7 @@ and waits for 5 seconds before running the application binary
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## CAN Bootloader Python Script {#CAN_BOOTLOADER_PYTHON_SCRIPT}
 
 - This script is used in QSPI boot mode for sending the appimage binaries to the EVM via CAN, after flashing the SBL CAN. Refer \ref BASIC_STEPS_TO_FLASH_FILES for flashing.
@@ -972,7 +972,7 @@ python can_bootloader.py --file=< path to multicore appimage of application bina
   \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
 ## Keyring Cert Generation Python Script {#KEYRING_CERT_GEN_PYTHON_SCRIPT}
 
 \note Support for encryption with symmetric auxiliary keys will be added in future releases.

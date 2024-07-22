@@ -9,6 +9,6 @@ part of the SDK.
 
 It consists of below sub-modules
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage SFO
 \endcond

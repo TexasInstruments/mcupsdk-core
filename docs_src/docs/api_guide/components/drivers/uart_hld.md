@@ -10,7 +10,7 @@
 \endcond
 - Blocking and Non-blocking (Callback) transfers
 - Write and Read Cancel mode of operation
-\cond !(SOC_AM263X || SOC_AM263PX)
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 - For low latency direct register read/write API, refer \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT and \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING example.
 \endcond
 

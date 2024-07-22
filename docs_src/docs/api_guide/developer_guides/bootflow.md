@@ -134,7 +134,7 @@ shaValue = FORMAT:HEX,OCT:0000
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 \code
 [ req ]
 distinguished_name     = req_distinguished_name
@@ -182,7 +182,7 @@ Depending on the device type, these are the validation requirements for ROM:
 \image html device_types_validation_req.png "Validation for Device Types"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \imageStyle{device_types_validation_req_am263x.png,width:50%}
 \image html device_types_validation_req_am263x.png "Validation for Device Types"
 \endcond
@@ -225,7 +225,7 @@ The SBL is like any other application, created using the same compiler and linke
 rather than a deliverable. It is customizable by users, but must adhere to the requirements by RBL which is a constant as mentioned above.
 However the steps to convert the application `.out` into a bootable image are different for SBL as listed below:
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 \cond ~SOC_AWR294X
 - The SBL entry point needs to be different vs other applications. On @VAR_SOC_NAME after power-ON ROM boots the SBL and sets the entry point of SBL to
   both R5FSS0-0 as well as R5FSS0-1. However for SBL we need to detect the core and run SBL only on Core0 and keep Core1 in `wfi` loop.
@@ -241,7 +241,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - Nothing should be placed in ATCM or BTCM
   - Only the region `0x70000000` to `0x70080000` should be used by SBL code, data, stack etc
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
   - The linker command file for SBL has to place vectors at address `0x70002000` and this is the entry point for the SBL.
   - Nothing should be placed in ATCM or BTCM
   - Currently, the region 0x70002000 to 0x70040000 is used by the SBL code, data, stack, etc.
@@ -256,13 +256,13 @@ However the steps to convert the application `.out` into a bootable image are di
   - This copies the loadable sections from the .out into a binary image stripping all symbol and section information.
   - If there are two loadable sections in the image which are not contiguous then `objcopy` fills the gaps with `0x00`.
   - It is highly recommended to keep all loadable sections together within a SBL application.
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
    - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
    - The rom_degenerateKey.pem is used for this.
    - This is a ROM bootloader requirement and is needed even on a non-secure device.
    - The signing tools take the `.bin` file
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM. This firmware provides various foundational security services. For HS-FS ,this can be found at source/drivers/hsmclient/soc/am263x/hsmRtImg.h. For HS-SE devices, more information can be found at MySecureSW. For integrating HSM RunTime with SBL, the following should be taken care of:
    - HSMClient should be initialized and registered.
    - HSMRT (TIFS-MCU) image signed appropriately should be available. For HS-FS, this is already part of the SDK, for HS-SE, this can be compiled with TIFS-MCU package (available on MySecureSW)
@@ -279,7 +279,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - **HS-FS** device:
     - `sbl_xxx.release.hs_fs.tiimage` [`hs_fs` prefix before `.tiimage`]
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
   - **HS-FS** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
 \endcond
@@ -288,7 +288,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM64X || SOC_AM243X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device.
 \endcond
 - The `.tiimage` file can then be flashed or copied to a boot image using the \ref TOOLS_FLASH
@@ -302,7 +302,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \image html tiimage_k3.png "TIIMAGE"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 \imageStyle{tiimage_normal.png,width:20%}
 \image html tiimage_normal.png "TIIMAGE"
 \endcond
@@ -323,7 +323,7 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \inlineVideo{sbl_boot.mp4,SBL BOOT,width=50%}
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX || SOC_AM261X
 - To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
 \endcond
 
@@ -356,7 +356,7 @@ and booting
 \image html bootflow_post_build_steps.png "Post build steps"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
@@ -374,7 +374,7 @@ and booting
 - Once the application images (`.appimage` and `.appimage_xip`) are created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 - Once the application images (`.appimage`) is created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
@@ -388,13 +388,13 @@ After a SBL and application image is flashed, shown below is the high level boot
 \imageStyle{bootflow_main.png,width:40%}
 \image html bootflow_main.png "HIGH LEVEL BOOTFLOW"
 
-\cond SOC_AM243X || SOC_AM64X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 ## Secure Boot
 
 In secure device variants, there are slight differences in the bootflow. For details on secure boot, please refer \ref SECURE_BOOT
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## PBIST For 200MHz and 400MHz R5F Core Variants
 
 pBIST (parallel Built-In Self-Test) can be performed for both 200MHz and 400MHz part numbers by including the instance of `mcu_bist` in the sys-config for the bootloader examples. By default it's enabled only for bootloader `sbl-sd`. For 400 MHz part numbers ROM performs pBIST on R5FSS0 Memories and L2 Memory - Bank-0 and Bank-1. But due to ROM limitation this test is not done by ROM for 200 MHz part numbers. The `mcu_bist` instance can be added or removed on the basis of use-case. pBIST is perfromed only on L2 memory - three banks (Bank-1,Bank-2,Bank3 (not on Bank-0)) and R5FSS1 TCM Memories. Please refer below for more information.
@@ -565,7 +565,7 @@ some details regarding those.
 
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 ### SBL OSPI
 
 - The `sbl_ospi` is a secondary bootloader which reads and parses the application image from a location in the OSPI flash and then moves on to core initialization and other steps
@@ -598,7 +598,7 @@ some details regarding those.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ### SBL CAN
 
 - The `sbl_can` is a secondary bootloader which needs to be flashed in QSPI Flash.
@@ -696,7 +696,7 @@ See also these additional pages for more details and examples about the boot flo
   - \ref EXAMPLES_DRIVERS_SBL_CAN
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
   - \ref EXAMPLES_DRIVERS_SBL_OSPI
   - \ref EXAMPLES_DRIVERS_SBL_UART
   - \ref EXAMPLES_DRIVERS_SBL_CAN
