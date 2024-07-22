@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,7 +64,7 @@ int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
         if (instance == MCRC0)
         {
             *baseAddr = (uint32_t)SDL_MCRC0_U_BASE;
-            size = 0x400UL;
+            size = 0x400U;
         }
         else
         {

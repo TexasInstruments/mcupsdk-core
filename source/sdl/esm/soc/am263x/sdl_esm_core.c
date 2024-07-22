@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Reference module for Error Signaling Module
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,9 +80,8 @@ bool SDL_ESM_getBaseAddr(const SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr)
             default:
                 break;
         }
+        *esmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*esmBaseAddr, size);
     }
-
-    *esmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*esmBaseAddr, size);
 
     return (instValid);
 }

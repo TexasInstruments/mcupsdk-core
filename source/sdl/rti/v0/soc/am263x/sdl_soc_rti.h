@@ -1,5 +1,5 @@
-/* 
- *   Copyright (c) Texas Instruments Incorporated 2023
+/*
+ *   Copyright (c) Texas Instruments Incorporated 2023-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,7 +80,7 @@ typedef enum {
 
 static uint32_t SDL_RTI_baseAddress[SDL_RTI_MAX_INSTANCE+1U] = {SDL_WDT0_U_BASE,SDL_WDT1_U_BASE,
                                                                 SDL_WDT2_U_BASE,SDL_WDT3_U_BASE,
-                                                                SDL_INSTANCE_INVALID};
+                                                                INSTANCE_INVALID};
 
 int32_t SDL_RTI_getBaseaddr(SDL_RTI_InstanceType instance,
                                        uint32_t *baseAddr);

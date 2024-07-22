@@ -79,7 +79,7 @@ volatile bool Erroresm = false;
 
 #define SDL_INTR_PRIORITY_LVL             1U
 #define SDL_ENABLE_ERR_PIN                1U
-#define SDL_ESM_MAX_EVENT_MAP_WORDS       4U
+#define SDL_ESM_MAX_EVENT_MAP_WORDS       32U
 
 #define SDL_MCU_ARMSS_VIM_NULL_ADDR       ((void *) 0 )
 /** ---------------------------------------------------------------------------
@@ -114,6 +114,13 @@ static SDL_CCM_Instance_t SDL_CCM_instance;
 uint32_t SDL_CCM_eventBitMap_param[SDL_ESM_MAX_EVENT_MAP_WORDS] =
 {
      0x00000000u, 0x00000000u, 0x00780880u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
 };
 /* ========================================================================== */
 /*                    Local functions declaration                             */

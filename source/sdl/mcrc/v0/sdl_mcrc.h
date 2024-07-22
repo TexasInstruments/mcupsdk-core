@@ -113,11 +113,11 @@ extern "C" {
  * \brief  Macro defines value of MCRC Control Register.
  */
 
-#define SDL_MCRC_TYPE_16BIT                 (0x4CU)
+#define SDL_MCRC_TYPE_16BIT                 (0x0000004CU)
 
-#define SDL_MCRC_TYPE_32BIT                 (0x54U)
+#define SDL_MCRC_TYPE_32BIT                 (0x00000054U)
 
-#define SDL_MCRC_TYPE_64BIT                 (0x44U)
+#define SDL_MCRC_TYPE_64BIT                 (0x00000044U)
 
 #define SDL_MCRC_DATAWIDTH_SEL_64BIT        (0x00U)
 

@@ -106,7 +106,7 @@ typedef struct SDL_EccAggrEntry_s
     const SDL_RAMIdEntry_t *ramTable;
     uint32_t numMemEntries;
     const SDL_MemConfig_t *memConfigTable;
-    uint32_t esmInst;
+    SDL_ESM_Inst esmInst;
     uint32_t esmIntSEC;
     uint32_t esmIntDED;
 } SDL_EccAggrEntry_t;

@@ -59,27 +59,20 @@
 #define SDL_ECC_INVALID_SELF_TEST_RAM_ID  (0xffffffffu)
 #define SDL_ECC_INVALID_CHECKER_TYPE      (0xffffffffu)
 
-#define SDL_ESM_MAX_EVENT_MAP_WORDS       (4U)
+#define SDL_ESM_MAX_EVENT_MAP_WORDS       (32U)
 
 /* Event BitMap for ECC ESM callback for MAIN */
 uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_WORDS] =
 {
-     0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+     0xffffffffu, 0xffffffffu, 0x001ffbffu, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
 };
-
-/* Event BitMap for ECC ESM callback for MCU */
-uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
-{
-    0xffffffffu, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-};
-
 
 /* ========================================================================== */
 /*                           enums                                            */
@@ -369,7 +362,7 @@ static bool SDL_ECC_getIntSrcErrInfo(SDL_ESM_Inst instance, uint32_t intSrc, uin
 
     for (i = ((uint32_t)0); i < (uint32_t)SDL_ECC_MEMTYPE_MAX; i++)
     {
-        if (SDL_ECC_aggrTable[i].esmInst == (uint32_t)instance)
+        if (SDL_ECC_aggrTable[i].esmInst == instance)
         {
             if (SDL_ECC_aggrTable[i].esmIntSEC == intSrc)
             {
@@ -447,7 +440,7 @@ static int32_t SDL_ECC_ESMCallBackFunction_MAIN (SDL_ESM_Inst instance, SDL_ESM_
     uint32_t errorAddr;
     SDL_ECC_MemType eccMemType;
     SDL_Ecc_AggrIntrSrc intrSrcType;
-    int32_t handledResult = 0U;
+    int32_t handledResult = 0;
 
     status = SDL_ECC_getIntSrcErrInfo(instance, intSrc, &intrSrcType, &errorAddr, &eccMemType);
 

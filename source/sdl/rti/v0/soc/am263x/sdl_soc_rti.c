@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,7 +64,7 @@ int32_t SDL_RTI_getBaseaddr(SDL_RTI_InstanceType instance,
         if (instance != SDL_INSTANCE_INVALID)
         {
             *baseAddr = (uint32_t)SDL_RTI_baseAddress[instance];
-            size =0x100UL ;
+            size =0x100U ;
         }
         else
         {
