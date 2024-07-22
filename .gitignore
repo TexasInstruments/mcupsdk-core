@@ -25,6 +25,7 @@ docs/datasheet*
 *.tiimage
 *.tiimage.hs
 *.mcelf
+*.mcelf_xip
 *-fw
 *.vscode/
 *.vscode-ctags
