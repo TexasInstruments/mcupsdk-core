@@ -1079,38 +1079,22 @@ void SOC_generateOttoReset(uint32_t ottoInstance)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 }
 
-void SOC_selectIcssGpiMux(uint8_t icssm_instance, uint8_t pru_instance, uint32_t mask)
+void SOC_selectIcssGpiMux(uint8_t pru_instance, uint32_t mask)
 {
     uint32_t baseAddr;
 
     /* Unlock MSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
-    if(icssm_instance == 0)
+    if(pru_instance == 0)
     {
-        if(pru_instance == 0)
-        {
-            baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU0_GPI_SEL;
-            CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM0_PRU0_GPI_SEL_SEL_MASK);
-        }
-        if(pru_instance == 1)
-        {
-            baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU1_GPI_SEL;
-            CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM0_PRU1_GPI_SEL_SEL_MASK);
-        }
+        baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU0_GPI_SEL;
+        CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM0_PRU0_GPI_SEL_SEL_MASK);
     }
-    if(icssm_instance == 1)
+    if(pru_instance == 1)
     {
-        if(pru_instance == 0)
-        {
-            baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM1_PRU0_GPI_SEL;
-            CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM1_PRU0_GPI_SEL_SEL_MASK);
-        }
-        if(pru_instance == 1)
-        {
-            baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM1_PRU1_GPI_SEL;
-            CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM1_PRU1_GPI_SEL_SEL_MASK);
-        }
+        baseAddr = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU1_GPI_SEL;
+        CSL_REG32_WR(baseAddr, mask & CSL_MSS_CTRL_ICSSM0_PRU1_GPI_SEL_SEL_MASK);
     }
 
     /* Lock MSS_CTRL registers */

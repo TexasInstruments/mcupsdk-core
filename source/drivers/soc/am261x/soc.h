@@ -627,7 +627,7 @@ void SOC_generateOttoReset(uint32_t ottoInstance);
  * \param pru_instance [in] PRU instance number [0 - 1]
  * \param mask [in] Bitwise selection of ICSSM GPI source. GPI or PWMXBar select for ICSSM port 0/1. 0-GPI, 1-PWMXBAR
  */
-void SOC_selectIcssGpiMux(uint8_t icssm_instance, uint8_t pru_instance, uint32_t mask);
+void SOC_selectIcssGpiMux(uint8_t pru_instance, uint32_t mask);
 
 /**
  *  \brief SOC Virtual (CPU) to Physical address translation function.
