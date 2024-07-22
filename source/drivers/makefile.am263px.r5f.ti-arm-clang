@@ -25,7 +25,10 @@ FILES_common := \
     bootloader_mem.c \
     bootloader_profile.c \
     bootloader_soc.c \
+    bootloader_uniflash_common.c \
     bootloader_uniflash.c \
+    bootloader_uniflash_rprc.c \
+    bootloader_uniflash_mcelf.c \
     bootloader_xmodem.c \
     xmodem.c \
     crc16.c \
@@ -89,6 +92,9 @@ FILES_PATH_common = \
     watchdog/v0/soc/am263px \
     adc/v2 \
     bootloader \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     bootloader/soc/am263px \
     cmpss/v0 \
     csl_arm_r5_pmu.S \

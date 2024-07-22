@@ -799,6 +799,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     {
         status = SystemP_FAILURE;
     }
+	config->fxns->imgSeekFxn(0, config->args);
 
     uint32_t doAuth = ((Bootloader_socIsAuthRequired() == TRUE) && (config->isAppimageSigned == TRUE));
 
@@ -1006,6 +1007,9 @@ int32_t Bootloader_parseMultiCoreAppImage(Bootloader_Handle handle, Bootloader_B
 
         if(SystemP_SUCCESS == status)
         {
+            /* seek to 0 */
+            config->fxns->imgSeekFxn(0, config->args);
+
             memset(&mHdrCore[0], 0xFF, BOOTLOADER_MAX_INPUT_FILES*sizeof(Bootloader_MetaHeaderCore));
 
             status = config->fxns->imgReadFxn(&mHdrStr, sizeof(Bootloader_MetaHeaderStart), config->args);

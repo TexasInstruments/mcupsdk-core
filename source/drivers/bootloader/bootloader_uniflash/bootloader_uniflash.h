@@ -68,6 +68,9 @@ extern "C"
 #define BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR        (0x40000001)
 #define BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERASE_ERROR         (0x50000001)
 
+#define BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_MCELF		(0x88U)
+#define BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_RPRC		(0x77U)
+
 typedef struct Bootloader_UniflashFileHeader_s
 {
 	uint32_t magicNumber;
@@ -115,7 +118,7 @@ typedef struct Bootloader_UniflashConfig_s
 	uint32_t bufSize;
 	uint8_t *verifyBuf;
 	uint32_t verifyBufSize;
-
+	uint32_t imageFormatType;
 } Bootloader_UniflashConfig;
 
 int32_t Bootloader_uniflashProcessFlashCommands(Bootloader_UniflashConfig *config, Bootloader_UniflashResponseHeader *respHeader);
