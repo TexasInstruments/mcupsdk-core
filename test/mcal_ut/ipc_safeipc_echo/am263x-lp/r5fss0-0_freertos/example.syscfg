@@ -10,6 +10,7 @@
  */
 const hsmclient         = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1        = hsmclient.addInstance();
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const ipc               = scripting.addModule("/drivers/ipc/ipc");
 const debug_log         = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7         = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
