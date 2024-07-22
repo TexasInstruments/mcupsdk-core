@@ -313,10 +313,12 @@ const example_file_list = [
     "test/drivers/optiflash/.project/project.js",
 	"test/drivers/ospi/.project/project.js",
     "test/benchmarks/memory_access_latency/.project/project.js",
+    "test/benchmarks/flsopskd_benchmark/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
 	"test/drivers/resolver/.project/project.js",
 	"test/drivers/soc/soc_r5f/.project/project.js",
 	"test/drivers/uart/.project/project.js",
+    "test/examples/fss_switch_b/.project/project.js",
 	"test/kernel/dpl/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/.project/project.js",
@@ -359,7 +361,6 @@ const example_file_list = [
     "tools/flasher/jtag_uniflash/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
-    "test/benchmarks/flsopskd_benchmark/.project/project.js"
 ];
 
 function getProjectSpecCpu(cpu) {
