@@ -367,6 +367,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT
+   -# \subpage EXAMPLES_DRIVERS_SWAP_TO_B
 \endcond
 -# PMU
    -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
@@ -392,7 +393,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
    -# \subpage EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
    -# \subpage EXAMPLES_DRIVERS_TMU_CONTEXTSAVE
-   -# \subpage EXAMPLES_DRIVERS_TMU_PARK_TRANSFORM_SUPPORT
+   -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
 \endcond
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO
