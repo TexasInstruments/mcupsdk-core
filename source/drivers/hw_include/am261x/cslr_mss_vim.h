@@ -61,7 +61,8 @@ typedef struct {
     volatile uint32_t FIQVEC;
     volatile uint32_t ACTIRQ;
     volatile uint32_t ACTFIQ;
-    volatile uint8_t  Resv_48[8];
+	volatile uint32_t IRQPRIMSK;		
+	volatile uint32_t FIQPRIMSK;		
     volatile uint32_t DEDVEC;
     volatile uint8_t  Resv_1024[972];
     volatile uint32_t RAW;
@@ -659,6 +660,8 @@ typedef struct {
 #define CSL_MSS_VIM_FIQVEC                                                     (0x0000001CU)
 #define CSL_MSS_VIM_ACTIRQ                                                     (0x00000020U)
 #define CSL_MSS_VIM_ACTFIQ                                                     (0x00000024U)
+#define CSL_MSS_VIM_IRQPRIMSK                                                  (0x00000028U)
+#define CSL_MSS_VIM_FIQPRIMSK                                                  (0x0000002CU)
 #define CSL_MSS_VIM_DEDVEC                                                     (0x00000030U)
 #define CSL_MSS_VIM_RAW                                                        (0x00000400U)
 #define CSL_MSS_VIM_STS                                                        (0x00000404U)
@@ -1456,6 +1459,31 @@ typedef struct {
 #define CSL_MSS_VIM_ACTFIQ_NUM_MAX                                             (0x000003FFU)
 
 #define CSL_MSS_VIM_ACTFIQ_RESETVAL                                            (0x00000000U)
+
+/* IRQPRIMSK */
+
+#define CSL_MSS_VIM_IRQPRIMSK_MSK_MASK                                         (0x0000FFFFU)
+#define CSL_MSS_VIM_IRQPRIMSK_MSK_SHIFT                                        (0x00000000U)
+#define CSL_MSS_VIM_IRQPRIMSK_MSK_RESETVAL                                     (0x0000FFFFU)
+#define CSL_MSS_VIM_IRQPRIMSK_MSK_MAX                                          (0x0000FFFFU)
+
+
+#define CSL_MSS_VIM_IRQPRIMSK_RES24_MASK                                       (0xFFFF0000U)
+#define CSL_MSS_VIM_IRQPRIMSK_RES24_SHIFT                                      (0x00000010U)
+#define CSL_MSS_VIM_IRQPRIMSK_RES24_RESETVAL                                   (0x00000000U)
+#define CSL_MSS_VIM_IRQPRIMSK_RES24_MAX                                        (0x0000FFFFU)
+
+/* FIQPRIMSK */ 
+
+#define CSL_MSS_VIM_FIQPRIMSK_MSK_MASK                                         (0x0000FFFFU)
+#define CSL_MSS_VIM_FIQPRIMSK_MSK_SHIFT                                        (0x00000000U)
+#define CSL_MSS_VIM_FIQPRIMSK_MSK_RESETVAL                                     (0x0000FFFFU)
+#define CSL_MSS_VIM_FIQPRIMSK_MSK_MAX                                          (0x0000FFFFU)
+
+#define CSL_MSS_VIM_FIQPRIMSK_RES24_MASK                                       (0xFFFF0000U)
+#define CSL_MSS_VIM_FIQPRIMSK_RES24_SHIFT                                      (0x00000010U)
+#define CSL_MSS_VIM_FIQPRIMSK_RES24_RESETVAL                                   (0x00000000U)
+#define CSL_MSS_VIM_FIQPRIMSK_RES24_MAX                                        (0x0000FFFFU)
 
 /* DEDVEC */
 
