@@ -67,6 +67,7 @@ extern "C"
 #define TISCI_MSG_FLAG_FW_CAP_LPM_MCU_ONLY         TISCI_BIT(2)
 #define TISCI_MSG_FLAG_FW_CAP_LPM_STANDBY          TISCI_BIT(3)
 #define TISCI_MSG_FLAG_FW_CAP_LPM_PARTIAL_IO_ON    TISCI_BIT(4)
+#define TISCI_MSG_FLAG_FW_CAP_LPM_DM_MANAGED       TISCI_BIT(5)
 
 /**
  * \brief Notification message to indicate the DMSC is available.

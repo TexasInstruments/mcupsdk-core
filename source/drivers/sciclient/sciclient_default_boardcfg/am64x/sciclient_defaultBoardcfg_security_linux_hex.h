@@ -1,7 +1,7 @@
 
 
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,7 +35,7 @@
 
 /* Input file name = sciclient_defaultBoardcfg_security_linux_hex.bin.signed */
 
-/* Image generation timestamp : 2024-05-28 16:42:48.011221 */
+/* Image generation timestamp : 2024-07-23 13:56:35.056966 */
 
 #ifndef SCICLIENT_DEFAULTBOARDCFG_SECURITY_LINUX_HEX_H_
 #define SCICLIENT_DEFAULTBOARDCFG_SECURITY_LINUX_HEX_H_

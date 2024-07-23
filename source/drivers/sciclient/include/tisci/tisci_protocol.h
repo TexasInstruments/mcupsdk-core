@@ -170,6 +170,13 @@ struct tisci_sec_header {
 #define TISCI_MSG_ABORT_ENTER_SLEEP             (0x0305U)
 #define TISCI_MSG_LPM_WAKE_REASON               (0x0306U)
 #define TISCI_MSG_SET_IO_ISOLATION              (0x0307U)
+#define TISCI_MSG_MIN_CONTEXT_RESTORE           (0x0308U)
+#define TISCI_MSG_LPM_SET_DEVICE_CONSTRAINT     (0x0309U)
+#define TISCI_MSG_LPM_SET_LATENCY_CONSTRAINT    (0x030AU)
+#define TISCI_MSG_LPM_GET_DEVICE_CONSTRAINT     (0x030BU)
+#define TISCI_MSG_LPM_GET_LATENCY_CONSTRAINT    (0x030CU)
+#define TISCI_MSG_LPM_GET_NEXT_SYS_MODE         (0x030DU)
+#define TISCI_MSG_LPM_GET_NEXT_HOST_STATE       (0x030EU)
 
 #define TISCI_MSG_FIRMWARE_LOAD                 (0x8105U)
 #define MSG_FIRMWARE_LOAD_RESULT                (0x8805U)
@@ -308,10 +315,16 @@ struct tisci_sec_header {
 #define TISCI_MSG_KEYRING_IMPORT                (0X9039U)
 
 /** Message to derive a constant DKEK and set SA2UL DKEK register */
-#define TISCI_MSG_SA2UL_SET_DKEK_CONST            (0x902AU)
+#define TISCI_MSG_SA2UL_SET_DKEK_CONST                (0x902AU)
 
 /** Message to derive a constant DKEK and return it via TISCI */
-#define TISCI_MSG_SA2UL_GET_DKEK_CONST            (0x902BU)
+#define TISCI_MSG_SA2UL_GET_DKEK_CONST                (0x902BU)
+
+/** Message to encrypt a blob */
+#define TISCI_MSG_SA2UL_AES_ENCRYPT                                             (0x9040U)
+
+/** Message to decrypt a blob */
+#define TISCI_MSG_SA2UL_AES_DECRYPT                                             (0x9041U)
 
 /* Processor Control APIs */
 
