@@ -45,13 +45,13 @@ gpio1.$name  = "GPIO_LED";
 gpio1.pinDir = "OUTPUT";
 
 gpio2.$name                = "GPIO_PUSH_BUTTON";
-gpio2.GPIO.gpioPin.$assign = "LIN2_RXD";
+gpio2.GPIO.gpioPin.$assign = "GPIO21";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

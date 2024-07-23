@@ -97,8 +97,8 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -330,6 +330,6 @@ adc2.ADC.AIN3.$suggestSolution          = "ADC2_AIN3";
 adc2.ADC.AIN4.$suggestSolution          = "ADC2_AIN4";
 adc2.ADC.AIN5.$suggestSolution          = "ADC2_AIN5";
 epwm1.EPWM.$suggestSolution             = "EPWM0";
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+epwm1.EPWM.A.$suggestSolution           = "GPIO43";
+epwm1.EPWM.B.$suggestSolution           = "GPIO44";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

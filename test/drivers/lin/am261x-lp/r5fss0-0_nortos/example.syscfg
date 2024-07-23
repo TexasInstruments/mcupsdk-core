@@ -46,8 +46,8 @@ lin1.LIN.$assign = "LIN1";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -263,6 +263,6 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-lin1.LIN.RXD.$suggestSolution           = "LIN1_RXD";
-lin1.LIN.TXD.$suggestSolution           = "LIN1_TXD";
+lin1.LIN.RXD.$suggestSolution           = "GPIO19";
+lin1.LIN.TXD.$suggestSolution           = "GPIO20";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -54,8 +54,8 @@ pmic1.$name = "CONFIG_PMIC0";
 i2c1.$name            = "CONFIG_I2C0";
 led1.peripheralDriver = i2c1;
 i2c1.I2C.$assign      = "I2C2";
-i2c1.I2C.SCL.$assign  = "UART0_RTSn";
-i2c1.I2C.SDA.$assign  = "UART0_CTSn";
+i2c1.I2C.SCL.$assign  = "GPIO25";
+i2c1.I2C.SDA.$assign  = "GPIO26";
 i2c1.I2C_child.$name  = "drivers_i2c_v1_i2c_v1_template0";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
@@ -76,8 +76,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -294,7 +294,7 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";

@@ -153,8 +153,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -403,10 +403,10 @@ adc5.ADC.AIN2.$suggestSolution              = "ADC4_AIN2";
 adc5.ADC.AIN3.$suggestSolution              = "ADC4_AIN3";
 adc5.ADC.AIN4.$suggestSolution              = "ADC4_AIN4";
 adc5.ADC.AIN5.$suggestSolution              = "ADC4_AIN5";
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+epwm1.EPWM.A.$suggestSolution               = "GPIO43";
+epwm1.EPWM.B.$suggestSolution               = "GPIO44";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";

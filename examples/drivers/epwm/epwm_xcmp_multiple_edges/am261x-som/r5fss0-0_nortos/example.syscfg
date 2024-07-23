@@ -138,8 +138,8 @@ epwm3.EPWM.$assign                                           = "EPWM2";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -365,10 +365,10 @@ int_xbar3.xbarOutput = ["EPWM2_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
+epwm1.EPWM.A.$suggestSolution           = "GPIO43";
+epwm1.EPWM.B.$suggestSolution           = "GPIO44";
+epwm2.EPWM.A.$suggestSolution           = "GPIO45";
+epwm2.EPWM.B.$suggestSolution           = "GPIO46";
+epwm3.EPWM.A.$suggestSolution           = "GPIO47";
+epwm3.EPWM.B.$suggestSolution           = "GPIO48";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

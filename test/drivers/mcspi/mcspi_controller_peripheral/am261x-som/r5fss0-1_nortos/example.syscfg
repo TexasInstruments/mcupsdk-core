@@ -49,9 +49,9 @@ ipc.r5fss0_0 = "notify";
 mcspi1.$name                 = "CONFIG_MCSPI0";
 mcspi1.mode                  = "MULTI_CONTROLLER";
 mcspi1.SPI.$assign           = "SPI1";
-mcspi1.SPI.CLK.$assign       = "SPI1_CLK";
-mcspi1.SPI.D0.$assign        = "SPI1_D0";
-mcspi1.SPI.D1.$assign        = "SPI1_D1";
+mcspi1.SPI.CLK.$assign       = "GPIO16";
+mcspi1.SPI.D0.$assign        = "GPIO17";
+mcspi1.SPI.D1.$assign        = "GPIO18";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
 
 
@@ -242,4 +242,4 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";

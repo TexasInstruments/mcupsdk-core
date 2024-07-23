@@ -391,8 +391,8 @@ epwm6.EPWM.$assign                                   = "EPWM31";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -619,16 +619,16 @@ int_xbar1.xbarOutput = ["EPWM31_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
-epwm5.EPWM.A.$suggestSolution           = "EPWM4_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM4_B";
-epwm6.EPWM.A.$suggestSolution           = "PR0_PRU1_GPIO10";
-epwm6.EPWM.B.$suggestSolution           = "PR0_PRU1_GPIO8";
+epwm1.EPWM.A.$suggestSolution           = "GPIO43";
+epwm1.EPWM.B.$suggestSolution           = "GPIO44";
+epwm2.EPWM.A.$suggestSolution           = "GPIO45";
+epwm2.EPWM.B.$suggestSolution           = "GPIO46";
+epwm3.EPWM.A.$suggestSolution           = "GPIO47";
+epwm3.EPWM.B.$suggestSolution           = "GPIO48";
+epwm4.EPWM.A.$suggestSolution           = "GPIO49";
+epwm4.EPWM.B.$suggestSolution           = "GPIO50";
+epwm5.EPWM.A.$suggestSolution           = "GPIO51";
+epwm5.EPWM.B.$suggestSolution           = "GPIO52";
+epwm6.EPWM.A.$suggestSolution           = "GPIO105";
+epwm6.EPWM.B.$suggestSolution           = "GPIO106";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -43,15 +43,15 @@ const section12       = section.addInstance();
  */
 uart1.$name            = "TESTER_UART";
 uart1.UART.$assign     = "UART3";
-uart1.UART.RXD.$assign = "SPI0_CS0";
-uart1.UART.TXD.$assign = "SPI0_CLK";
+uart1.UART.RXD.$assign = "GPIO11";
+uart1.UART.TXD.$assign = "GPIO12";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

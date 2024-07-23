@@ -51,8 +51,8 @@ i2c1.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
 
 i2c2.$name           = "CONFIG_I2C1";
 i2c2.I2C.$assign     = "I2C2";
-i2c2.I2C.SCL.$assign = "UART0_RTSn";
-i2c2.I2C.SDA.$assign = "UART0_CTSn";
+i2c2.I2C.SCL.$assign = "GPIO25";
+i2c2.I2C.SDA.$assign = "GPIO26";
 i2c2.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template2";
 
 pruicss1.$name = "CONFIG_PRU_ICSS1";
@@ -113,8 +113,8 @@ icss_emac1.learningEnable   = true;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution               = "I2C0_SCL";
-i2c1.I2C.SDA.$suggestSolution               = "I2C0_SDA";
+i2c1.I2C.SCL.$suggestSolution               = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution               = "GPIO134";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";
-debug_log.uartLog.UART.RXD.$suggestSolution = "MMC_CLK";
-debug_log.uartLog.UART.TXD.$suggestSolution = "MMC_CMD";
+debug_log.uartLog.UART.RXD.$suggestSolution = "GPIO77";
+debug_log.uartLog.UART.TXD.$suggestSolution = "GPIO78";

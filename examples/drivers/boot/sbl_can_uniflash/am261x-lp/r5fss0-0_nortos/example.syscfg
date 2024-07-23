@@ -71,17 +71,17 @@ flash1.fourByteEnableSeq                  = "0";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
 flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D7.$assign   = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D6.$assign   = "MCAN1_RX";
-flash1.peripheralDriver.OSPI.D5.$assign   = "MCAN0_TX";
-flash1.peripheralDriver.OSPI.D4.$assign   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
-flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -101,20 +101,20 @@ hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
 i2c1.$name           = "CONFIG_I2C0";
 i2c1.I2C.$assign     = "I2C1";
-i2c1.I2C.SCL.$assign = "I2C1_SCL";
-i2c1.I2C.SDA.$assign = "I2C1_SDA";
+i2c1.I2C.SCL.$assign = "GPIO23";
+i2c1.I2C.SDA.$assign = "GPIO24";
 i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
 
 mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN3";
-mcan1.MCAN.RX.$assign = "UART0_CTSn";
-mcan1.MCAN.TX.$assign = "UART0_RTSn";
+mcan1.MCAN.RX.$assign = "GPIO26";
+mcan1.MCAN.TX.$assign = "GPIO25";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";

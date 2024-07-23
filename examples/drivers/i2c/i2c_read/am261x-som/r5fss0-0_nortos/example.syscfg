@@ -43,14 +43,14 @@ const section12       = section.addInstance();
  */
 i2c1.$name           = "CONFIG_I2C0";
 i2c1.I2C.$assign     = "I2C0";
-i2c1.I2C.SCL.$assign = "I2C0_SCL";
-i2c1.I2C.SDA.$assign = "I2C0_SDA";
+i2c1.I2C.SCL.$assign = "GPIO135";
+i2c1.I2C.SDA.$assign = "GPIO134";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

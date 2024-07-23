@@ -285,5 +285,5 @@ int_xbar1.xbarOutput = ["SD0_FILT0_DRINT","SD0_FILT1_DRINT","SD0_FILT2_DRINT","S
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution = "EPWM0_B";
+epwm1.EPWM.A.$suggestSolution = "GPIO43";
+epwm1.EPWM.B.$suggestSolution = "GPIO44";

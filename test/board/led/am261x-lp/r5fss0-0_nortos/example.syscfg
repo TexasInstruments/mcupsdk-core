@@ -58,22 +58,22 @@ led3.$name = "CONFIG_LED2";
 
 gpio1.$name                = "CONFIG_GPIO0";
 led2.peripheralDriver      = gpio1;
-gpio1.GPIO.gpioPin.$assign = "UART0_CTSn";
+gpio1.GPIO.gpioPin.$assign = "GPIO26";
 
 gpio2.$name                = "CONFIG_GPIO1";
 led3.peripheralDriver      = gpio2;
-gpio2.GPIO.gpioPin.$assign = "UART0_RTSn";
+gpio2.GPIO.gpioPin.$assign = "GPIO25";
 
 i2c1.$name            = "CONFIG_I2C0";
 led1.peripheralDriver = i2c1;
 i2c1.I2C.$assign      = "I2C1";
-i2c1.I2C.SCL.$assign  = "I2C1_SCL";
-i2c1.I2C.SDA.$assign  = "I2C1_SDA";
+i2c1.I2C.SCL.$assign  = "GPIO23";
+i2c1.I2C.SDA.$assign  = "GPIO24";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

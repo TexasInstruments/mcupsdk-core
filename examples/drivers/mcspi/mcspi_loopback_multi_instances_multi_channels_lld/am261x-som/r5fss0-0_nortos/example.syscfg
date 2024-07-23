@@ -93,8 +93,8 @@ mcspi3.mcspiChannel[1].$name = "CONFIG_MCSPI_CH4";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -319,15 +319,15 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution             = "SPI0_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI0_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI0_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "UART0_CTSn";
-mcspi1.mcspiChannel[1].CSn.$suggestSolution = "SPI0_CS0";
-mcspi2.SPI.CLK.$suggestSolution             = "LIN1_TXD";
-mcspi2.SPI.D0.$suggestSolution              = "LIN2_RXD";
-mcspi2.SPI.D1.$suggestSolution              = "LIN2_TXD";
-mcspi2.mcspiChannel[0].CSn.$suggestSolution = "LIN1_RXD";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO12";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO13";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO14";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO26";
+mcspi1.mcspiChannel[1].CSn.$suggestSolution = "GPIO11";
+mcspi2.SPI.CLK.$suggestSolution             = "GPIO20";
+mcspi2.SPI.D0.$suggestSolution              = "GPIO21";
+mcspi2.SPI.D1.$suggestSolution              = "GPIO22";
+mcspi2.mcspiChannel[0].CSn.$suggestSolution = "GPIO19";
 mcspi3.SPI.$suggestSolution                 = "SPI4";
 mcspi3.SPI.CLK.$suggestSolution             = "EQEP0_A";
 mcspi3.SPI.D0.$suggestSolution              = "EQEP0_STROBE";

@@ -84,7 +84,7 @@ epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT
 epwm2.epwmCounterCompare_cmpB                                  = 18000;
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
 epwm2.EPWM.$assign                                             = "EPWM1";
-epwm2.EPWM.B.$assign                                           = "EPWM1_B";
+epwm2.EPWM.B.$assign                                           = "GPIO46";
 
 epwm3.$name                                                    = "CONFIG_EPWM2";
 epwm3.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
@@ -114,7 +114,7 @@ epwm4.epwmTimebase_phaseEnable                                 = true;
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_LOW";
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
 epwm4.EPWM.$assign                                             = "EPWM3";
-epwm4.EPWM.B.$assign                                           = "EPWM3_B";
+epwm4.EPWM.B.$assign                                           = "GPIO50";
 
 epwm5.$name                                                    = "CONFIG_EPWM4";
 epwm5.epwmTimebase_period                                      = 24000;
@@ -150,7 +150,7 @@ epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_HIGH";
 epwm6.EPWM.$assign                                             = "EPWM6";
-epwm6.EPWM.B.$assign                                           = "EPWM6_B";
+epwm6.EPWM.B.$assign                                           = "GPIO56";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -168,8 +168,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -389,17 +389,17 @@ mdl_xbar1.instance   = "MDL_XBAR_1";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$assign               = "EPWM0_A";
-epwm1.EPWM.B.$assign               = "EPWM0_B";
-epwm2.EPWM.A.$assign               = "EPWM1_A";
-epwm3.EPWM.A.$assign               = "EPWM2_A";
-epwm3.EPWM.B.$assign               = "EPWM2_B";
-epwm4.EPWM.A.$assign               = "EPWM3_A";
-epwm5.EPWM.A.$assign               = "EPWM4_A";
-epwm5.EPWM.B.$assign               = "EPWM4_B";
-epwm6.EPWM.A.$assign               = "EPWM6_A";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+epwm1.EPWM.A.$assign               = "GPIO43";
+epwm1.EPWM.B.$assign               = "GPIO44";
+epwm2.EPWM.A.$assign               = "GPIO45";
+epwm3.EPWM.A.$assign               = "GPIO47";
+epwm3.EPWM.B.$assign               = "GPIO48";
+epwm4.EPWM.A.$assign               = "GPIO49";
+epwm5.EPWM.A.$assign               = "GPIO51";
+epwm5.EPWM.B.$assign               = "GPIO52";
+epwm6.EPWM.A.$assign               = "GPIO55";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";

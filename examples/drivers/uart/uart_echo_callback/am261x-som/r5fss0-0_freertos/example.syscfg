@@ -223,8 +223,8 @@ uart1.writeMode        = "CALLBACK";
 uart1.readCallbackFxn  = "uart_echo_read_callback";
 uart1.writeCallbackFxn = "uart_echo_write_callback";
 uart1.UART.$assign     = "UART0";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.UART.RXD.$assign = "GPIO27";
+uart1.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

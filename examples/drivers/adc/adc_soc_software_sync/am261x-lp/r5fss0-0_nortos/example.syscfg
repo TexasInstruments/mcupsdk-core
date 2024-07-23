@@ -68,17 +68,17 @@ adc2.ADC.$assign       = "ADC2";
 
 gpio1.$name                = "GPIO_23_INPUT";
 gpio1.GPIO.$assign         = "GPIO";
-gpio1.GPIO.gpioPin.$assign = "I2C1_SCL";
+gpio1.GPIO.gpioPin.$assign = "GPIO23";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "GPIO_24_OUTPUT";
 gpio2.GPIO.$assign         = "GPIO";
-gpio2.GPIO.gpioPin.$assign = "I2C1_SDA";
+gpio2.GPIO.gpioPin.$assign = "GPIO24";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

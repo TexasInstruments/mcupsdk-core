@@ -47,8 +47,8 @@ ospi1.inputClkFreq = 80000000;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -270,16 +270,16 @@ section12.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 ospi1.OSPI.$suggestSolution      = "OSPI0";
-ospi1.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+ospi1.OSPI.CLK.$suggestSolution  = "GPIO2";
 ospi1.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
-ospi1.OSPI.DQS.$suggestSolution  = "UART1_TXD";
+ospi1.OSPI.DQS.$suggestSolution  = "GPIO76";
 ospi1.OSPI.D7.$suggestSolution   = "EPWM12_B";
-ospi1.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+ospi1.OSPI.D6.$suggestSolution   = "GPIO9";
 ospi1.OSPI.D5.$suggestSolution   = "EPWM12_A";
-ospi1.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-ospi1.OSPI.D3.$suggestSolution   = "OSPI0_D3";
-ospi1.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-ospi1.OSPI.D1.$suggestSolution   = "OSPI0_D1";
-ospi1.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+ospi1.OSPI.D4.$suggestSolution   = "GPIO7";
+ospi1.OSPI.D3.$suggestSolution   = "GPIO6";
+ospi1.OSPI.D2.$suggestSolution   = "GPIO5";
+ospi1.OSPI.D1.$suggestSolution   = "GPIO4";
+ospi1.OSPI.D0.$suggestSolution   = "GPIO3";
 
 debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -135,7 +135,7 @@ epwm5.$name                                                    = "EPWM_before_DE
 epwm5.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A1                  = "EPWM_TZ_EVENT_DCXH_HIGH";
 epwm5.epwmEventTrigger_enableInterrupt                         = true;
 epwm5.EPWM.$assign                                             = "EPWM9";
-epwm5.EPWM.B.$assign                                           = "EPWM9_B";
+epwm5.EPWM.B.$assign                                           = "GPIO62";
 
 epwm6.$name                                                    = "CONFIG_EPWM5";
 epwm6.epwmTimebase_period                                      = 24000;
@@ -187,8 +187,8 @@ epwm7.EPWM.B.$assign                                           = "EPWM12_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -428,7 +428,7 @@ int_xbar3.instance   = "INT_XBAR_2";
 output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
 output_xbar1.xbarOutput                 = ["EPWM4_SYNCOUT"];
 output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR13";
-output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "PR0_PRU1_GPIO19";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO119";
 output_xbar1.xbarConfig.$name           = "CONFIG_EPWM_SYNCOUT_XBAR0";
 
 output_xbar2.$name              = "CONFIG_OUTPUT_XBAR1";
@@ -440,14 +440,14 @@ output_xbar2.OUTPUTXBAR.$assign = "OUTPUTXBAR14";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$assign                    = "EPWM0_A";
-epwm1.EPWM.B.$assign                    = "EPWM0_B";
-epwm2.EPWM.A.$assign                    = "EPWM1_A";
-epwm3.EPWM.A.$assign                    = "EPWM2_A";
-epwm3.EPWM.B.$assign                    = "EPWM2_B";
-epwm4.EPWM.A.$assign                    = "EPWM3_A";
-epwm4.EPWM.B.$assign                    = "EPWM3_B";
-epwm5.EPWM.A.$assign                    = "EPWM9_A";
+epwm1.EPWM.A.$assign                    = "GPIO43";
+epwm1.EPWM.B.$assign                    = "GPIO44";
+epwm2.EPWM.A.$assign                    = "GPIO45";
+epwm3.EPWM.A.$assign                    = "GPIO47";
+epwm3.EPWM.B.$assign                    = "GPIO48";
+epwm4.EPWM.A.$assign                    = "GPIO49";
+epwm4.EPWM.B.$assign                    = "GPIO50";
+epwm5.EPWM.A.$assign                    = "GPIO61";
 epwm7.EPWM.A.$assign                    = "EPWM12_A";
 debug_log.uartLog.UART.$suggestSolution          = "UART0";
-output_xbar2.OUTPUTXBAR.XBAROUT.$suggestSolution = "PR0_PRU1_GPIO18";
+output_xbar2.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO120";

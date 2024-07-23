@@ -317,8 +317,8 @@ output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution                    = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution                    = "EPWM0_B";
+epwm1.EPWM.A.$suggestSolution                    = "GPIO43";
+epwm1.EPWM.B.$suggestSolution                    = "GPIO44";
 sdfm1.SDFM.CLK0.$suggestSolution                 = "SDFM0_CLK0";
 sdfm1.SDFM.CLK1.$suggestSolution                 = "SDFM0_CLK1";
 sdfm1.SDFM.CLK2.$suggestSolution                 = "SDFM0_CLK2";
@@ -328,6 +328,6 @@ sdfm1.SDFM.D1.$suggestSolution                   = "SDFM0_D1";
 sdfm1.SDFM.D2.$suggestSolution                   = "SDFM0_D2";
 sdfm1.SDFM.D3.$suggestSolution                   = "SDFM0_D3";
 debug_log.uartLog.UART.$suggestSolution          = "UART0";
-debug_log.uartLog.UART.RXD.$suggestSolution      = "MMC_CLK";
-debug_log.uartLog.UART.TXD.$suggestSolution      = "MMC_CMD";
-output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "I2C1_SDA";
+debug_log.uartLog.UART.RXD.$suggestSolution      = "GPIO77";
+debug_log.uartLog.UART.TXD.$suggestSolution      = "GPIO78";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO24";

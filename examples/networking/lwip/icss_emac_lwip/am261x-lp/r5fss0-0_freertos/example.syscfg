@@ -50,7 +50,7 @@ ethphy2.mdioPort = 3;
 gpio1.$name          = "CONFIG_GPIO0";
 gpio1.pinDir         = "OUTPUT";
 gpio1.rx             = true;
-gpio1.GPIO_n.$assign = "PR0_PRU1_GPIO10";
+gpio1.GPIO_n.$assign = "GPIO105";
 
 gpio2.$name          = "CONFIG_GPIO1";
 gpio2.pinDir         = "OUTPUT";
@@ -59,7 +59,7 @@ gpio2.GPIO_n.$assign = "OSPI0_CSn1";
 
 gpio3.$name          = "CONFIG_GPIO2";
 gpio3.rx             = true;
-gpio3.GPIO_n.$assign = "EPWM7_B";
+gpio3.GPIO_n.$assign = "GPIO58";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
@@ -124,8 +124,8 @@ icss_emac1.learningEnable   = true;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution               = "I2C1_SCL";
-i2c1.I2C.SDA.$suggestSolution               = "I2C1_SDA";
+i2c1.I2C.SCL.$suggestSolution               = "GPIO23";
+i2c1.I2C.SDA.$suggestSolution               = "GPIO24";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";
-debug_log.uartLog.UART.RXD.$suggestSolution = "MMC_CLK";
-debug_log.uartLog.UART.TXD.$suggestSolution = "MMC_CMD";
+debug_log.uartLog.UART.RXD.$suggestSolution = "GPIO77";
+debug_log.uartLog.UART.TXD.$suggestSolution = "GPIO78";

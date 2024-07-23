@@ -60,22 +60,22 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 fsi_rx1.$name             = "CONFIG_FSI_RX0";
 fsi_rx1.intrEnable        = false;
 fsi_rx1.FSIRX.$assign     = "FSIRX0";
-fsi_rx1.FSIRX.CLK.$assign = "SPI1_CLK";
-fsi_rx1.FSIRX.D0.$assign  = "SPI1_D0";
-fsi_rx1.FSIRX.D1.$assign  = "SPI1_D1";
+fsi_rx1.FSIRX.CLK.$assign = "GPIO16";
+fsi_rx1.FSIRX.D0.$assign  = "GPIO17";
+fsi_rx1.FSIRX.D1.$assign  = "GPIO18";
 
 fsi_tx1.$name             = "CONFIG_FSI_TX0";
 fsi_tx1.intrEnable        = false;
 fsi_tx1.FSITX.$assign     = "FSITX0";
-fsi_tx1.FSITX.CLK.$assign = "RGMII1_RXC";
-fsi_tx1.FSITX.D0.$assign  = "SPI0_D0";
-fsi_tx1.FSITX.D1.$assign  = "SPI0_D1";
+fsi_tx1.FSITX.CLK.$assign = "GPIO29";
+fsi_tx1.FSITX.D0.$assign  = "GPIO13";
+fsi_tx1.FSITX.D1.$assign  = "GPIO14";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

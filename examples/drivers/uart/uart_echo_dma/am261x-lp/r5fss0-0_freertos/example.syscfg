@@ -42,8 +42,8 @@ const section12       = section.addInstance();
  */
 uart1.$name                     = "CONFIG_UART_CONSOLE";
 uart1.intrEnable                = "DMA";
-uart1.UART.RXD.$assign          = "UART0_RXD";
-uart1.UART.TXD.$assign          = "UART0_TXD";
+uart1.UART.RXD.$assign          = "GPIO27";
+uart1.UART.TXD.$assign          = "GPIO28";
 uart1.uartRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
 uart1.uartTxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR1";
 uart1.uartTxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_1";

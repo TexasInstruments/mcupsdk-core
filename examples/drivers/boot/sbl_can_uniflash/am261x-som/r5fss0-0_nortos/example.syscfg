@@ -85,8 +85,8 @@ flash1.peripheralDriver.OSPI.$assign = "OSPI0";
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
 i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.SCL.$assign = "UART0_RTSn";
-i2c1.I2C.SDA.$assign = "UART0_CTSn";
+i2c1.I2C.SCL.$assign = "GPIO25";
+i2c1.I2C.SDA.$assign = "GPIO26";
 i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
 
 i2c2.$name               = "CONFIG_I2C1";
@@ -95,8 +95,8 @@ i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
 
 mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN4";
-mcan1.MCAN.RX.$assign = "EPWM9_A";
-mcan1.MCAN.TX.$assign = "EPWM9_B";
+mcan1.MCAN.RX.$assign = "GPIO61";
+mcan1.MCAN.TX.$assign = "GPIO62";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -117,8 +117,8 @@ edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -282,23 +282,23 @@ section8.output_section[0].$name = ".rodata.hsmrt";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
 flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "EPWM11_A";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "MCAN0_TX";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO3";
 i2c1.I2C.$suggestSolution                          = "I2C2";
 i2c2.I2C.$suggestSolution                          = "I2C0";
-i2c2.I2C.SCL.$suggestSolution                      = "I2C0_SCL";
-i2c2.I2C.SDA.$suggestSolution                      = "I2C0_SDA";
-mcspi1.SPI.CLK.$suggestSolution                    = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution                     = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution                     = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution        = "SPI1_CS0";
+i2c2.I2C.SCL.$suggestSolution                      = "GPIO135";
+i2c2.I2C.SDA.$suggestSolution                      = "GPIO134";
+mcspi1.SPI.CLK.$suggestSolution                    = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution                     = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution                     = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution        = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution            = "UART0";

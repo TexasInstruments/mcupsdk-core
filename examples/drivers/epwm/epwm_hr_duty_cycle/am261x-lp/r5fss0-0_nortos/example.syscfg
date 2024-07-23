@@ -57,14 +57,14 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTP
 epwm1.epwmEventTrigger_enableInterrupt                           = true;
 epwm1.epwmEventTrigger_interruptEventCount                       = "1";
 epwm1.EPWM.$assign                                               = "EPWM9";
-epwm1.EPWM.A.$assign                                             = "EPWM9_A";
-epwm1.EPWM.B.$assign                                             = "EPWM9_B";
+epwm1.EPWM.A.$assign                                             = "GPIO61";
+epwm1.EPWM.B.$assign                                             = "GPIO62";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

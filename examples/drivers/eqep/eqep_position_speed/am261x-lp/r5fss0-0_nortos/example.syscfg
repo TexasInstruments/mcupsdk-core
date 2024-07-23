@@ -80,17 +80,17 @@ eqep1.selectSourceA        = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.selectSourceB        = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.selectSourceIndex    = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.EQEP.$assign         = "EQEP2";
-eqep1.EQEP.A.$assign       = "I2C0_SDA";
+eqep1.EQEP.A.$assign       = "GPIO134";
 
 gpio1.$name                = "CONFIG_GPIO0";
 gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "EPWM2_B";
+gpio1.GPIO.gpioPin.$assign = "GPIO48";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -309,9 +309,9 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution      = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution      = "EPWM0_B";
-eqep1.EQEP.B.$suggestSolution      = "I2C0_SCL";
+epwm1.EPWM.A.$suggestSolution      = "GPIO43";
+epwm1.EPWM.B.$suggestSolution      = "GPIO44";
+eqep1.EQEP.B.$suggestSolution      = "GPIO135";
 eqep1.EQEP.STROBE.$suggestSolution = "MCAN2_TX";
 eqep1.EQEP.INDEX.$suggestSolution  = "MCAN2_RX";
 gpio1.GPIO.$suggestSolution        = "GPIO";

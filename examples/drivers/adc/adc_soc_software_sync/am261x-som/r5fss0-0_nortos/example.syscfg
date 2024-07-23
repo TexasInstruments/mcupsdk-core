@@ -74,12 +74,12 @@ adc2.ADC.$assign       = "ADC2";
 
 gpio1.$name                = "GPIO_23_INPUT";
 gpio1.GPIO.$assign         = "GPIO";
-gpio1.GPIO.gpioPin.$assign = "I2C1_SCL";
+gpio1.GPIO.gpioPin.$assign = "GPIO23";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "GPIO_24_OUTPUT";
 gpio2.GPIO.$assign         = "GPIO";
-gpio2.GPIO.gpioPin.$assign = "I2C1_SDA";
+gpio2.GPIO.gpioPin.$assign = "GPIO24";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -97,8 +97,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -333,8 +333,8 @@ adc2.ADC.AIN2.$suggestSolution              = "ADC2_AIN2";
 adc2.ADC.AIN3.$suggestSolution              = "ADC2_AIN3";
 adc2.ADC.AIN4.$suggestSolution              = "ADC2_AIN4";
 adc2.ADC.AIN5.$suggestSolution              = "ADC2_AIN5";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";

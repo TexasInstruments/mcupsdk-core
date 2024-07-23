@@ -133,8 +133,8 @@ epwm1.EPWM.$assign                                      = "EPWM0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -383,6 +383,6 @@ adc5.ADC.AIN2.$suggestSolution          = "ADC4_AIN2";
 adc5.ADC.AIN3.$suggestSolution          = "ADC4_AIN3";
 adc5.ADC.AIN4.$suggestSolution          = "ADC4_AIN4";
 adc5.ADC.AIN5.$suggestSolution          = "ADC4_AIN5";
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+epwm1.EPWM.A.$suggestSolution           = "GPIO43";
+epwm1.EPWM.B.$suggestSolution           = "GPIO44";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

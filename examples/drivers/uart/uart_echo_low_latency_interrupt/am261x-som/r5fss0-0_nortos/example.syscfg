@@ -44,8 +44,8 @@ uart1.$name            = "CONFIG_UART_CONSOLE";
 uart1.hwFlowControlThr = "1";
 uart1.rxTrigLvl        = "1";
 uart1.intrEnable       = "USER_INTR";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.UART.RXD.$assign = "GPIO27";
+uart1.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

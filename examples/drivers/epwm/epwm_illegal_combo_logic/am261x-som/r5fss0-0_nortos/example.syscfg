@@ -90,7 +90,7 @@ epwm2.epwmTimebase_counterMode                                 = "EPWM_COUNTER_M
 epwm2.epwmTimebase_period                                      = 24000;
 epwm2.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm2.EPWM.$assign                                             = "EPWM1";
-epwm2.EPWM.B.$assign                                           = "EPWM1_B";
+epwm2.EPWM.B.$assign                                           = "GPIO46";
 
 epwm3.$name              = "CONFIG_EPWM2";
 epwm3.epwmICL_useICLA    = true;
@@ -131,7 +131,7 @@ epwm4.epwmICLB_LUTDEC_3                                          = "1";
 epwm4.epwmICLB_LUTDEC_7                                          = "1";
 epwm4.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm4.EPWM.$assign                                               = "EPWM3";
-epwm4.EPWM.B.$assign                                           = "EPWM3_B";
+epwm4.EPWM.B.$assign                                           = "GPIO50";
 
 epwm5.$name              = "CONFIG_EPWM4";
 epwm5.epwmICL_useICLA    = true;
@@ -188,7 +188,7 @@ epwm7.epwmICLB_LUTDEC_5  = "1";
 epwm7.epwmICLB_LUTDEC_6  = "1";
 epwm7.epwmICLB_LUTDEC_7  = "1";
 epwm7.EPWM.$assign       = "EPWM6";
-epwm7.EPWM.B.$assign     = "EPWM6_B";
+epwm7.EPWM.B.$assign     = "GPIO56";
 
 const mcspi                  = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1                 = mcspi.addInstance({}, false);
@@ -207,8 +207,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -451,20 +451,20 @@ icl_xbar6.instance   = "ICL_XBAR_5";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$assign               = "EPWM0_A";
-epwm1.EPWM.B.$assign               = "EPWM0_B";
-epwm2.EPWM.A.$assign               = "EPWM1_A";
-epwm3.EPWM.A.$assign               = "EPWM2_A";
-epwm3.EPWM.B.$assign               = "EPWM2_B";
-epwm4.EPWM.A.$assign               = "EPWM3_A";
-epwm5.EPWM.A.$assign               = "EPWM4_A";
-epwm5.EPWM.B.$assign               = "EPWM4_B";
-epwm6.EPWM.A.$assign               = "EPWM5_A";
-epwm6.EPWM.B.$assign               = "EPWM5_B";
-epwm7.EPWM.A.$assign               = "EPWM6_A";
+epwm1.EPWM.A.$assign               = "GPIO43";
+epwm1.EPWM.B.$assign               = "GPIO44";
+epwm2.EPWM.A.$assign               = "GPIO45";
+epwm3.EPWM.A.$assign               = "GPIO47";
+epwm3.EPWM.B.$assign               = "GPIO48";
+epwm4.EPWM.A.$assign               = "GPIO49";
+epwm5.EPWM.A.$assign               = "GPIO51";
+epwm5.EPWM.B.$assign               = "GPIO52";
+epwm6.EPWM.A.$assign               = "GPIO53";
+epwm6.EPWM.B.$assign               = "GPIO54";
+epwm7.EPWM.A.$assign               = "GPIO55";
 mcspi1.SPI.$suggestSolution                 = "SPI1";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";

@@ -89,7 +89,7 @@ epwm2.EPWM.$assign                                               = "EPWM1";
 epwm2.EPWM.B.$used                                               = false;
 
 gpio1.$name                = "EPWM_TRIP_INPUT";
-gpio1.GPIO.gpioPin.$assign = "EPWM2_B";
+gpio1.GPIO.gpioPin.$assign = "GPIO48";
 
 gpio2.$name                = "GPIO_OUTPUT";
 gpio2.pinDir               = "OUTPUT";
@@ -335,10 +335,10 @@ int_xbar2.xbarOutput = ["EPWM1_TZINT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM9_A";
-epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
+epwm1.EPWM.A.$suggestSolution               = "GPIO61";
+epwm2.EPWM.A.$suggestSolution               = "GPIO45";
 gpio1.GPIO.$suggestSolution                 = "GPIO";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";

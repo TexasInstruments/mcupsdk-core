@@ -42,19 +42,19 @@ const section12  = section.addInstance();
 ospi1.$name             = "CONFIG_OSPI0";
 ospi1.inputClkFreq      = 80000000;
 ospi1.OSPI.CSn0.$assign = "OSPI0_CSn0";
-ospi1.OSPI.D7.$assign   = "MCAN1_TX";
-ospi1.OSPI.D6.$assign   = "MCAN1_RX";
-ospi1.OSPI.D5.$assign   = "MCAN0_TX";
-ospi1.OSPI.D4.$assign   = "MCAN0_RX";
-ospi1.OSPI.D3.$assign   = "OSPI0_D3";
-ospi1.OSPI.D2.$assign   = "OSPI0_D2";
-ospi1.OSPI.D1.$assign   = "OSPI0_D1";
+ospi1.OSPI.D7.$assign   = "GPIO10";
+ospi1.OSPI.D6.$assign   = "GPIO9";
+ospi1.OSPI.D5.$assign   = "GPIO8";
+ospi1.OSPI.D4.$assign   = "GPIO7";
+ospi1.OSPI.D3.$assign   = "GPIO6";
+ospi1.OSPI.D2.$assign   = "GPIO5";
+ospi1.OSPI.D1.$assign   = "GPIO4";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -254,6 +254,6 @@ section12.output_section[0].$name = ".bss.sipc_secure_host_queue_mem";
  * re-solve from scratch.
  */
 ospi1.OSPI.$suggestSolution     = "OSPI0";
-ospi1.OSPI.CLK.$suggestSolution = "OSPI0_CLK";
-ospi1.OSPI.DQS.$suggestSolution = "UART1_TXD";
-ospi1.OSPI.D0.$suggestSolution  = "OSPI0_D0";
+ospi1.OSPI.CLK.$suggestSolution = "GPIO2";
+ospi1.OSPI.DQS.$suggestSolution = "GPIO76";
+ospi1.OSPI.D0.$suggestSolution  = "GPIO3";

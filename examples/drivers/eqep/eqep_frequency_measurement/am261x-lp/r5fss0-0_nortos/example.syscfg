@@ -59,8 +59,8 @@ epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER
 epwm1.epwmDeadband_enableRED                                     = true;
 epwm1.epwmDeadband_enableFED                                     = true;
 epwm1.EPWM.$assign                                               = "EPWM0";
-epwm1.EPWM.A.$assign                                             = "EPWM0_A";
-epwm1.EPWM.B.$assign                                             = "EPWM0_B";
+epwm1.EPWM.A.$assign                                             = "GPIO43";
+epwm1.EPWM.B.$assign                                             = "GPIO44";
 
 eqep1.$name                = "CONFIG_EQEP0";
 eqep1.eqepOperationMode    = "EQEP_CONFIG_UP_COUNT";
@@ -83,8 +83,8 @@ eqep1.EQEP.INDEX.$assign   = "EQEP0_INDEX";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

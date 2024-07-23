@@ -43,8 +43,8 @@ const section12       = section.addInstance();
 uart1.$name            = "CONFIG_UART_CONSOLE";
 uart1.sdkInfra         = "LLD";
 uart1.intrEnable       = "DISABLE";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.UART.RXD.$assign = "GPIO27";
+uart1.UART.TXD.$assign = "GPIO28";
 uart1.child.$name      = "drivers_uart_v2_uart_v2_template_lld0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";

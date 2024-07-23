@@ -49,11 +49,11 @@ ipc.r5fss0_1 = "notify";
 mcspi1.$name                       = "CONFIG_MCSPI0";
 mcspi1.mode                        = "PERIPHERAL";
 mcspi1.SPI.$assign                 = "SPI0";
-mcspi1.SPI.CLK.$assign             = "SPI0_CLK";
-mcspi1.SPI.D0.$assign              = "SPI0_D0";
-mcspi1.SPI.D1.$assign              = "SPI0_D1";
+mcspi1.SPI.CLK.$assign             = "GPIO12";
+mcspi1.SPI.D0.$assign              = "GPIO13";
+mcspi1.SPI.D1.$assign              = "GPIO14";
 mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
-mcspi1.mcspiChannel[0].CSn.$assign = "SPI0_CS0";
+mcspi1.mcspiChannel[0].CSn.$assign = "GPIO11";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
@@ -61,8 +61,8 @@ debug_log.enableSharedMemLogReader = true;
 debug_log.enableSharedMemLog       = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

@@ -286,5 +286,5 @@ int_xbar1.instance   = "INT_XBAR_22";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution = "EPWM9_A";
-epwm1.EPWM.B.$suggestSolution = "EPWM8_B";
+epwm1.EPWM.A.$suggestSolution = "GPIO61";
+epwm1.EPWM.B.$suggestSolution = "GPIO60";

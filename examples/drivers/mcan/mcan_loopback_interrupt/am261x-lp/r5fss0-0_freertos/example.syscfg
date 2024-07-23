@@ -42,14 +42,14 @@ const section12       = section.addInstance();
  */
 mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN0";
-mcan1.MCAN.RX.$assign = "MCAN0_RX";
-mcan1.MCAN.TX.$assign = "MCAN0_TX";
+mcan1.MCAN.RX.$assign = "GPIO7";
+mcan1.MCAN.TX.$assign = "GPIO8";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

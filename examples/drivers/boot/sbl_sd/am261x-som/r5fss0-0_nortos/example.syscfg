@@ -71,8 +71,8 @@ freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -251,17 +251,17 @@ section8.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution                              = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution                               = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution                               = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution                  = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution                              = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution                               = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution                               = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution                  = "GPIO15";
 freertos_fat1.peripheralDriver.MMC.$suggestSolution          = "MMC";
-freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "MMC_CLK";
-freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "MMC_SDWP";
-freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution  = "MMC_CMD";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution = "MMC_DAT0";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution = "MMC_DAT1";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution = "MMC_DAT2";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution = "MMC_DAT3";
-freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution = "MMC_SDCD";
+freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "GPIO77";
+freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "GPIO83";
+freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution  = "GPIO78";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution = "GPIO79";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution = "GPIO80";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution = "GPIO81";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution = "GPIO82";
+freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution = "GPIO84";
 debug_log.uartLog.UART.$suggestSolution                      = "UART0";

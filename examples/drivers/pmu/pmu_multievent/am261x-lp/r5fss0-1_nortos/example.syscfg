@@ -41,8 +41,8 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 uart1.$name            = "CONFIG_UART_CONSOLE";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.UART.RXD.$assign = "GPIO27";
+uart1.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

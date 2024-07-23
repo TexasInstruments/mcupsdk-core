@@ -83,12 +83,12 @@ epwm2.EPWM.$assign                                               = "EPWM1";
 epwm2.EPWM.B.$used                                               = false;
 
 gpio1.$name                = "EPWM_TRIP_INPUT";
-gpio1.GPIO.gpioPin.$assign = "SPI0_CS0";
+gpio1.GPIO.gpioPin.$assign = "GPIO11";
 
 gpio2.$name                = "GPIO_OUTPUT";
 gpio2.pinDir               = "OUTPUT";
 gpio2.trigType             = "RISE_EDGE";
-gpio2.GPIO.gpioPin.$assign = "SPI0_CLK";
+gpio2.GPIO.gpioPin.$assign = "GPIO12";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -314,7 +314,7 @@ int_xbar2.xbarOutput = ["EPWM1_TZINT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution = "EPWM9_A";
-epwm2.EPWM.A.$suggestSolution = "EPWM1_A";
+epwm1.EPWM.A.$suggestSolution = "GPIO61";
+epwm2.EPWM.A.$suggestSolution = "GPIO45";
 gpio1.GPIO.$suggestSolution   = "GPIO";
 gpio2.GPIO.$suggestSolution   = "GPIO";

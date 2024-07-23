@@ -91,8 +91,8 @@ sdfm1.$name = "CONFIG_SDFM0";
 debug_log.enableCssLog             = false;
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -311,15 +311,15 @@ int_xbar1.xbarOutput = ["SD0_FILT0_DRINT","SD0_FILT1_DRINT","SD0_FILT2_DRINT","S
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
+epwm1.EPWM.A.$suggestSolution               = "GPIO43";
+epwm1.EPWM.B.$suggestSolution               = "GPIO44";
 epwm2.EPWM.$suggestSolution                 = "EPWM1";
-epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution               = "EPWM1_B";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+epwm2.EPWM.A.$suggestSolution               = "GPIO45";
+epwm2.EPWM.B.$suggestSolution               = "GPIO46";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 sdfm1.SDFM.$suggestSolution                 = "SDFM0";
 sdfm1.SDFM.CLK0.$suggestSolution            = "SDFM0_CLK0";
 sdfm1.SDFM.CLK1.$suggestSolution            = "SDFM0_CLK1";

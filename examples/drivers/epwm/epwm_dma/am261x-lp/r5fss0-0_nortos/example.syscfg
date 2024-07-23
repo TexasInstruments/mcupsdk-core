@@ -80,8 +80,8 @@ epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -301,6 +301,6 @@ int_xbar1.xbarOutput = ["EPWM1_INT"];
  * re-solve from scratch.
  */
 epwm1.EPWM.$suggestSolution             = "EPWM1";
-epwm1.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM1_B";
+epwm1.EPWM.A.$suggestSolution           = "GPIO45";
+epwm1.EPWM.B.$suggestSolution           = "GPIO46";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

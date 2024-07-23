@@ -163,39 +163,39 @@ epwm3.epwmDeadband_delayFED                                    = 100;
 epwm3.EPWM.$assign                                             = "EPWM2";
 
 gpio1.$name                = "GPIO_IGBT_FAULT_IN";
-gpio1.GPIO.gpioPin.$assign = "EPWM4_A";
+gpio1.GPIO.gpioPin.$assign = "GPIO51";
 
 gpio2.$name                = "GPIO_OVP_IN";
 gpio2.GPIO.$assign         = "GPIO";
-gpio2.GPIO.gpioPin.$assign = "EPWM5_A";
+gpio2.GPIO.gpioPin.$assign = "GPIO53";
 
 gpio3.pinDir               = "OUTPUT";
 gpio3.$name                = "GPIO_IGBT_FAULT_OUT";
 gpio3.GPIO.$assign         = "GPIO";
-gpio3.GPIO.gpioPin.$assign = "EPWM6_A";
+gpio3.GPIO.gpioPin.$assign = "GPIO55";
 
 gpio4.pinDir               = "OUTPUT";
 gpio4.$name                = "GPIO_OVP_OUT";
 gpio4.GPIO.$assign         = "GPIO";
-gpio4.GPIO.gpioPin.$assign = "EPWM7_A";
+gpio4.GPIO.gpioPin.$assign = "GPIO57";
 
 gpio5.$name                = "GPIO_OCP_IN";
 gpio5.GPIO.$assign         = "GPIO";
-gpio5.GPIO.gpioPin.$assign = "EPWM4_B";
+gpio5.GPIO.gpioPin.$assign = "GPIO52";
 
 gpio6.$name                = "GPIO_SPEED_LEVEL_IN";
 gpio6.GPIO.$assign         = "GPIO";
-gpio6.GPIO.gpioPin.$assign = "EPWM5_B";
+gpio6.GPIO.gpioPin.$assign = "GPIO54";
 
 gpio7.pinDir               = "OUTPUT";
 gpio7.$name                = "GPIO_OCP_OUT";
 gpio7.GPIO.$assign         = "GPIO";
-gpio7.GPIO.gpioPin.$assign = "EPWM6_B";
+gpio7.GPIO.gpioPin.$assign = "GPIO56";
 
 gpio8.pinDir               = "OUTPUT";
 gpio8.$name                = "GPIO_SPEED_LEVEL_OUT";
 gpio8.GPIO.$assign         = "GPIO";
-gpio8.GPIO.gpioPin.$assign = "EPWM7_B";
+gpio8.GPIO.gpioPin.$assign = "GPIO58";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -213,8 +213,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -479,15 +479,15 @@ int_xbar1.xbarOutput = ["EPWM9_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution               = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution               = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution               = "EPWM2_B";
+epwm1.EPWM.A.$suggestSolution               = "GPIO43";
+epwm1.EPWM.B.$suggestSolution               = "GPIO44";
+epwm2.EPWM.A.$suggestSolution               = "GPIO45";
+epwm2.EPWM.B.$suggestSolution               = "GPIO46";
+epwm3.EPWM.A.$suggestSolution               = "GPIO47";
+epwm3.EPWM.B.$suggestSolution               = "GPIO48";
 gpio1.GPIO.$suggestSolution                 = "GPIO";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";
