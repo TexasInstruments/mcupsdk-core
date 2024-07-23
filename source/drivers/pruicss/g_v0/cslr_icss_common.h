@@ -58,11 +58,23 @@ extern "C"
  */
 
 #define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_STATUS_REG                                 CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_STATUS_REG
+#define CSL_ICSS_PR1_IEP0_SLV_COMPEN_REG                                        CSL_ICSS_G_PR1_IEP0_SLV_COMPEN_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG                                   CSL_ICSS_G_PR1_IEP0_SLV_SLOW_COMPEN_REG
 #define CSL_ICSS_PR1_IEP0_SLV_COUNT_REG0                                        CSL_ICSS_G_PR1_IEP0_SLV_COUNT_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_COUNT_REG1                                        CSL_ICSS_G_PR1_IEP0_SLV_COUNT_REG1
 #define CSL_ICSS_PR1_IEP0_SLV_CAP_CFG_REG                                       CSL_ICSS_G_PR1_IEP0_SLV_CAP_CFG_REG
+#define CSL_ICSS_PR1_IEP0_SLV_CAP_STATUS_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_CAP_STATUS_REG
+#define CSL_ICSS_PR1_IEP0_SLV_CMP_CFG_REG                                       CSL_ICSS_G_PR1_IEP0_SLV_CMP_CFG_REG
+#define CSL_ICSS_PR1_IEP0_SLV_CMP_STATUS_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_CMP_STATUS_REG
+
 #define CSL_ICSS_PR1_IEP0_SLV_DIGIO_CTRL_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_CTRL_REG
-#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_EXP_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_EXP_REG
+#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_STATUS_REG                                  CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_STATUS_REG
+#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_IN_REG                                 CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_DATA_IN_REG
+#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_IN_RAW_REG                             CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_DATA_IN_RAW_REG
 #define CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG                                CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG
+#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_EN_REG                             CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_DATA_OUT_EN_REG
+#define CSL_ICSS_PR1_IEP0_SLV_DIGIO_EXP_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_DIGIO_EXP_REG
 
 #define CSL_ICSS_PR1_MDIO_V1P7_MDIO_LINK_REG                                    CSL_ICSS_G_PR1_MDIO_V1P7_MDIO_LINK_REG
 #define CSL_ICSS_PR1_MDIO_V1P7_MDIO_LINK_INT_MASKED_REG                         CSL_ICSS_G_PR1_MDIO_V1P7_MDIO_LINK_INT_MASKED_REG
@@ -154,6 +166,51 @@ extern "C"
 
 #define CSL_ICSS_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG0                         CSL_ICSS_G_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG0
 #define CSL_ICSS_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG1                         CSL_ICSS_G_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG1
+
+#define CSL_ICSS_PR1_IEP0_SLV_CMP0_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP0_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP0_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP0_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP1_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP1_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP1_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP1_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP2_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP2_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP2_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP2_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP3_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP3_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP3_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP3_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP4_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP4_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP4_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP4_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP5_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP5_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP5_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP5_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP6_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP6_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP6_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP6_REG1
+#define CSL_ICSS_PR1_IEP0_SLV_CMP7_REG0                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP7_REG0
+#define CSL_ICSS_PR1_IEP0_SLV_CMP7_REG1                                         CSL_ICSS_G_PR1_IEP0_SLV_CMP7_REG1
+
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC_CTRL_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_SYNC_CTRL_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC_FIRST_STAT_REG                               CSL_ICSS_G_PR1_IEP0_SLV_SYNC_FIRST_STAT_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC0_STAT_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_SYNC0_STAT_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC1_STAT_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_SYNC1_STAT_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC_PWIDTH_REG                                   CSL_ICSS_G_PR1_IEP0_SLV_SYNC_PWIDTH_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC0_PERIOD_REG                                  CSL_ICSS_G_PR1_IEP0_SLV_SYNC0_PERIOD_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC1_DELAY_REG                                   CSL_ICSS_G_PR1_IEP0_SLV_SYNC1_DELAY_REG
+#define CSL_ICSS_PR1_IEP0_SLV_SYNC_START_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_SYNC_START_REG
+
+#define CSL_ICSS_PR1_IEP0_SLV_WD_PREDIV_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_WD_PREDIV_REG
+#define CSL_ICSS_PR1_IEP0_SLV_PDI_WD_TIM_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_PDI_WD_TIM_REG
+#define CSL_ICSS_PR1_IEP0_SLV_PD_WD_TIM_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_PD_WD_TIM_REG
+#define CSL_ICSS_PR1_IEP0_SLV_WD_STATUS_REG                                     CSL_ICSS_G_PR1_IEP0_SLV_WD_STATUS_REG
+#define CSL_ICSS_PR1_IEP0_SLV_WD_EXP_CNT_REG                                    CSL_ICSS_G_PR1_IEP0_SLV_WD_EXP_CNT_REG
+#define CSL_ICSS_PR1_IEP0_SLV_WD_CTRL_REG                                       CSL_ICSS_G_PR1_IEP0_SLV_WD_CTRL_REG
+
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MASK                    CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MASK                 
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_SHIFT                   CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_SHIFT                
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MAX                     CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MAX                  
+
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_MASK                   CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_MASK                
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_SHIFT                  CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_SHIFT               
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_MAX                    CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_MAX                 
+
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_MASK                       CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_MASK                    
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_SHIFT                      CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_SHIFT                   
+#define CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_MAX                        CSL_ICSS_G_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_MAX                     
 
 #ifdef __cplusplus
 }
