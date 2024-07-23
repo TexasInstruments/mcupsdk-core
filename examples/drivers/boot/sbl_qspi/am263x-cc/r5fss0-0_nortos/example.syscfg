@@ -15,7 +15,7 @@ const bootloader1     = bootloader.addInstance();
 const hsmclient       = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1      = hsmclient.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -40,8 +40,10 @@ const section7        = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.$name           = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset  = "0x00080000";
+bootloader1.hsmrtDecoupling = true;
+bootloader1.hsmrtImageOffset = "0x00040000";
 
 flash1.$name                               = "CONFIG_FLASH0";
 bootloader1.flashDriver                    = flash1;
@@ -210,6 +212,7 @@ section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_S
 section5.load_memory             = "MSRAM_HSMRT";
 section5.group                   = false;
 section5.$name                   = "Hsmrt";
+section5.type                    = "NOLOAD";
 section5.output_section.create(1);
 section5.output_section[0].$name = ".rodata.hsmrt";
 
