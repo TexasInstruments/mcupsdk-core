@@ -66,7 +66,7 @@
 #include <ti_drivers_open_close.h>
 #include <ti_board_open_close.h>
 
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #ifdef __cplusplus
 extern "C" {

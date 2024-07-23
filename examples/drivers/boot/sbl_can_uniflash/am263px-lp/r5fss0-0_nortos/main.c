@@ -36,7 +36,7 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 #include <board/ioexp/ioexp_tca6416.h>
 

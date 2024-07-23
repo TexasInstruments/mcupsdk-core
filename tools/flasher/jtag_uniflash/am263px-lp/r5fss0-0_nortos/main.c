@@ -38,7 +38,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #undef FLASH_WRITE_SECTOR
 

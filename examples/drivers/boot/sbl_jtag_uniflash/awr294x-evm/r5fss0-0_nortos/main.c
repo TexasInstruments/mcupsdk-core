@@ -35,7 +35,7 @@
 #include <kernel/dpl/DebugP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #define FILE_MAX_SIZE   (0x200000) /* This has to match the size of DSS L3 section in linker.cmd */
 uint8_t gFileBuf[FILE_MAX_SIZE] __attribute__((aligned(128), section(".bss.dss_l3")));

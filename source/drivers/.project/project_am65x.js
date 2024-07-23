@@ -66,6 +66,9 @@ const files_r5f = {
 const filedirs = {
     common: [
         "bootloader",
+		"bootloader/bootloader_uniflash",
+		"bootloader/bootloader_uniflash/bootloader_uniflash_rprc",
+		"bootloader/bootloader_uniflash/bootloader_uniflash_mcelf",
         `bootloader/soc/am65x`,
         "ddr/v1",
         "gpio/v0",

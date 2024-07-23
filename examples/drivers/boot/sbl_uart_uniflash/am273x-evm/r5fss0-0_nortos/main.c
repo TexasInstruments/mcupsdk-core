@@ -38,7 +38,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x200000) /* This has to match the size of DDR section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.dss_l3")));

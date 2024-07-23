@@ -23,6 +23,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/middleware/lib",
     ],
 };
 
@@ -31,6 +32,7 @@ const libs_nortos_r5f = {
         "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "middleware.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

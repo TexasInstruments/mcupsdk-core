@@ -50,7 +50,7 @@
 #include <drivers/bootloader.h>
 #include <kernel/dpl/DebugP.h>
 #include <drivers/bootloader.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include "sbl_enet.h"
 
 uint32_t gGpioBaseAddr = ENET_TRANSFER_START_BTN_BASE_ADDR;

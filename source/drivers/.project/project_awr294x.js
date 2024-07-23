@@ -12,7 +12,10 @@ const files_r5f = {
         "bootloader_hsmRt_load.c",
         "bootloader_utils_addrxlate.c",
         "bootloader_xmodem.c",
-        "bootloader_uniflash.c",
+		"bootloader_uniflash_common.c",
+		"bootloader_uniflash.c",
+		"bootloader_uniflash_rprc.c",
+		"bootloader_uniflash_mcelf.c",
         "bootloader_profile.c",
         "xmodem.c",
         "adcbuf.c",
@@ -95,6 +98,9 @@ const files_c66 = {
 const filedirs = {
     common: [
         "bootloader",
+		"bootloader/bootloader_uniflash",
+		"bootloader/bootloader_uniflash/bootloader_uniflash_rprc",
+		"bootloader/bootloader_uniflash/bootloader_uniflash_mcelf",
         "bootloader/soc/awr294x",
         "adcbuf/v0",
         "cbuff/v0",

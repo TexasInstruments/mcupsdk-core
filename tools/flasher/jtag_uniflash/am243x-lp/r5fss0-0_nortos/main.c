@@ -39,7 +39,7 @@
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <drivers/mmcsd.h>
 
 #undef FLASH_WRITE_SECTOR

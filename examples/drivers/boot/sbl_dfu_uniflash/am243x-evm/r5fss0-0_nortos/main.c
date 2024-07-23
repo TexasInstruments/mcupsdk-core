@@ -41,7 +41,7 @@
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #include <usb/cdn/include/usb_init.h>
 #include "tusb.h"

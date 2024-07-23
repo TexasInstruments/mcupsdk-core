@@ -25,6 +25,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/sdl/lib",
         "${MCU_PLUS_SDK_PATH}/source/security/lib",
+        "${MCU_PLUS_SDK_PATH}/source/middleware/lib",
     ],
 };
 
@@ -35,6 +36,7 @@ const libs_nortos_r5f = {
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "security.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "middleware.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

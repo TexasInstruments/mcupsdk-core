@@ -39,7 +39,7 @@
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <drivers/bootloader/bootloader_uniflash.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <drivers/mmcsd.h>
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x150000) /* This has to match the size of MSRAM_2 section in linker.cmd */
