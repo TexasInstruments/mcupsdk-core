@@ -66,6 +66,11 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing the
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+### ICSS-EMAC Driver
+Industrial Communications Subsystem Ethernet Media Access Controller (\subpage ICSS_EMAC) driver provide APIs to transmit and receive packets with a firmware based Ethernet Switch that has been implemented on PRU-ICSS cores.
+\endcond
+
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ### ICSS-EMAC Driver
 ICSS-EMAC (Industrial Communications Subsystem Ethernet Media Access Controller) driver provide APIs to transmit and receive packets with a firmware based MAC and Ethernet Switch that has been implemented on PRUICSS cores.
@@ -75,7 +80,7 @@ ICSS-EMAC (Industrial Communications Subsystem Ethernet Media Access Controller)
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 ### ICSS TimeSync
 \subpage ICSS_TIMESYNC is a separate driver based on ICSS-EMAC, which provides APIs for PTP/1588 v2 receiver implementation on PRU-ICSS.
 

@@ -175,6 +175,9 @@ ICSS-EMAC is dependent on the Application/Transport layer for proper functioning
 
 \ref NETWORKING_ICSS_EMAC_MODULE
 
+\cond SOC_AM263X || SOC_AM263PX
 ## Dual EMAC and Switch Firmwares
 
 \subpage DUAL_EMAC_AND_SWITCH
+
+\endcond
