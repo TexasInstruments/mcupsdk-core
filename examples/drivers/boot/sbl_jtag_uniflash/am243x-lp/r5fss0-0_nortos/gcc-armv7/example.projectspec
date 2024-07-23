@@ -56,6 +56,7 @@
             -L${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -L${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -L${MCU_PLUS_SDK_PATH}/source/board/lib
+            -L${MCU_PLUS_SDK_PATH}/source/middleware/lib
             -L${CGT_GCC_ARMV7_PATH}/lib
             -Wl,-Map=sbl_jtag_uniflash.${ConfigName}.map
             -mcpu=cortex-r5

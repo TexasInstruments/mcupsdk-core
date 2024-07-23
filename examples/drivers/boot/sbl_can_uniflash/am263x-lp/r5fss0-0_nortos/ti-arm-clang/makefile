@@ -101,6 +101,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -109,6 +110,7 @@ LIBS_common = \
 	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmiddleware.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -124,6 +126,7 @@ LIBS_NAME = \
 	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	middleware.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -133,6 +136,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

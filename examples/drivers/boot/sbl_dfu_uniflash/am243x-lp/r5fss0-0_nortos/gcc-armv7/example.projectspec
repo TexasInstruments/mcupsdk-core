@@ -61,6 +61,7 @@
             -L${MCU_PLUS_SDK_PATH}/source/board/lib
             -L${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib
             -L${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib
+            -L${MCU_PLUS_SDK_PATH}/source/middleware/lib
             -L${CGT_GCC_ARMV7_PATH}/lib
             -Wl,-Map=sbl_dfu_uniflash.${ConfigName}.map
             -mcpu=cortex-r5

@@ -53,6 +53,9 @@ FILES_common := \
 
 FILES_PATH_common = \
     bootloader \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     bootloader/soc/am273x \
     cbuff/v1 \
     crc/v1 \

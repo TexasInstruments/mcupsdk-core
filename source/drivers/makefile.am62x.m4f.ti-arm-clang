@@ -24,6 +24,7 @@ FILES_common := \
     mcspi_v0.c \
     mcspi_dma.c \
     mcspi_dma_udma.c \
+    ipc_notify_soc.c \
     ipc_notify_v0.c \
     ipc_notify_v0_cfg.c \
     ipc_rpmsg.c \

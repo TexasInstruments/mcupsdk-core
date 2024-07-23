@@ -66,6 +66,9 @@ FILES_PATH_common = \
     adc/v0 \
     bootloader \
     bootloader/soc/am64x_am243x \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     crc/v0 \
     ddr/v0 \
     ddr/v0/cdn_drv/ \

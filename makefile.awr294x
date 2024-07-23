@@ -36,6 +36,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.awr294x board_r5f.ti-arm-clang board_c66.ti-c6000
 	@echo  $(MAKE) -s -f makefile.awr294x drivers_r5f.ti-arm-clang drivers_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.awr294x middleware_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.awr294x freertos_r5f.ti-arm-clang freertos_c66.ti-c6000
 	@echo  $(MAKE) -s -f makefile.awr294x nortos_r5f.ti-arm-clang nortos_c66.ti-c6000
 	@echo  $(MAKE) -s -f makefile.awr294x safertos_c66.ti-c6000
@@ -53,6 +54,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.awr294x board_r5f.ti-arm-clang_clean board_c66.ti-c6000_clean
 	@echo  $(MAKE) -s -f makefile.awr294x drivers_r5f.ti-arm-clang_clean drivers_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.awr294x middleware_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.awr294x freertos_r5f.ti-arm-clang_clean freertos_c66.ti-c6000_clean
 	@echo  $(MAKE) -s -f makefile.awr294x nortos_r5f.ti-arm-clang_clean nortos_c66.ti-c6000_clean
 	@echo  $(MAKE) -s -f makefile.awr294x safertos_c66.ti-c6000_clean
@@ -244,6 +246,7 @@ help:
 # Various Component Targets
 BUILD_COMBO_board = board_r5f.ti-arm-clang board_c66.ti-c6000
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_c66.ti-c6000
+BUILD_COMBO_middleware = middleware_r5f.ti-arm-clang
 BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_c66.ti-c6000
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_c66.ti-c6000
 BUILD_COMBO_safertos = safertos_c66.ti-c6000
@@ -259,7 +262,7 @@ BUILD_COMBO_security = security_r5f.ti-arm-clang security_c66.ti-c6000
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_middleware) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security)
 
 
 # Combine all Pre-built Components
@@ -281,6 +284,9 @@ $(BUILD_COMBO_board):
 
 $(BUILD_COMBO_drivers):
 	$(MAKE) -C source/drivers -f makefile.awr294x.$(subst drivers_,,$@) all
+
+$(BUILD_COMBO_middleware):
+	$(MAKE) -C source/middleware -f makefile.awr294x.$(subst middleware_,,$@) all
 
 $(BUILD_COMBO_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.awr294x.$(subst freertos_,,$@) all
@@ -323,6 +329,7 @@ $(BUILD_COMBO_security):
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_c66.ti-c6000_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_middleware = middleware_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_c66.ti-c6000_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_c66.ti-c6000_clean
 BUILD_COMBO_CLEAN_safertos = safertos_c66.ti-c6000_clean
@@ -338,7 +345,7 @@ BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean security_c66.ti-c60
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_safertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_safertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security)
 
 
 # Combine all Pre-built Components Clean
@@ -354,6 +361,9 @@ $(BUILD_COMBO_CLEAN_board):
 
 $(BUILD_COMBO_CLEAN_drivers):
 	$(MAKE) -C source/drivers -f makefile.awr294x.$(subst drivers_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_middleware):
+	$(MAKE) -C source/middleware -f makefile.awr294x.$(subst middleware_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.awr294x.$(subst freertos_,,$(subst _clean,,$@)) clean
@@ -396,6 +406,7 @@ $(BUILD_COMBO_CLEAN_security):
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_c66.ti-c6000_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_c66.ti-c6000_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_c66.ti-c6000_scrub_scrub
 BUILD_COMBO_SCRUB_safertos = safertos_c66.ti-c6000_scrub_scrub
@@ -411,7 +422,7 @@ BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub security_c66.ti-c60
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_safertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_safertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -426,6 +437,9 @@ $(BUILD_COMBO_SCRUB_board):
 
 $(BUILD_COMBO_SCRUB_drivers):
 	$(MAKE) -C source/drivers -f makefile.awr294x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_middleware):
+	$(MAKE) -C source/middleware -f makefile.awr294x.$(subst middleware_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.awr294x.$(subst freertos_,,$(subst _scrub,,$@)) scrub

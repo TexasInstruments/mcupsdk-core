@@ -36,6 +36,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am62x board_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am62x drivers_m4f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am62x middleware_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am62x nortos_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am62x freertos_m4f.ti-arm-clang
 	@echo  .
@@ -43,6 +44,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am62x board_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am62x drivers_m4f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am62x middleware_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am62x nortos_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am62x freertos_m4f.ti-arm-clang_clean
 	@echo  .
@@ -102,19 +104,18 @@ help:
 # Various Component Targets
 BUILD_COMBO_board = board_m4f.ti-arm-clang
 BUILD_COMBO_drivers = drivers_m4f.ti-arm-clang
+BUILD_COMBO_middleware = middleware_r5f.ti-arm-clang
 BUILD_COMBO_nortos = nortos_m4f.ti-arm-clang
 BUILD_COMBO_freertos = freertos_m4f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos)
 
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
-# Combine all Pre-built Components
-BUILD_COMBO_PREBUILT_ALL_GCC =
 
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
@@ -125,13 +126,15 @@ libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
-libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_board):
 	$(MAKE) -C source/board -f makefile.am62x.$(subst board_,,$@) all
 
 $(BUILD_COMBO_drivers):
 	$(MAKE) -C source/drivers -f makefile.am62x.$(subst drivers_,,$@) all
+
+$(BUILD_COMBO_middleware):
+	$(MAKE) -C source/middleware -f makefile.am62x.$(subst middleware_,,$@) all
 
 $(BUILD_COMBO_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am62x.$(subst nortos_,,$@) all
@@ -144,30 +147,31 @@ $(BUILD_COMBO_freertos):
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_board = board_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_drivers = drivers_m4f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_middleware = middleware_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_nortos = nortos_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos = freertos_m4f.ti-arm-clang_clean
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos)
 
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
-# Combine all GCC Pre-built Components Clean
-BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
-libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_board):
 	$(MAKE) -C source/board -f makefile.am62x.$(subst board_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_drivers):
 	$(MAKE) -C source/drivers -f makefile.am62x.$(subst drivers_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_middleware):
+	$(MAKE) -C source/middleware -f makefile.am62x.$(subst middleware_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am62x.$(subst nortos_,,$(subst _clean,,$@)) clean
@@ -180,29 +184,30 @@ $(BUILD_COMBO_CLEAN_freertos):
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_board = board_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_m4f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos = freertos_m4f.ti-arm-clang_scrub_scrub
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
-# Combine all Pre-built Components Scrub Targets
-BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
-libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_board):
 	$(MAKE) -C source/board -f makefile.am62x.$(subst board_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_drivers):
 	$(MAKE) -C source/drivers -f makefile.am62x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_middleware):
+	$(MAKE) -C source/middleware -f makefile.am62x.$(subst middleware_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am62x.$(subst nortos_,,$(subst _scrub,,$@)) scrub

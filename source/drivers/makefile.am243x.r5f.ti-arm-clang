@@ -25,7 +25,10 @@ FILES_common := \
     bootloader_mmcsd_raw.c \
     bootloader_soc.c \
     bootloader_xmodem.c \
+    bootloader_uniflash_common.c \
     bootloader_uniflash.c \
+    bootloader_uniflash_rprc.c \
+    bootloader_uniflash_mcelf.c \
     bootloader_profile.c \
     xmodem.c \
     crc16.c \
@@ -132,6 +135,9 @@ ASMFILES_common := \
 FILES_PATH_common = \
     adc/v0 \
     bootloader \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     bootloader/soc/am64x_am243x \
     crc/v0 \
     ddr/v0 \

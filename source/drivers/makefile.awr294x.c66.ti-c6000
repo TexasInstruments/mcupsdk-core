@@ -48,6 +48,9 @@ FILES_common := \
 
 FILES_PATH_common = \
     bootloader \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     bootloader/soc/awr294x \
     adcbuf/v0 \
     cbuff/v0 \

@@ -77,8 +77,6 @@ BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
-# Combine all Pre-built Components
-BUILD_COMBO_PREBUILT_ALL_GCC =
 
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
@@ -89,7 +87,6 @@ libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
-libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_unity):
 	$(MAKE) -C unity -f makefile.am62x.$(subst unity_,,$@) all
@@ -111,13 +108,10 @@ BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samp
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
-# Combine all GCC Pre-built Components Clean
-BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
-libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_unity):
 	$(MAKE) -C unity -f makefile.am62x.$(subst unity_,,$(subst _clean,,$@)) clean
@@ -138,13 +132,10 @@ BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samp
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
-# Combine all Pre-built Components Scrub Targets
-BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
-libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_unity):
 	$(MAKE) -C unity -f makefile.am62x.$(subst unity_,,$(subst _scrub,,$@)) scrub

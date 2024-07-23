@@ -25,7 +25,10 @@ FILES_common := \
     bootloader_soc.c \
     bootloader_hsmRt_load.c \
     bootloader_xmodem.c \
+    bootloader_uniflash_common.c \
     bootloader_uniflash.c \
+    bootloader_uniflash_rprc.c \
+    bootloader_uniflash_mcelf.c \
     bootloader_profile.c \
     xmodem.c \
     crc16.c \
@@ -82,6 +85,9 @@ ASMFILES_common := \
 FILES_PATH_common = \
     adc/v1 \
     bootloader \
+    bootloader/bootloader_uniflash \
+    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
+    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
     bootloader/soc/am263x \
     cmpss/v0 \
     dac/v0 \

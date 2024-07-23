@@ -101,12 +101,14 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmiddleware.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -120,6 +122,7 @@ LIBS_NAME = \
 	nortos.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	middleware.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -127,6 +130,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

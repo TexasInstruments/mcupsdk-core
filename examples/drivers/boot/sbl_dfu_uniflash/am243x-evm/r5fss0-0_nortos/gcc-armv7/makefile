@@ -98,6 +98,7 @@ LIBS_PATH_common = \
 	-L${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-L${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib \
 	-L${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib \
+	-L${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-L${CGT_GCC_ARMV7_PATH}/lib \
 
 LIBS_common = \
@@ -134,6 +135,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib \
 	${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${CGT_GCC_ARMV7_PATH}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

@@ -74,6 +74,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
 	-I${MCU_PLUS_SDK_PATH}/examples/drivers/boot/sbl_qspi_enet/awr294x-evm/r5fss0-0_nortos \
 	-I${MCU_PLUS_SDK_PATH}/source/security \
+	-I${MCU_PLUS_SDK_PATH}/source/middleware/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -117,6 +118,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -125,6 +127,7 @@ LIBS_common = \
 	-lboard.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lenet-cpsw.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmiddleware.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -140,6 +143,7 @@ LIBS_NAME = \
 	board.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	enet-cpsw.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
+	middleware.awr294x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -149,6 +153,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
