@@ -54,7 +54,6 @@ extern "C"
 #include "icss_timeSync.h"
 #include "icss_timeSyncApi.h"
 #include "icss_timeSync_osal.h"
-#include "icss_timeSync_common_macros.h"
 
 /**
  * \def TS_LEAP_61_INDEX

@@ -853,7 +853,7 @@ void TimeSync_txTSIsr(uintptr_t arg)
 
     /*TODO: Review this*/
     intStatusPtr = (uint32_t *)(uint32_t)((uint32_t)((PRUICSS_HwAttrs const *)(timeSyncHandle->pruicssHandle->hwAttrs))->intcRegBase
-                                          + CSL_ICSS_PR1_ICSS_INTC_SLV_ENA_STATUS_REG0);
+                                          + CSL_ICSS_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG0);
 
     /*Check which port posted the interrupt*/
     if(*intStatusPtr & TIMESYNC_TX_TS_ISR_MASK_P1)
