@@ -883,16 +883,22 @@ static void I2C_LLD_targetTransferCompleteCallback (void * args,
 
         if(NULL != hldhandle)
         {
-            if((object->i2cParams.transferMode) == I2C_MODE_CALLBACK)
+            if(transferStatus != I2C_STS_RESTART)
             {
-                object->currentTransaction->status = transferStatus;
-                object->i2cParams.transferCallbackFxn(hldhandle,
-                                                    object->currentTransaction,
-                                                    transferStatus);
+                I2C_completeCurrTransfer(hldhandle, transferStatus);
             }
             else
             {
-                /* No Code */
+                if((object->i2cParams.transferMode) == I2C_MODE_CALLBACK)
+                {
+                    object->i2cParams.transferCallbackFxn(hldhandle,
+                                                        object->currentTransaction,
+                                                        transferStatus);
+                }
+                else
+                {
+                    /* No Code */
+                }
             }
         }
     }
