@@ -50,6 +50,7 @@ const files = {
         "Uart_lld_sample.c",
         "Udma_sample.c",
         "Pru_ipc_sample.c",
+        "Gp_timer_sample.c"
     ],
 };
 

@@ -64,6 +64,7 @@ FILES_common := \
     Uart_lld_sample.c \
     Udma_sample.c \
     Pru_ipc_sample.c \
+    Gp_timer_sample.c \
     Soc_am64x_sample.c \
     I2c_lld_sample_v0.c \
     Soc_am64x_sample.c \

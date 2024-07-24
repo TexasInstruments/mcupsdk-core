@@ -134,6 +134,7 @@ FILES_PATH_common = \
     udma/soc/am64x_am243x \
     watchdog/v1 \
     watchdog/v1/soc/am64x_am243x \
+    gp_timer/v0 \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

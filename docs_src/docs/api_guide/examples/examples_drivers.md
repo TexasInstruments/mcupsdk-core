@@ -121,6 +121,14 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_POLLING
    -# \subpage EXAMPLES_DRIVERS_UDMA_SW_TRIGGER
+-# GPTIMER
+   -# \subpage EXAMPLES_DRIVERS_GP_TIMER_COMPARE_MATCH_CALLBACK
+   -# \subpage EXAMPLES_DRIVERS_GP_TIMER_FREE_RUN
+   -# \subpage EXAMPLES_DRIVERS_GP_TIMER_OVERFLOW_CALLBACK
+\cond SOC_AM243X
+   -# \subpage EXAMPLES_DRIVERS_GP_TIMER_PWM_CAPTURE
+\endcond
+
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X

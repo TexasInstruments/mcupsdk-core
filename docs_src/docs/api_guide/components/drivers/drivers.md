@@ -40,6 +40,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_UDMA_PAGE
 - \subpage DRIVERS_SOC_PAGE
 - \subpage DRIVERS_WATCHDOG_PAGE
+- \subpage DRIVERS_GPTIMER_PAGE
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X

@@ -2138,6 +2138,468 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example runs a timer in pwm generation mode and captures using another timer. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gp_timer_pwm_capture",
+        "location": "../../examples/drivers/gp_timer/gp_timer_pwm_capture/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_pwm_capture",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example runs a timer in pwm generation mode and captures using another timer. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gp_timer_pwm_capture",
+        "location": "../../examples/drivers/gp_timer/gp_timer_pwm_capture/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_pwm_capture",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Gpio Input Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

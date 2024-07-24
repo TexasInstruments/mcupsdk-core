@@ -128,6 +128,7 @@ FILES_common := \
     udma_utils.c \
     watchdog_rti.c \
     watchdog_soc.c \
+    gp_timer.c \
 
 ASMFILES_common := \
     csl_arm_r5_pmu.S \
@@ -208,6 +209,7 @@ FILES_PATH_common = \
     udma/soc/am64x_am243x \
     watchdog/v1 \
     watchdog/v1/soc/am64x_am243x \
+    gp_timer/v0 \
     pmu \
     pmu/r5f \
 
