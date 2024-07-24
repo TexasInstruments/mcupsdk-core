@@ -84,9 +84,6 @@ typedef struct Bootloader_socCoreOpModeConfig_s
     uint32_t r5fss0_opMode;
     /**< [IN] Operating mode for first R5 subsystem */
 
-    uint32_t r5fss1_opMode;
-    /**< [IN] Operating mode for second R5 subsystem */
-
 } Bootloader_socCoreOpModeConfig;
 
 /**

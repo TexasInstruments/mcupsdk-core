@@ -40,7 +40,6 @@ const section7    = section.addInstance();
 bootloader1.$name               = "CONFIG_BOOTLOADER0";
 bootloader1.bootMedia           = "MEM";
 bootloader1.R5FSS0operatingMode = "Standalone";
-bootloader1.R5FSS1operatingMode = "Standalone";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 

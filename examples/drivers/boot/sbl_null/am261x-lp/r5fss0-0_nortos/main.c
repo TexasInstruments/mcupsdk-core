@@ -34,10 +34,12 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include <drivers/bootloader.h>
-#include <drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -65,9 +67,9 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
-    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     DebugP_log("Starting NULL Bootloader ... \r\n");
 
@@ -87,14 +89,6 @@ int main(void)
 
     if(bootHandle != NULL)
     {
-        if(status == SystemP_SUCCESS && (coreconfig->r5fss1_opMode == BOOTLOADER_OPMODE_STANDALONE))
-        {
-            status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-        }
-        if(status == SystemP_SUCCESS)
-        {
-            status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-        }
         if(status == SystemP_SUCCESS && (coreconfig->r5fss0_opMode == BOOTLOADER_OPMODE_STANDALONE))
         {
             status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
