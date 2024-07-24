@@ -115,6 +115,7 @@ const files_r5f = {
         "udma_utils.c",
         "watchdog_rti.c",
         "watchdog_soc.c",
+        "gp_timer.c",
     ],
 };
 
@@ -315,6 +316,7 @@ const filedirs = {
         `udma/soc/am64x_am243x`,
         "watchdog/v1",
         `watchdog/v1/soc/am64x_am243x`,
+        "gp_timer/v0"
     ],
 };
 

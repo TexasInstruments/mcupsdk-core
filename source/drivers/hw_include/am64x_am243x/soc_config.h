@@ -104,6 +104,7 @@ extern "C"
 #define DRV_VERSION_UART_V0
 #define DRV_VERSION_UDMA_V0
 #define DRV_VERSION_WATCHDOG_V1
+#define DRV_VERSION_GP_TIMER_V0
 
 /* Driver DMA integration */
 #define DMA_VERSION_MCSPI_UDMA
