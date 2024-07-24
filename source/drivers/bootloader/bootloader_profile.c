@@ -173,6 +173,9 @@ void Bootloader_profilePrintProfileLog(void)
         case BOOTLOADER_MEDIA_USB:
             bootMediaName = "USB DFU";
             break ;
+        case BOOTLOADER_MEDIA_PCIE:
+            bootMediaName = "PCIE";
+            break ;
         default:
             bootMediaName = "undefined";
             break;

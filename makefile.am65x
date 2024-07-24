@@ -56,6 +56,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_linux/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_pcie_host/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -223,6 +224,7 @@ $(BUILD_COMBO_SCRUB_nortos):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang
@@ -281,6 +283,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  sbl_sd_am65x-idk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie_host/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_uart_am65x-idk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -384,6 +389,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
@@ -437,6 +443,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  sbl_sd_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie_host/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_uart_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -540,6 +549,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -593,6 +603,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sbl_sd_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_pcie_host_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie_host/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_uart_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
