@@ -229,7 +229,7 @@ section12.load_memory             = "MAILBOX_R5F";
 section12.$name                   = "SIPC R5F Queue Memory";
 section12.group                   = false;
 section12.output_section.create(1);
-section12.output_section[0].$name = ".bss.sipc_r5f_queue_mem";
+section12.output_section[0].$name = ".bss.sipc_secure_host_queue_mem";
 epwm1.epwmTimebase_emulationMode                                      = "EPWM_EMULATION_FREE_RUN";
 epwm1.epwmTimebase_period                                             = 12000;
 epwm1.epwmTimebase_counterMode                                        = "EPWM_COUNTER_MODE_UP_DOWN";

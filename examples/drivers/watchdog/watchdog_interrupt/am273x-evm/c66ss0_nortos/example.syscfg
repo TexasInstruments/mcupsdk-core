@@ -223,4 +223,4 @@ section10.group                       = false;
 section10.load_memory                 = "MAILBOX_R5F";
 section10.output_section.create(1);
 section10.output_section[0].alignment = 0;
-section10.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
+section10.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
