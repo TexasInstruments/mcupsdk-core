@@ -296,6 +296,7 @@ const example_file_list = [
     "test/drivers/soc/soc_m4f/.project/project.js",
     "test/drivers/uart/.project/project.js",
     "test/drivers/udma/.project/project.js",
+    "test/drivers/gp_timer/.project/project.js",
     "test/kernel/dpl/.project/project.js",
     "test/kernel/freertos/.project/project.js",
     "test/kernel/freertos_smp/.project/project.js",
