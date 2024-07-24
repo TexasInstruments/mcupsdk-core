@@ -61,7 +61,12 @@
 #include <string.h>
 #include <ctype.h>
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #include <usb/cdn/include/usb_init.h>
+#endif
+#if defined(SOC_AM261X)
+#include <usb/synp/soc/usb_init.h>
+#endif
 #include "tusb.h"
 
 #include "ti_drivers_config.h"
@@ -83,11 +88,12 @@ uint32_t recvFileSize = 0 ;
 /* Upload string */ 
 const char* upload_image[2]=
 {
-  "Hello world from AM64x-AM243x DFU! - Partition 0 \r\n",
+  "Hello world from DFU! - Partition 0 \r\n",
 };
 
 /* flag to indicate manifest done or not */ 
 uint8_t gManifestDone = 0 ; 
+
 
 
 int dfu_main(void)
@@ -97,10 +103,14 @@ int dfu_main(void)
 
     while (1)
     {
-	    cusbd_dsr(); /* Cadence DSR task */
-        tud_task(); /* tinyusb device task */
+      #if defined(SOC_AM64X) || defined (SOC_AM243X)
+      cusbd_dsr();   /* Cadence DSR task */
+      #else
+      USB_dwcTask(); /* Synopsis DWC task */
+      #endif
+      tud_task(); /* tinyusb device task */
 		
-		if( gManifestDone == MANIFEST_DONE)
+		if(gManifestDone == MANIFEST_DONE)
 		{
 			/* send the received file to uart as string */ 
 			DebugP_log("\r\n%s",(char*)gFileBuf);

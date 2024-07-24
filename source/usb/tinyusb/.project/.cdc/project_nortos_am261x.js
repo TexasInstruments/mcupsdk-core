@@ -55,6 +55,7 @@ const includes = {
 
 const defines = {
     common: [
+        "TINYUSB_INTEGRATION",
     ],
     debug: [
     ],

@@ -148,6 +148,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -406,6 +407,9 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_256/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1158,6 +1162,9 @@ BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos
@@ -1313,6 +1320,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2088,6 +2098,15 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  ipc_notify_echo_am261x-som_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile all
 
@@ -2413,6 +2432,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am261x-lp_system_freertos_nortos_clean
@@ -2563,6 +2585,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3338,6 +3363,15 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  ipc_notify_echo_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile clean
 
@@ -3663,6 +3697,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am261x-lp_system_freertos_nortos_scrub
@@ -3813,6 +3850,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -4588,6 +4628,15 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  ipc_notify_echo_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile scrub
 
@@ -4614,18 +4663,21 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

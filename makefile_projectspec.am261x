@@ -48,6 +48,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_oversampling_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_uart_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
@@ -306,6 +307,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha256_am261x-som_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am261x-lp_system_freertos_nortos_build
@@ -455,6 +459,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1230,6 +1237,15 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  ipc_notify_echo_am261x-som_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile_projectspec all
 
@@ -1302,6 +1318,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_oversampling_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_uart_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1560,6 +1577,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha256_am261x-som_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am261x-lp_system_freertos_nortos_clean
@@ -1709,6 +1729,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -2484,6 +2507,15 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  ipc_notify_echo_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile_projectspec clean
 
@@ -2556,6 +2588,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_oversampling_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_uart_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
@@ -2814,6 +2847,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha256_am261x-som_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am261x-som_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am261x-lp_system_freertos_nortos_export
@@ -2963,6 +2999,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -3738,6 +3777,15 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  ipc_notify_echo_am261x-som_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos -f makefile_projectspec export
 
@@ -3826,6 +3874,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -4084,6 +4133,9 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_256/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

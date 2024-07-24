@@ -1130,6 +1130,7 @@ static int dwc_usb3_ep_complete_request(dwc_usb3_pcd_t *pcd,
 	dwc_usb3_device_t *dev = pcd->usb3_dev;
 	u32 bmudbg;
 	static u32 old0, old1, old2, old3, old4;
+	(void)old0; (void)old1; (void)old2; (void)old3; (void)old4; (void)bmudbg;
 #endif
 
 	dwc_debug1(dev, "%s()\n", __func__);

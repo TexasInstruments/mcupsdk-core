@@ -37,8 +37,13 @@
 #include <string.h>
 #include <ctype.h>
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #include <usb/cdn/include/usb_init.h>
 #include <usb/cdn/include/cdn_print.h>
+#endif
+#if defined(SOC_AM261X)
+#include <usb/synp/soc/usb_init.h>
+#endif
 #include "tusb.h"
 
 #include "ti_drivers_config.h"
@@ -53,18 +58,17 @@ int cdc_echo_main(void)
     Drivers_open();
     Board_driversOpen();
 
-	/* Enable debug for cdn module */ 
-	DbgMsgEnableModule(USBSSP_DBG_CUSBD);
-	DbgMsgEnableModule(USBSSP_DBG_CUSBD_ISR );
-	DbgMsgSetLvl(100); 
-
     while (1)
     {
-	    cusbd_dsr(); /* Cadence DSR task */
+        #if defined(SOC_AM64X) || defined (SOC_AM243X)
+        cusbd_dsr();   /* Cadence DSR task */
+        #else
+        USB_dwcTask(); /* Synopsis DWC task */
+        #endif
         tud_task(); /* tinyusb device task */
         cdc_task(); /* CDC handler */
     }
-
+    
     return 0;
 }
 

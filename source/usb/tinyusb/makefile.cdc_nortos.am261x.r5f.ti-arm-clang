@@ -58,6 +58,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM261X \
+    -DTINYUSB_INTEGRATION \
 
 DEFINES_debug := \
 

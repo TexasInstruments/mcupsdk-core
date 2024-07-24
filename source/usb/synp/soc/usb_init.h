@@ -30,70 +30,55 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef USB_WRAPPER_H_
-#define USB_WRAPPER_H_
+ /** \file usb_init.h
+ *
+ *   \brief This file contains USB initialization APIs
+ */
 
-#include "device_usb_reg_offset.h"
-#include "usb_drv.h"
-#include "hardware.h"
-#include <kernel/dpl/HwiP.h> 
-#include <kernel/dpl/CycleCounterP.h>
-#include <cslr_soc.h>
+#ifndef INCLUDE_USB_INIT_H_
+#define INCLUDE_USB_INIT_H_
 
-/* Define 60s timeout value for usb connection to happen */
-/* Define QT_SIM macro to test timeout in simulation platform */
-/* This lowers the timeout value as QT simulation is slow */
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+#include <stdint.h>
 
-#ifndef QT_SIM
-#define BOOTPARAM_TIMEOUT_MS 60000U
-#else
-#define BOOTPARAM_TIMEOUT_MS 20U
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-typedef struct usb_handle_s {
-    /* Base of the usb_dwc_3 interface */
-    uint32_t cfg_base;  
-    /* global USB device structure */
-    dwc_usb3_device_t* dwc_usb3_dev;
-    /* HwiP Object and params */
-    HwiP_Params hwiParamsUsb;
-    HwiP_Object hwiObjUsb; 
-} usb_handle_t;
+/* ========================================================================== */
+/*                             Macros & Typedefs                              */
+/* ========================================================================== */
 
-typedef enum UsbPhy_ret_t_
-{
-    USB_PHY_OK = 0x01U ,
-    USB_PHY_ERR = 0x02U
 
-}UsbPhy_ret_t ;
 
-/* global buffers for EPs */
-extern uint8_t    ep_in_buf[DWC_MAX_EPS - 1U][DWC_MAX_PACKET_SIZE];
-extern uint8_t    ep_out_buf[DWC_MAX_EPS - 1U][DWC_MAX_PACKET_SIZE];
+/* ========================================================================== */
+/*                         Structures and Enums                               */
+/* ========================================================================== */
+
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
 /**
- * @brief SOC USB power on sequence
- *
+ * \brief USB Initialization function
  */
-UsbPhy_ret_t usb_phy_power_sequence(void);
+void USB_init();
 
-/**
- * @brief Register interrupt
- *
- * @param intr where intr represents MAINx interrupt number
- */
-void USB_configureInterrupt(uint32_t intr);
+/*
+ * \brief Task to handle triggered interrupt 
+ * Wait for signal from DWC_task (from interrupt context)
+ *  - check interrupt type (device, EP or invalid etc)
+ *      - invoke handler in user context.
+ **/
+void USB_dwcTask();
 
-/**
- * @brief Disable interrupt
- *
- * @param intr where intr represents MAINx interrupt number
- */
-void USB_disableInterrupt(uint32_t intr);
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
-/**
- * @brief Clear MAIN0 interrupt
- */
-void USB_clearInterrupt(void) ;
+#endif /* INCLUDE_USB_INIT__H_ */
 
-#endif /* USB_WRAPPER_H_ */
+/** @} */

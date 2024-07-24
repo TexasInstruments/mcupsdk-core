@@ -33,12 +33,13 @@
 #include <stdint.h>
 #include "hw_types.h"
 #include "device_wrapper.h"
+#include "usb_init.h"
 #include "device_usb_reg_offset.h"
 
 /* 5 milli sec timeout for per pll locking and usb reg reset while loop */ 
 #define CONFIG_TIMEOUT   (5U)
 
-usb_handle_t usb_handle __attribute__((section(".usbdfuCxtRam")));      /* global so it can be accessed in ISRs */
+usb_handle_t usb_handle __attribute__((section(".usbCxtRam")));      /* global so it can be accessed in ISRs */
 
 /**
  *  @b  Description 
@@ -55,7 +56,6 @@ void usbCoreIntrHandler(void *args);
  */
 void USB_init()
 {
-    DebugP_log("USB Init");
     usb_handle.cfg_base = USB_DWC_3;
     usb_handle.dwc_usb3_dev = NULL;
 
@@ -154,11 +154,8 @@ UsbPhy_ret_t usb_phy_power_sequence(void){
 	uint32_t startTime = CycleCounterP_getCount32() ; 
 	uint32_t curTime = startTime ;  
 	UsbPhy_ret_t status = USB_PHY_OK;
-	/* Enable clock and route to USB PHY */ 
-	if( per_pll_usb_clk_cfg() == USB_PHY_ERR ) 
-	{
-		status = USB_PHY_ERR ; 
-	}
+	/* Enable clock and route to USB PHY  Need to check this */
+	per_pll_usb_clk_cfg();
 	
     /* Configuring ocp2scp to sync ocp and scp clock */ 
     HW_WR_FIELD32_RAW(USB_OCP2SCP_REG + USB_OCP2SCP_REG_TIMING, 0x00000001,0,1);

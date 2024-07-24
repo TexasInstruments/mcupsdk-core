@@ -59,7 +59,7 @@ static int get_eventbuf_count(dwc_usb3_device_t *dev, int bufno);
 static u32 get_eventbuf_event(dwc_usb3_device_t *dev, int bufno, int size);
 
 /* counter to track excess events */
-int msg_cnt __attribute__((section(".usbdfuCxtRam")));;
+int msg_cnt __attribute__((section(".usbCxtRam")));;
 
 /**
  * This routine enables the Event Buffer interrupt.

@@ -36,7 +36,7 @@
 #include <string.h>
 #include "usb_drv.h"
 
-#define ALIGN_NO_CACHE(x) __attribute__ ((aligned (x))) __attribute__((section(".usb_dfu_nc_data")))
+#define ALIGN_NO_CACHE(x) __attribute__ ((aligned (x))) __attribute__((section(".bss.nocache")))
 
 /**
  * The simulation environment doesn't have a malloc() function, so all data
@@ -44,20 +44,20 @@
  */
 
 /** Driver context struct */
-dwc_usb3_device_t                g_usb3_dev __attribute__((section(".usbdfuCxtRam")));
+dwc_usb3_device_t                g_usb3_dev __attribute__((section(".usbCxtRam")));
 
 /** @{ */
 /** Endpoint context structs */
-dwc_usb3_pcd_ep_t                g_ep0 __attribute__((section(".usbdfuCxtRam")));
-dwc_usb3_pcd_ep_t                g_out_ep[DWC_MAX_EPS - 1U] __attribute__((section(".usbdfuCxtRam")));
-dwc_usb3_pcd_ep_t                g_in_ep[DWC_MAX_EPS - 1U] __attribute__((section(".usbdfuCxtRam")));
+dwc_usb3_pcd_ep_t                g_ep0 __attribute__((section(".usbCxtRam")));
+dwc_usb3_pcd_ep_t                g_out_ep[DWC_MAX_EPS - 1U] __attribute__((section(".usbCxtRam")));
+dwc_usb3_pcd_ep_t                g_in_ep[DWC_MAX_EPS - 1U] __attribute__((section(".usbCxtRam")));
 /** @} */
 /** EP0 PCD request */
-dwc_usb3_pcd_req_t               g_ep0_req __attribute__((section(".usbdfuCxtRam")));
+dwc_usb3_pcd_req_t               g_ep0_req __attribute__((section(".usbCxtRam")));
 /** @{ */
 /** PCD request pool */
-dwc_usb3_pcd_req_t               g_pcd_req[32] __attribute__((section(".usbdfuCxtRam")));
-uint32_t                         g_pcd_req_bm __attribute__((section(".usbdfuCxtRam")));
+dwc_usb3_pcd_req_t               g_pcd_req[32] __attribute__((section(".usbCxtRam")));
+uint32_t                         g_pcd_req_bm __attribute__((section(".usbCxtRam")));
 /** @} */
 
 /** Driver options struct, default values are defined here */

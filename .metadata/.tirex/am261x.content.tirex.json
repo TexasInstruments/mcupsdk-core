@@ -1459,6 +1459,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A SBL USB-DFU example CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_dfu",
+        "location": "../../examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_dfu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10460,6 +10493,105 @@
             "crypto",
             "dthe_sha",
             "crypto_sha_512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device DFU example CPU is R5FSS0-0 running NORTOS.",
+        "name": "usb_dfu",
+        "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "dfu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device DFU example CPU is R5FSS0-0 running FREERTOS.",
+        "name": "usb_dfu",
+        "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "dfu",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC example CPU is R5FSS0-0 running NORTOS.",
+        "name": "cdc_echo",
+        "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

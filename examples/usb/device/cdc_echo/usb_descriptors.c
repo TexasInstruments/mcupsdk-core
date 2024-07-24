@@ -58,6 +58,18 @@
 
 #include "tusb.h"
 
+#define DEV_MANUFACUTURER   "Texas Instruments, Inc."
+#define DEV_VERSION         "01.00.00.01"
+#define DEV_INTERFACE       "CDC-ACM"
+
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+#define DEV_PRODUCT         "AM64x-AM243x CDC"
+#elif defined(SOC_AM261X)
+#define DEV_PRODUCT         "AM261x CDC"
+#else
+#define DEV_PRODUCT         ""
+#endif
+
 /* A combination of interfaces must have a unique product id, since PC will save device driver after the first plug.
  * Same VID/PID with different interface e.g MSC (first), then CDC (later) will possibly cause system error on PC.
  *
@@ -211,14 +223,15 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
  String Descriptors
 --------------------------------------------------------------------+
 */
+
 /* array of pointer to string descriptors */
 char const* string_desc_arr [] =
 {
   (const char[]) { 0x09, 0x04 }, /* 0: is supported language is English (0x0409) */
-  "Texas Instruments ,Inc",                     /* 1: Manufacturer */
-  "AM64x-AM243x",              /* 2: Product */
-  "01.00.00.00",                      /* 3: Serials, should use chip ID */
-  "AM64x-AM243x CDC",                 /* 4: CDC Interface */
+  DEV_MANUFACUTURER,             /* 1: Manufacturer */
+  DEV_PRODUCT,                   /* 2: Product */
+  DEV_VERSION,                   /* 3: Serials, should use chip ID */
+  DEV_INTERFACE,                 /* 4: DFU Partition 1 */
 };
 
 static uint16_t _desc_str[32];

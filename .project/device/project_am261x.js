@@ -261,6 +261,8 @@ const example_file_list = [
 	"examples/security/crypto/dthe_sha/crypto_hmac_sha512/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_256/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
+	"examples/usb/device/dfu/.project/project.js",
+	"examples/usb/device/cdc_echo/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	// "test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
