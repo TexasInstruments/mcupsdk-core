@@ -19,7 +19,7 @@ const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -55,25 +55,28 @@ led2.name  = "TPIC2810";
 
 led3.$name = "CONFIG_LED0";
 
-led1.peripheralDriver      = gpio1;
-gpio1.$name                = "GPIO_LED";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$suggestSolution = "OSPI0_CSn1";
+led1.peripheralDriver = gpio1;
+gpio1.$name           = "GPIO_LED";
+gpio1.pinDir          = "OUTPUT";
+gpio1.rx              = true;
 
-gpio2.$name                = "CONFIG_GPIO0";
-led3.peripheralDriver      = gpio2;
-gpio2.GPIO.gpioPin.$assign = "GPIO22";
+gpio2.$name           = "CONFIG_GPIO0";
+led3.peripheralDriver = gpio2;
+gpio2.rx              = true;
+gpio2.GPIO_n.$assign  = "GPIO22";
 
 i2c1.$name            = "CONFIG_I2C0";
 led2.peripheralDriver = i2c1;
 i2c1.I2C.$assign      = "I2C2";
 i2c1.I2C.SCL.$assign  = "GPIO25";
 i2c1.I2C.SDA.$assign  = "GPIO26";
+i2c1.I2C_child.$name  = "drivers_i2c_v1_i2c_v1_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -289,6 +292,5 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.GPIO.$suggestSolution             = "GPIO";
-gpio2.GPIO.$suggestSolution             = "GPIO";
+gpio1.GPIO_n.$suggestSolution           = "GPIO0";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -12,7 +12,7 @@ const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const gpio2           = gpio.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -43,15 +43,18 @@ const section12       = section.addInstance();
  */
 gpio1.$name  = "GPIO_LED";
 gpio1.pinDir = "OUTPUT";
+gpio1.rx     = true;
 
-gpio2.$name                = "GPIO_PUSH_BUTTON";
-gpio2.GPIO.gpioPin.$assign = "GPIO21";
+gpio2.$name          = "GPIO_PUSH_BUTTON";
+gpio2.rx             = true;
+gpio2.GPIO_n.$assign = "GPIO21";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -267,6 +270,4 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.GPIO.$suggestSolution         = "GPIO";
-gpio1.GPIO.gpioPin.$suggestSolution = "OSPI0_CSn0";
-gpio2.GPIO.$suggestSolution         = "GPIO";
+gpio1.GPIO_n.$suggestSolution = "GPIO0";

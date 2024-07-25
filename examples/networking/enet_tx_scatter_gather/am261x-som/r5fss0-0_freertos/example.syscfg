@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "undefined" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.18.0+3266"}
  */
 

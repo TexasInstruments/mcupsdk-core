@@ -74,6 +74,9 @@ const deviceSpecificIncludes = {
     am263px : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
     ],
+    am2631x : [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
+    ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f",
     ],
@@ -107,6 +110,8 @@ const deviceSpecific_cflags = {
    ],
    am263px : [
    ],
+   am261x : [
+   ],
    am273x : [
        "-fno-strict-aliasing",
    ],
@@ -118,6 +123,7 @@ const deviceSpecific_cflags = {
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
