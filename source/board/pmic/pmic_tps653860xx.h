@@ -38,7 +38,6 @@
 /* ========================================================================== */
 
 #include <board/pmic.h>
-#include <board/pmic/pmic_lld/include/cfg/tps65386x/pmic_core_tps65386x.h>
 
 #ifdef __cplusplus
 extern "C" {

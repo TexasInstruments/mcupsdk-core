@@ -20,13 +20,12 @@ const files_r5f = {
         "ioexp_tca6416.c",
         "pmic_tps653860xx.c",
         "pmic.c",
+        "pmic_common.c",
         "pmic_core.c",
-        "pmic_esm.c",
-        "pmic_fsm.c",
-        "pmic_gpio.c",
         "pmic_io.c",
         "pmic_power.c",
         "pmic_wdg.c",
+        "pmic_lld.c"
     ],
 };
 
