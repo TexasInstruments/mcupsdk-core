@@ -3873,9 +3873,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -3889,6 +3889,41 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

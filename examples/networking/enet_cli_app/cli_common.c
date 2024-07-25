@@ -148,34 +148,6 @@ void UART_writeCLI(char *txBuffer)
     UART_write(gUartHandle[0], &UART_trans);
 }
 
-void EnetApp_macMode2MacMii(emac_mode macMode,
-        EnetMacPort_Interface *mii)
-{
-    switch (macMode)
-    {
-        case MII:
-            mii->layerType = ENET_MAC_LAYER_MII;
-            mii->sublayerType = ENET_MAC_SUBLAYER_STANDARD;
-            mii->variantType = ENET_MAC_VARIANT_NONE;
-            break;
-        case RMII:
-            mii->layerType = ENET_MAC_LAYER_MII;
-            mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;
-            mii->variantType = ENET_MAC_VARIANT_NONE;
-            break;
-
-        case RGMII:
-            mii->layerType = ENET_MAC_LAYER_GMII;
-            mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;
-            mii->variantType = ENET_MAC_VARIANT_FORCED;
-            break;
-        default:
-            EnetAppUtils_print("Invalid MAC mode: %u\r\n", macMode);
-            EnetAppUtils_assert(false);
-            break;
-    }
-}
-
 /* ========================================================================== */
 /*                   Static Function Definitions                              */
 /* ========================================================================== */

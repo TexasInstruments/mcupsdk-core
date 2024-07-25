@@ -65,11 +65,6 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *portLinkCfg,
-                          Enet_MacPort macPort);
-
 static int32_t EnetApp_waitForLinkUp(Enet_MacPort macPort);
 
 static uint64_t EnetApp_getTestAdminBaseTime(Enet_MacPort macPort,
@@ -273,66 +268,6 @@ void EnetApp_close(void)
 
     /* Do peripheral dependent deinitalization */
     EnetAppUtils_disableClocks(gEnetApp.enetType, gEnetApp.instId);
-}
-
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *linkArgs,
-                          Enet_MacPort macPort)
-{
-    EnetBoard_EthPort ethPort;
-    EnetMacPort_LinkCfg *linkCfg = &linkArgs->linkCfg;
-    EnetMacPort_Interface *mii = &linkArgs->mii;
-    EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
-    int32_t status = ENET_SOK;
-    const EnetBoard_PhyCfg *boardPhyCfg;
-
-    EnetAppUtils_print("Open MAC port %u\r\n", ENET_MACPORT_ID(macPort));
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = gEnetApp.enetType;
-    ethPort.instId   = gEnetApp.instId;
-    ethPort.macPort  = macPort;
-    ethPort.boardId  = EnetBoard_getId();
-    ethPort.mii.layerType    = ENET_MAC_LAYER_GMII;
-    ethPort.mii.sublayerType = ENET_MAC_SUBLAYER_REDUCED;
-    ethPort.mii.variantType  = ENET_MAC_VARIANT_FORCED;
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    if (status != ENET_SOK)
-    {
-        EnetAppUtils_print("Failed to setup MAC port %u\r\n", ENET_MACPORT_ID(macPort));
-        EnetAppUtils_assert(false);
-    }
-
-    /* Set port link params */
-    linkArgs->macPort = macPort;
-    linkArgs->macPort = macPort;
-
-    mii->layerType     = ethPort.mii.layerType;
-    mii->sublayerType  = ethPort.mii.sublayerType;
-    mii->variantType   = ENET_MAC_VARIANT_FORCED;
-
-    linkCfg->speed     = ENET_SPEED_AUTO;
-    linkCfg->duplexity = ENET_DUPLEX_AUTO;
-
-    boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-    if (boardPhyCfg != NULL)
-    {
-        EnetPhy_initCfg(phyCfg);
-        phyCfg->phyAddr     = boardPhyCfg->phyAddr;
-        phyCfg->isStrapped  = boardPhyCfg->isStrapped;
-        phyCfg->loopbackEn  = false;
-        phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-        phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-    }
-    else
-    {
-        EnetAppUtils_print("No PHY configuration found for MAC port %u\r\n", ENET_MACPORT_ID(macPort));
-        EnetAppUtils_assert(false);
-    }
-
 }
 
 static int32_t EnetApp_waitForLinkUp(Enet_MacPort macPort)

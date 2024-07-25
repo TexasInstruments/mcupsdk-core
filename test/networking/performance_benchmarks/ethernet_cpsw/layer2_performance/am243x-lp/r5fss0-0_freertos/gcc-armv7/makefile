@@ -22,17 +22,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_cpsw_layer2_performance.$(PROFILE).out
+OUTNAME:=enet_test_cpsw_layer2_performance.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_cpsw_layer2_performance.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_cpsw_layer2_performance.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_cpsw_layer2_performance.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_cpsw_layer2_performance.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_cpsw_layer2_performance.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_cpsw_layer2_performance.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_cpsw_layer2_performance.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_cpsw_layer2_performance.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -237,7 +237,7 @@ clean:
 	$(RM) $(LNK_FILES_common)
 
 scrub:
-	@echo  Scrubing: am243x:r5fss0-0:freertos:gcc-armv7 enet_cpsw_layer2_performance ...
+	@echo  Scrubing: am243x:r5fss0-0:freertos:gcc-armv7 enet_test_cpsw_layer2_performance ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

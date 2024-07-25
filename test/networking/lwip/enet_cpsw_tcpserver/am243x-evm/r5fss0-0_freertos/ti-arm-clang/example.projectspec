@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Enet Cpsw Tcpserver"
-        name = "enet_cpsw_tcpserver_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
+        title="Enet Test  Cpsw Tcpserver"
+        name = "enet_test__cpsw_tcpserver_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -69,7 +69,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib
             -i${CG_TOOL_ROOT}/lib
             -i${PROJECT_BUILD_DIR}/syscfg
-            -m=enet_cpsw_tcpserver.${ConfigName}.map
+            -m=enet_test__cpsw_tcpserver.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -85,7 +85,7 @@
             --context r5fss0-0 --part ALV --package ALV
         "
 
-        description="A Enet Cpsw Tcpserver FREERTOS project">
+        description="A Enet Test  Cpsw Tcpserver FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

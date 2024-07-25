@@ -82,9 +82,6 @@ void EnetApp_showMacAddrs(EnetApp_PerCtxt *perCtxts,
 
 int32_t EnetApp_waitForLinkUp(EnetApp_PerCtxt *perCtxt);
 
-void EnetApp_macMode2MacMii(emac_mode macMode,
-                                  EnetMacPort_Interface *mii);
-
 void EnetApp_setCpswPolicer(EnetApp_PerCtxt *perCtxt);
 /* ========================================================================== */
 /*                            Global Variables                                */

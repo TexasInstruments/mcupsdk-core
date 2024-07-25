@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_l2_cpsw.$(PROFILE).out
+OUTNAME:=enet_test_l2_cpsw.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_l2_cpsw.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_l2_cpsw.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_l2_cpsw.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_l2_cpsw.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_l2_cpsw.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_l2_cpsw.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_l2_cpsw.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_l2_cpsw.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_test_l2_cpsw.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_test_l2_cpsw.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_test_l2_cpsw.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_test_l2_cpsw.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_test_l2_cpsw.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_test_l2_cpsw.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_test_l2_cpsw.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_test_l2_cpsw.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -242,7 +242,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:freertos:ti-arm-clang enet_l2_cpsw ...
+	@echo  Scrubing: am64x:r5fss0-0:freertos:ti-arm-clang enet_test_l2_cpsw ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -359,12 +359,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for enet_l2_cpsw.$(PROFILE) ...
+	@echo Creating Coverage Report for enet_test_l2_cpsw.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_l2_cpsw.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_l2_cpsw.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_l2_cpsw.$(PROFILE).profdata > coverage/enet_l2_cpsw.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_l2_cpsw.$(PROFILE).profdata.json --output-json=coverage/enet_l2_cpsw.$(PROFILE).analysis.json --output=../enet_l2_cpsw.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_test_l2_cpsw.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_test_l2_cpsw.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_test_l2_cpsw.$(PROFILE).profdata > coverage/enet_test_l2_cpsw.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_test_l2_cpsw.$(PROFILE).profdata.json --output-json=coverage/enet_test_l2_cpsw.$(PROFILE).analysis.json --output=../enet_test_l2_cpsw.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

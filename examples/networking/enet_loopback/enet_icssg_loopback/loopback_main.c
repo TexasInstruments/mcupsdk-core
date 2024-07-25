@@ -40,8 +40,8 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "loopback_common.h"
 #include "loopback_cfg.h"
+#include "loopback_common.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -101,11 +101,6 @@ void EnetLpbk_mainTask(void *args)
     {
         gEnetLpbk.macPortList[macPortIdx] = macPortList[macPortIdx];
     }
-
-    gEnetLpbk.testLoopBackType = LOOPBACK_TYPE_PHY;
-    gEnetLpbk.macMode          = RGMII;
-    gEnetLpbk.boardId          = ENETBOARD_CPB_ID;
-
 
     for (i = 0U; i < ENETLPBK_NUM_ITERATION; i++)
     {

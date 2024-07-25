@@ -150,9 +150,6 @@ void UART_readCLI(char *rxBuffer, uint32_t rxBufferLen);
 /* Function to display string on the terminal */
 void UART_writeCLI(char *txBuffer);
 
-void EnetApp_macMode2MacMii(emac_mode macMode,
-        EnetMacPort_Interface *mii);
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

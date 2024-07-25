@@ -133,7 +133,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "icssg_layer2_dualmac";
+    property.name = "enet_test_icssg_layer2_dualmac";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 

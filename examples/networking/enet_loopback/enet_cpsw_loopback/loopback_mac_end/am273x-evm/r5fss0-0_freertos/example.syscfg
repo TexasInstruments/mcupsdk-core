@@ -1,0 +1,277 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
+const mpu_armv76      = mpu_armv7.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+const section9        = section.addInstance();
+const section10       = section.addInstance();
+const section11       = section.addInstance();
+const enet_cpsw       = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
+const enet_cpsw1      = enet_cpsw.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+debug_log.enableUartLog               = true;
+debug_log.enableCssLog                = false;
+debug_log.uartLog.$name               = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.MSS_UART.$assign    = "MSS_UARTA";
+debug_log.uartLog.MSS_UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.MSS_UART.TX.$assign = "PAD_DB";
+
+const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                        = edma.addInstance({}, false);
+edma1.$name                        = "CONFIG_EDMA0";
+debug_log.uartLog.edmaConfig       = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 14;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 14;
+
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x10200000;
+mpu_armv74.size     = 20;
+
+mpu_armv75.$name    = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr = 0x88000000;
+mpu_armv75.size     = 24;
+
+mpu_armv76.$name      = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr   = 0x1021C000;
+mpu_armv76.size       = 14;
+mpu_armv76.attributes = "NonCached";
+
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name           = "CONFIG_GENERAL0";
+general1.additional_data = "#include \"ti_enet_config.h\"";
+general1.stack_size      = 8192;
+general1.heap_size       = 1024;
+general1.linker.$name    = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(7);
+region1.memory_region[0].$name              = "R5F_VECS";
+region1.memory_region[0].size               = 0x40;
+region1.memory_region[0].auto               = false;
+region1.memory_region[1].$name              = "R5F_TCMA";
+region1.memory_region[1].size               = 0x3FC0;
+region1.memory_region[2].type               = "TCMB_R5F";
+region1.memory_region[2].size               = 0x4000;
+region1.memory_region[2].$name              = "R5F_TCMB";
+region1.memory_region[3].type               = "MSS_L2_R5F";
+region1.memory_region[3].$name              = "MSS_L2";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x10220000;
+region1.memory_region[3].size               = 0xD0000;
+region1.memory_region[4].type               = "DSS_L3_ALL";
+region1.memory_region[4].$name              = "DSS_L3";
+region1.memory_region[4].size               = 0x390000;
+region1.memory_region[5].type               = "MSS_L2_R5F";
+region1.memory_region[5].$name              = "SBL_RESERVED_L2_RAM";
+region1.memory_region[5].attributes         = ["R","W"];
+region1.memory_region[5].size               = 0x1C000;
+region1.memory_region[6].type               = "MSS_L2_R5F";
+region1.memory_region[6].$name              = "CPPI_DESC";
+region1.memory_region[6].size               = 0x4000;
+
+section1.$name                        = "Vector Table";
+section1.group                        = false;
+section1.load_memory                  = "R5F_VECS";
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.load_memory                  = "MSS_L2";
+section2.$name                        = "Text Section";
+section2.output_section.create(5);
+section2.output_section[0].$name      = ".text.hwi";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.cache";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.boot";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text:abort";
+section2.output_section[4].palignment = true;
+
+section3.$name                        = "Code and Read-Only Data";
+section3.load_memory                  = "MSS_L2";
+section3.output_section.create(2);
+section3.output_section[0].$name      = ".text";
+section3.output_section[0].palignment = true;
+section3.output_section[1].$name      = ".rodata";
+section3.output_section[1].palignment = true;
+
+section4.$name                        = "Data Segment";
+section4.load_memory                  = "MSS_L2";
+section4.output_section.create(1);
+section4.output_section[0].$name      = ".data";
+section4.output_section[0].palignment = true;
+
+section5.select_multiple_regions                 = true;
+section5.$name                                   = "Memory Segments";
+section5.output_section.create(1);
+section5.output_section[0].$name                 = ".bss";
+section5.output_section[0].palignment            = true;
+section5.output_section[0].output_sections_start = "__BSS_START";
+section5.output_section[0].output_sections_end   = "__BSS_END";
+section5.split_priority.create(2);
+section5.split_priority[0].$name                 = "Memory Region0";
+section5.split_priority[0].load_memory           = "SBL_RESERVED_L2_RAM";
+section5.split_priority[1].$name                 = "Memory Region1";
+section5.split_priority[1].load_memory           = "MSS_L2";
+
+section6.$name                         = "System mem and stack";
+section6.select_multiple_regions       = true;
+section6.group                         = false;
+section6.output_section.create(2);
+section6.output_section[0].$name       = ".sysmem";
+section6.output_section[1].$name       = ".stack";
+section6.split_priority.create(2);
+section6.split_priority[0].$name       = "Memory Region2";
+section6.split_priority[0].load_memory = "SBL_RESERVED_L2_RAM";
+section6.split_priority[1].$name       = "Memory Region3";
+section6.split_priority[1].load_memory = "MSS_L2";
+
+section7.select_multiple_regions                  = true;
+section7.$name                                    = "Stack Segments";
+section7.output_section.create(5);
+section7.output_section[0].$name                  = ".irqstack";
+section7.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section7.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section7.output_section[0].input_section.create(1);
+section7.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section7.output_section[1].$name                  = ".fiqstack";
+section7.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section7.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section7.output_section[1].input_section.create(1);
+section7.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section7.output_section[2].$name                  = ".svcstack";
+section7.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section7.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section7.output_section[2].input_section.create(1);
+section7.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section7.output_section[3].$name                  = ".abortstack";
+section7.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section7.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section7.output_section[3].input_section.create(1);
+section7.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section7.output_section[4].$name                  = ".undefinedstack";
+section7.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section7.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section7.output_section[4].input_section.create(1);
+section7.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+section7.split_priority.create(2);
+section7.split_priority[0].$name                  = "Memory Region4";
+section7.split_priority[0].load_memory            = "SBL_RESERVED_L2_RAM";
+section7.split_priority[1].$name                  = "Memory Region5";
+section7.split_priority[1].load_memory            = "MSS_L2";
+
+section8.$name                        = "Initialization and Exception Handling";
+section8.load_memory                  = "MSS_L2";
+section8.output_section.create(3);
+section8.output_section[0].$name      = ".ARM.exidx";
+section8.output_section[0].palignment = true;
+section8.output_section[1].$name      = ".init_array";
+section8.output_section[1].palignment = true;
+section8.output_section[2].$name      = ".fini_array";
+section8.output_section[2].palignment = true;
+
+section9.$name                       = "BSS DSS L3";
+section9.load_memory                 = "DSS_L3";
+section9.group                       = false;
+section9.output_section.create(1);
+section9.output_section[0].$name     = ".bss.dss_l3";
+section9.output_section[0].alignment = 0;
+
+section10.load_memory                 = "CPPI_DESC";
+section10.type                        = "NOLOAD";
+section10.group                       = false;
+section10.$name                       = "Bss Enet CPPI Desc";
+section10.output_section.create(1);
+section10.output_section[0].alignment = 128;
+section10.output_section[0].$name     = ".bss:ENET_CPPI_DESC";
+
+section11.load_memory                                        = "DSS_L3";
+section11.group                                              = false;
+section11.$name                                              = "Enet dma mem";
+section11.type                                               = "NOLOAD";
+section11.output_section.create(1);
+section11.output_section[0].$name                            = ".enet_dma_mem";
+section11.output_section[0].alignment                        = 0;
+section11.output_section[0].input_section.create(1);
+section11.output_section[0].input_section[0].additional_data = "#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)         \n       *(*ENET_DMA_PKT_MEMPOOL) \n#endif";
+section11.output_section[0].input_section[0].$name           = " ";
+
+enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
+enet_cpsw1.cptsHostRxTsEn                  = false;
+enet_cpsw1.macport1LoopbackMode            = "LOOPBACK_MODE_MAC";
+enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
+enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
+enet_cpsw1.$name                 = "CONFIG_ENET_CPSW0";
+enet_cpsw1.phyToMacInterfaceMode = "MSS_RGMII";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+enet_cpsw1.MSS_MDIO.$suggestSolution       = "MSS_MDIO0";
+enet_cpsw1.MSS_MDIO.DATA.$suggestSolution  = "PAD_CM";
+enet_cpsw1.MSS_MDIO.CLK.$suggestSolution   = "PAD_CN";
+enet_cpsw1.MSS_RGMII.$suggestSolution      = "MSS_RGMII0";
+enet_cpsw1.MSS_RGMII.RD0.$suggestSolution  = "PAD_CL";
+enet_cpsw1.MSS_RGMII.RD1.$suggestSolution  = "PAD_CK";
+enet_cpsw1.MSS_RGMII.RD2.$suggestSolution  = "PAD_CJ";
+enet_cpsw1.MSS_RGMII.RD3.$suggestSolution  = "PAD_CI";
+enet_cpsw1.MSS_RGMII.RCTL.$suggestSolution = "PAD_CB";
+enet_cpsw1.MSS_RGMII.RCLK.$suggestSolution = "PAD_CH";
+enet_cpsw1.MSS_RGMII.TD0.$suggestSolution  = "PAD_CF";
+enet_cpsw1.MSS_RGMII.TD1.$suggestSolution  = "PAD_CE";
+enet_cpsw1.MSS_RGMII.TD2.$suggestSolution  = "PAD_CD";
+enet_cpsw1.MSS_RGMII.TD3.$suggestSolution  = "PAD_CC";
+enet_cpsw1.MSS_RGMII.TCTL.$suggestSolution = "PAD_CA";
+enet_cpsw1.MSS_RGMII.TCLK.$suggestSolution = "PAD_CG";

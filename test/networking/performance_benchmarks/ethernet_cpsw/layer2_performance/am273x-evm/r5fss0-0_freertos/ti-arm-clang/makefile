@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_cpsw_loopback.$(PROFILE).out
+OUTNAME:=enet_test_cpsw_layer2_performance.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_cpsw_loopback.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_cpsw_loopback.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_cpsw_loopback.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_cpsw_loopback.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_cpsw_loopback.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_cpsw_loopback.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_cpsw_loopback.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_cpsw_loopback.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_test_cpsw_layer2_performance.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -238,7 +238,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am273x:r5fss0-0:freertos:ti-arm-clang enet_cpsw_loopback ...
+	@echo  Scrubing: am273x:r5fss0-0:freertos:ti-arm-clang enet_test_cpsw_layer2_performance ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -357,12 +357,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for enet_cpsw_loopback.$(PROFILE) ...
+	@echo Creating Coverage Report for enet_test_cpsw_layer2_performance.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_cpsw_loopback.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_cpsw_loopback.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_cpsw_loopback.$(PROFILE).profdata > coverage/enet_cpsw_loopback.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_cpsw_loopback.$(PROFILE).profdata.json --output-json=coverage/enet_cpsw_loopback.$(PROFILE).analysis.json --output=../enet_cpsw_loopback.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_test_cpsw_layer2_performance.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_test_cpsw_layer2_performance.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_test_cpsw_layer2_performance.$(PROFILE).profdata > coverage/enet_test_cpsw_layer2_performance.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_test_cpsw_layer2_performance.$(PROFILE).profdata.json --output-json=coverage/enet_test_cpsw_layer2_performance.$(PROFILE).analysis.json --output=../enet_test_cpsw_layer2_performance.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

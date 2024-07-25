@@ -65,12 +65,11 @@
 #include <enet_appmemutils_cfg.h>
 
 /* SDK includes */
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
 #include "ti_board_config.h"
-#include "ti_enet_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_drivers_open_close.h"
 #include "ti_enet_config.h"
-
+#include "ti_enet_open_close.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -125,10 +124,8 @@ typedef struct EnetLpbk_Obj_s
     uint32_t instId;
     uint32_t coreId;
     uint32_t coreKey;
-    uint32_t boardId;
     uint8_t numMacPorts;
     Enet_MacPort macPortList[ENET_SYSCFG_NUM_EXT_MAC_PORTS];
-    emac_mode macMode;   /* MAC mode (defined in board library) */
     Udma_DrvHandle hUdmaDrv;
     uint32_t rxFlowIdx;
     uint32_t rxStartFlowIdx;
@@ -141,7 +138,6 @@ typedef struct EnetLpbk_Obj_s
     uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
 
     /* Test config params */
-    EnetLpbk_type testLoopBackType;
     bool printFrame;        /* Print received Ethernet frames? */
 
     /* Test runtime params */

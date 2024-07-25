@@ -16,7 +16,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mbedtls_pka_am273x-evm_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stc_func_test_am273x-evm_system_nortos_nortos_build
@@ -65,7 +65,7 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
@@ -90,7 +90,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mbedtls_pka_am273x-evm_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stc_func_test_am273x-evm_system_nortos_nortos_clean
@@ -139,7 +139,7 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -164,7 +164,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mbedtls_pka_am273x-evm_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stc_func_test_am273x-evm_system_nortos_nortos_export
@@ -213,7 +213,7 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:

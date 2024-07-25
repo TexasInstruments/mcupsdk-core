@@ -30,8 +30,8 @@ BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
 BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
-BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/enet_cpsw_loopback.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/enet_cpsw_loopback.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/enet_test_cpsw_layer2_performance.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)

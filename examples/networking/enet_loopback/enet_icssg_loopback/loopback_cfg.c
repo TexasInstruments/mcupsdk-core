@@ -40,8 +40,9 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "loopback_common.h"
 #include "loopback_cfg.h"
+
+#include "loopback_common.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -64,12 +65,7 @@
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-static const char loopbackTestMenu[] =
-{
-    " \r\n 1: External PHY loopback"
-    " \r\n"
-    " \r\n Enter option: "
-};
+
 
 /* Enet loopback test object */
 EnetLpbk_Obj gEnetLpbk;
@@ -77,33 +73,6 @@ EnetLpbk_Obj gEnetLpbk;
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-
-void EnetApp_showMenu(void)
-{
-
-    int8_t option = -1;
-    bool retry = true;
-    DebugP_log("%s", loopbackTestMenu);
-    while(retry)
-    {
-        DebugP_scanf("%d", &option);
-
-        switch(option)
-        {
-            case 1U:
-                gEnetLpbk.testLoopBackType = LOOPBACK_TYPE_PHY;
-                gEnetLpbk.macMode          = RGMII;
-                gEnetLpbk.boardId          = ENETBOARD_CPB_ID;
-                retry = false;
-                break;
-            default:
-               DebugP_log(" \r\n Invalid option... Try Again!!!\r\n");
-               DebugP_log("%s", loopbackTestMenu);
-               break;
-        }
-        TaskP_yield();
-    }
-}
 
 /* ========================================================================== */
 /*                   Static Function Definitions                              */

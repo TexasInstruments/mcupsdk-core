@@ -39,7 +39,6 @@ TARGETS := $(BOOTIMAGE_NAME)
 FILES_common := \
 	enet_layer2_icssg.c \
 	main.c \
-	enet_custom_board_config.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \

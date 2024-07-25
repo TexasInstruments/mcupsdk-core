@@ -65,8 +65,6 @@ extern "C" {
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void EnetApp_showMenu(void);
-
 void EnetApp_createClock(void);
 
 void EnetApp_deleteClock(void);

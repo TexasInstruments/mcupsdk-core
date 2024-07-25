@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_layer2_icssg.$(PROFILE).out
+OUTNAME:=enet_test_icssg_layer2_switch.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_layer2_icssg.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_layer2_icssg.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_layer2_icssg.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_layer2_icssg.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_layer2_icssg.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_layer2_icssg.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_layer2_icssg.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_layer2_icssg.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_test_icssg_layer2_switch.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_test_icssg_layer2_switch.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_test_icssg_layer2_switch.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_test_icssg_layer2_switch.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_test_icssg_layer2_switch.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_test_icssg_layer2_switch.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_test_icssg_layer2_switch.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_test_icssg_layer2_switch.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -241,7 +241,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:r5fss0-0:freertos:ti-arm-clang enet_layer2_icssg ...
+	@echo  Scrubing: am243x:r5fss0-0:freertos:ti-arm-clang enet_test_icssg_layer2_switch ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -357,12 +357,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for enet_layer2_icssg.$(PROFILE) ...
+	@echo Creating Coverage Report for enet_test_icssg_layer2_switch.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_layer2_icssg.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_layer2_icssg.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_layer2_icssg.$(PROFILE).profdata > coverage/enet_layer2_icssg.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_layer2_icssg.$(PROFILE).profdata.json --output-json=coverage/enet_layer2_icssg.$(PROFILE).analysis.json --output=../enet_layer2_icssg.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_test_icssg_layer2_switch.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_test_icssg_layer2_switch.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_test_icssg_layer2_switch.$(PROFILE).profdata > coverage/enet_test_icssg_layer2_switch.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_test_icssg_layer2_switch.$(PROFILE).profdata.json --output-json=coverage/enet_test_icssg_layer2_switch.$(PROFILE).analysis.json --output=../enet_test_icssg_layer2_switch.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Icssg Layer2 Dualmac"
-        name = "icssg_layer2_dualmac_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
+        title="Enet Test Icssg Layer2 Dualmac"
+        name = "enet_test_icssg_layer2_dualmac_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -64,7 +64,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib
             -i${CG_TOOL_ROOT}/lib
             -i${PROJECT_BUILD_DIR}/syscfg
-            -m=icssg_layer2_dualmac.${ConfigName}.map
+            -m=enet_test_icssg_layer2_dualmac.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -80,7 +80,7 @@
             --context r5fss0-0 --part ALV --package ALV
         "
 
-        description="A Icssg Layer2 Dualmac FREERTOS project">
+        description="A Enet Test Icssg Layer2 Dualmac FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

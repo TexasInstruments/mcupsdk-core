@@ -110,9 +110,7 @@ typedef struct EnetLpbk_Obj_s
     uint32_t instId;
     uint32_t coreId;
     uint32_t coreKey;
-    uint32_t boardId;
     Enet_MacPort macPort;
-    emac_mode macMode;      /* MAC mode (defined in board library) */
     EnetDma_RxChHandle hRxCh;
     EnetDma_PktQ rxFreeQ;
     EnetDma_PktQ rxReadyQ;
@@ -121,7 +119,6 @@ typedef struct EnetLpbk_Obj_s
     uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
 
     /* Test config params */
-    EnetLpbk_type testLoopBackType;
     bool printFrame;        /* Print received Ethernet frames? */
 
     /* Test runtime params */

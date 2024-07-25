@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME=enet_cpsw_loopback_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+PROJECT_NAME=enet_test_cpsw_layer2_performance_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

@@ -134,61 +134,6 @@ void print_cpu_load()
     }
 }
 
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *linkArgs,
-                          Enet_MacPort macPort)
-{
-    EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
-    EnetMacPort_LinkCfg *linkCfg = &linkArgs->linkCfg;
-    EnetMacPort_Interface *mii = &linkArgs->mii;
-    EnetBoard_EthPort ethPort;
-    const EnetBoard_PhyCfg *boardPhyCfg;
-    int32_t status;
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = enetType;
-    ethPort.instId   = instId;
-    ethPort.macPort  = macPort;
-    ethPort.boardId  = ENETBOARD_AM64X_AM243X_EVM;
-    ethPort.mii.layerType      = ENET_MAC_LAYER_GMII;
-    ethPort.mii.sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
-    ethPort.mii.variantType    = ENET_MAC_VARIANT_FORCED;
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    EnetAppUtils_assert(status == ENET_SOK);
-
-    {
-	    IcssgMacPort_Cfg *macCfg = (IcssgMacPort_Cfg *)linkArgs->macCfg;
-	    IcssgMacPort_initCfg(macCfg);
-	    macCfg->specialFramePrio = 1U;
-    }
-
-    boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-    if (boardPhyCfg != NULL)
-    {
-        EnetPhy_initCfg(phyCfg);
-        phyCfg->phyAddr     = boardPhyCfg->phyAddr;
-        phyCfg->isStrapped  = boardPhyCfg->isStrapped;
-        phyCfg->loopbackEn  = false;
-        phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-        phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-    }
-    else
-    {
-        DebugP_log("No PHY configuration found for MAC port %u\r\n",
-                           ENET_MACPORT_ID(ethPort.macPort));
-        EnetAppUtils_assert(false);
-    }
-
-    mii->layerType     = ethPort.mii.layerType;
-    mii->sublayerType  = ethPort.mii.sublayerType;
-    mii->variantType   = ENET_MAC_VARIANT_FORCED;
-    linkCfg->speed     = ENET_SPEED_AUTO;
-    linkCfg->duplexity = ENET_DUPLEX_AUTO;
-}
-
 int enet_lwip_example(void *args)
 {
     uint32_t i;
@@ -330,11 +275,9 @@ static void EnetApp_initExtPhyArgs(Enet_Type enetType,
     /* Setup board for requested Ethernet port */
     ethPort.instId   = instId;
     ethPort.macPort  = macPort;
-    ethPort.boardId  = ENETBOARD_AM64X_AM243X_EVM;
+    ethPort.boardId  = EnetBoard_getId();
     ethPort.enetType = enetType;
-    ethPort.mii.layerType      = ENET_MAC_LAYER_GMII;
-    ethPort.mii.sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
-    ethPort.mii.variantType    = ENET_MAC_VARIANT_FORCED;
+    EnetBoard_getMiiConfig(&ethPort.mii);
     *mii = (EnetExtPhy_Mii) EnetUtils_macToPhyMii(&ethPort.mii);
 
     boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);

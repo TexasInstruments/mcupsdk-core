@@ -884,77 +884,6 @@ static void EnetTas_resetStats(EnetTas_PerCtxt *perCtxts,
     }
 }
 
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *portLinkCfg,
-                          Enet_MacPort macPort)
-{
-    EnetBoard_EthPort ethPort;
-    const EnetBoard_PhyCfg *boardPhyCfg;
-    IcssgMacPort_Cfg *icssgMacCfg;
-    EnetMacPort_LinkCfg *linkCfg = &portLinkCfg->linkCfg;
-    EnetMacPort_Interface *mii = &portLinkCfg->mii;
-    EnetPhy_Cfg *phyCfg = &portLinkCfg->phyCfg;
-    int32_t status = ENET_SOK;
-    EnetTas_PerCtxt *perCtxt;
-    uint32_t perIdx;
-
-    status = EnetTas_getPerIdx(enetType, instId, &perIdx);
-    EnetAppUtils_assert(status == ENET_SOK);
-
-    perCtxt = &gEnetTas.perCtxt[perIdx];
-
-    EnetAppUtils_print("%s: Open port %u\r\n", perCtxt->name, ENET_MACPORT_ID(macPort));
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = perCtxt->enetType;
-    ethPort.instId   = perCtxt->instId;
-    ethPort.macPort  = macPort;
-    ethPort.boardId  = ENETBOARD_AM64X_AM243X_EVM;
-    EnetTas_macMode2MacMii(RGMII, &ethPort.mii);
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    if (status != ENET_SOK)
-    {
-        EnetAppUtils_print("%s: Failed to setup MAC port %u\r\n", perCtxt->name, ENET_MACPORT_ID(macPort));
-        EnetAppUtils_assert(false);
-    }
-
-    icssgMacCfg = portLinkCfg->macCfg;
-    IcssgMacPort_initCfg(icssgMacCfg);
-    icssgMacCfg->specialFramePrio = 1U;
-
-        /* Set port link params */
-    portLinkCfg->macPort = macPort;
-
-    mii->layerType     = ethPort.mii.layerType;
-    mii->sublayerType  = ethPort.mii.sublayerType;
-    mii->variantType   = ENET_MAC_VARIANT_FORCED;
-
-    linkCfg->speed     = ENET_SPEED_AUTO;
-    linkCfg->duplexity = ENET_DUPLEX_AUTO;
-
-    boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-    if (boardPhyCfg != NULL)
-    {
-        EnetPhy_initCfg(phyCfg);
-
-        phyCfg->phyAddr         = boardPhyCfg->phyAddr;
-        phyCfg->isStrapped      = boardPhyCfg->isStrapped;
-        phyCfg->loopbackEn      = false;
-        phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-        phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-    }
-    else
-    {
-        EnetAppUtils_print("%s: No PHY configuration found\r\n", perCtxt->name);
-        EnetAppUtils_assert(false);
-    }
-
-}
-
-
 static int32_t EnetTas_waitForLinkUp(EnetTas_PerCtxt *perCtxt)
 {
     Enet_IoctlPrms prms;
@@ -1031,6 +960,13 @@ static void EnetTas_macMode2MacMii(emac_mode macMode,
 {
     switch (macMode)
     {
+        case MII:
+        {
+            mii->layerType    = ENET_MAC_LAYER_MII;
+            mii->sublayerType = ENET_MAC_SUBLAYER_STANDARD;
+            mii->variantType  = ENET_MAC_VARIANT_NONE;
+            break;
+        }
         case RMII:
             mii->layerType    = ENET_MAC_LAYER_MII;
             mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;

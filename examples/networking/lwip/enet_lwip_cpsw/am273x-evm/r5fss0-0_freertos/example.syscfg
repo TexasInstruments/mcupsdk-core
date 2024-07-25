@@ -298,8 +298,8 @@ enet_cpsw1.PktInfoOnlyEnable               = true;
 enet_cpsw1.cptsHostRxTsEn                  = false;
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].phyToMacInterfaceMode = "MSS_RGMII";
+enet_cpsw1.$name                 = "CONFIG_ENET_CPSW0";
+enet_cpsw1.phyToMacInterfaceMode = "MSS_RGMII";
 enet_cpsw1.netifInstance.create(1);
 enet_cpsw1.netifInstance[0].$name          = "NETIF_INST_ID0";
 
@@ -308,19 +308,19 @@ enet_cpsw1.netifInstance[0].$name          = "NETIF_INST_ID0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-enet_cpsw1.pinmux[0].MSS_MDIO.$suggestSolution       = "MSS_MDIO0";
-enet_cpsw1.pinmux[0].MSS_MDIO.DATA.$suggestSolution  = "PAD_CM";
-enet_cpsw1.pinmux[0].MSS_MDIO.CLK.$suggestSolution   = "PAD_CN";
-enet_cpsw1.pinmux[0].MSS_RGMII.$suggestSolution      = "MSS_RGMII0";
-enet_cpsw1.pinmux[0].MSS_RGMII.RD0.$suggestSolution  = "PAD_CL";
-enet_cpsw1.pinmux[0].MSS_RGMII.RD1.$suggestSolution  = "PAD_CK";
-enet_cpsw1.pinmux[0].MSS_RGMII.RD2.$suggestSolution  = "PAD_CJ";
-enet_cpsw1.pinmux[0].MSS_RGMII.RD3.$suggestSolution  = "PAD_CI";
-enet_cpsw1.pinmux[0].MSS_RGMII.RCTL.$suggestSolution = "PAD_CB";
-enet_cpsw1.pinmux[0].MSS_RGMII.RCLK.$suggestSolution = "PAD_CH";
-enet_cpsw1.pinmux[0].MSS_RGMII.TD0.$suggestSolution  = "PAD_CF";
-enet_cpsw1.pinmux[0].MSS_RGMII.TD1.$suggestSolution  = "PAD_CE";
-enet_cpsw1.pinmux[0].MSS_RGMII.TD2.$suggestSolution  = "PAD_CD";
-enet_cpsw1.pinmux[0].MSS_RGMII.TD3.$suggestSolution  = "PAD_CC";
-enet_cpsw1.pinmux[0].MSS_RGMII.TCTL.$suggestSolution = "PAD_CA";
-enet_cpsw1.pinmux[0].MSS_RGMII.TCLK.$suggestSolution = "PAD_CG";
+enet_cpsw1.MSS_MDIO.$suggestSolution       = "MSS_MDIO0";
+enet_cpsw1.MSS_MDIO.DATA.$suggestSolution  = "PAD_CM";
+enet_cpsw1.MSS_MDIO.CLK.$suggestSolution   = "PAD_CN";
+enet_cpsw1.MSS_RGMII.$suggestSolution      = "MSS_RGMII0";
+enet_cpsw1.MSS_RGMII.RD0.$suggestSolution  = "PAD_CL";
+enet_cpsw1.MSS_RGMII.RD1.$suggestSolution  = "PAD_CK";
+enet_cpsw1.MSS_RGMII.RD2.$suggestSolution  = "PAD_CJ";
+enet_cpsw1.MSS_RGMII.RD3.$suggestSolution  = "PAD_CI";
+enet_cpsw1.MSS_RGMII.RCTL.$suggestSolution = "PAD_CB";
+enet_cpsw1.MSS_RGMII.RCLK.$suggestSolution = "PAD_CH";
+enet_cpsw1.MSS_RGMII.TD0.$suggestSolution  = "PAD_CF";
+enet_cpsw1.MSS_RGMII.TD1.$suggestSolution  = "PAD_CE";
+enet_cpsw1.MSS_RGMII.TD2.$suggestSolution  = "PAD_CD";
+enet_cpsw1.MSS_RGMII.TD3.$suggestSolution  = "PAD_CC";
+enet_cpsw1.MSS_RGMII.TCTL.$suggestSolution = "PAD_CA";
+enet_cpsw1.MSS_RGMII.TCLK.$suggestSolution = "PAD_CG";

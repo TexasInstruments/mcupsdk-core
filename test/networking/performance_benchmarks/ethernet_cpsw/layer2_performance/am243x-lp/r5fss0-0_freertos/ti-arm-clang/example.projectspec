@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Enet Cpsw Layer2 Performance"
-        name = "enet_cpsw_layer2_performance_am243x-lp_r5fss0-0_freertos_ti-arm-clang"
+        title="Enet Test Cpsw Layer2 Performance"
+        name = "enet_test_cpsw_layer2_performance_am243x-lp_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -65,7 +65,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib
             -i${CG_TOOL_ROOT}/lib
             -i${PROJECT_BUILD_DIR}/syscfg
-            -m=enet_cpsw_layer2_performance.${ConfigName}.map
+            -m=enet_test_cpsw_layer2_performance.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -81,7 +81,7 @@
             --context r5fss0-0 --part ALX --package ALX
         "
 
-        description="A Enet Cpsw Layer2 Performance FREERTOS project">
+        description="A Enet Test Cpsw Layer2 Performance FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

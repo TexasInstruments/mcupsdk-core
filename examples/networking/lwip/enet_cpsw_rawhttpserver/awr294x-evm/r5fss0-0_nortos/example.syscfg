@@ -72,8 +72,8 @@ enet_cpsw1.RtosVariant                     = "NoRTOS";
 enet_cpsw1.cptsHostRxTsEn                  = false;
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].phyToMacInterfaceMode = "RGMII";
+enet_cpsw1.$name                 = "CONFIG_ENET_CPSW0";
+enet_cpsw1.phyToMacInterfaceMode = "RGMII";
 enet_cpsw1.netifInstance.create(1);
 enet_cpsw1.netifInstance[0].$name          = "NETIF_INST_ID0";
 
@@ -82,19 +82,19 @@ enet_cpsw1.netifInstance[0].$name          = "NETIF_INST_ID0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-enet_cpsw1.pinmux[0].MDIO.$suggestSolution       = "MDIO0";
-enet_cpsw1.pinmux[0].MDIO.DATA.$suggestSolution  = "ball.T5";
-enet_cpsw1.pinmux[0].MDIO.CLK.$suggestSolution   = "ball.R4";
-enet_cpsw1.pinmux[0].RGMII.$suggestSolution      = "RGMII0";
-enet_cpsw1.pinmux[0].RGMII.RD0.$suggestSolution  = "ball.V6";
-enet_cpsw1.pinmux[0].RGMII.RD1.$suggestSolution  = "ball.V4";
-enet_cpsw1.pinmux[0].RGMII.RD2.$suggestSolution  = "ball.V5";
-enet_cpsw1.pinmux[0].RGMII.RD3.$suggestSolution  = "ball.U10";
-enet_cpsw1.pinmux[0].RGMII.RCTL.$suggestSolution = "ball.T7";
-enet_cpsw1.pinmux[0].RGMII.RCLK.$suggestSolution = "ball.T9";
-enet_cpsw1.pinmux[0].RGMII.TD0.$suggestSolution  = "ball.U7";
-enet_cpsw1.pinmux[0].RGMII.TD1.$suggestSolution  = "ball.U5";
-enet_cpsw1.pinmux[0].RGMII.TD2.$suggestSolution  = "ball.U6";
-enet_cpsw1.pinmux[0].RGMII.TD3.$suggestSolution  = "ball.U4";
-enet_cpsw1.pinmux[0].RGMII.TCTL.$suggestSolution = "ball.R6";
-enet_cpsw1.pinmux[0].RGMII.TCLK.$suggestSolution = "ball.V3";
+enet_cpsw1.MDIO.$suggestSolution       = "MDIO0";
+enet_cpsw1.MDIO.DATA.$suggestSolution  = "ball.T5";
+enet_cpsw1.MDIO.CLK.$suggestSolution   = "ball.R4";
+enet_cpsw1.RGMII.$suggestSolution      = "RGMII0";
+enet_cpsw1.RGMII.RD0.$suggestSolution  = "ball.V6";
+enet_cpsw1.RGMII.RD1.$suggestSolution  = "ball.V4";
+enet_cpsw1.RGMII.RD2.$suggestSolution  = "ball.V5";
+enet_cpsw1.RGMII.RD3.$suggestSolution  = "ball.U10";
+enet_cpsw1.RGMII.RCTL.$suggestSolution = "ball.T7";
+enet_cpsw1.RGMII.RCLK.$suggestSolution = "ball.T9";
+enet_cpsw1.RGMII.TD0.$suggestSolution  = "ball.U7";
+enet_cpsw1.RGMII.TD1.$suggestSolution  = "ball.U5";
+enet_cpsw1.RGMII.TD2.$suggestSolution  = "ball.U6";
+enet_cpsw1.RGMII.TD3.$suggestSolution  = "ball.U4";
+enet_cpsw1.RGMII.TCTL.$suggestSolution = "ball.R6";
+enet_cpsw1.RGMII.TCLK.$suggestSolution = "ball.V3";

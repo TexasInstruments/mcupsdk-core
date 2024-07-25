@@ -164,6 +164,9 @@ int32_t EnetSBL_setup(void)
     {
         status = EnetApp_driverOpen(gEnetSBL_LLDObj.enetType, gEnetSBL_LLDObj.instId);
 
+        /* Set Enet global runtime log level */
+        Enet_setTraceLevel(ENET_TRACE_DEBUG);
+
         if (status != ENET_SOK)
         {
             EnetAppUtils_print("[ ENETSBL ] Failed to open Enet driver: %d\r\n", status);
@@ -1255,74 +1258,6 @@ static bool EnetSBL_parseFrame(EthFrame *frame, uint32_t dataLen)
 
 	return matchingPkt;
 }
-
-
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *linkArgs,
-                          Enet_MacPort macPort)
-{
-    EnetBoard_EthPort ethPort;
-    CpswMacPort_Cfg *cpswMacCfg;
-    EnetMacPort_LinkCfg *linkCfg = &linkArgs->linkCfg;
-    EnetMacPort_Interface *mii = &linkArgs->mii;
-    EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
-    int32_t status = ENET_SOK;
-    EnetPhy_Mii phyMii;
-
-
-    EnetAppUtils_assert(EnetAppUtils_isDescCached() == false);
-    /* Set Enet global runtime log level */
-    Enet_setTraceLevel(ENET_TRACE_DEBUG);
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = gEnetSBL_LLDObj.enetType;
-    ethPort.instId   = gEnetSBL_LLDObj.instId;
-    ethPort.macPort  = gEnetSBL_LLDObj.macPort;
-    ethPort.boardId  = gEnetSBL_LLDObj.boardId;
-    EnetSBL_macMode2MacMii(gEnetSBL_LLDObj.macMode, &ethPort.mii);
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    EnetAppUtils_assert(status == ENET_SOK);
-
-    /* Set port link params */
-    linkArgs->macPort = macPort;
-
-    cpswMacCfg = linkArgs->macCfg;
-
-    EnetSBL_macMode2MacMii(gEnetSBL_LLDObj.macMode, mii);
-
-    const EnetBoard_PhyCfg *boardPhyCfg = NULL;
-
-    /* Set PHY configuration params */
-    EnetPhy_initCfg(phyCfg);
-    status = EnetSBL_macMode2PhyMii(gEnetSBL_LLDObj.macMode, &phyMii);
-
-    if (status == ENET_SOK)
-    {
-        boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-        if (boardPhyCfg != NULL)
-        {
-            phyCfg->phyAddr     = boardPhyCfg->phyAddr;
-            phyCfg->isStrapped  = boardPhyCfg->isStrapped;
-            phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-            phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        phyCfg->loopbackEn  = false;
-            memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-        }
-        else
-        {
-            EnetAppUtils_print("[ ENETSBL ] PHY info not found\r\n");
-            EnetAppUtils_assert(false);
-        }
-        linkCfg->speed = ENET_SPEED_AUTO;
-        linkCfg->duplexity = ENET_DUPLEX_AUTO;
-    }
-    /* MAC and PHY txsgs are mutually exclusive */
-    phyCfg->loopbackEn = false;
-    cpswMacCfg->loopbackEn = false;
-}
-
 
 void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId, Cpsw_Cfg *cpswCfg)
 {

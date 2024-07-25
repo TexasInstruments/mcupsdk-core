@@ -8249,9 +8249,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8265,6 +8265,7 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -8282,9 +8283,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Loopback Example. CPU is R5FSS0-1 running FREERTOS.",
-        "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8298,6 +8299,7 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
             "r5fss0-1_freertos"
         ],
         "mainCategories": [
@@ -8315,9 +8317,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
         ],
@@ -8331,6 +8333,109 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

@@ -202,8 +202,9 @@ int32_t EnetApp_loopbackTest(void)
             EnetAppUtils_print("Failed to add ucast entry: %d\r\n", status);
         }
     }
+
     /* Wait for link up */
-    if ((status == ENET_SOK) && (gEnetLpbk.testLoopBackType == LOOPBACK_TYPE_PHY))
+    if (status == ENET_SOK)
     {
         status = EnetApp_waitForLinkUp();
     }
@@ -633,96 +634,6 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId, Cpsw_Cfg *c
      * IP limitation, so disabling timestamping for this application */
     cptsCfg->hostRxTsEn = false;
 
-}
-
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *linkArgs,
-                          Enet_MacPort macPort)
-{
-    EnetBoard_EthPort ethPort;
-    CpswMacPort_Cfg *cpswMacCfg;
-    EnetMacPort_LinkCfg *linkCfg = &linkArgs->linkCfg;
-    EnetMacPort_Interface *mii = &linkArgs->mii;
-    EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
-    int32_t status = ENET_SOK;
-    EnetPhy_Mii phyMii;
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = gEnetLpbk.enetType;
-    ethPort.instId   = gEnetLpbk.instId;
-    ethPort.macPort  = gEnetLpbk.macPort;
-    ethPort.boardId  = gEnetLpbk.boardId;
-    EnetApp_macMode2MacMii(gEnetLpbk.macMode, &ethPort.mii);
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    EnetAppUtils_assert(status == ENET_SOK);
-
-    /* Set port link params */
-    linkArgs->macPort = macPort;
-
-    cpswMacCfg = linkArgs->macCfg;
-
-    EnetApp_macMode2MacMii(gEnetLpbk.macMode, mii);
-
-    if (gEnetLpbk.testLoopBackType == LOOPBACK_TYPE_PHY)
-    {
-        const EnetBoard_PhyCfg *boardPhyCfg = NULL;
-
-        /* Set PHY configuration params */
-        EnetPhy_initCfg(phyCfg);
-        status = EnetApp_macMode2PhyMii(gEnetLpbk.macMode, &phyMii);
-
-        if (status == ENET_SOK)
-        {
-            boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-            if (boardPhyCfg != NULL)
-            {
-                phyCfg->phyAddr     = boardPhyCfg->phyAddr;
-                phyCfg->isStrapped  = boardPhyCfg->isStrapped;
-                phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-                phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-                memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-            }
-            else
-            {
-                EnetAppUtils_print("PHY info not found\r\n");
-                EnetAppUtils_assert(false);
-            }
-
-            if ((phyMii == ENETPHY_MAC_MII_MII) ||
-                (phyMii == ENETPHY_MAC_MII_RMII))
-            {
-                linkCfg->speed = ENET_SPEED_100MBIT;
-            }
-            else
-            {
-                /* Speed is always 100 Mbits on AM273x */
-                linkCfg->speed = ENET_SPEED_100MBIT;
-            }
-
-            linkCfg->duplexity = ENET_DUPLEX_FULL;
-        }
-    }
-    else
-    {
-        phyCfg->phyAddr = ENETPHY_INVALID_PHYADDR;
-
-        if (mii->layerType == ENET_MAC_LAYER_MII)
-        {
-            linkCfg->speed = ENET_SPEED_100MBIT;
-        }
-        else
-        {
-            linkCfg->speed = ENET_SPEED_1GBIT;
-        }
-
-        linkCfg->duplexity = ENET_DUPLEX_FULL;
-    }
-
-    /* MAC and PHY loopbacks are mutually exclusive */
-    phyCfg->loopbackEn = (gEnetLpbk.testLoopBackType == LOOPBACK_TYPE_PHY);
-    cpswMacCfg->loopbackEn = (gEnetLpbk.testLoopBackType == LOOPBACK_TYPE_MAC);
 }
 
 static void EnetApp_closeEnet(void)

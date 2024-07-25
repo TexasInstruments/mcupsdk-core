@@ -231,9 +231,9 @@ enet_cpsw1.BoardType                = "am261x-lp";
 enet_cpsw1.cptsHostRxTsEn           = false;
 enet_cpsw1.txDmaChannel[0].$name    = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name    = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name          = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].RGMII1.$assign = "RGMII1";
-enet_cpsw1.pinmux[0].RGMII2.$assign = "RGMII2";
+enet_cpsw1.$name          = "CONFIG_ENET_CPSW0";
+enet_cpsw1.RGMII1.$assign = "RGMII1";
+enet_cpsw1.RGMII2.$assign = "RGMII2";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

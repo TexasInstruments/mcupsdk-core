@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "INDUSTRIAL_COMMUNICATIONS_SDK@09.00.00"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -39,22 +39,29 @@ gpio1.$name                    = "CONFIG_GPIO0";
 gpio1.pinDir                   = "OUTPUT";
 gpio1.useMcuDomainPeripherals  = true;
 gpio1.MCU_GPIO.$assign         = "MCU_GPIO0";
-gpio1.MCU_GPIO.gpioPin.$assign = "ball.A7";
+gpio1.MCU_GPIO.gpioPin.$assign = "MCU_SPI1_CS0";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
 i2c1.I2C.$assign         = "I2C0";
-i2c1.I2C.SCL.$assign     = "ball.A18";
-i2c1.I2C.SDA.$assign     = "ball.B18";
+i2c1.I2C.SCL.$assign     = "I2C0_SCL";
+i2c1.I2C.SDA.$assign     = "I2C0_SDA";
+i2c1.I2C_child.$name     = "drivers_i2c_v0_i2c_v0_template1";
 
 i2c2.$name           = "CONFIG_I2C1";
 i2c2.I2C.$assign     = "I2C1";
-i2c2.I2C.SCL.$assign = "ball.C18";
-i2c2.I2C.SDA.$assign = "ball.B19";
+i2c2.I2C.SCL.$assign = "I2C1_SCL";
+i2c2.I2C.SDA.$assign = "I2C1_SDA";
+i2c2.I2C_child.$name = "drivers_i2c_v0_i2c_v0_template2";
 
 debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;
 debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -91,20 +98,19 @@ mpu_armv77.$name    = "CONFIG_MPU_REGION6";
 mpu_armv77.size     = 27;
 mpu_armv77.baseAddr = 0x60000000;
 
-enet_icss1.$name                          = "CONFIG_ENET_ICSS0";
-enet_icss1.phyToMacInterfaceMode          = "RGMII";
-enet_icss1.mdioMode                       = "MDIO_MODE_MANUAL";
-enet_icss1.LargePoolPktCount              = 80;
-enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
-enet_icss1.rxDmaChannel.create(2);
-enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].sizeThreshEn   = 0;
-enet_icss1.rxDmaChannel[1].$name          = "ENET_DMA_RX_CH1";
-enet_icss1.rxDmaChannel[1].macAddrCount   = 0;
-enet_icss1.rxDmaChannel[1].chIdx          = 1;
-enet_icss1.rxDmaChannel[1].sizeThreshEn   = 0;
-enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
-enet_icss1.PRU_ICSSG1_RGMII2.$assign      = "PRU_ICSSG1_RGMII2";
+enet_icss1.$name                        = "CONFIG_ENET_ICSS0";
+enet_icss1.phyToMacInterfaceMode        = "RGMII";
+enet_icss1.mdioMode                     = "MDIO_MODE_MANUAL";
+enet_icss1.LargePoolPktCount            = 80;
+enet_icss1.txDmaChannel[0].$name        = "ENET_DMA_TX_CH0";
+enet_icss1.rxDmaChannel[0].$name        = "ENET_DMA_RX_CH0";
+enet_icss1.rxDmaChannel[0].sizeThreshEn = 0;
+enet_icss1.rxDmaChannel[1].$name        = "ENET_DMA_RX_CH1";
+enet_icss1.rxDmaChannel[1].macAddrCount = 0;
+enet_icss1.rxDmaChannel[1].chIdx        = 1;
+enet_icss1.rxDmaChannel[1].sizeThreshEn = 0;
+enet_icss1.PRU_ICSSG1_RGMII1.$assign    = "PRU_ICSSG1_RGMII1";
+enet_icss1.PRU_ICSSG1_RGMII2.$assign    = "PRU_ICSSG1_RGMII2";
 
 enet_icss1.icss                          = pruicss1;
 pruicss1.$name                           = "CONFIG_PRU_ICSS1";
@@ -125,35 +131,35 @@ enet_icss1.udmaDrv = udma1;
  * re-solve from scratch.
  */
 debug_log.uartLog.UART.$suggestSolution                  = "USART0";
-debug_log.uartLog.UART.RXD.$suggestSolution              = "ball.D15";
-debug_log.uartLog.UART.TXD.$suggestSolution              = "ball.C16";
+debug_log.uartLog.UART.RXD.$suggestSolution              = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution              = "UART0_TXD";
 enet_icss1.PRU_ICSSG1_MDIO.$suggestSolution              = "PRU_ICSSG1_MDIO0";
-enet_icss1.PRU_ICSSG1_MDIO.MDC.$suggestSolution          = "ball.Y6";
-enet_icss1.PRU_ICSSG1_MDIO.MDIO.$suggestSolution         = "ball.AA6";
+enet_icss1.PRU_ICSSG1_MDIO.MDC.$suggestSolution          = "PRG1_MDIO0_MDC";
+enet_icss1.PRU_ICSSG1_MDIO.MDIO.$suggestSolution         = "PRG1_MDIO0_MDIO";
 enet_icss1.PRU_ICSSG1_IEP.$suggestSolution               = "PRU_ICSSG1_IEP0";
-enet_icss1.PRU_ICSSG1_IEP.EDC_LATCH_IN0.$suggestSolution = "ball.V7";
-enet_icss1.PRU_ICSSG1_IEP.EDC_SYNC_OUT0.$suggestSolution = "ball.W7";
-enet_icss1.PRU_ICSSG1_RGMII1.RD0.$suggestSolution        = "ball.Y7";
-enet_icss1.PRU_ICSSG1_RGMII1.RD1.$suggestSolution        = "ball.U8";
-enet_icss1.PRU_ICSSG1_RGMII1.RD2.$suggestSolution        = "ball.W8";
-enet_icss1.PRU_ICSSG1_RGMII1.RD3.$suggestSolution        = "ball.V8";
-enet_icss1.PRU_ICSSG1_RGMII1.RXC.$suggestSolution        = "ball.AA7";
-enet_icss1.PRU_ICSSG1_RGMII1.RX_CTL.$suggestSolution     = "ball.Y8";
-enet_icss1.PRU_ICSSG1_RGMII1.TD0.$suggestSolution        = "ball.AA8";
-enet_icss1.PRU_ICSSG1_RGMII1.TD1.$suggestSolution        = "ball.U9";
-enet_icss1.PRU_ICSSG1_RGMII1.TD2.$suggestSolution        = "ball.W9";
-enet_icss1.PRU_ICSSG1_RGMII1.TD3.$suggestSolution        = "ball.AA9";
-enet_icss1.PRU_ICSSG1_RGMII1.TXC.$suggestSolution        = "ball.V9";
-enet_icss1.PRU_ICSSG1_RGMII1.TX_CTL.$suggestSolution     = "ball.Y9";
-enet_icss1.PRU_ICSSG1_RGMII2.RD0.$suggestSolution        = "ball.W11";
-enet_icss1.PRU_ICSSG1_RGMII2.RD1.$suggestSolution        = "ball.V11";
-enet_icss1.PRU_ICSSG1_RGMII2.RD2.$suggestSolution        = "ball.AA12";
-enet_icss1.PRU_ICSSG1_RGMII2.RD3.$suggestSolution        = "ball.Y12";
-enet_icss1.PRU_ICSSG1_RGMII2.RXC.$suggestSolution        = "ball.U11";
-enet_icss1.PRU_ICSSG1_RGMII2.RX_CTL.$suggestSolution     = "ball.W12";
-enet_icss1.PRU_ICSSG1_RGMII2.TD0.$suggestSolution        = "ball.AA10";
-enet_icss1.PRU_ICSSG1_RGMII2.TD1.$suggestSolution        = "ball.V10";
-enet_icss1.PRU_ICSSG1_RGMII2.TD2.$suggestSolution        = "ball.U10";
-enet_icss1.PRU_ICSSG1_RGMII2.TD3.$suggestSolution        = "ball.AA11";
-enet_icss1.PRU_ICSSG1_RGMII2.TXC.$suggestSolution        = "ball.Y10";
-enet_icss1.PRU_ICSSG1_RGMII2.TX_CTL.$suggestSolution     = "ball.Y11";
+enet_icss1.PRU_ICSSG1_IEP.EDC_LATCH_IN0.$suggestSolution = "PRG1_PRU0_GPO18";
+enet_icss1.PRU_ICSSG1_IEP.EDC_SYNC_OUT0.$suggestSolution = "PRG1_PRU0_GPO19";
+enet_icss1.PRU_ICSSG1_RGMII1.RD0.$suggestSolution        = "PRG1_PRU0_GPO0";
+enet_icss1.PRU_ICSSG1_RGMII1.RD1.$suggestSolution        = "PRG1_PRU0_GPO1";
+enet_icss1.PRU_ICSSG1_RGMII1.RD2.$suggestSolution        = "PRG1_PRU0_GPO2";
+enet_icss1.PRU_ICSSG1_RGMII1.RD3.$suggestSolution        = "PRG1_PRU0_GPO3";
+enet_icss1.PRU_ICSSG1_RGMII1.RXC.$suggestSolution        = "PRG1_PRU0_GPO6";
+enet_icss1.PRU_ICSSG1_RGMII1.RX_CTL.$suggestSolution     = "PRG1_PRU0_GPO4";
+enet_icss1.PRU_ICSSG1_RGMII1.TD0.$suggestSolution        = "PRG1_PRU0_GPO11";
+enet_icss1.PRU_ICSSG1_RGMII1.TD1.$suggestSolution        = "PRG1_PRU0_GPO12";
+enet_icss1.PRU_ICSSG1_RGMII1.TD2.$suggestSolution        = "PRG1_PRU0_GPO13";
+enet_icss1.PRU_ICSSG1_RGMII1.TD3.$suggestSolution        = "PRG1_PRU0_GPO14";
+enet_icss1.PRU_ICSSG1_RGMII1.TXC.$suggestSolution        = "PRG1_PRU0_GPO16";
+enet_icss1.PRU_ICSSG1_RGMII1.TX_CTL.$suggestSolution     = "PRG1_PRU0_GPO15";
+enet_icss1.PRU_ICSSG1_RGMII2.RD0.$suggestSolution        = "PRG1_PRU1_GPO0";
+enet_icss1.PRU_ICSSG1_RGMII2.RD1.$suggestSolution        = "PRG1_PRU1_GPO1";
+enet_icss1.PRU_ICSSG1_RGMII2.RD2.$suggestSolution        = "PRG1_PRU1_GPO2";
+enet_icss1.PRU_ICSSG1_RGMII2.RD3.$suggestSolution        = "PRG1_PRU1_GPO3";
+enet_icss1.PRU_ICSSG1_RGMII2.RXC.$suggestSolution        = "PRG1_PRU1_GPO6";
+enet_icss1.PRU_ICSSG1_RGMII2.RX_CTL.$suggestSolution     = "PRG1_PRU1_GPO4";
+enet_icss1.PRU_ICSSG1_RGMII2.TD0.$suggestSolution        = "PRG1_PRU1_GPO11";
+enet_icss1.PRU_ICSSG1_RGMII2.TD1.$suggestSolution        = "PRG1_PRU1_GPO12";
+enet_icss1.PRU_ICSSG1_RGMII2.TD2.$suggestSolution        = "PRG1_PRU1_GPO13";
+enet_icss1.PRU_ICSSG1_RGMII2.TD3.$suggestSolution        = "PRG1_PRU1_GPO14";
+enet_icss1.PRU_ICSSG1_RGMII2.TXC.$suggestSolution        = "PRG1_PRU1_GPO16";
+enet_icss1.PRU_ICSSG1_RGMII2.TX_CTL.$suggestSolution     = "PRG1_PRU1_GPO15";

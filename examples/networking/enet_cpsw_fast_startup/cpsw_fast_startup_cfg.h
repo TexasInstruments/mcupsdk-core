@@ -69,9 +69,6 @@ void EnetApp_closePort(void);
 
 int32_t EnetApp_waitForLinkUp(void);
 
-void EnetApp_macMode2MacMii(emac_mode macMode,
-                                  EnetMacPort_Interface *mii);
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

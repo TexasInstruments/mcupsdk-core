@@ -528,67 +528,6 @@ void EnetApp_showMacAddrs(EnetApp_PerCtxt *perCtxts,
     }
 }
 
-void EnetApp_initLinkArgs(Enet_Type enetType,
-                          uint32_t instId,
-                          EnetPer_PortLinkCfg *linkArgs,
-                          Enet_MacPort macPort)
-{
-    EnetBoard_EthPort ethPort;
-    const EnetBoard_PhyCfg *boardPhyCfg;
-    EnetMacPort_LinkCfg *linkCfg = &linkArgs->linkCfg;
-    EnetMacPort_Interface *mii = &linkArgs->mii;
-    EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
-    int32_t status = ENET_SOK;
-    EnetApp_PerCtxt *perCtxt;
-
-    perCtxt = EnetApp_getPerCtxt(enetType, instId);
-
-    EnetAppUtils_print("%s: Open port %u\r\n", perCtxt->name, ENET_MACPORT_ID(macPort));
-
-    /* Setup board for requested Ethernet port */
-    ethPort.enetType = perCtxt->enetType;
-    ethPort.instId   = perCtxt->instId;
-    ethPort.macPort  = macPort;
-    ethPort.boardId  = EnetBoard_getId();
-    EnetApp_macMode2MacMii(RGMII, &ethPort.mii);
-
-    status = EnetBoard_setupPorts(&ethPort, 1U);
-    if (status != ENET_SOK)
-    {
-        EnetAppUtils_print("%s: Failed to setup MAC port %u\r\n", perCtxt->name, ENET_MACPORT_ID(macPort));
-        EnetAppUtils_assert(false);
-    }
-
-    /* Set port link params */
-    linkArgs->macPort = macPort;
-
-    mii->layerType     = ethPort.mii.layerType;
-    mii->sublayerType  = ethPort.mii.sublayerType;
-    mii->variantType   = ENET_MAC_VARIANT_FORCED;
-
-    linkCfg->speed     = ENET_SPEED_AUTO;
-    linkCfg->duplexity = ENET_DUPLEX_AUTO;
-
-    boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-    if (boardPhyCfg != NULL)
-    {
-        EnetPhy_initCfg(phyCfg);
-        phyCfg->phyAddr     = boardPhyCfg->phyAddr;
-        phyCfg->isStrapped  = boardPhyCfg->isStrapped;
-        phyCfg->loopbackEn  = false;
-        phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
-        phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        /* Setting Tx and Rx skew delay values */
-        memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-
-    }
-    else
-    {
-        EnetAppUtils_print("%s: No PHY configuration found\r\n", perCtxt->name);
-        EnetAppUtils_assert(false);
-    }
-}
-
 void EnetApp_closePort(EnetApp_PerCtxt *perCtxt)
 {
     Enet_IoctlPrms prms;
@@ -643,29 +582,6 @@ int32_t EnetApp_waitForLinkUp(EnetApp_PerCtxt *perCtxt)
     }
 
     return status;
-}
-
-void EnetApp_macMode2MacMii(emac_mode macMode,
-                                  EnetMacPort_Interface *mii)
-{
-    switch (macMode)
-    {
-        case RMII:
-            mii->layerType    = ENET_MAC_LAYER_MII;
-            mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;
-            mii->variantType  = ENET_MAC_VARIANT_NONE;
-            break;
-
-        case RGMII:
-            mii->layerType    = ENET_MAC_LAYER_GMII;
-            mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;
-            mii->variantType  = ENET_MAC_VARIANT_FORCED;
-            break;
-        default:
-            EnetAppUtils_print("Invalid MAC mode: %u\r\n", macMode);
-            EnetAppUtils_assert(false);
-            break;
-    }
 }
 
 /* Sample Policer for rate limiting - filtering on Src MAC, Ether type and Port */

@@ -48,6 +48,7 @@
 #if (ENETBOARD_SYSCFG_CUSTOM_BOARD == 1)
 
 #include <drivers/i2c.h>
+#include <enet.h>
 
 #define IO_EXPANDER_PORT0_OUTPUT_REG (0x04U)
 #define IO_EXPANDER_PORT0_DIR_REG (0x0CU)
@@ -359,7 +360,12 @@ uint32_t EnetBoard_getId(void)
     return ENETBOARD_AM64X_AM243X_EVM;
 }
 
-
+void EnetBoard_getMiiConfig(EnetMacPort_Interface *mii)
+{
+    mii->layerType      =     ENET_MAC_LAYER_GMII;
+    mii->sublayerType   =     ENET_MAC_SUBLAYER_REDUCED;
+    mii->variantType    =     ENET_MAC_VARIANT_FORCED;
+}
 
 #endif /* #if (ENETBOARD_SYSCFG_CUSTOM_BOARD == 1) */
 

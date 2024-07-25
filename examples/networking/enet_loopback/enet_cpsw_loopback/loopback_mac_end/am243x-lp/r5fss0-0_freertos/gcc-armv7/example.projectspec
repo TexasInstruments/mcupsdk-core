@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex R.AM2434_ALX"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Enet Cpsw Loopback Mac End"
+        name = "enet_cpsw_loopback_mac_end_am243x-lp_r5fss0-0_freertos_gcc-armv7"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+                Debug,
+                Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="GNU"
+        toolVersion="7.2"
+        device="Cortex R.AM2434_ALX"
+        deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="false"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/arm-none-eabi/include
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4
+            -mcpu=cortex-r5
+            -mfloat-abi=hard
+            -mfpu=vfpv3-d16
+            -Wall
+            -Werror
+            -mthumb
+            -g
+            -Wno-unused-function
+            -Wno-enum-compare
+            -Wno-uninitialized
+            -Wno-address-of-packed-member
+            -Wno-int-to-pointer-cast
+            -Wno-stringop-truncation
+            -fgnu89-inline
+            -Wno-pointer-to-int-cast
+            -Wno-unused-variable
+            -Wno-unused-but-set-variable
+            -fdata-sections
+            -ffunction-sections
+            -DSOC_AM243X
+            -DENET_ENABLE_PER_CPSW=1
+        "
+        linkerBuildOptions="
+            -L${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
+            -L${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -L${MCU_PLUS_SDK_PATH}/source/board/lib
+            -L${MCU_PLUS_SDK_PATH}/source/networking/enet/lib
+            -L${CGT_GCC_ARMV7_PATH}/lib
+            -i${PROJECT_BUILD_DIR}/syscfg
+            -Wl,-Map=enet_cpsw_loopback_mac_end.${ConfigName}.map
+            -mcpu=cortex-r5
+            -mfloat-abi=hard
+            -mfpu=vfpv3-d16
+            -Wl,-static
+            -Wl,--gc-sections
+            -Wl,--build-id=none
+            -lstdc++
+            -lgcc
+            -lm
+            -lc
+            -lnosys
+        "
+
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am243x"
+
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context r5fss0-0 --part ALX --package ALX
+        "
+
+        description="A Enet Cpsw Loopback Mac End FREERTOS project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+                -lfreertos.am243x.r5f.gcc-armv7.debug.lib
+                -ldrivers.am243x.r5f.gcc-armv7.debug.lib
+                -lenet-cpsw.am243x.r5f.gcc-armv7.debug.lib
+                -lboard.am243x.r5f.gcc-armv7.debug.lib
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -O2
+                -flto
+            "
+            linkerBuildOptions="
+                -lfreertos.am243x.r5f.gcc-armv7.release.lib
+                -ldrivers.am243x.r5f.gcc-armv7.release.lib
+                -lenet-cpsw.am243x.r5f.gcc-armv7.release.lib
+                -lboard.am243x.r5f.gcc-armv7.release.lib
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../..//loopback_cfg.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../..//loopback_test.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../..//loopback_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am243x/EXAMPLES_ENET_CPSW_LOOPBACK.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>

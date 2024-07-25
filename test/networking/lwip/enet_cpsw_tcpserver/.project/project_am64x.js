@@ -125,7 +125,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "enet_cpsw_tcpserver";
+    property.name = "enet_test__cpsw_tcpserver";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 

@@ -193,7 +193,8 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -680,7 +681,8 @@ BUILD_COMBO_EXAMPLE_ALL += interrupt_profiling_am273x-evm_r5fss0-0_freertos_ti-a
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += lldp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am273x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -1112,8 +1114,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1454,7 +1459,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += interrupt_profiling_am273x-evm_r5fss0-0_freerto
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lldp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -1881,8 +1887,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -2223,7 +2232,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += interrupt_profiling_am273x-evm_r5fss0-0_freerto
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lldp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -2650,8 +2660,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_loopback_mac_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_loopback_phy_end_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_app_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

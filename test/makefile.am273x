@@ -494,7 +494,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += stc_func_test_am273x-evm_system_nortos_nortos
@@ -1050,7 +1050,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
@@ -1260,7 +1260,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_am273x-evm_system_nortos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_am273x-evm_system_freertos_clean
@@ -1811,7 +1811,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -2021,7 +2021,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_am273x-evm_system_nortos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_am273x-evm_system_freertos_scrub
@@ -2572,7 +2572,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+ enet_test_cpsw_layer2_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:

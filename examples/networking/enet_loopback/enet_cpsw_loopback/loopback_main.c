@@ -47,8 +47,6 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define APP_ENABLE_STATIC_CFG                      (0U)
-
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -95,18 +93,6 @@ void EnetLpbk_mainTask(void *args)
 
     EnetAppUtils_assert(numMacPorts == 1);
     gEnetLpbk.macPort          = macPortList[0];
-
-#if (1U == APP_ENABLE_STATIC_CFG)
-    gEnetLpbk.instId           = 0U;
-    gEnetLpbk.testLoopBackType = LOOPBACK_TYPE_PHY;
-    gEnetLpbk.macPort          = ENET_MAC_PORT_1;
-    gEnetLpbk.macMode          = RGMII;
-    gEnetLpbk.enetType         = ENET_CPSW_2G;
-    gEnetLpbk.boardId          = ENETBOARD_CPB_ID;
-#else
-    EnetApp_showMenu();
-#endif
-
 
     for (i = 0U; i < ENETLPBK_NUM_ITERATION; i++)
     {

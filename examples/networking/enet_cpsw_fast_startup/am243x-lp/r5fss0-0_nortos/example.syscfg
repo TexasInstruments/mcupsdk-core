@@ -2,12 +2,28 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const eeprom          = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1         = eeprom.addInstance();
+const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
+const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1            = i2c.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
+const mpu_armv76      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -22,29 +38,71 @@ const section4        = section.addInstance();
 const section5        = section.addInstance();
 const section6        = section.addInstance();
 const section7        = section.addInstance();
-
-const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
-const eeprom1    = eeprom.addInstance();
-const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1      = gpio.addInstance();
-const gpio2      = gpio.addInstance();
-const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1       = i2c.addInstance();
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
-const mpu_armv75 = mpu_armv7.addInstance();
-const mpu_armv76 = mpu_armv7.addInstance();
-const enet_cpsw  = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
-const enet_cpsw1 = enet_cpsw.addInstance();
+const enet_cpsw       = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
+const enet_cpsw1      = enet_cpsw.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+eeprom1.$name = "CONFIG_EEPROM0";
+
+gpio1.pinDir         = "OUTPUT";
+gpio1.$name          = "CONFIG_ENET_RGMII_PHY_RST";
+gpio1.pu_pd          = "pu";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "GPMC0_AD11";
+
+gpio2.pinDir         = "OUTPUT";
+gpio2.$name          = "CONFIG_ENET_RGMII_MUX_SEL";
+gpio2.pu_pd          = "pu";
+gpio2.rx             = true;
+gpio2.GPIO_n.$assign = "GPMC0_AD12";
+
+i2c1.$name               = "CONFIG_I2C0";
+eeprom1.peripheralDriver = i2c1;
+i2c1.I2C.$assign         = "I2C0";
+i2c1.I2C_child.$name     = "drivers_i2c_v0_i2c_v0_template1";
+
+debug_log.enableUartLog        = true;
+debug_log.enableCssLog         = false;
+debug_log.uartLog.$name        = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 23;
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION5";
+mpu_armv75.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv75.baseAddr          = 0xA5000000;
+mpu_armv75.size              = 23;
+mpu_armv75.attributes        = "NonCached";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION6";
+mpu_armv76.size     = 27;
+mpu_armv76.baseAddr = 0x60000000;
+
 default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name           = "CONFIG_GENERAL0";
@@ -161,59 +219,6 @@ section7.output_section[0].input_section[0].$name           = "*(*ENET_DMA_DESC_
 section7.output_section[0].input_section[1].$name           = "*(*ENET_DMA_RING_MEMPOOL)";
 section7.output_section[0].input_section[1].additional_data = "#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)\n        *(*ENET_DMA_PKT_MEMPOOL)\n#endif";
 
-eeprom1.$name = "CONFIG_EEPROM0";
-
-gpio1.pinDir               = "OUTPUT";
-gpio1.$name                = "CONFIG_ENET_RGMII_PHY_RST";
-gpio1.GPIO.$assign         = "GPIO0";
-gpio1.GPIO.gpioPin.pu_pd   = "pu";
-gpio1.GPIO.gpioPin.$assign = "ball.W20";
-
-gpio2.pinDir               = "OUTPUT";
-gpio2.$name                = "CONFIG_ENET_RGMII_MUX_SEL";
-gpio2.GPIO.$assign         = "GPIO0";
-gpio2.GPIO.gpioPin.pu_pd   = "pu";
-gpio2.GPIO.gpioPin.$assign = "ball.Y20";
-
-i2c1.$name               = "CONFIG_I2C0";
-eeprom1.peripheralDriver = i2c1;
-i2c1.I2C.$assign         = "I2C0";
-
-debug_log.enableUartLog        = true;
-debug_log.enableCssLog         = false;
-debug_log.uartLog.$name        = "CONFIG_UART0";
-debug_log.uartLog.UART.$assign = "USART0";
-
-mpu_armv71.$name             = "CONFIG_MPU_REGION0";
-mpu_armv71.size              = 31;
-mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv71.allowExecute      = false;
-
-mpu_armv72.$name             = "CONFIG_MPU_REGION1";
-mpu_armv72.size              = 15;
-mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.baseAddr          = 0x41010000;
-mpu_armv73.size              = 15;
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 23;
-
-mpu_armv75.$name             = "CONFIG_MPU_REGION5";
-mpu_armv75.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv75.baseAddr          = 0xA5000000;
-mpu_armv75.size              = 23;
-mpu_armv75.attributes        = "NonCached";
-
-mpu_armv76.$name    = "CONFIG_MPU_REGION6";
-mpu_armv76.size     = 27;
-mpu_armv76.baseAddr = 0x60000000;
-
 enet_cpsw1.$name                       = "CONFIG_ENET_CPSW0";
 enet_cpsw1.RtosVariant                 = "NoRTOS";
 enet_cpsw1.macOnlyEn_hostPort          = true;
@@ -222,14 +227,18 @@ enet_cpsw1.macOnlyEn_macPort2          = true;
 enet_cpsw1.isStrappedPhy1              = true;
 enet_cpsw1.isStrappedPhy2              = true;
 enet_cpsw1.mdioMode                    = "MDIO_MODE_MANUAL";
+enet_cpsw1.macport1LinkSpeed           = "ENET_SPEED_100MBIT";
+enet_cpsw1.macport1LinkDuplexity       = "ENET_DUPLEX_FULL";
+enet_cpsw1.macport2LinkSpeed           = "ENET_SPEED_100MBIT";
+enet_cpsw1.macport2LinkDuplexity       = "ENET_DUPLEX_FULL";
 enet_cpsw1.txDmaChannel[0].$name       = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name       = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name             = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].MDIO.$assign      = "MDIO0";
-enet_cpsw1.pinmux[0].MDIO.MDC.$assign  = "ball.W1";
-enet_cpsw1.pinmux[0].MDIO.MDIO.$assign = "ball.V2";
-enet_cpsw1.pinmux[0].RGMII1.$assign    = "RGMII1";
-enet_cpsw1.pinmux[0].RGMII2.$assign    = "RGMII2";
+enet_cpsw1.$name             = "CONFIG_ENET_CPSW0";
+enet_cpsw1.MDIO.$assign      = "MDIO0";
+enet_cpsw1.MDIO.MDC.$assign  = "PRG1_MDIO0_MDC";
+enet_cpsw1.MDIO.MDIO.$assign = "PRG1_MDIO0_MDIO";
+enet_cpsw1.RGMII1.$assign    = "RGMII1";
+enet_cpsw1.RGMII2.$assign    = "RGMII2";
 
 const udma         = scripting.addModule("/drivers/udma/udma", {}, false);
 const udma1        = udma.addInstance({}, false);
@@ -240,31 +249,31 @@ enet_cpsw1.udmaDrv = udma1;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution                       = "ball.B16";
-i2c1.I2C.SDA.$suggestSolution                       = "ball.B15";
-debug_log.uartLog.UART.RXD.$suggestSolution         = "ball.B10";
-debug_log.uartLog.UART.TXD.$suggestSolution         = "ball.B11";
-enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "ball.T5";
-enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "ball.R2";
-enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "ball.U2";
-enet_cpsw1.pinmux[0].RGMII1.RD3.$suggestSolution    = "ball.T1";
-enet_cpsw1.pinmux[0].RGMII1.RX_CTL.$suggestSolution = "ball.Y3";
-enet_cpsw1.pinmux[0].RGMII1.RXC.$suggestSolution    = "ball.U1";
-enet_cpsw1.pinmux[0].RGMII1.TD0.$suggestSolution    = "ball.Y14";
-enet_cpsw1.pinmux[0].RGMII1.TD1.$suggestSolution    = "ball.Y16";
-enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "ball.U13";
-enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "ball.AA14";
-enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "ball.W16";
-enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "ball.W13";
-enet_cpsw1.pinmux[0].RGMII2.RD0.$suggestSolution    = "ball.AA10";
-enet_cpsw1.pinmux[0].RGMII2.RD1.$suggestSolution    = "ball.Y10";
-enet_cpsw1.pinmux[0].RGMII2.RD2.$suggestSolution    = "ball.Y11";
-enet_cpsw1.pinmux[0].RGMII2.RD3.$suggestSolution    = "ball.V12";
-enet_cpsw1.pinmux[0].RGMII2.RX_CTL.$suggestSolution = "ball.Y12";
-enet_cpsw1.pinmux[0].RGMII2.RXC.$suggestSolution    = "ball.V10";
-enet_cpsw1.pinmux[0].RGMII2.TD0.$suggestSolution    = "ball.Y6";
-enet_cpsw1.pinmux[0].RGMII2.TD1.$suggestSolution    = "ball.AA8";
-enet_cpsw1.pinmux[0].RGMII2.TD2.$suggestSolution    = "ball.Y9";
-enet_cpsw1.pinmux[0].RGMII2.TD3.$suggestSolution    = "ball.W9";
-enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$suggestSolution = "ball.V9";
-enet_cpsw1.pinmux[0].RGMII2.TXC.$suggestSolution    = "ball.Y8";
+i2c1.I2C.SCL.$suggestSolution                       = "I2C0_SCL";
+i2c1.I2C.SDA.$suggestSolution                       = "I2C0_SDA";
+debug_log.uartLog.UART.RXD.$suggestSolution         = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution         = "UART0_TXD";
+enet_cpsw1.RGMII1.RD0.$suggestSolution    = "PRG0_PRU1_GPO7";
+enet_cpsw1.RGMII1.RD1.$suggestSolution    = "PRG0_PRU1_GPO9";
+enet_cpsw1.RGMII1.RD2.$suggestSolution    = "PRG0_PRU1_GPO10";
+enet_cpsw1.RGMII1.RD3.$suggestSolution    = "PRG0_PRU1_GPO17";
+enet_cpsw1.RGMII1.RX_CTL.$suggestSolution = "PRG0_PRU0_GPO9";
+enet_cpsw1.RGMII1.RXC.$suggestSolution    = "PRG0_PRU0_GPO10";
+enet_cpsw1.RGMII1.TD0.$suggestSolution    = "PRG1_PRU1_GPO7";
+enet_cpsw1.RGMII1.TD1.$suggestSolution    = "PRG1_PRU1_GPO9";
+enet_cpsw1.RGMII1.TD2.$suggestSolution    = "PRG1_PRU1_GPO10";
+enet_cpsw1.RGMII1.TD3.$suggestSolution    = "PRG1_PRU1_GPO17";
+enet_cpsw1.RGMII1.TX_CTL.$suggestSolution = "PRG1_PRU0_GPO9";
+enet_cpsw1.RGMII1.TXC.$suggestSolution    = "PRG1_PRU0_GPO10";
+enet_cpsw1.RGMII2.RD0.$suggestSolution    = "PRG1_PRU1_GPO0";
+enet_cpsw1.RGMII2.RD1.$suggestSolution    = "PRG1_PRU1_GPO1";
+enet_cpsw1.RGMII2.RD2.$suggestSolution    = "PRG1_PRU1_GPO2";
+enet_cpsw1.RGMII2.RD3.$suggestSolution    = "PRG1_PRU1_GPO3";
+enet_cpsw1.RGMII2.RX_CTL.$suggestSolution = "PRG1_PRU1_GPO4";
+enet_cpsw1.RGMII2.RXC.$suggestSolution    = "PRG1_PRU1_GPO6";
+enet_cpsw1.RGMII2.TD0.$suggestSolution    = "PRG1_PRU1_GPO11";
+enet_cpsw1.RGMII2.TD1.$suggestSolution    = "PRG1_PRU1_GPO12";
+enet_cpsw1.RGMII2.TD2.$suggestSolution    = "PRG1_PRU1_GPO13";
+enet_cpsw1.RGMII2.TD3.$suggestSolution    = "PRG1_PRU1_GPO14";
+enet_cpsw1.RGMII2.TX_CTL.$suggestSolution = "PRG1_PRU1_GPO15";
+enet_cpsw1.RGMII2.TXC.$suggestSolution    = "PRG1_PRU1_GPO16";

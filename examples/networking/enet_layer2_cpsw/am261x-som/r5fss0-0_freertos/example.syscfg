@@ -232,21 +232,21 @@ enet_cpsw1.MediumPoolPktCount            = 32;
 enet_cpsw1.cptsHostRxTsEn                = false;
 enet_cpsw1.txDmaChannel[0].$name         = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name         = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name               = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].RGMII1.$assign      = "RGMII2";
-enet_cpsw1.pinmux[0].RGMII2.$assign      = "RGMII1";
-enet_cpsw1.pinmux[0].RGMII2.RD0.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD1.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD2.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD3.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RX_CTL.$used = false;
-enet_cpsw1.pinmux[0].RGMII2.RXC.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD0.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD1.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD2.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD3.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$used = false;
-enet_cpsw1.pinmux[0].RGMII2.TXC.$used    = false;
+enet_cpsw1.$name               = "CONFIG_ENET_CPSW0";
+enet_cpsw1.RGMII1.$assign      = "RGMII2";
+enet_cpsw1.RGMII2.$assign      = "RGMII1";
+enet_cpsw1.RGMII2.RD0.$used    = false;
+enet_cpsw1.RGMII2.RD1.$used    = false;
+enet_cpsw1.RGMII2.RD2.$used    = false;
+enet_cpsw1.RGMII2.RD3.$used    = false;
+enet_cpsw1.RGMII2.RX_CTL.$used = false;
+enet_cpsw1.RGMII2.RXC.$used    = false;
+enet_cpsw1.RGMII2.TD0.$used    = false;
+enet_cpsw1.RGMII2.TD1.$used    = false;
+enet_cpsw1.RGMII2.TD2.$used    = false;
+enet_cpsw1.RGMII2.TD3.$used    = false;
+enet_cpsw1.RGMII2.TX_CTL.$used = false;
+enet_cpsw1.RGMII2.TXC.$used    = false;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

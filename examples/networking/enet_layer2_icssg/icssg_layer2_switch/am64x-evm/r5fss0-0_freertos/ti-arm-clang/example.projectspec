@@ -117,8 +117,6 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../enet_custom_board_config.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">

@@ -133,7 +133,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "enet_cpsw_loopback";
+    property.name = "enet_test_cpsw_layer2_performance";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 

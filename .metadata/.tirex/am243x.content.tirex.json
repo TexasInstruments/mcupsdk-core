@@ -12824,9 +12824,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -12840,6 +12840,7 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -12857,9 +12858,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
         ],
@@ -12873,6 +12874,75 @@
             "networking",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -14305,7 +14375,7 @@
         ],
         "description": "A Enet Icssg Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "enet_icssg_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -14319,6 +14389,7 @@
             "networking",
             "enet_loopback",
             "enet_icssg_loopback",
+            "loopback_phy_end",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -14338,7 +14409,7 @@
         ],
         "description": "A Enet Icssg Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "enet_icssg_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
         ],
@@ -14352,6 +14423,7 @@
             "networking",
             "enet_loopback",
             "enet_icssg_loopback",
+            "loopback_phy_end",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
