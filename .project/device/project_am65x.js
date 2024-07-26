@@ -20,6 +20,7 @@ const device_defines = {
 const example_file_list = [
     "examples/drivers/boot/sbl_null/.project/project.js",
     "examples/drivers/boot/sbl_ospi/.project/project.js",
+    "examples/drivers/boot/sbl_ospi_linux/.project/project.js",
     "examples/drivers/boot/sbl_uart/.project/project.js",
     "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
     "examples/drivers/gpio/gpio_input_interrupt/.project/project.js",

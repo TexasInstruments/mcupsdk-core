@@ -38,6 +38,7 @@ FILES_common := \
     csl_udmap.c \
     ddr.c \
     gpio.c \
+    gtc.c \
     i2c_v0.c \
     i2c_v0_lld.c \
     ipc_notify_soc.c \
@@ -95,6 +96,7 @@ FILES_PATH_common = \
     bootloader/soc/am65x \
     ddr/v1 \
     gpio/v0 \
+    gtc/v0 \
     hw_include/ringacc/V0/priv \
     hw_include/serdes_sb/V1 \
     i2c/v0 \

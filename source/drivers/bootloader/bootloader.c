@@ -1108,8 +1108,8 @@ void Bootloader_BootImageInfo_init(Bootloader_BootImageInfo *bootImageInfo)
     }
 }
 
-#if defined (SOC_AM64X)
-/* Linux image load is applicable only for am64x. */
+#if defined (SOC_AM64X) || defined (SOC_AM65X)
+/* Linux image load is applicable only for am64x and am65x. */
 int32_t Bootloader_parseAndLoadLinuxAppImage(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo)
 {
     int32_t status = SystemP_SUCCESS;
