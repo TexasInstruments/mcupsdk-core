@@ -28,6 +28,9 @@ CORES = \
     $(CORE_1) \
     $(CORE_0) \
 
+CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).out
+CORE_1_IMG=../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).out
+
 SYSTEM_FLAG := true
 
 all: postBuild

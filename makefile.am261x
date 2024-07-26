@@ -148,8 +148,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_epwm_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -391,8 +389,6 @@ help:
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
-	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am261x-som/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am261x-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am261x-som/system_nortos [all clean syscfg-gui syscfg]
@@ -1124,8 +1120,6 @@ BUILD_COMBO_EXAMPLE_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang
 
 # Various System Example Targets
-BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am261x-som_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am261x-lp_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-som_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-som_system_nortos
@@ -1275,12 +1269,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1996,12 +1984,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- spinlock_example_am261x-som_system_nortos:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile all
-
- spinlock_example_am261x-lp_system_nortos:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos -f makefile all
-
  empty_am261x-som_system_freertos:
 	$(MAKE) -C examples/empty/am261x-som/system_freertos -f makefile all
 
@@ -2300,8 +2282,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am261x-som_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am261x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-som_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-som_system_nortos_clean
@@ -2447,12 +2427,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3168,12 +3142,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- spinlock_example_am261x-som_system_nortos_clean:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile clean
-
- spinlock_example_am261x-lp_system_nortos_clean:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos -f makefile clean
-
  empty_am261x-som_system_freertos_clean:
 	$(MAKE) -C examples/empty/am261x-som/system_freertos -f makefile clean
 
@@ -3472,8 +3440,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am261x-som_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am261x-lp_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-som_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-som_system_nortos_scrub
@@ -3619,12 +3585,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -4340,12 +4300,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  dthe_sha_512_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- spinlock_example_am261x-som_system_nortos_scrub:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile scrub
-
- spinlock_example_am261x-lp_system_nortos_scrub:
-	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos -f makefile scrub
-
  empty_am261x-som_system_freertos_scrub:
 	$(MAKE) -C examples/empty/am261x-som/system_freertos -f makefile scrub
 
@@ -4360,16 +4314,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 
 

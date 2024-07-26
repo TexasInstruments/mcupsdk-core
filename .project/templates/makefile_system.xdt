@@ -43,7 +43,7 @@ CORES = \
 % for (let i = numProjects-1; i>=0; i--) {
     $(CORE_`i`) \
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % numProjects = 0;
 
 % for (let project of args.project.projects) {
