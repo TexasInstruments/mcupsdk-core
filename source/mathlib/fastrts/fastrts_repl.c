@@ -41,47 +41,47 @@
 
 #include "fastrts.h"
 
-__attribute__((always_inline)) float sinf(float x)
+inline __attribute__((always_inline)) float sinf(float x)
 {
     return FastRTS_sinf(x);
 }
 
-__attribute__((always_inline)) float cosf(float x)
+inline __attribute__((always_inline)) float cosf(float x)
 {
     return FastRTS_cosf(x);
 }
 
-__attribute__((always_inline)) float acosf(float x)
+inline __attribute__((always_inline)) float acosf(float x)
 {
     return FastRTS_acosf(x);
 }
 
-__attribute__((always_inline)) float asinf(float x)
+inline __attribute__((always_inline)) float asinf(float x)
 {
     return FastRTS_asinf(x);
 }
 
-__attribute__((always_inline)) float atanf(float x)
+inline __attribute__((always_inline)) float atanf(float x)
 {
     return FastRTS_atanf(x);
 }
 
-__attribute__((always_inline)) float atan2f(float y, float x)
+inline __attribute__((always_inline)) float atan2f(float y, float x)
 {
     return FastRTS_atan2f(y, x);
 }
 
-__attribute__((always_inline)) float expf(float x)
+inline __attribute__((always_inline)) float expf(float x)
 {
     return FastRTS_expf(x);
 }
 
-__attribute__((always_inline)) float logf(float x)
+inline __attribute__((always_inline)) float logf(float x)
 {
     return FastRTS_logf(x);
 }
 
-__attribute__((always_inline)) float sqrtf(float x)
+inline __attribute__((always_inline)) float sqrtf(float x)
 {
     return FastRTS_sqrtf(x);
 }

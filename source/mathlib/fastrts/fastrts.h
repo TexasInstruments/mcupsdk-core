@@ -51,7 +51,7 @@ extern "C"
 /*                                 Macros                                     */
 /* ========================================================================== */
 
-#define RTS_TEXT_SECTION   __attribute__((section(".trigText"))) __attribute__((always_inline))
+#define RTS_TEXT_SECTION   __attribute__((section(".trigText"))) __attribute__((always_inline)) inline
 #define RTS_DATA_SECTION   __attribute__((aligned(8), section(".trigData")))
 
 /* ========================================================================== */
