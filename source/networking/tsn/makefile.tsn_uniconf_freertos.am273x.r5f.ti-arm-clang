@@ -40,15 +40,18 @@ FILES_common := \
     ieee802-dot1q-bridge.c \
     ieee802-dot1q-bridge_runconf.c \
     ieee802-dot1q-bridge_nconf.c \
+    ieee802-dot1q-bridge_access.c \
     ieee802-dot1q-tsn-config-uni.c \
     ieee802-dot1q-tsn-config-uni_runconf.c \
     ieee802-dot1q-tsn-config-uni_nconf.c \
+    ieee802-dot1q-tsn-config-uni_access.c \
     ieee802-dot1ab-lldp.c \
     ieee802-dot1ab-lldp_runconf.c \
     ieee802-dot1ab-lldp_nconf.c \
     excelfore-tsn-remote.c \
     excelfore-tsn-remote_runconf.c \
     excelfore-netconf-server_nconf.c \
+    excelfore-tsn-remote_access.c \
     excelfore-tsn-remote_nconf.c \
     ieee802-dot1ab-lldp_access.c \
     ietf-interfaces_access.c \
@@ -63,18 +66,25 @@ FILES_common := \
     uc_notice_tilld.c \
     excelfore-netconf-server_nconf.c \
     ieee1588-ptp-tt_nconf.c \
+    excelfore-config-uni_nconf.c \
+    excelfore-config-uni.c \
+    excelfore-config-uni_runconf.c \
+    yang_config_coresinit.c \
+    yang_config_cuncinit.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/hal \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
-    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cores \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cores/generated \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cunc \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cunc/generated \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/tilld \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/r5f \
@@ -86,9 +96,10 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/mod \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/hal \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cores/generated \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cunc/generated \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f \
 

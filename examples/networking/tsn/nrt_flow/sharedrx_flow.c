@@ -82,7 +82,7 @@ static void EthIpv4RxTask(void *args)
     llrawp.proto = ETH_P_IPV4;
     llrawp.vlan_proto = 0;
     llrawp.vlanid = 0;
-    llrawp.rw_type = CB_RAWSOCK_RDWR;
+    llrawp.rw_type = CB_RAWSOCK_RDONLY;
     if(cb_rawsock_open(&llrawp, &lldsock, NULL, NULL, bmac) < 0)
     {
         EnetAppUtils_print("%s:failed to open raw socket\r\n", __func__);

@@ -72,7 +72,6 @@ int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
         /* share the RX Dma channel with PTP */
         update_cfg->dmaRxChId[0] = ENET_DMA_RX_CH0;
         update_cfg->dmaRxOwner = false; /* gptp is RX dma owner */
-        update_cfg->unusedDmaTx = true;
     }
     return 0;
 }

@@ -91,13 +91,6 @@ static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbarg
 /*                            Local Variables                                */
 /* ========================================================================== */
 
-static EnetApp_LldpOpt_t gLldpopt =
-{
-    .confFiles = NULL,
-    .numConf = 0,
-    .vlanId = -1
-};
-
 static EnetApp_DbNameVal_t gLldpGlobalData[] =
 {
     {"message-fast-tx" , "1"},
@@ -271,7 +264,7 @@ static void *EnetApp_lldpTask(void* arg)
     EnetApp_ModuleCtx_t *modCtx = (EnetApp_ModuleCtx_t *)arg;
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
 
-    if (lldpd_init(appCtx->dbName, &gLldpopt.vlanId, appCtx->netdev, appCtx->netdevSize) == 0)
+    if (lldpd_init(appCtx->dbName, appCtx->netdev, appCtx->netdevSize) == 0)
     {
         uint8_t *terminated = (uint8_t*)&modCtx->stopFlag;
         lldpd_run(terminated); // Blocking task

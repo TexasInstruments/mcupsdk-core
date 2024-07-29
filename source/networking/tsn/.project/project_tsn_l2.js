@@ -5,6 +5,7 @@ const files = {
     common: [
 		"avbtp.c",
 		"avtpc.c",
+		"avtpc_direct.c",
 		"avtpc_acf.c",
 		"avtpc_acf_common.c",
 		"avtpc_crf.c",
@@ -15,6 +16,13 @@ const files = {
 		"tilld_ll_avtp_ethernet.c",
 		"xl4-extmod-xl4avtp.c",
 		"xl4-extmod-xl4avtp_runconf.c"
+		// conl2 started
+		"aaf_avtpc_listener.c",
+		"aaf_avtpc_talker.c",
+		"conl2_avtpc_listener.c",
+		"conl2_avtpc_talker.c",
+		"aes3_helper.c"
+		// conl2 end
     ],
 };
 
@@ -23,6 +31,7 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_l2",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_l2/tilld",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_l2/l2conf",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_conl2",
     ],
 };
 
@@ -45,8 +54,12 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_unibase",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc/tsn_l2",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc/tsn_conl2",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_l2",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_l2/l2conf",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_src/tsn_conl2",
     ],
 };
 
