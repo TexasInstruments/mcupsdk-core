@@ -119,8 +119,6 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg 
 {
     EnetApp_PerCtxt *perCtxt = EnetApp_getPerCtxt(enetType, instId);
     EnetCpdma_Cfg *dmaCfg;
-	EnetBoard_EthPort ethPort;
-    const EnetBoard_PhyCfg *boardPhyCfg;
 
     EnetAppUtils_assert(perCtxt != NULL);
     /* Prepare init configuration for all peripherals */
@@ -141,20 +139,6 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg 
     /* Set the enChOverrideFlag to enable the channel override feature of CPDMA */
     dmaCfg=(EnetCpdma_Cfg *)cpswCfg->dmaCfg;
     dmaCfg->enChOverrideFlag = true;
-
-    /* Setup board for requested Ethernet port */
-    ethPort.instId   = instId;
-    ethPort.macPort  = perCtxt->macPort;
-    ethPort.boardId  = EnetBoard_getId();
-    ethPort.enetType = enetType;
-    ethPort.mii.layerType      = ENET_MAC_LAYER_GMII;
-    ethPort.mii.sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
-    ethPort.mii.variantType    = ENET_MAC_VARIANT_FORCED;
-    boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
-    EnetAppUtils_assert(boardPhyCfg != NULL);
-
-    cpswCfg->mdioCfg.mode = MDIO_MODE_NORMAL;
-    cpswCfg->mdioCfg.pollEnMask = boardPhyCfg->phyAddr;
 }
 
 int32_t EnetApp_open(EnetApp_PerCtxt *perCtxts,
