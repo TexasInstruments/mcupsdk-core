@@ -3803,11 +3803,12 @@ EPWM_setActionQualifierShadowLoadMode(uint32_t base,
     // Set the appropriate sync and load mode bits and also enable shadow
     // load mode. Shadow to active load can also be frozen.
     //
+
     HW_WR_REG16((base + CSL_EPWM_AQCTL),
         ((HW_RD_REG16(base + CSL_EPWM_AQCTL) &
-        ((~((CSL_EPWM_AQCTL_LDAQAMODE_MASK << (uint16_t)aqModule) |
+        (~((CSL_EPWM_AQCTL_LDAQAMODE_MASK << (uint16_t)aqModule) |
         (CSL_EPWM_AQCTL_LDAQASYNC_MAX << (uint16_t)syncModeOffset))) |
-        (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset))) |
+        (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset)) |
         ((((uint16_t)loadMode >> 2U) << syncModeOffset) |
         (((uint16_t)loadMode & CSL_EPWM_AQCTL_LDAQAMODE_MASK) <<
         (uint16_t)aqModule))));
