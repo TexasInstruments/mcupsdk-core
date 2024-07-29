@@ -36,7 +36,6 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
-#include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 #include <drivers/ospi.h>
 #include <drivers/fss.h>
 
@@ -57,7 +56,9 @@ typedef union bootinfo_sector_u_t
     uint8_t bin[FLASH_SECTOR_SIZE];
 }bootinfo_sector_t;
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+#define MAX_HSMRT_SIZE_IN_BYTES (248 * 1024U)
+
+const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt")));
 
 extern HsmClient_t gHSMClient ;
 
@@ -88,10 +89,30 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
+uint32_t get_Hsmrt_size() 
+{
+    uint8_t x509Header[4U];
+    uint8_t x509HsmrtCert[2000U];
+    uint32_t hsmrt_Cert_Len = 0U;
+    uint32_t hsmrt_image_Size = 0U;
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509Header, 4);
+    CacheP_wb((void *)x509Header, 4, CacheP_TYPE_ALL);
+
+    hsmrt_Cert_Len = Bootloader_getX509CertLen(x509Header);
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509HsmrtCert, hsmrt_Cert_Len);
+    CacheP_wb((void *)x509Header, hsmrt_Cert_Len, CacheP_TYPE_ALL);
+
+    hsmrt_image_Size = Bootloader_getMsgLen(x509HsmrtCert, hsmrt_Cert_Len);
+
+    return (hsmrt_image_Size + hsmrt_Cert_Len);
+}
+
 int main(void)
 {
-
     int32_t status;
+    uint32_t hsmrt_size = 0U;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -103,26 +124,37 @@ int main(void)
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    DebugP_log("Starting OSPI Bootloader ... \r\n");
-
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
-
-    DebugP_log("Starting OSPI Bootloader ... \r\n");
-
     Bootloader_profileAddProfilePoint("Board_driversOpen");
+    
+    /* 
+        Calculate the HSM Runtime image size from the flash offset specified. 
+    */
+    hsmrt_size = get_Hsmrt_size();
+
+    /* 
+        Read the HSM Runtime image from the flash offset specified. 
+    */
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
+    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
+    Bootloader_profileAddProfilePoint("HSMRT_FlashRead");
+
+    /* 
+        Request the HSM ROM to load the HSMRT image onto itself. 
+    */
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
 
     if (SystemP_SUCCESS == status)
     {

@@ -49,9 +49,10 @@ const fota1       = fota.addInstance();
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
-bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00081000";
-
+bootloader1.$name           = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset  = "0x00081000";
+bootloader1.hsmrtDecoupling = true;
+bootloader1.hsmrtImageOffset = "0x00040000";
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
 flash1.strDtr_isAddrReg                   = true;
@@ -269,6 +270,7 @@ section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
 section5.load_memory             = "MSRAM_HSMRT";
+section5.type                    = "NOLOAD";
 section5.group                   = false;
 section5.$name                   = "Hsmrt";
 section5.output_section.create(1);

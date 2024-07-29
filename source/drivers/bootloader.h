@@ -515,6 +515,29 @@ uint32_t Bootloader_getBootMedia(Bootloader_Handle handle);
  * \return SystemP_SUCCESS on success, else failure
  */
 int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
+
+/**
+ * \brief API to get the length of an x509 certificate
+ *
+ * This API calculates the length of an x509 certificate from the 4 byte x509 header present at the top.
+ *
+ * \param x509_cert_ptr Pointer to the 4 byte x509 header present at the start of the certificate.
+ *
+ * \return Length of the certificate
+ */
+uint32_t Bootloader_getX509CertLen(uint8_t *x509_cert_ptr);
+
+/**
+ * \brief API to get image length from a x509 certificate
+ *
+ * This API calculates the length of an image from the x509 certificate.
+ *
+ * \param x509_cert_ptr Pointer to the x509 certificate.
+ * \param x509_cert_size Length of the x509 certificate.
+ *
+ * \return Length of the image 
+ */
+uint32_t Bootloader_getMsgLen(uint8_t *x509_cert_ptr, uint32_t x509_cert_size);
 /** @} */
 
 #ifdef __cplusplus
