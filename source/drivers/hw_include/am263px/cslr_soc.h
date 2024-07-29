@@ -102,6 +102,9 @@ extern "C"
 #include <drivers/hw_include/am263px/cslr_xbar_integration_data.h>
 #include <drivers/hw_include/am263px/soc_config.h>
 
+/* Hsm base address header file */
+#include <drivers/hw_include/am263px/cslr_soc_hsm_baseaddress.h>
+
 #ifdef __cplusplus
 }
 #endif

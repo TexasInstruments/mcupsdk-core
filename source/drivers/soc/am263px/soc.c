@@ -36,6 +36,8 @@
 
 #define EPWM_HALTEN_STEP  (CSL_CONTROLSS_CTRL_EPWM1_HALTEN - CSL_CONTROLSS_CTRL_EPWM0_HALTEN)
 
+#define EDMA_M4F_VIRT_TO_PHY_OFFSET             (0x20020000U)
+
 typedef struct
 {
     uint32_t tcmaSize;
@@ -1405,6 +1407,14 @@ uint64_t SOC_virtToPhy(void *virtAddr)
                 phyAddr += CSL_R5SS1_CORE1_TCMB_U_BASE;
             }
         }
+    }
+#endif
+
+#if (__ARM_ARCH == 7) && (__ARM_ARCH_PROFILE == 'M')
+    if ( temp >= (CSL_HSM_M4_RAM_BASE - CSL_HSM_M4_RAM_BASE) && 
+        (temp < CSL_HSM_M4_RAM_SIZE))
+    {
+        phyAddr += EDMA_M4F_VIRT_TO_PHY_OFFSET;
     }
 #endif
 

@@ -89,6 +89,8 @@ extern "C"
 #include <drivers/hw_include/am263x/cslr_top_rcm.h>
 #include <drivers/hw_include/am263x/cslr_mss_rcm.h>
 
+/* Hsm base address header file */
+#include <drivers/hw_include/am263x/cslr_soc_hsm_baseaddress.h>
 #ifdef __cplusplus
 }
 #endif

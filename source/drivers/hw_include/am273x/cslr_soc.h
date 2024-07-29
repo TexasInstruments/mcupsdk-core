@@ -84,6 +84,9 @@ extern "C"
 #include <drivers/hw_include/am273x/cslr_hsm_soc_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_top_anareg.h>
 
+/* Hsm base address header file */
+#include <drivers/hw_include/am273x/cslr_soc_hsm_baseaddress.h>
+
 /* EFuse control register header files */
 #include <drivers/hw_include/am273x/cslr_efuse_farm.h>
 

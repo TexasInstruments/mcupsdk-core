@@ -43,6 +43,8 @@
 
 #define ARM_M4F_VIRT_TO_PHY_OFFSET              (0x50000000U)
 
+#define EDMA_M4F_VIRT_TO_PHY_OFFSET             (0x20020000U)
+
 typedef struct
 {
     uint32_t tcmaSize;
@@ -406,6 +408,12 @@ uint64_t SOC_virtToPhy(void *virtAddr)
         (temp < CSL_MSS_ETPWMC_U_BASE)) )
     {
         phyAddr += ARM_M4F_VIRT_TO_PHY_OFFSET;
+    }
+
+    if ( temp >= (CSL_HSM_M4_RAM_BASE - CSL_HSM_M4_RAM_BASE) && 
+        (temp < CSL_HSM_M4_RAM_SIZE))
+    {
+        phyAddr += EDMA_M4F_VIRT_TO_PHY_OFFSET;
     }
 
 #endif
