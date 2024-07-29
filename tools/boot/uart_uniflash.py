@@ -415,6 +415,7 @@ def main(argv):
                     print("Command arguments : {}".format(line.rstrip('\n')))
                     # Check if the size of application image is larger than buffer size in target side.
                     f_size = 0
+                    tempfilename = ''
                     if linecfg.filename is not None:
                         f_size = os.path.getsize(linecfg.filename)
 
