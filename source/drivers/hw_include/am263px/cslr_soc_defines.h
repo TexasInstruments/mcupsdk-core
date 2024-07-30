@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -101,6 +101,11 @@ extern "C" {
 
 #define MCAN_MSG_RAM_MAX_WORD_COUNT     (4352U)
 
+/*! @brief  Maximum number of Rx Dma buffers. */
+#define MCAN_MAX_RX_DMA_BUFFERS             (7U)
+
+/*! @brief  Maximum number of Tx Dma buffers. */
+#define MCAN_MAX_TX_DMA_BUFFERS             (4U)
 /**
  * \anchor CSL_CoreID
  * \name Core ID's of core or CPUs present on this SOC

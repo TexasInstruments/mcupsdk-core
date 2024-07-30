@@ -31,6 +31,9 @@ FILES_common := \
     bootloader_uniflash_mcelf.c \
     bootloader_profile.c \
     xmodem.c \
+    canfd.c \
+    canfd_soc.c \
+    canfd_dma_udma.c \
     crc16.c \
     crc.c \
     csl_bcdma.c \
@@ -173,6 +176,8 @@ FILES_PATH_common = \
     ipc_notify/v0/soc/am243x \
     ipc_rpmsg/ \
     mcan/v0 \
+    mcan/v0/soc/am64x_am243x \
+    mcan/v0/dma/udma \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \

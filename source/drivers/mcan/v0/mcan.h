@@ -65,6 +65,43 @@ extern "C" {
 /* ========================================================================== */
 /*                             Macros & Typedefs                              */
 /* ========================================================================== */
+/** @name Return status
+ */
+/**@{*/
+/**
+ * \brief Return status when the API execution was successful
+ */
+#define MCAN_STATUS_SUCCESS         ((int32_t)0)
+
+/**
+ * \brief Return status when the API execution was not successful due to a failure
+ */
+#define MCAN_STATUS_FAILURE         ((int32_t)-1)
+
+/**
+ * \brief Return status when the API execution was not successful due to a time out
+ */
+#define MCAN_TIMEOUT                ((int32_t)-2)
+
+/**
+ * \brief Return status when the API execution failed due invalid parameters
+ */
+#define MCAN_INVALID_PARAM          ((int32_t)-3)
+
+/**
+ * \brief Return status when the API execution failed due to driver busy
+ */
+#define MCAN_STATUS_BUSY            ((int32_t)-4)
+
+/**
+ * \brief Return status when the API execution failed due to invalid state
+ */
+#define MCAN_INVALID_STATE          ((int32_t)-5)
+
+/**
+ * \brief Return status when the API execution failed due to lack of resources (memory / HW)
+ */
+#define MCAN_OUT_OF_RESOURCES  ((int32_t)-6) //TODO
 
 /**
  * \brief  Macro defines mask for all the interrupts status for MCAN.
@@ -286,6 +323,21 @@ extern "C" {
 #define MCAN_EXT_FILT_TYPE_DISABLE                            (3U)
 /**< Range filter from EFID1 to EFID2 (EFID2 ≥ EFID1), XIDAM mask not applied */
 /** @} */
+
+/*!
+ *  @brief      Maximum number of Tx message objects that can be supported by CANFD
+ */
+#define MCAN_MAX_TX_MSG_OBJECTS             (32U)
+
+/*!
+ *  @brief      Maximum number of Rx message objects that can be supported by CANFD
+ */
+#define MCAN_MAX_RX_MSG_OBJECTS             (32U)
+
+/*!
+ *  @brief      Maximum number of message objects that can be supported by CANFD
+ */
+#define MCAN_MAX_MSG_OBJECTS                (MCAN_MAX_TX_MSG_OBJECTS + MCAN_MAX_RX_MSG_OBJECTS)
 
 /**
  *  \anchor MCAN_IntrLineNum
@@ -1754,6 +1806,22 @@ int32_t MCAN_msgRAMConfig(uint32_t                       baseAddr,
 int32_t MCAN_setExtIDAndMask(uint32_t baseAddr, uint32_t idMask);
 
 /**
+ * \brief   This API is used to get the address of Tx buffer in message ram.
+ *
+ * \param   baseAddr        Base Address of the MCAN Registers.
+ * \param   memType         Part of message ram to which given message to write.
+ *                          Refer enum MCAN_MemType.
+ * \param   bufNum          Buffer  number where message to write.
+ *                          This parameter will ignored if memType is FIFO/Q.
+ *
+ * \return  #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t MCAN_getWriteMsgElemAddress(uint32_t                 baseAddr,
+                                     uint32_t                 memType,
+                                     uint32_t                 bufNum,
+                                     uint32_t                 *elemAddr);
+
+/**
  * \brief   This API is used to write Tx message to message RAM.
  *
  * \param   baseAddr        Base Address of the MCAN Registers.
@@ -1811,6 +1879,26 @@ int32_t MCAN_txBufAddReq(uint32_t baseAddr, uint32_t bufNum);
  */
 void  MCAN_getNewDataStatus(uint32_t              baseAddr,
                             MCAN_RxNewDataStatus *newDataStatus);
+
+/**
+ * \brief   This API is used to get the address of Rx buffer in message ram.
+ *
+ * \param   baseAddr        Base Address of the MCAN Registers.
+ * \param   memType         Part of message ram to which given message to write.
+ *                          Refer enum MCAN_MemType.
+ * \param   bufNum          Buffer  number from where message is to read.
+ *                          This parameter will ignored if memType is FIFO/Q.
+ *  \param  fifoNum         FIFOs number from where message is to read.
+ *                          Refer enum MCAN_RxFIFONum.
+ *                          This parameter will ignored if memType is buffer.
+ *
+ * \return  #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t MCAN_getReadMsgElemAddress(uint32_t    baseAddr,
+                                   uint32_t    memType,
+                                   uint32_t    bufNum,
+                                   uint32_t    fifoNum,
+                                   uint32_t    *elemAddr);
 
 /**
  * \brief   This API clear New Data Message Status.

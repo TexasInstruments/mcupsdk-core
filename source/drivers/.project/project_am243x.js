@@ -18,6 +18,9 @@ const files_r5f = {
 		"bootloader_uniflash_mcelf.c",
         "bootloader_profile.c",
         "xmodem.c",
+        "canfd.c",
+        "canfd_soc.c",
+        "canfd_dma_udma.c",
         "crc16.c",
         "crc.c",
         "csl_bcdma.c",
@@ -123,6 +126,9 @@ const files_r5f = {
 const files_m4f = {
     common: [
         "adc.c",
+        "canfd.c",
+        "canfd_soc.c",
+        "canfd_dma_udma.c",
         "crc.c",
         "csl_sec_proxy.c",
         "ecap.c",
@@ -205,6 +211,8 @@ const filedirs = {
         `ipc_notify/v0/soc/${device}`,
         "ipc_rpmsg/",
         "mcan/v0",
+        "mcan/v0/soc/am64x_am243x",
+        "mcan/v0/dma/udma",
         "mcspi/v0",
         "mcspi/v0/lld",
         "mcspi/v0/lld/dma",

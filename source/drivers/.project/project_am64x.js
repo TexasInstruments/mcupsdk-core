@@ -66,6 +66,9 @@ const files_r5f = {
         "ddr.c",
         "ddr_soc.c",
         "mcan.c",
+        "canfd.c",
+        "canfd_soc.c",
+        "canfd_dma_udma.c",
         "mcspi_v0.c",
         "mcspi_dma_udma.c",
         "mcspi_v0_lld.c",
@@ -123,6 +126,9 @@ const files_r5f = {
 const files_m4f = {
     common: [
         "adc.c",
+        "canfd.c",
+        "canfd_soc.c",
+        "canfd_dma_udma.c",
         "crc.c",
         "csl_bcdma.c",
         "csl_emif.c",
@@ -172,6 +178,9 @@ const files_m4f = {
 const files_a53 = {
     common: [
         "adc.c",
+        "canfd.c",
+        "canfd_soc.c",
+        "canfd_dma_udma.c",
         "csl_bcdma.c",
         "csl_intaggr.c",
         "csl_lcdma_ringacc.c",
@@ -281,6 +290,8 @@ const filedirs = {
         `ipc_notify/v0/soc/${device}`,
         "ipc_rpmsg/",
         "mcan/v0",
+        "mcan/v0/soc/am64x_am243x",
+        "mcan/v0/dma/udma",
         "mcspi/v0",
         "mcspi/v0/lld",
         "mcspi/v0/lld/dma",
@@ -356,6 +367,8 @@ const filedirs_a53 =  {
         `ipc_notify/v0/soc/${device}`,
         "ipc_rpmsg/",
         "mcan/v0",
+        "mcan/v0/soc/am64x_am243x",
+        "mcan/v0/dma/udma",
         "mcspi/v0",
         "mcspi/v0/lld",
         "mcspi/v0/lld/dma",

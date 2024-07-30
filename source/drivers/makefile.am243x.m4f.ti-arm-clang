@@ -18,6 +18,9 @@ LIBNAME:=drivers.am243x.m4f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     adc.c \
+    canfd.c \
+    canfd_soc.c \
+    canfd_dma_udma.c \
     crc.c \
     csl_sec_proxy.c \
     ecap.c \
@@ -97,6 +100,8 @@ FILES_PATH_common = \
     ipc_notify/v0/soc/am243x \
     ipc_rpmsg/ \
     mcan/v0 \
+    mcan/v0/soc/am64x_am243x \
+    mcan/v0/dma/udma \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
