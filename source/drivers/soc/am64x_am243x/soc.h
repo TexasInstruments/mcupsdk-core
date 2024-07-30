@@ -195,6 +195,11 @@ static inline int32_t MMCSD_lld_isBaseAddrValid(uint32_t ctrlBaseAddr,
 
     return status;
 }
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_FSS0_OSPI0_CTRL_BASE)
+
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_DATA_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_FSS0_DAT_REG1_BASE)
 
 /**
  * \brief Enable clock to specified module

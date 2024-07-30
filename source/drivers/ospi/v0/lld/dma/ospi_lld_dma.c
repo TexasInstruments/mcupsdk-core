@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,7 +42,7 @@
 
 #include <kernel/dpl/SystemP.h>
 #include <string.h>
-#include <drivers/ospi/v0/dma/ospi_dma.h>
+#include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -60,18 +60,17 @@ extern uint32_t gOspiDmaConfigNum;
 /*                             Function Definitions                           */
 /* ========================================================================== */
 
-OSPI_DmaHandle OSPI_dmaOpen(int32_t index)
+int32_t OSPI_dmaOpen(int32_t index)
 {
 	OSPI_DmaConfig *config = NULL;
+	int32_t status = SystemP_SUCCESS;
 
-	if((gOspiDmaConfigNum > 0) && (index >= 0))
+	if((gOspiDmaConfigNum > 0U) && (index >= 0))
 	{
 		config = &gOspiDmaConfig[index];
 		if((config->fxns) && (config->fxns->dmaOpenFxn) && (config->ospiDmaArgs))
 		{
-			int32_t status;
-
-			status = config->fxns->dmaOpenFxn(config->ospiDmaArgs);
+			status = config->fxns->dmaOpenFxn(config->ospiDrvHandle);
 			if(status != SystemP_SUCCESS)
 			{
 				config = NULL;
@@ -79,20 +78,21 @@ OSPI_DmaHandle OSPI_dmaOpen(int32_t index)
 		}
 	}
 
-	return (OSPI_DmaHandle)config;
+	// return (OSPI_DmaHandle)config;
+	return status;
 }
 
 int32_t OSPI_dmaClose(OSPI_DmaHandle handle)
 {
 	int32_t status = SystemP_SUCCESS;
 
-	if(handle != NULL)
+	if(NULL != handle)
 	{
 		OSPI_DmaConfig *config = (OSPI_DmaConfig *)handle;
 
 		if((config->fxns) && (config->fxns->dmaCloseFxn))
 		{
-			status = config->fxns->dmaCloseFxn(handle, config->ospiDmaArgs);
+			status = config->fxns->dmaCloseFxn(config->ospiDrvHandle);
 		}
 	}
 	else
@@ -103,17 +103,17 @@ int32_t OSPI_dmaClose(OSPI_DmaHandle handle)
 	return status;
 }
 
-int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length)
+int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length, uint32_t timeout)
 {
 	int32_t status = SystemP_SUCCESS;
 
-	if(handle != NULL)
+	if(NULL != handle)
 	{
 		OSPI_DmaConfig *config = (OSPI_DmaConfig *)handle;
 
 		if((config->fxns) && (config->fxns->dmaCopyFxn))
 		{
-			status = config->fxns->dmaCopyFxn(config->ospiDmaArgs, dst, src, length);
+			status = config->fxns->dmaCopyFxn(config->ospiDrvHandle, dst, src, length, timeout);
 		}
 	}
 	else
@@ -122,4 +122,26 @@ int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t lengt
 	}
 
 	return status;
+}
+
+int32_t OSPI_isDmaInterruptEnabled(OSPI_DmaHandle handle)
+{
+	int32_t retVal = SystemP_SUCCESS;
+
+	if(NULL != handle)
+	{
+		OSPI_DmaConfig *config = (OSPI_DmaConfig *)handle;
+
+		if((config->fxns) && (config->fxns->dmaItrStatusFxn))
+		{
+			retVal = config->fxns->dmaItrStatusFxn(config->ospiDrvHandle);
+		}
+	}
+	else
+	{
+		retVal = SystemP_FAILURE;
+	}
+
+	return retVal;
+
 }

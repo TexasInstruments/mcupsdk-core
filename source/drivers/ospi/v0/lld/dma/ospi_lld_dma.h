@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,13 +31,13 @@
  */
 
 /**
- *  \file ospi_dma.h
+ *  \file ospi_lld_dma.h
  *
- *  \brief OSPI DMA header file.
+ *  \brief OSPI LLD DMA header file.
  */
 
-#ifndef OSPI_DMA_H_
-#define OSPI_DMA_H_
+#ifndef OSPI_LLD_DMA_H_
+#define OSPI_LLD_DMA_H_
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
@@ -49,7 +49,7 @@ extern "C"
 
 /**
  *  \defgroup OSPI_DMA APIs for OSPI DMA mode
- *  \ingroup DRV_OSPI_MODULE
+ *  \ingroup DRV_OSPI_LLD_MODULE
  *
  *  This module contains APIs to program and use DMA drivers available in the SoC with OSPI.
  *
@@ -84,7 +84,7 @@ typedef int32_t (*OSPI_dmaOpenFxn)(void *ospiDmaArgs);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-typedef int32_t (*OSPI_dmaCloseFxn)(OSPI_DmaHandle, void *ospiDmaArgs);
+typedef int32_t (*OSPI_dmaCloseFxn)(void *ospiDmaArgs);
 
 /**
  * \brief Driver implementation to do a DMA copy using a specific DMA driver - UDMA, EDMA etc
@@ -99,7 +99,20 @@ typedef int32_t (*OSPI_dmaCloseFxn)(OSPI_DmaHandle, void *ospiDmaArgs);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-typedef int32_t (*OSPI_dmaCopyFxn)(void *ospiDmaArgs, void *dst, void *src, uint32_t length);
+typedef int32_t (*OSPI_dmaCopyFxn)(void *ospiDmaArgs, void *dst, void *src, uint32_t length, uint32_t timeout);
+
+/**
+ * \brief Driver implementation to get the interrupt enable status for DMA driver channel 
+ *                                                                     - UDMA, EDMA etc
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new DMA driver needs to be supported.
+ *
+ * \param ospiDmaArgs      [in] DMA specific arguments, obtained from the config
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+typedef int32_t (*OSPI_dmaItrFxn)(void *ospiDmaArgs);
 
 /**
  * \brief Driver implementation callbacks
@@ -109,6 +122,7 @@ typedef struct OSPI_DmaFxns_s
 	OSPI_dmaOpenFxn    dmaOpenFxn;
 	OSPI_dmaCloseFxn   dmaCloseFxn;
 	OSPI_dmaCopyFxn    dmaCopyFxn;
+	OSPI_dmaItrFxn     dmaItrStatusFxn;
 
 } OSPI_DmaFxns;
 
@@ -124,6 +138,8 @@ typedef struct OSPI_DmaConfig_s
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
 	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
 	 */
+	void *ospiDrvHandle;
+	/* Contains the OSPI Driver Handle*/
 
 } OSPI_DmaConfig;
 
@@ -136,14 +152,14 @@ typedef struct OSPI_DmaConfig_s
  *
  * \return Handle to the OSPI DMA Config Object 
  */
-OSPI_DmaHandle OSPI_dmaOpen(int32_t index);
+int32_t OSPI_dmaOpen(int32_t index);
 
 /**
  * \brief API to close an OSPI DMA channel
  *
  * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
  *
- * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ * \param handle [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
  *
  * \return SystemP_SUCCESS on success, else failure
  */
@@ -158,10 +174,22 @@ int32_t OSPI_dmaClose(OSPI_DmaHandle handle);
  * \param dst           [in] Destination address to which the data is to be copied
  * \param src           [in] Source address from which the data is to be copied
  * \param length        [in] Data length
+ * \param timeout 		[in] Timeout for the transaction
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length);
+int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length,uint32_t timeout);
+
+/**
+ * \brief API to get the DMA Interrupt status
+ *
+ * This API will retrieve the interrrupt status of the DMA Channel
+
+ * \param handle [in] Handle to the OSPI DMA Config Object
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_isDmaInterruptEnabled(OSPI_DmaHandle handle);
 
 /** @} */
 
@@ -169,4 +197,4 @@ int32_t OSPI_dmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t lengt
 }
 #endif
 
-#endif /* OSPI_DMA_H_ */
+#endif /* OSPI_LLD_DMA_H_ */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,13 +30,15 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef OSPI_UDMA_H_
-#define OSPI_UDMA_H_
+#ifndef OSPI_EDMA_LLD_H_
+#define OSPI_EDMA_LLD_H_
 
 #include <stdint.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <drivers/ospi.h>
 #include <drivers/edma.h>
+#include <drivers/ospi/v0/lld/ospi_lld.h>
+#include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -55,25 +57,76 @@ typedef struct
     /**< EDMA TCC used for QSPI transfer */
     uint32_t edmaChId;
     /**< EDMA Channel used for QSPI transfer */
+    uint32_t edmaChainChId;
+    /**< EDMA Chained Channel used for QSPI transfer */
     uint32_t edmaParam;
     /**< EDMA Param ID used for QSPI transfer */
+    uint32_t edmaChainParam;
+    /**< EDMA Param ID used for Chained channel in QSPI transfer */
     uint32_t edmaRegionId;
     /**< EDMA Region used for QSPI transfer */
     uint32_t edmaBaseAddr;
     /**< EDMA Base address used for QSPI transfer */
     uint32_t isIntEnabled;
-    /**< EDMA Interrupt enabled status */
+    /**< EDMA Interrupt enabled status */    
+    uint32_t edmaInst;
+    /**< EDMA Instance */    
     Edma_IntrObject edmaIntrObj;
     /**< EDMA Interrupt object */
-    SemaphoreP_Object gEdmaTransferDoneSem;
-    /**< EDMA transfer done Semaphore */
-    uint32_t edmaInst;
 } OspiDma_EdmaArgs;
 
 extern OSPI_DmaFxns gOspiDmaEdmaFxns;
+
+/**
+ * \brief API to open an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *
+ * \param index [in] Index of the DMA Config selected for this particular OSPI driver instance
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_edmaInit(OSPI_DmaHandle handle);
+
+/**
+ * \brief API to close an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_edmaDeInit(OSPI_DmaHandle handle);
+
+/**
+ * \brief API to do a DMA Copy using appropriate DMA Channel opened
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param handle        [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ * \param dst           [in] Destination address to which the data is to be copied
+ * \param src           [in] Source address from which the data is to be copied
+ * \param length        [in] Data length
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_edmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length,uint32_t timeout);
+
+/**
+ * \brief API to close an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_edmaItrStatus(OSPI_DmaHandle handle);
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* OSPI_UDMA_H_ */
+#endif /* OSPI_EDMA_LLD_H_ */

@@ -43,11 +43,11 @@
 /* ========================================================================== */
 
 #if defined (SOC_AM65X)
-#include <drivers/ospi/v0/dma/soc/am65x/ospi_dma_soc.h>
+#include <drivers/ospi/v0/lld/dma/soc/am65x/ospi_dma_soc.h>
 #endif
 
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-#include <drivers/ospi/v0/dma/soc/am64x_am243x/ospi_dma_soc.h>
+#include <drivers/ospi/v0/lld/dma/soc/am64x_am243x/ospi_dma_soc.h>
 #endif
 
 #ifdef __cplusplus

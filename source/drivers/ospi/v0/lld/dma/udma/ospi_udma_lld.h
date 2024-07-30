@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,10 +30,12 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef OSPI_UDMA_H_
-#define OSPI_UDMA_H_
+#ifndef OSPI_UDMA_LLD_H_
+#define OSPI_UDMA_LLD_H_
 
 #include <stdint.h>
+#include <drivers/ospi/v0/lld/ospi_lld.h>
+#include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -67,12 +69,59 @@ typedef struct OspiDma_UdmaArgs_s
     /**< UDMA completion queue ring memory is enabled or disabled */
     /**< This is only used for AM65x */
 
-} OspiDma_UdmaArgs;
+} OSPI_UdmaParams;
 
 extern OSPI_DmaFxns gOspiDmaUdmaFxns;
+
+/**
+ * \brief API to open an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *
+ * \param index [in] Index of the DMA Config selected for this particular OSPI driver instance
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_udmaInit(OSPI_DmaHandle handle);
+
+/**
+ * \brief API to close an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_udmaDeInit(OSPI_DmaHandle handle);
+
+/**
+ * \brief API to do a DMA Copy using appropriate DMA Channel opened
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param handle        [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ * \param dst           [in] Destination address to which the data is to be copied
+ * \param src           [in] Source address from which the data is to be copied
+ * \param length        [in] Data length
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_udmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length,uint32_t timeout);
+
+/**
+ * \brief API to close an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_udmaItrStatus(OSPI_DmaHandle handle);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* OSPI_UDMA_H_ */
+#endif /* OSPI_UDMA_LLD_H_ */
