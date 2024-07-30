@@ -71,7 +71,7 @@ flash1.fourByteEnableSeq                  = "0";
 flash1.flashDeviceId                      = "0x5B17";
 flash1.fname                              = "IS25LX064";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.inputClkFreq      = 166666666;
 flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO10";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO62";
@@ -84,15 +84,14 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
-ioexp1.$name = "CONFIG_IOEXP0";
-
-edma1.$name                        = "CONFIG_EDMA0";
-flash1.peripheralDriver.edmaDriver = edma1;
-edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.$name                 = "CONFIG_EDMA0";
+edma1.intrEnable            = "FALSE";
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 gpio1.pinDir         = "OUTPUT";
 gpio1.defaultValue   = "1";

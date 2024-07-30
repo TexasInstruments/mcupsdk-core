@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -75,6 +75,12 @@ void ospi_flash_diag_main(void *args)
     DebugP_log("[OSPI Flash Diagnostic Test] Starting ...\r\n");
 
     OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+
+    
+#if defined (SOC_AM64X)
+/* The OSPI Controller will be configured in 8s-8s-8s mode */
+    OSPI_setProtocol(ospiHandle,525320);
+#endif
 
     /* Zero init the dev defines struct */
     memset(&gNorSpiDevDefines, 0, sizeof(gNorSpiDevDefines));

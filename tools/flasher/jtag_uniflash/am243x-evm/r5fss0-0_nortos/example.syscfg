@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM243x_ALV_beta" --part "ALV" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCBGA (ALV)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -15,7 +16,7 @@ const ddr1            = ddr.addInstance();
 const mmcsd           = scripting.addModule("/drivers/mmcsd/mmcsd", {}, false);
 const mmcsd1          = mmcsd.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -38,8 +39,9 @@ const section5        = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                  = "CONFIG_FLASH0";
-flash1.peripheralDriver.$name = "CONFIG_OSPI0";
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name       = "CONFIG_OSPI0";
+flash1.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_template0";
 
 ddr1.$name = "CONFIG_DDR0";
 
@@ -100,7 +102,7 @@ region1.memory_region[3].auto               = false;
 region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].manualStartAddress = 0x70000100;
-region1.memory_region[4].size               = 0x19000;
+region1.memory_region[4].size               = 0x1B000;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].size               = 0x20000;
 region1.memory_region[5].manualStartAddress = 0x70018000;

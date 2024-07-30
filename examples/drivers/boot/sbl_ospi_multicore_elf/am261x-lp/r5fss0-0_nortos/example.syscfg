@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.999+169"}
  */
 
 /**
@@ -74,6 +74,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -155,13 +156,13 @@ region1.memory_region[3].auto               = false;
 region1.memory_region[3].manualStartAddress = 0x70002000;
 region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
-region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x40000;
+region1.memory_region[4].size               = 0x50000;
+region1.memory_region[4].auto               = false;
 region1.memory_region[5].$name              = "MSRAM_HSMRT";
-region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70042100;
 region1.memory_region[5].size               = 0x30000;
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x70052100;
 region1.memory_region[6].type               = "CUSTOM";
 region1.memory_region[6].$name              = "MAILBOX_HSM";
 region1.memory_region[6].auto               = false;
