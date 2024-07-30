@@ -1,4 +1,4 @@
-# OSPI Flash DMA {#EXAMPLES_DRIVERS_OSPI_FLASH_DMA}
+# OSPI Flash DMA LLD {#EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD}
 
 [TOC]
 
@@ -8,19 +8,16 @@ This example demonstrates the OSPI low latency transfer using DMA. 16 bytes of k
 
 The average time for transfers is then printed out, and if all transfers were successful, the test result is passed otherwise failed.
 
-# Supported Combinations {#EXAMPLES_DRIVERS_OSPI_FLASH_DMA_COMBOS}
+# Supported Combinations {#EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD_COMBOS}
 
 \cond SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
- ^              | a53ss0-0 nortos
- ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
- ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_dma
+ Example folder | examples/drivers/ospi/ospi_flash_dma_lld
 
 \endcond
 
@@ -31,7 +28,7 @@ The average time for transfers is then printed out, and if all transfers were su
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_dma
+ Example folder | examples/drivers/ospi/ospi_flash_dma_lld
 
 \endcond
 
@@ -43,18 +40,7 @@ The average time for transfers is then printed out, and if all transfers were su
  ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_dma
-
-\endcond
-
-\cond SOC_AM65X
-
- Parameter      | Value
- ---------------|-----------
- CPU + OS       | r5fss0-0 nortos
- Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_dma
+ Example folder | examples/drivers/ospi/ospi_flash_dma_lld
 
 \endcond
 
@@ -83,42 +69,6 @@ The average time for transfers is then printed out, and if all transfers were su
 
 # Sample Output
 
-\if SOC_AM65X
-
 \code
-[OSPI] DMA low latency example started...
-OSPI Write 32 bytes in 78280 ns
-OSPI Read 32 bytes in 4015 ns
-OSPI Read 32 bytes in 2292 ns
-OSPI Read 32 bytes in 2257 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-OSPI Read 32 bytes in 2207 ns
-Average time for OSPI Read 32 bytes in 2400 ns
 All tests have passed !!!
 \endcode
-
-\else
-
-\code
-[OSPI] DMA low latency example started...
-OSPI Write 16 bytes in 449758 ns
-OSPI Read 16 bytes in 1888 ns
-OSPI Read 16 bytes in 1578 ns
-OSPI Read 16 bytes in 1508 ns
-OSPI Read 16 bytes in 1498 ns
-OSPI Read 16 bytes in 1498 ns
-OSPI Read 16 bytes in 1498 ns
-OSPI Read 16 bytes in 1498 ns
-OSPI Read 16 bytes in 1502 ns
-OSPI Read 16 bytes in 1498 ns
-OSPI Read 16 bytes in 1498 ns
-Average time for OSPI Read 16 bytes in 1546 ns
-All tests have passed !!!
-\endcode
-
-\endif

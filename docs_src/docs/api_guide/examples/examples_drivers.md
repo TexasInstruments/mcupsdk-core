@@ -89,6 +89,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_XIP
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_EP
@@ -392,7 +396,11 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_OSPI_NAND_FLASH_IO
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT

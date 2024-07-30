@@ -1,28 +1,25 @@
-# OSPI Flash IO {#EXAMPLES_DRIVERS_OSPI_FLASH_IO}
+# OSPI Flash INTERRUPT {#EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT}
 
 [TOC]
 
 # Introduction
 
-This example demonstrates basic read write to the OSPI flash configured in polled mode of operation. APIs from flash driver are used to read and write to the flash. The underlying OSPI reads and writes are taken care by the flash APIs.
+This example demonstrates basic read write to the OSPI flash configured in interrupt mode of operation. Both Write and Read functionality is performed in INDAC mode.
 
 The example writes known data to a particular offset in the flash and then reads it back. The read back data is then compared with the written known data. This is done twice at different offsets.
 
 When both the comparisons match, test result is passed otherwise failed.
 
-# Supported Combinations {#EXAMPLES_DRIVERS_OSPI_FLASH_IO_COMBOS}
+# Supported Combinations {#EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_COMBOS}
 
 \cond SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
- ^              | a53ss0-0 nortos
- ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
- ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_io
+ Example folder | examples/drivers/ospi/ospi_flash_interrupt
 
 \endcond
 
@@ -33,7 +30,7 @@ When both the comparisons match, test result is passed otherwise failed.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_io
+ Example folder | examples/drivers/ospi/ospi_flash_interrupt
 
 \endcond
 
@@ -45,18 +42,7 @@ When both the comparisons match, test result is passed otherwise failed.
  ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_io
-
-\endcond
-
-\cond SOC_AM65X
-
- Parameter      | Value
- ---------------|-----------
- CPU + OS       | r5fss0-0 nortos
- Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/drivers/ospi/ospi_flash_io
+ Example folder | examples/drivers/ospi/ospi_flash_interrupt
 
 \endcond
 
