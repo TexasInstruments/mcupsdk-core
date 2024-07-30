@@ -242,20 +242,20 @@ enet_cpsw1.netifInstance[0].$name        = "NETIF_INST_ID0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO0";
-enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "GPIO42";
-enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "GPIO41";
+enet_cpsw1.MDIO.$suggestSolution          = "MDIO0";
+enet_cpsw1.MDIO.MDC.$suggestSolution      = "GPIO42";
+enet_cpsw1.MDIO.MDIO.$suggestSolution     = "GPIO41";
 enet_cpsw1.RGMII1.$suggestSolution        = "RGMII2";
-enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "GPIO93";
-enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "GPIO94";
-enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "GPIO95";
-enet_cpsw1.pinmux[0].RGMII1.RD3.$suggestSolution    = "GPIO96";
-enet_cpsw1.pinmux[0].RGMII1.RX_CTL.$suggestSolution = "GPIO92";
-enet_cpsw1.pinmux[0].RGMII1.RXC.$suggestSolution    = "GPIO91";
-enet_cpsw1.pinmux[0].RGMII1.TD0.$suggestSolution    = "GPIO99";
-enet_cpsw1.pinmux[0].RGMII1.TD1.$suggestSolution    = "GPIO100";
-enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "GPIO101";
-enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "GPIO102";
-enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "GPIO98";
-enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "GPIO97";
+enet_cpsw1.RGMII1.RD0.$suggestSolution    = "GPIO93";
+enet_cpsw1.RGMII1.RD1.$suggestSolution    = "GPIO94";
+enet_cpsw1.RGMII1.RD2.$suggestSolution    = "GPIO95";
+enet_cpsw1.RGMII1.RD3.$suggestSolution    = "GPIO96";
+enet_cpsw1.RGMII1.RX_CTL.$suggestSolution = "GPIO92";
+enet_cpsw1.RGMII1.RXC.$suggestSolution    = "GPIO91";
+enet_cpsw1.RGMII1.TD0.$suggestSolution    = "GPIO99";
+enet_cpsw1.RGMII1.TD1.$suggestSolution    = "GPIO100";
+enet_cpsw1.RGMII1.TD2.$suggestSolution    = "GPIO101";
+enet_cpsw1.RGMII1.TD3.$suggestSolution    = "GPIO102";
+enet_cpsw1.RGMII1.TX_CTL.$suggestSolution = "GPIO98";
+enet_cpsw1.RGMII1.TXC.$suggestSolution    = "GPIO97";
 enet_cpsw1.RGMII2.$suggestSolution        = "RGMII1";
