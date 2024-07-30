@@ -20,15 +20,6 @@ const files_r5f = {
         "nor_spi_sfdp.c",
         "ioexp_tca6424.c",
         "ioexp_tca6416.c",
-        "pmic_tps653860xx.c",
-        "pmic.c",
-        "pmic_core.c",
-        "pmic_esm.c",
-        "pmic_fsm.c",
-        "pmic_gpio.c",
-        "pmic_io.c",
-        "pmic_power.c",
-        "pmic_wdg.c",
     ],
 };
 
@@ -59,8 +50,6 @@ const includes = {
         "pmic",
         "pmic/pmic_lld/src",
         "pmic/pmic_lld/include",
-        "pmic/pmic_lld/include/cfg/tps65386x",
-        "pmic/pmic_lld/src/cfg/tps65386x",
     ],
 };
 
