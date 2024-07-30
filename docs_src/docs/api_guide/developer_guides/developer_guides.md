@@ -80,6 +80,7 @@ SDK features and tools.
 - \subpage OPTIFLASH_CONFIGURE
 - \subpage SOC_MIGRATION
 - \subpage TMU_GUIDE
+- \subpage bootseg_ip_working
 \endcond
 
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
