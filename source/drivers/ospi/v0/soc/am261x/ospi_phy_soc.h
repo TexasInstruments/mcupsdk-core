@@ -33,11 +33,11 @@
 /**
  *  \file v0/soc/ospi_phy_soc.h
  *
- *  \brief OSPI Driver PHY SOC API/interface file.
+ *  \brief OSPI Driver PHY AM64X API/interface file.
  */
 
-#ifndef OSPI_PHY_SOC_TOP_H_
-#define OSPI_PHY_SOC_TOP_H_
+#ifndef OSPI_PHY_SOC_H_
+#define OSPI_PHY_SOC_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -51,21 +51,7 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM65X)
-#include <drivers/ospi/v0/soc/am65x/ospi_phy_soc.h>
-#endif
-
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
-#include <drivers/ospi/v0/soc/am64x_am243x/ospi_phy_soc.h>
-#endif
-
-#if defined (SOC_AM263PX)
-#include <drivers/ospi/v0/soc/am263px/ospi_phy_soc.h>
-#endif
-
-#if defined (SOC_AM261X)
-#include <drivers/ospi/v0/soc/am261x/ospi_phy_soc.h>
-#endif
+#define OSPI_PHY_INIT_RD_DELAY_SOC (0U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -83,4 +69,4 @@ extern "C" {
 }
 #endif
 
-#endif /* #ifndef OSPI_PHY_SOC_TOP_H_ */
+#endif /* #ifndef OSPI_PHY_SOC_H_ */
