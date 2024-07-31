@@ -9,7 +9,7 @@
  * Import the modules used in this configuration.
  */
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -336,6 +336,8 @@ section11.output_section[0].$name      = ".TI.offchip";
 RL21.$name                                  = "RL20";
 RL21.enable                                 = false;
 RL21.memoryRegion                           = "L2_CACHE_BANK";
+RL21.rangeStart                             = 0x60300000;
+RL21.rangeEnd_2                             = 0x60B00000;
 RL21.cacheSize                              = "RL2_CACHESIZE_64K";
 RL21.memory_section.group                   = scripting.forceWrite(true);
 RL21.memory_section.load_to_memory          = scripting.forceWrite("Memory");
