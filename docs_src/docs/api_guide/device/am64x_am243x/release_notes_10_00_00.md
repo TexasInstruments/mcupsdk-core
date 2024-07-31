@@ -22,6 +22,8 @@ Feature                                                                         
 A53 Drivers: ADC, MMCSD, McSPI, MCAN, OSPI, EPWM< EQEP, ECAP                                    | Drivers
 Little FS file system support for OSPI NOR                                                      | File System
 FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
+Sysconfig support for PRU Projects                                                              | PRUICSS
+System project for PRU ADC examples                                                             | PRU-IO
 \endcond
 
 \cond SOC_AM243X

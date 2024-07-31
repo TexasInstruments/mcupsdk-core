@@ -12,7 +12,7 @@
 
 Feature                                                                                                  | Module
 ---------------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                                        | -   
+Sysconfig support for PRU Projects                                                                       | PRUICSS
 
 ## Device and Validation Information
 

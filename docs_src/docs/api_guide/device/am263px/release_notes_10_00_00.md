@@ -16,7 +16,7 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+Sysconfig support for PRU Projects                                                              | PRUICSS
 
 # Modules Not tested/supported in this release
 
@@ -164,6 +164,13 @@ Time out Gasket(STOG)  | R5F             | NA                |  NORTOS | Timeout
 Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, under and thershold temperature interrupts                   | -
 
 **Note**: SDL is validate only on ControlCard.
+
+### PRU IO
+
+Module          | Supported CPUs    | SysConfig Support | OS Support        | Key features tested                                                               | Key features not tested
+----------------|-------------------|-------------------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------
+Empty           | PRU               | YES                | Bare Metal        | Empty project to get started with PRU firmware development                        | -
+
 
 ## Fixed Issues
 
