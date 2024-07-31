@@ -40,13 +40,15 @@
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
             -Wall
-            -mthumb
             -Werror
+            -mthumb
             -g
             -Wno-unused-function
             -Wno-enum-compare
             -Wno-uninitialized
+            -Wno-address-of-packed-member
             -Wno-int-to-pointer-cast
+            -Wno-stringop-truncation
             -fgnu89-inline
             -Wno-pointer-to-int-cast
             -Wno-unused-variable

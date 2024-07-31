@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 export PROFILE?=Release
 
-PROJECT_NAME=xip_benchmark_am243x-lp_system_freertos_gcc
+PROJECT_NAME=xip_benchmark_am243x-lp_system_freertos_gcc-armv7
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

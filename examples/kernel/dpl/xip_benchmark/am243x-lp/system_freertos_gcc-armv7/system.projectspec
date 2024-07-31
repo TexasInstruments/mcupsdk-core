@@ -5,7 +5,7 @@
     <import spec="../r5fss1-0_freertos/gcc-armv7/example.projectspec"/>
     <import spec="../r5fss1-1_freertos/gcc-armv7/example.projectspec"/>
     <project
-        name="xip_benchmark_am243x-lp_system_freertos_gcc"
+        name="xip_benchmark_am243x-lp_system_freertos_gcc-armv7"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,
