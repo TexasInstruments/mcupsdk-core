@@ -216,7 +216,7 @@ LED        | R5F, A53       | YES               | GPIO , I2C IO expander based L
 
 Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                         | Key features not tested
 ----------------------------|----------------|-------------------|-------------------|---------------------------------------------------------------------------------------------|------------------------
-FreeRTOS+FAT                | R5F            | YES               | NORTOS            | File read, write, create. FAT partition and mounting                                        | File I/O with FreeRTOS
+FreeRTOS+FAT                | R5F            | YES               | FreeRTOS, NORTOS  | File read, write, create. FAT partition and mounting                                        | File I/O with FreeRTOS
 
 ### CMSIS
 
