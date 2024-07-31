@@ -3,6 +3,8 @@
 ### Access Protection Scheme
 AES and SHA IP in DTHE support two contexts, namely Public and Secure. 
 
+\note Dma functionality is not yet added in dthe R5f, it will be added in the future.
+
 ### SHA
 - The Hash/HMAC engine performs the SHA-1, SHA-2, and MD5 hash computation. 
 When loaded with a data block, and optionally an intermediate digest, it 

@@ -3,6 +3,8 @@
 ### Access Protection Scheme
 AES and SHA IP in DTHE support two contexts, namely Public and Secure.
 
+\note Dma functionality is not yet added in dthe R5f, it will be added in the future.
+
 ### AES
 - The AES IP is an efficient implementation of the Rijndael cipher (the AES
 algorithm) and a 128-bit polynomial multiplication. Rijndael is a block cipher
