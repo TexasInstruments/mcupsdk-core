@@ -551,8 +551,6 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am243x-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am243x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am243x-lp/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am243x-evm/system_freertos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am243x-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am243x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_nortos [all clean syscfg-gui syscfg]
@@ -1508,8 +1506,6 @@ BUILD_COMBO_EXAMPLE_ALL += empty_am243x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am243x-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am243x-lp_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += xip_benchmark_am243x-evm_system_freertos
-BUILD_COMBO_EXAMPLE_ALL += xip_benchmark_am243x-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += wfi_standby_demo_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-lp_system_nortos
@@ -2825,12 +2821,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am243x-lp_system_nortos:
 	$(MAKE) -C examples/empty/am243x-lp/system_nortos -f makefile all
 
- xip_benchmark_am243x-evm_system_freertos:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-evm/system_freertos -f makefile all
-
- xip_benchmark_am243x-lp_system_freertos:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-lp/system_freertos -f makefile all
-
  wfi_standby_demo_am243x-evm_system_nortos:
 	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am243x-evm/system_nortos -f makefile all
 
@@ -3255,8 +3245,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am243x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am243x-lp_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += xip_benchmark_am243x-evm_system_freertos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += xip_benchmark_am243x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += wfi_standby_demo_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-lp_system_nortos_clean
@@ -4568,12 +4556,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am243x-lp_system_nortos_clean:
 	$(MAKE) -C examples/empty/am243x-lp/system_nortos -f makefile clean
 
- xip_benchmark_am243x-evm_system_freertos_clean:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-evm/system_freertos -f makefile clean
-
- xip_benchmark_am243x-lp_system_freertos_clean:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-lp/system_freertos -f makefile clean
-
  wfi_standby_demo_am243x-evm_system_nortos_clean:
 	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am243x-evm/system_nortos -f makefile clean
 
@@ -4998,8 +4980,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am243x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am243x-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am243x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am243x-lp_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += xip_benchmark_am243x-evm_system_freertos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += xip_benchmark_am243x-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += wfi_standby_demo_am243x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-lp_system_nortos_scrub
@@ -6310,12 +6290,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am243x-lp_system_nortos_scrub:
 	$(MAKE) -C examples/empty/am243x-lp/system_nortos -f makefile scrub
-
- xip_benchmark_am243x-evm_system_freertos_scrub:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-evm/system_freertos -f makefile scrub
-
- xip_benchmark_am243x-lp_system_freertos_scrub:
-	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am243x-lp/system_freertos -f makefile scrub
 
  wfi_standby_demo_am243x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am243x-evm/system_nortos -f makefile scrub
