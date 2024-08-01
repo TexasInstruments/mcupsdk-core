@@ -26,6 +26,21 @@ const libdirs = {
     ],
 };
 
+const libdirs_freertos = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+    ],
+};
+
+const includes_freertos_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
+    ],
+};
+
 const libs_r5f = {
     common: [
         "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -33,9 +48,23 @@ const libs_r5f = {
     ],
 };
 
+const libs_freertos_r5f = {
+    common: [
+        "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
 const libs_r5f_gcc = {
     common: [
         "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
+const libs_freertos_r5f_gcc = {
+    common: [
+        "freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
 };
@@ -61,6 +90,17 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_freertos_r5f =
+[
+    {
+        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "mmcsd_raw_io_main",
+        },
+    },
+];
+
 const templates_nortos_r5f_gcc =
 [
     {
@@ -79,10 +119,29 @@ const templates_nortos_r5f_gcc =
     }
 ];
 
+const templates_freertos_r5f_gcc =
+[
+    {
+        input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
+        output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
+    },
+    {
+        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "mmcsd_raw_io_main",
+        },
+    }
+];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -110,13 +169,33 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.cgt.match(/gcc*/) )
         {
-            build_property.libs = libs_r5f_gcc;
-            build_property.templates = templates_nortos_r5f_gcc;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f_gcc;
+                build_property.templates = templates_freertos_r5f_gcc;
+            }
+            else
+            {
+                build_property.libs = libs_r5f_gcc;
+                build_property.templates = templates_nortos_r5f_gcc;
+            }
         }
         else
         {
-            build_property.libs = libs_r5f;
-            build_property.templates = templates_nortos_r5f;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f;
+                build_property.templates = templates_freertos_r5f;
+            }
+            else
+            {
+                build_property.libs = libs_r5f;
+                build_property.templates = templates_nortos_r5f;
+            }
         }
     }
 
