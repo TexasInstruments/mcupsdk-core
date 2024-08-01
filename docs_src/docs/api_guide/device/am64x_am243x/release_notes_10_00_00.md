@@ -24,6 +24,7 @@ Little FS file system support for OSPI NOR                                      
 FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
 Sysconfig support for PRU Projects                                                              | PRUICSS
 System project for PRU ADC examples                                                             | PRU-IO
+Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
 \endcond
 
 \cond SOC_AM243X
@@ -31,6 +32,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Little FS file system support for OSPI NOR                                                      | File System
 FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
+Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
 \endcond
 
 ## Device and Validation Information
@@ -231,7 +233,7 @@ CMSIS DSP                   | R5F            | NA                | FreeRTOS, NOR
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------
 TSN                         | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
-LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
+LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping, LwIP bridge, shared memory driver  | Other LwIP features
 Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW  | RMII mode
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
@@ -802,5 +804,17 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> Ethernet (CPSW and ICSSG)
+    <td> EnetApp_initLinkArgs function defination
+    <td> EnetApp_initLinkArgs defination is moved to generated code. Please refer and follow \ref enet_mcupsdk_10_00_update for more details
+    <td> \ref enet_mcupsdk_10_00_update
+</tr>
+<tr>
+    <td> Ethernet (CPSW)
+    <td> example.syscfg file of all examples/application where 'ENET(CPSW)' component added
+    <td> Pinmux component parameters are defined directly under PCSW component, rather than a seperate module. Please refer and follow \ref enet_mcupsdk_10_00_update for more details.
+    <td> \ref enet_mcupsdk_10_00_update
 </tr>
 </table>

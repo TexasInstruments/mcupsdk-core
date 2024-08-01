@@ -95,7 +95,7 @@ $ ptp4l -v
 \endcode
 - Configure linuxptp
 \code
-$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/master/configs/gPTP.cfg -O ~/gptp_config.cfg
+$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/v4.3/configs/gPTP.cfg -O ~/gptp_config.cfg
 \endcode
 \attention Change the value of `priority1` in ~/gptp_config.cfg file to `255` to enforce PC to gPTP slave
 

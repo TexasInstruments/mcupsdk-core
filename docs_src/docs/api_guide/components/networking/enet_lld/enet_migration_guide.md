@@ -410,6 +410,8 @@ AppLinkUpPortMask Config      |Syscfg generates function to determine if link is
 [Back To Top](@ref enet_migration_guide_top)
 \endif
 
+# Compatibilty Breaks During MCU+ SDK Version Update
 
- 
+## Updating to version 10.00
 
+\ref enet_mcupsdk_10_00_update
