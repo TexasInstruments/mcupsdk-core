@@ -319,6 +319,7 @@ const example_file_list = [
     "test/benchmarks/flsopskd_benchmark/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
 	"test/drivers/resolver/.project/project.js",
+    "test/drivers/rti/.project/project.js",
 	"test/drivers/soc/soc_r5f/.project/project.js",
 	"test/drivers/uart/.project/project.js",
     "test/examples/fss_switch_b/.project/project.js",
