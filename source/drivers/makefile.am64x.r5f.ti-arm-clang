@@ -84,7 +84,8 @@ FILES_common := \
     mcspi_v0_lld.c \
     mdio_v0.c \
     mmcsd_v0.c \
-    mmcsd_priv.c \
+    mmcsd_v0_lld.c \
+    mmcsd_parse.c \
     ospi_v0.c \
     ospi_dma.c \
     ospi_dma_udma.c \
@@ -180,6 +181,8 @@ FILES_PATH_common = \
     mdio/v0 \
     mmcsd \
     mmcsd/v0 \
+    mmcsd/v0/lld \
+    mmcsd/v0/lld/internal \
     ospi \
     ospi/v0 \
     ospi/v0/dma \

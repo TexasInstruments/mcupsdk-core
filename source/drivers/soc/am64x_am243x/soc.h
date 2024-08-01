@@ -171,6 +171,25 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
     return status;
 }
 
+/** \brief API to validate MMCSD base addresses. */
+static inline int32_t MMCSD_lld_isBaseAddrValid(uint32_t ctrlBaseAddr,
+                                                uint32_t ssBaseAddr)
+{
+    /* Set status to invalid Param */
+    int32_t status = (int32_t)(-3);
+
+    if ((   (ctrlBaseAddr == CSL_MMCSD1_CTL_CFG_BASE)  &&
+            (ssBaseAddr == CSL_MMCSD1_SS_CFG_BASE))    ||
+        (   (ctrlBaseAddr == CSL_MMCSD0_CTL_CFG_BASE) &&
+            (ssBaseAddr == CSL_MMCSD0_SS_CFG_BASE)))
+    {
+        /* Set status to success */
+        status = 0;
+    }
+
+    return status;
+}
+
 /**
  * \brief Enable clock to specified module
  *

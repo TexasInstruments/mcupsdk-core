@@ -109,6 +109,8 @@ FILES_PATH_common = \
     mdio/v0 \
     mmcsd \
     mmcsd/v0 \
+    mmcsd/v0/lld \
+    mmcsd/v0/lld/internal \
     ospi \
     ospi/v0 \
     ospi/v0/dma \

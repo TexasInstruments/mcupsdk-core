@@ -94,7 +94,7 @@ typedef struct {
     volatile uint32_t PHY_STAT_2_REG;            /* PHY Status 2 Register */
 } CSL_mmc_sscfgRegs;
 
-
+typedef volatile CSL_mmc_sscfgRegs      *CSL_mmc_sscfgRegsOvly;
 /**************************************************************************
 * Register Macros
 **************************************************************************/
@@ -707,6 +707,7 @@ typedef struct {
     volatile uint32_t CQ_ERROR_TASK_ID;          /* CQ Error Task ID Register */
 } CSL_mmc_ctlcfgRegs;
 
+typedef volatile CSL_mmc_ctlcfgRegs      *CSL_mmc_ctlcfgRegsOvly;
 
 /**************************************************************************
 * Register Macros
