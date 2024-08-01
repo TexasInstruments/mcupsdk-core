@@ -98,7 +98,7 @@ int32_t SDL_MCRC_getHighestPriorityIntrStatus(SDL_MCRC_InstType instance, uint32
     }
     else
     {
-        *pIntVecAddr = HW_RD_FIELD32(baseAddr + SDL_MCRC_INT_OFFSET_REG, SDL_MCRC_INT_OFFSET_REG);
+        *pIntVecAddr = HW_RD_FIELD32(baseAddr + SDL_MCRC_INT_OFFSET, SDL_MCRC_INT_OFFSET_REG);
         status = SDL_PASS;
     }
 

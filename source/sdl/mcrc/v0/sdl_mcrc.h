@@ -112,18 +112,11 @@ extern "C" {
 /**
  * \brief  Macro defines value of MCRC Control Register.
  */
+#define SDL_MCRC_DATAWIDTH_SEL_64BIT        (0x00000000U)
 
-#define SDL_MCRC_TYPE_16BIT                 (0x0000004CU)
+#define SDL_MCRC_DATAWIDTH_SEL_16BIT        (0x00000001U)
 
-#define SDL_MCRC_TYPE_32BIT                 (0x00000054U)
-
-#define SDL_MCRC_TYPE_64BIT                 (0x00000044U)
-
-#define SDL_MCRC_DATAWIDTH_SEL_64BIT        (0x00U)
-
-#define SDL_MCRC_DATAWIDTH_SEL_16BIT        (0x01U)
-
-#define SDL_MCRC_DATAWIDTH_SEL_32BIT        (0x02U)
+#define SDL_MCRC_DATAWIDTH_SEL_32BIT        (0x00000002U)
 
 /**
  * \brief  Max number of channels supported in MCRC.
@@ -173,6 +166,32 @@ typedef uint32_t SDL_MCRC_Channel_t;
 /** @} */
 
 /**
+ *  \anchor SDL_MCRC_Type_t
+ *  \name CRC Type
+ *  @{
+ */
+/**
+ * \brief  CRC Type supported.
+ */
+typedef uint32_t SDL_MCRC_Type_t;
+
+#define SDL_MCRC_TYPE_16BIT                  (SDL_MCRC_CTRL0_CH1_CRC_SEL_16BIT)
+/**< CRC 16-bit operation */
+#define SDL_MCRC_TYPE_32BIT                  (SDL_MCRC_CTRL0_CH1_CRC_SEL_32BIT)
+/**< CRC 32-bit operation */
+#define SDL_MCRC_TYPE_64BIT                  (SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT)
+/**< CRC 64-bit operation */
+#define SDL_MCRC_TYPE_E2EPROFILE             (SDL_MCRC_CTRL0_CH1_CRC_SEL_E2EPROFILE4)
+/**< CRC E2E PROFILE operation */
+#define SDL_MCRC_TYPE_VDA_CAN_SAEJ1850       (SDL_MCRC_CTRL0_CH1_CRC_SEL_VDA_CAN_SAEJ1850)
+/**< CRC VDA,CAN,SAEJ1850 operation */
+#define SDL_MCRC_TYPE_H2F_AUTOSAR4           (SDL_MCRC_CTRL0_CH1_CRC_SEL_H2F_AUTOSAR4)
+/**< CRC H2,AUTOSAR4 operation */
+#define SDL_MCRC_TYPE_CASTAGNOLI_ISCSI       (SDL_MCRC_CTRL0_CH1_CRC_SEL_CASTAGNOLI_ISCSI)
+/**< CRC CASTAGNOLI,ISCSI operation */
+/** @} */
+
+/**
  * \brief This enumerator defines the Data size for input MCRC DATA
  *
  */
@@ -183,11 +202,82 @@ typedef enum {
     /**< 16 Bit data packed */
     SDL_MCRC_DATA_32_BIT = 3,
     /**< 32 Bit data packed */
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+    SDL_MCRC_DATA_64_BIT = 4,
+    /**< 64 Bit data packed */
+#endif
 } SDL_MCRC_DataBitSize;
+
+/**
+ *  \anchor SDL_MCRC_DataLength_t
+ *  \name CRC Data Length
+ *  @{
+ */
+/**
+ * \brief  CRC Data Length supported.
+ */
+typedef uint32_t SDL_MCRC_DataLength_t;
+
+#define SDL_MCRC_DATALENGTH_16BIT            (SDL_MCRC_CTRL0_CH1_DW_SEL_16BIT)
+/**< CRC 16-bit data operation */
+#define SDL_MCRC_DATALENGTH_32BIT            (SDL_MCRC_CTRL0_CH1_DW_SEL_32BIT)
+/**< CRC 32-bit data operation */
+#define SDL_MCRC_DATALENGTH_64BIT            (SDL_MCRC_CTRL0_CH1_DW_SEL_64BIT)
+/**< CRC 64-bit data operation */
+/** @} */
+
+/**
+ *  \anchor CDL_CRC_BitSwap_t
+ *  \name CRC Bit Swap
+ *  @{
+ */
+/**
+ * \brief  CRC Bit Swap supported.
+ */
+typedef uint32_t SDL_MCRC_BitSwap_t;
+
+#define SDL_MCRC_BITSWAP_MSB                 (SDL_MCRC_CTRL0_CH1_BIT_SWAP_MSB)
+/**< MSB first */
+#define SDL_MCRC_BITSWAP_LSB                 (SDL_MCRC_CTRL0_CH1_BIT_SWAP_LSB)
+/**< LSB first */
+/** @} */
+
+/**
+ *  \anchor SDL_MCRC_ByteSwap_t
+ *  \name CRC Byte Swap
+ *  @{
+ */
+/**
+ * \brief  CRC Byte Swap supported.
+ */
+typedef uint32_t SDL_MCRC_ByteSwap_t;
+
+#define SDL_MCRC_BYTESWAP_DISABLE            (SDL_MCRC_CTRL0_CH1_BTYE_SWAP_DISABLE)
+/**< Byte wwap disabled across data size */
+#define SDL_MCRC_BYTESWAP_ENABLE             (SDL_MCRC_CTRL0_CH1_BTYE_SWAP_ENABLE)
+/**< Byte swap enabled across data size */
+/** @} */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
+
+/**
+ * \brief CRC Configuration
+ */
+typedef struct SDL_MCRC_Config_s
+{
+    SDL_MCRC_Type_t               type;
+    /**< Polynomial type. Refer enum #SDL_MCRC_Type_t */
+    SDL_MCRC_DataLength_t         dataLen;
+    /**< CRC data length. Refer enum #SDL_MCRC_DataLength_t */
+    SDL_MCRC_DataBitSize          dataBitSize;
+    /**< Data Bit size  */
+    SDL_MCRC_BitSwap_t            bitSwap;
+    /**< Bit Swapping mode. Refer enum #SDL_MCRC_BitSwap_t */
+    SDL_MCRC_ByteSwap_t           byteSwap;
+    /**< Byte Swapping mode. Refer enum #SDL_MCRC_ByteSwap_t */
+} SDL_MCRC_Config_t;
 
 /**
  * \brief  Structure for accessing MCRC register data which are 64 bit wide.
@@ -330,6 +420,27 @@ int32_t SDL_MCRC_config(SDL_MCRC_InstType     instance,
                         uint32_t              sectorCount,
                         SDL_MCRC_ModeType     mode);
 
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+/**
+ * \brief   This API will configure Data size, CRC Type, Bit and Byte Swap for
+ *          given channel.
+ *
+ * \param   instance        MCRC instance either MCU or Main.
+ * \param   channel         Channel number to be configured.
+ *                          Values given by #SDL_MCRC_Channel_t.
+ * \param   pConfig         Pointer to configuration values.
+ *                          Refer struct #SDL_MCRC_Config_t for details.
+ *
+ * \return  status          MCRC channel configuration status
+ *                          SDL_PASS:     success
+ *                          SDL_EBADARGS: failure, indicate the bad input arguments
+ *
+ */
+int32_t SDL_MCRC_addConfig(SDL_MCRC_InstType instance,
+                           SDL_MCRC_Channel_t channel,
+                           const SDL_MCRC_Config_t *pConfig);
+#endif
+
 /**
  * \brief   This API will verify the configure of MCRC mode, pattern and sector
  *           count for given channel.
@@ -353,7 +464,12 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType     instance,
                               SDL_MCRC_Channel_t    channel,
                               uint32_t              patternCount,
                               uint32_t              sectorCount,
-                              SDL_MCRC_ModeType     mode);
+                              SDL_MCRC_ModeType     mode
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                              ,const SDL_MCRC_Config_t *pConfig);
+#else
+);
+#endif
 
 /**
  * \brief   This API is used to reset the MCRC channel
@@ -639,24 +755,6 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
  */
 int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
 					 SDL_MCRC_Channel_t       channel);
-
-/**
- * \brief   This API is used to configure the MCRC data width for given Channel.
- *
- * \param   instance        MCRC instance either MCU or Main.
- * \param   channel         Channel number for which MCRC register address is
- *                          to get.
- *                          Values given by #SDL_MCRC_Channel_t.
- * \param   datawidth       DataWidth
- *                          Values given by macro SDL_MCRC_DATAWIDTH_SEL_xxBIT.
- *
- * \return  status          SDL_PASS:     success
- *                          SDL_EBADARGS: failure, indicate the bad input
- *                                        arguments
- *
- */
-int32_t SDL_MCRC_configDataWidth(SDL_MCRC_InstType instance,
-					           SDL_MCRC_Channel_t channel, uint32_t datawidth);
 
 #ifdef _cplusplus
 }

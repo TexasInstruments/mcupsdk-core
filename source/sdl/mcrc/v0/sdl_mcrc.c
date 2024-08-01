@@ -109,42 +109,42 @@ int32_t SDL_MCRC_init(SDL_MCRC_InstType instance,
         {
             case SDL_MCRC_CHANNEL_1:
                 /* Configure watchdog pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD1,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD1_REG,
                               SDL_MCRC_WDTOPLD1,
                               watchdogPreload);
                 /* Configure clock pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD1,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD1_REG,
                               SDL_MCRC_BCTOPLD1,
                               blockPreload);
                 break;
             case SDL_MCRC_CHANNEL_2:
                 /* Configure watchdog pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD2,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD2_REG,
                               SDL_MCRC_WDTOPLD2,
                               watchdogPreload);
                 /* Configure clock pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD2,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD2_REG,
                               SDL_MCRC_BCTOPLD2,
                               blockPreload);
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
                 /* Configure watchdog pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3_REG,
                               SDL_MCRC_WDTOPLD3,
                               watchdogPreload);
                 /* Configure clock pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD3,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD3_REG,
                               SDL_MCRC_BCTOPLD3,
                               blockPreload);
                 break;
             case SDL_MCRC_CHANNEL_4:
                 /* Configure watchdog pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD4,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD4_REG,
                               SDL_MCRC_WDTOPLD4,
                               watchdogPreload);
                 /* Configure clock pre-load value */
-                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD4,
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_BCTOPLD4_REG,
                               SDL_MCRC_BCTOPLD4,
                               blockPreload);
                 break;
@@ -183,28 +183,28 @@ int32_t SDL_MCRC_verifyInit(SDL_MCRC_InstType     instance,
         switch (channel)
         {
             case SDL_MCRC_CHANNEL_1:
-                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD1,
+                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD1_REG,
                                                     SDL_MCRC_WDTOPLD1);
-                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD1,
+                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD1_REG,
                                                  SDL_MCRC_BCTOPLD1);
                 break;
             case SDL_MCRC_CHANNEL_2:
-                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD2,
+                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD2_REG,
                                                     SDL_MCRC_WDTOPLD2);
-                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD2,
+                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD2_REG,
                                                  SDL_MCRC_BCTOPLD2);
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
-                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3,
+                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3_REG,
                                                     SDL_MCRC_WDTOPLD3);
-                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD3,
+                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD3_REG,
                                                  SDL_MCRC_BCTOPLD3);
                 break;
             case SDL_MCRC_CHANNEL_4:
-                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD4,
+                readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD4_REG,
                                                     SDL_MCRC_WDTOPLD4);
-                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD4,
+                readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD4_REG,
                                                  SDL_MCRC_BCTOPLD4);
                 break;
 #endif
@@ -315,6 +315,188 @@ int32_t SDL_MCRC_config(SDL_MCRC_InstType instance,
     return (status);
 }
 
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+/**
+ *  Design: PROC_SDL-8413
+ */
+int32_t SDL_MCRC_addConfig(SDL_MCRC_InstType instance,
+                           SDL_MCRC_Channel_t channel,
+                           const SDL_MCRC_Config_t *pConfig)
+{
+    int32_t status = SDL_PASS;
+    uint32_t baseAddr;
+
+    if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)) ||
+        (pConfig == NULL) ||
+        (pConfig->type > SDL_MCRC_TYPE_E2EPROFILE) ||
+        (pConfig->dataLen > SDL_MCRC_CTRL0_CH1_DW_SEL_32BIT) ||
+        (pConfig->dataBitSize > SDL_MCRC_DATA_64_BIT) ||
+        (pConfig->bitSwap > SDL_MCRC_CTRL0_CH1_BIT_SWAP_LSB) ||
+        (pConfig->byteSwap > SDL_MCRC_CTRL0_CH1_BTYE_SWAP_ENABLE)
+        )
+    {
+        status = SDL_EBADARGS;
+    }
+    else
+    {
+        switch (channel)
+        {
+            case SDL_MCRC_CHANNEL_1:
+                /* Configure data length */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH1_DW_SEL,
+                              pConfig->dataLen);
+                /* Configure bit swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH1_BIT_SWAP,
+                              pConfig->bitSwap);
+                /* Configure byte swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH1_BYTE_SWAP,
+                              pConfig->byteSwap);
+                if((pConfig->type == SDL_MCRC_TYPE_64BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_16BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_32BIT))
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL,
+                                 pConfig->type);
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
+                }
+                else
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL,
+                                 ((pConfig->type) & ((SDL_MCRC_Type_t)0x3U)));
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2_VDA_CAN_SAEJ18502_H2F_AUTOSAR4_CASTAGNOLI_ISCSI);
+                }
+                break;
+            case SDL_MCRC_CHANNEL_2:
+                /* Configure data length */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH2_DW_SEL,
+                              pConfig->dataLen);
+                /* Configure bit swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH2_BIT_SWAP,
+                              pConfig->bitSwap);
+                /* Configure byte swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH2_BYTE_SWAP,
+                              pConfig->byteSwap);
+                if((pConfig->type == SDL_MCRC_TYPE_64BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_16BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_32BIT))
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL,
+                                 pConfig->type);
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
+                }
+                else
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL,
+                                 ((pConfig->type) & ((SDL_MCRC_Type_t)0x3U)));
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2_VDA_CAN_SAEJ18502_H2F_AUTOSAR4_CASTAGNOLI_ISCSI);
+                }
+                break;
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+            case SDL_MCRC_CHANNEL_3:
+                /* Configure data length */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH3_DW_SEL,
+                              pConfig->dataLen);
+                /* Configure bit swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH3_BIT_SWAP,
+                              pConfig->bitSwap);
+                /* Configure byte swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH3_BYTE_SWAP,
+                              pConfig->byteSwap);
+                if((pConfig->type == SDL_MCRC_TYPE_64BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_16BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_32BIT))
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL,
+                                 pConfig->type);
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
+                }
+                else
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL,
+                                 ((pConfig->type) & ((SDL_MCRC_Type_t)0x3U)));
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH3_CRC_SEL2_VDA_CAN_SAEJ18502_H2F_AUTOSAR4_CASTAGNOLI_ISCSI);
+                }
+                break;
+            case SDL_MCRC_CHANNEL_4:
+                /* Configure data length */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH4_DW_SEL,
+                              pConfig->dataLen);
+                /* Configure bit swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH4_BIT_SWAP,
+                              pConfig->bitSwap);
+                /* Configure byte swap */
+                HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                              SDL_MCRC_CTRL0_CH4_BYTE_SWAP,
+                              pConfig->byteSwap);
+                if((pConfig->type == SDL_MCRC_TYPE_64BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_16BIT) ||
+                   (pConfig->type == SDL_MCRC_TYPE_32BIT))
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL,
+                                 pConfig->type);
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
+                }
+                else
+                {
+                    /* Configure CRC mode */
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL,
+                                 ((pConfig->type) & ((SDL_MCRC_Type_t)0x3U)));
+                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL2,
+                                 SDL_MCRC_CTRL0_CH4_CRC_SEL2_VDA_CAN_SAEJ18502_H2F_AUTOSAR4_CASTAGNOLI_ISCSI);
+                }
+                break;
+#endif
+            default:
+                status = SDL_EBADARGS;
+                break;
+        }
+    }
+
+    return (status);
+}
+#endif
+
 /**
  *  Design: PROC_SDL-2082
  */
@@ -322,18 +504,31 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                               SDL_MCRC_Channel_t channel,
                               uint32_t           patternCount,
                               uint32_t           sectorCount,
-                              SDL_MCRC_ModeType  mode)
+                              SDL_MCRC_ModeType  mode
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                              ,const SDL_MCRC_Config_t *pConfig)
+#else
+)
+#endif
 {
     int32_t            status = SDL_PASS;
     uint32_t           pCount;
     uint32_t           sCount;
     uint32_t           baseAddr;
-    SDL_MCRC_ModeType mcrcMode;
+    SDL_MCRC_ModeType  mcrcMode;
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+    SDL_MCRC_Config_t  cfg;
+#endif
 
-    if ((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)    ||
+    if ((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)  ||
         (patternCount > SDL_MCRC_PATTERN_COUNT_MAX)  ||
         (sectorCount > SDL_MCRC_SECTOR_COUNT_MAX)    ||
-        (mode > SDL_MCRC_CTRL2_CH1_MODE_FULLCPU))
+        (mode > SDL_MCRC_CTRL2_CH1_MODE_FULLCPU)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+        || (pConfig == NULL))
+#else
+         )
+#endif
     {
         status = SDL_EBADARGS;
     }
@@ -349,6 +544,16 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                                        SDL_MCRC_SCOUNT_REG1_SEC_COUNT1);
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH1_MODE);
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                cfg.byteSwap = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH1_BYTE_SWAP);
+                cfg.bitSwap =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH1_BIT_SWAP);
+                cfg.dataLen =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH1_DW_SEL);
+                cfg.type =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH1_CRC_SEL);
+#endif
                 break;
             case SDL_MCRC_CHANNEL_2:
                 pCount = HW_RD_FIELD32(baseAddr + SDL_MCRC_PCOUNT_REG2,
@@ -357,6 +562,16 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                                        SDL_MCRC_SCOUNT_REG2_SEC_COUNT2);
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH2_MODE);
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                cfg.byteSwap = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH2_BYTE_SWAP);
+                cfg.bitSwap =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH2_BIT_SWAP);
+                cfg.dataLen =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH2_DW_SEL);
+                cfg.type =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH2_CRC_SEL);
+#endif
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
@@ -366,6 +581,16 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                                        SDL_MCRC_SCOUNT_REG3_SEC_COUNT3);
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH3_MODE);
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                cfg.byteSwap = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH3_BYTE_SWAP);
+                cfg.bitSwap =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH3_BIT_SWAP);
+                cfg.dataLen =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH3_DW_SEL);
+                cfg.type =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH3_CRC_SEL);
+#endif
                 break;
             case SDL_MCRC_CHANNEL_4:
                 pCount = HW_RD_FIELD32(baseAddr + SDL_MCRC_PCOUNT_REG4,
@@ -374,6 +599,16 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                                        SDL_MCRC_SCOUNT_REG4_SEC_COUNT4);
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH4_MODE);
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+                cfg.byteSwap = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH4_BYTE_SWAP);
+                cfg.bitSwap =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                           SDL_MCRC_CTRL0_CH4_BIT_SWAP);
+                cfg.dataLen =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH4_DW_SEL);
+                cfg.type =  HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL0,
+                                            SDL_MCRC_CTRL0_CH4_CRC_SEL);
+#endif
                 break;
 #endif
             default:
@@ -386,7 +621,14 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
     {
         if ((pCount != patternCount) ||
             (sCount != sectorCount)  ||
-            (mcrcMode != mode))
+            (mcrcMode != mode)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+            || (cfg.byteSwap != pConfig->byteSwap)
+            || (cfg.bitSwap != pConfig->bitSwap)
+            || (cfg.dataLen != pConfig->dataLen)
+            || (cfg.type != pConfig->type)
+#endif
+            )
         {
             status = SDL_EFAIL;
         }
@@ -988,8 +1230,8 @@ int32_t SDL_MCRC_readStaticReg(SDL_MCRC_InstType instance,
         {
             pStaticRegs->channelRegs[i].PCOUNT   = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_PCOUNT_REG1);
             pStaticRegs->channelRegs[i].SCOUNT   = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_SCOUNT_REG1);
-            pStaticRegs->channelRegs[i].WDTOPLD  = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_WDTOPLD1);
-            pStaticRegs->channelRegs[i].BCTOPLD  = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_BCTOPLD1);
+            pStaticRegs->channelRegs[i].WDTOPLD  = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_WDTOPLD1_REG);
+            pStaticRegs->channelRegs[i].BCTOPLD  = HW_RD_REG32(baseAddr + SDL_MCRC_getRegsOffset(i) + SDL_MCRC_BCTOPLD1_REG);
         }
         status = SDL_PASS;
     }
@@ -1057,7 +1299,7 @@ static int32_t SDL_MCRC_dataWrite(const SDL_MCRC_DataConfig_t *pDataConfig,
             {
                 HW_WR_REG8(sigRegAddr->regL, pData[i]);
             }
-	}
+    }
         break;
         case SDL_MCRC_DATA_16_BIT:
         {
@@ -1067,16 +1309,30 @@ static int32_t SDL_MCRC_dataWrite(const SDL_MCRC_DataConfig_t *pDataConfig,
                 HW_WR_REG16(sigRegAddr->regL, pData[i]);
             }
         }
-	break;
-	case SDL_MCRC_DATA_32_BIT:
-	{
+    break;
+    case SDL_MCRC_DATA_32_BIT:
+    {
             uint32_t *pData = (uint32_t *)(pDataConfig->pMCRCData);
             for (i = (uint32_t)(0U); i < (pDataConfig->size / (uint32_t)4U); i++)
             {
                 HW_WR_REG32(sigRegAddr->regL, pData[i]);
             }
-	}
-	break;
+    }
+    break;
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
+    case SDL_MCRC_DATA_64_BIT:
+    {
+            uint32_t *pData = (uint32_t *)(pDataConfig->pMCRCData);
+            for (i = (uint32_t)(0U); i < (pDataConfig->size / (uint32_t)4U);)
+            {
+                HW_WR_REG32(sigRegAddr->regL, pData[i]);
+                i++;
+                HW_WR_REG32(sigRegAddr->regH, pData[i]);
+                i++;
+            }
+    }
+    break;
+#endif
         default:
             result = SDL_EBADARGS;
         break;
@@ -1110,9 +1366,9 @@ int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
 
         /* Write MCRC data */
         if (result == SDL_PASS)
-	{
-            result = SDL_MCRC_dataWrite(pDataConfig, &sigRegAddr);
-	}
+        {
+                result = SDL_MCRC_dataWrite(pDataConfig, &sigRegAddr);
+        }
 
         if (result == SDL_PASS)
         {
@@ -1150,9 +1406,9 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
                 pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL2);
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-			case SDL_MCRC_CHANNEL_3:
-			    pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH3);
-			    pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL3);
+            case SDL_MCRC_CHANNEL_3:
+                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH3);
+                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL3);
                 break;
             case SDL_MCRC_CHANNEL_4:
                 pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH4);
@@ -1169,78 +1425,37 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
 }
 
 int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
-					 SDL_MCRC_Channel_t       channel)
+                     SDL_MCRC_Channel_t       channel)
 {
-	int32_t status = SDL_PASS;
-	uint32_t baseAddr;
+    int32_t status = SDL_PASS;
+    uint32_t baseAddr;
 
-	if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
-	{
-		status = SDL_EBADARGS;
-	}
-	else
-	{
-		switch (channel)
+    if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
+    {
+        status = SDL_EBADARGS;
+    }
+    else
+    {
+        switch (channel)
         {
             case SDL_MCRC_CHANNEL_1:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, SDL_MCRC_TYPE_64BIT);
-				break;
-			case SDL_MCRC_CHANNEL_2:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 8U));
-				break;
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, SDL_MCRC_TYPE_64BIT);
+                break;
+            case SDL_MCRC_CHANNEL_2:
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 8U));
+                break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-			case SDL_MCRC_CHANNEL_3:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 16U));
-				break;
-			case SDL_MCRC_CHANNEL_4:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 24U));
-				break;
+            case SDL_MCRC_CHANNEL_3:
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 16U));
+                break;
+            case SDL_MCRC_CHANNEL_4:
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 24U));
+                break;
 #endif
-			default:
+            default:
                 status = SDL_EBADARGS;
                 break;
-		}
-	}
+        }
+    }
     return (status);
 }
-
-#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-int32_t SDL_MCRC_configDataWidth(SDL_MCRC_InstType instance,
-					SDL_MCRC_Channel_t channel, uint32_t datawidth)
-{
-	int32_t status = SDL_PASS;
-	uint32_t baseAddr;
-
-	if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
-	{
-		status = SDL_EBADARGS;
-	}
-	else
-	{
-		switch (channel)
-        {
-            case SDL_MCRC_CHANNEL_1:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
-                            (datawidth << SDL_MCRC_CTRL0_CH1_DW_SEL_SHIFT));
-				break;
-			case SDL_MCRC_CHANNEL_2:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
-                            (datawidth << SDL_MCRC_CTRL0_CH2_DW_SEL_SHIFT));
-				break;
-			case SDL_MCRC_CHANNEL_3:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
-                            (datawidth << SDL_MCRC_CTRL0_CH3_DW_SEL_SHIFT));
-				break;
-			case SDL_MCRC_CHANNEL_4:
-				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
-                            (datawidth << SDL_MCRC_CTRL0_CH4_DW_SEL_SHIFT));
-				break;
-			default:
-                status = SDL_EBADARGS;
-                break;
-		}
-	}
-    return (status);
-}
-#endif
-
