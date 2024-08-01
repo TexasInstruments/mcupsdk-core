@@ -8,8 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const pmic            = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1           = pmic.addInstance();
 const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
@@ -49,25 +47,10 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 gpio1.$name                = "CONFIG_GPIO0";
 gpio1.pinDir               = "OUTPUT";
 gpio1.GPIO.gpioPin.pu_pd   = "pu";
 gpio1.GPIO.gpioPin.$assign = "SDFM0_CLK0";
-
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 freertos_fat1.$name                  = "CONFIG_FREERTOS_FAT0";
 freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";

@@ -8,8 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const pmic            = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1           = pmic.addInstance();
 const cmpss           = scripting.addModule("/drivers/cmpss/cmpss", {}, false);
 const cmpss1          = cmpss.addInstance();
 const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
@@ -52,8 +50,6 @@ const output_xbar1    = output_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 cmpss1.$name            = "CONFIG_CMPSS0";
 cmpss1.enableModule     = true;
 cmpss1.cmpssBase        = "CSL_CONTROLSS_CMPSSA1_U_BASE";
@@ -66,21 +62,6 @@ cmpss1.thresholdHigh    = 17;
 
 dac1.$name        = "CONFIG_DAC0";
 dac1.enableOutput = true;
-
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template0";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -324,7 +305,3 @@ output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO24";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
-mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
-mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";

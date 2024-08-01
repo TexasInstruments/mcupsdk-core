@@ -8,15 +8,11 @@
 /**
  * Import the modules used in this configuration.
  */
-const pmic       = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1      = pmic.addInstance();
 const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
 const adc1       = adc.addInstance();
 const adc2       = adc.addInstance();
 const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1      = edma.addInstance();
-const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1     = mcspi.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -46,8 +42,6 @@ const section13  = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 adc1.$name                          = "CONFIG_ADC0";
 adc1.soc0Channel                    = "ADC_CH_ADCIN2";
 adc1.enableConverter                = true;
@@ -69,14 +63,7 @@ adc2.enableInterrupt1               = true;
 adc2.enableInterrupt1ContinuousMode = true;
 adc2.ADC.$assign                    = "ADC1";
 
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
-
 edma1.$name                                         = "CONFIG_EDMA0";
-mcspi1.edmaDriver                                   = edma1;
 edma1.edmaRmDmaCh[0].$name                          = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name                         = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name                            = "CONFIG_EDMA_RM2";
@@ -311,8 +298,4 @@ adc2.ADC.AIN2.$suggestSolution              = "ADC1_AIN2";
 adc2.ADC.AIN3.$suggestSolution              = "ADC1_AIN3";
 adc2.ADC.AIN4.$suggestSolution              = "ADC1_AIN4";
 adc2.ADC.AIN5.$suggestSolution              = "ADC1_AIN5";
-mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
-mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
-mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";

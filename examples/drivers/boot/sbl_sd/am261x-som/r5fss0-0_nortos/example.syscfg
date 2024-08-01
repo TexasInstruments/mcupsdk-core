@@ -9,7 +9,6 @@
  * Import the modules used in this configuration.
  */
 const pmic          = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1         = pmic.addInstance();
 const bootloader    = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1   = bootloader.addInstance();
 const hsmclient     = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
@@ -43,27 +42,10 @@ const section8      = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 freertos_fat1.$name                  = "CONFIG_FREERTOS_FAT0";
 freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";
@@ -251,10 +233,6 @@ section8.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution                              = "GPIO16";
-mcspi1.SPI.D0.$suggestSolution                               = "GPIO17";
-mcspi1.SPI.D1.$suggestSolution                               = "GPIO18";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution                  = "GPIO15";
 freertos_fat1.peripheralDriver.MMC.$suggestSolution          = "MMC";
 freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "GPIO77";
 freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "GPIO83";

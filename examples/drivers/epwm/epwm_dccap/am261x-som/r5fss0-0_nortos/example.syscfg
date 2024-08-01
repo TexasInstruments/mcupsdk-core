@@ -8,8 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const pmic            = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1           = pmic.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
@@ -49,8 +47,6 @@ const output_xbar1    = output_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 epwm1.$name                                                  = "CONFIG_EPWM0";
 epwm1.epwmTimebase_period                                    = 2000;
 epwm1.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
@@ -103,20 +99,7 @@ epwm2.epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP2_ACTIVE = "EPWM_AQ_OUTPUT_LOW
 epwm2.epwmXTBPRD_Active                                    = 2000;
 epwm2.EPWM.$assign                                         = "EPWM1";
 
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
 mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

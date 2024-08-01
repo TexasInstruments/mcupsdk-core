@@ -9,7 +9,6 @@
  * Import the modules used in this configuration.
  */
 const pmic        = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1       = pmic.addInstance();
 const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1       = gpio.addInstance();
 const gpio2       = gpio.addInstance();
@@ -53,29 +52,12 @@ const input_xbar1 = input_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 gpio1.$name                = "INPUT_PIN";
 gpio1.GPIO.gpioPin.$assign = "GPIO24";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "OUTPUT_PIN";
 gpio2.GPIO.gpioPin.$assign = "GPIO23";
-
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template0";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 rti1.counter0Enable = true;
 rti1.compare0Enable = true;
@@ -321,7 +303,3 @@ input_xbar1.xbarOutput = "GPIO24";
  */
 gpio1.GPIO.$suggestSolution                 = "GPIO";
 gpio2.GPIO.$suggestSolution                 = "GPIO";
-mcspi1.SPI.CLK.$suggestSolution             = "GPIO16";
-mcspi1.SPI.D0.$suggestSolution              = "GPIO17";
-mcspi1.SPI.D1.$suggestSolution              = "GPIO18";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
