@@ -89,6 +89,7 @@
                 -lnortos.am243x.r5f.gcc-armv7.debug.lib
                 -ldrivers.am243x.r5f.gcc-armv7.debug.lib
                 -lboard.am243x.r5f.gcc-armv7.debug.lib
+                -lmiddleware.am243x.r5f.gcc-armv7.debug.lib
             "
         ></configuration>
         <configuration name="Release"
@@ -99,6 +100,7 @@
                 -lnortos.am243x.r5f.gcc-armv7.release.lib
                 -ldrivers.am243x.r5f.gcc-armv7.release.lib
                 -lboard.am243x.r5f.gcc-armv7.release.lib
+                -lmiddleware.am243x.r5f.gcc-armv7.release.lib
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
