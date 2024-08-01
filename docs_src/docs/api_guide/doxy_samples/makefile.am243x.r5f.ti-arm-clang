@@ -67,8 +67,12 @@ FILES_common := \
     Gp_timer_sample.c \
     Soc_am64x_sample.c \
     I2c_lld_sample_v0.c \
+    Mmcsd_sample.c \
+    Mmcsd_lld_v0_sample.c \
     Soc_am64x_sample.c \
     I2c_lld_sample_v0.c \
+    Mmcsd_sample.c \
+    Mmcsd_lld_v0_sample.c \
 
 FILES_PATH_common = \
     board \

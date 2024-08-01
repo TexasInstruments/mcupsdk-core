@@ -10,9 +10,7 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
-        "/networking/networking",
-        "/memory_configurator/components",
-        "/security/security",
+        "/fs/fs",
     ],
     "devices": [
         "AM64x",

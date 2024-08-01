@@ -283,6 +283,8 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files;
         build_property.files.common.push("Soc_am64x_sample.c");
         build_property.files.common.push("I2c_lld_sample_v0.c");
+        build_property.files.common.push("Mmcsd_sample.c");
+        build_property.files.common.push("Mmcsd_lld_v0_sample.c");
         build_property.includes = includes;
     }
     if(buildOption.device=="am273x" || buildOption.device=="awr294x")
