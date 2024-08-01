@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) Texas Instruments Incorporated 2022-2023
+ *  Copyright (C) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -174,6 +174,41 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
     },
 #endif
 };
+
+ static SDL_MCRC_Config_t SDL_MCRC_Config[MCRC_USECASES] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+#endif
+ };
+
 /*===========================================================================*/
 /*                   Function definitions                              */
 /*===========================================================================*/
@@ -242,7 +277,7 @@ int32_t mcrcAutoCPU_main(void)
 			SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 
 			/* Configure CRC channel */
-			SDL_MCRC_configCRCType(instance, mcrcChannel);
+			SDL_MCRC_addConfig(params[testCase].instance,params[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 			SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, SDL_MCRC_OPERATION_MODE_FULLCPU);
 
 			/* Get CRC PSA signature register address */
@@ -284,7 +319,7 @@ int32_t mcrcAutoCPU_main(void)
 		    /* Reset the CRC channel*/
 		    SDL_MCRC_channelReset(instance, mcrcChannel);
 		    SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, params[testCase].mcrcMode);
-		    SDL_MCRC_configCRCType(instance, mcrcChannel);
+			SDL_MCRC_addConfig(params[testCase].instance,params[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 
 		    SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 		    SDL_MCRC_getCRCRegAddr(instance, mcrcChannel, &crcRegAddr);

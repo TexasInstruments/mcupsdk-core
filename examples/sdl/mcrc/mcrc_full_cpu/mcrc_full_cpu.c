@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -111,8 +111,11 @@ typedef struct
 
 #define MCRC_BUF_MAX_SIZE            (40000U)
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #define MCRC_NUM_USE_CASES           (2U)
-
+#else
+#define MCRC_NUM_USE_CASES           (5U)
+#endif
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
@@ -127,17 +130,11 @@ static int32_t sdl_mcrc_full_cpu_test(void);
 static uint8_t gMCRCSrcBuffer[MCRC_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss:extMemCache:ramdisk"))) = {1U};
 
 /** \brief Defines the various MCRC use cases. */
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
 {
     {
-#if defined(SOC_AM64X) || defined (SOC_AM243X)
         MCU_MCRC64_0,
-#elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-	    MCRC0,
-#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
-        MCRC_INSTANCE,
-#endif
-
         (uint32_t) SDL_MCRC_CHANNEL_1,
         (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
         4U,
@@ -151,14 +148,7 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
         (uint32_t) &gMCRCSrcBuffer[0],
     },
     {
-#if defined(SOC_AM64X) || defined (SOC_AM243X)
         MCU_MCRC64_0 ,
-#elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-	    MCRC0,
-#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
-        MCRC_INSTANCE,
-#endif
-
         (uint32_t) SDL_MCRC_CHANNEL_2,
         (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
         4U,
@@ -170,8 +160,147 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
         0xaef33083U,
         MCRC_BUF_MAX_SIZE,
         (uint32_t) &gMCRCSrcBuffer[0],
-    },
+    }
 };
+#endif
+
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined(SOC_AWR294X) || defined(SOC_AM273X)
+static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
+{
+{
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+	    MCRC0,
+#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
+        MCRC_INSTANCE,
+#endif
+        (uint32_t) SDL_MCRC_CHANNEL_1,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0x749E85BfU,
+        0xB9257584U,
+        400,
+        (uint32_t) &gMCRCSrcBuffer[0],
+    },
+    {
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+	    MCRC0,
+#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
+        MCRC_INSTANCE,
+#endif
+        (uint32_t) SDL_MCRC_CHANNEL_2,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0x749E85BfU,
+        0xB9257584U,
+        400,
+        (uint32_t) &gMCRCSrcBuffer[0],
+    },
+    {
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+        MCRC0,
+#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
+        MCRC_INSTANCE,
+#endif
+        (uint32_t) SDL_MCRC_CHANNEL_1,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0x749E85BfU,
+        0xB9257584U,
+        400,
+        (uint32_t) &gMCRCSrcBuffer[0],
+    },
+    {
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+        MCRC0,
+#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
+        MCRC_INSTANCE,
+#endif
+        (uint32_t) SDL_MCRC_CHANNEL_1,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0xEDD1B33EU,
+        0xFF852D40U,
+        400,
+        (uint32_t) &gMCRCSrcBuffer[0],
+    },
+    {
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+        MCRC0,
+#elif defined(SOC_AWR294X) || defined(SOC_AM273X)
+        MCRC_INSTANCE,
+#endif
+        (uint32_t) SDL_MCRC_CHANNEL_1,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0xB33Eff85U,
+        0x2D4885EBU,
+        400,
+        (uint32_t) &gMCRCSrcBuffer[0],
+    }
+};
+#endif
+
+
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+ static SDL_MCRC_Config_t SDL_MCRC_Config[MCRC_NUM_USE_CASES] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_64BIT,
+         SDL_MCRC_DATA_64_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_32BIT,
+         SDL_MCRC_DATA_32_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_16BIT,
+         SDL_MCRC_DATA_16_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+ };
+#endif
 
 sdlMCRCApp_t  sdlmcrcAppList[] = {
     {sdl_mcrc_full_cpu_test,    "MCRC_fullCPU_mode",     SDL_APP_NOT_RUN },
@@ -196,7 +325,11 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 
         mcrcData.pMCRCData       = (uint32_t *)params[useCase].sourceMemory;
         mcrcData.size            = params[useCase].dataSize;
-        mcrcData.dataBitSize     = SDL_MCRC_DATA_32_BIT;
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+            mcrcData.dataBitSize     = SDL_MCRC_DATA_32_BIT;
+#else
+            mcrcData.dataBitSize     = SDL_MCRC_Config[useCase].dataBitSize;
+#endif
         SDL_MCRC_Signature_t  sectSignVal;
 
         result = SDL_MCRC_init(params[useCase].instance,params[useCase].mcrcChannelNumber,
@@ -210,7 +343,12 @@ static int32_t sdl_mcrc_full_cpu_test(void)
             result = SDL_MCRC_config(params[useCase].instance,params[useCase].mcrcChannelNumber,params[useCase].mcrcPatternCount,
                         params[useCase].mcrcSectorCount, params[useCase].mcrcMode);
         }
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+        if (result == SDL_PASS)
+         {
+            result = SDL_MCRC_addConfig(params[useCase].instance,params[useCase].mcrcChannelNumber,&SDL_MCRC_Config[useCase]);
+         }
+#endif
         pMCRCData = (uint32_t *)mcrcData.pMCRCData;
         for (i = 0; i < (mcrcData.size / 4U); i++)
         {
@@ -226,14 +364,15 @@ static int32_t sdl_mcrc_full_cpu_test(void)
              * Check if the generated MCRC signature value
              * matches with the reference signaure vaule
              */
-             if(useCase == 0)
+             if(useCase != 1U)
              {
-                if ((sectSignVal.regH == params[0].mcrcSignHigh) &&
-                    (sectSignVal.regL == params[0].mcrcSignLow))
+                if ((sectSignVal.regH == params[useCase].mcrcSignHigh) &&
+                    (sectSignVal.regL == params[useCase].mcrcSignLow))
                 {
                     result = SDL_PASS;
                 }
-                else{
+                else
+                {
                     result = SDL_EFAIL;
                 }
              }
