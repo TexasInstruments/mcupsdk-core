@@ -49,12 +49,12 @@ const includes = {
 };
 
 const template_options_cc = {
-    bootformat: "RPRC",
+    bootformat: "MCELF",
     board: "am263px-cc"
 }
 
 const template_options_lp = {
-    bootformat: "RPRC",
+    bootformat: "MCELF",
     board: "am263px-lp"
 }
 
@@ -91,7 +91,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_uart";
+    property.name = "sbl_uart_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;

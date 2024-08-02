@@ -78,6 +78,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+    if(buildOption.board === "am261x-som")
+    {
+        build_property.templates = templates_cc;
+    }
+    else if(buildOption.board === "am261x-lp")
+    {
+        build_property.templates = templates_lp;
+    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {

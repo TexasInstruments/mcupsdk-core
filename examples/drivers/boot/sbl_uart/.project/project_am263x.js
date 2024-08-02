@@ -57,6 +57,35 @@ const includes = {
     ],
 };
 
+const template_options_cc = {
+    bootformat: "RPRC",
+    board: "am263x-cc"
+}
+
+const template_options_lp = {
+    bootformat: "RPRC",
+    board: "am263x-lp"
+}
+
+const templates_cc =
+[
+    {
+        input: ".project/templates/am263x/sbl/sbl_uart/main.c.xdt",
+        output: "../main.c",
+        options: template_options_cc
+    },
+];
+
+
+const templates_lp =
+[
+    {
+        input: ".project/templates/am263x/sbl/sbl_uart/main.c.xdt",
+        output: "../main.c",
+        options: template_options_lp
+    },
+];
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART";
@@ -87,6 +116,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+    if(buildOption.board === "am263x-cc")
+    {
+        build_property.templates = templates_cc;
+    }
+    else if(buildOption.board === "am263x-lp")
+    {
+        build_property.templates = templates_lp;
+    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
@@ -94,7 +131,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.defines = r5f0_macro;
     }
     build_property.includes = includes;
-
 
     return build_property;
 }
