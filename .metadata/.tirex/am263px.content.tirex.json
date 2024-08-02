@@ -14726,6 +14726,130 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running NORTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running NORTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
         "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

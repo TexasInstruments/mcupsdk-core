@@ -484,6 +484,10 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1300,6 +1304,10 @@ BUILD_COMBO_EXAMPLE_ALL += gptp_lwip_cpsw_am263px-lp_r5fss0-0_freertos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_ALL += gptp_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += lldp_app_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -2542,6 +2550,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -3087,6 +3107,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_lwip_cpsw_am263px-lp_r5fss0-0_freertos_ti-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lldp_app_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4324,6 +4348,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4869,6 +4905,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_lwip_cpsw_am263px-lp_r5fss0-0_freertos_ti-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lldp_app_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6105,6 +6145,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  lldp_app_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ real_time_debug_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/real_time_debug/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
