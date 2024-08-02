@@ -5838,6 +5838,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Example to demonstrate Firmware updates Over Can CPU is R5FSS0-0 running FREERTOS.",
+        "name": "fota_over_can",
+        "location": "../../examples/drivers/fss/fota_over_can/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fss",
+            "fota_over_can",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",

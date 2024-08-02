@@ -43,6 +43,7 @@ FILES_common := \
     etpwm.c \
     flsopskd_v0.c \
     fota_fw_arr.c \
+    fota_agent.c \
     fsi_rx.c \
     fsi_tx.c \
     fss_v0.c \
@@ -108,6 +109,7 @@ FILES_PATH_common = \
     edma/v0 \
     epwm/v1 \
     eqep/v1 \
+    fota_agent \
     fsi/v1 \
     fss/v0 \
     gpio/v0 \

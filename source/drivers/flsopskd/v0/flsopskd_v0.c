@@ -143,7 +143,7 @@ int32_t FLSOPSKD_Erase(FLSOPSKD_handle *pHandle, uint32_t offset)
 int32_t FLSOPSKD_Write(FLSOPSKD_handle *pHandle, uint32_t destAddr, uint8_t *pSrcBuffer, uint32_t wrSize)
 {
     unsigned int flash_page_size = FLASH_PAGE_SIZE;
-    unsigned int sector_size = FLASH_SECTOR_SIZE;
+    unsigned int sector_size = ERASE_SECTOR_SIZE;
     int32_t status = SystemP_FAILURE;
     uint32_t bytesWritten = 0;
 

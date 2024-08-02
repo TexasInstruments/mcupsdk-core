@@ -47,13 +47,13 @@ static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, u
 
 	if(fileBuf != NULL)
 	{
-		ELFUP_ELFPH pht[4];
+		ELFUP_ELFPH pht[20];
 		ELFUP_Handle elfuph;
 		int32_t status = SystemP_FAILURE;
 
 		memset(pht, 0xff, sizeof(pht));
 
-		ELFUP_init(&elfuph, pht, 4);
+		ELFUP_init(&elfuph, pht, 20);
 
 		flashAttrs = Flash_getAttrs(flashIndex);
 		flashHandle = Flash_getHandle(flashIndex);

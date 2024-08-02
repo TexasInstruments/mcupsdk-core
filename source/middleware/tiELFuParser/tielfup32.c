@@ -153,9 +153,9 @@ int16_t ELFUP_isPartOfSegment(ELFUP_Handle *handle, uint32_t offset, ELFUP_ELFPH
             {
                 ph_len = handle->pht[i].ELFPH.memsz;
                 ph_offset = handle->pht[i].ELFPH.offset;
-                if((ph_offset < offset) && (offset < (ph_offset + ph_len)))
+                if((ph_offset <= offset) && (offset < (ph_offset + ph_len)))
                 {
-                    phtInfo = &handle->pht[i];
+                    *phtInfo = handle->pht[i];
                     status = SystemP_SUCCESS;
                     break;
                 }
