@@ -131,8 +131,6 @@ int main(void)
         if((bootHandle != NULL) && (SystemP_SUCCESS == status))
         {
 
-#ifdef BOOTLOADER_IMAGE_RPRC
-
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
             /* Initialize CPUs and Load RPRC Image */
@@ -175,11 +173,6 @@ int main(void)
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
                 }
             }
-#endif
-
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
 
             if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
             {
@@ -201,7 +194,7 @@ int main(void)
                 /* do nothing */
             }
 
-            /* Delay 5 seconds for the user to connect to UART before the CPUs start running*/
+            /* Delay 2 seconds for the user to connect to UART before the CPUs start running*/
             ClockP_sleep(BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS);
 
             /* Run CPUs */
@@ -220,12 +213,10 @@ int main(void)
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
