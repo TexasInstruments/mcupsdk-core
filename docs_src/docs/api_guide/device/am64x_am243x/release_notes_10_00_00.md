@@ -25,6 +25,8 @@ FreeRTOS FAT supported with FreeRTOS kernel now                                 
 Sysconfig support for PRU Projects                                                              | PRUICSS
 System project for PRU ADC examples                                                             | PRU-IO
 Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
+Early PLL driver in TIFS init updated to follow recommended sequence to avoid PLL instability   | SYSFW (DMSC)
+PM PLL and HSDIV programing in PLL init updated to remove steps violating the recommendation    | SYSFW (DMSC)
 \endcond
 
 \cond SOC_AM243X
@@ -33,6 +35,8 @@ Feature                                                                         
 Little FS file system support for OSPI NOR                                                      | File System
 FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
 Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
+Early PLL driver in TIFS init updated to follow recommended sequence to avoid PLL instability   | SYSFW (DMSC)
+PM PLL and HSDIV programing in PLL init updated to remove steps violating the recommendation    | SYSFW (DMSC)
 \endcond
 
 ## Device and Validation Information
@@ -64,6 +68,7 @@ FreeRTOS SMP Kernel     | A53            | @VAR_FREERTOS_SMP_KERNEL_VERSION
 Tiny USB                | R5F            | @VAR_TINYUSB_VERSION
 LwIP                    | R5F            | @VAR_LWIP_VERSION
 Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
+DMSC Firmware           | DMSC           | @VAR_DMSC_FIRMWARE_VERSION
 
 ## Key Features
 
@@ -415,6 +420,30 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 09.02.00
     <td> AM64x, AM243x
     <td> Fixed
+</tr>
+<tr>
+    <td> SYSFW-7463
+    <td> TISCI_MSG_GET_CLOCK always return Enabled for input clock
+    <td> DMSC
+    <td> All
+    <td> AM64x, AM243x
+    <td> API fixed to return correct state
+</tr>
+<tr>
+    <td> SYSFW-7485
+    <td> Update the PLL driver in TIFS boot flow to follow correct sequence
+    <td> DMSC
+    <td> All
+    <td> AM64x, AM243x
+    <td> Early PLL driver in security init of DMSC firmware updated
+</tr>
+<tr>
+    <td> SYSFW-7486
+    <td> PM: Cleanup additional steps in pll init startup routine
+    <td> DMSC
+    <td> All
+    <td> AM64x, AM243x
+    <td> Regular PLL driver init sequence in DMSC firmware updated
 </tr>
 </table>
 
