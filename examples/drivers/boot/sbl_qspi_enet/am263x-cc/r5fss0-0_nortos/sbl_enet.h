@@ -77,6 +77,7 @@ extern void Board_cpswMuxSel(void);
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+#define SBL_TEST_STANDALONE_ENET_DEMO (1) // 1 = packet is discarded to verify enet only functionality
 
 /* Host PC MAC Address */
 #define ENET_HOST_PC_MAC_ADDRESS        { 0x28, 0x87, 0xBA, 0x3E, 0x41, 0x77}

@@ -270,11 +270,15 @@ int32_t EnetSBL_transferAppimage(void)
 
     while(!finished)
     {
-        // waitCount++;
+#if !SBL_TEST_STANDALONE_ENET_DEMO
+        waitCount++;
         if(waitCount > 1000 && (totalPktCnt == 0xFFFFFFFFU))
         {
             break;
         }
+#else
+        (void)waitCount ; // WA to mute the compilation warning (unused variable)
+#endif
         SemaphoreP_pend(&gEnetSBL_LLDObj.rxSemObj, SystemP_NO_WAIT);
         /* Get the packets received so far */
         rxReadyCnt = EnetSBL_receivePkts();
@@ -308,12 +312,20 @@ int32_t EnetSBL_transferAppimage(void)
                             totalPktCnt = fileHeader->rsv1;
                             EnetAppUtils_print("[ ENETSBL ] Receiving file, please wait ...\r\n");
                         }
-                        /* Copy pkt contents to appimage buffer and increase file size */
+#if SBL_TEST_STANDALONE_ENET_DEMO
+                        EnetAppUtils_print("[ ENETSBL ] ReceivedPacket:\r\n");
 
-                        /* TODO, REPLACE WRITING FILE INTO QSPI DIRECTLY INSTEAD OF MEMCPY INTO OCRAM */
+                        for (uint32_t i = 0; i < 20; i++)
+                        {
+                        	EnetAppUtils_print("[ ENETSBL ] %x ", pktInfoRx->sgList.list[0].bufPtr[i]);
+                        }
+                        EnetAppUtils_print("\r\n");
+#else
+
+                        /* TODO, REPLACE WRITING FILE INTO QSPI FLASH DIRECTLY INSTEAD OF MEMCPY */
                         // memcpy(&gFlashFileBuf[gFlashFileSize], &gEnetSBL_MetaObj.appPktData[MGC_NUM_SIZE+SEQ_NUM_SIZE], (EthPayloadLen-MGC_NUM_SIZE-SEQ_NUM_SIZE));
-                        // gFlashFileSize += (EthPayloadLen-MGC_NUM_SIZE-SEQ_NUM_SIZE);
-
+                        gFlashFileSize += (EthPayloadLen-MGC_NUM_SIZE-SEQ_NUM_SIZE);
+#endif
                         /* Fill the TX payload with seq number and ACK code */
                         memcpy(&gEnetSBL_MetaObj.txPayload[0], &currPktCnt, sizeof(currPktCnt));
                         memcpy(&gEnetSBL_MetaObj.txPayload[sizeof(currPktCnt)], &EnetSBL_Ack, sizeof(EnetSBL_Ack));
@@ -401,17 +413,16 @@ int32_t EnetSBL_transferAppimage(void)
             }
 
             /*Submit now processed buffers */
-            if (status == ENET_SOK)
-            {
-                EnetAppUtils_validatePacketState(&gEnetSBL_LLDObj.rxFreeQ,
+            EnetAppUtils_validatePacketState(&gEnetSBL_LLDObj.rxFreeQ,
                                                  ENET_PKTSTATE_APP_WITH_FREEQ,
                                                  ENET_PKTSTATE_APP_WITH_DRIVER);
-                EnetDma_submitRxPktQ(gEnetSBL_LLDObj.hRxCh,
+            EnetDma_submitRxPktQ(gEnetSBL_LLDObj.hRxCh,
                                      &gEnetSBL_LLDObj.rxFreeQ);
-            }
+
         }
     }
 
+    EnetAppUtils_print("[ ENETSBL ] Status:%d\r\n", status);
     return ENET_EFAIL; /* send actual status instead of failure when ethernet image is received */
 }
 
@@ -525,7 +536,6 @@ static uint32_t EnetSBL_receivePkts(void)
         EnetAppUtils_print("[ ENETSBL ] receivePkts() failed to retrieve pkts: %d\r\n", status);
     }
 
-    EnetAppUtils_print("[ ENETSBL ] receivePkts() failed to retrieve pkts: %d\r\n", status);
     return rxReadyCnt;
 }
 
@@ -1270,7 +1280,12 @@ static bool EnetSBL_parseFrame(EthFrame *frame, uint32_t dataLen)
 				    {
 				        if (EnetApp_verifyUDPChecksum(ipv4Frame, udpFrame, &payload[sizeof(EthAppIPv4Header)+sizeof(EthAppUDPHeader)]))
 				        {
-                            if(memcmp(&payload[sizeof(EthAppIPv4Header)+sizeof(EthAppUDPHeader)], &EnetSBL_MagicNum, MGC_NUM_SIZE) == 0)
+#if SBL_TEST_STANDALONE_ENET_DEMO
+                            if(true /*memcmp(&payload[sizeof(EthAppIPv4Header)+sizeof(EthAppUDPHeader)], &EnetSBL_MagicNum, MGC_NUM_SIZE) == 0*/) // uncomment this while testing with real application*/
+#else
+
+#endif
+
                             {
                                 memcpy(&gEnetSBL_MetaObj.appPktData[0], &payload[sizeof(EthAppIPv4Header)+sizeof(EthAppUDPHeader)], sizeof(gEnetSBL_MetaObj.appPktData[0])*dataLen);
                                 matchingPkt = true;
@@ -1348,7 +1363,7 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
             phyCfg->isStrapped  = boardPhyCfg->isStrapped;
             phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
             phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-        phyCfg->loopbackEn  = false;
+            phyCfg->loopbackEn  = false;
             memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
         }
         else
@@ -1356,8 +1371,8 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
             EnetAppUtils_print("[ ENETSBL ] PHY info not found\r\n");
             EnetAppUtils_assert(false);
         }
-        linkCfg->speed = ENET_SPEED_AUTO;
-        linkCfg->duplexity = ENET_DUPLEX_AUTO;
+        linkCfg->speed = ENET_SPEED_100MBIT;
+        linkCfg->duplexity = ENET_DUPLEX_FULL;
     }
     /* MAC and PHY txsgs are mutually exclusive */
     phyCfg->loopbackEn = false;
