@@ -105,6 +105,7 @@ LIBS_common = \
 	-l:nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:middleware.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:usbd_cdn_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:usbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 
@@ -126,6 +127,7 @@ LIBS_NAME = \
 	nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	middleware.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	usbd_cdn_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	usbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 

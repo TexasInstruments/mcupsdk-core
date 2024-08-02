@@ -41,6 +41,7 @@ const libs_nortos_r5f_gcc = {
         "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "middleware.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
 };
 

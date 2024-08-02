@@ -94,6 +94,7 @@
                 -lnortos.am243x.r5f.gcc-armv7.debug.lib
                 -ldrivers.am243x.r5f.gcc-armv7.debug.lib
                 -lboard.am243x.r5f.gcc-armv7.debug.lib
+                -lmiddleware.am243x.r5f.gcc-armv7.debug.lib
                 -lusbd_cdn_nortos.am243x.r5f.gcc-armv7.debug.lib
                 -lusbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.debug.lib
             "
@@ -106,6 +107,7 @@
                 -lnortos.am243x.r5f.gcc-armv7.release.lib
                 -ldrivers.am243x.r5f.gcc-armv7.release.lib
                 -lboard.am243x.r5f.gcc-armv7.release.lib
+                -lmiddleware.am243x.r5f.gcc-armv7.release.lib
                 -lusbd_cdn_nortos.am243x.r5f.gcc-armv7.release.lib
                 -lusbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.release.lib
             "
