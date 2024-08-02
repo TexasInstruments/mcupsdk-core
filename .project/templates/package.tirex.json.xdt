@@ -12,7 +12,7 @@
 [
     {
         "metadataVersion": "3.01.00",
-        % if((args.device == "am263px") || (args.device == "am261x") && (!isDevelopmentMode)) {
+        % if(((args.device == "am263px") || (args.device == "am261x")) && (!isDevelopmentMode)) {
         "id": "`"MCU-PLUS-SDK-"+args.device.toUpperCase()`",
         % } else {
         "id": "com.ti.`productName`",
