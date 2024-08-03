@@ -25,6 +25,7 @@ FreeRTOS FAT supported with FreeRTOS kernel now                                 
 Sysconfig support for PRU Projects                                                              | PRUICSS
 System project for PRU ADC examples                                                             | PRU-IO
 Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
+PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.14.03       | Ethernet
 Early PLL driver in TIFS init updated to follow recommended sequence to avoid PLL instability   | SYSFW (DMSC)
 PM PLL and HSDIV programing in PLL init updated to remove steps violating the recommendation    | SYSFW (DMSC)
 \endcond
@@ -445,6 +446,62 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Regular PLL driver init sequence in DMSC firmware updated
 </tr>
+<tr>
+    <td> MCUSDK-12756
+    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
+    <td> Mbed-TLS
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> SITSW-4937
+    <td> ENET - MII padconfig pins are not getting configured from the SYSCONFIG generated code
+    <td> Ethernet
+    <td> 09.01.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> SITSW-4932
+    <td> ENET - 10M link speed is not working 
+    <td> Ethernet
+    <td> 09.01.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7981
+    <td> Ethernet: FDB: Clearing issue during initialization
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7982
+    <td> Ethernet: 10M: Race condition during IEP CMP config
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7990
+    <td> Ethernet: HD: Need to handle CRS, COL connections combination in firmware.
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7980
+    <td> Ethernet: FDB: Learning and Flushing Issues
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7851
+    <td> [ENET_ICSSG] Ping does not work on the other port in Cut-through mode
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> None
+</tr>
 </table>
 
 ## Known Issues
@@ -668,6 +725,8 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 08.06.00 onwards
     <td> None
 </tr>
+
+
 </table>
 
 ## Errata
