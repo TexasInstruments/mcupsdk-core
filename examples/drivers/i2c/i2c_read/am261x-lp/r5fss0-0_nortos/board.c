@@ -40,5 +40,5 @@
 
 uint32_t Board_i2cGetEepromDeviceAddr()
 {
-    return 0x53;
+    return 0x51;
 }
