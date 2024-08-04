@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,6 +56,33 @@ PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSM0 =
     CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_PDSP0_IRAM_RAM_REGS_BASE,                   /* pru0IramBase */
     CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_PDSP1_IRAM_RAM_REGS_BASE,                   /* pru1IramBase */
     CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_RAM_SLV_RAM_REGS_BASE,                          /* sharedDramBase */
+    /*TODO: Replace these values with macros*/
+    (0x2000UL),                                                                             /* pru0DramSize */
+    (0x2000UL),                                                                             /* pru1DramSize */
+    (0x3000UL),                                                                             /* pru0IramSize */
+    (0x3000UL),                                                                             /* pru1IramSize */
+    (0x8000UL),                                                                             /* sharedDramSize */
+};
+
+PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSM1 =
+{
+    0,                                                                                      /* instance */
+    CSL_ICSSM1_INTERNAL,                                                                    /* baseAddr */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP0_IRAM_REGS_BASE,                              /* pru0CtrlRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP1_IRAM_REGS_BASE,                              /* pru1CtrlRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_ICSS_INTC_SLV_REGS_BASE,                           /* intcRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE,                                 /* cfgRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_ICSS_UART_SLV_REGS_BASE,                           /* uartRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_IEP0_SLV_REGS_BASE,                                /* iep0RegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_ICSS_ECAP0_ECAP_SLV_REGS_BASE,                     /* ecapRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_MII_RT_PR1_MII_RT_CFG_REGS_BASE,                   /* miiRtCfgRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_REGS_BASE,          /* miiGRtCfgRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_MDIO_V1P7_MDIO_REGS_BASE,                          /* miiMdioRegBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_DRAM0_SLV_RAM_REGS_BASE,                               /* pru0DramBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_DRAM1_SLV_RAM_REGS_BASE,                               /* pru1DramBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP0_IRAM_RAM_REGS_BASE,                          /* pru0IramBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP1_IRAM_RAM_REGS_BASE,                          /* pru1IramBase */
+    CSL_ICSSM1_INTERNAL + CSL_ICSS_M_RAM_SLV_RAM_REGS_BASE,                                 /* sharedDramBase */
     /*TODO: Replace these values with macros*/
     (0x2000UL),                                                                             /* pru0DramSize */
     (0x2000UL),                                                                             /* pru1DramSize */
