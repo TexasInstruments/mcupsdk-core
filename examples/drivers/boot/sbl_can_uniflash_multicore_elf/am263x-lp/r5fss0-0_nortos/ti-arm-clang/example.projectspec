@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Sbl Can Uniflash"
-        name = "sbl_can_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang"
+        title="Sbl Can Uniflash Mutlicore Elf"
+        name = "sbl_can_uniflash_mutlicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -52,7 +52,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${MCU_PLUS_SDK_PATH}/source/middleware/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=sbl_can_uniflash.${ConfigName}.map
+            -m=sbl_can_uniflash_mutlicore_elf.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -65,7 +65,7 @@
             --context r5fss0-0 --part AM263x --package ZCZ
         "
 
-        description="A Sbl Can Uniflash NORTOS project">
+        description="A Sbl Can Uniflash Mutlicore Elf NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -99,6 +99,8 @@
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../board.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

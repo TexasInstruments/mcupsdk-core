@@ -39,7 +39,7 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
+#include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -130,7 +130,6 @@ int main(void)
 
         if((bootHandle != NULL) && (SystemP_SUCCESS == status))
         {
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -156,11 +155,6 @@ int main(void)
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
                 }
             }
-#endif
-
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
 
             if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
             {
@@ -193,12 +187,10 @@ int main(void)
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }

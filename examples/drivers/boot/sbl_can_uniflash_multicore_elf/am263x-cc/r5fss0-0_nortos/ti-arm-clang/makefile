@@ -24,13 +24,13 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sbl_can_uniflash.$(PROFILE).out
+OUTNAME:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME_GP:=sbl_can_uniflash.$(PROFILE).tiimage
-BOOTIMAGE_NAME_HS:=sbl_can_uniflash.$(PROFILE).hs.tiimage
-BOOTIMAGE_NAME_HS_FS:=sbl_can_uniflash.$(PROFILE).hs_fs.tiimage
-BOOTIMAGE_BIN_NAME:=sbl_can_uniflash.$(PROFILE).bin
+BOOTIMAGE_NAME_GP:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).hs_fs.tiimage
+BOOTIMAGE_BIN_NAME:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).bin
 
 ifeq ($(DEVICE_TYPE),HS)
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
@@ -40,6 +40,7 @@ endif
 
 FILES_common := \
 	main.c \
+	board.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -206,7 +207,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang sbl_can_uniflash ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang sbl_can_uniflash_mutlicore_elf ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -305,12 +306,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sbl_can_uniflash.$(PROFILE) ...
+	@echo Creating Coverage Report for sbl_can_uniflash_mutlicore_elf.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_can_uniflash.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_can_uniflash.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_can_uniflash.$(PROFILE).profdata > coverage/sbl_can_uniflash.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_can_uniflash.$(PROFILE).profdata.json --output-json=coverage/sbl_can_uniflash.$(PROFILE).analysis.json --output=../sbl_can_uniflash.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata > coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata.json --output-json=coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).analysis.json --output=../sbl_can_uniflash_mutlicore_elf.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

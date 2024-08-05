@@ -29,7 +29,6 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <stdint.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -38,7 +37,6 @@
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
-#include <board/ioexp/ioexp_tca6416.h>
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
@@ -51,21 +49,20 @@ uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((align
 uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
 
 uint32_t gRunApp;
-
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void gpio_flash_reset(void);
+void board_flash_reset(void);
 void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
  */
-void loop_forever()
+void loop_forever(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
+    while (loop)
         ;
 }
 
@@ -78,7 +75,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-int main()
+int main(void)
 {
     int32_t status;
     uint32_t done = 0U;
@@ -111,7 +108,6 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     mcanEnableTransceiver();
-
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
     DebugP_log("\r\n");
@@ -144,7 +140,7 @@ int main()
             /* Process the flash commands and return a response */
             Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
             status = Bootloader_CANTransmitResp((uint8_t *)&respHeader);
-            break;
+            done = 1U;
         }
     }
 
@@ -163,7 +159,6 @@ int main()
 
         if(bootHandle != NULL)
         {
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -184,14 +179,22 @@ int main()
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
-#endif
 
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
-
-            Bootloader_profileAddProfilePoint("CPU load");
+			Bootloader_profileAddProfilePoint("CPU load");
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+
+            if (status == SystemP_SUCCESS)
+            {
+                /* enable Phy and Phy pipeline for XIP execution */
+                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                {
+                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+
+                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
+            }
 
             /* Run CPUs */
             if(status == SystemP_SUCCESS)
@@ -201,12 +204,10 @@ int main()
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 if (status == SystemP_SUCCESS)
                 {
                     /* enable Phy and Phy pipeline for XIP execution */
@@ -236,7 +237,7 @@ int main()
             Bootloader_close(bootHandle);
         }
     }
-    if(status != SystemP_SUCCESS )
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log("Some tests have failed!!\r\n");
     }
@@ -249,7 +250,7 @@ int main()
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    gpio_flash_reset();
+    board_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

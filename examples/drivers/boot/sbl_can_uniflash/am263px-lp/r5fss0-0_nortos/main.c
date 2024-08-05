@@ -159,7 +159,6 @@ int main(void)
 
         if(bootHandle != NULL)
         {
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -200,11 +199,6 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
-#endif
-
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
 
 			Bootloader_profileAddProfilePoint("CPU load");
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
@@ -238,12 +232,10 @@ int main(void)
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 if (status == SystemP_SUCCESS)
                 {
                     /* enable Phy and Phy pipeline for XIP execution */

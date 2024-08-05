@@ -158,14 +158,6 @@ int main(void)
             /* Run CPUs */
             if(status == SystemP_SUCCESS)
             {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-            }
-            if(status == SystemP_SUCCESS)
-            {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-            }
-            if(status == SystemP_SUCCESS)
-            {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
             if(status == SystemP_SUCCESS)

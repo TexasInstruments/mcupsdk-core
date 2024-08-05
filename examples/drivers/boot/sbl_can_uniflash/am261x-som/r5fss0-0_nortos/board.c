@@ -203,3 +203,8 @@ void mcanEnableTransceiver(void)
 
     DebugP_assert(status == SystemP_SUCCESS);
 }
+
+void board_flash_reset(void)
+{
+    i2c_flash_reset();
+}

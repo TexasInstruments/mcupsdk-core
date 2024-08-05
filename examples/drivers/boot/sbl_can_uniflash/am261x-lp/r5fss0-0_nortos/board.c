@@ -101,3 +101,9 @@ void gpio_flash_reset(void)
     GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
 
 }
+
+
+void board_flash_reset(void)
+{
+    gpio_flash_reset();
+}

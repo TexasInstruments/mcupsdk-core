@@ -114,9 +114,10 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     mcanEnableTransceiver();
-
-    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
+
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Bootloader...");
 
     if(SystemP_SUCCESS == status)
     {

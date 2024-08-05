@@ -29,10 +29,6 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-
-#include <stdlib.h>
-#include <string.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -40,7 +36,6 @@
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
-#include <board/ioexp/ioexp_tca6416.h>
 
 #define BOOTLOADER_CAN_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -148,7 +143,6 @@ int main()
         if((bootHandle != NULL) && (SystemP_SUCCESS == status) && (gRunApp == CSL_TRUE))
         {
 
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -176,11 +170,7 @@ int main()
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
                 }
             }
-#endif
 
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
             if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
             {
                 BufIo_sendTransferComplete(CONFIG_MCAN0);
@@ -209,12 +199,10 @@ int main()
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 if(status == SystemP_SUCCESS)
                 {
                     Bootloader_profileAddProfilePoint("SBL End");

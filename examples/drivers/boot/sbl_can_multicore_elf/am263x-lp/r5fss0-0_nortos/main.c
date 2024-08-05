@@ -29,10 +29,6 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-
-#include <stdlib.h>
-#include <string.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -40,7 +36,6 @@
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
-#include <drivers/gpio.h>
 
 #define BOOTLOADER_CAN_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -76,18 +71,6 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-void mcanEnableTransceiver(void)
-{
-    uint32_t    gpioBaseAddr, pinNum;
-
-    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-    pinNum       = CONFIG_GPIO0_PIN;
-
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
-
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-}
-
 int main()
 {
     int32_t status;
@@ -107,16 +90,16 @@ int main()
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
+    Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
-    DebugP_log("Starting CAN Bootloader...");
 
     status = Board_driversOpen();
-
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
-    mcanEnableTransceiver();
+
+    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
     if(SystemP_SUCCESS == status)
@@ -156,60 +139,7 @@ int main()
 
         if((bootHandle != NULL) && (SystemP_SUCCESS == status) && (gRunApp == CSL_TRUE))
         {
-
-#ifdef BOOTLOADER_IMAGE_RPRC
-
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
-
-            /* Initialize CPUs and Load RPRC Image */
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-				}
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-				}
-            }
-            if(status == SystemP_SUCCESS && ((TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)) || (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))))
-            {
-                /* Set clocks for self cluster */
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-				}
-
-                Bootloader_profileAddProfilePoint("CPU load");
-
-                /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
-                if(status == SystemP_SUCCESS)
-                {
-                    status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
-                }
-            }
-#endif
-
-#ifdef BOOTLOADER_IMAGE_MCELF
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
             if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
             {
                 BufIo_sendTransferComplete(CONFIG_MCAN0);
@@ -245,13 +175,6 @@ int main()
             }
             if(status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-				{
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-				}
-#endif
                 if(status == SystemP_SUCCESS)
                 {
                     Bootloader_profileAddProfilePoint("SBL End");

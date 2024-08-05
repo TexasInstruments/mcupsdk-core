@@ -100,9 +100,10 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     mcanEnableTransceiver();
-
-    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
+
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Bootloader...");
 
     if(SystemP_SUCCESS == status)
     {
@@ -171,7 +172,6 @@ int main()
             }
             if(status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
                 if(status == SystemP_SUCCESS)
                 {
                     Bootloader_profileAddProfilePoint("SBL End");

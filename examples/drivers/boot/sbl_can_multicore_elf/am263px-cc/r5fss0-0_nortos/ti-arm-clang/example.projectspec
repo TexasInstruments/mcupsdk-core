@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Sbl Can"
-        name = "sbl_can_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
+        title="Sbl Can Multicore Elf"
+        name = "sbl_can_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -49,7 +49,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=sbl_can.${ConfigName}.map
+            -m=sbl_can_multicore_elf.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -62,7 +62,7 @@
             --context r5fss0-0 --part AM263P4 --package ZCZ_S
         "
 
-        description="A Sbl Can NORTOS project">
+        description="A Sbl Can Multicore Elf NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

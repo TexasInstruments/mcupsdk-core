@@ -52,7 +52,7 @@ uint32_t gRunApp;
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void i2c_flash_reset(void);
+void board_flash_reset(void);
 void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
@@ -159,7 +159,6 @@ int main(void)
 
         if(bootHandle != NULL)
         {
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -180,11 +179,6 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
-#endif
-
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
 
 			Bootloader_profileAddProfilePoint("CPU load");
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
@@ -210,12 +204,10 @@ int main(void)
             if(status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
 				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
 				{
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 				}
-#endif
                 if (status == SystemP_SUCCESS)
                 {
                     /* enable Phy and Phy pipeline for XIP execution */
@@ -258,7 +250,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    i2c_flash_reset();
+    board_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

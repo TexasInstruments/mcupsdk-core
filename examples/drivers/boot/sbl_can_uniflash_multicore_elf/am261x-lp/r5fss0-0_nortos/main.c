@@ -35,32 +35,34 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
+#include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
-#define BOOTLOADER_CAN_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
-#define BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
-#define BOOTLOADER_CAN_STATUS_APPIMAGE_SIZE_EXCEEDED (0x45584344) /* EXCD */
-
-#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x80000) /* Size of section MSRAM_2 specified in linker.cmd */
-uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
-
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-    = HSMRT_IMG;
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
 
-uint32_t gRunApp;
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x170000) /* This has to match the size of MSRAM1 section in linker.cmd */
+uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
+#define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
+uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
+
+uint32_t gRunApp;
+extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle);
+void board_flash_reset(void);
 void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
  */
-void loop_forever()
+void loop_forever(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
+    while (loop)
         ;
 }
 
@@ -73,9 +75,13 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-int main()
+int main(void)
 {
     int32_t status;
+    uint32_t done = 0U;
+    uint32_t fileSize = 0U;
+    Bootloader_UniflashConfig uniflashConfig;
+    Bootloader_UniflashResponseHeader respHeader;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -88,23 +94,59 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socInitL2MailBoxMemory();
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
+
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     mcanEnableTransceiver();
-
-    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
-    if(SystemP_SUCCESS == status)
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Flashwriter...\r\n");
+
+    while(!done)
+    {
+        /* CAN Receive */
+        status = Bootloader_CANReceiveFile(&fileSize, gUniflashFileBuf, &gRunApp);
+
+        if(fileSize >= BOOTLOADER_UNIFLASH_MAX_FILE_SIZE)
+        {
+            /* Possible overflow, send error to host side */
+            status = SystemP_FAILURE;
+
+            respHeader.magicNumber = BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER;
+            respHeader.statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
+
+            Bootloader_CANTransmitResp((uint8_t *)&respHeader);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            uniflashConfig.flashIndex = CONFIG_FLASH0;
+            uniflashConfig.buf = gUniflashFileBuf;
+            uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
+            uniflashConfig.verifyBuf = gUniflashVerifyBuf;
+            uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
+
+            /* Process the flash commands and return a response */
+            Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+            status = Bootloader_CANTransmitResp((uint8_t *)&respHeader);
+            done = 1U;
+        }
+    }
+
+    DebugP_log("\r\n");
+
+    if(SystemP_SUCCESS == status && gRunApp == CSL_TRUE)
     {
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
@@ -113,55 +155,26 @@ int main()
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
-        bootParams.bufIoTempBuf     = gAppImageBuf;
-        bootParams.bufIoTempBufSize = BOOTLOADER_APPIMAGE_MAX_FILE_SIZE;
-        bootParams.bufIoDeviceIndex = CONFIG_MCAN0;
-        bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
+        bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
 
-        bootHandle = Bootloader_open(CONFIG_BOOTLOADER_0, &bootParams);
-
-        if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
+        if(bootHandle != NULL)
         {
-            uint32_t fileSize = 0U;
-            /* CAN Receive */
-            status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf, &gRunApp);
-
-            if(SystemP_SUCCESS == status && fileSize == BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
-            {
-                /* A file larger than 384 KB was sent, and xmodem probably dropped bytes */
-                status = SystemP_FAILURE;
-
-                /* Send response to the script that file size exceeded */
-                uint32_t response;
-                response = BOOTLOADER_CAN_STATUS_APPIMAGE_SIZE_EXCEEDED;
-
-                Bootloader_CANTransmitResp((uint8_t *)&response);
-            }
-        }
-
-        if((bootHandle != NULL) && (SystemP_SUCCESS == status) && (gRunApp == CSL_TRUE))
-        {
-
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 
-            if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
-            {
-                BufIo_sendTransferComplete(CONFIG_MCAN0);
-            }
-            else if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
-            {
-                uint32_t response = BOOTLOADER_CAN_STATUS_LOAD_SUCCESS;
+			Bootloader_profileAddProfilePoint("CPU load");
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
 
-                if(status != SystemP_SUCCESS)
+            if (status == SystemP_SUCCESS)
+            {
+                /* enable Phy and Phy pipeline for XIP execution */
+                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
                 {
-                    response = BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL;
-                }
+                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
 
-                Bootloader_CANTransmitResp((uint8_t *)&response);
-            }
-            else
-            {
-                /* do nothing */
+                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
             }
 
             /* Run CPUs */
@@ -171,15 +184,25 @@ int main()
             }
             if(status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
+                /* enable Phy and Phy pipeline for XIP execution */
+                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                {
+                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+
+                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
                 if(status == SystemP_SUCCESS)
                 {
+                    Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
                     Bootloader_profileAddProfilePoint("SBL End");
                     Bootloader_profilePrintProfileLog();
                     DebugP_log("Image loading done, switching to application ...\r\n");
                     UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
+                /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 
@@ -187,12 +210,21 @@ int main()
             Bootloader_close(bootHandle);
         }
     }
-    if(status != SystemP_SUCCESS)
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log("Some tests have failed!!\r\n");
     }
+
     Drivers_close();
     System_deinit();
 
     return 0;
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle)
+{
+    board_flash_reset();
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
