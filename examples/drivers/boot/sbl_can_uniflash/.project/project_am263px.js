@@ -51,6 +51,45 @@ const includes = {
     ],
 };
 
+const template_options_cc = {
+    bootformat: "RPRC",
+    board: "am263px-cc"
+}
+
+const template_options_lp = {
+    bootformat: "RPRC",
+    board: "am263px-lp"
+}
+
+const templates_cc =
+[
+    {
+        input: ".project/templates/am263px/sbl/sbl_can_uniflash/main.c.xdt",
+        output: "../main.c",
+        options: template_options_cc
+    },
+    {
+        input: ".project/templates/am263px/sbl/sbl_can_uniflash/am263px-cc/board.c.xdt",
+        output: "../board.c",
+        options: template_options_cc
+    }
+];
+
+
+const templates_lp =
+[
+    {
+        input: ".project/templates/am263px/sbl/sbl_can_uniflash/main.c.xdt",
+        output: "../main.c",
+        options: template_options_lp
+    },
+    {
+        input: ".project/templates/am263px/sbl/sbl_can_uniflash/am263px-lp/board.c.xdt",
+        output: "../board.c",
+        options: template_options_cc
+    }
+];
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH";
@@ -81,6 +120,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+    if(buildOption.board === "am263px-cc")
+    {
+        build_property.templates = templates_cc;
+    }
+    else if(buildOption.board === "am263px-lp")
+    {
+        build_property.templates = templates_lp;
+    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {

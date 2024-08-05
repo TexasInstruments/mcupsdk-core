@@ -100,9 +100,10 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     mcanEnableTransceiver();
-
-    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
+
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Bootloader...");
 
     if(SystemP_SUCCESS == status)
     {
@@ -195,7 +196,6 @@ int main()
 #ifdef BOOTLOADER_IMAGE_MCELF
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 #endif
-
             if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
             {
                 BufIo_sendTransferComplete(CONFIG_MCAN0);

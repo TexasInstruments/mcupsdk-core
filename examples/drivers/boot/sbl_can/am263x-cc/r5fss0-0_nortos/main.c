@@ -74,6 +74,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 int main()
 {
     int32_t status;
+    Bootloader_profileReset();
 
     Bootloader_socConfigurePll();
 
@@ -84,6 +85,7 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);

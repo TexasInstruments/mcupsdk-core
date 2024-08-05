@@ -52,7 +52,7 @@ uint32_t gRunApp;
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void i2c_flash_reset(void);
+void board_flash_reset(void);
 void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
@@ -286,7 +286,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    i2c_flash_reset();
+    board_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

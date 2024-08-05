@@ -1459,9 +1459,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Jtag Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_jtag_uniflash",
-        "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Can Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1474,7 +1474,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_jtag_uniflash",
+            "sbl_can_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -1492,9 +1492,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Jtag Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_jtag_uniflash",
-        "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Can Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
         ],
@@ -1507,7 +1507,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_jtag_uniflash",
+            "sbl_can_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -1525,9 +1525,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_null",
-        "location": "../../examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Can Uniflash Mutlicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_mutlicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1540,7 +1540,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_null",
+            "sbl_can_uniflash_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -1558,9 +1558,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_null",
-        "location": "../../examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Can Uniflash Mutlicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_mutlicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
         ],
@@ -1573,7 +1573,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_null",
+            "sbl_can_uniflash_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -1591,9 +1591,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_uart",
-        "location": "../../examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Uart Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_uart_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1606,7 +1606,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_uart",
+            "sbl_uart_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -1624,9 +1624,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_uart",
-        "location": "../../examples/drivers/boot/sbl_uart/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sbl Uart Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_uart_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
         ],
@@ -1639,7 +1639,7 @@
         "subCategories": [
             "drivers",
             "boot",
-            "sbl_uart",
+            "sbl_uart_multicore_elf",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

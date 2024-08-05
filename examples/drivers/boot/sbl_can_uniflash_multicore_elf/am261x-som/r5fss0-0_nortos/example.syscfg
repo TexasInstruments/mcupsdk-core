@@ -1,0 +1,282 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eeprom      = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1     = eeprom.addInstance();
+const flash       = scripting.addModule("/board/flash/flash", {}, false);
+const flash1      = flash.addInstance();
+const pmic        = scripting.addModule("/board/pmic/pmic", {}, false);
+const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1 = bootloader.addInstance();
+const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1  = hsmclient.addInstance();
+const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1        = i2c.addInstance();
+const i2c2        = i2c.addInstance();
+const mcan        = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1       = mcan.addInstance();
+const mcspi       = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1      = mcspi.addInstance();
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const mpu_armv75  = mpu_armv7.addInstance();
+const general     = scripting.addModule("/memory_configurator/general", {}, false);
+const general1    = general.addInstance();
+const region      = scripting.addModule("/memory_configurator/region", {}, false);
+const region1     = region.addInstance();
+const section     = scripting.addModule("/memory_configurator/section", {}, false);
+const section1    = section.addInstance();
+const section2    = section.addInstance();
+const section3    = section.addInstance();
+const section4    = section.addInstance();
+const section5    = section.addInstance();
+const section6    = section.addInstance();
+const section7    = section.addInstance();
+const section8    = section.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eeprom1.$name = "CONFIG_EEPROM0";
+
+bootloader1.$name          = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset = "0x00080000";
+
+bootloader1.flashDriver              = flash1;
+flash1.$name                         = "CONFIG_FLASH0";
+flash1.proto_isAddrReg               = true;
+flash1.proto_cmdRegRd                = "0x85";
+flash1.proto_cmdRegWr                = "0x81";
+flash1.proto_mask                    = "0xff";
+flash1.dummy_isAddrReg               = true;
+flash1.dummy_cfgReg                  = "1";
+flash1.dummy_cmdRegRd                = "0x85";
+flash1.dummy_cmdRegWr                = "0x81";
+flash1.strDtr_isAddrReg              = true;
+flash1.strDtr_cmdRegRd               = "0x85";
+flash1.strDtr_cmdRegWr               = "0x81";
+flash1.strDtr_mask                   = "255";
+flash1.xspiWipRdCmd                  = "0x05";
+flash1.strDtr_shift                  = 255;
+flash1.proto_cfgReg                  = "0";
+flash1.dummy_mask                    = "0xFF";
+flash1.protocol                      = "8d_8d_8d";
+flash1.fourByteEnableSeq             = "0";
+flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable    = true;
+flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.OSPI.$assign = "OSPI0";
+
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+i2c1.$name           = "CONFIG_I2C0";
+i2c1.I2C.SCL.$assign = "GPIO25";
+i2c1.I2C.SDA.$assign = "GPIO26";
+i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
+
+i2c2.$name               = "CONFIG_I2C1";
+eeprom1.peripheralDriver = i2c2;
+i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
+
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.MCAN.$assign    = "MCAN4";
+mcan1.MCAN.RX.$assign = "GPIO61";
+mcan1.MCAN.TX.$assign = "GPIO62";
+
+flash1.peripheralDriver.edmaDriver = edma1;
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.intrEnable       = "DISABLE";
+debug_log.uartLog.UART.RXD.$assign = "GPIO27";
+debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.attributes        = "Cached+Sharable";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "Device";
+mpu_armv75.size         = 24;
+mpu_armv75.baseAddr     = 0xCE000000;
+
+general1.$name          = "CONFIG_GENERAL0";
+general1.irq_stack_size = 4096;
+general1.svc_stack_size = 256;
+general1.linker.$name   = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION";
+region1.memory_region.create(7);
+region1.memory_region[0].type               = "TCMA";
+region1.memory_region[0].$name              = "R5F_VECS";
+region1.memory_region[0].auto               = false;
+region1.memory_region[0].size               = 0x100;
+region1.memory_region[1].type               = "TCMA";
+region1.memory_region[1].$name              = "R5F_TCMA";
+region1.memory_region[1].auto               = false;
+region1.memory_region[1].manualStartAddress = 0x100;
+region1.memory_region[1].size               = 0x7F00;
+region1.memory_region[2].type               = "TCMB";
+region1.memory_region[2].$name              = "R5F_TCMB";
+region1.memory_region[2].size               = 0x8000;
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].$name              = "MSRAM_VECS";
+region1.memory_region[3].manualStartAddress = 0x70002000;
+region1.memory_region[3].size               = 0x100;
+region1.memory_region[4].$name              = "MSRAM_0";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0x70002100;
+region1.memory_region[4].size               = 0x3DF00;
+region1.memory_region[5].$name              = "MSRAM_1";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x70080000;
+region1.memory_region[5].size               = 0x170000;
+region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].manualStartAddress = 0x70040000;
+region1.memory_region[6].size               = 0x40000;
+region1.memory_region[6].auto               = false;
+
+section1.group                                    = false;
+section1.$name                                    = "Vector Table";
+section1.load_memory                              = "MSRAM_VECS";
+section1.run_memory                               = "R5F_VECS";
+section1.output_section.create(1);
+section1.output_section[0].$name                  = ".sbl_init_code";
+section1.output_section[0].palignment             = true;
+section1.output_section[0].input_section.create(1);
+section1.output_section[0].input_section[0].$name = "*(.vectors). = align(8);";
+
+section2.$name                        = "Text Segments";
+section2.load_memory                  = "MSRAM_0";
+section2.output_section.create(7);
+section2.output_section[0].$name      = ".text";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.hwi";
+section2.output_section[2].$name      = ".text.cache";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.mpu";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text.boot";
+section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".data";
+section2.output_section[5].palignment = true;
+section2.output_section[6].$name      = ".rodata";
+section2.output_section[6].palignment = true;
+
+section3.$name                                   = "Memory Segments";
+section3.load_memory                             = "MSRAM_0";
+section3.group                                   = false;
+section3.output_section.create(1);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+section3.output_section[0].palignment            = true;
+
+section4.$name                        = "CONFIG_SECTION2";
+section4.group                        = false;
+section4.load_memory                  = "MSRAM_0";
+section4.output_section.create(1);
+section4.output_section[0].$name      = ".sysmem";
+section4.output_section[0].palignment = true;
+
+section5.$name                        = "CONFIG_SECTION3";
+section5.group                        = false;
+section5.load_memory                  = "MSRAM_0";
+section5.output_section.create(1);
+section5.output_section[0].$name      = ".stack";
+section5.output_section[0].palignment = true;
+
+section6.$name                                    = "CONFIG_SECTION4";
+section6.load_memory                              = "MSRAM_0";
+section6.output_section.create(5);
+section6.output_section[0].$name                  = ".irqstack";
+section6.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section6.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section6.output_section[0].input_section.create(1);
+section6.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section6.output_section[1].$name                  = ".fiqstack";
+section6.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section6.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section6.output_section[1].input_section.create(1);
+section6.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section6.output_section[2].$name                  = ".svcstack";
+section6.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section6.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section6.output_section[2].input_section.create(1);
+section6.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section6.output_section[3].$name                  = ".abortstack";
+section6.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section6.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section6.output_section[3].input_section.create(1);
+section6.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section6.output_section[4].$name                  = ".undefinedstack";
+section6.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section6.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section6.output_section[4].input_section.create(1);
+section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+
+section7.group                        = false;
+section7.type                         = "NOLOAD";
+section7.load_memory                  = "MSRAM_1";
+section7.$name                        = "CONFIG_SECTION5";
+section7.output_section.create(1);
+section7.output_section[0].$name      = ".bss.filebuf";
+section7.output_section[0].palignment = true;
+
+section8.$name                   = "Hsmrt";
+section8.group                   = false;
+section8.load_memory             = "MSRAM_HSMRT";
+section8.output_section.create(1);
+section8.output_section[0].$name = ".rodata.hsmrt";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "EPWM11_A";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO3";
+i2c1.I2C.$suggestSolution                          = "I2C2";
+i2c2.I2C.$suggestSolution                          = "I2C0";
+i2c2.I2C.SCL.$suggestSolution                      = "GPIO135";
+i2c2.I2C.SDA.$suggestSolution                      = "GPIO134";
+debug_log.uartLog.UART.$suggestSolution            = "UART0";
