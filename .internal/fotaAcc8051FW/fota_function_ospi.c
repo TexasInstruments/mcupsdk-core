@@ -264,6 +264,9 @@ void main()
                 rdata3 = ESFR_MCU_CFG_RD_DAT3 & 0x80;
             }
 
+            // BEGIN TIMING OPTMIZED CODE BLOCK
+            FOTA_GetDatBusOwnership();
+
             FOTA_ReadCfg(OPTISPI_DEV_INSTR_RD_CONFIG_REG, ESFR_OSPI_REGS_RSEL);
             initOspiRdCfg_3 = ESFR_MCU_CFG_RD_DAT3;
             initOspiRdCfg_2 = ESFR_MCU_CFG_RD_DAT2;
@@ -319,10 +322,6 @@ void main()
             // block.
             ESFR_MCU_CFG_ADDR0 = OPTISPI_CFG_REG & 0x00FF; // write the address out to esfr registers
             ESFR_MCU_CFG_ADDR1 = (OPTISPI_CFG_REG >> 8) & 0x00FF;
-
-            // BEGIN TIMING OPTMIZED CODE BLOCK
-
-            FOTA_GetDatBusOwnership();
 
             // disable pipeline
             FOTA_WriteCfgPreload(ESFR_OSPI_REGS_RSEL);

@@ -68,6 +68,16 @@ void write_verify_calibration_data(void *args)
     }
 
     FLSOPSKD_Write(&flopsdkHandle, FLASH_DATA_OFFSET, (uint8_t*)gWrCalibrationData, CALIBRATION_DATA_LENGTH);
+
+    /* verify by reading it back */
+
+    FLSOPSKD_STIGRead(&flopsdkHandle, FLASH_DATA_OFFSET, (uint8_t*)gRdCalibrationData, CALIBRATION_DATA_LENGTH);
+
+    for(uint32_t rdLen = 0; rdLen < sizeof(gRdCalibrationData)/sizeof(*gRdCalibrationData); rdLen++)
+    {
+        DebugP_assert(gWrCalibrationData[rdLen] == gRdCalibrationData[rdLen]);
+    }
+
 }
 
 __attribute__((optnone))  int main(void)

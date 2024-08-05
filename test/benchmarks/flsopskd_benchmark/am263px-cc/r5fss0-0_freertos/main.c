@@ -85,6 +85,8 @@ int main()
     Drivers_open();
     Board_driversOpen();
 
+    DebugP_log("\r\nStarting Application.");
+
     config_pmu();
     {
         // volatile uint64_t time = ClockP_getTimeUsec();
