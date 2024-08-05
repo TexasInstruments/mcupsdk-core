@@ -108,6 +108,22 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 #define IS_QSPI_MEMORY_MAP_ADDR_VALID(baseAddr)    ((baseAddr == CSL_EXT_FLASH0_U_BASE) || \
                                                     (baseAddr == CSL_EXT_FLASH1_U_BASE))
 
+/** \brief API to validate MMCSD base addresses. */
+static inline int32_t MMCSD_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    /* Set status to invalid Param */
+    int32_t status = (int32_t)(-3);
+
+    if (baseAddr == CSL_MMC0_U_BASE)
+
+    {
+        /* Set status to success */
+        status = 0;
+    }
+
+    return status;
+}
+
 /**
  * \brief Enable clock to specified module
  *

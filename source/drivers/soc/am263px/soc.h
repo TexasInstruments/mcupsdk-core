@@ -125,6 +125,22 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
                                              (baseAddr == CSL_I2C2_U_BASE) || \
                                              (baseAddr == CSL_I2C3_U_BASE))
 
+/** \brief API to validate MMCSD base addresses. */
+static inline int32_t MMCSD_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    /* Set status to invalid Param */
+    int32_t status = (int32_t)(-3);
+
+    if (baseAddr == CSL_MMC0_U_BASE)
+
+    {
+        /* Set status to success */
+        status = 0;
+    }
+
+    return status;
+}
+
 /**
  * \brief Enable clock to specified module
  *

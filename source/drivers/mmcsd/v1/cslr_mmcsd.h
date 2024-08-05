@@ -40,57 +40,108 @@ extern "C"
 
 #include <drivers/hw_include/cslr.h>
 #include <drivers/hw_include/tistdtypes.h>
-
+#include <stdint.h>
 
 /**************************************************************************
 * Register Overlay Structure for __ALL__
 **************************************************************************/
+
 typedef struct {
-    volatile Uint32 HL_REV;
-    volatile Uint32 HL_HWINFO;
-    volatile Uint8  RSVD0[8];
-    volatile Uint32 HL_SYSCONFIG;
-    volatile Uint8  RSVD1[252];
-    volatile Uint32 SYSCONFIG;
-    volatile Uint32 SYSSTATUS;
-    volatile Uint8  RSVD2[12];
-    volatile Uint32 CSRE;
-    volatile Uint32 SYSTEST;
-    volatile Uint32 CON;
-    volatile Uint32 PWCNT;
-    volatile Uint32 DLL;
-    volatile Uint8  RSVD3[200];
-    volatile Uint32 SDMASA;
-    volatile Uint32 BLK;
-    volatile Uint32 ARG;
-    volatile Uint32 CMD;
-    volatile Uint32 RSP10;
-    volatile Uint32 RSP32;
-    volatile Uint32 RSP54;
-    volatile Uint32 RSP76;
-    volatile Uint32 DATA;
-    volatile Uint32 PSTATE;
-    volatile Uint32 HCTL;
-    volatile Uint32 SYSCTL;
-    volatile Uint32 STAT;
-    volatile Uint32 IE;
-    volatile Uint32 ISE;
-    volatile Uint32 AC12;
-    volatile Uint32 CAPA;
-    volatile Uint32 CAPA2;
-    volatile Uint32 CUR_CAPA;
-    volatile Uint8  RSVD4[4];
-    volatile Uint32 FE;
-    volatile Uint32 ADMAES;
-    volatile Uint32 ADMASAL;
-    volatile Uint8  RSVD5[4];
-    volatile Uint32 PVINITSD;
-    volatile Uint32 PVHSSDR12;
-    volatile Uint32 PVSDR25SDR50;
-    volatile Uint32 PVSDR104DDR50;
-    volatile Uint8  RSVD6[140];
-    volatile Uint32 REV;
+    volatile uint32_t HL_REV;
+    volatile uint32_t HL_HWINFO;
+    volatile uint32_t RSVD0[2];
+    volatile uint32_t HL_SYSCONFIG;
+    volatile uint32_t RSVD1[63];
+    volatile uint32_t SYSCONFIG;
+    volatile uint32_t SYSSTATUS;
+    volatile uint32_t RSVD2[3];
+    volatile uint32_t CSRE;
+    volatile uint32_t SYSTEST;
+    volatile uint32_t CON;
+    volatile uint32_t PWCNT;
+    volatile uint32_t DLL;
+    volatile uint32_t RSVD3[50];
+    volatile uint32_t SDMASA;
+    volatile uint32_t BLK;
+    volatile uint32_t ARG;
+    volatile uint32_t CMD;
+    volatile uint32_t RSP10;
+    volatile uint32_t RSP32;
+    volatile uint32_t RSP54;
+    volatile uint32_t RSP76;
+    volatile uint32_t DATA;
+    volatile uint32_t PSTATE;
+    volatile uint32_t HCTL;
+    volatile uint32_t SYSCTL;
+    volatile uint32_t STAT;
+    volatile uint32_t IE;
+    volatile uint32_t ISE;
+    volatile uint32_t AC12;
+    volatile uint32_t CAPA;
+    volatile uint32_t CAPA2;
+    volatile uint32_t CUR_CAPA;
+    volatile uint32_t RSVD4;
+    volatile uint32_t FE;
+    volatile uint32_t ADMAES;
+    volatile uint32_t ADMASAL;
+    volatile uint32_t RSVD5;
+    volatile uint32_t PVINITSD;
+    volatile uint32_t PVHSSDR12;
+    volatile uint32_t PVSDR25SDR50;
+    volatile uint32_t PVSDR104DDR50;
+    volatile uint32_t RSVD6[35];
+    volatile uint32_t REV;
 } CSL_MmchsRegs;
+
+typedef volatile CSL_MmchsRegs              *CSL_MmcsdRegs;
+
+
+// typedef struct {
+//     volatile Uint32 HL_REV;
+//     volatile Uint32 HL_HWINFO;
+//     volatile Uint8  RSVD0[8];
+//     volatile Uint32 HL_SYSCONFIG;
+//     volatile Uint8  RSVD1[252];
+//     volatile Uint32 SYSCONFIG;
+//     volatile Uint32 SYSSTATUS;
+//     volatile Uint8  RSVD2[12];
+//     volatile Uint32 CSRE;
+//     volatile Uint32 SYSTEST;
+//     volatile Uint32 CON;
+//     volatile Uint32 PWCNT;
+//     volatile Uint32 DLL;
+//     volatile Uint8  RSVD3[200];
+//     volatile Uint32 SDMASA;
+//     volatile Uint32 BLK;
+//     volatile Uint32 ARG;
+//     volatile Uint32 CMD;
+//     volatile Uint32 RSP10;
+//     volatile Uint32 RSP32;
+//     volatile Uint32 RSP54;
+//     volatile Uint32 RSP76;
+//     volatile Uint32 DATA;
+//     volatile Uint32 PSTATE;
+//     volatile Uint32 HCTL;
+//     volatile Uint32 SYSCTL;
+//     volatile Uint32 STAT;
+//     volatile Uint32 IE;
+//     volatile Uint32 ISE;
+//     volatile Uint32 AC12;
+//     volatile Uint32 CAPA;
+//     volatile Uint32 CAPA2;
+//     volatile Uint32 CUR_CAPA;
+//     volatile Uint8  RSVD4[4];
+//     volatile Uint32 FE;
+//     volatile Uint32 ADMAES;
+//     volatile Uint32 ADMASAL;
+//     volatile Uint8  RSVD5[4];
+//     volatile Uint32 PVINITSD;
+//     volatile Uint32 PVHSSDR12;
+//     volatile Uint32 PVSDR25SDR50;
+//     volatile Uint32 PVSDR104DDR50;
+//     volatile Uint8  RSVD6[140];
+//     volatile Uint32 REV;
+// } CSL_MmchsRegs;
 
 
 /**************************************************************************
