@@ -1,4 +1,4 @@
-# MCAN {#DRIVERS_MCAN_PAGE}
+# CANFD {#DRIVERS_CANFD_PAGE}
 
 [TOC]
 
@@ -23,6 +23,7 @@ Below are the high level features supported by the MCAN driver.
 - Configure Global filter to receive non-matching messages
 - Configure Maskable interrupts and two interrupt lines
 - Api's to read protocol status register(useful in case of communication failures)
+- DMA mode of operation
 
 ## SysConfig Features
 
@@ -30,11 +31,14 @@ Below are the high level features supported by the MCAN driver.
 
 SysConfig can be used to configure below parameters apart from common configuration like Clock, MPU, RAT and others.
 - MCAN instances and pin configurations.
-- Defualt values for bit time parameter initialization set by MCAN_initSetBitTimeParams
+- Bit time parameter
+- Message RAM configuration
+- Transmitter Delay compensation
+- ECC configuration
+- Additional core configuration
 
 ## Features NOT Supported
 
-- DMA mode of operation
 
 ## Usage
 
@@ -148,26 +152,37 @@ Formula for bit-rate is:
    CAN clock is functional clock of CAN module (80MHz)
    BRP: Bit rate pre-scalar value
    TSEG1, TSEG2: Time Segments expressed in terms of number of Tq(Time Quantum)
+   Prop_Seg: Prop Segement value
+   Phase_Seg1: Phase Segment 1
+   Phase_Seg2: Phase Segment 2
+   TSEG1: Time before the sampling point = Prop_Seg + Phase_Seg1
+   TSEG2: Time after the sampling point = Phase_Seg2.`,
 
    Tq: the period of the CAN module functional clock.
    \endcode
 
 - Sampling point is the point of time at which the bus level is read and interpreted as the value at that respective time. Typical value of sampling point is between 75-90%.
-- Bit timing can be configured by calling the #MCAN_setBitTime function passing the #MCAN_BitTimingParams structure.
-- The default initialization for the #MCAN_BitTimingParams strcuture is done by calling #MCAN_initSetBitTimeParams.
-- Sysconfig provides an interface to program the default initialization values set in #MCAN_initSetBitTimeParams function. under Global Parameters for MCAN module. This is common for all instances of MCAN.
+- Bit timing can be configured by calling the #CANFD_configBitTime function passing the CANFD_MCANBitTimingParams structure.
+- Sysconfig provides an interface to program the bit timing parameters.
 - The default parameter corresponds to 1Mbps of NOM bit rate and 5Mbps of DATA bit rate.
-- If the application needs different bit timing for any instance of MCAN it should appropriately update the #MCAN_BitTimingParams structure passed to #MCAN_setBitTime API.
+- If the application needs different bit timing for any instance of MCAN it should appropriately update the CANFD_MCANBitTimingParams structure passed to #CANFD_configBitTime API.
 
 \note Values selected in Sysconfig / the values set in structure are directly programmed in MCAN register bit fields. The actual interpretation by the hardware of this value is such that one more than the value programmed.
 
    \code
     Default values used for NOM bit rate (1Mbps) are
-    MCAN_BitTimingParams::nomRatePrescalar = 7 (BRP = 8)
-    MCAN_BitTimingParams::nomTimeSeg1 = 5 (TSEG1 = 6)
-    MCAN_BitTimingParams::nomTimeSeg2 = 2 (TSEG2 = 3)
+    CANFD_MCANBitTimingParams::nomBrp = 4
+    CANFD_MCANBitTimingParams::Prop_Seg = 8 
+    CANFD_MCANBitTimingParams::Phase_Seg1 = 6 
+    CANFD_MCANBitTimingParams::Phase_Seg2 = 5
+    TSEG1 = (Prop_Seg + Phase_Seg1) = (8 + 6) = 14
+    TSEG2 = (Phase_Seg2) = 5
+    
+    bit rate(bits per second) = (CAN clock in Hz) / BRP / (1 + TSEG1 + TSEG2)
+    Sampling Point(%) = (1 + TSEG1) / (1 + TSEG1 + TSEG2)
 
-    bit rate = 80MHz / 8 / (1 + 6 + 3) = 1Mbps
+    bit rate = 80MHz / 4 / (1 + 14 + 5) = 1Mbps
+    Sampling Point(%) = ((1 + 14) / (1 + 14 + 5)) * 100 = 75
 
    \endcode
 
@@ -278,34 +293,20 @@ The MCAN enters Busoff state according to CAN protocol conditions. The Busoff st
 To restart CAN operation, the application software needs to clear CCCR.INIT. After CCCR.INIT is cleared, the MCAN’s CAN state machine waits for the completion of the Busoff Recovery Sequence according to CAN protocol (at least 128 occurrences of Bus Idle Condition, which is the detection of 11 consecutive recessive bits).
 In the MCAN User’s Manual the description of Bus_Off recovery states that “Once CCCR.INIT has been cleared by the CPU, the device will then wait for 129 occurrences of Bus Idle (129 * 11 consecutive recessive bits) before resuming normal operation. At the end of the Bus_Off recovery sequence, the Error Management Counters will be reset”.
 
-## Example Usage {#MCAN_EXAMPLE_USAGE}
+## Example Usage {#MCAN_CANFD_EXAMPLE_USAGE}
 
 Include the below file to access the APIs
-\snippet Mcan_sample.c include
+\snippet Canfd_sample.c include
 
-MCAN Interrupt Registration
-\snippet Mcan_sample.c App_mcanIntrReg
+MCAN_CANFD Open CANFD instances
+\snippet Canfd_sample.c open
 
-MCAN Message RAM Configuration
-\snippet Mcan_sample.c App_mcanInitMsgRamConfigParams
+MCAN_CANFD Configure and transmit and receive
+\snippet Canfd_sample.c transfer_blocking
 
-MCAN Rx Standard Filter Element Configuration
-\snippet Mcan_sample.c App_mcanInitStdFilterElemParams
-
-MCAN Tx Message Configuration
-\snippet Mcan_sample.c App_mcanConfigTxMsg
-
-MCAN Message Transmit/Receive
-\snippet Mcan_sample.c App_mcanTxRxMsg
-
-MCAN Interrupt Service Routine
-\snippet Mcan_sample.c App_mcanIntrISR
-
-MCAN Interrupt De-Registration
-\snippet Mcan_sample.c App_mcanIntrDeReg
+MCAN_CANFD Close CANFD instances
+\snippet Canfd_sample.c close
 
 ## API
 
-\ref DRV_MCAN_MODULE
-
-
+\ref DRV_CANFD_MODULE

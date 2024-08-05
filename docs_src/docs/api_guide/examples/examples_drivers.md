@@ -7,6 +7,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_SINGLESHOT
 -# CRC
    -# \subpage EXAMPLES_DRIVERS_CRC_FULL_CPU
+-# CANFD
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_DMA
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_POLLING
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT
 -# DDR
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MAIN_ESM
 \cond SOC_AM64X
@@ -240,6 +244,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_SYNC
    -# \subpage EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING
+-# CANFD
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_DMA
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_POLLING
+   -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT
 \cond SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE
    -# \subpage EXAMPLES_DRIVERS_ADC_DAC_LOOPBACK

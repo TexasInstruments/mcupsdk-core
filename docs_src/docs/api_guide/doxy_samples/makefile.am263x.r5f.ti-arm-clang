@@ -19,6 +19,7 @@ FILES_common := \
     AddrTranslateP_sample.c \
     Bootloader_sample_v2.c \
     CacheP_sample.c \
+    Canfd_sample.c \
     CpuIdP_sample.c \
     ClockP_sample.c \
     Cmpss_sample.c \

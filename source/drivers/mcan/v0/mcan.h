@@ -141,6 +141,7 @@ extern "C" {
  * \brief  Size of MCAN Header in bytes.
  */
 #define MCAN_HEADER_SIZE_BYTES              (8U)
+/** @} */
 
 /**
  * \brief  Maximum payload supported by CAN-FD protocol in bytes.
@@ -1813,7 +1814,8 @@ int32_t MCAN_setExtIDAndMask(uint32_t baseAddr, uint32_t idMask);
  *                          Refer enum MCAN_MemType.
  * \param   bufNum          Buffer  number where message to write.
  *                          This parameter will ignored if memType is FIFO/Q.
- *
+ * \param   elemAddr        Element address
+ * 
  * \return  #SystemP_SUCCESS if successful; else error on failure
  */
 int32_t MCAN_getWriteMsgElemAddress(uint32_t                 baseAddr,
@@ -1891,6 +1893,7 @@ void  MCAN_getNewDataStatus(uint32_t              baseAddr,
  *  \param  fifoNum         FIFOs number from where message is to read.
  *                          Refer enum MCAN_RxFIFONum.
  *                          This parameter will ignored if memType is buffer.
+ * \param   elemAddr        Element address
  *
  * \return  #SystemP_SUCCESS if successful; else error on failure
  */
