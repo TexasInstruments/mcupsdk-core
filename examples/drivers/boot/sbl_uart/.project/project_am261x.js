@@ -48,6 +48,35 @@ const includes = {
     ],
 };
 
+const template_options_cc = {
+    bootformat: "RPRC",
+    board: "am261x-som"
+}
+
+const template_options_lp = {
+    bootformat: "RPRC",
+    board: "am261x-lp"
+}
+
+const templates_cc =
+[
+    {
+        input: ".project/templates/am261x/sbl/sbl_uart/main.c.xdt",
+        output: "../main.c",
+        options: template_options_cc
+    },
+];
+
+
+const templates_lp =
+[
+    {
+        input: ".project/templates/am261x/sbl/sbl_uart/main.c.xdt",
+        output: "../main.c",
+        options: template_options_lp
+    },
+];
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART";

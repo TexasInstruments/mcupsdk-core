@@ -191,8 +191,8 @@ hsmclient1.$name = "CONFIG_HSMCLIENT0";
 uart1.$name            = "CONFIG_UART0";
 uart1.intrEnable       = "DISABLE";
 uart1.UART.$assign     = "UART0";
-uart1.UART.RXD.$assign = "ball.A7";
-uart1.UART.TXD.$assign = "ball.A6";
+uart1.UART.RXD.$assign = "GPIO27";
+uart1.UART.TXD.$assign = "GPIO28";
 
 debug_log.enableCssLog      = false;
 debug_log.enableLogZoneInfo = true;
