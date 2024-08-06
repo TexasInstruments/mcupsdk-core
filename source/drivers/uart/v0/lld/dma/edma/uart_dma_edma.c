@@ -594,7 +594,7 @@ static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
             {
                 UART_lld_flushTxFifo(hUart);
                 hUart->writeTrans.count = bytesRemain;
-                hUart->writeTrans.buf = hUart->writeTrans.buf + bytesSent;
+                hUart->writeTrans.buf = (uint8_t *)hUart->writeTrans.buf + bytesSent;
                 UART_lld_dmaWrite(hUart, &hUart->writeTrans);
             }
             else
@@ -630,7 +630,7 @@ static void UART_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
         if(bytesRemain > 0)
         {
             hUart->readTrans.count = bytesRemain;
-            hUart->readTrans.buf = hUart->readTrans.buf + bytesReceived;
+            hUart->readTrans.buf = (uint8_t *)hUart->readTrans.buf + bytesReceived;
             UART_lld_dmaRead(hUart, &hUart->readTrans);
         }
         else
