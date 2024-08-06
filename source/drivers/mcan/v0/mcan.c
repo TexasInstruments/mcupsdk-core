@@ -374,6 +374,17 @@ static const MCAN_OffsetAddr gMcanOffsetAddr =
      #error Offsets assumed donot match for MCAN
 #endif
 
+#elif defined (SOC_AM261X)
+static const MCAN_OffsetAddr gMcanOffsetAddr =
+{
+    .mcanSsOffset       = ((int32_t) CSL_MCAN0_CFG_U_BASE                   - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
+    .mcanCfgOffset      = ((int32_t) (CSL_MCAN0_CFG_U_BASE + 0x00000200U)    - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
+};
+/* Offsets are same for MCAN0 and MCAN1 instances. */
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN1_CFG_U_BASE - CSL_MCAN1_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+
 #elif defined (SOC_AM62X)
 static const MCAN_OffsetAddr gMcanOffsetAddr =
 {
@@ -2352,6 +2363,13 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
         case CSL_MCAN7_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MCAN7_ECC_U_BASE;
             break;
+#elif defined (SOC_AM261X)
+        case CSL_MCAN0_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN0_ECC_U_BASE;
+            break;
+        case CSL_MCAN1_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN1_ECC_U_BASE;
+            break;
 #elif defined (SOC_AM62X)
         /*
          * Address traslation is required for AM62X MCU M4.
@@ -2364,7 +2382,7 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
         case CSL_MCAN1_MSGMEM_RAM_BASE:
             eccAggrBase = CSL_MCAN1_ECC_AGGR_BASE;
             break;
-#endif /* #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)  || defined (SOC_AM263PX) */
+#endif /* #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)  || defined (SOC_AM263PX)  || (SOC_AM261X) */
         default:
             eccAggrBase = (uint64_t)0U;
             break;
@@ -2410,6 +2428,11 @@ static const MCAN_OffsetAddr* MCAN_getOffsetAddr(uint32_t baseAddr)
         case CSL_MCAN5_MSG_RAM_U_BASE:
         case CSL_MCAN6_MSG_RAM_U_BASE:
         case CSL_MCAN7_MSG_RAM_U_BASE:
+            offsetAddr = &gMcanOffsetAddr;
+            break;
+#elif defined (SOC_AM261X)
+        case CSL_MCAN0_MSG_RAM_U_BASE:
+        case CSL_MCAN1_MSG_RAM_U_BASE:
             offsetAddr = &gMcanOffsetAddr;
             break;
 #elif defined (SOC_AM62X)

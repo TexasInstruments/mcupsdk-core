@@ -31,6 +31,9 @@ FILES_common := \
     bootloader_uniflash_mcelf.c \
     bootloader_xmodem.c \
     cmpss.c \
+    canfd.c \
+    canfd_soc.c \
+    canfd_dma_edma.c \
     dac.c \
     ecap.c \
     edma.c \
@@ -106,6 +109,8 @@ FILES_PATH_common = \
     ipc_rpmsg/ \
     lin/v0 \
     mcan/v0 \
+    mcan/v0/soc/am261x \
+    mcan/v0/dma/edma \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
