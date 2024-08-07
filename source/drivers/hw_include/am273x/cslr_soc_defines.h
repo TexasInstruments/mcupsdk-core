@@ -119,6 +119,12 @@ extern "C" {
 
 #define MCAN_MSG_RAM_MAX_WORD_COUNT     (4352U)
 
+/* todo! Need to cross verify later */
+/*! @brief  Maximum number of Rx Dma buffers. */
+#define MCAN_MAX_RX_DMA_BUFFERS             (7U)
+/*! @brief  Maximum number of Tx Dma buffers. */
+#define MCAN_MAX_TX_DMA_BUFFERS             (4U)
+
 /* ESM number of groups */
 #define ESM_NUM_GROUP_MAX                    (3U)
 #define ESM_NUM_INTR_PER_GROUP               (128U)

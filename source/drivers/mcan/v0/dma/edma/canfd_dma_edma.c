@@ -215,7 +215,7 @@ int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
         canfdEdmaHandle = (EDMA_Handle) ptrCanFdObj->canfdDmaHandle;
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
 
-        if ((canfdEdmaHandle == NULL) || (edmaChCfg = NULL))
+        if ((canfdEdmaHandle == NULL) || (edmaChCfg == NULL))
         {
             status = SystemP_FAILURE;
         }
@@ -381,7 +381,7 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
 
 int32_t CANFD_cancelDmaTx(const CANFD_Object *ptrCanFdObj, const CANFD_MessageObject* ptrCanMsgObj)
 {
-    uint32_t            status = SystemP_SUCCESS;
+    int32_t             status = SystemP_SUCCESS;
     uint32_t            baseAddr, regionId;
     uint32_t            dmaTxCh;
     CANFD_EdmaChConfig *edmaChCfg = NULL;
@@ -693,4 +693,3 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
 
     return status;
 }
-

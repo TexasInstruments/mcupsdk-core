@@ -2216,6 +2216,204 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Canfd Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "canfd_loopback_polling",
+        "location": "../../examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_polling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Polling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "canfd_loopback_polling",
+        "location": "../../examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_polling",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "canfd_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "canfd_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "canfd_loopback_dma",
+        "location": "../../examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "canfd_loopback_dma",
+        "location": "../../examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies MCASP loopback mode of operation CPU is C66SS0 running NORTOS.",
         "name": "mcasp_loopback",
         "location": "../../examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",

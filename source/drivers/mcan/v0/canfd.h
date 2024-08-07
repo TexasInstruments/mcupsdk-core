@@ -107,10 +107,6 @@ typedef void *CANFD_Handle;
 
 /** \brief Externally defined driver configuration array size */
 extern uint32_t             gCANFDConfigNum;
-/**
- * \brief Forward declaration of \ref CANFD_OpenParams
- */
-typedef struct CANFD_OpenParams_t CANFD_OpenParams;
 
 /** @name Return status
  *

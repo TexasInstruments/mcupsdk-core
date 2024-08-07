@@ -95,21 +95,21 @@ static int32_t CANFD_writeIntr(CANFD_MsgObjHandle handle,
                                 const uint8_t* data);
 
 static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle,
-                              uint32_t id,
-                              CANFD_MCANFrameType ptrFrameType,
-                              CANFD_MCANXidType idType,
+                              uint32_t* id,
+                              CANFD_MCANFrameType* ptrFrameType,
+                              CANFD_MCANXidType* idType,
                               uint8_t* data);
 
 static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle,
-                              uint32_t id,
-                              CANFD_MCANFrameType ptrFrameType,
-                              CANFD_MCANXidType idType,
+                              uint32_t* id,
+                              CANFD_MCANFrameType* ptrFrameType,
+                              CANFD_MCANXidType* idType,
                               uint8_t* data);
 
 static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
-                              uint32_t id,
-                              CANFD_MCANFrameType ptrFrameType,
-                              CANFD_MCANXidType idType,
+                              uint32_t* id,
+                              CANFD_MCANFrameType* ptrFrameType,
+                              CANFD_MCANXidType* idType,
                               uint8_t* data);
 
 static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj,
@@ -1687,16 +1687,16 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t id, CANFD_MCANFrameT
             {
                 if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
                 {
-                    retVal = CANFD_readIntr(ptrCanMsgObj, id, ptrFrameType, idType, data);
+                    retVal = CANFD_readIntr(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
                 }
                 else
                 {
-                    retVal = CANFD_readDma(ptrCanMsgObj, id, ptrFrameType, idType, data);
+                    retVal = CANFD_readDma(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
                 }
             }
             else
             {
-                retVal = CANFD_readPoll(ptrCanMsgObj, id, ptrFrameType, idType, data);
+                retVal = CANFD_readPoll(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
             }
         }
     }
@@ -1707,11 +1707,11 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t id, CANFD_MCANFrameT
     return retVal;
 }
 
-static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType ptrFrameType, CANFD_MCANXidType idType, uint8_t* data)
+static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCANFrameType* ptrFrameType, CANFD_MCANXidType* idType, uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
-    uint32_t                retVal = SystemP_SUCCESS;
+    int32_t                 retVal = SystemP_SUCCESS;
     uint32_t                dataLength;
 
     if(handle != NULL)
@@ -1721,7 +1721,7 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCAN
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
 
         /* Get the data length from DLC */
-        if((ptrCanFdObj->rxBuffElem.dlc >= MCAN_DATA_SIZE_0BYTES) && (ptrCanFdObj->rxBuffElem.dlc <= MCAN_DATA_SIZE_64BYTES))
+        if(((int32_t)ptrCanFdObj->rxBuffElem.dlc >= MCAN_DATA_SIZE_0BYTES) & (ptrCanFdObj->rxBuffElem.dlc <= MCAN_DATA_SIZE_64BYTES))
         {
             dataLength = ptrCanFdObj->mcanDataSize[ptrCanFdObj->rxBuffElem.dlc];
             /*
@@ -1745,26 +1745,26 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCAN
             if(ptrCanFdObj->rxBuffElem.xtd == MCAN_ID_TYPE_29_BIT)
             {
                 /* Received frame with Extended ID */
-                id = (uint32_t)(ptrCanFdObj->rxBuffElem.id);
-                idType = CANFD_MCANXidType_29_BIT;
+                *id = (uint32_t)(ptrCanFdObj->rxBuffElem.id);
+                *idType = CANFD_MCANXidType_29_BIT;
             }
             else
             {
                 /* Received frame with Standard ID */
-                id = (uint32_t)((ptrCanFdObj->rxBuffElem.id >> STD_MSGID_SHIFT) & STD_MSGID_MASK);
-                idType = CANFD_MCANXidType_11_BIT;
+                *id = (uint32_t)((ptrCanFdObj->rxBuffElem.id >> STD_MSGID_SHIFT) & STD_MSGID_MASK);
+                *idType = CANFD_MCANXidType_11_BIT;
             }
 
             /* Get the frame type */
             if(ptrCanFdObj->rxBuffElem.fdf == MCAN_FRAME_TYPE_FD)
             {
                 /* FD frame Received */
-                ptrFrameType = CANFD_MCANFrameType_FD;
+                *ptrFrameType = CANFD_MCANFrameType_FD;
             }
             else
             {
                 /* Classic frame Received */
-                ptrFrameType = CANFD_MCANFrameType_CLASSIC;
+                *ptrFrameType = CANFD_MCANFrameType_CLASSIC;
             }
 
             /* Copy the data */
@@ -1789,7 +1789,8 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCAN
 static int32_t CANFD_readPollProcessBuff(CANFD_MessageObject *ptrCanMsgObj, uint8_t *data)
 {
     uint32_t                baseAddr;
-    uint32_t                index, status = SystemP_SUCCESS;
+    uint32_t                index;
+    int32_t                 status = SystemP_SUCCESS;
     MCAN_RxNewDataStatus    newDataStatus = {0};
     CANFD_Object*           ptrCanFdObj;
     CANFD_Config           *config;
@@ -1891,7 +1892,7 @@ static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj, uint
     return retVal;
 }
 
-static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType ptrFrameType, CANFD_MCANXidType idType, uint8_t* data)
+static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCANFrameType* ptrFrameType, CANFD_MCANXidType* idType, uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     int32_t                 retVal = SystemP_SUCCESS;
@@ -2827,9 +2828,9 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
 }
 
 static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
-                              uint32_t id,
-                              CANFD_MCANFrameType ptrFrameType,
-                              CANFD_MCANXidType idType,
+                              uint32_t* id,
+                              CANFD_MCANFrameType* ptrFrameType,
+                              CANFD_MCANXidType* idType,
                               uint8_t* data)
 {
     int32_t retVal = SystemP_SUCCESS;

@@ -35,6 +35,9 @@ FILES_common := \
     cbuff_lvds.c \
     cbuff_transfer.c \
     cbuff_edma.c \
+    canfd.c \
+    canfd_soc.c \
+    canfd_dma_edma.c \
     crc16.c \
     crc.c \
     csirx.c \
@@ -100,6 +103,8 @@ FILES_PATH_common = \
     ipc_rpmsg \
     mcasp/v0 \
     mcan/v0 \
+    mcan/v0/soc/am273x \
+    mcan/v0/dma/edma \
     mibspi/v0 \
     mibspi/v0/edma \
     mibspi/v0/soc/am273x \

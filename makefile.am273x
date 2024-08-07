@@ -132,6 +132,12 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcasp/mcasp_playback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -620,6 +626,12 @@ BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -930,6 +942,24 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
@@ -1398,6 +1428,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1703,6 +1739,24 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
@@ -2171,6 +2225,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2476,6 +2536,24 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ canfd_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
