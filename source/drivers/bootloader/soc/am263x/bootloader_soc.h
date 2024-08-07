@@ -45,6 +45,9 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+/** Maximum supported size of the application certificate */
+#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
+
 /**
  *  \anchor DevTypes
  *  \name Device Types
