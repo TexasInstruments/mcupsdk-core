@@ -11,6 +11,10 @@
         "/drivers/drivers",
         "/board/board",
         "/fs/fs",
+        "/networking/networking",
+        "/security/security",
+        "/xbar/xbar",
+        "/memory_configurator/components",
     ],
     "devices": [
         "AM64x",

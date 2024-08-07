@@ -89,6 +89,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am273x-evm_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -465,6 +467,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -891,6 +899,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am273x-evm_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1267,6 +1277,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -1693,6 +1709,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am273x-evm_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -2069,6 +2087,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  qspi_flash_interrupt_lld_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_file_io_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -2511,6 +2535,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_file_io/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
