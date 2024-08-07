@@ -5,6 +5,7 @@ let device = "am261x";
 const files = {
     common: [
         "dac_epwm_sync.c",
+        "board.c",
         "main.c",
     ],
 };

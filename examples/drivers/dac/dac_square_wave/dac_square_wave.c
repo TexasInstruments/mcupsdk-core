@@ -62,6 +62,12 @@
 /* No of iterations to run app for 10 seconds */
 #define APP_NUM_ITER    (2500000U)
 
+extern void i2c_io_expander_dac_out();
+
+__attribute__((weak)) void i2c_io_expander_dac_out(){
+    DebugP_log("No I2C IO Expander Driver Defined or needed for this SOC\r\n");
+}
+
 void dac_square_wave_main(void *args)
 {
     uint32_t baseAddr = CONFIG_DAC0_BASE_ADDR;
@@ -70,6 +76,8 @@ void dac_square_wave_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+    i2c_io_expander_dac_out();
 
     DebugP_log("DAC Square Wave Test Started ...\r\n");
 

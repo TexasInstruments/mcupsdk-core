@@ -76,12 +76,20 @@ uint16_t App_dmaConfigure( const uint16_t *table, uint16_t table_num,
         uint32_t dac_base);
 void App_configureWaveform(void);
 
+extern void i2c_io_expander_dac_out();
+
+__attribute__((weak)) void i2c_io_expander_dac_out(){
+    DebugP_log("No I2C IO Expander Driver Defined or needed for this SOC\r\n");
+}
+
 void dac_sine_dma_main(void *args)
 {
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+    i2c_io_expander_dac_out();
 
     DebugP_log("DAC Sine DMA  Test Started ...\r\n");
 

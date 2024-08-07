@@ -5,6 +5,7 @@ let device = "am261x";
 const files = {
     common: [
         "dac_constant_voltage.c",
+        "board.c",
         "main.c",
     ],
 };

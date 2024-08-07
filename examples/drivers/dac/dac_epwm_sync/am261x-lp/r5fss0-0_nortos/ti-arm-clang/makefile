@@ -44,6 +44,7 @@ endif
 
 FILES_common := \
 	dac_epwm_sync.c \
+	board.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
