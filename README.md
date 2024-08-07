@@ -60,6 +60,9 @@ that need to be cloned and are listed below:
 - [FreeRTOS-Kernel](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-Kernel)
 - [FreeRTOS-POSIX](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-POSIX)
 - [FreeRTOS-FAT](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-FAT)
+- [Sysconfig Driver](https://github.com/TexasInstruments/mcupsdk-sysconfig)
+- [TIFS-Common](https://github.com/TexasInstruments/tifs-mcu-common)
+- [Multi-Core ELF](https://github.com/TexasInstruments/multicore-elf)
 
 We use the [repo tool](https://gerrit.googlesource.com/git-repo) to clone and manage
 multiple repositories. To setup the repo tool, navigate to [repo tool setup](#repo-tool-setup) section.
@@ -97,12 +100,54 @@ TI has an amazing collection of tutorials on MCU+ Academy to help you get starte
 
 ### Clone and build from GIT
 
-#### Repo Tool Setup
+### West tool Setup
+
+MCU+ SDK has multiple components (in multiple repositories) and dependencies (like compiler, CCS and other tools). 
+We utilize [West tool](https://docs.zephyrproject.org/latest/develop/west/index.html) from the Zephyr project to manage these multiple repositories. 
+West serves as an alternative to Google's repo tool. We are transitioning to West because the repo tool does not support the Windows native shell. 
+For those using West to clone the repository, the repo tool setup is unnecessary. Follow the steps below to set up the West tool:
+
+Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Download) and is in your OS path.
+
+Do the following in terminal
+- Linux:
+  
+  ```bash
+  pip3 install --user -U west
+  ```
+
+- Windows and macOS
+  ```bash
+  pip3 install -U west 
+  ```
+If you are using a network proxy, include the --proxy={your_network_proxy} option in the pip installation command.
+
+#### Cloning The Repositories - West
+
+To clone the repositories using West tool, do below in your workarea folder:
+
+ Note that the components you clone may vary depending on the SoC you are working with. Therefore, 
+ please select the manifest folder that corresponds to the SoC you are interested in. 
+ For example, {device}/dev.yml. We are providing the link for cloning dependent repositories for 
+ all devices in the /dev.yml file below.
+
+```bash
+west init -m https://github.com/TexasInstruments/mcupsdk-manifests.git --mr mcupsdk_west --mf all/dev.yml
+```
+After the west is initialized, do a
+
+```bash
+west update
+```
+
+This should clone all the repositories required for MCU+ SDK development. Now proceed to [Download and Install dependencies](#downloading-and-installing-dependencies) section
+
+#### Repo Tool Setup (Deprecated in the next release)
 
 MCU+ SDK has multiple components (in multiple repositories) and dependencies
 (like compiler, CCS and other tools). We use repo tool from Google to manage these
 multiple repositories. Currently there is no support for native windows shells like
-CMD or Powershell. This will be added at a later point. Windows users can rely on
+CMD or Powershell. West tool is recommeded for other platforms. Windows users can rely on
 Git Bash for the repo setup. Follow the below mentioned steps to setup repo tool:
 
 Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Download) and is in your OS path.
@@ -125,7 +170,7 @@ Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Dow
   source ~/.bashrc
   ```
 
-#### Cloning The Repositories
+#### Cloning The Repositories - Repo (Deprecated in the next release)
 
 To clone the repositories using repo tool, do below in your workarea folder:
 
