@@ -110,7 +110,7 @@ dwc_usb3_dma_desc_t *dwc_usb3_pcd_trb_alloc(dwc_usb3_pcd_ep_t *ep, int num_trbs,
 	}
 #endif
 
-	trbs = cur_trb = dwc_usb3_gadget_alloc_dma(ep, size, &trbs_dma);
+	trbs = cur_trb = (dwc_usb3_dma_desc_t *)dwc_usb3_gadget_alloc_dma(ep, size, &trbs_dma);
 	if (!trbs) {
 		return NULL;
 	}

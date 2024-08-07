@@ -179,7 +179,7 @@ static void haps_phy_config_hook(struct dwc_usb3_device *dev, int soft_reset,
  */
 void dwc_usb3_common_irq(int irq, void *dev)
 {
-        dwc_usb3_device_t *usb3_dev = dev;
+        dwc_usb3_device_t *usb3_dev = (dwc_usb3_device_t *)dev;
 
         dwc_acquire_spinlock(usb3_dev, &usb3_dev->pcd.lock);
         dwc_usb3_irq(usb3_dev, irq);
@@ -285,7 +285,7 @@ dwc_usb3_device_t *dwc_usb3_driver_init(u32 base_addr_dwc)
         usb3_dev->pcd.ep0_in_desc_dma = (dwc_dma_t)&g_ep0_in_desc;
         usb3_dev->pcd.ep0_status_buf = g_ep0_status_buf;
         usb3_dev->pcd.ep0_status_buf_dma = (dwc_dma_t)g_ep0_status_buf;
-        usb3_dev->pcd.ep0_setup_pkt = (union dwc_setup_pkt *)g_ep0_setup_pkt;
+        usb3_dev->pcd.ep0_setup_pkt = (dwc_setup_pkt_t *)g_ep0_setup_pkt;
         usb3_dev->pcd.ep0_setup_pkt_dma = (dwc_dma_t)g_ep0_setup_pkt;
 
         for (i = 0; i < 15U; i++) {

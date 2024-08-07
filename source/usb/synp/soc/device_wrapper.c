@@ -48,7 +48,7 @@ usb_handle_t usb_handle __attribute__((section(".usbdfuCxtRam")));      /* globa
 static CSL_top_rcmRegs * ptrTopRCMRegs = (CSL_top_rcmRegs *)DEVICE_TOPRCM_BASE;
 
 void usbdIntrConfig();
-void usbCoreIntrHandler();
+void usbCoreIntrHandler(void *args);
 
 /*
  *  ======== borad_init ========
@@ -90,7 +90,7 @@ void usbdIntrConfig()
 
 /* main entry point for DWC core interrupt handler with USB Wrapper setup
 * Matching interrupt call-back function API */
-void usbCoreIntrHandler()
+void usbCoreIntrHandler(void *args)
 {
     /*Clear USB Interrrupts*/
     USB_clearInterrupt();

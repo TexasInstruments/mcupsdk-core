@@ -40,7 +40,7 @@ extern "C" {
 #endif
 
 
-#include <drivers/hw_include/am263px/cslr_rl2_of_r5fss0_core0.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 /**
  * @brief function returned success

@@ -32,8 +32,6 @@
 
 #include <string.h>
 #include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/am263px/cslr_soc_baseaddress.h>
-#include <drivers/hw_include/am263px/cslr_soc_defines.h>
 #include "rl2.h"
 
 RL2_API_STS_t RL2_configure(RL2_Params *config)

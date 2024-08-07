@@ -40,7 +40,7 @@ const includes = {
         "../../drivers/hw_include/am261x",
         "../../drivers/soc/am261x",
         "../../kernel/freertos/FreeRTOS-Kernel/include",
-        "../../kernel/freertos/config/am243x/r5f",
+        "../../kernel/freertos/config/am261x/r5f",
         "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "../tinyusb/config/freertos/am261x/dfu_config",
         "../tinyusb/tinyusb-stack/src",

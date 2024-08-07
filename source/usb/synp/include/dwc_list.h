@@ -354,7 +354,7 @@ struct {								\
  */
 #define DWC_CIRCLEQ_FIRST(head)		((head)->cqh_first)
 #define DWC_CIRCLEQ_LAST(head)		((head)->cqh_last)
-#define DWC_CIRCLEQ_END(head)		((void *)(head))
+#define DWC_CIRCLEQ_END(head)		((struct dwc_usb3_pcd_req *)(head))
 #define DWC_CIRCLEQ_NEXT(elm, field)	((elm)->field.cqe_next)
 #define DWC_CIRCLEQ_PREV(elm, field)	((elm)->field.cqe_prev)
 #define DWC_CIRCLEQ_EMPTY(head)						\

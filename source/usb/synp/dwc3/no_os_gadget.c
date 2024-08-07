@@ -500,8 +500,8 @@ void dwc_usb3_gadget_set_ep_not_started(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *
  */
 usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const void *epdesc, const void *epcomp)
 {
-	const usb_endpoint_descriptor_t			*ep_desc = epdesc;
-	const ss_endpoint_companion_descriptor_t	*ep_comp = epcomp;
+	const usb_endpoint_descriptor_t			*ep_desc = (const usb_endpoint_descriptor_t *)epdesc;
+	const ss_endpoint_companion_descriptor_t	*ep_comp = (const ss_endpoint_companion_descriptor_t *)epcomp;
 	dwc_usb3_pcd_t					*pcd = &usb3_dev->pcd;
 	dwc_usb3_pcd_ep_t				*pcd_ep;
 	dwc_usb3_dma_desc_t				*desc;
@@ -705,7 +705,7 @@ int dwc_usb3_ep_queue(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep, usb_re
 		req_flags |= DWC_PCD_REQ_ZERO;
 	}
 
-	pcd_req->dwc_req.buf[0] = usb_req->buf;
+	pcd_req->dwc_req.buf[0] = (char *)usb_req->buf;
 	pcd_req->dwc_req.bufdma[0] = usb_req->dma;
 	pcd_req->dwc_req.buflen[0] = usb_req->length;
 	pcd_req->dwc_req.numbuf = 1;

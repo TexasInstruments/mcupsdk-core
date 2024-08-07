@@ -45,7 +45,7 @@ INCLUDES_common := \
     -I../../drivers/hw_include/am261x \
     -I../../drivers/soc/am261x \
     -I../../kernel/freertos/FreeRTOS-Kernel/include \
-    -I../../kernel/freertos/config/am243x/r5f \
+    -I../../kernel/freertos/config/am261x/r5f \
     -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I../tinyusb/config/freertos/am261x/dfu_config \
     -I../tinyusb/tinyusb-stack/src \

@@ -124,7 +124,7 @@ static void do_set_address(dwc_usb3_pcd_t *pcd)
 		dwc_usb3_set_address(pcd, UGETW(ctrl.wValue));
 		pcd->ep0->dwc_ep.is_in = 1;
 		pcd->ep0state = EP0_IN_WAIT_NRDY;
-		if (ctrl.wValue > 0U) {
+		if (UGETW(ctrl.wValue) > 0U) {
 			pcd->state = DWC_STATE_ADDRESSED;
 		}
 		else {
@@ -942,7 +942,7 @@ static void setup_in_status_phase(dwc_usb3_pcd_t *pcd, void *buf,
 
 	dwc_debug0(pcd->usb3_dev, "EP0 IN ZLP\n");
 
-	pcd->ep0_req->dwc_req.buf[0] = buf;
+	pcd->ep0_req->dwc_req.buf[0] = (char *)buf;
 	pcd->ep0_req->dwc_req.bufdma[0] = dma;
 	pcd->ep0_req->dwc_req.length = 0;
 	pcd->ep0_req->dwc_req.actual = 0;
@@ -970,7 +970,7 @@ static void setup_out_status_phase(dwc_usb3_pcd_t *pcd, void *buf,
 
 	dwc_debug0(pcd->usb3_dev, "EP0 OUT ZLP\n");
 
-	pcd->ep0_req->dwc_req.buf[0] = buf;
+	pcd->ep0_req->dwc_req.buf[0] = (char *)buf;
 	pcd->ep0_req->dwc_req.bufdma[0] = dma;
 	pcd->ep0_req->dwc_req.length = 0;
 	pcd->ep0_req->dwc_req.actual = 0;

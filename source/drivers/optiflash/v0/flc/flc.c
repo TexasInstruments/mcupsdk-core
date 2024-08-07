@@ -33,8 +33,6 @@
 
 #include <string.h>
 #include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/am263px/cslr_soc_baseaddress.h>
-#include <drivers/hw_include/am263px/cslr_soc_defines.h>
 #include "flc.h"
 
 FLC_API_STS_t FLC_configureRegion(FLC_RegionInfo * const regionInfo)

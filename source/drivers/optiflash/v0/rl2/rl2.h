@@ -34,7 +34,7 @@
 #define IG__RL2_H__
 
 #include <stdint.h>
-#include <drivers/hw_include/am263px/cslr_rl2_of_r5fss0_core0.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 #ifdef __cplusplus
 extern "C" {

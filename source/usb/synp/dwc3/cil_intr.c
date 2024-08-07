@@ -265,7 +265,7 @@ int dwc_usb3_handle_event(dwc_usb3_device_t *dev)
             /* Ignore null events */
             continue;
         }
-        event_entry = malloc(sizeof(dwc_usb3_event_req_t));
+        event_entry = (dwc_usb3_event_req_t *)malloc(sizeof(dwc_usb3_event_req_t));
         event_entry->event = event;
 
         DWC_SIMPLEQ_INSERT_TAIL(&pcd->event_q, event_entry, entry);

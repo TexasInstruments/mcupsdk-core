@@ -280,6 +280,13 @@ typedef struct dwc_ept {
 #endif
 } dwc_ep_t;
 
+/** SETUP packet buffer for EP0 */
+typedef union dwc_setup_pkt {
+	usb_device_request_t req;
+	u32 d32[2];
+	char d8[8];
+} dwc_setup_pkt_t;
+
 /** PCD EP structure.
  * This structure describes an EP, there is an array of EP pointers in the
  * PCD structure.
@@ -485,11 +492,7 @@ typedef struct dwc_usb3_pcd {
 
 	/** @{ */
 	/** SETUP packet buffer for EP0 */
-	union dwc_setup_pkt {
-		usb_device_request_t req;
-		u32 d32[2];
-		char d8[8];
-	} *ep0_setup_pkt;
+	dwc_setup_pkt_t *ep0_setup_pkt;
 	dwc_dma_t ep0_setup_pkt_dma;
 	/** @} */
 
