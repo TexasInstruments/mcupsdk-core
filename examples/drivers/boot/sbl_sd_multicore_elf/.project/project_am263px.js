@@ -59,7 +59,7 @@ const templates =
         input: ".project/templates/am263px/sbl/sbl_sd/main.c.xdt",
         output: "../main.c",
         options: {
-            bootformat: "RPRC",
+            bootformat: "MCELF",
             supportFotaSwap: false,
             enableFastBoot: false,
         }
@@ -80,7 +80,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_sd";
+    property.name = "sbl_sd_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
