@@ -137,13 +137,13 @@ int32_t EnetSBL_setup(void)
     EnetApp_HandleInfo handleInfo;
     int32_t status = 0;
 
-    gEnetSBL_LLDObj.enetType        =ENET_TYPE;
-    gEnetSBL_LLDObj.instId          = ENET_INSTANCE_ID;
-    gEnetSBL_LLDObj.macPort          = ENET_MAC_PORT_1;
     gEnetSBL_LLDObj.macMode          = RGMII;
     gEnetSBL_LLDObj.boardId          = ENETBOARD_CPB_ID;
     gEnetSBL_LLDObj.testLoopBackType = TXSG_LOOPBACK_TYPE_NONE;
 
+
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &gEnetSBL_LLDObj.enetType, &gEnetSBL_LLDObj.instId);
+    EnetApp_getEnetInstMacInfo(gEnetSBL_LLDObj.enetType, gEnetSBL_LLDObj.instId, &gEnetSBL_LLDObj.macPort[0], &gEnetSBL_LLDObj.numMacPorts);
 
     /* Create Global Event Object */
     status = EventP_construct(&gEnetSBL_LLDObj.appEvents);
@@ -622,13 +622,16 @@ static void EnetSBL_closeEnet(void)
     Enet_IoctlPrms prms;
     int32_t status = 0;
 
-    /* Close port link */
-    ENET_IOCTL_SET_IN_ARGS(&prms, &gEnetSBL_LLDObj.macPort);
-
-    ENET_IOCTL(gEnetSBL_LLDObj.hEnet, gEnetSBL_LLDObj.coreId, ENET_PER_IOCTL_CLOSE_PORT_LINK, &prms,status);
-    if (status != ENET_SOK)
+    for (uint32_t portIdx = 0; portIdx < gEnetSBL_LLDObj.numMacPorts; portIdx++)
     {
-        EnetAppUtils_print("[ ENETSBL ] Failed to close port link: %d\r\n", status);
+    	/* Close port link */
+    	ENET_IOCTL_SET_IN_ARGS(&prms, &gEnetSBL_LLDObj.macPort[portIdx]);
+
+    	ENET_IOCTL(gEnetSBL_LLDObj.hEnet, gEnetSBL_LLDObj.coreId, ENET_PER_IOCTL_CLOSE_PORT_LINK, &prms,status);
+    	if (status != ENET_SOK)
+    	{
+    		EnetAppUtils_print("[ ENETSBL ] Failed to close port %d link: %d\r\n", gEnetSBL_LLDObj.macPort[portIdx], status);
+    	}
     }
 
     /* Close Enet driver */
@@ -668,14 +671,17 @@ static int32_t EnetSBL_showAlivePhys(void)
 static int32_t EnetSBL_waitForLinkUp(void)
 {
     Enet_IoctlPrms prms;
-    bool linked = false;
     int32_t status = ENET_SOK;
     uint8_t linkUpWaitCount = 0;
 
+    for (uint32_t portIdx = 0; portIdx < gEnetSBL_LLDObj.numMacPorts; portIdx++)
+    {
+    	// wait for both the links to be up
+        bool linked = false;
         while (!linked)
         {
             EnetApp_phyStateHandler();
-            ENET_IOCTL_SET_INOUT_ARGS(&prms, &gEnetSBL_LLDObj.macPort, &linked);
+            ENET_IOCTL_SET_INOUT_ARGS(&prms, &gEnetSBL_LLDObj.macPort[portIdx], &linked);
 
             ENET_IOCTL(gEnetSBL_LLDObj.hEnet, gEnetSBL_LLDObj.coreId, ENET_PER_IOCTL_IS_PORT_LINK_UP, &prms, status);
             if (status != ENET_SOK)
@@ -696,6 +702,13 @@ static int32_t EnetSBL_waitForLinkUp(void)
                 }
             }
         }
+
+        if (status != ENET_SOK)
+        {
+        	// break if any port linkup has timedout
+        	break;
+        }
+    }
     /* Sleep for 2 sec to complete host PC link up */
 	ClockP_sleep(2U);
     return status;
@@ -1332,9 +1345,9 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
     Enet_setTraceLevel(ENET_TRACE_DEBUG);
 
     /* Setup board for requested Ethernet port */
-    ethPort.enetType = gEnetSBL_LLDObj.enetType;
-    ethPort.instId   = gEnetSBL_LLDObj.instId;
-    ethPort.macPort  = gEnetSBL_LLDObj.macPort;
+    ethPort.enetType = enetType;
+    ethPort.instId   = instId;
+    ethPort.macPort  = macPort;
     ethPort.boardId  = gEnetSBL_LLDObj.boardId;
     EnetSBL_macMode2MacMii(gEnetSBL_LLDObj.macMode, &ethPort.mii);
 
@@ -1352,7 +1365,7 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
 
     /* Set PHY configuration params */
     EnetPhy_initCfg(phyCfg);
-    status = EnetSBL_macMode2PhyMii(gEnetSBL_LLDObj.macMode, &phyMii);
+    status = EnetSBL_macMode2PhyMii(gEnetSBL_LLDObj.macMode, &phyMii); // todo:
 
     if (status == ENET_SOK)
     {
@@ -1363,7 +1376,7 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
             phyCfg->isStrapped  = boardPhyCfg->isStrapped;
             phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
             phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
-            phyCfg->loopbackEn  = false;
+            phyCfg->loopbackEn  = (gEnetSBL_LLDObj.testLoopBackType == TXSG_LOOPBACK_TYPE_PHY);
             memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
         }
         else
@@ -1371,12 +1384,12 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
             EnetAppUtils_print("[ ENETSBL ] PHY info not found\r\n");
             EnetAppUtils_assert(false);
         }
-        linkCfg->speed = ENET_SPEED_100MBIT;
-        linkCfg->duplexity = ENET_DUPLEX_FULL;
+        linkCfg->speed = ENET_SPEED_100MBIT; // todo:
+        linkCfg->duplexity = ENET_DUPLEX_FULL; // Todo:
     }
     /* MAC and PHY txsgs are mutually exclusive */
-    phyCfg->loopbackEn = false;
-    cpswMacCfg->loopbackEn = false;
+    phyCfg->loopbackEn = (gEnetSBL_LLDObj.testLoopBackType == TXSG_LOOPBACK_TYPE_PHY);
+    cpswMacCfg->loopbackEn = (gEnetSBL_LLDObj.testLoopBackType == TXSG_LOOPBACK_TYPE_MAC);
 }
 
 

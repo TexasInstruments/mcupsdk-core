@@ -65,6 +65,7 @@
 #include "ti_board_config.h"
 #include <ti_drivers_open_close.h>
 #include <ti_board_open_close.h>
+#include <ti_enet_config.h>
 
 #include <drivers/bootloader/bootloader_uniflash.h>
 
@@ -146,9 +147,10 @@ extern void Board_cpswMuxSel(void);
 typedef enum EnetSBL_type_e
 {
     /* PHY txsg (internal) */
-    TXSG_LOOPBACK_TYPE_PHY  = 0,
+    TXSG_LOOPBACK_TYPE_MAC  = 0,
+    TXSG_LOOPBACK_TYPE_PHY  = 1,
     /* No loopback. trasmit packets to network */
-    TXSG_LOOPBACK_TYPE_NONE = 1
+    TXSG_LOOPBACK_TYPE_NONE = 2
 } EnetSBL_type;
 
 typedef struct EnetSBL_LLDObj_s
@@ -159,7 +161,8 @@ typedef struct EnetSBL_LLDObj_s
     uint32_t instId;
     uint32_t coreId;
     uint32_t coreKey;
-    Enet_MacPort macPort;
+    Enet_MacPort macPort[ENET_SYSCFG_MAX_MAC_PORTS];
+    uint8_t numMacPorts;
     uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
 
     /* Tx, Rx Packet Queues */

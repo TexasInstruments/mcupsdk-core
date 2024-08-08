@@ -97,7 +97,6 @@ enet_cpsw1.$name                        = "CONFIG_ENET_CPSW0";
 enet_cpsw1.RtosVariant                  = "NoRTOS";
 enet_cpsw1.LargePoolPktCount            = 16;
 enet_cpsw1.customBoardEnable            = true;
-enet_cpsw1.DisableMacPort2              = true;
 enet_cpsw1.hostportRxCsumOffloadEn      = false;
 enet_cpsw1.txDmaChannel[0].$name        = "ENET_DMA_TX_CH0";
 enet_cpsw1.txDmaChannel[0].PacketsCount = 8;

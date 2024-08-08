@@ -84,7 +84,7 @@ int main(void)
     Bootloader_profileAddProfilePoint("System_init");
 
     loop_forever();
-    // Board_init(); // deta remove this?
+    // Board_init(); // Todo: remove this?
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");

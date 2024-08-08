@@ -35,7 +35,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
         .enetType = ENET_CPSW_3G,
         .instId   = 0U,
         .macPort  = ENET_MAC_PORT_1,
-        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_REDUCED },
         .phyCfg   =
         {
             .phyAddr         = < phy address>,
@@ -50,7 +50,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
         .enetType = ENET_CPSW_3G,
         .instId   = 0U,
         .macPort  = ENET_MAC_PORT_2,
-        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_REDUCED },
         .phyCfg   =
         {
             .phyAddr         = < phy address>,
