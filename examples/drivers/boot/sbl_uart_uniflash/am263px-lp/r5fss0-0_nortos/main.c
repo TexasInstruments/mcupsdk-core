@@ -20,7 +20,7 @@
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  A PARTICULAR PURPOSE` ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
  *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
  *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
@@ -32,6 +32,7 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
@@ -39,6 +40,10 @@
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
+#include <drivers/fss.h>
+
+#define BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_A      (0xF8)
+#define BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_B      (0xF9)
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
@@ -83,10 +88,10 @@ int main(void)
         status = Bootloader_xmodemReceive(CONFIG_UART0, gUniflashFileBuf, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE, &fileSize);
 
         /*
-         * The `fileSize` wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem.
+         * The 'fileSize' wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem.
          * This adds ~1KB. We can't know exactly how many bytes will be padded without checking the file header. But doing that
          * will unnecessary complicate the logic, so since the overhead is as small as ~1KB we could check for file size exceed
-         * by checking * this `fileSize` returned by xmodem as well.
+         * by checking * this 'fileSize' returned by xmodem as well.
         */
 
         if(fileSize >= BOOTLOADER_UNIFLASH_MAX_FILE_SIZE)
@@ -107,9 +112,10 @@ int main(void)
             uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
             uniflashConfig.verifyBuf = gUniflashVerifyBuf;
             uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
-
+			uniflashConfig.imageFormatType = BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_RPRC;
             /* Process the flash commands and return a response */
             Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+
 
             status = Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&respHeader, sizeof(Bootloader_UniflashResponseHeader));
         }

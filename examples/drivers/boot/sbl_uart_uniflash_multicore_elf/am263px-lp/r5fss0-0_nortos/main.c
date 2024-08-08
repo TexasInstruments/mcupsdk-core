@@ -112,10 +112,45 @@ int main(void)
             uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
             uniflashConfig.verifyBuf = gUniflashVerifyBuf;
             uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
-			uniflashConfig.imageFormatType = BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_RPRC;
+			uniflashConfig.imageFormatType = BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_MCELF;
             /* Process the flash commands and return a response */
-            Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+            Bootloader_UniflashFileHeader fileHeader;
+            memcpy(&fileHeader, uniflashConfig.buf, sizeof(Bootloader_UniflashFileHeader));
+            respHeader.magicNumber = BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER;
+            respHeader.statusCode  = BOOTLOADER_UNIFLASH_STATUSCODE_SUCCESS;
+            respHeader.rsv0        = 0xDEADBABE;
+            respHeader.rsv1        = 0xDEADBABE;
+            if(fileHeader.magicNumber == BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER)
+            {
+                /* Obtain the actual filesize */
+                uniflashConfig.bufSize = fileHeader.actualFileSize;
 
+                /* Check if the actual filesize is 16 B aligned. This is smallest program granularity suppported by NOR flashes.
+                * If it is not aligned, we have to write 1-15 bytes extra. Since xmodem would have already padded zeros into the
+                * file buffer for 1024B alignment, we can assume that these 1-15 bytes would be zero.
+                */
+                uint32_t remainder = uniflashConfig.bufSize % 16U;
+                if(remainder != 0)
+                {
+                    uniflashConfig.bufSize += (16U - remainder);
+                }
+                uint32_t opType = (fileHeader.operationTypeAndFlags) & (uint32_t)0xFF;
+                switch(opType)
+                {
+                    case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_A:
+                    {
+                        gFlashConfig[uniflashConfig.flashIndex].rwOffset = 0;
+                    }
+                    break;
+                    case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_B:
+                    {
+                        gFlashConfig[uniflashConfig.flashIndex].rwOffset = (Flash_getAttrs(uniflashConfig.flashIndex)->flashSize)/2;
+                    }
+                    break;
+                    default:
+                        Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+                }
+            }
 
             status = Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&respHeader, sizeof(Bootloader_UniflashResponseHeader));
         }

@@ -43,7 +43,9 @@
 
 
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+#define MAX_HSMRT_SIZE_IN_BYTES (248 * 1024U)
+
+const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt")));
 
 extern HsmClient_t gHSMClient ;
 
@@ -80,30 +82,62 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
+uint32_t get_Hsmrt_size() 
+{
+    uint8_t x509Header[4U];
+    uint8_t x509HsmrtCert[2000U];
+    uint32_t hsmrt_Cert_Len = 0U;
+    uint32_t hsmrt_image_Size = 0U;
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509Header, 4);
+    CacheP_wb((void *)x509Header, 4, CacheP_TYPE_ALL);
+
+    hsmrt_Cert_Len = Bootloader_getX509CertLen(x509Header);
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509HsmrtCert, hsmrt_Cert_Len);
+    CacheP_wb((void *)x509Header, hsmrt_Cert_Len, CacheP_TYPE_ALL);
+
+    hsmrt_image_Size = Bootloader_getMsgLen(x509HsmrtCert, hsmrt_Cert_Len);
+
+    return (hsmrt_image_Size + hsmrt_Cert_Len);
+}
 int main(void)
 {
     int32_t status;
-    Bootloader_profileReset();
+    uint32_t hsmrt_size = 0U;
     Bootloader_socConfigurePll();
     Bootloader_socSetAutoClock();
 
     System_init();
-    Bootloader_profileAddProfilePoint("System_init");
     Drivers_open();
-    Bootloader_profileAddProfilePoint("Drivers_open");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
-    Bootloader_profileAddProfilePoint("Board_driversOpen");
-    DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
+    /* 
+        Calculate the HSM Runtime image size from the flash offset specified. 
+    */
+    hsmrt_size = get_Hsmrt_size();
+
+    /* 
+        Read the HSM Runtime image from the flash offset specified. 
+    */
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
+    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
+
+    /* 
+        Request the HSM ROM to load the HSMRT image onto itself. 
+    */
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socInitL2MailBoxMemory();
+
+    /* 
+        Keyring init
+    */
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     if (SystemP_SUCCESS == status)
     {
@@ -118,46 +152,8 @@ int main(void)
 
         if (bootHandle != NULL)
         {
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 
-            /* Initialize CPUs and Load RPRC Image */
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-				}
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-				}
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-				}
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], FALSE);
-            }
-            Bootloader_profileAddProfilePoint("CPU load");
             if (status == SystemP_SUCCESS)
             {
                 /* enable Phy and Phy pipeline for XIP execution */
@@ -187,17 +183,6 @@ int main(void)
             if (status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-                if(status == SystemP_SUCCESS)
-                {
-                    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
-                    Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
-                    Bootloader_profileAddProfilePoint("SBL End");
-                    Bootloader_profilePrintProfileLog();
-
-                    DebugP_log("Image loading done, switching to application ...\r\n");
-                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
-                }
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 

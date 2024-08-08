@@ -41,7 +41,26 @@
 #include <drivers/ospi.h>
 #include <drivers/fss.h>
 
+/* Hardcoding flash sector size for ISSI flash */
+#define FLASH_SECTOR_SIZE (4096U)
 
+#define BOOT_REGION_A (0U)
+
+#define BOOT_REGION_B (1U)
+
+typedef struct bootinfo_sector_s_t
+{
+    uint8_t phyTuningVector[OSPI_FLASH_ATTACK_VECTOR_SIZE];
+    uint32_t bootRegion;
+}bootinfo_sector_fields_t;
+
+typedef union bootinfo_sector_u_t
+{
+    bootinfo_sector_fields_t fields;
+    uint8_t bin[FLASH_SECTOR_SIZE];
+}bootinfo_sector_t;
+
+extern char __TI_SBL_FLASH_BOOTINFO_SECTOR_START[];
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
@@ -118,45 +137,48 @@ int main(void)
 
         if (bootHandle != NULL)
         {
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+#ifdef FOTA_IN_USE
+			volatile uint8_t bootrgn;
+            bootinfo_sector_t *bootinfo;
+            Flash_Attrs *flashAttr = Flash_getAttrs(CONFIG_FLASH0);
+            bootinfo = (bootinfo_sector_t *)__TI_SBL_FLASH_BOOTINFO_SECTOR_START;
+            fssConf.extFlashSize = flashAttr->flashSize;
+            /*
+                save this to internal memory
+                as bootinfo->fields.bootRegion value will change when
+                bootseg will switch to different region
+            */
+            bootrgn = bootinfo->fields.bootRegion;
 
-            /* Initialize CPUs and Load RPRC Image */
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if (bootrgn == BOOT_REGION_B)
             {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
+                FSS_selectRegionB((FSS_Handle)&fssConf);
+            }
+            else
+            {
+                FSS_selectRegionA((FSS_Handle)&fssConf);
+            }
+#endif
+            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-				}
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+#ifdef FOTA_IN_USE
+            /*
+                Bootloader_parseAndLoadMultiCoreELF might have failed cuz of right image is
+                present in other region
+            */
+            if(status == SystemP_FAILURE)
             {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-				}
+                if (bootrgn == BOOT_REGION_B)
+                {
+                    FSS_selectRegionA((FSS_Handle)&fssConf);
+                }
+                else
+                {
+                    FSS_selectRegionB((FSS_Handle)&fssConf);
+                }
+                status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-                status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID) {
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-				}
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], FALSE);
-            }
+#endif
             Bootloader_profileAddProfilePoint("CPU load");
             if (status == SystemP_SUCCESS)
             {
