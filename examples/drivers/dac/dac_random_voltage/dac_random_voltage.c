@@ -61,12 +61,6 @@
 /* DAC Output Voltage variable is initialised with 0*/
 uint16_t APP_DAC_OUT_VOLTAGE = 0;
 
-extern void i2c_io_expander_dac_out();
-
-__attribute__((weak)) void i2c_io_expander_dac_out(){
-    DebugP_log("No I2C IO Expander Driver Defined or needed for this SOC\r\n");
-}
-
 void dac_random_voltage_main(void *args)
 {
     uint32_t baseAddr = CONFIG_DAC0_BASE_ADDR;
@@ -78,8 +72,6 @@ void dac_random_voltage_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-    
-    i2c_io_expander_dac_out();
 
     DebugP_log("DAC Random Voltage Test Started ...\r\n");
 

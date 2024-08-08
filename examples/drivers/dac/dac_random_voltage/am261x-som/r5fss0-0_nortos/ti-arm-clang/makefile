@@ -44,7 +44,6 @@ endif
 
 FILES_common := \
 	dac_random_voltage.c \
-	board.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

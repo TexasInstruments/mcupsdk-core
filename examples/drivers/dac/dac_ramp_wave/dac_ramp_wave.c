@@ -84,12 +84,6 @@ uint32_t gDacBaseAddr = CONFIG_DAC0_BASE_ADDR;
 /* Final value that gets written into DAC shadow register */
 uint16_t gDacOutput = 0;
 
-extern void i2c_io_expander_dac_out();
-
-__attribute__((weak)) void i2c_io_expander_dac_out(){
-    DebugP_log("No I2C IO Expander Driver Defined or needed for this SOC\r\n");
-}
-
 void dac_ramp_wave_main(void *args)
 {
     /* Calculate the step value to obtain ramp wave of required frquency */
@@ -98,8 +92,6 @@ void dac_ramp_wave_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-    
-    i2c_io_expander_dac_out();
 
     DebugP_log("DAC Ramp Wave Test Started ...\r\n");
 

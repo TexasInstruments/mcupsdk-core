@@ -9,6 +9,8 @@
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
 const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
 const dac1            = dac.addInstance();
 const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
@@ -47,6 +49,10 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+
 dac1.$name        = "CONFIG_DAC0";
 dac1.enableOutput = true;
 
@@ -60,9 +66,10 @@ edma1.edmaChannel[0].$name            = "CONFIG_EDMA_CH0";
 edma1.edmaChannel[0].channelTrigger   = "DMA_TRIG_XBAR_RTI1_DMA_0";
 edma1.edmaChannel[0].xbarConfig.$name = "CONFIG_DMA_TRIG_XBAR0";
 
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C0";
-i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

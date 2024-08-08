@@ -5,7 +5,6 @@ let device = "am261x";
 const files = {
     common: [
         "dac_square_wave.c",
-        "board.c",
         "main.c",
     ],
 };

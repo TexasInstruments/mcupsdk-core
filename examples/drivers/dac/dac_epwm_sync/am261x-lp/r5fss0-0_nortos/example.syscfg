@@ -9,6 +9,8 @@
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
 const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
 const dac1            = dac.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
@@ -49,6 +51,10 @@ const int_xbar1       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+
 dac1.$name        = "CONFIG_DAC0";
 dac1.enableOutput = true;
 dac1.loadMode     = "DAC_LOAD_PWMSYNC";
@@ -64,6 +70,7 @@ epwm1.epwmEventTrigger_interruptEventCountInitEnable           = true;
 epwm1.epwmCounterCompare_cmpA                                  = 999;
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_LOW";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
 epwm1.EPWM.$assign                                             = "EPWM0";
 epwm1.EPWM.B.$used                                             = false;
 
@@ -72,9 +79,10 @@ gpio1.$name          = "STATUS";
 gpio1.rx             = true;
 gpio1.GPIO_n.$assign = "GPIO44";
 
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C0";
-i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);

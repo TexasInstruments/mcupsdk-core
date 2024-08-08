@@ -5,7 +5,6 @@ let device = "am261x";
 const files = {
     common: [
         "dac_sine_dma.c",
-        "board.c",
         "main.c",
     ],
 };
