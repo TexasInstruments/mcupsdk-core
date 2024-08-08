@@ -1,24 +1,21 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const eeprom      = scripting.addModule("/board/eeprom/eeprom", {}, false);
-const eeprom1     = eeprom.addInstance();
 const flash       = scripting.addModule("/board/flash/flash", {}, false);
 const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
-const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1        = i2c.addInstance();
-const i2c2        = i2c.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -45,11 +42,10 @@ const section7    = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-eeprom1.$name = "CONFIG_EEPROM0";
-
 bootloader1.$name            = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset   = "0x00081000";
-bootloader1.hsmrtImageOffset = "0x00040000";
+bootloader1.hsmrtDecoupling  = true;
+bootloader1.hsmrtImageOffset = "0x40000";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
@@ -87,18 +83,12 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
+gpio1.pinDir         = "OUTPUT";
+gpio1.$name          = "GPIO_OSPI_RST";
+gpio1.defaultValue   = "1";
+gpio1.GPIO_n.$assign = "EPWM11_B";
+
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C2";
-i2c1.I2C.SCL.$assign = "UART0_RTSn";
-i2c1.I2C.SDA.$assign = "UART0_CTSn";
-i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template1";
-
-i2c2.$name               = "CONFIG_I2C1";
-eeprom1.peripheralDriver = i2c2;
-i2c2.I2C.$assign         = "I2C0";
-i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template2";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -150,7 +140,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(10);
+region1.memory_region.create(9);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -191,12 +181,6 @@ region1.memory_region[8].auto               = false;
 region1.memory_region[8].manualStartAddress = 0x60080000;
 region1.memory_region[8].size               = 0x1000;
 region1.memory_region[8].$name              = "FLASH_BOOTINFO_SECTOR";
-region1.memory_region[9].last_sym           = "__TI_SBL_FLASH_BOOTINFO_SECTOR_START";
-region1.memory_region[9].auto               = false;
-region1.memory_region[9].type               = "CUSTOM";
-region1.memory_region[9].$name              = "BOOT_SECTOR_INFO";
-region1.memory_region[9].manualStartAddress = 0x80080000;
-region1.memory_region[9].size               = 0x1000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -270,6 +254,7 @@ section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_S
 section5.load_memory             = "MSRAM_HSMRT";
 section5.group                   = false;
 section5.$name                   = "Hsmrt";
+section5.type                    = "NOLOAD";
 section5.output_section.create(1);
 section5.output_section[0].$name = ".rodata.hsmrt";
 
@@ -295,6 +280,4 @@ section7.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution = "OSPI0";
-i2c2.I2C.SCL.$suggestSolution                 = "I2C0_SCL";
-i2c2.I2C.SDA.$suggestSolution                 = "I2C0_SDA";
 debug_log.uartLog.UART.$suggestSolution       = "UART0";

@@ -41,15 +41,17 @@ const section4    = section.addInstance();
 const section5    = section.addInstance();
 const section6    = section.addInstance();
 const section7    = section.addInstance();
+const fota        = scripting.addModule("/optiflash/fota/fota", {}, false);
+const fota1       = fota.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
-bootloader1.$name            = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset   = "0x00081000";
-bootloader1.hsmrtImageOffset = "0x00040000";
+bootloader1.$name          = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset = "0x00081000";
+bootloader1.imageFormat    = "MCELF";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
@@ -288,6 +290,8 @@ section7.$name                       = "SIPC R5F Queue Memory";
 section7.output_section.create(1);
 section7.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section7.output_section[0].alignment = 0;
+
+fota1.$name = "fota0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

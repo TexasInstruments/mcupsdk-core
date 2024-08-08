@@ -49,21 +49,19 @@ const includes = {
     ],
 };
 
-
 const template_options_cc = {
-    bootformat: "RPRC",
+    bootformat: "MCELF",
     supportFotaSwap: false,
-    enableFastBoot: false,
+    enableFastBoot: true,
     board: "am263px-cc"
 }
 
 const template_options_lp = {
-    bootformat: "RPRC",
+    bootformat: "MCELF",
     supportFotaSwap: false,
-    enableFastBoot: false,
+    enableFastBoot: true,
     board: "am263px-lp"
 }
-
 
 const templates_cc =
 [
@@ -93,7 +91,6 @@ const templates_lp =
         options: template_options_lp
     }
 ];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
@@ -101,6 +98,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
+
 ];
 
 function getComponentProperty() {
@@ -108,7 +106,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_ospi";
+    property.name = "sbl_ospi_fastboot";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
