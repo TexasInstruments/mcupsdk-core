@@ -5,16 +5,23 @@
 
 # Introduction
 
-- This examples demonstrates the use of **TinyUSB** **DFU DEV Class driver**. Its implements all the necessary callbacks that are 
-required by TinyUSB DFU DEV class driver. 
+- This example demonstrates the use of **TinyUSB** **DFU DEV Class driver**. Its implements all the necessary callbacks that are 
+required by TinyUSB DFU (Device Firmware Upgrade) DEV class driver. 
 
 - When user issues DFU download command then the application receives the data in a static buffer via USB DFU. Once the manifest 
 state is completed the application sends the received data back to UART0. 
-- When user issues DFU Upload command it sends the **"Hello world from AM64x-AM243x DFU! - Partition 0"** string back to the HOST PC. 
 
-- refer [USB2.0 DFU specs](https://www.usb.org/sites/default/files/DFU_1.1.pdf) to konw more about USB 2.0 DFU class. 
+\cond SOC_AM64X || SOC_AM243X
+- When user issues DFU Upload command it sends the **Hello world from AM64x-AM243x DFU! - Partition 0** string back to the HOST PC. 
+\endcond
 
-\note The max buffer size is 4KB thus, as far as this example is concerned user can send at max 4KB of data. 
+\cond SOC_AM261X
+- When user issues DFU Upload command it sends the **Hello world from AM261x DFU! - Partition 0** string back to the HOST PC. 
+\endcond
+
+- refer [USB2.0 DFU specs](https://www.usb.org/sites/default/files/DFU_1.1.pdf) to know more about USB 2.0 DFU class. 
+
+\note The max buffer size is 4 KB thus, as far as this example is concerned user can send at max 4 KB of data. 
 
 - To enable USB Logging for this example refer \ref EXAMPLES_USB_CDC_ECHO
 
@@ -38,6 +45,17 @@ state is completed the application sends the received data back to UART0.
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/usb/device/dfu
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME
  Example folder | examples/usb/device/dfu
 
 \endcond
@@ -88,13 +106,24 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 
 \endcond
 
+\cond SOC_AM261X
+
+### AM261x-LP
+- To test the application, one can use a Windows/Linux PC as a USB host.
+- Connect the J10 on AM261x-LP to the USB host.
+
+  \imageStyle{am261x_lp_j10.png,width:30%}
+  \image html am261x_lp_j10.png USB Type-C Device Connector
+
+\endcond
+
 ## Run the example
 
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
 - When the application is running. Observer DFU device detected on HOST PC. 
 
-- Open cmd in windows and terminal in case of Linux. Run Following command to detect whether the DFU device has been enumerated or not. 
+- Open cmd in windows and terminal in case of Linux. Run the following command to detect whether a DFU device has been enumerated or not. 
 
 	**Windows** 
 
@@ -107,14 +136,22 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 - If the enumeration is successful the following should be displayed on console. 
 
 \imageStyle{usb_dfu_enum.png,width:50%}
+
+\cond SOC_AM261X
 \image html usb_dfu_enum.png AM64x-AM243x DFU Device detected. 
+\endcond
+
+
+\cond SOC_AM243X || SOC_AM64X
+\image html usb_dfu_enum.png AM64x-AM243x DFU Device detected.
+\endcond
 
 - If the DFU device is not detected then most probably the WinUSB driver is not installed. 
-- refer "Install steps for dfu-util tools(windows)" in \ref SDK_DOWNLOAD_PAGE 
+- Refer "Install steps for dfu-util tools(windows)" in \ref SDK_DOWNLOAD_PAGE 
 
 #### DFU Download 
 
-- Open COM port in windows and /dev/ttyUSBx in linux which opens console for UART0. 
+- Open COM port in windows and /dev/ttyUSBx in Linux which opens console for UART0. 
 - Once the DFU device is enumerated run the following command. 
 
 	**Windows** 
@@ -126,7 +163,7 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 
 		sudo dfu-util -a 0 -i 0 -D test_data.txt
 
-- The *test_data.txt* file contains a string data that is to be transfered. 
+- The *test_data.txt* file contains a string data that is to be transferred. 
 - Once the DFU transfer is completed following will be displayed on the terminal. 
 
 
@@ -152,9 +189,15 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 
 - Once the DFU Upload transaction is successful , open `upload_data.txt` file to see the contents 
 
+\cond SOC_AM243X || AM64X
 \imageStyle{upload_data.png,width:30%}
 \image html upload_data.png Data sent by DFU device to DFU host. 
+\endcond
 
+\cond SOC_AM261X
+\imageStyle{am261x_dfu_upload_data.png,width:30%}
+\image html am261x_dfu_upload_data.png Data sent by DFU device to DFU host. 
+\endcond
 # See Also
 
 \ref USB_DEVICE_DRIVER
