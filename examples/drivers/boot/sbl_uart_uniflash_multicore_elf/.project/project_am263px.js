@@ -54,8 +54,8 @@ const templates =
         input: ".project/templates/am263px/sbl/sbl_uart_uniflash/main.c.xdt",
         output: "../main.c",
         options: {
-            bootformat: "RPRC",
-            supportFotaSwap: false,
+            bootformat: "MCELF",
+            supportFotaSwap: true,
             enableFastBoot: false,
         }
     }
@@ -64,7 +64,7 @@ const templates =
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH_MULTICORE_ELF";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
@@ -76,7 +76,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_uart_uniflash";
+    property.name = "sbl_uart_uniflash_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
