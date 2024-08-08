@@ -1,13 +1,27 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1 = bootloader.addInstance();
+const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1  = hsmclient.addInstance();
+const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1       = uart.addInstance();
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
 const general     = scripting.addModule("/memory_configurator/general", {}, false);
 const general1    = general.addInstance();
 const region      = scripting.addModule("/memory_configurator/region", {}, false);
@@ -21,23 +35,42 @@ const section5    = section.addInstance();
 const section6    = section.addInstance();
 const section7    = section.addInstance();
 const section8    = section.addInstance();
-const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
-const bootloader1 = bootloader.addInstance();
-const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
-const hsmclient1  = hsmclient.addInstance();
-const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
-const uart1       = uart.addInstance();
-const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
-const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71  = mpu_armv7.addInstance();
-const mpu_armv72  = mpu_armv7.addInstance();
-const mpu_armv73  = mpu_armv7.addInstance();
-const mpu_armv74  = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+bootloader1.bootMedia   = "MEM";
+bootloader1.$name       = "CONFIG_BOOTLOADER_0";
+
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+uart1.$name        = "CONFIG_UART0";
+uart1.UART.$assign = "UART0";
+uart1.child.$name  = "drivers_uart_v2_uart_v2_template0";
+
+debug_log.enableCssLog      = false;
+debug_log.enableLogZoneInfo = true;
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
@@ -182,38 +215,10 @@ section8.output_section.create(1);
 section8.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section8.output_section[0].alignment = 0;
 
-
-bootloader1.bootMedia = "MEM";
-bootloader1.$name     = "CONFIG_BOOTLOADER_0";
-
-hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-uart1.$name            = "CONFIG_UART0";
-uart1.intrEnable       = "DISABLE";
-uart1.UART.$assign     = "UART0";
-uart1.UART.RXD.$assign = "ball.A7";
-uart1.UART.TXD.$assign = "ball.A6";
-
-debug_log.enableCssLog      = false;
-debug_log.enableLogZoneInfo = true;
-
-mpu_armv71.$name             = "CONFIG_MPU_REGION0";
-mpu_armv71.size              = 31;
-mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv71.allowExecute      = false;
-
-mpu_armv72.$name             = "CONFIG_MPU_REGION1";
-mpu_armv72.size              = 15;
-mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.baseAddr          = 0x80000;
-mpu_armv73.size              = 15;
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 21;
-
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+uart1.UART.RXD.$suggestSolution = "GPIO27";
+uart1.UART.TXD.$suggestSolution = "GPIO28";

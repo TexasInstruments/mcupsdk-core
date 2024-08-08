@@ -86,7 +86,6 @@ typedef struct {
     volatile uint8_t  Resv_496[8];
     volatile uint32_t OSPI0_CLK_SRC_SEL;
 	volatile uint32_t OSPI1_CLK_SRC_SEL;
-    volatile uint8_t  Resv_504[4];
     volatile uint32_t CONTROLSS_PLL_CLK_SRC_SEL;
     volatile uint32_t CPTS_CLK_SRC_SEL;
     volatile uint32_t GPMC_CLK_SRC_SEL;
@@ -99,9 +98,12 @@ typedef struct {
     volatile uint32_t LIN1_UART1_CLK_SRC_SEL;
     volatile uint32_t LIN2_UART2_CLK_SRC_SEL;
     volatile uint32_t LIN3_UART3_CLK_SRC_SEL;
+	volatile uint32_t LIN4_UART4_CLK_SRC_SEL;		
+	volatile uint32_t LIN5_UART5_CLK_SRC_SEL;		
+	volatile uint8_t  Resv_740[104];
 	volatile uint32_t ICSSM0_CORE_CLK_SRC_SEL;		
 	volatile uint32_t ICSSM1_CORE_CLK_SRC_SEL;		
-    volatile uint8_t  Resv_768[140];
+	volatile uint8_t  Resv_768[20];
     volatile uint32_t MCAN0_CLK_DIV_VAL;
     volatile uint32_t MCAN1_CLK_DIV_VAL;
     volatile uint8_t  Resv_832[56];
@@ -123,7 +125,6 @@ typedef struct {
     volatile uint8_t  Resv_1008[8];
     volatile uint32_t OSPI0_CLK_DIV_VAL;
 	volatile uint32_t OSPI1_CLK_DIV_VAL;
-    volatile uint8_t  Resv_1016[4];
     volatile uint32_t CONTROLSS_PLL_CLK_DIV_VAL;
     volatile uint32_t CPTS_CLK_DIV_VAL;
     volatile uint32_t GPMC_CLK_DIV_VAL;
@@ -141,9 +142,12 @@ typedef struct {
     volatile uint32_t LIN1_UART1_CLK_DIV_VAL;
     volatile uint32_t LIN2_UART2_CLK_DIV_VAL;
     volatile uint32_t LIN3_UART3_CLK_DIV_VAL;
+	volatile uint32_t LIN4_UART4_CLK_DIV_VAL;		
+	volatile uint32_t LIN5_UART5_CLK_DIV_VAL;		
+	volatile uint8_t  Resv_1252[104];
 	volatile uint32_t ICSSM0_CORE_CLK_DIV_VAL;		
 	volatile uint32_t ICSSM1_CORE_CLK_DIV_VAL;		
-    volatile uint8_t  Resv_1280[140];
+	volatile uint8_t  Resv_1280[20];
     volatile uint32_t MCAN0_CLK_GATE;
     volatile uint32_t MCAN1_CLK_GATE;
     volatile uint8_t  Resv_1344[56];
@@ -165,7 +169,6 @@ typedef struct {
     volatile uint8_t  Resv_1520[8];
     volatile uint32_t OSPI0_CLK_GATE;
 	volatile uint32_t OSPI1_CLK_GATE;
-    volatile uint8_t  Resv_1528[4];
     volatile uint32_t CONTROLSS_PLL_CLK_GATE;
     volatile uint32_t CPTS_CLK_GATE;
     volatile uint32_t GPMC_CLK_GATE;
@@ -189,21 +192,26 @@ typedef struct {
     volatile uint32_t UART1_CLK_GATE;
     volatile uint32_t UART2_CLK_GATE;
     volatile uint32_t UART3_CLK_GATE;
+	volatile uint32_t UART4_CLK_GATE;		
+	volatile uint32_t UART5_CLK_GATE;		
+	volatile uint8_t  Resv_1764[40];
 	volatile uint32_t ICSSM0_CORE_CLK_GATE;		
 	volatile uint32_t ICSSM1_CORE_CLK_GATE;		
-    volatile uint8_t  Resv_1792[76];
+	volatile uint8_t  Resv_1792[20];
     volatile uint32_t R5_COREA_GATE0;
     volatile uint8_t  Resv_1808[12];
     volatile uint32_t R5_COREB_GATE0;
     volatile uint8_t  Resv_1824[12];
     volatile uint32_t ICSSM0_IEP_CLK_GATE;
     volatile uint32_t ICSSM1_IEP_CLK_GATE;
+	volatile uint8_t  Resv_1840[8];
     volatile uint32_t ICSSM0_SYS_CLK_GATE;
     volatile uint32_t ICSSM1_SYS_CLK_GATE;
+	volatile uint8_t  Resv_1856[8];
     volatile uint32_t USB_CLK_GATE;
     volatile uint32_t USB_WKUP_CLK_GATE;
 	volatile uint32_t USB_XTAL_CLK_GATE;		
-    volatile uint8_t  Resv_2048[192];
+	volatile uint8_t  Resv_2048[180];
     volatile uint32_t HSM_RTIA_CLK_SRC_SEL;
     volatile uint32_t HSM_WDT_CLK_SRC_SEL;
     volatile uint32_t HSM_RTC_CLK_SRC_SEL;
@@ -246,7 +254,6 @@ typedef struct {
     volatile uint8_t  Resv_2544[8];
     volatile uint32_t OSPI0_CLK_STATUS;
 	volatile uint32_t OSPI1_CLK_STATUS;
-    volatile uint8_t  Resv_2552[4];
     volatile uint32_t CONTROLSS_PLL_CLK_STATUS;
     volatile uint32_t CPTS_CLK_STATUS;
     volatile uint32_t GPMC_CLK_STATUS;
@@ -258,16 +265,18 @@ typedef struct {
     volatile uint32_t MMC0_32K_CLK_STATUS;
     volatile uint32_t TEMPSENSE_32K_CLK_STATUS;
 	volatile uint32_t CPSW_5_50_250_CLK_STATUS;
-    volatile uint8_t  Resv_2596[4];
     volatile uint32_t I2C_CLK_STATUS;
     volatile uint8_t  Resv_2660[60];
     volatile uint32_t LIN0_UART0_CLK_STATUS;
     volatile uint32_t LIN1_UART1_CLK_STATUS;
     volatile uint32_t LIN2_UART2_CLK_STATUS;
     volatile uint32_t LIN3_UART3_CLK_STATUS;
+	volatile uint32_t LIN4_UART4_CLK_STATUS;		
+	volatile uint32_t LIN5_UART5_CLK_STATUS;		
+	volatile uint8_t  Resv_2788[104];
 	volatile uint32_t ICSSM0_CORE_CLK_STATUS;		
 	volatile uint32_t ICSSM1_CORE_CLK_STATUS;		
-    volatile uint8_t  Resv_2816[140];
+	volatile uint8_t  Resv_2816[20];
     volatile uint32_t MCAN0_RST_CTRL;
     volatile uint32_t MCAN1_RST_CTRL;
     volatile uint8_t  Resv_2880[56];
@@ -289,7 +298,7 @@ typedef struct {
     volatile uint8_t  Resv_3056[8];
     volatile uint32_t OSPI0_RST_CTRL;
 	volatile uint32_t OSPI1_RST_CTRL;		
-    volatile uint8_t  Resv_3072[12];
+	volatile uint8_t  Resv_3072[8];
     volatile uint32_t GPMC_RST_CTRL;
     volatile uint32_t MMC0_RST_CTRL;
     volatile uint32_t MSS_ELM_RST_CTRL;
@@ -308,7 +317,9 @@ typedef struct {
     volatile uint32_t UART1_RST_CTRL;
     volatile uint32_t UART2_RST_CTRL;
     volatile uint32_t UART3_RST_CTRL;
-    volatile uint8_t  Resv_3328[76];
+	volatile uint32_t UART4_RST_CTRL;		
+	volatile uint32_t UART5_RST_CTRL;		
+	volatile uint8_t  Resv_3328[68];
     volatile uint32_t CR5SS_POR_RST_CTRL0;
     volatile uint8_t  Resv_3344[12];
     volatile uint32_t CR5SSA_RST_CTRL0;
@@ -414,6 +425,8 @@ typedef struct {
 #define CSL_MSS_RCM_LIN1_UART1_CLK_SRC_SEL                                 (0x00000268U)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_SRC_SEL                                 (0x0000026CU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_SRC_SEL                                 (0x00000270U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL                                 (0x00000274U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL                                 (0x00000278U)
 #define CSL_MSS_RCM_ICSSM0_CORE_CLK_SRC_SEL                                (0x000002E4U)
 #define CSL_MSS_RCM_ICSSM1_CORE_CLK_SRC_SEL                                (0x000002E8U)
 #define CSL_MSS_RCM_MCAN0_CLK_DIV_VAL                                      (0x00000300U)
@@ -447,6 +460,8 @@ typedef struct {
 #define CSL_MSS_RCM_LIN1_UART1_CLK_DIV_VAL                                 (0x00000468U)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_DIV_VAL                                 (0x0000046CU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_DIV_VAL                                 (0x00000470U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL                                 (0x00000474U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL                                 (0x00000478U)
 #define CSL_MSS_RCM_ICSSM0_CORE_CLK_DIV_VAL                                (0x000004E4U)
 #define CSL_MSS_RCM_ICSSM1_CORE_CLK_DIV_VAL                                (0x000004E8U)
 #define CSL_MSS_RCM_MCAN0_CLK_GATE                                         (0x00000500U)
@@ -486,6 +501,8 @@ typedef struct {
 #define CSL_MSS_RCM_UART1_CLK_GATE                                         (0x000006A8U)
 #define CSL_MSS_RCM_UART2_CLK_GATE                                         (0x000006ACU)
 #define CSL_MSS_RCM_UART3_CLK_GATE                                         (0x000006B0U)
+#define CSL_MSS_RCM_UART4_CLK_GATE                                         (0x000006B4U)
+#define CSL_MSS_RCM_UART5_CLK_GATE                                         (0x000006B8U)
 #define CSL_MSS_RCM_ICSSM0_CORE_CLK_GATE                                   (0x000006E4U)
 #define CSL_MSS_RCM_ICSSM1_CORE_CLK_GATE                                   (0x000006E8U)
 #define CSL_MSS_RCM_R5_COREA_GATE0                                         (0x00000700U)
@@ -549,6 +566,8 @@ typedef struct {
 #define CSL_MSS_RCM_LIN1_UART1_CLK_STATUS                                  (0x00000A68U)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_STATUS                                  (0x00000A6CU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_STATUS                                  (0x00000A70U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS                                  (0x00000A74U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS                                  (0x00000A78U)
 #define CSL_MSS_RCM_ICSSM0_CORE_CLK_STATUS                                 (0x00000AE4U)
 #define CSL_MSS_RCM_ICSSM1_CORE_CLK_STATUS                                 (0x00000AE8U)
 #define CSL_MSS_RCM_MCAN0_RST_CTRL                                         (0x00000B00U)
@@ -582,6 +601,8 @@ typedef struct {
 #define CSL_MSS_RCM_UART1_RST_CTRL                                         (0x00000CA8U)
 #define CSL_MSS_RCM_UART2_RST_CTRL                                         (0x00000CACU)
 #define CSL_MSS_RCM_UART3_RST_CTRL                                         (0x00000CB0U)
+#define CSL_MSS_RCM_UART4_RST_CTRL                                         (0x00000CB4U)
+#define CSL_MSS_RCM_UART5_RST_CTRL                                         (0x00000CB8U)
 #define CSL_MSS_RCM_CR5SS_POR_RST_CTRL0                                    (0x00000D00U)
 #define CSL_MSS_RCM_CR5SSA_RST_CTRL0                                       (0x00000D10U)
 #define CSL_MSS_RCM_CR5SSB_RST_CTRL0                                       (0x00000D20U)
@@ -951,7 +972,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_I2C_CLK_SRC_SEL_RESETVAL                               (0x00000000U)
 
-/* MSS_LIN0_UART0_CLK_SRC_SEL */
+/* LIN0_UART0_CLK_SRC_SEL */
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_SRC_SEL_CLKSRCSEL_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN0_UART0_CLK_SRC_SEL_CLKSRCSEL_SHIFT (0x00000000U)
@@ -960,7 +981,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN1_UART1_CLK_SRC_SEL */
+/* LIN1_UART1_CLK_SRC_SEL */
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_SRC_SEL_CLKSRCSEL_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN1_UART1_CLK_SRC_SEL_CLKSRCSEL_SHIFT (0x00000000U)
@@ -969,7 +990,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN2_UART2_CLK_SRC_SEL */
+/* LIN2_UART2_CLK_SRC_SEL */
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_SRC_SEL_CLKSRCSEL_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_SRC_SEL_CLKSRCSEL_SHIFT (0x00000000U)
@@ -978,7 +999,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN3_UART3_CLK_SRC_SEL */
+/* LIN3_UART3_CLK_SRC_SEL */
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_SRC_SEL_CLKSRCSEL_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_SRC_SEL_CLKSRCSEL_SHIFT (0x00000000U)
@@ -986,6 +1007,24 @@ typedef struct {
 #define CSL_MSS_RCM_LIN3_UART3_CLK_SRC_SEL_CLKSRCSEL_MAX (0x00000FFFU)
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
+
+
+/* LIN4_UART4_CLK_SRC_SEL */
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL_CLKSRCSEL_MASK                   (0x00000FFFU)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL_CLKSRCSEL_SHIFT                  (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL_CLKSRCSEL_RESETVAL               (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL_CLKSRCSEL_MAX                    (0x00000FFFU)
+
+#define CSL_MSS_RCM_LIN4_UART4_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
+
+
+/* LIN5_UART5_CLK_SRC_SEL */
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL_CLKSRCSEL_MASK                   (0x00000FFFU)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL_CLKSRCSEL_SHIFT                  (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL_CLKSRCSEL_RESETVAL               (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL_CLKSRCSEL_MAX                    (0x00000FFFU)
+
+#define CSL_MSS_RCM_LIN5_UART5_CLK_SRC_SEL_RESETVAL                        (0x00000000U)
 
 
 
@@ -1245,7 +1284,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_I2C_CLK_DIV_VAL_RESETVAL                               (0x00000000U)
 
-/* MSS_LIN0_UART0_CLK_DIV_VAL */
+/* LIN0_UART0_CLK_DIV_VAL */
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_DIV_VAL_CLKDIVR_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN0_UART0_CLK_DIV_VAL_CLKDIVR_SHIFT (0x00000000U)
@@ -1254,7 +1293,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN1_UART1_CLK_DIV_VAL */
+/* LIN1_UART1_CLK_DIV_VAL */
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_DIV_VAL_CLKDIVR_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN1_UART1_CLK_DIV_VAL_CLKDIVR_SHIFT (0x00000000U)
@@ -1263,7 +1302,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN2_UART2_CLK_DIV_VAL */
+/* LIN2_UART2_CLK_DIV_VAL */
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_DIV_VAL_CLKDIVR_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_DIV_VAL_CLKDIVR_SHIFT (0x00000000U)
@@ -1272,7 +1311,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
 
-/* MSS_LIN3_UART3_CLK_DIV_VAL */
+/* LIN3_UART3_CLK_DIV_VAL */
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_DIV_VAL_CLKDIVR_MASK (0x00000FFFU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_DIV_VAL_CLKDIVR_SHIFT (0x00000000U)
@@ -1280,6 +1319,24 @@ typedef struct {
 #define CSL_MSS_RCM_LIN3_UART3_CLK_DIV_VAL_CLKDIVR_MAX (0x00000FFFU)
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
+
+
+/* LIN4_UART4_CLK_DIV_VAL */
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL_CLKDIVR_MASK                     (0x00000FFFU)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL_CLKDIVR_SHIFT                    (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL_CLKDIVR_RESETVAL                 (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL_CLKDIVR_MAX                      (0x00000FFFU)
+
+#define CSL_MSS_RCM_LIN4_UART4_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
+
+
+/* LIN5_UART5_CLK_DIV_VAL */
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL_CLKDIVR_MASK                     (0x00000FFFU)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL_CLKDIVR_SHIFT                    (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL_CLKDIVR_RESETVAL                 (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL_CLKDIVR_MAX                      (0x00000FFFU)
+
+#define CSL_MSS_RCM_LIN5_UART5_CLK_DIV_VAL_RESETVAL                        (0x00000000U)
 
 
 
@@ -1566,7 +1623,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_I2C2_CLK_GATE_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN0_CLK_GATE */
+/* LIN0_CLK_GATE */
 
 #define CSL_MSS_RCM_LIN0_CLK_GATE_GATED_MASK             (0x00000007U)
 #define CSL_MSS_RCM_LIN0_CLK_GATE_GATED_SHIFT            (0x00000000U)
@@ -1575,7 +1632,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN0_CLK_GATE_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN1_CLK_GATE */
+/* LIN1_CLK_GATE */
 
 #define CSL_MSS_RCM_LIN1_CLK_GATE_GATED_MASK             (0x00000007U)
 #define CSL_MSS_RCM_LIN1_CLK_GATE_GATED_SHIFT            (0x00000000U)
@@ -1584,7 +1641,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN1_CLK_GATE_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN2_CLK_GATE */
+/* LIN2_CLK_GATE */
 
 #define CSL_MSS_RCM_LIN2_CLK_GATE_GATED_MASK             (0x00000007U)
 #define CSL_MSS_RCM_LIN2_CLK_GATE_GATED_SHIFT            (0x00000000U)
@@ -1593,7 +1650,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN2_CLK_GATE_RESETVAL                                 (0x00000000U)
 
-/* MSS_UART0_CLK_GATE */
+/* UART0_CLK_GATE */
 
 #define CSL_MSS_RCM_UART0_CLK_GATE_GATED_MASK           (0x00000007U)
 #define CSL_MSS_RCM_UART0_CLK_GATE_GATED_SHIFT          (0x00000000U)
@@ -1602,7 +1659,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART0_CLK_GATE_RESETVAL                                (0x00000000U)
 
-/* MSS_UART1_CLK_GATE */
+/* UART1_CLK_GATE */
 
 #define CSL_MSS_RCM_UART1_CLK_GATE_GATED_MASK           (0x00000007U)
 #define CSL_MSS_RCM_UART1_CLK_GATE_GATED_SHIFT          (0x00000000U)
@@ -1611,7 +1668,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART1_CLK_GATE_RESETVAL                                (0x00000000U)
 
-/* MSS_UART2_CLK_GATE */
+/* UART2_CLK_GATE */
 
 #define CSL_MSS_RCM_UART2_CLK_GATE_GATED_MASK           (0x00000007U)
 #define CSL_MSS_RCM_UART2_CLK_GATE_GATED_SHIFT          (0x00000000U)
@@ -1620,7 +1677,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART2_CLK_GATE_RESETVAL                                (0x00000000U)
 
-/* MSS_UART3_CLK_GATE */
+/* UART3_CLK_GATE */
 
 #define CSL_MSS_RCM_UART3_CLK_GATE_GATED_MASK           (0x00000007U)
 #define CSL_MSS_RCM_UART3_CLK_GATE_GATED_SHIFT          (0x00000000U)
@@ -1628,6 +1685,24 @@ typedef struct {
 #define CSL_MSS_RCM_UART3_CLK_GATE_GATED_MAX            (0x00000007U)
 
 #define CSL_MSS_RCM_UART3_CLK_GATE_RESETVAL                                (0x00000000U)
+
+
+/* UART4_CLK_GATE */
+#define CSL_MSS_RCM_UART4_CLK_GATE_GATED_MASK                               (0x00000007U)
+#define CSL_MSS_RCM_UART4_CLK_GATE_GATED_SHIFT                              (0x00000000U)
+#define CSL_MSS_RCM_UART4_CLK_GATE_GATED_RESETVAL                           (0x00000000U)
+#define CSL_MSS_RCM_UART4_CLK_GATE_GATED_MAX                                (0x00000007U)
+
+#define CSL_MSS_RCM_UART4_CLK_GATE_RESETVAL                                (0x00000000U)
+
+
+/* UART5_CLK_GATE */
+#define CSL_MSS_RCM_UART5_CLK_GATE_GATED_MASK                               (0x00000007U)
+#define CSL_MSS_RCM_UART5_CLK_GATE_GATED_SHIFT                              (0x00000000U)
+#define CSL_MSS_RCM_UART5_CLK_GATE_GATED_RESETVAL                           (0x00000000U)
+#define CSL_MSS_RCM_UART5_CLK_GATE_GATED_MAX                                (0x00000007U)
+
+#define CSL_MSS_RCM_UART5_CLK_GATE_RESETVAL                                (0x00000000U)
 
 
 /* ICSSM0_CORE_CLK_GATE */
@@ -2278,7 +2353,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_I2C_CLK_STATUS_RESETVAL                                (0x00000001U)
 
-/* MSS_LIN0_UART0_CLK_STATUS */
+/* LIN0_UART0_CLK_STATUS */
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_STATUS_CLKINUSE_MASK (0x000000FFU)
 #define CSL_MSS_RCM_LIN0_UART0_CLK_STATUS_CLKINUSE_SHIFT (0x00000000U)
@@ -2292,7 +2367,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN0_UART0_CLK_STATUS_RESETVAL                         (0x00000001U)
 
-/* MSS_LIN1_UART1_CLK_STATUS */
+/* LIN1_UART1_CLK_STATUS */
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_STATUS_CLKINUSE_MASK (0x000000FFU)
 #define CSL_MSS_RCM_LIN1_UART1_CLK_STATUS_CLKINUSE_SHIFT (0x00000000U)
@@ -2306,7 +2381,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN1_UART1_CLK_STATUS_RESETVAL                         (0x00000001U)
 
-/* MSS_LIN2_UART2_CLK_STATUS */
+/* LIN2_UART2_CLK_STATUS */
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_STATUS_CLKINUSE_MASK (0x000000FFU)
 #define CSL_MSS_RCM_LIN2_UART2_CLK_STATUS_CLKINUSE_SHIFT (0x00000000U)
@@ -2320,7 +2395,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN2_UART2_CLK_STATUS_RESETVAL                         (0x00000001U)
 
-/* MSS_LIN3_UART3_CLK_STATUS */
+/* LIN3_UART3_CLK_STATUS */
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_STATUS_CLKINUSE_MASK (0x000000FFU)
 #define CSL_MSS_RCM_LIN3_UART3_CLK_STATUS_CLKINUSE_SHIFT (0x00000000U)
@@ -2333,6 +2408,37 @@ typedef struct {
 #define CSL_MSS_RCM_LIN3_UART3_CLK_STATUS_CURRDIVIDER_MAX (0x000000FFU)
 
 #define CSL_MSS_RCM_LIN3_UART3_CLK_STATUS_RESETVAL                         (0x00000001U)
+
+
+/* LIN4_UART4_CLK_STATUS */
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CLKINUSE_MASK                     (0x000000FFU)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CLKINUSE_SHIFT                    (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CLKINUSE_RESETVAL                 (0x00000001U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CLKINUSE_MAX                      (0x000000FFU)
+
+
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CURRDIVIDER_MASK                  (0x0000FF00U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CURRDIVIDER_SHIFT                 (0x00000008U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CURRDIVIDER_RESETVAL              (0x00000000U)
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_CURRDIVIDER_MAX                   (0x000000FFU)
+
+#define CSL_MSS_RCM_LIN4_UART4_CLK_STATUS_RESETVAL                         (0x00000001U)
+
+
+
+/* LIN5_UART5_CLK_STATUS */
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CLKINUSE_MASK                     (0x000000FFU)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CLKINUSE_SHIFT                    (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CLKINUSE_RESETVAL                 (0x00000001U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CLKINUSE_MAX                      (0x000000FFU)
+
+
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CURRDIVIDER_MASK                  (0x0000FF00U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CURRDIVIDER_SHIFT                 (0x00000008U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CURRDIVIDER_RESETVAL              (0x00000000U)
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_CURRDIVIDER_MAX                   (0x000000FFU)
+
+#define CSL_MSS_RCM_LIN5_UART5_CLK_STATUS_RESETVAL                         (0x00000001U)
 
 
 /* ICSSM0_CORE_CLK_STATUS */
@@ -2574,7 +2680,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_I2C2_RST_CTRL_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN0_RST_CTRL */
+/* LIN0_RST_CTRL */
 
 #define CSL_MSS_RCM_LIN0_RST_CTRL_ASSERT_MASK            (0x00000007U)
 #define CSL_MSS_RCM_LIN0_RST_CTRL_ASSERT_SHIFT           (0x00000000U)
@@ -2583,7 +2689,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN0_RST_CTRL_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN1_RST_CTRL */
+/* LIN1_RST_CTRL */
 
 #define CSL_MSS_RCM_LIN1_RST_CTRL_ASSERT_MASK            (0x00000007U)
 #define CSL_MSS_RCM_LIN1_RST_CTRL_ASSERT_SHIFT           (0x00000000U)
@@ -2592,7 +2698,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN1_RST_CTRL_RESETVAL                                 (0x00000000U)
 
-/* MSS_LIN2_RST_CTRL */
+/* LIN2_RST_CTRL */
 
 #define CSL_MSS_RCM_LIN2_RST_CTRL_ASSERT_MASK            (0x00000007U)
 #define CSL_MSS_RCM_LIN2_RST_CTRL_ASSERT_SHIFT           (0x00000000U)
@@ -2601,7 +2707,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_LIN2_RST_CTRL_RESETVAL                                 (0x00000000U)
 
-/* MSS_UART0_RST_CTRL */
+/* UART0_RST_CTRL */
 
 #define CSL_MSS_RCM_UART0_RST_CTRL_ASSERT_MASK          (0x00000007U)
 #define CSL_MSS_RCM_UART0_RST_CTRL_ASSERT_SHIFT         (0x00000000U)
@@ -2610,7 +2716,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART0_RST_CTRL_RESETVAL                                (0x00000000U)
 
-/* MSS_UART1_RST_CTRL */
+/* UART1_RST_CTRL */
 
 #define CSL_MSS_RCM_UART1_RST_CTRL_ASSERT_MASK          (0x00000007U)
 #define CSL_MSS_RCM_UART1_RST_CTRL_ASSERT_SHIFT         (0x00000000U)
@@ -2619,7 +2725,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART1_RST_CTRL_RESETVAL                                (0x00000000U)
 
-/* MSS_UART2_RST_CTRL */
+/* UART2_RST_CTRL */
 
 #define CSL_MSS_RCM_UART2_RST_CTRL_ASSERT_MASK          (0x00000007U)
 #define CSL_MSS_RCM_UART2_RST_CTRL_ASSERT_SHIFT         (0x00000000U)
@@ -2628,7 +2734,7 @@ typedef struct {
 
 #define CSL_MSS_RCM_UART2_RST_CTRL_RESETVAL                                (0x00000000U)
 
-/* MSS_UART3_RST_CTRL */
+/* UART3_RST_CTRL */
 
 #define CSL_MSS_RCM_UART3_RST_CTRL_ASSERT_MASK          (0x00000007U)
 #define CSL_MSS_RCM_UART3_RST_CTRL_ASSERT_SHIFT         (0x00000000U)
@@ -2636,6 +2742,25 @@ typedef struct {
 #define CSL_MSS_RCM_UART3_RST_CTRL_ASSERT_MAX           (0x00000007U)
 
 #define CSL_MSS_RCM_UART3_RST_CTRL_RESETVAL                                (0x00000000U)
+
+
+/* UART4_RST_CTRL */
+#define CSL_MSS_RCM_UART4_RST_CTRL_ASSERT_MASK                              (0x00000007U)
+#define CSL_MSS_RCM_UART4_RST_CTRL_ASSERT_SHIFT                             (0x00000000U)
+#define CSL_MSS_RCM_UART4_RST_CTRL_ASSERT_RESETVAL                          (0x00000000U)
+#define CSL_MSS_RCM_UART4_RST_CTRL_ASSERT_MAX                               (0x00000007U)
+
+#define CSL_MSS_RCM_UART4_RST_CTRL_RESETVAL                                (0x00000000U)
+
+
+
+/* UART5_RST_CTRL */
+#define CSL_MSS_RCM_UART5_RST_CTRL_ASSERT_MASK                              (0x00000007U)
+#define CSL_MSS_RCM_UART5_RST_CTRL_ASSERT_SHIFT                             (0x00000000U)
+#define CSL_MSS_RCM_UART5_RST_CTRL_ASSERT_RESETVAL                          (0x00000000U)
+#define CSL_MSS_RCM_UART5_RST_CTRL_ASSERT_MAX                               (0x00000007U)
+
+#define CSL_MSS_RCM_UART5_RST_CTRL_RESETVAL                                (0x00000000U)
 
 /* MSS_CR5SS_POR_RST_CTRL0 */
 

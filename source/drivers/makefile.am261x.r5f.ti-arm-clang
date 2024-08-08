@@ -30,6 +30,7 @@ FILES_common := \
     bootloader_uniflash_rprc.c \
     bootloader_uniflash_mcelf.c \
     bootloader_xmodem.c \
+    crc16.c \
     cmpss.c \
     canfd.c \
     canfd_soc.c \
@@ -78,6 +79,7 @@ FILES_common := \
     uart_v0_lld.c \
     watchdog_rti.c \
     watchdog_soc.c \
+    xmodem.c \
 
 ASMFILES_common := \
     csl_arm_r5_pmu.S \

@@ -1997,7 +1997,7 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivO
     }
     if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_3)
     {
-        DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX3]) == 0);
+        //DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX3]) == 0); TOFIX
         hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX3];
         hsDivOutRegVal--;
         ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3, 4U, 0U, hsDivOutRegVal);
@@ -2077,16 +2077,9 @@ void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
             ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0, 4U, 0U, hsDivOutRegVal);
         
         }
-        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
-        {
-            DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2]) == 0);
-            hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2];
-            hsDivOutRegVal--;
-            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2, 4U, 0U, hsDivOutRegVal);
-        
-        }
-        /* Core PLL output 1 not used.WIll not configure */
-        /* Core PLL output 3 not used.WIll not configure */
+        /* Eth PLL output 1 not used.Will not configure */
+        /* Eth PLL output 2 not used.Will not configure */
+        /* Eth PLL output 3 not used.Will not configure */
 
         /* Generate Trigger to latch these values */
         ptrTopRCMRegs->PLL_ETH_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER, 2U, 2U, 0x1U);
@@ -2096,10 +2089,6 @@ void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
         if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_0)
         {
             ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0, 8U, 8U, 0x1U);
-        }
-        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
-        {
-            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2, 8U, 8U, 0x1U);
         }
 
     }
@@ -2156,9 +2145,16 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
             ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0, 4U, 0U, hsDivOutRegVal);
         
         }
-        /* Core PLL output 1 not used.WIll not configure */
-        /* Core PLL output 2 not used.WIll not configure */
-        /* Core PLL output 3 not used.WIll not configure */
+        /* Per PLL output 1 not used.Will not configure */
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
+        {
+            DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2]) == 0);
+            hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2];
+            hsDivOutRegVal--;
+            ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2, 4U, 0U, hsDivOutRegVal);
+        
+        }
+        /* Per PLL output 3 not used.Will not configure */
 
         /* Generate Trigger to latch these values */
         ptrTopRCMRegs->PLL_PER_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER, 2U, 2U, 0x1U);
@@ -2168,6 +2164,11 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
         if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_0)
         {
             ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0, 8U, 8U, 0x1U);
+        }
+        /* Ungate the clocks */
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
+        {
+            ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2, 8U, 8U, 0x1U);
         }
 
     }

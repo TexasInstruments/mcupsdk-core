@@ -50,22 +50,13 @@ Bootloader_resMemSections gResMemSection =
 Bootloader_CoreBootInfo gCoreBootInfo[]                                                                             =
 {
     {
-        .defaultClockHz = (uint32_t)(400*1000000),
+        .defaultClockHz = (uint32_t)(500*1000000),
         .coreName       = "r5f0-0",
     },
 
     {
-        .defaultClockHz = (uint32_t)(400*1000000),
+        .defaultClockHz = (uint32_t)(500*1000000),
         .coreName       = "r5f0-1",
-    },
-    {
-        .defaultClockHz = (uint32_t)(400*1000000),
-        .coreName       = "r5f1-0",
-    },
-
-    {
-        .defaultClockHz = (uint32_t)(400*1000000),
-        .coreName       = "r5f1-1",
     },
 };
 
@@ -424,7 +415,7 @@ void Bootloader_socSetAutoClock()
     }
     else
     {
-        Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
+        Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(500*1000000));
     }
 }
 
