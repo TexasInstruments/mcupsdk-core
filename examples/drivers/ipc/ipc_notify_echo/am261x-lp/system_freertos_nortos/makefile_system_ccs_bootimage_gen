@@ -47,25 +47,17 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 MULTI_CORE_APP_PARAMS = \
 	../ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 	../ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
-	../ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
-	../ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
 	../ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 	../ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
-	../ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
-	../ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 CORE_0_IMG=../ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang.out
 CORE_1_IMG=../ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss0-1_nortos_ti-arm-clang.out
-CORE_2_IMG=../ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-0_nortos_ti-arm-clang.out
-CORE_3_IMG=../ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am261x-lp_r5fss1-1_nortos_ti-arm-clang.out
 
 CORE_IMG_ARGS :=
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
-CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
-CORE_IMG_ARGS +=--core-img=3:$(CORE_3_IMG)
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)
@@ -77,7 +69,7 @@ else
 
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) ...
 
-	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE)
 
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .

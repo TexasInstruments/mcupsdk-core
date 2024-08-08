@@ -95,12 +95,8 @@ const templates_freertos_r5f =
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
 ];
 
 const systemProjects = [
@@ -113,8 +109,6 @@ const systemProjects = [
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
             { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
-            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
-            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
         ],
     },
     {
@@ -126,8 +120,6 @@ const systemProjects = [
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
             { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
-            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
-            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
         ],
     },
 ];

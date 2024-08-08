@@ -43,8 +43,8 @@
 #define R5FSS0_1_MBOX_PROC_BIT_POS  ( 4U)
 
 /* mailbox interrupts */
-#define R5FSS0_0_MBOX_READ_REQ_INTR ( 136U)
-#define R5FSS0_1_MBOX_READ_REQ_INTR ( 136U)
+#define R5FSS0_0_MBOX_READ_REQ_INTR ( 158U)
+#define R5FSS0_1_MBOX_READ_REQ_INTR ( 158U)
 
 /* dedicated mailbox memories address and size */
 #define MSS_MBOX_MEM                (CSL_MBOX_SRAM_U_BASE)
