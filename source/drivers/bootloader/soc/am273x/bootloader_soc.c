@@ -410,3 +410,18 @@ int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint)
 
     return status;
 }
+
+int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
+{
+    return SystemP_SUCCESS;
+}
+
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint32_t enc)
+{
+    return SystemP_SUCCESS;
+}
+
+int32_t Bootloader_authFinish()
+{
+    return SystemP_SUCCESS;
+}

@@ -300,6 +300,21 @@ void Bootloader_socSetAutoClock();
  */
 int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
 
+/**
+ * \brief API to start streaming boot authentication
+ */
+int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size);
+
+/**
+ * \brief API to update the Secure Boot Stream with a new segment
+ */
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint32_t enc);
+
+/**
+ * \brief API to finish streaming boot authentication
+ */
+int32_t Bootloader_authFinish();
+
 #ifdef __cplusplus
 }
 #endif

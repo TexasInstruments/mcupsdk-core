@@ -36,9 +36,17 @@
 #include <drivers/bootloader/soc/bootloader_soc.h>
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
+#include <security_common/drivers/hsmclient/hsmclient.h>
 
 #define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
 #define BOOTLOADER_R5SS_FREQ_200MHz (1U)
+
+#define MAX_SECURE_BOOT_STREAM_LENGTH (1024U)
+
+extern HsmClient_t gHSMClient ;
+
+SecureBoot_Stream_t gSecureBootStreamArray[MAX_SECURE_BOOT_STREAM_LENGTH];
+uint32_t gStreamId = 0;
 
 Bootloader_resMemSections gResMemSection =
 {
@@ -423,6 +431,52 @@ int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint)
 {
    int32_t status = SystemP_SUCCESS;
    /* dummy api call */
+
+    return status;
+}
+
+int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
+{
+    int32_t status = SystemP_FAILURE;
+
+    gSecureBootStreamArray[gStreamId].streamId = gStreamId;
+    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)SOC_virtToPhy((void *)startAddr);
+    gSecureBootStreamArray[gStreamId].dataLen = size;
+    gSecureBootStreamArray[gStreamId].canBeEncrypted = 0x0U;
+
+    status = HsmClient_procAuthBootStart(&gHSMClient, &gSecureBootStreamArray[gStreamId]);
+
+    gStreamId++;
+
+    return status;
+}
+
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint32_t enc)
+{
+	int32_t status = SystemP_FAILURE;
+
+    gSecureBootStreamArray[gStreamId].streamId = gStreamId;
+    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)SOC_virtToPhy((void *)startAddr);
+    gSecureBootStreamArray[gStreamId].dataLen = size;
+    gSecureBootStreamArray[gStreamId].canBeEncrypted = enc;
+
+    status = HsmClient_procAuthBootUpdate(&gHSMClient, &gSecureBootStreamArray[gStreamId]);
+
+    gStreamId++;
+
+    return status;
+}
+
+int32_t Bootloader_authFinish()
+{
+    int32_t status = SystemP_FAILURE;
+
+    gSecureBootStreamArray[gStreamId].streamId = gStreamId;
+    gSecureBootStreamArray[gStreamId].dataIn = 0x0U;
+    gSecureBootStreamArray[gStreamId].dataLen = 0x0U;
+    gSecureBootStreamArray[gStreamId].canBeEncrypted = 0x0U;
+
+    status = HsmClient_procAuthBootFinish(&gHSMClient, &gSecureBootStreamArray[gStreamId]);
 
     return status;
 }

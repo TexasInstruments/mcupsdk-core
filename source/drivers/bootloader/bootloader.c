@@ -51,8 +51,6 @@
 #include <drivers/bootloader/bootloader_priv.h>
 #include <string.h>
 
-#include <security_common/drivers/hsmclient/hsmclient.h>
-
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -62,6 +60,7 @@
 #define SEGMENT_MAP_NOTE_TYPE (0xBBBB7777)
 
 #define MAX_SECURE_BOOT_STREAM_LENGTH (1024U)
+#define MAX_APP_CERT_LENGTH (0x1000U)
 
 /* ========================================================================== */
 /*                             Global Variables                               */
@@ -78,7 +77,7 @@ uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
 uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
 uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
 
-uint8_t gX509Cert[BOOTLOADER_SOC_APP_CERT_SIZE];
+uint8_t gX509Cert[MAX_APP_CERT_LENGTH];
 
 /* ========================================================================== */
 /*                             Function Definitions                           */
@@ -801,6 +800,31 @@ int32_t Bootloader_parseNoteSegment(Bootloader_Handle handle,
     return status;
 }
 
+static int32_t Bootloader_verifySegmentAddr(uint32_t addr)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    /* Add check for SBL reserved memory */
+    Bootloader_resMemSections *resMem;
+    uint32_t resSectionCnt, start, end;
+    
+    resMem = Bootloader_socGetSBLMem();
+    
+    for (resSectionCnt = 0; resSectionCnt < resMem->numSections; resSectionCnt++)
+    {
+        start = resMem->memSection[resSectionCnt].memStart;
+        end = resMem->memSection[resSectionCnt].memEnd;
+        if((addr > start) && (addr < end))
+        {
+            status = SystemP_FAILURE;
+            DebugP_logError("Application image has a load address (0x%08X) in the SBL reserved memory range!!\r\n", addr);
+            break;
+        }
+    }
+
+    return status;
+}
+
 int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo)
 {
     int32_t status = SystemP_SUCCESS;
@@ -975,7 +999,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                             vec_present = 1U;
                             vec_size = elfPhdrPtr32[i].filesz;
                         }
-                        
+                          
                         status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
                         config->bootImageSize += elfPhdrPtr32[i].filesz;
                         
@@ -1011,7 +1035,12 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                 {
                     config->fxns->imgSeekFxn(imgOffset + elfPhdrPtr64[i].offset, config->args);
                     uint32_t addr = Bootloader_socTranslateSectionAddr(gNoteSegBuffer[segmentMapIdx + i - 1], elfPhdrPtr64[i].vaddr);
-                    status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr64[i].filesz, config->args);
+                    
+                    status = Bootloader_verifySegmentAddr(addr);
+                    if (status == SystemP_SUCCESS)
+                    {
+                        status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr64[i].filesz, config->args);
+                    }
                     
                     if((status == SystemP_SUCCESS) && (doAuth == TRUE))
                     {
