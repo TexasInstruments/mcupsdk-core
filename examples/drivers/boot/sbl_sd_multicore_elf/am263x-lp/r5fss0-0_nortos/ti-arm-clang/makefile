@@ -24,13 +24,13 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sbl_qspi_fastboot.$(PROFILE).out
+OUTNAME:=sbl_sd_multicore_elf.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME_GP:=sbl_qspi_fastboot.$(PROFILE).tiimage
-BOOTIMAGE_NAME_HS:=sbl_qspi_fastboot.$(PROFILE).hs.tiimage
-BOOTIMAGE_NAME_HS_FS:=sbl_qspi_fastboot.$(PROFILE).hs_fs.tiimage
-BOOTIMAGE_BIN_NAME:=sbl_qspi_fastboot.$(PROFILE).bin
+BOOTIMAGE_NAME_GP:=sbl_sd_multicore_elf.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=sbl_sd_multicore_elf.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_sd_multicore_elf.$(PROFILE).hs_fs.tiimage
+BOOTIMAGE_BIN_NAME:=sbl_sd_multicore_elf.$(PROFILE).bin
 
 ifeq ($(DEVICE_TYPE),HS)
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
@@ -56,6 +56,10 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
+	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include \
+	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
+	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
+	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
 	-I${MCU_PLUS_SDK_PATH}/source/security \
 	-Igenerated \
 
@@ -99,6 +103,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
@@ -107,6 +112,7 @@ LIBS_common = \
 	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -122,6 +128,7 @@ LIBS_NAME = \
 	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
@@ -131,6 +138,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
@@ -202,7 +210,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang sbl_qspi_fastboot ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang sbl_sd_multicore_elf ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -301,12 +309,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sbl_qspi_fastboot.$(PROFILE) ...
+	@echo Creating Coverage Report for sbl_sd_multicore_elf.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_qspi_fastboot.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_qspi_fastboot.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_qspi_fastboot.$(PROFILE).profdata > coverage/sbl_qspi_fastboot.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_qspi_fastboot.$(PROFILE).profdata.json --output-json=coverage/sbl_qspi_fastboot.$(PROFILE).analysis.json --output=../sbl_qspi_fastboot.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_sd_multicore_elf.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_sd_multicore_elf.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_sd_multicore_elf.$(PROFILE).profdata > coverage/sbl_sd_multicore_elf.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_sd_multicore_elf.$(PROFILE).profdata.json --output-json=coverage/sbl_sd_multicore_elf.$(PROFILE).analysis.json --output=../sbl_sd_multicore_elf.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

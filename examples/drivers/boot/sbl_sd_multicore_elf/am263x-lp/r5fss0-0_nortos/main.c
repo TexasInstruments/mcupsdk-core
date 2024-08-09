@@ -1,6 +1,5 @@
-
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,19 +30,24 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include <stdlib.h>
+#include <string.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <kernel/dpl/CacheP.h>
-#include <drivers/bootloader.h>
-#include <board/flash.h>
 #include <security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
+
+#define BOOTLOADER_SD_APPIMAGE_FILENAME ("/sd0/app")
+
+#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x80000) /* Size of section MSRAM_2 specified in linker.cmd */
+
+uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
-
 
 extern HsmClient_t gHSMClient ;
 
@@ -67,11 +71,9 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-
 int main(void)
 {
     int32_t status;
-    uint32_t hsmrt_size = 0U;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -79,26 +81,56 @@ int main(void)
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
-    Bootloader_profileReset();
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
+    DebugP_log("\r\n");
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    DebugP_log("Starting SD Bootloader ... \r\n");
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
-    /* 
-        Request the HSM ROM to load the HSMRT image onto itself. 
-    */
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+    /* File I/O */
+    if(SystemP_SUCCESS == status)
+    {
+        /* Open app file */
+        FF_FILE *appFp = ff_fopen(BOOTLOADER_SD_APPIMAGE_FILENAME, "rb");
 
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-    DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
+        /* Check if file open succeeded */
+        if(appFp == NULL)
+        {
+            status =  SystemP_FAILURE;
+        }
+        else
+        {
+            /* Check file size */
+            uint32_t fileSize = ff_filelength(appFp);
+
+            if(fileSize >= BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
+            {
+                /* Application size more than buffer size, abort */
+                status = SystemP_FAILURE;
+                DebugP_log("Appimage size exceeded limit !!\r\n");
+            }
+            else
+            {
+                /* Read the file into RAM buffer */
+                ff_fread(gAppImageBuf, fileSize, 1, appFp);
+            }
+
+            /* Close the file */
+            ff_fclose(appFp);
+        }
+    }
+    Bootloader_profileAddProfilePoint("File read from SD card");
 
     if(SystemP_SUCCESS == status)
     {
@@ -109,7 +141,9 @@ int main(void)
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
-        bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
+        bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
+
+        bootHandle = Bootloader_open(CONFIG_BOOTLOADER_MEM, &bootParams);
 
         if(bootHandle != NULL)
         {
@@ -118,6 +152,7 @@ int main(void)
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 
             Bootloader_profileAddProfilePoint("CPU load");
+
             /* Run CPUs */
             if(status == SystemP_SUCCESS)
             {
@@ -136,12 +171,12 @@ int main(void)
                 /* Load the RPRC image on self core now */
                 if(status == SystemP_SUCCESS)
                 {
-                    QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, QSPI_getInputClk(qspiHandle));
+                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_SD, 0);
+                    /* Print SBL Profiling logs to UART as other cores may use the UART for logging */
                     Bootloader_profileAddProfilePoint("SBL End");
                     Bootloader_profilePrintProfileLog();
-                    DebugP_log("[SBL] Image loading done, switching to application ...\r\n");
+                    DebugP_log("Image loading done, switching to application ...\r\n");
                     UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
@@ -154,7 +189,7 @@ int main(void)
     }
     if(status != SystemP_SUCCESS )
     {
-        DebugP_log("[SBL] Application Boot Failed\r\n");
+        DebugP_log("Some tests have failed!!\r\n");
     }
     Drivers_close();
     System_deinit();

@@ -38,11 +38,12 @@
 #include <kernel/dpl/CacheP.h>
 #include <drivers/bootloader.h>
 #include <board/flash.h>
+#include <security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 
-#define MAX_HSMRT_SIZE_IN_BYTES (184 * 1024U)
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
+    = HSMRT_IMG;
 
-const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")));
 
 extern HsmClient_t gHSMClient ;
 
@@ -66,25 +67,6 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-uint32_t get_Hsmrt_size() 
-{
-    uint8_t x509Header[4U];
-    uint8_t x509HsmrtCert[2000U];
-    uint32_t hsmrt_Cert_Len = 0U;
-    uint32_t hsmrt_image_Size = 0U;
-
-    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509Header, 4);
-    CacheP_wb((void *)x509Header, 4, CacheP_TYPE_ALL);
-
-    hsmrt_Cert_Len = Bootloader_getX509CertLen(x509Header);
-
-    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509HsmrtCert, hsmrt_Cert_Len);
-    CacheP_wb((void *)x509Header, hsmrt_Cert_Len, CacheP_TYPE_ALL);
-
-    hsmrt_image_Size = Bootloader_getMsgLen(x509HsmrtCert, hsmrt_Cert_Len);
-
-    return (hsmrt_image_Size + hsmrt_Cert_Len);
-}
 
 int main(void)
 {
@@ -107,27 +89,15 @@ int main(void)
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     /* 
-        Calculate the HSM Runtime image size from the flash offset specified. 
-    */
-    hsmrt_size = get_Hsmrt_size();
-
-    /* 
-        Read the HSM Runtime image from the flash offset specified. 
-    */
-    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
-    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
-    Bootloader_profileAddProfilePoint("HSMRT_FlashRead");
-
-    /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 
     if(SystemP_SUCCESS == status)

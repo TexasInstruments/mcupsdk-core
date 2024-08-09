@@ -25,8 +25,8 @@ endif
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
 BOOTIMAGE_NAME_GP:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
-BOOTIMAGE_NAME_HS:=sbl_qspi_fast.$(PROFILE).hs.tiimage
-BOOTIMAGE_NAME_HS_FS:=sbl_qspi_fast.$(PROFILE).hs_fs.tiimage
+BOOTIMAGE_NAME_HS:=sbl_qspi_fastboot.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_qspi_fastboot.$(PROFILE).hs_fs.tiimage
 ifeq ($(DEVICE_TYPE),HS)
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
 else
