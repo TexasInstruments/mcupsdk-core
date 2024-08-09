@@ -1,8 +1,7 @@
-
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.20.0+3587"}
  */
 
@@ -134,6 +133,8 @@ mpu_armv77.size       = 27;
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
+general1.stack_size     = 8192;
+general1.heap_size      = 8192;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";

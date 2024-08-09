@@ -44,7 +44,6 @@ bootloader1.$name            = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset   = "0x00080000";
 bootloader1.hsmrtDecoupling  = true;
 bootloader1.hsmrtImageOffset = "0x00040000";
-bootloader1.imageFormat      = "MCELF";
 
 flash1.$name                               = "CONFIG_FLASH0";
 bootloader1.flashDriver                    = flash1;
@@ -102,6 +101,8 @@ default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
+general1.stack_size     = 8192;
+general1.heap_size      = 8192;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";

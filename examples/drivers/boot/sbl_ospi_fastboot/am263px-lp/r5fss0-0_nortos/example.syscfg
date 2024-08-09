@@ -137,6 +137,8 @@ mpu_armv77.size       = 27;
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
+general1.stack_size     = 8192;
+general1.heap_size      = 1024;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
