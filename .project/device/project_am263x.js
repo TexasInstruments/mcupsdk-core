@@ -71,6 +71,7 @@ const example_file_list = [
     "examples/drivers/boot/sbl_qspi_fastboot/.project/project.js",
     "examples/drivers/boot/sbl_qspi_multicore_elf/.project/project.js",
     "examples/drivers/boot/sbl_sd/.project/project.js",
+    "examples/drivers/boot/sbl_sd_multicore_elf/.project/project.js",
     "examples/drivers/boot/sbl_uart/.project/project.js",
     "examples/drivers/boot/sbl_uart_multicore_elf/.project/project.js",
     "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
