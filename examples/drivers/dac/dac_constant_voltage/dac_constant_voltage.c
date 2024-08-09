@@ -63,7 +63,7 @@ void dac_constant_voltage_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    i2c_io_expander_dac_out();
+    
     
     DebugP_log("DAC Constant Voltage Test Started ...\r\n");
 

@@ -83,7 +83,7 @@ void dac_sine_dma_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    i2c_io_expander_dac_out();
+    
 
     DebugP_log("DAC Sine DMA  Test Started ...\r\n");
 
