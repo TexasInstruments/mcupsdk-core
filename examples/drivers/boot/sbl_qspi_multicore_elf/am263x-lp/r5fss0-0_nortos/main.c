@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
@@ -34,11 +35,14 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <kernel/dpl/CacheP.h>
 #include <drivers/bootloader.h>
-#include <drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <board/flash.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-    = HSMRT_IMG;
+#define MAX_HSMRT_SIZE_IN_BYTES (184 * 1024U)
+
+const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")));
 
 extern HsmClient_t gHSMClient ;
 
@@ -62,9 +66,30 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
+uint32_t get_Hsmrt_size() 
+{
+    uint8_t x509Header[4U];
+    uint8_t x509HsmrtCert[2000U];
+    uint32_t hsmrt_Cert_Len = 0U;
+    uint32_t hsmrt_image_Size = 0U;
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509Header, 4);
+    CacheP_wb((void *)x509Header, 4, CacheP_TYPE_ALL);
+
+    hsmrt_Cert_Len = Bootloader_getX509CertLen(x509Header);
+
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) x509HsmrtCert, hsmrt_Cert_Len);
+    CacheP_wb((void *)x509Header, hsmrt_Cert_Len, CacheP_TYPE_ALL);
+
+    hsmrt_image_Size = Bootloader_getMsgLen(x509HsmrtCert, hsmrt_Cert_Len);
+
+    return (hsmrt_image_Size + hsmrt_Cert_Len);
+}
+
 int main(void)
 {
     int32_t status;
+    uint32_t hsmrt_size = 0U;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -72,23 +97,38 @@ int main(void)
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
+    Bootloader_profileReset();
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    status = Board_driversOpen();
+    DebugP_assert(status == SystemP_SUCCESS);
+    Bootloader_profileAddProfilePoint("Board_driversOpen");
+
+    /* 
+        Calculate the HSM Runtime image size from the flash offset specified. 
+    */
+    hsmrt_size = get_Hsmrt_size();
+
+    /* 
+        Read the HSM Runtime image from the flash offset specified. 
+    */
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
+    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
+    Bootloader_profileAddProfilePoint("HSMRT_FlashRead");
+
+    /* 
+        Request the HSM ROM to load the HSMRT image onto itself. 
+    */
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("Starting QSPI Bootloader ... \r\n");
-
-    status = Board_driversOpen();
-    DebugP_assert(status == SystemP_SUCCESS);
-    Bootloader_profileAddProfilePoint("Board_driversOpen");
+    DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 
     if(SystemP_SUCCESS == status)
     {
@@ -100,65 +140,38 @@ int main(void)
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
+
         if(bootHandle != NULL)
         {
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
-            /* Load CPUs */
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-            }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-            }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
-            }
-            Bootloader_profileAddProfilePoint("CPU load");
-            QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
 
+
+            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
+
+            Bootloader_profileAddProfilePoint("CPU load");
             /* Run CPUs */
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if(status == SystemP_SUCCESS)
             {
-                /* Load the image on self core now */
-                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-                {
-                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-                }
+                /* Load the RPRC image on self core now */
                 if(status == SystemP_SUCCESS)
                 {
+                    QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
                     Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, QSPI_getInputClk(qspiHandle));
                     Bootloader_profileAddProfilePoint("SBL End");
                     Bootloader_profilePrintProfileLog();
-                    DebugP_log("Image loading done, switching to application ...\r\n");
+                    DebugP_log("[SBL] Image loading done, switching to application ...\r\n");
                     UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
@@ -171,7 +184,7 @@ int main(void)
     }
     if(status != SystemP_SUCCESS )
     {
-        DebugP_log("Some tests have failed!!\r\n");
+        DebugP_log("[SBL] Application Boot Failed\r\n");
     }
     Drivers_close();
     System_deinit();
