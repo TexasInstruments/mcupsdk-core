@@ -39,7 +39,12 @@
 #include <security_common/drivers/hsmclient/hsmclient.h>
 
 #define BOOTLOADER_R5SS_FREQ_200MHz (1U)
-#define MAX_SECURE_BOOT_STREAM_LENGTH (1024U)
+
+/*
+    1 Start, 1 Finish, 1 ELF Buffer and 1 PHT Buffer
+    + 1024 ELF segments (including the 2 Note segments)
+*/
+#define MAX_SECURE_BOOT_STREAM_LENGTH (1028U)
 
 extern HsmClient_t gHSMClient ;
 

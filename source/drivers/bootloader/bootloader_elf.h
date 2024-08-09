@@ -65,7 +65,7 @@ extern "C"
 #define ELF_P_HEADER_64_SIZE      (56U)
 
 #define ELF_HEADER_MAX_SIZE       (ELF_HEADER_64_SIZE)
-#define ELF_MAX_SEGMENTS          (64U)
+#define ELF_MAX_SEGMENTS          (1024U)
 #define ELF_P_HEADER_MAX_SIZE     (ELF_P_HEADER_64_SIZE)
 #define ELF_NOTE_SEGMENT_MAX_SIZE (512U)
 
