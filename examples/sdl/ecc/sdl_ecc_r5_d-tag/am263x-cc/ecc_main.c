@@ -37,7 +37,7 @@
  * \brief       This file demonstrates using the Error Correcting Code Module (ECC),
  *              utilizing the ECC and ESM Software Diagnostic Reference (SDL) functions.
  *
- *  \details    ESM Safety Example module tests
+ *  \details    ECC Safety Example module tests
  **/
 
 /* ========================================================================== */
@@ -144,8 +144,8 @@ int32_t ecc_main(void)
     Drivers_open();
     Board_driversOpen();
 
-    DebugP_log("\r\nECC Example Application\r\n");
-    DebugP_log("\r\nECC UC-1 and UC-2 Test \r\n");
+    // DebugP_log("\r\nECC Example Application\r\n");
+    // DebugP_log("\r\nECC UC-1 and UC-2 Test \r\n");
     testResult = ECC_funcTest();
 
     if (testResult == SDL_PASS)

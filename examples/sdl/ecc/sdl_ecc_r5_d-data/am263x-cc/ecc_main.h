@@ -83,8 +83,13 @@ extern "C"
 /* ========================================================================== */
 
 extern int32_t ECC_funcTest(void);
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 extern volatile bool esmError;
 extern volatile bool uknownErr;
+extern volatile uint32_t ram_Id;
 #ifdef __cplusplus
 }
 #endif

@@ -37,7 +37,7 @@
  * \brief       This file demonstrates using the Error Correcting Code Module (ECC),
  *              utilizing the ECC and ESM Software Diagnostic Reference (SDL) functions.
  *
- *  \details    ESM Safety Example module tests
+ *  \details    ECC Safety Example module tests
  **/
 
 /* ========================================================================== */
@@ -63,8 +63,12 @@
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
 
+#define SDL_ECC_AGG_R5SS0_CORE0_VECTOR                      (0x53000008u)
+#define SDL_ECC_AGG_R5SS0_CORE0_CTRL                        (0x53000014u)
+
 #define SDL_CLEAR_STATUS									(0x10u)
 #define SDL_CLEAR_ALL_STATUS                                (0xffu)
+#define SDL_ECC_SPECIFIC_VECTOR_VALUE                       (0x148000u)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -92,6 +96,14 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
     int32_t retVal = 0;
     uint32_t rd_data = 0, clearErr = 0;
+
+
+    /* Stop the error injection from ECC aggr for dedicated ram_Id */
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_VECTOR, ram_Id); /* Write ram_Id on ecc_vector register */
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_CTRL, clearErr); /* Write 0 value on ecc control register */
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_VECTOR, SDL_ECC_SPECIFIC_VECTOR_VALUE);
+    /* Wait for ECC Aggrs. register update properly */
+    while( ((*((uint32_t *)SDL_ECC_AGG_R5SS0_CORE0_VECTOR)>>24)&0X1) != 1u);
 
     DebugP_log("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
@@ -129,7 +141,6 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
     }
-    SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intSrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 
     esmError = true;

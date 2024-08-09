@@ -64,13 +64,14 @@
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID
+#define SDL_ECC_CACHE_ARRAY_SIZE 32*1024 /* Size of the array in bytes (32KB) */
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-#define SDL_ECC_CACHE_ARRAY_SIZE 32*1024 /* Size of the array in bytes (32KB) */
 uint8_t SDL_ECC_ddata_cache[SDL_ECC_CACHE_ARRAY_SIZE]__attribute__((section(".DATA_Cache.buffer")));
+volatile uint32_t ram_Id = 0;
 
 /* This is the list of exception handle and the parameters */
 const SDL_R5ExptnHandlers ECC_Test_R5ExptnHandlers =
@@ -87,6 +88,58 @@ const SDL_R5ExptnHandlers ECC_Test_R5ExptnHandlers =
     .dabtExptnHandlerArgs = ((void *)0u),
     .irqExptnHandlerArgs = ((void *)0u),
 };
+
+static uint32_t arg;
+
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+
+static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
+{
+     SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
+{
+    .numRams = SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+
+/* ========================================================================== */
+/*                 Internal Function Declarations                             */
+/* ========================================================================== */
+
+/* ECC_Example_init function */
+int32_t ECC_Example_init (void);
+
+extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                                   SDL_ESM_IntType esmIntType,
+                                                   uint32_t grpChannel,
+                                                   uint32_t index,
+                                                   uint32_t intSrc,
+                                                   void *arg);
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
 
 void ECC_Test_undefInstructionExptnCallback(void)
 {
@@ -136,57 +189,6 @@ void ECC_Test_exceptionInit(void)
 
     return;
 }
-
-static uint32_t arg;
-
-SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
-{
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
-};
-
-extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
-                                                   SDL_ESM_IntType esmIntType,
-                                                   uint32_t grpChannel,
-                                                   uint32_t index,
-                                                   uint32_t intSrc,
-                                                   void *arg);
-
-static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
-{
-     SDL_EXAMPLE_ECC_RAM_ID,
-};
-
-static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
-{
-    .numRams = SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS,
-    /**< Number of Rams ECC is enabled  */
-    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
-    /**< Sub type list  */
-};
-
-/* ========================================================================== */
-/*                 Internal Function Declarations                             */
-/* ========================================================================== */
-
-/* ECC_Example_init function */
-int32_t ECC_Example_init (void);
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
 
 /*********************************************************************
 * @fn      ECC_Example_init
@@ -256,7 +258,7 @@ int32_t ECC_Example_init (void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_R5FSS0_CORE0_D_DATA_1BitInjectTest()
+int32_t ECC_Test_run_R5FSS0_CORE0_D_DATA_1BitInjectTest(uint32_t ram_Id)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -272,7 +274,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_D_DATA_1BitInjectTest()
     /* Run one shot test for R5FSS0 CORE0 D_DATA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
     result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
-                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                (SDL_ECC_MemSubType)ram_Id,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_REPEAT,
                                  &injectErrorConfig);
 
@@ -317,7 +319,6 @@ int32_t ECC_Test_run_R5FSS0_CORE0_D_DATA_2BitInjectTest(void)
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_REPEAT,
                                  &injectErrorConfig);
 
-
     if (result != SDL_PASS ) {
        retVal = -1;
     } else {
@@ -346,47 +347,12 @@ static int32_t ECC_sdlFuncTest(void)
     uint32_t maxTimeOutMilliSeconds = 1000000000;
     uint32_t timeOutCnt = 0;
     uint8_t SDL_ECC_cache_ddata[SDL_ECC_CACHE_ARRAY_SIZE];
-    void *ptr = (void *)&arg;
 
-    result = ECC_Test_run_R5FSS0_CORE0_D_DATA_1BitInjectTest();
-    asm("NOP"); /* ideal cycle needed for error injection in R5F cache */
-
-    for(uint32_t cache_byte_count = 0u; cache_byte_count < SDL_ECC_CACHE_ARRAY_SIZE; cache_byte_count++)
+    for (ram_Id = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID; ram_Id <= SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID; ram_Id++)
     {
-        SDL_ECC_cache_ddata[cache_byte_count] = SDL_ECC_cache_ddata[cache_byte_count];
-    }
 
-    if (result == SDL_PASS)
-    {
-        DebugP_log("\r\nWaiting for ESM Interrupt \r\n");
-        do
-        {
-            timeOutCnt += 1;
-            if (timeOutCnt > maxTimeOutMilliSeconds)
-            {
-                result = SDL_EFAIL;
-                break;
-            }
-        } while (esmError == false);
-    }
-    if(result == SDL_PASS){
-        DebugP_log("\r\nUC-1: Injected 1-bit error and got ESM Interrupt\r\n");
-        /* Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation */
-        esmError = false;
-    }
-
-    if (result != SDL_PASS) {
-        retVal = -1;
-        DebugP_log("\r\nESM_ECC_Example_run: UC-1 has failed...\r\n");
-        /* UC-1 Low priority R5F interrupt */
-    }
-
-
-    if (retVal == 0)
-    {
-        result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
-        result = ECC_Test_run_R5FSS0_CORE0_D_DATA_2BitInjectTest();
-        asm("NOP"); /* Enable ECC for Cache memories */
+        result = ECC_Test_run_R5FSS0_CORE0_D_DATA_1BitInjectTest(ram_Id);
+        asm("NOP"); /* ideal cycle needed for error injection in R5F cache */
 
         for(uint32_t cache_byte_count = 0u; cache_byte_count < SDL_ECC_CACHE_ARRAY_SIZE; cache_byte_count++)
         {
@@ -398,7 +364,7 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nWaiting for ESM Interrupt \r\n");
             do
             {
-                timeOutCnt += 10;
+                timeOutCnt += 1;
                 if (timeOutCnt > maxTimeOutMilliSeconds)
                 {
                     result = SDL_EFAIL;
@@ -407,19 +373,17 @@ static int32_t ECC_sdlFuncTest(void)
             } while (esmError == false);
         }
         if(result == SDL_PASS){
-            DebugP_log("\r\nUC-2: Injected 2-bit error and got ESM Interrupt.\r\n");
-            /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+            DebugP_log("\r\nUC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = %d\r\n", ram_Id);
+            /* Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation */
             esmError = false;
-            uknownErr = true;
         }
 
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nESM_ECC_Example_run: UC-2 has failed....\r\n");
-            /* UC-2 High priority R5F interrupt */
+            DebugP_log("\r\nESM_ECC_Example_run: UC-1 has failed...\r\n");
+            /* UC-1 Low priority R5F interrupt */
         }
     }
-
 
     return retVal;
 }/* End of ECC_sdlFuncTest() */

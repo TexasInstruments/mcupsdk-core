@@ -85,6 +85,57 @@ const SDL_R5ExptnHandlers ECC_Test_R5ExptnHandlers =
     .irqExptnHandlerArgs = ((void *)0u),
 };
 
+static uint32_t arg;
+
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+
+static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
+{
+     SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
+{
+    .numRams = SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+
+/* ========================================================================== */
+/*                 Internal Function Declarations                             */
+/* ========================================================================== */
+
+/* ECC_Example_init function */
+int32_t ECC_Example_init (void);
+
+extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                                   SDL_ESM_IntType esmIntType,
+                                                   uint32_t grpChannel,
+                                                   uint32_t index,
+                                                   uint32_t intSrc,
+                                                   void *arg);
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
 void ECC_Test_undefInstructionExptnCallback(void)
 {
     printf("\r\nUndefined Instruction exception\r\n");
@@ -133,57 +184,6 @@ void ECC_Test_exceptionInit(void)
 
     return;
 }
-
-static uint32_t arg;
-
-SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
-{
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
-};
-
-extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
-                                                   SDL_ESM_IntType esmIntType,
-                                                   uint32_t grpChannel,
-                                                   uint32_t index,
-                                                   uint32_t intSrc,
-                                                   void *arg);
-
-static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
-{
-     SDL_EXAMPLE_ECC_RAM_ID,
-};
-
-static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
-{
-    .numRams = SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS,
-    /**< Number of Rams ECC is enabled  */
-    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
-    /**< Sub type list  */
-};
-
-/* ========================================================================== */
-/*                 Internal Function Declarations                             */
-/* ========================================================================== */
-
-/* ECC_Example_init function */
-int32_t ECC_Example_init (void);
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
 
 /*********************************************************************
 * @fn      ECC_Example_init
@@ -308,6 +308,7 @@ static int32_t ECC_sdlFuncTest(void)
     {
         if (retVal == 0)
         {
+            asm("MCR     P15,#0, R0, C7, C5,#0"); /* Invalidate Instruction cache before injection ecc test */
             result = ECC_Test_run_R5FSS0_CORE0_i_tag_1BitInjectTest(ram_Id);
             asm("NOP"); /* Enable ECC for Cache memories */
 

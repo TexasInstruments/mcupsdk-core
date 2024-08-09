@@ -37,7 +37,7 @@
  * \brief       This file demonstrates using the Error Correcting Code Module (ECC),
  *              utilizing the ECC and ESM Software Diagnostic Reference (SDL) functions.
  *
- *  \details    ESM Safety Example module tests
+ *  \details    ECC Safety Example module tests
  **/
 
 /* ========================================================================== */
@@ -60,9 +60,11 @@
 /* ========================================================================== */
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CTRL_REG                  (0x53000014u)
 
 #define SDL_CLEAR_STATUS									(0x40u)
 #define SDL_CLEAR_ALL_STATUS                                (0xffu)
+#define SDL_CLEAR_ERR                                       (0X00U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -114,8 +116,9 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, clearErr);
     rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
     DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    /* Clear ECC enable flags */
+    SDL_REG32_WR(SDL_R5FSS0_CORE0_ECC_AGGR_CTRL_REG, SDL_CLEAR_ERR);
 
-    SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intSrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 
     esmError = true;

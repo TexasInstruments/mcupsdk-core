@@ -37,7 +37,7 @@
  * \brief       This file demonstrates using the Error Correcting Code Module (ECC),
  *              utilizing the ECC and ESM Software Diagnostic Reference (SDL) functions.
  *
- *  \details    ESM Safety Example module tests
+ *  \details    ECC Safety Example module tests
  **/
 
 /* ========================================================================== */
