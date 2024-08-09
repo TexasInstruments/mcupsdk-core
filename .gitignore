@@ -25,6 +25,8 @@ docs/datasheet*
 *.tiimage
 *.tiimage.hs
 *.mcelf
+*.mcelf.hs
+*.mcelf-enc
 *.mcelf_xip
 *-fw
 *.vscode/
