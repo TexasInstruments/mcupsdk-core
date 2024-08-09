@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -40,13 +40,14 @@ const section7        = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.$name            = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset   = "0x00080000";
+bootloader1.hsmrtDecoupling  = true;
+bootloader1.hsmrtImageOffset = "0x00040000";
 
 flash1.$name                               = "CONFIG_FLASH0";
 bootloader1.flashDriver                    = flash1;
 flash1.peripheralDriver.$name              = "CONFIG_QSPI0";
-flash1.peripheralDriver.dmaEnable          = true;
 flash1.peripheralDriver.QSPI.QSPI_D2.pu_pd = "pu";
 flash1.peripheralDriver.QSPI.QSPI_D3.pu_pd = "pu";
 flash1.peripheralDriver.child.$name        = "drivers_qspi_v0_qspi_v0_template0";
@@ -88,13 +89,12 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
-mpu_armv74.attributes        = "Cached+Sharable";
 
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
-mpu_armv75.allowExecute = false;
 mpu_armv75.attributes   = "Device";
-mpu_armv75.baseAddr     = 0xCE000000;
 mpu_armv75.size         = 24;
+mpu_armv75.baseAddr     = 0xCE000000;
+mpu_armv75.allowExecute = false;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 

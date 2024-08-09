@@ -58,14 +58,14 @@ const includes = {
 };
 
 const template_options = {
-    bootformat: "RPRC",
-    enableFastBoot: false,
+    bootformat: "MCELF",
+    enableFastBoot: true,
 }
 
 const templates =
 [
     {
-        input: ".project/templates/am263x/sbl/sbl_qspi/main_backsupport.c.xdt",
+        input: ".project/templates/am263x/sbl/sbl_qspi/main_fastboot.c.xdt",
         output: "../main.c",
         options: template_options
     }
@@ -73,7 +73,7 @@ const templates =
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_QSPI";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_QSPI_FAST";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
@@ -85,7 +85,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_qspi";
+    property.name = "sbl_qspi_fastboot";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
