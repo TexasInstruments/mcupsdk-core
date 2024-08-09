@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
@@ -17,7 +18,7 @@ const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
@@ -55,19 +56,20 @@ flash1.protocol                           = "8d_8d_8d";
 flash1.fourByteEnableSeq                  = "0";
 flash1.cmdRd                              = "0x7c";
 flash1.dummy_mask                         = "0xff";
+flash1.flashDeviceId                      = "0x5B17";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
-flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
-flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
-flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
-flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO10";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO62";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO9";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO68";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO67";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO76";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -81,7 +83,7 @@ edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 gpio1.pinDir         = "OUTPUT";
 gpio1.$name          = "GPIO_OSPI_RST";
 gpio1.defaultValue   = "1";
-gpio1.GPIO_n.$assign = "EPWM11_B";
+gpio1.GPIO_n.$assign = "GPIO61";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 

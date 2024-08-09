@@ -37,7 +37,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
-#define FILE_MAX_SIZE   (0x1C0000) /* This has to match the size of MSRAM_1 section in linker.cmd */
+#define FILE_MAX_SIZE   (0x140000) /* This has to match the size of MSRAM_1 section in linker.cmd */
 uint8_t gFileBuf[FILE_MAX_SIZE] __attribute__((aligned(128), section(".bss.filebuf"))); 
 
 #define VERIFY_BUF_MAX_SIZE (32*1024)

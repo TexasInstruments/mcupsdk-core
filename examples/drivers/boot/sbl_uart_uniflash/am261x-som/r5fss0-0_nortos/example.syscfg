@@ -143,7 +143,7 @@ region1.memory_region[4].size               = 0x3DF00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70040000;
-region1.memory_region[5].size               = 0x1C0000;
+region1.memory_region[5].size               = 0x140000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;

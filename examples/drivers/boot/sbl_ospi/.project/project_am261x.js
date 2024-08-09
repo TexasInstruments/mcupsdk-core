@@ -24,6 +24,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -32,6 +33,7 @@ const libs_nortos_r5f = {
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -41,6 +43,54 @@ const lnkfiles = {
     ]
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
+const template_options_cc = {
+    bootformat: "RPRC",
+    supportFotaSwap: false,
+    enableFastBoot: false,
+    board: "am261x-som"
+}
+
+const template_options_lp = {
+    bootformat: "RPRC",
+    supportFotaSwap: false,
+    enableFastBoot: false,
+    board: "am261x-lp"
+}
+
+const templates_cc =
+[
+    {
+        input: ".project/templates/am261x/sbl/sbl_ospi/main.c.xdt",
+        output: "../main.c",
+        options: template_options_cc
+    },
+    {
+        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-som/board.c.xdt",
+        output: "../board.c",
+        options: template_options_cc
+    }
+];
+
+
+const templates_lp =
+[
+    {
+        input: ".project/templates/am261x/sbl/sbl_ospi/main.c.xdt",
+        output: "../main.c",
+        options: template_options_lp
+    },
+    {
+        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-som/board.c.xdt",
+        output: "../board.c",
+        options: template_options_lp
+    }
+];
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
@@ -74,9 +124,18 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
+    if(buildOption.board === "am261x-som")
+    {
+        build_property.templates = templates_cc;
+    }
+    else if(buildOption.board === "am261x-lp")
+    {
+        build_property.templates = templates_lp;
+    }
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

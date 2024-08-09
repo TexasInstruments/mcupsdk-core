@@ -1,26 +1,24 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const eeprom      = scripting.addModule("/board/eeprom/eeprom", {}, false);
-const eeprom1     = eeprom.addInstance();
 const flash       = scripting.addModule("/board/flash/flash", {}, false);
 const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
-const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1        = i2c.addInstance();
-const i2c2        = i2c.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
@@ -43,28 +41,35 @@ const section7    = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-eeprom1.$name = "CONFIG_EEPROM0";
-
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
 
-bootloader1.flashDriver                 = flash1;
-flash1.$name                            = "CONFIG_FLASH0";
-flash1.strDtr_isAddrReg                 = true;
-flash1.strDtr_cmdRegRd                  = "0x85";
-flash1.strDtr_cmdRegWr                  = "0x81";
-flash1.strDtr_mask                      = "255";
-flash1.xspiWipRdCmd                     = "0x05";
-flash1.strDtr_shift                     = 255;
-flash1.protocol                         = "8d_8d_8d";
-flash1.fourByteEnableSeq                = "0";
-flash1.cmdRd                            = "0x7c";
-flash1.dummy_mask                       = "0xff";
-flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable       = true;
-flash1.peripheralDriver.phyEnable       = true;
-flash1.peripheralDriver.OSPI.D7.$suggestSolution = "GPIO10";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution = "GPIO8";
+bootloader1.flashDriver                   = flash1;
+flash1.$name                              = "CONFIG_FLASH0";
+flash1.strDtr_isAddrReg                   = true;
+flash1.strDtr_cmdRegRd                    = "0x85";
+flash1.strDtr_cmdRegWr                    = "0x81";
+flash1.strDtr_mask                        = "255";
+flash1.xspiWipRdCmd                       = "0x05";
+flash1.strDtr_shift                       = 255;
+flash1.protocol                           = "8d_8d_8d";
+flash1.fourByteEnableSeq                  = "0";
+flash1.cmdRd                              = "0x7c";
+flash1.dummy_mask                         = "0xff";
+flash1.flashDeviceId                      = "0x5B17";
+flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO10";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO62";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO9";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO68";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO67";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO76";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -75,22 +80,19 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
+gpio1.pinDir         = "OUTPUT";
+gpio1.$name          = "GPIO_OSPI_RST";
+gpio1.defaultValue   = "1";
+gpio1.GPIO_n.$assign = "GPIO61";
+
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C2";
-i2c1.I2C.SCL.$assign = "GPIO25";
-i2c1.I2C.SDA.$assign = "GPIO26";
-
-i2c2.$name               = "CONFIG_I2C1";
-eeprom1.peripheralDriver = i2c2;
-i2c2.I2C.$assign         = "I2C0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -257,16 +259,5 @@ section7.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO9";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO3";
-i2c2.I2C.SCL.$suggestSolution                      = "GPIO135";
-i2c2.I2C.SDA.$suggestSolution                      = "GPIO134";
-debug_log.uartLog.UART.$suggestSolution            = "UART0";
+flash1.peripheralDriver.OSPI.$suggestSolution = "OSPI0";
+debug_log.uartLog.UART.$suggestSolution       = "UART0";

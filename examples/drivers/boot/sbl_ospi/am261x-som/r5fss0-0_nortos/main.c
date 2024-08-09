@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
@@ -36,7 +37,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
-#include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
+#include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
@@ -45,7 +46,7 @@ extern HsmClient_t gHSMClient ;
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void i2c_flash_reset(void);
+void gpio_flash_reset(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -66,6 +67,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 {
     return SystemP_SUCCESS;
 }
+
 
 int main(void)
 {
@@ -98,8 +100,6 @@ int main(void)
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("Starting OSPI Bootloader ... \r\n");
-
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     if (SystemP_SUCCESS == status)
@@ -116,7 +116,6 @@ int main(void)
         if (bootHandle != NULL)
         {
 
-#ifdef BOOTLOADER_IMAGE_RPRC
 
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 
@@ -135,13 +134,9 @@ int main(void)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], FALSE);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
-#endif
 
-#ifdef BOOTLOADER_IMAGE_MCELF
-            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-#endif
 
             Bootloader_profileAddProfilePoint("CPU load");
 
@@ -168,6 +163,25 @@ int main(void)
             if (status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
+				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+				{
+					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+				}
+                if (status == SystemP_SUCCESS)
+                {
+                    /*
+                        enable Phy and Phy pipeline for XIP execution
+                        again because those would be disabled by Bootloader_rprcImageLoad
+                    */
+                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                    {
+                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+
+                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+                    }
+                }
                 if(status == SystemP_SUCCESS)
                 {
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
@@ -178,6 +192,7 @@ int main(void)
                     UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
 
+                /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 
@@ -197,7 +212,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    i2c_flash_reset();
+    gpio_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
