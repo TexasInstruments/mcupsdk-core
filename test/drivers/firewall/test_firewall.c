@@ -77,7 +77,7 @@ void test_firewall_positive(void *args);
 void test_firewall_negative(void *args);
 
 /* Strong declaration of user defined data abort exception */
-extern void HwiP_data_abort_handler_c(void);
+extern void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr);
 
 /* client ID that is used to receive messages in Any to Any test */
 uint32_t gClientId = 4u;
@@ -94,8 +94,7 @@ SemaphoreP_Object gMainDoneSem;
 SemaphoreP_Object gRemoteDoneSem;
 
 /* Strong definition of user defined data abort exception. This function will be called incase of any data abort */
-void HwiP_data_abort_handler_c(void)
-{
+void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr){
     gDataAbortRecived++;
 }
 

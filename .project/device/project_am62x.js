@@ -41,7 +41,6 @@ const example_file_list = [
      "test/drivers/sciclient/.project/project.js",
      "test/drivers/uart/.project/project.js",
      "test/drivers/gpio/.project/project.js",
-
 ];
 
 function getProjectSpecCpu(cpu) {

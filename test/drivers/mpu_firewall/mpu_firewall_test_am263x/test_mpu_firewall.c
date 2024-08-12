@@ -75,8 +75,7 @@ uint32_t gDataAbortReceived = 0;
 /* ========================================================================== */
 
 /* Strong definition of user defined data abort exception. This function will be called incase of any data abort */
-void HwiP_data_abort_handler_c(void)
-{
+void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr){
     gDataAbortReceived++;
 }
 
