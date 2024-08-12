@@ -123,40 +123,6 @@ void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
     }
 }
 
-void EnetApp_initEnetLinkCbPrms(Cpsw_Cfg *cpswCfg)
-{
-#if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
-    cpswCfg->mdioLinkStateChangeCb     = NULL;
-    cpswCfg->mdioLinkStateChangeCbArg  = NULL;
-#else
-    cpswCfg->mdioLinkStateChangeCb     = EnetApp_mdioLinkStatusChange;
-    cpswCfg->mdioLinkStateChangeCbArg  = &gEnetApp;
-#endif
-
-    cpswCfg->portLinkStatusChangeCb    = &EnetApp_portLinkStatusChangeCb;
-    cpswCfg->portLinkStatusChangeCbArg = &gEnetApp;
-}
-
-void EnetApp_initAleConfig(CpswAle_Cfg *aleCfg)
-{
-    aleCfg->modeFlags = CPSW_ALE_CFG_MODULE_EN;
-    aleCfg->agingCfg.autoAgingEn = true;
-    aleCfg->agingCfg.agingPeriodInMs = 1000;
-
-    aleCfg->nwSecCfg.vid0ModeEn                = true;
-    aleCfg->vlanCfg.aleVlanAwareMode           = FALSE;
-    aleCfg->vlanCfg.cpswVlanAwareMode          = FALSE;
-    aleCfg->vlanCfg.unknownUnregMcastFloodMask = CPSW_ALE_ALL_PORTS_MASK;
-    aleCfg->vlanCfg.unknownRegMcastFloodMask   = CPSW_ALE_ALL_PORTS_MASK;
-    aleCfg->vlanCfg.unknownVlanMemberListMask  = CPSW_ALE_ALL_PORTS_MASK;
-    aleCfg->policerGlobalCfg.policingEn        = true;
-    aleCfg->policerGlobalCfg.yellowDropEn      = false;
-    /* Enables the ALE to drop the red colored packets. */
-    aleCfg->policerGlobalCfg.redDropEn         = true;
-    /* Policing match mode */
-    aleCfg->policerGlobalCfg.policerNoMatchMode = CPSW_ALE_POLICER_NOMATCH_MODE_GREEN;
-}
-
 void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg *cpswCfg)
 {
     EnetApp_PerCtxt *perCtxt = EnetApp_getPerCtxt(enetType, instId);
@@ -167,13 +133,16 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg 
     EnetAppUtils_print("----------------------------------------------\r\n");
     EnetAppUtils_print("%s: init config\r\n", perCtxt->name);
 
-    cpswCfg->vlanCfg.vlanAware          = false;
-    cpswCfg->hostPortCfg.removeCrc      = true;
-    cpswCfg->hostPortCfg.padShortPacket = true;
-    cpswCfg->hostPortCfg.passCrcErrors  = true;
-    EnetApp_initEnetLinkCbPrms(cpswCfg);
-    EnetApp_initAleConfig(&cpswCfg->aleCfg);
+#if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
+    cpswCfg->mdioLinkStateChangeCb     = NULL;
+    cpswCfg->mdioLinkStateChangeCbArg  = NULL;
+#else
+    cpswCfg->mdioLinkStateChangeCb     = EnetApp_mdioLinkStatusChange;
+    cpswCfg->mdioLinkStateChangeCbArg  = &gEnetApp;
+#endif
 
+    cpswCfg->portLinkStatusChangeCb    = &EnetApp_portLinkStatusChangeCb;
+    cpswCfg->portLinkStatusChangeCbArg = &gEnetApp;
 }
 int32_t EnetApp_open(EnetApp_PerCtxt *perCtxts,
                            uint32_t numPerCtxts)
