@@ -416,7 +416,7 @@ int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
     return SystemP_SUCCESS;
 }
 
-int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint32_t enc)
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc)
 {
     return SystemP_SUCCESS;
 }
