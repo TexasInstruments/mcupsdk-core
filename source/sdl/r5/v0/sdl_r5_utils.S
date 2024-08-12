@@ -3,7 +3,7 @@
 *
 * Software Diagnostics Library Utils module
 *
-*  (C) Copyright 2022-2023 Texas Instruments, Inc.
+*  (C) Copyright 2022-2024 Texas Instruments, Inc.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -44,213 +44,6 @@
 *   \par
 ******************************************************************************/
     .text
-
-/*==============================================================================
-*   Get the device ID code that contains information about the processor
-==============================================================================*/
-    .global SDL_UTILS_getMIDR
-SDL_UTILS_getMIDR:
-    MRC p15, #0, r0, c0, c0, #0
-    BX      lr
-
-/*==============================================================================
-*   Get the instruction and data minimum line length in bytes, to enable a range
-    of addresses to be invalidated.
-==============================================================================*/
-    .global SDL_UTILS_getCTR
-SDL_UTILS_getCTR:
-    MRC p15, #0, r0, c0, c0, #1
-    BX      lr
-
-/*==============================================================================
-*   Informs the processor of the number of ATCMs and BTCMs in the system
-==============================================================================*/
-    .global SDL_UTILS_getTCMTR
-SDL_UTILS_getTCMTR:
-    MRC p15, #0, r0, c0, c0, #2
-    BX      lr
-
-/*==============================================================================
-*   Get the value for the number of instruction and data memory regions
-    implemented in the processor.
-==============================================================================*/
-    .global SDL_UTILS_getMPUIR
-SDL_UTILS_getMPUIR:
-    MRC p15, #0, r0, c0, c0, #4
-    BX      lr
-
-/*==============================================================================
-*   Enables CPUs to be recognized and characterized within a twin-CPU system.
-==============================================================================*/
-    .global SDL_UTILS_getMPIDR
-SDL_UTILS_getMPIDR:
-    MRC p15, #0, r0, c0, c0, #5
-    BX      lr
-
-/*==============================================================================
-*   Provides information about the execution state support and programmers model
-    for the processor.(Processor Feature Register 0)
-==============================================================================*/
-    .global SDL_UTILS_getPFR0
-SDL_UTILS_getPFR0:
-    MRC p15, #0, r0, c0, c1, #0
-    BX      lr
-
-/*==============================================================================
-*   Provides information about the execution state support and programmers model
-    for the processor.(Processor Feature Register 1)
-==============================================================================*/
-    .global SDL_UTILS_getPFR1
-SDL_UTILS_getPFR1:
-    MRC p15, #0, r0, c0, c1, #1
-    BX      lr
-
-/*==============================================================================
-*   Provides information about the execution state support and programmers model
-    for the processor.(Processor Feature Register 1)
-==============================================================================*/
-    .global SDL_UTILS_getID_DFR0
-SDL_UTILS_getID_DFR0:
-    MRC p15, #0, r0, c0, c1, #2
-    BX      lr
-
-/*==============================================================================
-*   Provides additional information about the features of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getID_AFR0
-SDL_UTILS_getID_AFR0:
-    MRC p15, #0, r0, c0, c1, #3
-    BX      lr
-
-/*==============================================================================
-*   The ID_MMFR0 provides information about the memory model, memory management,
-     and cache support operations of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getID_MMFR0
-SDL_UTILS_getID_MMFR0:
-    MRC p15, #0, r0, c0, c1, #4
-    BX      lr
-
-/*==============================================================================
-*   The ID_MMFR1 provides information about the memory model, memory management,
-     and cache support operations of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getID_MMFR1
-SDL_UTILS_getID_MMFR1:
-    MRC p15, #0, r0, c0, c1, #5
-    BX      lr
-
-/*==============================================================================
-*   The ID_MMFR2 provides information about the memory model, memory management,
-     and cache support operations of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getID_MMFR2
-SDL_UTILS_getID_MMFR2:
-    MRC p15, #0, r0, c0, c1, #6
-    BX      lr
-
-/*==============================================================================
-*   The ID_MMFR3 provides information about the memory model, memory management,
-     and cache support operations of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getID_MMFR3
-SDL_UTILS_getID_MMFR3:
-    MRC p15, #0, r0, c0, c1, #7
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR0 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR0
-SDL_UTILS_getID_ISAR0:
-    MRC p15, #0, r0, c0, c2, #0
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR1 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR1
-SDL_UTILS_getID_ISAR1:
-    MRC p15, #0, r0, c0, c2, #1
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR2 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR2
-SDL_UTILS_getID_ISAR2:
-    MRC p15, #0, r0, c0, c2, #2
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR3 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR3
-SDL_UTILS_getID_ISAR3:
-    MRC p15, #0, r0, c0, c2, #3
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR4 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR4
-SDL_UTILS_getID_ISAR4:
-    MRC p15, #0, r0, c0, c2, #4
-    BX      lr
-
-/*==============================================================================
-*   The ID_ISAR5 Provides information about the instruction set that the processor
-    supports,beyond the basic set.
-==============================================================================*/
-    .global SDL_UTILS_getID_ISAR5
-SDL_UTILS_getID_ISAR5:
-    MRC p15, #0, r0, c0, c2, #5
-    BX      lr
-
-/*==============================================================================
-*   The CCSIDR Provides information about the size and behavior of the
-    instruction or data cache. Architecturally, there can be up to eight levels of
-    cache, containing instruction, data, or unified caches. This processor contains
-    L1 instruction and data caches only. The CSSELR determines which CCSIDR to select.
-==============================================================================*/
-    .global SDL_UTILS_getCCSIDR
-SDL_UTILS_getCCSIDR:
-    MRC p15, #1, r0, c0, c0, #0
-    BX      lr
-
-/*==============================================================================
-*   The CLIDR have the following purpose-
-*   Indicates the cache levels that are implemented. Architecturally,
-    there can be a different number of cache levels on the instruction and data side.
-*   Captures the point-of-coherency.
-*   Captures the point-of-unification.
-==============================================================================*/
-    .global SDL_UTILS_getCLIDR
-SDL_UTILS_getCLIDR:
-    MRC p15, #1, r0, c0, c0, #1
-    BX      lr
-
-/*==============================================================================
-*   Provides additional information about the features of the processor.
-==============================================================================*/
-    .global SDL_UTILS_getAIDR
-SDL_UTILS_getAIDR:
-    MRC p15, #1, r0, c0, c0, #7
-    BX      lr
-
-/*==============================================================================
-*   Get the value that the processor uses to select the CSSELR to use
-==============================================================================*/
-    .global SDL_UTILS_getCSSELR
-SDL_UTILS_getCSSELR:
-    MRC p15, #2, r0, c0, c0, #0
-    BX      lr
-
 /*==============================================================================
 *   The SCTLR Provides control and configuration information for-
 *   memory alignment, endianness, protection, and fault behavior.
@@ -296,47 +89,6 @@ SDL_UTILS_getCPACR:
     BX      lr
 
 /*==============================================================================
-*  The MPU Region Base Address Register characteristics are:
-*  Describes the base address of the region specified by the Memory Region Number Register.
-==============================================================================*/
-    .global SDL_UTILS_getMPURegionBaseADDR
-SDL_UTILS_getMPURegionBaseADDR:
-    MRC p15, #0, r0, c6, c1, #0
-    BX      lr
-
-/*==============================================================================
-*  The MPU Region Size and Enable Register characteristics are:
-*  Specifies the size of the region specified by the Memory Region Number Register.
-*  Identifies the address ranges that are used for a particular region.
-*  Enables or disables the region, and its sub-regions, specified by the Memory
-    Region Number Register.
-==============================================================================*/
-    .global SDL_UTILS_getMPURegionEnableR
-SDL_UTILS_getMPURegionEnableR:
-    MRC p15, #0, r0, c6, c1, #2
-    BX      lr
-
-/*==============================================================================
-*  The MPU Region Access Control Register characteristics are:
-*  Holds the region attributes and access permissions for the region specified
-   by the Memory Region Number Register.
-==============================================================================*/
-    .global SDL_UTILS_getMPURegionAccessControlR
-SDL_UTILS_getMPURegionAccessControlR:
-    MRC p15, #0, r0, c6, c1, #4
-    BX      lr
-
-/*==============================================================================
-*  The RGNRs characteristics are:
-*  Multiple registers with one register for each memory region implemented.
- The value contained in the RGNR determines which of the multiple registers is accessed.
-==============================================================================*/
-    .global SDL_UTILS_getRGNR
-SDL_UTILS_getRGNR:
-    MRC p15, #0, r0, c6, c2, #0
-    BX      lr
-
-/*==============================================================================
 *  The BTCM Region Register characteristics are:
 *  Holds the base address and size of the BTCM.
 *  Determines if the BTCM is enabled.
@@ -379,34 +131,6 @@ SDL_UTILS_getSlavePortControlR:
 SDL_UTILS_getCONTEXTIDR:
     MRC p15, #0, r0, c13, c0, #1
     BX      lr
-
-/*==============================================================================
-*  The Thread and Process ID Registers provide locations to store the IDs
-   of software threads and processes for Operating System (OS) management purposes.
-==============================================================================*/
-    .global SDL_UTILS_getThreadProcessIDR1
-SDL_UTILS_getThreadProcessIDR1:
-    MRC p15, #0, r0, c13, c0, #2
-    BX      lr
-
-/*==============================================================================
-*  The Thread and Process ID Registers provide locations to store the IDs
-   of software threads and processes for Operating System (OS) management purposes.
-==============================================================================*/
-    .global SDL_UTILS_getThreadProcessIDR2
-SDL_UTILS_getThreadProcessIDR2:
-    MRC p15, #0, r0, c13, c0, #3
-    BX      lr
-
-/*==============================================================================
-*  The Thread and Process ID Registers provide locations to store the IDs
-   of software threads and processes for Operating System (OS) management purposes.
-==============================================================================*/
-    .global SDL_UTILS_getThreadProcessIDR3
-SDL_UTILS_getThreadProcessIDR3:
-    MRC p15, #0, r0, c13, c0, #4
-    BX      lr
-
 /*==============================================================================
 *  The nVAL IRQ Enable Set Register characteristics are:
 *  Enables any of the PMXEVCNTR Registers, PMXEVCNTR0-PMXEVCNTR2, and CCNT,
@@ -620,6 +344,46 @@ SDL_UTILS_getIFAR:
     MRC p15, #0, r0, c6, c0, #2
     BX      lr
 
+/*==============================================================================
+*   Get Performance Monitor Control Register (PMCR) value
+==============================================================================*/
+    .global SDL_UTILS_getPMCR
+SDL_UTILS_getPMCR:
+    MRC p15, #0, r0, c9, c12, #0
+    BX      lr
+
+/*==============================================================================
+*   Get Performance Monitor Count Enable Set Register (PMCNTENSET) value
+==============================================================================*/
+    .global SDL_UTILS_getPMCNTENSET
+SDL_UTILS_getPMCNTENSET:
+    MRC p15, #0, r0, c9, c12, #1
+    BX      lr
+
+/*==============================================================================
+*   Get Performance Monitor User Enable Register (PMUSERENR) value
+==============================================================================*/
+    .global SDL_UTILS_getPMUSERENR
+SDL_UTILS_getPMUSERENR:
+    MRC p15, #0, r0, c9, c14, #0
+    BX      lr
+
+/*==============================================================================
+*   Get Performance Monitor Interrupt Enable Set Register (PMINTENSET) value
+==============================================================================*/
+    .global SDL_UTILS_getPMINTENSET
+SDL_UTILS_getPMINTENSET:
+    MRC p15, #0, r0, c9, c14, #1
+    BX      lr
+
+/*==============================================================================
+*   Get Performance Monitor Interrupt Enable Clear Register (PMINTENCLR) value
+==============================================================================*/
+    .global SDL_UTILS_getPMINTENCLR
+SDL_UTILS_getPMINTENCLR:
+    MRC p15, #0, r0, c9, c14, #2
+    BX      lr
+
 /*****************************************************************************
 * Enable Event Bus
 ******************************************************************************/
@@ -649,3 +413,35 @@ SDL_UTILS_enable_cache_event_bus:
     MRC p15, #0, r0, c1, c0, #0     /* Read System Control Register */
     NOP
 	BX      lr
+
+/*****************************************************************************
+*   void SDL_R5MPU_readStaticRegisters(SDL_R5MPU_staticRegs *pMPUStaticRegs,uint32_t regionNum)
+* 	Design: PROC_SDL-2496
+******************************************************************************/
+     .global SDL_R5MPU_readStaticRegisters
+SDL_R5MPU_readStaticRegisters:
+    PUSH    {r4}
+    AND     r1, r1, #0xF
+    MCR     p15, #0, r1, c6, c2, #0         /* Write RGNR (MPU Region Number Register) */
+	EOR     r1,r1,r1   
+    MRC     p15, #0, r1, c1, c0, #0         /* Read SCTLR (System Control Register) */
+	STR     r1, [r0]
+	ADD     r0, r0, #0x4
+    MRC     p15, #0, r2, c0, c0, #4         /* Read MPUIR (MPU Type Register) */
+	STR     r2, [r0]
+	ADD     r0, r0, #0x4
+    MRC     p15, #0, r4, c6, c2, #0         /* Read RGNR (MPU Region Number Register) */
+    AND     r4, r4, #0xF    
+    STR 	r4, [r0]
+	ADD     r0, r0, #0x4					
+    MRC     p15, #0, r4, c6, c1, #0         /* Read MPU Region Base Address Register */
+    BIC     r4, r4, #0x1F                   /* Base address must be 16-bit aligned  */
+    STR 	r4, [r0]
+	ADD     r0, r0, #0x4
+    MRC     p15, #0, r4, c6, c1, #2         /* Read Data MPU Region Size and Enable Register */
+    STR 	r4, [r0]
+	ADD     r0, r0, #0x4
+    MRC     p15, #0, r4, c6, c1, #4         /* Read MPU Region Access Control Register */
+    STR 	r4, [r0]
+    POP     {r4}
+    BX      lr

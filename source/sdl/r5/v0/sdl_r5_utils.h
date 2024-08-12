@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library utilities
  *
- *  Copyright (c) Texas Instruments Incorporated 2020-2023
+ *  Copyright (c) Texas Instruments Incorporated 2020-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -90,52 +90,6 @@
  *
  */
 typedef struct {
-    uint32_t MIDR;
-    /* MIDR register */
-    uint32_t CTR;
-    /* CTR register */
-    uint32_t TCMTR;
-    /* TCMTR register */
-    uint32_t MPUIR;
-    /* MPUIR register */
-    uint32_t MPIDR;
-    /* MPIDR register */
-    uint32_t PFR0;
-    /* PFR0 register */
-    uint32_t PFR1;
-    /* PFR1 register */
-    uint32_t ID_DFR0;
-    /* ID_DFR0 register */
-    uint32_t ID_AFR0;
-    /* ID_AFR0 register */
-    uint32_t ID_MMFR0;
-    /* ID_MMFR0 register */
-    uint32_t ID_MMFR1;
-    /* ID_MMFR1 register */
-    uint32_t ID_MMFR2;
-    /* ID_MMFR2 register */
-    uint32_t ID_MMFR3;
-    /* ID_MMFR3 register */
-    uint32_t ID_ISAR0;
-    /* ID_ISAR0 register */
-    uint32_t ID_ISAR1;
-    /* ID_ISAR1 register */
-    uint32_t ID_ISAR2;
-    /* ID_ISAR2 register */
-    uint32_t ID_ISAR3;
-    /* ID_ISAR3 register */
-    uint32_t ID_ISAR4;
-    /* ID_ISAR4 register */
-    uint32_t ID_ISAR5;
-    /* ID_ISAR5 register */
-    uint32_t CCSIDR;
-    /* CCSIDR register */
-    uint32_t CLIDR;
-    /* CLIDR register */
-    uint32_t AIDR;
-    /* AIDR register */
-    uint32_t CSSELR;
-    /* CSSELR register */
     uint32_t SCTLR;
     /* SCTLR register */
     uint32_t ACTLR;
@@ -144,14 +98,6 @@ typedef struct {
     /* SecondaryACTLR register */
     uint32_t CPACR;
     /* CPACR register */
-    uint32_t MPURegionBaseADDR;
-    /* MPURegionBaseADDR register */
-    uint32_t MPURegionEnableR;
-    /* MPURegionEnableR register */
-    uint32_t MPURegionAccessControlR;
-    /* MPURegionAccessControlR register */
-    uint32_t RGNR;
-    /* RGNR register */
     uint32_t BTCMRegionR;
     /* BTCMRegionR register */
     uint32_t ATCMRegionR;
@@ -160,12 +106,6 @@ typedef struct {
     /* SlavePortControlR register */
     uint32_t CONTEXTIDR;
     /* CONTEXTIDR register */
-    uint32_t ThreadProcessIDR1;
-    /* ThreadProcessIDR1 register */
-    uint32_t ThreadProcessIDR2;
-    /* ThreadProcessIDR2 register */
-    uint32_t ThreadProcessIDR3;
-    /* ThreadProcessIDR3 register */
     uint32_t nVALIRQSET;
     /* nVALIRQSET register */
     uint32_t nVALFIQSET;
@@ -194,24 +134,42 @@ typedef struct {
     /* LLPPvirtualAXIRR register */
     uint32_t AHBRR;
     /* AHBRR register */
-    uint32_t CFLR;
-    /* CFLR register */
-    uint32_t PMOVSR;
-    /* PMOVSR register */
-    uint32_t DFSR;
-    /* DFSR register */
-    uint32_t ADFSR;
-    /* ADFSR register */
-    uint32_t DFAR;
-    /* DFAR register */
-    uint32_t IFSR;
-    /* IFSR register */
-    uint32_t IFAR;
-    /* IFAR register */
-    uint32_t AIFSR;
-    /* AIFSR register */
+    uint32_t PMCR;
+    /* PMCR Register */
+    uint32_t PMCNTENSET;
+    /* PMCNTENSET Register */
+    uint32_t PMUSERENR;
+    /* PMUSERENR Register */
+    uint32_t PMINTENSET;
+    /* PMINTENSET Register */
+    uint32_t PMINTENCLR;
+    /* PMINTENCLR Register */
 
 }SDL_R5FCPU_StaticRegs;
+
+/** ---------------------------------------------------------------------------
+ * \brief MPU Static Registers structure
+ *
+ * This structure defines the MPU static configuration registers
+ * ----------------------------------------------------------------------------
+ */
+typedef struct SDL_MPU_staticReg_read
+{
+    uint32_t sysControlReg;
+    /**< SCTLR (System Control Register)*/
+    uint32_t mpuTypeReg;
+    /**< MPUIR (MPU Type Register) */
+	 uint32_t regionId;
+    /**< Region number to configure.
+     *   Range: 0 to (SDL_ARM_R5F_MPU_REGIONS_MAX     1U) */
+    uint32_t baseAddr;
+    /**< Region base address: 32 bytes aligned. */
+    uint32_t size;
+    /**< Region size */
+	uint32_t accessPermission;
+    /**< Access permissions */
+	
+}SDL_R5MPU_staticRegs;
 
 /** @} */
 
@@ -230,7 +188,20 @@ typedef struct {
  *
  * \param   pCPUStaticRegs      Pointer to the SDL_R5FCPU_StaticRegs structure.
  */
-int32_t SDL_CPU_staticRegisterRead(SDL_R5FCPU_StaticRegs *pCPUStaticRegs);
+extern int32_t SDL_CPU_staticRegisterRead(SDL_R5FCPU_StaticRegs *pCPUStaticRegs);
+
+/**
+ *
+ * \brief   MPU API to Read the Static Registers.
+ *          This function reads the values of the static registers such as
+ *          System Control Register, MPU Type Register and MPU Region Number Register.
+ *
+ * \param   pMPUStaticRegs  [IN]    Pointer to the static registers structure
+ * \param   regionNum    [IN]    Region number
+ *
+ */
+
+extern void SDL_R5MPU_readStaticRegisters(SDL_R5MPU_staticRegs *pMPUStaticRegs,uint32_t regionNum);	
 
 /** @} */
 /** @} */
@@ -239,45 +210,14 @@ int32_t SDL_CPU_staticRegisterRead(SDL_R5FCPU_StaticRegs *pCPUStaticRegs);
 /*                         Local Function Declarations                             */
 /* ========================================================================== */
 
-
-uint32_t SDL_UTILS_getMIDR(void);
-uint32_t SDL_UTILS_getCTR(void);
-uint32_t SDL_UTILS_getTCMTR(void);
-uint32_t SDL_UTILS_getMPUIR(void);
-uint32_t SDL_UTILS_getMPIDR(void);
-uint32_t SDL_UTILS_getPFR0(void);
-uint32_t SDL_UTILS_getPFR1(void);
-uint32_t SDL_UTILS_getID_DFR0(void);
-uint32_t SDL_UTILS_getID_AFR0(void);
-uint32_t SDL_UTILS_getID_MMFR0(void);
-uint32_t SDL_UTILS_getID_MMFR1(void);
-uint32_t SDL_UTILS_getID_MMFR2(void);
-uint32_t SDL_UTILS_getID_MMFR3(void);
-uint32_t SDL_UTILS_getID_ISAR0(void);
-uint32_t SDL_UTILS_getID_ISAR1(void);
-uint32_t SDL_UTILS_getID_ISAR2(void);
-uint32_t SDL_UTILS_getID_ISAR3(void);
-uint32_t SDL_UTILS_getID_ISAR4(void);
-uint32_t SDL_UTILS_getID_ISAR5(void);
-uint32_t SDL_UTILS_getCCSIDR(void);
-uint32_t SDL_UTILS_getCLIDR(void);
-uint32_t SDL_UTILS_getAIDR(void);
-uint32_t SDL_UTILS_getCSSELR(void);
 uint32_t SDL_UTILS_getSCTLR(void);
 uint32_t SDL_UTILS_getACTLR(void);
 uint32_t SDL_UTILS_getSecondaryACTLR(void);
 uint32_t SDL_UTILS_getCPACR(void);
-uint32_t SDL_UTILS_getMPURegionBaseADDR(void);
-uint32_t SDL_UTILS_getMPURegionEnableR(void);
-uint32_t SDL_UTILS_getMPURegionAccessControlR(void);
-uint32_t SDL_UTILS_getRGNR(void);
 uint32_t SDL_UTILS_getBTCMRegionR(void);
 uint32_t SDL_UTILS_getATCMRegionR(void);
 uint32_t SDL_UTILS_getSlavePortControlR(void);
 uint32_t SDL_UTILS_getCONTEXTIDR(void);
-uint32_t SDL_UTILS_getThreadProcessIDR1(void);
-uint32_t SDL_UTILS_getThreadProcessIDR2(void);
-uint32_t SDL_UTILS_getThreadProcessIDR3(void);
 uint32_t SDL_UTILS_getnVALIRQSET(void);
 uint32_t SDL_UTILS_getnVALFIQSET(void);
 uint32_t SDL_UTILS_getnVALRESETSET(void);
@@ -300,6 +240,11 @@ uint32_t SDL_UTILS_getDFAR(void);
 uint32_t SDL_UTILS_getIFSR(void);
 uint32_t SDL_UTILS_getIFAR(void);
 uint32_t SDL_UTILS_getAIFSR(void);
+uint32_t SDL_UTILS_getPMCR(void);
+uint32_t SDL_UTILS_getPMCNTENSET(void);
+uint32_t SDL_UTILS_getPMUSERENR (void);
+uint32_t SDL_UTILS_getPMINTENSET(void);
+uint32_t SDL_UTILS_getPMINTENCLR(void);
 
 /* Some other function not related to CPU Static register*/
 void SDL_UTILS_enable_event_bus(void);
