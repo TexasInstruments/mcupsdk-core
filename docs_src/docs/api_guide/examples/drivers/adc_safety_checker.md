@@ -12,7 +12,7 @@
 This example compares the absolute value of the two ADC conversion results with the set tolerance value and generates an out-of-tolerance flag if the difference exceeds the tolerance value. Channel 0 and 1 of ADC1 are used to compare the two ADC conversion. If the difference between two conversion results exceeds the value configured as tolerance then the ADC safety checker aggregator generates an interrupt signal from out-of-tolerance.
 
 ## Safety Checker Configurations
-1. Safety checker tile 1 is configured to compare two ADC channels ADC1_AIN0 and ADC1_AIN2
+1. Safety checker tile 1 is configured to compare two ADC channels ADC1_AIN0 and ADC1_AIN1
 2. The tolerance value is set to 100 in digital representation
     - If the difference between two ADC channel is > 100, it will generate an interrupt
 3. Safety checker aggregator is configured to generate an interrupt when oot event occures
@@ -29,10 +29,13 @@ ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted
  - on AM263Px LP
      - Feed Analog input to ADC1_AIN0 - J1/3 Pin 24
      - Feed Analog input to ADC1_AIN1 - J1/3 Pin 29
+ - on AM261x LP
+     - Feed Analog input to ADC1_AIN0 - J1/3 Pin 24
+     - Feed Analog input to ADC1_AIN1 - J5/7 Pin 42
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SAFETY_CHECKER_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

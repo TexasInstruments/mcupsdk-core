@@ -11,7 +11,7 @@ The example does the below
 - Waits for the specified time using ePWM ISR.
 
 # External Connections
-- EPWM9_A/B pin can be connected to an oscilloscope to view the waveform.
+- EPWM9_A/B (EPWM2_A/B in case of AM261x-LP) pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263X-CC or AM263PX-CC
 When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
@@ -23,9 +23,14 @@ When using AM263x-LP or AM263Px-LP
 - Connect boosterpack J6/J8 pin 75 for epwm9_A
 - Connect boosterpack J6/J8 pin 76 for epwm9_B
 
+## AM261X-LP
+When using AM261x-LP
+- Connect boosterpack J2/J4 pin 40 for epwm2_A
+- Connect boosterpack J2/J4 pin 39 for epwm2_B
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_HR_DUTY_CYCLE_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -17,13 +17,13 @@ EPMW0_A to detect the trip within a MINMAX window and trip its EPWMxA output
 EPMW1_A waveform is used as a trip input. 
 
 # Configurations 
-1. EPWM0
+1. EPWM0 (EPWM2 in case of AM261x-LP)
   - DCCAP is enabled, trip inputs are configured for Trip1. 
   - waveform A/B are configured (in the example) to match the min-max window for observing.
   - IN Trip zone, CAPEVT is configured for CBC source and Trip action on output A to low Action when trip occured.
   - XCMP is enbaled for this feature usage.
 
-2. EPWM1
+2. EPWM1 (EPWM3 in case of AM261x-LP)
   - XCMP is enabled (not a necessary requirement)
   - generates a waveform, that goes high on counter = 100, goes low on counter = 1000, for a period of 2000 
 
@@ -44,7 +44,7 @@ The EPWM1A is routed internally via GPIO. if wish to use a different/external tr
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DCCAP_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
@@ -112,7 +112,7 @@ All tests have passed!!
 \endcode
 
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
 \imageStyle{am263p_epwm_dccap_output.png, width:60%}
     \image html am263p_epwm_dccap_output.png "EPWM DCCAP Edge Monitoring Sample output"

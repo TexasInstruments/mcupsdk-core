@@ -9,10 +9,10 @@ modules.
 
 Signal of 10kHz with duty of 0.5 is configured on ePWMxA & ePWMxB
 with ePWMxB inverted. Also, phase of 120 degree is configured between
-EPWM0 to EPWM2 signals.
+EPWM0 to EPWM2 (EPWM2 to EPWM4 in case of AM261x-LP) signals.
  
-During the test, monitor EPWM0, EPWM1, and/or epwEPWM2 outputs
-on an oscilloscope.
+During the test, monitor EPWM0, EPWM1, and/or EPWM2 (EPWM2, EPWM3 and/or
+EPWM4 in case of AM261x-LP) outputs on an oscilloscope.
 
 # External Connections
 
@@ -27,10 +27,14 @@ Probe the following on boosterpack
  - EPWM 0A/0B : J4 11 / J8 59
  - EPWM 1A/1B : J2 37 / J2 38
  - EPWM 2A/2B : J2 39 / J2 40
-
+## On AM261x LP
+Probe the following on boosterpack
+ - EPWM 2A/2B : J2 40 / J8 39
+ - EPWM 3A/3B : J2 38 / J2 37
+ - EPWM 4A/4B : J2 36 / J2 35
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_CONFIGURE_SIGNAL_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

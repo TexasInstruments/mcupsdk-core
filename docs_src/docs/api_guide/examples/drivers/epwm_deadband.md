@@ -66,9 +66,27 @@ Probe the following
 - CONFIG_EPWM5 output on  PIN J5/7 45  (EPWM15_B)
 - CONFIG_EPWM6 output on  PIN J2/4 35  (EPWM14_A)
 - CONFIG_EPWM6 output on  PIN J2/4 36  (EPWM14_B)
+
+## AM261X-LP
+Probe the following
+- CONFIG_EPWM0 output on  PIN J5/7 70  (EPWM0_A)
+- CONFIG_EPWM0 output on  PIN J6/8 57  (EPWM0_B)
+- CONFIG_EPWM1 output on  PIN J5/7 69  (EPWM1_A)
+- CONFIG_EPWM1 output on  PIN J5/7 63  (EPWM1_B)
+- CONFIG_EPWM2 output on  PIN J2/4 40  (EPWM2_A)
+- CONFIG_EPWM2 output on  PIN J2/4 39  (EPWM2_B)
+- CONFIG_EPWM3 output on  PIN J2/4 38  (EPWM3_A)
+- CONFIG_EPWM3 output on  PIN J2/4 37  (EPWM3_B)
+- CONFIG_EPWM4 output on  PIN J2/4 36  (EPWM4_A)
+- CONFIG_EPWM4 output on  PIN J2/4 35  (EPWM4_B)
+- CONFIG_EPWM5 output on  PIN J6/8 80  (EPWM5_A)
+- CONFIG_EPWM5 output on  PIN J2/4 13  (EPWM5_B)
+- CONFIG_EPWM6 output on  PIN J6/8 78  (EPWM6_A)
+- CONFIG_EPWM6 output on  PIN J6/8 77  (EPWM6_B)
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DEADBAND_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

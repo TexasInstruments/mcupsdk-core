@@ -28,15 +28,15 @@
     - reads ADC EOC flag
 
 # External Connections
-ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted.
+ADC1_AIN0 pin should be connected to signals to be converted.
  - on AM263Px CC E1, with HSEC Dock
      - Feed Analog input to ADC1_AIN0 - HSEC PIN 12
- - on AM263Px LP
+ - on AM263Px LP / AM261x LP
      - Feed Analog input to ADC1_AIN0 - J1/3 Pin 24
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_TRIGGER_REPEATER_UNDERSAMPLING_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

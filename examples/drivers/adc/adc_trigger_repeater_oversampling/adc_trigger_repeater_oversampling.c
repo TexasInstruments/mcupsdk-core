@@ -78,7 +78,7 @@
  * External Connections
  * - AM263PX-CC E1
  *      - Feed Analog Voltages on ADC 1 Channel 0 - HSEC PIN 12
- *  - AM263PX-LP
+ *  - AM263PX-LP or AM261X-LP
  *      - Feed Analog Voltages on ADC 1 Channel 0 - J1/3 PIN 24
  *
  */

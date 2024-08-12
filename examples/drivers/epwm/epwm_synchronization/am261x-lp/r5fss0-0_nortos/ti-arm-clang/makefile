@@ -24,19 +24,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=epwm_trip_zone.$(PROFILE).out
+OUTNAME:=epwm_synchronization.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=epwm_trip_zone.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=epwm_trip_zone.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=epwm_trip_zone.$(PROFILE).appimage.signed
-BOOTIMAGE_NAME_MCELF:=epwm_trip_zone.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=epwm_trip_zone.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_trip_zone.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_trip_zone.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_trip_zone.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_trip_zone.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_trip_zone.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=epwm_synchronization.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=epwm_synchronization.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=epwm_synchronization.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=epwm_synchronization.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=epwm_synchronization.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=epwm_synchronization.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=epwm_synchronization.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=epwm_synchronization.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=epwm_synchronization.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=epwm_synchronization.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,7 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	epwm_trip_zone.c \
+	epwm_synchronization.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -202,7 +202,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang epwm_trip_zone ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang epwm_synchronization ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -243,11 +243,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2612 --package ZFG --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -343,12 +343,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for epwm_trip_zone.$(PROFILE) ...
+	@echo Creating Coverage Report for epwm_synchronization.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_trip_zone.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_trip_zone.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_trip_zone.$(PROFILE).profdata > coverage/epwm_trip_zone.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_trip_zone.$(PROFILE).profdata.json --output-json=coverage/epwm_trip_zone.$(PROFILE).analysis.json --output=../epwm_trip_zone.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_synchronization.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_synchronization.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_synchronization.$(PROFILE).profdata > coverage/epwm_synchronization.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_synchronization.$(PROFILE).profdata.json --output-json=coverage/epwm_synchronization.$(PROFILE).analysis.json --output=../epwm_synchronization.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

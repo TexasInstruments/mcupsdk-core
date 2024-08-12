@@ -72,36 +72,32 @@ The sync-out event options available are:
  # External Connections
 
 When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-Probe the following
-- CONFIG_EPWM0 output on HSEC PIN 49  (EPWM0_A)
-- CONFIG_EPWM0 output on HSEC PIN 51  (EPWM0_B)
-- CONFIG_EPWM1 output on HSEC PIN 53  (EPWM1_A)
-- CONFIG_EPWM1 output on HSEC PIN 55  (EPWM1_B)
-- CONFIG_EPWM2 output on HSEC PIN 50  (EPWM2_A)
-- CONFIG_EPWM2 output on HSEC PIN 52  (EPWM2_B)
-- CONFIG_EPWM3 output on HSEC PIN 54  (EPWM3_A)
-- CONFIG_EPWM3 output on HSEC PIN 56  (EPWM3_B)
-- CONFIG_EPWM4 output on HSEC PIN 57  (EPWM4_A)
-- CONFIG_EPWM4 output on HSEC PIN 59  (EPWM4_B)
-- CONFIG_EPWM5 output on HSEC PIN 61  (EPWM5_A)
-- CONFIG_EPWM5 output on HSEC PIN 63  (EPWM5_B)
+Probe the following on the HSEC pins
+- CONFIG_EPWM0 - EPWM 0A/0B : 49 / 51
+- CONFIG_EPWM1 - EPWM 1A/1B : 53 / 55
+- CONFIG_EPWM2 - EPWM 2A/2B : 50 / 52
+- CONFIG_EPWM3 - EPWM 3A/3B : 54 / 56
+- CONFIG_EPWM4 - EPWM 4A/4B : 57 / 59
+- CONFIG_EPWM5 - EPWM 5A/5B : 61 / 63
 
 
 Early Access: For AM263Px-CC E1, the connections is same as that of AM263x
 
 When using AM263X-LP or AM263PX-LP
-- CONFIG_EPWM0 output on J2.11  (EPWM0_A)
-- CONFIG_EPWM0 output on J6.59  (EPWM0_B)
-- CONFIG_EPWM1 output on J4.37  (EPWM1_A)
-- CONFIG_EPWM1 output on J4.38  (EPWM1_B)
-- CONFIG_EPWM2 output on J4.39  (EPWM2_A)
-- CONFIG_EPWM2 output on J4.40  (EPWM2_B)
-- CONFIG_EPWM3 output on J8.77  (EPWM3_A)
-- CONFIG_EPWM3 output on J8.78  (EPWM3_B)
-- CONFIG_EPWM4 output on J8.75  (EPWM9_A)
-- CONFIG_EPWM4 output on J8.76  (EPWM9_B)
-- CONFIG_EPWM5 output on J8.79  (EPWM13_A)
-- CONFIG_EPWM5 output on J8.80  (EPWM13_B)
+- CONFIG_EPWM0 - EPWM 0A/0B :   J2.11 / J6.59
+- CONFIG_EPWM1 - EPWM 1A/1B :   J4.37 / J4.38
+- CONFIG_EPWM2 - EPWM 2A/2B :   J4.39 / J4.40
+- CONFIG_EPWM3 - EPWM 3A/3B :   J8.77 / J8.78
+- CONFIG_EPWM4 - EPWM 9A/9B :   J8.75 / J8.76
+- CONFIG_EPWM5 - EPWM 13A/13B : J8.79 / J8.80
+
+When using AM261X-LP
+- CONFIG_EPWM0 - EPWM 0A/0B :   J7.70 / J8.57
+- CONFIG_EPWM1 - EPWM 1A/1B :   J7.69 / J7.63
+- CONFIG_EPWM2 - EPWM 2A/2B :   J2.40 / J2.39
+- CONFIG_EPWM3 - EPWM 3A/3B :   J2.38 / J2.37
+- CONFIG_EPWM4 - EPWM 4A/4B :   J2.36 / J2.35
+- CONFIG_EPWM5 - EPWM 6A/6B :   J6.78 / J6.77
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION_COMBOS}
 

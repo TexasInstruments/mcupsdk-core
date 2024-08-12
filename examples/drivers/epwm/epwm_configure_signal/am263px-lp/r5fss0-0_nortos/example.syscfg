@@ -46,9 +46,11 @@ epwm1.$name        = "CONFIG_EPWM0";
 epwm1.EPWM.$assign = "EPWM0";
 
 epwm2.$name        = "CONFIG_EPWM1";
+epwm2.epwmTimebase_syncInPulseSource = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm2.EPWM.$assign = "EPWM1";
 
 epwm3.$name        = "CONFIG_EPWM2";
+epwm3.epwmTimebase_syncInPulseSource = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm3.EPWM.$assign = "EPWM2";
 
 debug_log.enableUartLog            = true;

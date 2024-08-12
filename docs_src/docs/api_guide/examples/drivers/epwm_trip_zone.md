@@ -16,7 +16,7 @@ Initially tie TZ0 high. During the test, monitor EHRPWM0 or EHRPWM1 outputs on a
 
 The TZ-Event is defined such that EHRPWM0_A will undergo a One-Shot Trip and EHRPWM1_A will undergo a Cycle-By-Cycle Trip.
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || AM261X
 This example configures ePWMx and ePWMy as follows
 - ePWMx has TZ1 as one shot trip source
 - ePWMy has TZ1 as cycle by cycle trip source
@@ -53,6 +53,11 @@ For CBC as observed at the end, after exiting the loop, it recovers from trip st
     - GPIO11 is connected to GPIO12
     - EPWM9_A and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 \endcond
+\cond SOC_AM261X
+- For AM261x-LP:
+    - GPIO3 is connected to GPIO4
+    - EPWM2_A and EPWM3_A pin can be connected to an oscilloscope to view the waveform.
+\endcond
 
 \cond SOC_AM243X
 
@@ -74,6 +79,11 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect J2/J4 pin 37 to scope
 \endcond
 
+\cond SOC_AM261X
+## AM261X-LP
+- Connect boosterpack header J1/J3 pin 8 to J2/J4 pin 18
+- Connect J2/J4 pin 40 and 38 to scope
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_TRIP_ZONE_COMBOS}
 
@@ -99,7 +109,16 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 \endcond
 
+\cond SOC_AM261X
 
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/epwm/epwm_trip_zone
+
+\endcond
 
 # Steps to Run the Example
 
@@ -151,7 +170,7 @@ All tests have passed!!
  \image html am243_epwm_trip_zone_output.png "EPWM Trip Zone waveform"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \imageStyle{am263_epwm_trip_zone_output.PNG,width:80%}
  \image html am263_epwm_trip_zone_output.PNG "EPWM Trip Zone waveform"
 \endcond

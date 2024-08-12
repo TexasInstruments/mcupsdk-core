@@ -14,23 +14,23 @@ Key Funcitonalities include...
 # Example Description
  this example demonstrates the Chopper functionality of EPWM. 
 Configurations
-1. EPWM 0 (EPWM_NO_CHOPPER)
+1. EPWM 0 (EPWM_NO_CHOPPER) (EPWM2 in case of AM261x-LP)
  - No Chopper enabled (Chopper bypassed) 
  - 50% duty Cycle with Period 100 uS 
  
-2. EPWM 1 (EPWM_CHOPPER_1_8TH)
+2. EPWM 1 (EPWM_CHOPPER_1_8TH) (EPWM3 in case of AM261x-LP)
  - Chopper enabled (Chopper bypassed) 
      - first Pulse width 8/(EPWMCLK/16)
      - Chopper Duty Cycle : 1/8
  - 50% duty Cycle with Period 100 uS 
  
-3. EPWM 2 (EPWM_CHOPPER_6_8TH)
+3. EPWM 2 (EPWM_CHOPPER_6_8TH) (EPWM4 in case of AM261x-LP)
  - No Chopper enabled (Chopper bypassed) 
      - first Pulse width 8/(EPWMCLK/16)
      - Chopper Duty Cycle : 2/3
  - 50% duty Cycle with Period 100 uS 
  
-4. EPWM 3 (EPWM_CHOPPER_4_8TH_WITH_DB)
+4. EPWM 3 (EPWM_CHOPPER_4_8TH_WITH_DB) (EPWM6 in case of AM261x-LP)
  - No Chopper enabled (Chopper bypassed) 
      - first Pulse width 8/(EPWMCLK/16)
      - Chopper Duty Cycle : 1/2
@@ -40,16 +40,19 @@ Configurations
      - output B is FED with 50 EPWM TBCLKs
  
 ## External Connections
-1. Probe EPWM 0A for Reference waveform 
-2. Probe EPWM 1A,2A,3A,3B for the Chopper enabled waveforms.
+1. Probe EPWM 0A (EPWM 2A in case of AM261x-LP) for Reference waveform 
+2. Probe EPWM 1A,2A,3A,3B (EPWM 3A,4A,6A,6B in case of AM261x-LP) for the Chopper enabled waveforms.
 ### On AM263x CC/ AM263Px CC with HSEC Dock, 
 Probe HSEC pins 49,53,50,54,56 respectively for EPWM 0A, 1A, 2A, 3A and 3B
 ### On AM263x LP/ AM263Px LP,
 Probe J4 11, J2 37, J2 39, J6 77, J6 78 respectively for EPWM 0A, 1A, 2A, 3A and 3B
 
+### On AM261x LP
+Probe J2 40, J2 38, J2 36, J6 78, J6 77 respectively for EPWM 2A, 3A, 4A, 6A and 6B
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_CHOPPER_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

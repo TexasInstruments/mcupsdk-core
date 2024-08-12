@@ -43,10 +43,10 @@
  *
  * Signal of 10kHz with duty of 0.5 is configured on ePWMxA & ePWMxB
  * with ePWMxB inverted. Also, phase of 120 degree is configured between
- * EPWM0 to EPWM2 signals.
+ * EPWM0 to EPWM2 (EPWM2 to EPWM4 in case of AM261x-LP) signals.
  *
- * During the test, monitor EPWM0, EPWM1, and/or epwEPWM2 outputs
- * on an oscilloscope.
+ * During the test, monitor EPWM0, EPWM1, and/or EPWM2 (EPWM2, EPWM3 and/or
+ * EPWM4 in case of AM261x-LP) outputs on an oscilloscope.
  *
  * On AM263x CC/ AM263Px CC with HSEC Dock,
  * Probe the following on the HSEC pins
@@ -59,6 +59,12 @@
  *  - EPWM 0A/0B : J4 11 / J8 59
  *  - EPWM 1A/1B : J2 37 / J2 38
  *  - EPWM 2A/2B : J2 39 / J2 40
+ * 
+ * On AM261x LP,
+ * Probe the following on boosterpack
+ *  - EPWM 2A/2B : J2 40 / J8 39
+ *  - EPWM 3A/3B : J2 38 / J2 37
+ *  - EPWM 4A/4B : J2 36 / J2 35
  */
 
 #define SYSCLK_FREQ (200*1000*1000U) // 200 MHz
@@ -118,10 +124,6 @@ void epwm_configure_signal_main(void *args)
     /* Configure phase shift for EPWM1 & 2 */
     configurePhase(gEpwm1Base, gEpwm0Base, 120);
     configurePhase(gEpwm2Base, gEpwm0Base, 240);
-
-    /* Setting the sync in source from main PWM. */
-    EPWM_setSyncInPulseSource(gEpwm1Base, EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0);
-    EPWM_setSyncInPulseSource(gEpwm2Base, EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0);
 
     EPWM_enablePhaseShiftLoad(gEpwm1Base);
     EPWM_enablePhaseShiftLoad(gEpwm2Base);

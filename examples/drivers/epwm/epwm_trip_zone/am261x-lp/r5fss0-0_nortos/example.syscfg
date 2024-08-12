@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3687"}
  */
 
 /**
@@ -14,7 +15,7 @@ const epwm2           = epwm.addInstance();
 const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const gpio2           = gpio.addInstance();
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -62,7 +63,8 @@ epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK
 epwm1.epwmTripZone_oneShotSource                                 = ["EPWM_TZ_SIGNAL_OSHT1"];
 epwm1.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_OST"];
 epwm1.$name                                                      = "CONFIG_EPWMx";
-epwm1.EPWM.$assign                                               = "EPWM9";
+epwm1.EPWM.$assign                                               = "EPWM2";
+epwm1.EPWM.A.$assign                                             = "GPIO47";
 epwm1.EPWM.B.$used                                               = false;
 
 epwm2.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
@@ -79,16 +81,40 @@ epwm2.epwmEventTrigger_interruptEventCount                       = "1";
 epwm2.epwmTripZone_cbcSource                                     = ["EPWM_TZ_SIGNAL_CBC1"];
 epwm2.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_CBC"];
 epwm2.$name                                                      = "CONFIG_EPWMy";
-epwm2.EPWM.$assign                                               = "EPWM1";
+epwm2.EPWM.$assign                                               = "EPWM3";
 epwm2.EPWM.B.$used                                               = false;
 
-gpio1.$name                = "EPWM_TRIP_INPUT";
-gpio1.GPIO.gpioPin.$assign = "GPIO11";
+gpio1.$name          = "EPWM_TRIP_INPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "GPIO3";
 
-gpio2.$name                = "GPIO_OUTPUT";
-gpio2.pinDir               = "OUTPUT";
-gpio2.trigType             = "RISE_EDGE";
-gpio2.GPIO.gpioPin.$assign = "GPIO12";
+gpio2.$name          = "GPIO_OUTPUT";
+gpio2.pinDir         = "OUTPUT";
+gpio2.trigType       = "RISE_EDGE";
+gpio2.rx             = true;
+gpio2.GPIO_n.$assign = "GPIO4";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -300,21 +326,18 @@ section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
-input_xbar1.xbarOutput = "GPIO11";
+input_xbar1.xbarOutput = "GPIO3";
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["EPWM9_TZINT"];
+int_xbar1.xbarOutput = ["EPWM2_TZINT"];
 
 int_xbar2.$name      = "CONFIG_INT_XBAR1";
 int_xbar2.instance   = "INT_XBAR_1";
-int_xbar2.xbarOutput = ["EPWM1_TZINT"];
+int_xbar2.xbarOutput = ["EPWM3_TZINT"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution = "GPIO61";
-epwm2.EPWM.A.$suggestSolution = "GPIO45";
-gpio1.GPIO.$suggestSolution   = "GPIO";
-gpio2.GPIO.$suggestSolution   = "GPIO";
+epwm2.EPWM.A.$suggestSolution = "GPIO49";
