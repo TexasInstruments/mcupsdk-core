@@ -829,3 +829,18 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
     uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x22};
     memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
 }
+
+int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
+{
+    return SystemP_SUCCESS;
+}
+
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc)
+{
+    return SystemP_SUCCESS;
+}
+
+int32_t Bootloader_authFinish()
+{
+    return SystemP_SUCCESS;
+}

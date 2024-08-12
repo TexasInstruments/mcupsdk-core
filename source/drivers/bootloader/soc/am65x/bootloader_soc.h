@@ -316,6 +316,21 @@ void Bootloader_socNotifyFirewallOpen(void);
  */
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 
+/**
+ * \brief API to start streaming boot authentication
+ */
+int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size);
+
+/**
+ * \brief API to update the Secure Boot Stream with a new segment
+ */
+int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc);
+
+/**
+ * \brief API to finish streaming boot authentication
+ */
+int32_t Bootloader_authFinish();
+
 #ifdef __cplusplus
 }
 #endif
