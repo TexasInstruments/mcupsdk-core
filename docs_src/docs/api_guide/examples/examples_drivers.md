@@ -84,8 +84,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_EMMC_INTR_LLD
    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_EMMC_LLD
-   -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_SD_INTR_LLD
-   -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_SD_LLD
 -# OSPI
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
@@ -368,6 +366,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# MMCSD
     -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
     -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
+    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_SD_INTR_LLD
+    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO_SD_LLD
 \cond SOC_AM263X
 -# QSPI
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG

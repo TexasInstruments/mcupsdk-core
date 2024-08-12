@@ -73,7 +73,7 @@ const templates =
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_QSPI_MCELF";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_QSPI";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
