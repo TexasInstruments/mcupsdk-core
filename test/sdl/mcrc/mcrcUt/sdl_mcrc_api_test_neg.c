@@ -40,6 +40,62 @@
 
 #include "mcrc_main.h"
 
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+ static SDL_MCRC_Config_t SDL_MCRC_Configparam[7] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          0xFU,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         0xFU,
+         SDL_MCRC_DATA_64_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_16BIT,
+         SDL_MCRC_DATA_16_BIT,
+         0xFU,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_64BIT,
+         SDL_MCRC_DATA_64_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         0xFU
+      },
+      {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+         SDL_MCRC_DATALENGTH_32BIT,
+         (SDL_MCRC_DataBitSize)0xFU,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+     {
+         SDL_MCRC_CTRL0_CH1_CRC_SEL_16BIT,
+         SDL_MCRC_DATALENGTH_64BIT,
+         SDL_MCRC_DATA_64_BIT,
+         SDL_MCRC_BITSWAP_MSB,
+         SDL_MCRC_BYTESWAP_DISABLE
+     },
+
+ };
+ #endif
+
 int32_t sdl_mcrc_negTest(void)
 {
     int32_t                       testStatus = SDL_APP_TEST_PASS;
@@ -70,7 +126,7 @@ int32_t sdl_mcrc_negTest(void)
     uint32_t                     sectorCount = 255U;
     SDL_MCRC_DataConfig_t         pDataConfig;
 
-    /*  Error/Fualt test of init API*/
+    /*  Error/Fault test of init API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_init(SDL_MCRC_INVALID, channel, watchdogPreload, blockPreload)!= SDL_EBADARGS)
@@ -155,7 +211,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /* ---------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of verify init API*/
+    /*  Error/Fault test of verify init API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_verifyInit(SDL_MCRC_INVALID, channel, watchdogPreload, blockPreload) != SDL_EBADARGS)
@@ -271,7 +327,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*---------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of config API*/
+    /*  Error/Fault test of config API*/
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -342,12 +398,122 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
 
+    /*---------------------------------------------------------------------------------------*/
+    /*  Error/Fault test of additional config API*/
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(SDL_MCRC_INVALID,channel,&SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,NULL)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,5U,&SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[1])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[2])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[3])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[4])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[5])) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+#endif
     /*----------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of verify config API*/
+    /*  Error/Fault test of verify config API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,channel,patternCount,sectorCount, SDL_MCRC_OPERATION_MODE_FULLCPU+1U, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,channel,patternCount,sectorCount, SDL_MCRC_OPERATION_MODE_FULLCPU+1U)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -361,8 +527,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,channel,patternCount,sectorCount, mode)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -377,7 +546,11 @@ int32_t sdl_mcrc_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_MCRC_config(instance,channel,patternCount,sectorCount, mode);
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,256U,sectorCount, mode, &SDL_MCRC_Configparam[0])) != SDL_EFAIL)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,256U,sectorCount, mode)) != SDL_EFAIL)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -392,7 +565,11 @@ int32_t sdl_mcrc_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_MCRC_config(instance,channel,patternCount,sectorCount, mode);
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,256U, mode, &SDL_MCRC_Configparam[0])) != SDL_EFAIL)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,256U, mode)) != SDL_EFAIL)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -407,7 +584,11 @@ int32_t sdl_mcrc_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_MCRC_config(instance,channel,patternCount,sectorCount, mode);
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, SDL_MCRC_OPERATION_MODE_SEMICPU, &SDL_MCRC_Configparam[0])) != SDL_EFAIL)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, SDL_MCRC_OPERATION_MODE_SEMICPU)) != SDL_EFAIL)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -422,7 +603,11 @@ int32_t sdl_mcrc_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_MCRC_config(instance,channel,patternCount,sectorCount, mode);
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,256U,256U, SDL_MCRC_OPERATION_MODE_SEMICPU, &SDL_MCRC_Configparam[0])) != SDL_EFAIL)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,256U,256U, SDL_MCRC_OPERATION_MODE_SEMICPU)) != SDL_EFAIL)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -436,7 +621,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, SDL_MCRC_CTRL2_CH1_MODE_FULLCPU+1U, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, SDL_MCRC_CTRL2_CH1_MODE_FULLCPU+1U)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -450,8 +639,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,5U,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,5U,patternCount,sectorCount, mode)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -465,8 +657,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,(SDL_MCRC_PATTERN_COUNT_MAX+1),sectorCount, mode, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,(SDL_MCRC_PATTERN_COUNT_MAX+1),sectorCount, mode)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -480,8 +675,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,(SDL_MCRC_SECTOR_COUNT_MAX+1), mode, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,(SDL_MCRC_SECTOR_COUNT_MAX+1), mode)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -495,8 +693,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,6U,SDL_MCRC_PATTERN_COUNT_MAX+1U,SDL_MCRC_SECTOR_COUNT_MAX, SDL_MCRC_CTRL2_CH1_MODE_FULLCPU+1U, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(SDL_MCRC_INVALID,6U,SDL_MCRC_PATTERN_COUNT_MAX+1U,SDL_MCRC_SECTOR_COUNT_MAX, SDL_MCRC_CTRL2_CH1_MODE_FULLCPU+1U)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -510,8 +711,11 @@ int32_t sdl_mcrc_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-
+        #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, 6U, &SDL_MCRC_Configparam[0])) != SDL_EBADARGS)
+        #else
         if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, 6U)) != SDL_EBADARGS)
+        #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -522,9 +726,95 @@ int32_t sdl_mcrc_negTest(void)
         DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
+
+    #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, NULL)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[1])) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[2])) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[3])) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[4])) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+   if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[6])) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+    #endif
 
     /*-------------------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of channel reset API*/
+    /*  Error/Fault test of channel reset API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_channelReset(SDL_MCRC_INVALID,channel)) != SDL_EBADARGS)
@@ -554,7 +844,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*---------------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of read PSA signature API*/
+    /*  Error/Fault test of read PSA signature API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getPSASig(SDL_MCRC_INVALID,channel, &pPSAsign)) != SDL_EBADARGS)
@@ -598,7 +888,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*---------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of set PSA signature API*/
+    /*  Error/Fault test of set PSA signature API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_setPSASeedSig(SDL_MCRC_INVALID,channel, &pSeedSign)!= SDL_EBADARGS)
@@ -642,7 +932,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*------------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of read PSA sector signature API*/
+    /*  Error/Fault test of read PSA sector signature API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_getPSASectorSig(SDL_MCRC_INVALID,channel,&pSecSign) != SDL_EBADARGS)
@@ -686,7 +976,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*---------------------------------------------------------------------------------------*/
-    /*  Error/Fualt test of intrStatus API*/
+    /*  Error/Fault test of intrStatus API*/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ( SDL_MCRC_getIntrStatus(SDL_MCRC_INVALID, channel, &pIntrstatus)!= SDL_EBADARGS)
@@ -730,7 +1020,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*-----------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of EnableIntr API */
+    /* Error/Fault test of EnableIntr API */
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -775,7 +1065,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*------------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of DisableIntr API */
+    /* Error/Fault test of DisableIntr API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_disableIntr(SDL_MCRC_INVALID, channel,IntrMask) != SDL_EBADARGS)
@@ -819,7 +1109,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*-----------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of ClearIntr API */
+    /* Error/Fault test of ClearIntr API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_MCRC_clearIntr(SDL_MCRC_INVALID, channel,IntrMask) != SDL_EBADARGS)
@@ -863,7 +1153,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*-------------------------------------------------------------------------*/
-    /* Error/Fualt test of SDL_MCRC_isBusy API */
+    /* Error/Fault test of SDL_MCRC_isBusy API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_isBusy(SDL_MCRC_INVALID, channel, &pBusyFlag)) != SDL_EBADARGS)
@@ -907,7 +1197,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*----------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of Get Currrent Sector Number API */
+    /* Error/Fault test of Get Currrent Sector Number API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getCurSecNum(SDL_MCRC_INVALID, channel, &pCurSecNum)) != SDL_EBADARGS)
@@ -951,7 +1241,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*--------------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of Get PSA signature API */
+    /* Error/Fault test of Get PSA signature API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getPSASig(instance, 5U, &pPSAsig)) != SDL_EBADARGS)
@@ -995,7 +1285,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*---------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of readStaticreg API */
+    /* Error/Fault test of readStaticreg API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_MCRC_StaticRegs_t pStaticRegs;
@@ -1026,7 +1316,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*------------------------------------------------------------------------------------*/
-    /* Error/Fualt test of GetCurPSASig API */
+    /* Error/Fault test of GetCurPSASig API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getCurPSASig(SDL_MCRC_INVALID,channel, &pCurPSASig)) != SDL_EBADARGS)
@@ -1070,7 +1360,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*-----------------------------------------------------------------------------------*/
-    /* Error/Fualt test of GetPSASigRegAddr API */
+    /* Error/Fault test of GetPSASigRegAddr API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getPSASigRegAddr(SDL_MCRC_INVALID,channel, &pMCRCregAddr)) != SDL_EBADARGS)
@@ -1114,7 +1404,7 @@ int32_t sdl_mcrc_negTest(void)
     }
 
     /*-----------------------------------------------------------------------------------*/
-    /* Error/Fualt test of SDL_MCRC_computeSignCPUmode API */
+    /* Error/Fault test of SDL_MCRC_computeSignCPUmode API */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_computeSignCPUmode(SDL_MCRC_INVALID,channel,&pDataConfig, &pSecSign)) != SDL_EBADARGS)

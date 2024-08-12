@@ -48,6 +48,54 @@
 #define SDL_MCRC_CHANNEL_MAXIMUM 2;
 #endif
 
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+ static SDL_MCRC_Config_t SDL_MCRC_Configparam[6] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_16BIT,
+          SDL_MCRC_DATA_16_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      },
+ };
+ #endif
+
 int32_t sdl_mcrc_posTest(void)
 {
     int32_t               testStatus = SDL_APP_TEST_PASS;
@@ -98,7 +146,11 @@ int32_t sdl_mcrc_posTest(void)
         SDL_MCRC_init(instance,channel,0U,0U);
         SDL_MCRC_channelReset(instance,channel);
         SDL_MCRC_config(instance,channel,mcrcData.size/4U, 1U, SDL_MCRC_OPERATION_MODE_FULLCPU);
+        #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) ||defined(SOC_AWR294X) || defined (SOC_AM261X)
+        for (bit_size=SDL_MCRC_DATA_8_BIT; bit_size<= SDL_MCRC_DATA_64_BIT; bit_size++)
+        #else
         for (bit_size=SDL_MCRC_DATA_8_BIT; bit_size<= SDL_MCRC_DATA_32_BIT; bit_size++)
+        #endif
         {
             mcrcData.dataBitSize = (SDL_MCRC_DataBitSize)bit_size;
             pMCRCData = (uint32_t *)mcrcData.pMCRCData;
@@ -118,7 +170,7 @@ int32_t sdl_mcrc_posTest(void)
             }
         }
         /* Giving Data bit size wrong for failing SDL_MCRC_dataWrite API */
-        mcrcData.dataBitSize     =(SDL_MCRC_DataBitSize) (SDL_MCRC_DATA_32_BIT + 1);
+        mcrcData.dataBitSize     =(SDL_MCRC_DataBitSize) (SDL_MCRC_DATA_32_BIT + 3);
         if ((SDL_MCRC_computeSignCPUmode(instance,SDL_MCRC_CHANNEL_1, &mcrcData, &sectSignVal)) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -217,7 +269,12 @@ int32_t sdl_mcrc_posTest(void)
                 {
                 #endif
                     SDL_MCRC_config(instance,channel,patternCount,sectorCount, mode);
+                    #if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X) || defined (SOC_AM273X) || defined (SOC_AWR294x)
+                    SDL_MCRC_Configparam[0].type = SDL_MCRC_TYPE_64BIT;
+                    if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode, &SDL_MCRC_Configparam[0])) != SDL_PASS)
+                    #else
                     if ((SDL_MCRC_verifyConfig(instance,channel,patternCount,sectorCount, mode)) != SDL_PASS)
+                    #endif
                     {
                         testStatus = SDL_APP_TEST_FAILED;
                     }
@@ -493,8 +550,62 @@ int32_t sdl_mcrc_posTest(void)
                 DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
                 return (testStatus);
             }
+            #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+            if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[channel-1U]) != SDL_PASS))
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+            }
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+            SDL_MCRC_Configparam[channel-1U].type = SDL_MCRC_TYPE_16BIT;
+            if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[channel-1U]) != SDL_PASS))
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+            }
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+            SDL_MCRC_Configparam[channel-1U].type = SDL_MCRC_TYPE_32BIT;
+            if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[channel-1U]) != SDL_PASS))
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+            }
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+            SDL_MCRC_Configparam[channel-1U].type = SDL_MCRC_TYPE_E2EPROFILE;
+            if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[channel-1U]) != SDL_PASS))
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+            }
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+            SDL_MCRC_Configparam[channel-1U].type = SDL_MCRC_TYPE_VDA_CAN_SAEJ1850;
+            if ((SDL_MCRC_addConfig(instance,channel,&SDL_MCRC_Configparam[channel-1U]) != SDL_PASS))
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+            }
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+            #endif
         }
+
     }
+
+
 
     return (testStatus);
 }

@@ -56,7 +56,18 @@
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
-/* None */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+ static SDL_MCRC_Config_t SDL_MCRC_Configparam[1] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_64BIT,
+          SDL_MCRC_DATA_64_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      }
+ };
+ #endif
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -145,8 +156,13 @@ int32_t sdl_mcrcFullCPU_main(void)
             result = SDL_MCRC_channelReset(testParams[testCase].instance,testParams[testCase].mcrcChannelNumber);
             SDL_MCRC_config(testParams[testCase].instance,testParams[testCase].mcrcChannelNumber,testParams[testCase].mcrcPatternCount,
                         testParams[testCase].mcrcSectorCount, testParams[testCase].mcrcMode);
+            #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM261X)
+            result = (SDL_MCRC_verifyConfig(testParams[testCase].instance,testParams[testCase].mcrcChannelNumber,testParams[testCase].mcrcPatternCount,
+                        testParams[testCase].mcrcSectorCount, testParams[testCase].mcrcMode, &SDL_MCRC_Configparam[0]));
+            #else
             result = SDL_MCRC_verifyConfig(testParams[testCase].instance,testParams[testCase].mcrcChannelNumber,testParams[testCase].mcrcPatternCount,
                         testParams[testCase].mcrcSectorCount, testParams[testCase].mcrcMode);
+            #endif
         }
         if (result == SDL_PASS)
         {
