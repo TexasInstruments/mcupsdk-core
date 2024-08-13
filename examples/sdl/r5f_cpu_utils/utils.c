@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2023-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -52,12 +52,16 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+
+#define SDL_MPU_REGION_MAX     4U
+
 /*===========================================================================*/
 /*                         Declarations                                      */
 /*===========================================================================*/
 
 /* Declaration of Global structure to contain all register values*/
 SDL_R5FCPU_StaticRegs  pCPUStaticRegs;
+SDL_R5MPU_staticRegs   pMPUStaticRegs;
 
 int32_t  sdl_apiTest(void);
 void    print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs);
@@ -68,44 +72,14 @@ void    print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs);
 
 void  print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs)
 {
-    DebugP_log("The MIDR register value  is  0x%x \r\n",pCPUStaticRegs->MIDR);
-    DebugP_log("The CTR register value  is  0x%x \r\n",pCPUStaticRegs->CTR);
-    DebugP_log("The TCMTR register value  is  0x%x \r\n",pCPUStaticRegs->TCMTR);
-    DebugP_log("The MPUIR register value  is  0x%x \r\n",pCPUStaticRegs->MPUIR);
-    DebugP_log("The MPIDR register value  is  0x%x \r\n",pCPUStaticRegs->MPIDR);
-    DebugP_log("The PFR0 register value  is  0x%x \r\n",pCPUStaticRegs->PFR0);
-    DebugP_log("The PFR1 register value  is  0x%x \r\n",pCPUStaticRegs->PFR1);
-    DebugP_log("The ID_DFR0 register value  is  0x%x \r\n",pCPUStaticRegs->ID_DFR0);
-    DebugP_log("The ID_AFR0 register value  is  0x%x \r\n",pCPUStaticRegs->ID_AFR0);
-    DebugP_log("The ID_MMFR0 register value  is  0x%x \r\n",pCPUStaticRegs->ID_MMFR0);
-    DebugP_log("The ID_MMFR1 register value  is  0x%x \r\n",pCPUStaticRegs->ID_MMFR1);
-    DebugP_log("The ID_MMFR2 register value  is  0x%x \r\n",pCPUStaticRegs->ID_MMFR2);
-    DebugP_log("The ID_MMFR3 register value  is  0x%x \r\n",pCPUStaticRegs->ID_MMFR3);
-    DebugP_log("The ID_ISAR0 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR0);
-    DebugP_log("The ID_ISAR1 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR1);
-    DebugP_log("The ID_ISAR2 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR2);
-    DebugP_log("The ID_ISAR3 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR3);
-    DebugP_log("The ID_ISAR4 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR4);
-    DebugP_log("The ID_ISAR5 register value  is  0x%x \r\n",pCPUStaticRegs->ID_ISAR5);
-    DebugP_log("The CCSIDR register value  is  0x%x \r\n",pCPUStaticRegs->CCSIDR);
-    DebugP_log("The CLIDR register value  is  0x%x \r\n",pCPUStaticRegs->CLIDR);
-    DebugP_log("The AIDR register value  is  0x%x \r\n",pCPUStaticRegs->AIDR);
-    DebugP_log("The CSSELR register value  is  0x%x \r\n",pCPUStaticRegs->CSSELR);
     DebugP_log("The SCTLR register value  is  0x%x \r\n",pCPUStaticRegs->SCTLR);
     DebugP_log("The ACTLR register value  is  0x%x \r\n",pCPUStaticRegs->ACTLR);
     DebugP_log("The SecondaryACTLR register value  is  0x%x \r\n",pCPUStaticRegs->SecondaryACTLR);
     DebugP_log("The CPACR register value  is  0x%x \r\n",pCPUStaticRegs->CPACR);
-    DebugP_log("The MPURegionBaseADDR register value  is  0x%x \r\n",pCPUStaticRegs->MPURegionBaseADDR);
-    DebugP_log("The MPURegionEnableR register value  is  0x%x \r\n",pCPUStaticRegs->MPURegionEnableR);
-    DebugP_log("The MPURegionAccessControlR register value  is  0x%x \r\n",pCPUStaticRegs->MPURegionAccessControlR);
-    DebugP_log("The RGNR register value  is  0x%x \r\n",pCPUStaticRegs->RGNR);
     DebugP_log("The BTCMRegionR register value  is  0x%x \r\n", pCPUStaticRegs->BTCMRegionR);
     DebugP_log("The ATCMRegionR register value  is  0x%x \r\n",pCPUStaticRegs->ATCMRegionR);
     DebugP_log("The SlavePortControlR register value  is  0x%x \r\n",pCPUStaticRegs->SlavePortControlR);
     DebugP_log("The CONTEXTIDR register value  is  0x%x \r\n",pCPUStaticRegs->CONTEXTIDR);
-    DebugP_log("The ThreadProcessIDR1 register value  is  0x%x \r\n",pCPUStaticRegs->ThreadProcessIDR1);
-    DebugP_log("The ThreadProcessIDR2 register value  is  0x%x \r\n",pCPUStaticRegs->ThreadProcessIDR2);
-    DebugP_log("The ThreadProcessIDR3 register value  is  0x%x \r\n",pCPUStaticRegs->ThreadProcessIDR3);
     DebugP_log("The nVALIRQSET register value  is  0x%x \r\n",pCPUStaticRegs->nVALIRQSET);
     DebugP_log("The nVALFIQSET register value  is  0x%x \r\n",pCPUStaticRegs->nVALFIQSET);
     DebugP_log("The nVALRESETSET register value  is  0x%x \r\n",pCPUStaticRegs->nVALRESETSET);
@@ -120,30 +94,41 @@ void  print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs)
     DebugP_log("The LLPPnormalAXIRR register value  is  0x%x \r\n",pCPUStaticRegs->LLPPnormalAXIRR);
     DebugP_log("The LLPPvirtualAXIRR register value  is  0x%x \r\n",pCPUStaticRegs->LLPPvirtualAXIRR);
     DebugP_log("The AHBRR register value  is  0x%x \r\n",pCPUStaticRegs->AHBRR);
-    DebugP_log("The CFLR register value  is  0x%x \r\n",pCPUStaticRegs->CFLR);
-    DebugP_log("The PMOVSR register value  is  0x%x \r\n",pCPUStaticRegs->PMOVSR);
-    DebugP_log("The DFSR register value  is  0x%x \r\n",pCPUStaticRegs->DFSR);
-    DebugP_log("The ADFSR register value  is  0x%x \r\n",pCPUStaticRegs->ADFSR);
-    DebugP_log("The DFAR register value  is  0x%x \r\n",pCPUStaticRegs->DFAR);
-    DebugP_log("The IFSR register value  is  0x%x \r\n",pCPUStaticRegs->IFSR);
-    DebugP_log("The IFAR register value  is  0x%x \r\n", pCPUStaticRegs->IFAR);
-    DebugP_log("The AIFSR register value  is  0x%x \r\n",pCPUStaticRegs->AIFSR);
+    DebugP_log("The PMCNTENSET register value  is  0x%x \r\n",pCPUStaticRegs->PMCNTENSET);
+    DebugP_log("The PMCR register value  is  0x%x \r\n",pCPUStaticRegs->PMCR);
+    DebugP_log("The PMUSERENR register value  is  0x%x \r\n",pCPUStaticRegs->PMUSERENR);
+    DebugP_log("The PMINTENSET register value  is  0x%x \r\n",pCPUStaticRegs->PMINTENSET);
+    DebugP_log("The PMINTENCLR register value  is  0x%x \r\n",pCPUStaticRegs->PMINTENCLR);
 }
 
 int32_t sdl_apiTest(void)
 {
     int32_t sdlResult = SDL_EBADARGS;
+    uint32_t SDL_MPU_region;
     /*Read all R5F cpu static registers*/
     sdlResult = SDL_CPU_staticRegisterRead(&pCPUStaticRegs);
 
+    for(SDL_MPU_region = 0; SDL_MPU_region < SDL_MPU_REGION_MAX; SDL_MPU_region++)
+    {
+        SDL_R5MPU_readStaticRegisters(&pMPUStaticRegs, SDL_MPU_region);
+        DebugP_log("The MPU Register read started for MPU REGION -> 0x%d \r\n\n",SDL_MPU_region);
+
+        DebugP_log("The SCTLR register value  is  0x%x \r\n",pMPUStaticRegs.sysControlReg);
+        DebugP_log("The MPUIR register value  is  0x%x \r\n",pMPUStaticRegs.mpuTypeReg);
+        DebugP_log("The RGNR register value  is  0x%x \r\n",pMPUStaticRegs.regionId);
+        DebugP_log("The MPURbaseAddr register value  is  0x%x \r\n",pMPUStaticRegs.baseAddr);
+        DebugP_log("The MPURsize register value  is  0x%x \r\n",pMPUStaticRegs.size);
+        DebugP_log("The MPURaccessControl register value  is  0x%x \r\n\n",pMPUStaticRegs.accessPermission);
+    }
+
     if (sdlResult==SDL_PASS)
     {
-        DebugP_log("All the register read are complete. \r\n");
+        DebugP_log("All the R5F MPU Static register read are complete. \r\n\n");
         sdlResult = SDL_PASS;
     }
     else
     {
-        DebugP_log("Some Register read are fail. \r\n");
+        DebugP_log("Some MPU Register read are fail. \r\n\n");
         sdlResult = SDL_EBADARGS;
     }
     /*Print All register values*/

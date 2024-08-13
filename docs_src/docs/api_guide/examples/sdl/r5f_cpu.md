@@ -52,73 +52,77 @@ For detail description of these register values, one can refer
 
 \code
 
- ASM Test Application
-All the register read are complete.
-The MIDR register value  is  0x411fc153
-The CTR register value  is  0x8003c003
-The TCMTR register value  is  0x10001
-The MPUIR register value  is  0x1000
-The MPIDR register value  is  0xc0000000
-The PFR0 register value  is  0x131
-The PFR1 register value  is  0x1
-The ID_DFR0 register value  is  0x10400
-The ID_AFR0 register value  is  0x0
-The ID_MMFR0 register value  is  0x210030
-The ID_MMFR1 register value  is  0x0
-The ID_MMFR2 register value  is  0x1200000
-The ID_MMFR3 register value  is  0x211
-The ID_ISAR0 register value  is  0x2101111
-The ID_ISAR1 register value  is  0x13112111
-The ID_ISAR2 register value  is  0x21232141
-The ID_ISAR3 register value  is  0x1112131
-The ID_ISAR4 register value  is  0x10142
-The ID_ISAR5 register value  is  0x0
-The CCSIDR register value  is  0xf00fe019
-The CLIDR register value  is  0x9200003
-The AIDR register value  is  0x0
-The CSSELR register value  is  0x1
-The SCTLR register value  is  0x1e5187d
-The ACTLR register value  is  0x27
-The SecondaryACTLR register value  is  0x400000
-The CPACR register value  is  0xc0f00000
-The MPURegionBaseADDR register value  is  0x70000000
-The MPURegionEnableR register value  is  0x29
-The MPURegionAccessControlR register value  is  0x20b
-The RGNR register value  is  0x3
-The BTCMRegionR register value  is  0x80019
-The ATCMRegionR register value  is  0x25
-The SlavePortControlR register value  is  0x0
-The CONTEXTIDR register value  is  0x0
-The ThreadProcessIDR1 register value  is  0x0
-The ThreadProcessIDR2 register value  is  0x0
-The ThreadProcessIDR3 register value  is  0x0
-The nVALIRQSET register value  is  0x0
-The nVALFIQSET register value  is  0x0
-The nVALRESETSET register value  is  0x0
-The nVALDEBUGSET register value  is  0x0
-The nVALIRQCLEAR register value  is  0x0
-The nVALFIQCLEAR register value  is  0x0
-The nVALRESETCLEAR register value  is  0x0
-The nVALDEBUGCLEAR register value  is  0x0
-The BuildOption1R register value  is  0x80000
-The BuildOption2R register value  is  0x8abfc5c7
-The PinOptionR register value  is  0xc
-The LLPPnormalAXIRR register value  is  0x0
-The LLPPvirtualAXIRR register value  is  0x0
-The AHBRR register value  is  0x5000004d
-The CFLR register value  is  0x0
-The PMOVSR register value  is  0x0
-The DFSR register value  is  0x0
-The ADFSR register value  is  0x0
-The DFAR register value  is  0x0
-The IFSR register value  is  0x0
-The IFAR register value  is  0x0
-The AIFSR register value  is  0x0
-Test Name: ASM API TEST  PASSED
+R5F CPU STATIC REGISTER READ Start... 
 
- All tests have passed
+The MPU Register read started for MPU REGION -> 0x0 
 
+The SCTLR register value  is  0x1e5187d 
+The MPUIR register value  is  0x1000 
+The RGNR register value  is  0x0 
+The MPURbaseAddr register value  is  0x0 
+The MPURsize register value  is  0x3d 
+The MPURaccessControl register value  is  0x1204 
 
+The MPU Register read started for MPU REGION -> 0x1 
+
+The SCTLR register value  is  0x1e5187d 
+The MPUIR register value  is  0x1000 
+The RGNR register value  is  0x1 
+The MPURbaseAddr register value  is  0x0 
+The MPURsize register value  is  0x1d 
+The MPURaccessControl register value  is  0x20b 
+
+The MPU Register read started for MPU REGION -> 0x2 
+
+The SCTLR register value  is  0x1e5187d 
+The MPUIR register value  is  0x1000 
+The RGNR register value  is  0x2 
+The MPURbaseAddr register value  is  0x80000 
+The MPURsize register value  is  0x1d 
+The MPURaccessControl register value  is  0x20b 
+
+The MPU Register read started for MPU REGION -> 0x3 
+
+The SCTLR register value  is  0x1e5187d 
+The MPUIR register value  is  0x1000 
+The RGNR register value  is  0x3 
+The MPURbaseAddr register value  is  0x70000000 
+The MPURsize register value  is  0x29 
+The MPURaccessControl register value  is  0x20b 
+
+All the R5F MPU Static register read are complete. 
+
+The SCTLR register value  is  0x1e5187d 
+The ACTLR register value  is  0x2f 
+The SecondaryACTLR register value  is  0x400000 
+The CPACR register value  is  0xc0f00000 
+The BTCMRegionR register value  is  0x80019 
+The ATCMRegionR register value  is  0x25 
+The SlavePortControlR register value  is  0x0 
+The CONTEXTIDR register value  is  0x0 
+The nVALIRQSET register value  is  0x0 
+The nVALFIQSET register value  is  0x0 
+The nVALRESETSET register value  is  0x0 
+The nVALDEBUGSET register value  is  0x0 
+The nVALIRQCLEAR register value  is  0x0 
+The nVALFIQCLEAR register value  is  0x0 
+The nVALRESETCLEAR register value  is  0x0 
+The nVALDEBUGCLEAR register value  is  0x0 
+The BuildOption1R register value  is  0x80000 
+The BuildOption2R register value  is  0x8abfc5c7 
+The PinOptionR register value  is  0xc 
+The LLPPnormalAXIRR register value  is  0x0 
+The LLPPvirtualAXIRR register value  is  0x0 
+The AHBRR register value  is  0x5000004d 
+The PMCNTENSET register value  is  0x80000000 
+The PMCR register value  is  0x41151801 
+The PMUSERENR register value  is  0x0 
+The PMINTENSET register value  is  0x0 
+The PMINTENCLR register value  is  0x0 
+
+R5F CPU STATIC REGISTER READ Complete! 
+
+All test have passed. 
 
 \endcode
 \endcond
