@@ -758,12 +758,7 @@ typedef struct {
 
 /* INTXBAR0_G2 */
 
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MASK                             (0x80000000U)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_SHIFT                            (0x0000001FU)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MAX                              (0x00000001U)
-
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MASK                             (0x80000000U)
+#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MASK                             (0x80007FFFU)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_SHIFT                            (0x0000001FU)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_RESETVAL                         (0x00000000U)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MAX                              (0x00000001U)
@@ -772,12 +767,7 @@ typedef struct {
 
 /* INTXBAR0_G3 */
 
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MASK                             (0x00000300U)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_SHIFT                            (0x00000008U)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MAX                              (0x00000003U)
-
-#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MASK                             (0x00000300U)
+#define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MASK                             (0x00000303U)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_SHIFT                            (0x00000008U)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_RESETVAL                         (0x00000000U)
 #define CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MAX                              (0x00000003U)
