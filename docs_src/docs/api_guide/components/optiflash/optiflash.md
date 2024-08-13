@@ -205,6 +205,10 @@ Although, FOTA is usually a very low priority task and XIP downtime can be manag
 
 This role of this accelerator is to schedule reads and writes over same 8 data lines of OSPI. The aim of this hardware is to minimize XIP downtime.
 
+To read more on this please refer to 
+1. \ref FLSOPSKD_IP
+2. \ref bootseg_ip_working
+
 ## XIP Performance Benchmarks
 
 ### Benchmark 1
