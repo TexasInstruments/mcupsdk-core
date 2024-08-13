@@ -356,7 +356,7 @@ int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc);
 /**
  * \brief API to finish streaming boot authentication
  */
-int32_t Bootloader_authFinish();
+int32_t Bootloader_authFinish(void);
 
 #ifdef __cplusplus
 }

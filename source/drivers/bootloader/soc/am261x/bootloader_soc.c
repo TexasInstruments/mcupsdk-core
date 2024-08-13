@@ -465,7 +465,7 @@ int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc)
     return status;
 }
 
-int32_t Bootloader_authFinish()
+int32_t Bootloader_authFinish(void)
 {
     int32_t status = SystemP_FAILURE;
 

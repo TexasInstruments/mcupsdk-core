@@ -912,13 +912,13 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         /* If ELF magic bytes match, then read the whole ELF buffer. */
         config->fxns->imgSeekFxn((imgOffset + rdSz), config->args);
         status = config->fxns->imgReadFxn((gElfHBuffer + rdSz), (elfSize - rdSz), config->args);
+        parsedImageSize += elfSize;
     }
 
     if((status == SystemP_SUCCESS) && (doAuth == TRUE))
     {
         /* Send the ELF header for streaming authentication to the HSM. */
         status = Bootloader_authUpdate((uintptr_t)gElfHBuffer, elfSize, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
-        parsedImageSize += elfSize;
     }
 
     Bootloader_ELFH32 *elfPtr32 = (Bootloader_ELFH32 *)gElfHBuffer;
@@ -954,13 +954,13 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         }
         config->fxns->imgSeekFxn(imgOffset + phoff, config->args);
         status = config->fxns->imgReadFxn((void *)(gPHTBuffer), phtSize, config->args);
+        parsedImageSize += phtSize;
     }
 
     if(status == SystemP_SUCCESS && (doAuth == TRUE))
     {
         /* Send the PHT for streaming authentication to the HSM. */
         status = Bootloader_authUpdate((uintptr_t)(gPHTBuffer), phtSize, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
-        parsedImageSize += phtSize;
     }
 
     Bootloader_ELFPH32 *elfPhdrPtr32 = (Bootloader_ELFPH32 *)gPHTBuffer;
@@ -981,6 +981,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         /* Read the note segment buffer from the note segment flash offset. */
         config->fxns->imgSeekFxn(imgOffset + noteSegmentOffset, config->args);
         status = config->fxns->imgReadFxn((void *)(gNoteSegBuffer), noteSegmentSz, config->args);
+        parsedImageSize += noteSegmentSz;
     }
 
     if(status == SystemP_SUCCESS)
@@ -993,7 +994,6 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     {
         /* Send the note segment for streaming authentication to the HSM. */
         status = Bootloader_authUpdate((uintptr_t)gNoteSegBuffer, noteSegmentSz, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
-        parsedImageSize += noteSegmentSz;
     }
 
     int32_t i;
@@ -1007,7 +1007,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         */
         for(i = 1; ((i < elfPtr32->e_phnum) && (status == SystemP_SUCCESS)); i++)
         {
-            if((elfPhdrPtr32[i].filesz != 0) && (elfPhdrPtr32[i].filesz <= (bootImageLen - parsedImageSize)))
+            if((elfPhdrPtr32[i].filesz != 0) && (((doAuth == TRUE) && (elfPhdrPtr32[i].filesz <= (bootImageLen - parsedImageSize))) || (doAuth == FALSE)))
             {
                 if(elfPhdrPtr32[i].type == PT_LOAD)
                 {
@@ -1049,13 +1049,13 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                             /* If the address of the segment is valid, load the segment from the flash. */
                             status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
                             config->bootImageSize += elfPhdrPtr32[i].filesz;
+                            parsedImageSize += elfPhdrPtr32[i].filesz;
                         }
                         
                         if((status == SystemP_SUCCESS) && (doAuth == TRUE))
                         {
                             /* Send the loadable segment info for Streaming Authentication to the HSM. */
                             status = Bootloader_authUpdate((uintptr_t)addr, elfPhdrPtr32[i].filesz, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
-                            parsedImageSize += elfPhdrPtr32[i].filesz;
                         }
                     }
                 }
@@ -1064,7 +1064,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                     /* Ignore this segment */
                 }
             }
-            else if (elfPhdrPtr32[i].filesz > (bootImageLen - parsedImageSize))
+            else if ((elfPhdrPtr32[i].filesz > (bootImageLen - parsedImageSize)) && (doAuth == TRUE))
             {
                 /* If the segment size is greater than the remaining size left. */
                 status = SystemP_FAILURE;
@@ -1083,7 +1083,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         */
         for(i = 1; ((i < elfPtr64->e_phnum) && (status == SystemP_SUCCESS)); i++)
         {
-            if((elfPhdrPtr64[i].filesz != 0) && (elfPhdrPtr64[i].filesz <= (bootImageLen - parsedImageSize)))
+            if((elfPhdrPtr64[i].filesz != 0) && (((doAuth == TRUE) && (elfPhdrPtr64[i].filesz <= (bootImageLen - parsedImageSize))) || (doAuth == FALSE)))
             {
                 if(elfPhdrPtr64[i].type == PT_LOAD)
                 {
@@ -1114,13 +1114,13 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                     {
                         status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr64[i].filesz, config->args);
                         config->bootImageSize += elfPhdrPtr64[i].filesz;
+                        parsedImageSize += elfPhdrPtr64[i].filesz;
                     }
                     
                     if((status == SystemP_SUCCESS) && (doAuth == TRUE))
                     {
                         /* Send the loadable segment info for Streaming Authentication to the HSM. */
                         status = Bootloader_authUpdate((uintptr_t)addr, elfPhdrPtr64[i].filesz, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
-                        parsedImageSize += elfPhdrPtr64[i].filesz;
                     }
                 }
                 else
@@ -1128,7 +1128,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                     /* Ignore this segment */
                 }
             }
-            else if (elfPhdrPtr64[i].filesz > (bootImageLen - parsedImageSize))
+            else if ((elfPhdrPtr64[i].filesz > (bootImageLen - parsedImageSize)) && (doAuth == TRUE))
             {
                 /* If the segment size is greater than the remaining size left. */
                 status = SystemP_FAILURE;
@@ -1145,19 +1145,23 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         status = SystemP_FAILURE;
     }
 
-    if((status == SystemP_SUCCESS) && (bootImageLen > parsedImageSize))
+    if((status == SystemP_SUCCESS) && (bootImageLen > parsedImageSize) && (doAuth == TRUE))
     {
         if ((bootImageLen - parsedImageSize) > BOOTLOADER_MAX_RS_NOTE_SEGMENT_SIZE)
         {
             status = SystemP_FAILURE;
         }
 
-        if ((status == SystemP_SUCCESS) && (doAuth == TRUE))
+        if (status == SystemP_SUCCESS)
         {
             /* This segement contains the random string required to verify decryption. */
             config->fxns->imgReadFxn((void *)randomStringBuffer, (bootImageLen - parsedImageSize), config->args);
             status = Bootloader_authUpdate((uintptr_t)randomStringBuffer, (bootImageLen - parsedImageSize), BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
         }
+    }
+    else if ((status == SystemP_SUCCESS) && (doAuth == FALSE))
+    {
+        status = SystemP_SUCCESS;
     }
     else 
     {

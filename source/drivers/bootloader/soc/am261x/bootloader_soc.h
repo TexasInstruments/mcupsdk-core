@@ -285,6 +285,11 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize);
 
 /**
+ * \brief Non blocking API to load hsm runtime firmware
+ */
+void Bootloader_socLoadHsmRtFwNonBlocking(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+
+/**
  * \brief API to set CPU clock to 200 MHz or 400 MHz on the basis of eFUSE bits configuration
  */
 void Bootloader_socSetAutoClock();
@@ -307,7 +312,7 @@ int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc);
 /**
  * \brief API to finish streaming boot authentication
  */
-int32_t Bootloader_authFinish();
+int32_t Bootloader_authFinish(void);
 
 #ifdef __cplusplus
 }
