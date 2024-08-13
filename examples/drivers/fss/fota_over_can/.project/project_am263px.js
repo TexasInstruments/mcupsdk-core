@@ -55,7 +55,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_FOTA_OVER_CAN";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_FOTA_OVER_CAN";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true},

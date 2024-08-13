@@ -69,7 +69,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "TEST_prefetch_ABORTT";
+const readmeDoxygenPageTag = "EXAMPLES_KERNEL_PREFETCH_ABORT";
 
 const templates_nortos_r5f =
 [
