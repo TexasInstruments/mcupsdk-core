@@ -47,13 +47,13 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "adc_global_force_main",
-        },
-    }
+    // {
+    //     input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
+    //     output: "../main.c",
+    //     options: {
+    //         entryFunction: "adc_global_force_main",
+    //     },
+    // }
 ];
 
 const buildOptionCombos = [

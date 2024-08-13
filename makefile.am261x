@@ -116,6 +116,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_differential_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_early_interrupt_offset/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_early_interrupt_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_global_force/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_high_priority_soc/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_multiple_soc_epwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_open_shorts_detection/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -134,6 +138,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_ecap/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_epwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -883,6 +889,10 @@ BUILD_COMBO_EXAMPLE_ALL += adc_differential_mode_am261x-som_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_ALL += adc_differential_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_early_interrupt_offset_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_multiple_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_open_shorts_detection_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -901,6 +911,8 @@ BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_am261x-som_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_dma_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_oversampling_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -1232,6 +1244,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_early_interrupt_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1285,6 +1309,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2174,6 +2204,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_differential_mode_am261x-som_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_differential_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_early_interrupt_offset_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_multiple_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_open_shorts_detection_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2192,6 +2226,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_am261x-som_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_dma_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_oversampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2518,6 +2554,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_early_interrupt_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -2571,6 +2619,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3460,6 +3514,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_differential_mode_am261x-som_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_differential_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_early_interrupt_offset_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_multiple_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_open_shorts_detection_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -3478,6 +3536,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_am261x-som_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_dma_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_epwm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_oversampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -3804,6 +3864,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  adc_early_interrupt_offset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_early_interrupt_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ adc_global_force_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_global_force_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_global_force/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_high_priority_soc_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_high_priority_soc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_high_priority_soc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  adc_multiple_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -3857,6 +3929,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  adc_soc_continuous_dma_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_soc_ecap_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_soc_ecap_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_soc_ecap/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  adc_soc_epwm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

@@ -65,6 +65,10 @@ Feed analog inputs to channels
 Feed analog inputs to channels
     - ADC1_AIN0 - J1/3 Pin 24
     - ADC1_AIN1 - J1/3 Pin 29
+## AM261x-LP
+Feed analog inputs to channels
+    - ADC1_AIN0 - J1 Pin 24
+    - ADC1_AIN1 - J5 Pin 42
 # Watch Variables
 - gAdc1soc0Delay[] - holds the delay values for ADC1_SOC0
 - gAdc1soc1Delay[] - holds the delay values for ADC1_SOC1
@@ -100,6 +104,7 @@ Feed analog inputs to channels
 
 Shown below is a sample output when the application is run,
 
+\cond SOC_AM263X || SOC_AM263PX
 \code
 ADC PPB Delay Test Started
 Delays associated with
@@ -121,3 +126,31 @@ conversion	SOC 0	SOC 1
 ADC PPB Delay Test Passed
 All tests have passed!!
 \endcode
+\endcond
+
+\cond SOC_AM261X
+ADC PPB Delay Test Started
+Delays associated with
+conversion	SOC 0	SOC 1
+	16	    28	    2
+	24	    2	    33
+	41	    50	    2
+	49	    2	    11
+	66	    72	    2
+	83	    5	    2
+	91	    2	    56
+	108	    27	    2
+	116	    2	    34
+	133	    49	    2
+	141	    2	    12
+	158	    71	    2
+	175	    4	    2
+	183	    2	    57
+	200	    26	    2
+	208	    2	    35
+	225	    48	    2
+	233	    2	    13
+	250	    70	    2
+ADC PPB Delay Test Passed
+All tests have passed!!
+\endcond

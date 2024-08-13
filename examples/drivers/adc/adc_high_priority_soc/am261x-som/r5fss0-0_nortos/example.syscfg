@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.999+157"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
@@ -59,45 +60,51 @@ adc1.ppb4SOCNumber      = "ADC_SOC_NUMBER3";
 adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
 adc1.ADC.$assign        = "ADC0";
 
-adc2.$name              = "CONFIG_ADC1";
-adc2.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCB";
-adc2.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc2.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc2.soc3Trigger        = "ADC_TRIGGER_EPWM0_SOCB";
-adc2.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
-adc2.enableConverter    = true;
-adc2.ppb2SOCNumber      = "ADC_SOC_NUMBER1";
-adc2.ppb3SOCNumber      = "ADC_SOC_NUMBER2";
-adc2.ppb4SOCNumber      = "ADC_SOC_NUMBER3";
-adc2.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
-adc2.ADC.$assign        = "ADC1";
+adc2.$name               = "CONFIG_ADC1";
+adc2.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
+adc2.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.soc3Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
+adc2.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
+adc2.enableConverter     = true;
+adc2.ppb2SOCNumber       = "ADC_SOC_NUMBER1";
+adc2.ppb3SOCNumber       = "ADC_SOC_NUMBER2";
+adc2.ppb4SOCNumber       = "ADC_SOC_NUMBER3";
+adc2.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
+adc2.socHighPriorityMode = "ADC_PRI_THRU_SOC3_HIPRI";
+adc2.ADC.$assign         = "ADC1";
 
-adc3.$name               = "CONFIG_ADC2";
-adc3.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
-adc3.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
-adc3.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
-adc3.soc3Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
-adc3.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
-adc3.enableConverter     = true;
-adc3.ppb2SOCNumber       = "ADC_SOC_NUMBER1";
-adc3.ppb3SOCNumber       = "ADC_SOC_NUMBER2";
-adc3.ppb4SOCNumber       = "ADC_SOC_NUMBER3";
-adc3.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
-adc3.socHighPriorityMode = "ADC_PRI_THRU_SOC3_HIPRI";
-adc3.ADC.$assign         = "ADC2";
+adc3.$name                          = "CONFIG_ADC2";
+adc3.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc1Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc2Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc3Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc3.enableConverter                = true;
+adc3.ppb2SOCNumber                  = "ADC_SOC_NUMBER1";
+adc3.ppb3SOCNumber                  = "ADC_SOC_NUMBER2";
+adc3.ppb4SOCNumber                  = "ADC_SOC_NUMBER3";
+adc3.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc3.enableInterrupt1               = true;
+adc3.enableInterrupt1ContinuousMode = true;
+adc3.interrupt1SOCSource            = "ADC_SOC_NUMBER2";
+adc3.ADC.$assign                    = "ADC2";
 
-epwm1.$name                                             = "CONFIG_EPWM0";
-epwm1.epwmTimebase_clockDiv                             = "EPWM_CLOCK_DIVIDER_128";
-epwm1.epwmTimebase_period                               = 24000;
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_U_CMPA";
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "15";
-epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEnable         = true;
-epwm1.epwmEventTrigger_EPWM_SOC_B_triggerSource         = "EPWM_SOC_TBCTR_U_CMPB";
-epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar = "15";
-epwm1.epwmCounterCompare_cmpA                           = 1000;
-epwm1.epwmCounterCompare_cmpB                           = 1005;
-epwm1.EPWM.$assign                                      = "EPWM0";
+epwm1.$name                                                   = "CONFIG_EPWM0";
+epwm1.epwmTimebase_clockDiv                                   = "EPWM_CLOCK_DIVIDER_128";
+epwm1.epwmTimebase_period                                     = 24000;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable               = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource               = "EPWM_SOC_TBCTR_U_CMPA";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar       = "15";
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEnable               = true;
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerSource               = "EPWM_SOC_TBCTR_U_CMPB";
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar       = "15";
+epwm1.epwmCounterCompare_cmpA                                 = 1000;
+epwm1.epwmCounterCompare_cmpB                                 = 1005;
+epwm1.epwmTimebase_emulationMode                              = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitEnable = true;
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitEnable = true;
+epwm1.EPWM.$assign                                            = "EPWM0";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
@@ -179,13 +186,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -338,7 +345,7 @@ section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["ADC4_INT1"];
+int_xbar1.xbarOutput = ["ADC2_INT1"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

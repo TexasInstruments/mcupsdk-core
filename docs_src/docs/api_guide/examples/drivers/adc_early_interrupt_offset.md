@@ -46,6 +46,10 @@ Feed analog inputs to channels
 ## AM263Px-LP or AM263x-LP
 Feed analog inputs to channels
          ADC1_AIN0 - J1/3 Pin 24
+## AM261X-LP
+When using AM261x-LP
+Feed Analog Inputs to the Boosterpack Headers at the following
+    	 ADC1_AIN0 - J5 pin 24
 # Watch Variables
          gAdc1soc1Delay[] - holds the delay values for ADC1_SOC1
 

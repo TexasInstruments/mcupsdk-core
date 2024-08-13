@@ -68,39 +68,14 @@
 /* Number of ADC conversions required */
 #define ADC_CONVERSION_COUNT     (256U)
 
+/* definitions in main.c */
+extern uint32_t gAdcBaseAddr[CONFIG_ADC_NUM_INSTANCES];
 
-uint32_t gAdcBaseAddr[5] = {
-    CONFIG_ADC0_BASE_ADDR,
-    CONFIG_ADC1_BASE_ADDR,
-    CONFIG_ADC2_BASE_ADDR,
-    CONFIG_ADC3_BASE_ADDR,
-    CONFIG_ADC4_BASE_ADDR,
-    };
+extern uint32_t gAdcResultBaseAddr[CONFIG_ADC_NUM_INSTANCES];
 
-uint32_t gAdcResultBaseAddr[5] = {
-    CONFIG_ADC0_RESULT_BASE_ADDR,
-    CONFIG_ADC1_RESULT_BASE_ADDR,
-    CONFIG_ADC2_RESULT_BASE_ADDR,
-    CONFIG_ADC3_RESULT_BASE_ADDR,
-    CONFIG_ADC4_RESULT_BASE_ADDR,
-    };
+extern uint16_t* gAdcResults[CONFIG_ADC_NUM_INSTANCES];
 
 uint32_t globalForceSocNumber = (uint32_t)ADC_SOC_NUMBER0;
-
-/* Array to store RTI triggered ADC Conversions */
-uint16_t gAdc0Results[ADC_CONVERSION_COUNT] = {0};
-uint16_t gAdc1Results[ADC_CONVERSION_COUNT] = {0};
-uint16_t gAdc2Results[ADC_CONVERSION_COUNT] = {0};
-uint16_t gAdc3Results[ADC_CONVERSION_COUNT] = {0};
-uint16_t gAdc4Results[ADC_CONVERSION_COUNT] = {0};
-
-uint16_t* gAdcResults[] = {
-    gAdc0Results,
-    gAdc1Results,
-    gAdc2Results,
-    gAdc3Results,
-    gAdc4Results,
-};
 
 uint32_t gConversionCount = 0;
 

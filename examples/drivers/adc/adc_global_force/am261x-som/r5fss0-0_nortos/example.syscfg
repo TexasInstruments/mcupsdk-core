@@ -1,24 +1,20 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const pmic       = scripting.addModule("/board/pmic/pmic", {}, false);
 const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
 const adc1       = adc.addInstance();
 const adc2       = adc.addInstance();
 const adc3       = adc.addInstance();
-const adc4       = adc.addInstance();
-const adc5       = adc.addInstance();
-const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1     = mcspi.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
@@ -68,19 +64,27 @@ adc3.enableInterrupt1  = true;
 adc3.soc0SampleWindow  = 20;
 adc3.ADC.$assign       = "ADC2";
 
-adc4.$name             = "CONFIG_ADC3";
-adc4.adcClockPrescaler = "ADC_CLK_DIV_4_0";
-adc4.enableConverter   = true;
-adc4.soc0SampleWindow  = 20;
-adc4.enableInterrupt1  = true;
-adc4.ADC.$assign       = "ADC3";
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+adc.adcReferences     = soc_ctrl_adc1;
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
 
-adc5.$name             = "CONFIG_ADC4";
-adc5.adcClockPrescaler = "ADC_CLK_DIV_4_0";
-adc5.enableConverter   = true;
-adc5.soc0SampleWindow  = 20;
-adc5.enableInterrupt1  = true;
-adc5.ADC.$assign       = "ADC4";
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -136,7 +140,7 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
@@ -285,34 +289,22 @@ int_xbar1.xbarOutput = ["ADC0_INT1"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution              = "ADC0_AIN0";
-adc1.ADC.AIN1.$suggestSolution              = "ADC0_AIN1";
-adc1.ADC.AIN2.$suggestSolution              = "ADC0_AIN2";
-adc1.ADC.AIN3.$suggestSolution              = "ADC0_AIN3";
-adc1.ADC.AIN4.$suggestSolution              = "ADC0_AIN4";
-adc1.ADC.AIN5.$suggestSolution              = "ADC0_AIN5";
-adc2.ADC.AIN0.$suggestSolution              = "ADC1_AIN0";
-adc2.ADC.AIN1.$suggestSolution              = "ADC1_AIN1";
-adc2.ADC.AIN2.$suggestSolution              = "ADC1_AIN2";
-adc2.ADC.AIN3.$suggestSolution              = "ADC1_AIN3";
-adc2.ADC.AIN4.$suggestSolution              = "ADC1_AIN4";
-adc2.ADC.AIN5.$suggestSolution              = "ADC1_AIN5";
-adc3.ADC.AIN0.$suggestSolution              = "ADC2_AIN0";
-adc3.ADC.AIN1.$suggestSolution              = "ADC2_AIN1";
-adc3.ADC.AIN2.$suggestSolution              = "ADC2_AIN2";
-adc3.ADC.AIN3.$suggestSolution              = "ADC2_AIN3";
-adc3.ADC.AIN4.$suggestSolution              = "ADC2_AIN4";
-adc3.ADC.AIN5.$suggestSolution              = "ADC2_AIN5";
-adc4.ADC.AIN0.$suggestSolution              = "ADC3_AIN0";
-adc4.ADC.AIN1.$suggestSolution              = "ADC3_AIN1";
-adc4.ADC.AIN2.$suggestSolution              = "ADC3_AIN2";
-adc4.ADC.AIN3.$suggestSolution              = "ADC3_AIN3";
-adc4.ADC.AIN4.$suggestSolution              = "ADC3_AIN4";
-adc4.ADC.AIN5.$suggestSolution              = "ADC3_AIN5";
-adc5.ADC.AIN0.$suggestSolution              = "ADC4_AIN0";
-adc5.ADC.AIN1.$suggestSolution              = "ADC4_AIN1";
-adc5.ADC.AIN2.$suggestSolution              = "ADC4_AIN2";
-adc5.ADC.AIN3.$suggestSolution              = "ADC4_AIN3";
-adc5.ADC.AIN4.$suggestSolution              = "ADC4_AIN4";
-adc5.ADC.AIN5.$suggestSolution              = "ADC4_AIN5";
-debug_log.uartLog.UART.$suggestSolution     = "UART0";
+adc1.ADC.AIN0.$suggestSolution          = "ADC0_AIN0";
+adc1.ADC.AIN1.$suggestSolution          = "ADC0_AIN1";
+adc1.ADC.AIN2.$suggestSolution          = "ADC0_AIN2";
+adc1.ADC.AIN3.$suggestSolution          = "ADC0_AIN3";
+adc1.ADC.AIN4.$suggestSolution          = "ADC0_AIN4";
+adc1.ADC.AIN5.$suggestSolution          = "ADC0_AIN5";
+adc2.ADC.AIN0.$suggestSolution          = "ADC1_AIN0";
+adc2.ADC.AIN1.$suggestSolution          = "ADC1_AIN1";
+adc2.ADC.AIN2.$suggestSolution          = "ADC1_AIN2";
+adc2.ADC.AIN3.$suggestSolution          = "ADC1_AIN3";
+adc2.ADC.AIN4.$suggestSolution          = "ADC1_AIN4";
+adc2.ADC.AIN5.$suggestSolution          = "ADC1_AIN5";
+adc3.ADC.AIN0.$suggestSolution          = "ADC2_AIN0";
+adc3.ADC.AIN1.$suggestSolution          = "ADC2_AIN1";
+adc3.ADC.AIN2.$suggestSolution          = "ADC2_AIN2";
+adc3.ADC.AIN3.$suggestSolution          = "ADC2_AIN3";
+adc3.ADC.AIN4.$suggestSolution          = "ADC2_AIN4";
+adc3.ADC.AIN5.$suggestSolution          = "ADC2_AIN5";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

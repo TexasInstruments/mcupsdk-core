@@ -222,8 +222,6 @@ uint16_t App_dmaConfigure(
     uint32_t            baseAddr, regionId;
     EDMACCPaRAMEntry    empty_edmaParam, edmaParam;
     uint32_t            empty_dmaCh, dmaCh, empty_tcc, tcc, empty_param, param;
-    // EDMACCPaRAMEntry    empty_edmaParam;
-    // uint32_t            empty_dmaCh, empty_tcc, empty_param;
     int32_t             testStatus = SystemP_SUCCESS;
 
     /* Enable only TC and ITC chaining on dmaCh0.

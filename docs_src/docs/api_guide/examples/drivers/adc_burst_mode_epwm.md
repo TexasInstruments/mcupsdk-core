@@ -54,6 +54,14 @@ The example demonstrates Burst mode of ADC periodically triggered by trigger fro
       - ADC1_AIN1, i.e., J1/3 PIN  29
       - ADC1_AIN2, i.e., J5/7 PIN  67
       - ADC1_AIN3, i.e., J1/3 PIN  6
+      
+## AM261X-LP
+      When using AM261x-LP
+      Feed Analog Inputs to the Boosterpack Headers at the following
+      - ADC1_AIN0 - J5 pin 24
+      - ADC1_AIN1 - J5 pin 42
+      - ADC1_AIN2,  J5 pin 64 | note this will require IO expander configurations. check schematics and syscfg for details.
+      - ADC1_AIN3 - J5 pin 46
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM_COMBOS}

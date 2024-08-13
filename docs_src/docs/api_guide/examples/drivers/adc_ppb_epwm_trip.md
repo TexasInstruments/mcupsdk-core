@@ -22,9 +22,9 @@ The example does the below
 - ADC PPB is configured to generate ADC EVT1 if ADC results are outside the range.
 - ADC Event is configured as EPWM trip source through EPWM XBAR.
 - Trip Zone and Digital Compare submodule are configured to enable different trip combinations.
-- EPWM0 is configured for One Shot trip.
-- EPWM1 is configured for Cycle by Cycle trip.
-- EPWM2 is configured for Direct trip via Digital compare submodule.
+- EPWM0 (EPWM2 in case of AM261x-LP) is configured for One Shot trip.
+- EPWM1 (EPWM3 in case of AM261x-LP) is configured for Cycle by Cycle trip.
+- EPWM2 (EPWM4 in case of AM261x-LP) is configured for Direct trip via Digital compare submodule.
 - The ramp waveform on DAC output is routed to ADC input.
 - The watch variables storing ADC conversion outputs can be used to view the results.
 
@@ -34,6 +34,7 @@ Watch  Variables
 # External Connections
 - ADC0_AIN2 pin should be connected to DAC output pin.
 - EPWM0A, EPWM0B, EPWM1A, EPWM1B, EPWM2A, EPWM2B can be connected to an oscilloscope to validate tripping.
+- In case of AM261x-LP, these are EPWM 2A/B, 3A/B, 4A/B respectively
 
 ## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1
 
@@ -47,6 +48,15 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 When using AM263x-LP
 - Connect booster pack header J5/J7 pin 66 (ADC input) to J1/J3 pin 30 (DAC out)
 - Capture and analyze waveforms at booster pack header J2/J4 pin 11, J6/J8 pin 59, J2/J4 pin 37, J2/J4 pin 38, J2/J4 pin 39, J2/J4 pin 40.
+
+## AM261X-LP
+
+When using AM261x-LP
+- Connect booster pack header J7 pin 63 (ADC input) to J3 pin 30 (DAC out) | note for these pins refer to IO Expander configurations on Schematics and syscfg
+- Capture and analyze waveforms at booster pack header 
+  - EPWM 2A / 2B J4 pin 40/39
+  - EPWM 3A / 3B J4 pin 38/37
+  - EPWM 4A / 4B J4 pin 36/35
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_EPWM_TRIP_COMBOS}
 

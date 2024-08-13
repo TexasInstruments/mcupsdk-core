@@ -21,7 +21,7 @@ This example showcases the feature "High Priority SOC configuration"
 - NOTE
     - PPB Delay Time Stamp cannot be used if the SOC trigger is software. hence, the example uses EPWM0 to trigger SOC conversions.
     - This example intends to showcase the Priority modes in the SOC. the input channels can be configured through Syscfg as per need.
-
+\cond SOC_AM263X || SOC_AM263PX 
 - ADC0  (done through Syscfg)
     - SOC 0-3 are in Round Robin (no high priority selected)
     - all SOC are triggered by EPWM0SOCA signal.
@@ -54,11 +54,37 @@ This example showcases the feature "High Priority SOC configuration"
     - SOC 1,2 are triggered by EPWM0SOCA signal.
     - SOC 0,3 are triggered by EPWM0SOCB signal.
     - Conversion sequence : SOC 1 --> SOC 2 --> SOC 0 --> SOC 3
-
 PPB Configurations :
 - (done through Syscfg for ADC 0-3. done through Code below for ADC 4 for reference)
 - All PPBx in ADCy are configured for respective SOCx for delay in trigger to signal capture.
+\endcond
 
+\cond SOC_AM261X
+- ADC0  (done through Syscfg)
+    - SOC 0-3 are in Round Robin (no high priority selected)
+    - all SOC are triggered by EPWM0SOCA signal.
+    - Conversion sequence : SOC 0 --> SOC 1 --> SOC 2 --> SOC 3
+
+- ADC1  (done through Syscfg)
+    - SOC 0-3 are in High Priority (SOC 4-15 are in low priority mode by default)
+    - SOC 1,2 are triggered by EPWM0SOCA signal.
+    - SOC 0,3 are triggered by EPWM0SOCB signal.
+    - Conversion sequence : SOC 1 --> SOC 2 --> SOC 0 --> SOC 3
+
+- ADC2  (done through Syscfg)
+    - SOC 0 are in High Priority (SOC 1-15 are in low priority mode by default)
+    - SOC 0-3 are triggered by EPWM0SOCA signal.
+    - Conversion sequence : SOC 0 --> SOC 1 --> SOC 2 --> SOC 3
+
+- ADC2  (reset and done through the code for reference. Can also be set from syscfg)
+    - SOC 0 are in High Priority (SOC 1-15 are in low priority mode by default)
+    - SOC 1,2 are triggered by EPWM0SOCA signal.
+    - SOC 0,3 are triggered by EPWM0SOCB signal.
+    - Conversion sequence : SOC 1 --> SOC 2 --> SOC 0 --> SOC 3
+PPB Configurations :
+- (done through Syscfg for ADC 0-2. done through Code below for ADC 2 for reference)
+- All PPBx in ADCy are configured for respective SOCx for delay in trigger to signal capture.
+\endcond
 
 
 The example does the below
@@ -66,16 +92,22 @@ The example does the below
 - Configures ADC interrupt 0 to be generated at end of conversion of SOC12.
 - ADC0 Interrupt ISR is used to read results of ADC0 from SOC0,SOC1 and average of SOC12 through SOC15.
 
+\cond SOC_AM263X || SOC_AM263PX
 Watch  Variables
 - The watch variables gAdc0PpbDelay, gAdc1PpbDelay, gAdc2PpbDelay, gAdc3PpbDelay, gAdc4PpbDelay, gAdc4PpbDelay_case2 storing ADC conversion delays can be used to view the respective delays for the SOCs configured.
+\endcond
 
+\cond SOC_AM261X
+Watch  Variables
+- The watch variables gAdc0PpbDelay, gAdc1PpbDelay, gAdc2PpbDelay, gAdc3PpbDelay, gAdc4PpbDelay, gAdc4PpbDelay_case2 storing ADC conversion delays can be used to view the respective delays for the SOCs configured.
+\endcond
 # External Connections
 - For this example demonstration, SOCs in respective ADCs are configured for Channel 0 (arbitrarily, any channel can be selected).
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_HIGH_PRIORITY_SOC_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
@@ -102,7 +134,7 @@ Watch  Variables
 \ref DRIVERS_ADC_PAGE
 
 # Sample Output
-
+\cond SOC_AM263X || SOC_AM263PX
 Shown below is a sample output when the application is run,
 
 \code
@@ -150,3 +182,42 @@ ADC High Priority Test Passed!!
 All tests have passed!!
 
 \endcode
+\endcond
+
+\cond SOC_AM261X
+Shown below is a sample output when the application is run,
+
+\code
+ADC High Priority SOC Test Started ...
+
+ADC0: All SOC in round robin. All SOC triggered by EPWM0SOCA
+Expected: delay(SOC0)<delay(SOC1)<delay(SOC2)<delay(SOC3)
+delay(SOC0)	delay(SOC1)	delay(SOC2)	delay(SOC3)
+2		74		146		218
+2		74		146		218
+
+ADC1: All SOC in High Priority. SOC1,2 triggered by EPWM0SOCA.SOC0,3 triggered by EPWM0SOCB 
+Expected: delay(SOC1)<delay(SOC2) delay(SOC0)<delay(SOC3)
+delay(SOC0)	delay(SOC1)	delay(SOC2)	delay(SOC3)
+0		2		74		0
+2		2		74		74
+
+ADC2: SOC0 in high Priority. All SOC triggered by EPWM0SOCA
+Expected: delay(SOC0)<delay(SOC1)<delay(SOC2)<delay(SOC3)
+delay(SOC0)	delay(SOC1)	delay(SOC2)	delay(SOC3)
+2		74		146		218
+2		74		146		218
+
+ADC2: SOC0 in round robin. SOC1,2 triggered by EPWM0SOCA.SOC0,3 triggered by EPWM0SOCB 
+Expected: delay(SOC0) should be between 0-1 conversions
+	delay(SOC1) : 0 conversions, SOC2 : 2 Conversions, SOC3: 2 conversions
+
+delay(SOC0)	delay(SOC1)	delay(SOC2)	delay(SOC3)
+2		2		74		74
+2		2		74		74
+
+ADC High Priority Test Passed!!
+All tests have passed!!
+
+\endcode
+\endcond

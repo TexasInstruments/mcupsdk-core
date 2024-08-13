@@ -39,6 +39,12 @@ When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
 When using LP
 - Feed analog inputs (non-zero volatage) to Boosterpack header Pin 24, Pin 29 and Pin 6.
 
+## AM261X-LP
+When using AM261x-LP
+- Feed Analog Inputs to the Boosterpack Headers at the following
+    - ADC1_AIN0 - J5 pin 24
+    - ADC1_AIN1 - J5 pin 42
+    - ADC1_AIN3 - J5 pin 46
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSAMPLING_COMBOS}
 

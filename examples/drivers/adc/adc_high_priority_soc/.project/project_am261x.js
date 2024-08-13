@@ -4,7 +4,7 @@ let device = "am261x";
 
 const files = {
     common: [
-        "adc_high_priority_soc.c",
+        "adc_high_priority_soc_v1.c",
         "main.c",
     ],
 };

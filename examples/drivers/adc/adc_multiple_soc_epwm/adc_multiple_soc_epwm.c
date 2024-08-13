@@ -49,6 +49,7 @@
  *
  * External Connections
  * ADC2_AIN0, ADC2_AIN1, ADC2_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins
+ * (if AM261X-LP is used, then : ADC2_AIN0, ADC2_AIN2, ADC2_AIN3 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins)
  * should be connected to signals to be converted.
  *
  * Watch Variables

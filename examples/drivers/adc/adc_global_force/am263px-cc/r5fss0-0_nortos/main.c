@@ -36,6 +36,38 @@
 
 void adc_global_force_main(void *args);
 
+#define ADC_CONVERSION_COUNT     (256U)
+
+uint32_t gAdcBaseAddr[CONFIG_ADC_NUM_INSTANCES] = {
+    CONFIG_ADC0_BASE_ADDR,
+    CONFIG_ADC1_BASE_ADDR,
+    CONFIG_ADC2_BASE_ADDR,
+    CONFIG_ADC3_BASE_ADDR,
+    CONFIG_ADC4_BASE_ADDR,
+    };
+
+uint32_t gAdcResultBaseAddr[CONFIG_ADC_NUM_INSTANCES] = {
+    CONFIG_ADC0_RESULT_BASE_ADDR,
+    CONFIG_ADC1_RESULT_BASE_ADDR,
+    CONFIG_ADC2_RESULT_BASE_ADDR,
+    CONFIG_ADC3_RESULT_BASE_ADDR,
+    CONFIG_ADC4_RESULT_BASE_ADDR,
+    };
+
+uint16_t gAdc0Results[ADC_CONVERSION_COUNT] = {0};
+uint16_t gAdc1Results[ADC_CONVERSION_COUNT] = {0};
+uint16_t gAdc2Results[ADC_CONVERSION_COUNT] = {0};
+uint16_t gAdc3Results[ADC_CONVERSION_COUNT] = {0};
+uint16_t gAdc4Results[ADC_CONVERSION_COUNT] = {0};
+
+uint16_t* gAdcResults[CONFIG_ADC_NUM_INSTANCES] = {
+    gAdc0Results,
+    gAdc1Results,
+    gAdc2Results,
+    gAdc3Results,
+    gAdc4Results,
+};
+
 int main(void)
 {
     System_init();

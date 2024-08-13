@@ -103,6 +103,9 @@
  * - Am263px-LP or Am263x-LP : Feed analog inputs to channels
  *          ADC1_AIN0 - J1/3 Pin 24
  *          ADC1_AIN1 - J1/3 Pin 29
+ * - Am261x-LP : Feed analog inputs to channels
+ *          ADC1_AIN0 - J3 Pin 24
+ *          ADC1_AIN1 - J5 Pin 42
  *
  * Watch Variables :
  *          gAdc1soc0Delay[] - holds the delay values for ADC1_SOC0

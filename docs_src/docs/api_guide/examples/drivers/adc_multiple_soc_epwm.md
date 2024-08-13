@@ -54,6 +54,17 @@ When using LP
     - ADC1_AIN1 - J1/J3 29
     - ADC1_AIN2 - J5/J7 67
 
+## AM261X-LP
+When using LP
+- Feed the analog inputs
+- Feed analog inputs to the following.
+    - ADC2_AIN0 - J3 25
+    - ADC2_AIN2 - J7 65   | note this will require IO expander configurations. check schematics and syscfg for details.
+    - ADC2_AIN3 - J7 69   | note this will require IO expander configurations. check schematics and syscfg for details.
+    - ADC1_AIN0 - J1/J3 24
+    - ADC1_AIN1 - J1/J3 29
+    - ADC1_AIN2 - J5/J7 67
+
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_MULTIPLE_SOC_EPWM_COMBOS}
 
 \cond SOC_AM263X || SOC_AM263PX

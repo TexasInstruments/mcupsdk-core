@@ -1,13 +1,16 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+161"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
 const adc             = scripting.addModule("/drivers/adc/adc", {}, false);
 const adc1            = adc.addInstance();
 const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
@@ -16,7 +19,7 @@ const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
 const epwm3           = epwm.addInstance();
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -52,6 +55,11 @@ const int_xbar2       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
+
 adc1.$name                          = "CONFIG_ADC0";
 adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
 adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
@@ -88,7 +96,7 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB    = "EPWM_AQ_O
 epwm1.epwmTimebase_period                                           = 10000;
 epwm1.epwmCounterCompare_cmpA                                       = 5000;
 epwm1.epwmCounterCompare_cmpB                                       = 5000;
-epwm1.EPWM.$assign                                                  = "EPWM0";
+epwm1.EPWM.$assign                                                  = "EPWM2";
 
 epwm2.$name                                                         = "CONFIG_EPWM1";
 epwm2.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                          = "EPWM_DC_TRIP_TRIPIN8";
@@ -110,7 +118,7 @@ epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB    = "EPWM_AQ_O
 epwm2.epwmTimebase_period                                           = 4000;
 epwm2.epwmCounterCompare_cmpA                                       = 3200;
 epwm2.epwmCounterCompare_cmpB                                       = 2000;
-epwm2.EPWM.$assign                                                  = "EPWM1";
+epwm2.EPWM.$assign                                                  = "EPWM3";
 
 epwm3.$name                                                         = "CONFIG_EPWM2";
 epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                          = "EPWM_DC_TRIP_TRIPIN9";
@@ -135,6 +143,39 @@ epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB    = "EPWM_AQ_O
 epwm3.epwmTimebase_period                                           = 20000;
 epwm3.epwmCounterCompare_cmpA                                       = 6000;
 epwm3.epwmCounterCompare_cmpB                                       = 10000;
+epwm3.EPWM.$assign                                                  = "EPWM4";
+epwm3.EPWM.A.$assign                                                = "GPIO51";
+epwm3.EPWM.B.$assign                                                = "GPIO52";
+
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+adc.adcReferences     = soc_ctrl_adc1;
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -187,13 +228,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -375,10 +416,9 @@ adc1.ADC.AIN2.$suggestSolution = "ADC0_AIN2";
 adc1.ADC.AIN3.$suggestSolution = "ADC0_AIN3";
 adc1.ADC.AIN4.$suggestSolution = "ADC0_AIN4";
 adc1.ADC.AIN5.$suggestSolution = "ADC0_AIN5";
-epwm1.EPWM.A.$suggestSolution  = "GPIO43";
-epwm1.EPWM.B.$suggestSolution  = "GPIO44";
-epwm2.EPWM.A.$suggestSolution  = "GPIO45";
-epwm2.EPWM.B.$suggestSolution  = "GPIO46";
-epwm3.EPWM.$suggestSolution    = "EPWM2";
-epwm3.EPWM.A.$suggestSolution  = "GPIO47";
-epwm3.EPWM.B.$suggestSolution  = "GPIO48";
+epwm1.EPWM.A.$suggestSolution  = "GPIO47";
+epwm1.EPWM.B.$suggestSolution  = "GPIO48";
+epwm2.EPWM.A.$suggestSolution  = "GPIO49";
+epwm2.EPWM.B.$suggestSolution  = "GPIO50";
+i2c1.I2C.SCL.$suggestSolution  = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution  = "GPIO134";

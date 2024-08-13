@@ -42,9 +42,10 @@ Loop DAC output back to ADC1 Channel 0
 Loop DAC output back to ADC1 Channel 0
 - Connect HSEC Pin 9 to HSEC Pin 18
 
-## AM263PX-LP or AM263X-LP
+## AM263PX-LP or AM263X-LP or AM261X-LP
 Loop DAC output back to ADC1 Channel 0
 - Connect J1/J3 Pin 30 to J1/J3 Pin 24
+(for AM261X-LP, to use DAC out at J3 30, please refer to IO expander configurations from Schematics and Syscfg)
 
 # Watch Variables
 - gAdcHighLimitOutputs[] - holds the High limit trip values
