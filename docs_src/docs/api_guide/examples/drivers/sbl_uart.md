@@ -52,6 +52,17 @@ This bootloader does SOC initializations and attempts to boot a multicore appima
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_uart
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is a bootloader and is used as a SOC initialization binary, the example will be run every time you boot an application using this example. It is generally run from a boot media (OSPI Flash, SD Card or over UART) unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.

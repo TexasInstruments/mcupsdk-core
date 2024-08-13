@@ -18,9 +18,15 @@ that sends over the image to the target board via PCIe. The bootloader then conf
 inbound ATU region for receiving the appimage and an outbound ATU region to send out
 a handshake signal to indicate the bootloader is ready to accept application image.
 
+\if SOC_AM65X
+The host application \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST on receiving the handshake signal
+from the bootloader send the system firmware and application image via PCIe and marks a
+magic word to indicate transfer complete.
+\else
 The host application \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST on receiving the handshake signal
 from the bootloader send the application image via PCIe and marks a magic word to indicate
 transfer complete and marks the relative offset to which image is flashed.
+\endif
 
 On receiving the multicore appimage, the SBL then parses it, splits it into RPRCs for
 each core applicable. Each core is then initialized, RPRC image is loaded, entry points
@@ -30,6 +36,7 @@ refer \ref BOOTFLOW_GUIDE
 \imageStyle{pcie_bootflow.png,width:60%}
 \image html pcie_bootflow.png "PCIe bootflow"
 
+\cond !SOC_AM65X
 \note This bootloader application can also be run from other bootmedia (Serial Flash,
 UART, SD etc), and the bootloader can receive subsequent appimage via PCIe. When not
 booted from PCIe bootmode, the bootloader needs to do PCIe initialization within the bootloader.
@@ -37,10 +44,12 @@ Whereas when booting in PCIe bootmode, the bootloader need not reinitialize PCIe
 again. In this case the SBL will be reusing the PCIe configuration done by ROM. This can be
 changed via SysCfg to use ROM configuration or not use ROM configuration, i.e
 the bootloader is executed from PCIe bootmode or other bootmodes.
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_PCIE_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
+
 
  Parameter      | Value
  ---------------|-----------
@@ -53,16 +62,24 @@ the bootloader is executed from PCIe bootmode or other bootmodes.
 
 ## HW Setup
 
+\if SOC_AM65X
+\note Make sure you have setup the IDK with cable connections as shown here, \ref IDK_SETUP_PAGE.
+      In addition do below steps.
+\else
 \note Make sure you have setup the EVM with cable connections as shown here, \ref EVM_SETUP_PAGE.
       In addition do below steps.
+\endif
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 
 \cond SOC_AM243X
 ### AM243-EVM
 \endcond
 \cond SOC_AM64X
 ### AM64X-EVM
+\endcond
+\cond SOC_AM65X
+### AM65X-IDK
 \endcond
 
 - For connecting two board in RC and EP mode a specialized cable as below is required
@@ -71,6 +88,28 @@ the bootloader is executed from PCIe bootmode or other bootmodes.
 - This cable can be obtained from Adex Electronics (https://www.adexelec.com).
 - Modify the cable to remove resistors in CK+ and CK- in order to avoid ground loops (power) and smoking clock drivers (clk+/-).
 - The ends of the modified cable should look like below:
+\if SOC_AM65X
+    - A side
+        \imageStyle{pcie_cable_am65x_a1.png,width:90%}
+        \imageStyle{pcie_cable_am65x_a2.png,width:90%}
+
+        <table style="border: 0 px">
+        <tr>
+            <td> \image html pcie_cable_am65x_a1.png "PCIe cable A side end 1" </td>
+            <td> \image html pcie_cable_am65x_a2.png "PCIe cable A side end 2" </td>
+        </tr>
+        </table>
+    - B side
+        \imageStyle{pcie_cable_am65x_b1.png,width:90%}
+        \imageStyle{pcie_cable_am65x_b2.png,width:90%}
+
+        <table style="border: 0 px">
+        <tr>
+            <td> \image html pcie_cable_am65x_b1.png "PCIe cable B side end 1" </td>
+            <td> \image html pcie_cable_am65x_b2.png "PCIe cable B side end 2" </td>
+        </tr>
+        </table>
+\else
     - A side
         \imageStyle{pcie_cable_a1.png,width:90%}
         \imageStyle{pcie_cable_a2.png,width:90%}
@@ -91,6 +130,7 @@ the bootloader is executed from PCIe bootmode or other bootmodes.
             <td> \image html pcie_cable_b2.png "PCIe cable B side end 2" </td>
         </tr>
         </table>
+\endif
 \endcond
 
 # Steps to Run the Example

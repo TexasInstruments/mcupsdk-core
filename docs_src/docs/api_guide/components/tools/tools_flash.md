@@ -13,7 +13,9 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 \cond SOC_AM64X || SOC_AM243X
 - \ref TOOLS_FLASH_DFU_UNIFLASH
 \endcond
+\cond !SOC_AM65X
 - \ref TOOLS_FLASH_JTAG_UNIFLASH
+\endcond
 \cond SOC_AWR294X
 - \ref TOOLS_FLASH_ENET_UNIFLASH
 \endcond
@@ -186,7 +188,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     <td>sbl_uart_uniflash
     <td>Flashing application that is run on the EVM to receive files to flash
 </tr>
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 <tr>
     <td>sbl_ospi
     <td>OSPI bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application
@@ -220,7 +222,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
 ### Basic steps to flash files {#BASIC_STEPS_TO_FLASH_FILES}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 
 #### Getting ready to flash
 
@@ -233,15 +235,31 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
         {SDK_INSTALL_PATH}/examples/drivers/boot
 
+   \if SOC_AM65X
+    - The flashing system firmware can be found at below path
+
+          {SDK_INSTALL_PATH}/source/drivers/sciclient/soc/
+
+  - If you have modified the flashing or bootloader applications, make sure to rebuild these applications and note the path to the `.tiimage` files
+    that are generated as part of the build.
+
+  - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
+    Note the path to the `*.appimage` file that is generated as part of the build.
+   \else
+
   - If you have modified the flashing or bootloader applications, make sure to rebuild these applications and note the path to the `hs_fs.tiimage` files
     that are generated as part of the build.
 
   - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
     Note the path to the `*.appimage.hs_fs` file that is generated as part of the build.
-
+   \endif
 - Make sure you have installed python as mention in \ref INSTALL_PYTHON3
 
+  \if SOC_AM65X
+- Make sure you have identified the UART port on the EVM as mentioned in \ref IDK_SETUP_PAGE
+  \else
 - Make sure you have identified the UART port on the EVM as mentioned in \ref EVM_SETUP_PAGE
+  \endif
 
 #### Flash configuration file
 
@@ -249,6 +267,21 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_ospi.cfg
 
+\if SOC_AM65X
+  - In this config file, modify the paths to the flashing application, system firmware and OSPI bootloader, in case you are not using the pre-built applications
+
+          --flash-writer={path to flash application .tiimage}
+          --file={path to your application system firmware file} --operation=mem
+          --file={path to OSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
+
+  - Edit below line to point to the system firmware file
+
+          --file={path to your application system firmware file} --operation=flash --flash-offset=0x80000
+
+  - Edit below line to point to the user application (`.appimage`) file
+
+          --file={path to your application .appimage file} --operation=flash --flash-offset=0x100000
+\else
 - In this config file, modify the paths to the flashing application and OSPI bootloader, in case you are not using the pre-built applications
 
         --flash-writer={path to flash application .tiimage}
@@ -257,8 +290,9 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 - Edit below line to point to the user application (`.appimage.hs_fs`) file
 
         --file={path to your application .appimage.hs_fs file} --operation=flash --flash-offset=0x80000
+\endif
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM65X
 - Edit below line to point to the user application XIP image (`.appimage_xip`) file. When not using XIP mode, this file input is optional.
 
         --file={path to your application .appimage_xip file} --operation=flash-xip
@@ -340,7 +374,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
 - At each step in the flashing your will see success or error messages, including progress as the file is being transferred.
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM65X
 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
@@ -397,23 +431,38 @@ Some common error messages, reasons and potential solutions are listed below.
     <td> Python or python packages needed for this script are not installed
     <td> Follow steps mentioned in \ref INSTALL_PYTHON3 to install python and related packages
 </tr>
+  \if SOC_AM65X
+<tr>
+    <td> Parsing config file error
+    <td> SBL binaries are missing from the prebuilt folder
+    <td> Build sbl using below command: \code gmake -s sbl DEVICE=am65x \endcode
+</tr>
+  \else
 <tr>
     <td> Parsing config file error
     <td> SBL binaries are missing from the prebuilt folder
     <td> Build sbl using below command: \code gmake -s sbl DEVICE=am243x \endcode
 </tr>
+\endif
 </table>
 
 ### Detailed sequence of steps that happen when flashing files
 
 \note This section has more detailed sequence of steps that happen underneath the tools and on the EVM for reference.
 
+\if SOC_AM65X
+The detailed sequence of steps that happen when flashing files is listed below, refer to the \ref IDK_SETUP_PAGE page to see how to setup the EVM in different boot modes that are needed for this sequence of steps.
+\else
 The detailed sequence of steps that happen when flashing files is listed below, refer to the \ref EVM_SETUP_PAGE page to see how to setup the EVM in different boot modes that are needed for this sequence of steps.
+\endif
 
 - Set EVM in UART boot mode and power it on, the SOC ROM bootloader waits to receive a file using the UART+XMODEM protocol.
 - PC sends the flashing application file (`sbl_uart_uniflash.release.tiimage`) via the flashing tool using UART+XMODEM protocol underneath.
 - The ROM bootloader, boots the flashing application
 - The flashing application now initializes the flash on the EVM and waits for additional commands using UART+XMODEM protocol
+\if SOC_AM65X
+- Flashing application recieve the system firmware and does the board configuration
+\endif
 - The PC tool can now send one or more of below commands with the file data, one after the other, until it is done.
   - Flash a file at a given offset in the flash
   - Verify a previously flashed file at a given offset in the flash
@@ -448,6 +497,23 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   in a single configuration file which is provided as input to the tool.
 \endcond
 
+\cond SOC_AM65X
+- However typically one needs to at least send the below files to flash
+  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.tiimage`). If the OSPI bootloader is
+    already flashed previously then this step can be skipped.
+  - Send system firmware, required for sbl_ospi to do board configuration and flash it at offset 0x80000
+  - Send your application image multi-core image and flash it at offset 0x100000 (`*.appimage`).
+    The offset 0x100000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it
+    will attempt to find a application at this location.
+- After flashing is done, power OFF the EVM
+- Set EVM in OSPI boot mode and power ON the EVM.
+  - The ROM bootloader will now boot the OSPI bootloader by reading offset 0x0
+  - And the OSPI bootloader will read the system firmware from offset 0x80000 and do the board configuration. Later it boot the application by reading from offset 0x100000.
+- The initial flashing application and the subsequent commands to send and flash the OSPI bootloader, system firmware and application files are all specified
+    in a single configuration file which is provided as input to the tool.
+\endcond
+
+\cond !SOC_AM65X
 ### GUI for UART Uniflash (Experimental) {#TOOLS_UART_UNIFLASH_GUI}
 
 UART Uniflash GUI is a GUI wrapper around the UART Uniflash tool already present (`uart_uniflash.py`). This is a strictly experimental feature with minimal testing from TI side. Can be used if GUI is more comfortable. Since most of the CLI tool is used underneath, it is the same functionality wise
@@ -732,6 +798,7 @@ CAN is used as the transport or interface to send the file to flash to the EVM.
 ### Basic steps to flash files
 
 Refer the example \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
+\endcond
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X

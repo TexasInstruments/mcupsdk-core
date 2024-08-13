@@ -66,6 +66,9 @@ In this example,
 # Steps to Run the Example
 
 \note This is a `system` or multi-core project, so refer to system project build instructions for CCS project or makefiles when building the example.
+\cond SOC_AM65X
+\note When using this example with **SBL OSPI LINUX**, update the Example folder/am65x-idk/r5fss0-0_freertos/ti-arm-clang/makefile and Example folder/am65x-idk/r5fss0-1_freertos/ti-arm-clang/makefile by replacing rproc_linker.cmd with the sbl_linker.cmd at the LNK_FILES_common variable.
+\endcond
 
 - **When using CCS projects to build**, import the system CCS project
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE). This will build all the dependant CPU projects as well

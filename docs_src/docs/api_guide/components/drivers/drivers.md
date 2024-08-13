@@ -207,6 +207,7 @@ It consists of below sub-modules
 \endcond
 
 \cond SOC_AM65X
+- \subpage DRIVERS_BOOTLOADER_PAGE
 - \subpage DRIVERS_GPIO_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE

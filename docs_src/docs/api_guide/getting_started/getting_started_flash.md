@@ -700,3 +700,134 @@ number of lines used in the protocol is indeed 8.
 - \ref GETTING_STARTED_FLASH_DFU
 
 \endcond
+
+\cond SOC_AM65X
+## Flashing the application
+### AM65X-IDK
+- **POWER-OFF** the EVM
+
+- Set boot mode to UART BOOTMODE as shown in below image
+
+  \imageStyle{boot_pins_uart_mode.png,width:30%}
+  \image html boot_pins_uart_mode.png "UART BOOT MODE"
+
+- **POWER-ON** the EVM
+
+- You should see character "C" getting printed on the UART terminal every 2-3 seconds as shown below
+
+  \imageStyle{uart_rom_boot.png,width:80%}
+  \image html uart_rom_boot.png "UART output in UART BOOT MODE"
+
+- Close the UART terminal as shown below. This is important, else the UART script in next step wont be able to connect to the UART port.
+
+  \imageStyle{ccs_uart_close.png,width:80%}
+  \image html ccs_uart_close.png "Close UART terminal"
+
+- Open a command prompt and run the below command to flash the SOC initialization binary to the EVM.
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python uart_uniflash.py -p COM13 --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_ospi.cfg
+
+  - Here COM13 is the port name of the identified UART port in Windows.
+  - On Linux,
+    - The name for UART port is typically something like `/dev/ttyUSB0`
+    - On some Linux systems, one needs to use `python3` to invoke python3.x, just `python` command may invoke python 2.x which will not work with the flashing script.
+
+- When the flashing is in progress you will see something like below
+
+  \imageStyle{flash_soc_init_in_progress.png,width:100%}
+  \image html flash_soc_init_in_progress.png "Flash in progress"
+
+- After all the flashing is done, you will see something like below
+
+        Parsing config file ...
+        Parsing config file ... SUCCESS. Found 7 command(s) !!!
+
+        Executing command 1 of 7 ...
+        Found flash writer ... sending sbl_prebuilt/am65x-idk/sbl_uart_uniflash.release.tiimage
+        Sent flashwriter sbl_prebuilt/am65x-idk/sbl_uart_uniflash.release.tiimage of size 56760 bytes in 7.86s.
+
+        Executing command 2 of 7 ...
+        Command arguments : --file=../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin --operation=mem
+        Sent ../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin of size 263083 bytes in 26.38s.
+
+        Executing command 3 of 7 ...
+        Command arguments : --operation=flash-phy-tuning-data
+        Sent flash phy tuning data in 1.77s.
+        [STATUS] SUCCESS !!!
+
+        Executing command 4 of 7 ...
+        Command arguments : --file=sbl_prebuilt/am65x-idk/sbl_ospi.release.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/am65x-idk/sbl_ospi.release.tiimage of size 59504 bytes in 7.3s.
+        [STATUS] SUCCESS !!!
+
+        Executing command 5 of 7 ...
+        Command arguments : --file=../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin --operation=flash --flash-offset=0x80000
+        Sent ../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin of size 263083 bytes in 26.48s.
+        [STATUS] SUCCESS !!!
+
+        Executing command 6 of 7 ...
+        Command arguments : --file=../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage --operation=flash --flash-offset=0x100000
+        Sending ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage: 56595bytes
+        Sent ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage of size 56044 bytes in 6.91s.
+        [STATUS] SUCCESS !!!
+
+        Executing command 7 of 7 ...
+        Command arguments : --file=../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage_xip --operation=flash-xip
+        Sending ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage_xip: 1029byt
+        Sent ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage_xip of size 52 bytes in 1.72s.
+        [STATUS] SUCCESS !!!
+
+        All commands from config file are executed !!!
+
+- If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
+
+- If flashing is successful, do the next steps ...
+
+## Running the flashed application
+### AM65X-IDK
+- **POWER-OFF** the EVM
+
+- Switch the EVM boot mode to OSPI mode as shown below,
+
+  \imageStyle{boot_pins_ospi_mode.png,width:30%}
+  \image html boot_pins_ospi_mode.png "OSPI BOOT MODE"
+
+- Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
+
+- **POWER-ON** the EVM
+
+- You should see the application output in UART terminal as below
+
+        Starting OSPI Bootloader ...
+
+        DMSC Firmware Version 22.1.1--v2022.01 (Terrific Llam
+        DMSC Firmware revision 0x16
+        DMSC ABI revision 3.1
+
+        INFO: Bootloader_loadSelfCpu:207: CPU r5f0-0 is initialized to 400000000 Hz !!!
+        INFO: Bootloader_loadSelfCpu:207: CPU r5f0-1 is initialized to 400000000 Hz !!!
+        [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+        [BOOTLOADER_PROFILE] Boot Media Clock : 133.333 MHz
+        [BOOTLOADER_PROFILE] Boot Image Size  : 54 KB
+        [BOOTLOADER_PROFILE] Cores present    :
+        r5f0-0
+        [BOOTLOADER PROFILE] System_init                      :        352us
+        [BOOTLOADER PROFILE] Drivers_open                     :        101us
+        [BOOTLOADER PROFILE] Board_driversOpen                :      14196us
+        [BOOTLOADER PROFILE] SYSFW init                       :     199697us
+        [BOOTLOADER PROFILE] Sciclient Get Version            :      82314us
+        [BOOTLOADER PROFILE] CPU Load                         :      54960us
+        [BOOTLOADER_PROFILE] SBL Total Time Taken             :     351629us
+
+        Image loading done, switching to application ...
+        INFO: Bootloader_runSelfCpu:217: All done, reseting self ...
+
+        I2C LED Blink Test Started ...
+        LED will Blink for 10 loop ...
+        I2C LED Blink Test Passed!!
+        All tests have passed!!
+
+- Congratulations now the EVM is flashed with your application and you dont need CCS anymore to run the application.
+
+\endcond

@@ -100,6 +100,7 @@ SDK features and tools.
 \cond SOC_AM65X
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
+- \subpage BOOTFLOW_GUIDE
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage SYSCONFIG_INTRO_PAGE

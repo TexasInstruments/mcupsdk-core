@@ -4,6 +4,21 @@
 
 # Introduction
 
+\if SOC_AM65X
+\note This is **NOT** a bootloader but a helper application running on a host board,
+that sends the bootloader, system firmware and application image to the target board.
+
+This application can be run as we run any other applcation using any boot modes
+preferred. This application works in conjunction with \ref EXAMPLES_DRIVERS_SBL_PCIE.
+The application sends the images required for the target board to boot from PCIe boot
+mode. The application first finds the SBL image by name `sbl_pcie.release.tiimage`
+from the SD card and sends the image via PCIe for ROM to boot.
+
+Then the appimage is send via PCIe for the SBL in target board to pick up and boot.
+The system firmware and appimage must be present in the SD card by the name `sysfw.bin`
+and `app` respectively. On succesfully sending the image, application sends a magic word
+to mark the completion of transfer.
+\else
 \note This is **NOT** a bootloader but a helper application running on a host board,
 that sends the bootloader and application image to the target board.
 
@@ -17,10 +32,11 @@ Then the appimage is send via PCIe for the SBL in target board to pick up and bo
 The appimage must be present in the SD card by the name `app`. On succesfully
 sending the image, application sends a magic word to mark the completion of transfer
 and marks the relative offset  to which the image is sent to.
+\endif
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_PCIE_HOST_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 
  Parameter      | Value
  ---------------|-----------

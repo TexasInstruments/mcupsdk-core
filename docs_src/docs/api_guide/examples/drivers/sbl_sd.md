@@ -53,6 +53,18 @@ This bootloader runs in three steps:
  Example folder | examples/drivers/boot/sbl_sd
 
 \endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER,
+ Example folder | examples/drivers/boot/sbl_sd
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is a bootloader, the example will be run every time you boot an application using this example. It is run from an SD card unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
@@ -113,5 +125,32 @@ All tests have passed!!
 [BOOTLOADER_PROFILE] SBL Total Time Taken             :     129399us
 
 Image loading done, switching to application ...
+\endcode
+\endcond
+
+\cond SOC_AM65X
+\code
+Starting MMCSD Bootloader ...
+
+DMSC Firmware Version 22.1.1--v2022.01 (Terrific Llam
+DMSC Firmware revision 0x16
+DMSC ABI revision 3.1
+
+INFO: Bootloader_loadSelfCpu:232: CPU r5f0-0 is initialized to 400000000 Hz !!!
+INFO: Bootloader_loadSelfCpu:232: CPU r5f0-1 is initialized to 400000000 Hz !!!
+[BOOTLOADER_PROFILE] Boot Media       : SD Card
+[BOOTLOADER_PROFILE] Boot Image Size  : 69 KB
+[BOOTLOADER_PROFILE] Cores present    :
+[BOOTLOADER PROFILE] System_init                      :        594us
+[BOOTLOADER PROFILE] Drivers_open                     :      17398us
+[BOOTLOADER PROFILE] Board_driversOpen                :          1us
+[BOOTLOADER PROFILE] Sciclient Get Version            :     131273us
+[BOOTLOADER PROFILE] File read from SD card           :      18256us
+[BOOTLOADER PROFILE] CPU load                         :      31279us
+[BOOTLOADER PROFILE] SBL End                          :          1us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :     198805us
+
+Image loading done, switching to application ...
+INFO: Bootloader_runSelfCpu:242: All done, reseting self ...
 \endcode
 \endcond

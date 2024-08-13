@@ -109,6 +109,7 @@ I2C Target              | I2C device which responds to I2C Controller
 - **Step 3:** Setup IDK for program execution, see \subpage IDK_SETUP_PAGE
 - **Step 4:** Build a "hello world" example for the IDK, see \subpage GETTING_STARTED_BUILD
 - **Step 5:** Load and run the "hello world" example on the IDK, see \subpage CCS_LAUNCH_PAGE
+- **Step 6:** Flash the "hello world" example on the IDK and boot without CCS, see \subpage GETTING_STARTED_FLASH [**OPTIONAL and is typically needed after all development via CCS is done**]
 \else
 - **Step 3:** Setup EVM for program execution, see \subpage EVM_SETUP_PAGE
 

@@ -6,6 +6,17 @@
 
 # Introduction
 
+\if SOC_AM65X
+This is a bootloader example, which shows an example of booting Linux on A53 core and RTOS/NORTOS applications on R5 cores.
+
+The SBL uses two appimages
+- A Linux appimage containing the **Linux binaries (ATF, OPTEE, SPL)**.
+- A muticore appimage containing the **RTOS/NORTOS applications for R5 cores**.
+
+The bootloader does SOC initializations and parses the multicore appimage present at 0x100000, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset.
+
+For booting Linux, SBL parses the Linux appimage present at 0x800000, splits it into individual linux binaries (ATF, OPTEE, SPL). SBL loads the Linux binaries, entry point is set to the start address of ATF and A53 core is released from reset.
+\else
 This is a bootloader example, which shows an example of booting Linux on A53 core and RTOS/NORTOS applications on R5 and M4 cores.
 
 The SBL uses two appimages
@@ -16,6 +27,7 @@ The bootloader does SOC initializations and parses the multicore appimage presen
 
 For booting Linux, SBL parses the Linux appimage present at 0x300000, splits it into individual linux binaries (ATF, OPTEE, SPL). SBL loads the Linux binaries, entry point is set to the start address of ATF and A53 core is released from reset.
 
+\endif
 
 # Supported Combinations
 
@@ -41,7 +53,11 @@ For booting Linux, SBL parses the Linux appimage present at 0x300000, splits it 
 
 ## Create Linux Appimage
 
+\if SOC_AM65X
+\note Change DEVICE_TYPE to HS in ${SDK_INSTALL_PATH}/devconfig/devconfig.mak and then generate Linux Appimage for HS device.
+\else
 \note Change DEVICE_TYPE to HS in ${SDK_INSTALL_PATH}/devconfig/devconfig.mak and then generate Linux Appimage for HS-SE device.
+\endif
 
 \note User needs to build A53 SPL images (ATF, OPTEE and uboot) and the prebuilt images
 in linux SDK is signed and the Linux appimage gen tool requries unsigned binaries
@@ -57,7 +73,11 @@ in linux SDK is signed and the Linux appimage gen tool requries unsigned binarie
 
 ## Run the example
 
+\if SOC_AM65X
+- This example is the SBL which needs to be flashed on the EVM flash, along with sample application images for R5 CPUs and Linux Appimage.
+\else
 - This example is the SBL which needs to be flashed on the EVM flash, along with sample application images for R5, M4 CPUs and Linux Appimage.
+\endif
 \note Use **default_sbl_ospi_linux_hs.cfg** when flashing to HS devices
 - There is a default flash config file as shown below which flashes this SBL and the IPC RPMsg Linux echo applications
 
@@ -83,6 +103,42 @@ in linux SDK is signed and the Linux appimage gen tool requries unsigned binarie
 # Sample Output
 
 After flashing and booting the EVM, you will see below output on the UART console (Complete log is not shown)
+\if SOC_AM65X
+
+    [BOOTLOADER PROFILE] System_init                      :        445us
+    [BOOTLOADER PROFILE] Drivers_open                     :        105us
+    [BOOTLOADER PROFILE] Board_driversOpen                :      14457us
+    [BOOTLOADER PROFILE] SYSFW init                       :     199687us
+    [BOOTLOADER PROFILE] App_loadImages                   :     180472us
+    [BOOTLOADER_PROFILE] SBL Total Time Taken             :     897993us
+
+    Image loading done, switching to application ...
+    Starting linux and RTOS/Baremetal applications
+
+    U-Boot SPL 2021.01-g44a87e3ab8 (Mar 24 2022 - 02:48:34 +0000)
+    SYSFW ABI: 3.1 (firmware rev 0x0016 '22.1.1--v2022.01 (Terrific Llam')
+    Trying to boot from MMC2
+
+    .
+    .
+    .
+    .
+    .
+    .
+
+
+    _____                    _____           _         _
+    |  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_
+    |     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+    |__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|
+                |___|                    |___|
+
+    Arago Project am65xx-evm ttyS1
+
+    Arago 2021.09 am65xx-evm ttyS1
+
+    am65xx-evm login:
+\else
 
     [BOOTLOADER PROFILE] SYSFW Load                       :      17592us
     [BOOTLOADER PROFILE] System_init                      :      19018us
@@ -119,3 +175,4 @@ After flashing and booting the EVM, you will see below output on the UART consol
     Arago 2020.09 am64xx-evm ttyS2
 
     am64xx-evm login:
+\endif

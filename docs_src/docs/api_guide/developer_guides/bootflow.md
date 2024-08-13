@@ -67,7 +67,7 @@ provided for boot.
 
 The x509 template for ROM looks something like this:
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 \code
 [ req ]
 distinguished_name     = req_distinguished_name
@@ -187,7 +187,7 @@ Depending on the device type, these are the validation requirements for ROM:
 \image html device_types_validation_req_am263x.png "Validation for Device Types"
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 #### System Controller Firmware (SYSFW)
 - In case of @VAR_SOC_NAME, there is one more component called the System Controller Firmware (SYSFW) which is
   important in the booting process and SoC operation. As the name suggests it is controller firmware which runs in the
@@ -199,6 +199,7 @@ Depending on the device type, these are the validation requirements for ROM:
 
 - Since the services provided by SYSFW are fundamental, it needs to be loaded before the secondary bootloader can do pretty
   much anything.
+\cond !SOC_AM65X
 - In MCU+SDK we follow what's called the combined bootflow (for more details on combined bootflow refer \ref BOOTFLOW_MIGRATION_GUIDE),
   where RBL boots the SBL and the SYSFW. For this we have to prepare the boot image for RBL specially. It will be a
   concatenation of the SBL binary, SYSFW binary and Board Configuration binary all signed with a single x509 certificate.
@@ -217,6 +218,7 @@ Depending on the device type, these are the validation requirements for ROM:
 
 - For more information regarding the SYSFW please refer to the TISCI Documentation : https://software-dl.ti.com/tisci/esd/latest/index.html
 \endcond
+\endcond
 - For ROM to accept any image to boot, there are some restrictions in the image preparation
 
 #### Preparing the SBL for boot
@@ -225,7 +227,7 @@ The SBL is like any other application, created using the same compiler and linke
 rather than a deliverable. It is customizable by users, but must adhere to the requirements by RBL which is a constant as mentioned above.
 However the steps to convert the application `.out` into a bootable image are different for SBL as listed below:
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X || SOC_AM65X
 \cond ~SOC_AWR294X
 - The SBL entry point needs to be different vs other applications. On @VAR_SOC_NAME after power-ON ROM boots the SBL and sets the entry point of SBL to
   both R5FSS0-0 as well as R5FSS0-1. However for SBL we need to detect the core and run SBL only on Core0 and keep Core1 in `wfi` loop.
@@ -251,12 +253,19 @@ However the steps to convert the application `.out` into a bootable image are di
   - Currently, the region `0x10200000` to `0x10220000` is used by the SBL code, data, stack, etc.
 \endcond
 \endcond
+\cond SOC_AM65X
+- Other special factors for SBL application are listed below
+  - After entering `main()`, sbl read the system firmware from boot media specified and load the system firmware. Later board configuration is performed.
+  - The linker command file for SBL has to place vectors at address `0x41C00100` and this is the entry point for the SBL.
+  - SBL maintain the copy of vectors at `0x00`(ATCM region)
+  - Only the region `0x41C00100` to `0x41C3E000` should be used by SBL code, data, stack etc
+\endcond
 - After building, the SBL application `.out` file is first converted to a binary format `.bin` using the TI ARM CLANG
   `objcopy` tool.
   - This copies the loadable sections from the .out into a binary image stripping all symbol and section information.
   - If there are two loadable sections in the image which are not contiguous then `objcopy` fills the gaps with `0x00`.
   - It is highly recommended to keep all loadable sections together within a SBL application.
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X || SOC_AM65X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
    - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
    - The rom_degenerateKey.pem is used for this.
@@ -283,8 +292,15 @@ However the steps to convert the application `.out` into a bootable image are di
   - **HS-FS** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
 \endcond
+\if SOC_AM65X
+  - **GP** device:
+    - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
+  - **HS** device:
+    - `sbl_xxx.release.hs.tiimage` [`hs` prefix before `.tiimage`]
+\else
   - **HS-SE** device:
     - `sbl_xxx.release.hs.tiimage` [`hs` prefix before `.tiimage`]
+\endif
 \cond SOC_AM64X || SOC_AM243X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
 \endcond
@@ -306,6 +322,10 @@ However the steps to convert the application `.out` into a bootable image are di
 \imageStyle{tiimage_normal.png,width:20%}
 \image html tiimage_normal.png "TIIMAGE"
 \endcond
+
+\if SOC_AM65X
+- In case of AM65X, combined boot flow is not used, so the tiimage will have only SBL image.
+\endif
 
 \endcond
 
@@ -339,7 +359,7 @@ However the steps to convert the application `.out` into a bootable image are di
 Shown below are the different steps that are done to convert the compiler+linker generated application `.out` into a format suitable for flashing
 and booting
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X|| SOC_AM65X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
@@ -370,7 +390,7 @@ and booting
 
 #### Flashing the application for boot
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM65X
 - Once the application images (`.appimage` and `.appimage_xip`) are created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
@@ -501,6 +521,45 @@ some details regarding those.
 \endcond
 - This is referred to as the SOC initialization binary, refer \ref EVM_FLASH_SOC_INIT for more on this.
 
+\cond SOC_AM65X
+
+### SBL SD {#BOOTFLOW_SBL_SD}
+
+- The `sbl_sd` is a secondary bootloader which reads the application image file from the SD card and then moves on to core initialization and other steps
+
+- To boot an application using the `sbl_sd`, the system firmware and application image needs to be copied to the SD card as a file named as "sysfw.bin" and "app" respectively. Make sure that the SD card is formatted to have a FAT partition.
+
+- Follow the steps in the above referred page to partition the SD card. For a complete boot from SD card,the `sbl_sd` binary, system firmware and the application image binary has to be present as files in the SD card. You have to rename the `sbl_sd` appimage as 'tiboot3.bin'.
+
+        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_sd.release.tiimage
+        rename in SD card as => tiboot3.bin
+
+- Similarly you can copy any appimage file to the SD card and rename in the SD card as "app" so that the SBL can pick it up.
+
+- Currently the `sbl_sd` reads the full appimage file into an MSRAM buffer and then parses the multicore appimage. Because of this reason **appimages higher than ~380 KB in size can't be booted by `sbl_sd` as of now**.
+
+### SBL OSPI
+
+- The `sbl_ospi` is a secondary bootloader which reads and parses the application image from a location in the OSPI flash and then moves on to core initialization and other steps
+
+- To boot an application using the `sbl_ospi`, the application image needs to be flashed at a particular location in the OSPI flash memory.
+
+- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x100000. This offset is chosen under the assumption that the `sbl_ospi`
+  application takes at max 264 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
+  size of the bootloader which is being flashed and also aligns with the block size of the flash.
+
+- To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
+
+### SBL OSPI LINUX
+
+- The `sbl_ospi_linux` is a secondary bootloader which boots Linux on A53 core and RTOS/NORTOS application on R5 cores.
+
+- To boot Linux and RTOS/NORTOS applications using `sbl_ospi_linux`, the Linux appimage (see \ref LINUX_APPIMAGE_GEN_TOOL) and the RTOS/NORTOS application images needs to be flashed at a particular location in the OSPI flash memory.
+
+- This location or offset is specified in the SysConfig of the `sbl_ospi_linux` application. Currently this is 0x100000 for RTOS/NORTOS images and 0x800000 for Linux application image. In most cases you wouldn't need to change this.
+
+- To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
+\endcond
 \cond SOC_AM64X || SOC_AM243X
 ### SBL SD {#BOOTFLOW_SBL_SD}
 
@@ -620,7 +679,7 @@ some details regarding those.
 - To boot and appication using `sbl_sd`, you can refer to \ref EXAMPLES_DRIVERS_SBL_SD subsection.
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 
 ### SBL PCIE
 
@@ -678,6 +737,13 @@ See also these additional pages for more details and examples about the boot flo
 - To understand different secondary bootloader (SBL) examples see,
   - \ref EXAMPLES_DRIVERS_SBL_NULL
   - \ref EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
+\cond SOC_AM65X
+  - \ref EXAMPLES_DRIVERS_SBL_SD
+  - \ref EXAMPLES_DRIVERS_SBL_OSPI
+  - \ref EXAMPLES_DRIVERS_SBL_UART
+  - \ref EXAMPLES_DRIVERS_SBL_PCIE
+  - \ref EXAMPLES_DRIVERS_SBL_OSPI_LINUX
+\endcond
 \cond SOC_AM64X || SOC_AM243X
   - \ref EXAMPLES_DRIVERS_SBL_SD
   - \ref EXAMPLES_DRIVERS_SBL_OSPI

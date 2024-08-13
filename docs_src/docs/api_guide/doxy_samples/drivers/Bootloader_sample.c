@@ -133,6 +133,25 @@ void bootcores_am263x(void)
 //! [bootcores_am263x]
 }
 
+void bootcores_am65x(void)
+{
+//! [bootcores_am65x]
+    int32_t status = SystemP_SUCCESS;
+
+    status = Bootloader_parseMultiCoreAppImage(gBootloaderHandle, &gBootImageInfo);
+
+    if(SystemP_SUCCESS == status && gBootloaderHandle != NULL)
+    {
+        gBootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
+        gBootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
+        /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
+        status = Bootloader_bootSelfCpu(gBootloaderHandle, &gBootImageInfo);
+
+    }
+
+//! [bootcores_am65x]
+}
+
 void close(void)
 {
 //! [close]

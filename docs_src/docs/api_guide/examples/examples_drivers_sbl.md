@@ -3,6 +3,9 @@
 This page lists all the examples related to secondary bootloader and bootloader driver.
 
 To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW_GUIDE
+\cond SOC_AM65X
+During the switcing between GP to HS or vise versa, make sure to do clean build the sbl image.
+\endcond
 \cond SOC_AM64X || SOC_AM243X
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
@@ -56,4 +59,14 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
 
 \cond SOC_AWR294X
    -# \subpage EXAMPLES_DRIVERS_SBL_QSPI_ENET
+\endcond
+
+\cond SOC_AM65X
+   -# \subpage EXAMPLES_DRIVERS_SBL_NULL
+   -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
+   -# \subpage EXAMPLES_DRIVERS_SBL_OSPI_LINUX
+   -# \subpage EXAMPLES_DRIVERS_SBL_PCIE_HOME
+   -# \subpage EXAMPLES_DRIVERS_SBL_SD
+   -# \subpage EXAMPLES_DRIVERS_SBL_UART
+   -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
 \endcond

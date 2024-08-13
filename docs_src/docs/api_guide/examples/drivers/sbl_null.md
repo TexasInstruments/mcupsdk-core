@@ -56,6 +56,17 @@ SBL NULL honors the various core variants of the device. The core variants might
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_null
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is a bootloader and is used as a SOC initialization binary, the example will be run every time you boot an application using this example. It is generally run from a boot media (OSPI Flash, SD Card) unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
@@ -116,5 +127,19 @@ INFO: Bootloader_runCpu:150: CPU r5f0-1 is initialized to 400000000 Hz !!!
 NULL Bootloader Execution Complete...
 INFO: Bootloader_loadSelfCpu:202: CPU r5f0-0 is initialized to 400000000 Hz !!!
 INFO: Bootloader_runSelfCpu:219: All done, reseting self ...
+\endcode
+\endcond
+
+\cond SOC_AM65X
+\code
+Starting NULL Bootloader ...
+
+DMSC Firmware Version 22.1.1--v2022.01 (Terrific Llam
+DMSC Firmware revision 0x16
+DMSC ABI revision 3.1
+
+INFO: Bootloader_loadSelfCpu:232: CPU r5f0-0 is initialized to 400000000 Hz !!!
+INFO: Bootloader_loadSelfCpu:232: CPU r5f0-1 is initialized to 400000000 Hz !!!
+INFO: Bootloader_runSelfCpu:242: All done, reseting self ...
 \endcode
 \endcond

@@ -41,6 +41,16 @@ This section describes the various tools that are used to create boot images for
     <td>Tool to split a RPRC file generated from `out2rprc` into two files containing non-XIP and XIP sections.
 </tr>
 \endcond
+\if SOC_AM65X
+<tr>
+    <td>uart_bootloader.py
+    <td>Python script used to send the SBL, system firmware(sysfw) and appimage binaries over UART using XMODEM protocol in UART boot mode
+</tr>
+<tr>
+    <td>uart_uniflash.py
+    <td>Python script used to flash SBL, system firmware(sysfw) and applications to EVM flash using UART. See \ref TOOLS_FLASH for more details.
+</tr>
+\else
 <tr>
     <td>uart_bootloader.py
     <td>Python script used to send the SBL and appimage binaries over UART using XMODEM protocol in UART boot mode
@@ -49,6 +59,7 @@ This section describes the various tools that are used to create boot images for
     <td>uart_uniflash.py
     <td>Python script used to flash SBL and applications to EVM flash using UART. See \ref TOOLS_FLASH for more details.
 </tr>
+\endif
 </table>
 
 ## Out2RPRC
@@ -205,6 +216,17 @@ r4          | 3
 
 \endcond
 
+\cond SOC_AM65X
+
+- In case of @VAR_SOC_NAME, `DEV_ID` is `55`.
+- The various core ID to be used are as below.
+
+CORE        | CORE ID
+------------|--------
+r5fss0-0    | 4
+r5fss0-1    | 5
+
+\endcond
 
 ## Signing Scripts {#TOOLS_BOOT_SIGNING}
 
@@ -543,6 +565,10 @@ make -s -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-cla
   - Refer to TRM Chapter on Initialization, section 5.6.4.1.1 to get help on RSA key pair generation.
 \endcond
 
+\cond SOC_AM65X
+  - `SBL_RUN_ADDRESS` is `0x41C00100`
+  - In the case of GP device, `BOOTIMAGE_CERT_KEY` is `rom_degenerateKey.pem`.
+\endcond
 
 These scripts are invoked in makefiles, and the image generation happens
 automatically along with the example build. So mostly these scripts need
@@ -701,7 +727,7 @@ if Image Encryption OID is available in the certificate.
  This is the index used in keyring for retrieving the aes key for decryption of application image.
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 ## XIP Image Generator Tool
 
 - This tool, splits a input RPRC application file, into two RPRC files,
@@ -760,7 +786,11 @@ if Image Encryption OID is available in the certificate.
 
 ## UART Bootloader Python Script {#UART_BOOTLOADER_PYTHON_SCRIPT}
 
+\if SOC_AM65X
+- This script is used in UART boot mode for sending the SBL, system firmware(sysfw) and appimage binaries to the EVM via UART using XMODEM protocol
+\else
 - This script is used in UART boot mode for sending the SBL and appimage binaries to the EVM via UART using XMODEM protocol
+\endif
 - Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
 - Booting via UART is slow, but is useful if application loading via CCS or OSPI boot is not an option
 - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
@@ -771,16 +801,53 @@ if Image Encryption OID is available in the certificate.
 - To confirm that the board is in UART boot mode, open the UART terminal and confirm that you see the character 'C' getting printed on the console every 2-3 seconds.
 - Now close the terminal. This is important as the script won't be able to function properly if the UART terminal is open.
 - Open a command prompt and run the below command to send the SBL and application binary to the EVM
+  \if SOC_AM65X
   \code
+  cd ${SDK_INSTALL_PATH}/tools/boot
+  python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/default_sbl_uart.cfg
+  \endcode
+  \else
+    \code
   cd ${SDK_INSTALL_PATH}/tools/boot
   python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/sbl_uart.release.tiimage --file=< path to multicore appimage of application binary >
   \endcode
+  \endif
+\if SOC_AM65X
+- When you execute this, the script first sends the uart bootloader, system firmware(sysfw) and then the multicore appimage
+\else
 - When you execute this, the script first sends the uart bootloader, and then the multicore appimage
+\endif
 - After the multicore appimage is successfully parsed, the uart bootloader sends an acknowledgment to the script
 and waits for 5 seconds before running the application binary
 - Upon receiving the ack, the script will exit successfully
 - Connect to the UART terminal within 5 seconds to see logs from the application
 - Below are the logs of the script after all the files have been sent
+  \if SOC_AM65X
+  \code
+  Parsing config file ...
+  Parsing config file ... SUCCESS. Found 3 command(s) !!!
+
+  Executing command 1 of 3 ...
+  Found the UART bootloader ... sending sbl_prebuilt/am65x-idk/sbl_uart.release.tiimage
+  Sent bootloader sbl_prebuilt/am65x-idk/sbl_uart.release.tiimage of size 48016 bytes in 6.47s.
+
+  Executing command 2 of 3 ...
+  Command arguments : --file=../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin
+  Sent ../../source/drivers/sciclient/soc/am65x/sysfw_sr2.bin of size 263083 bytes in 28.8s.
+  [STATUS] Application load SUCCESS !!!
+
+  Executing command 3 of 3 ...
+  Command arguments : --file=../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage
+  Sending ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage: 56595bytes
+  Sent ../../examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang/i2c_led_blink.release.appimage of size 56012 bytes in 8.44s.
+  [STATUS] Application load SUCCESS !!!
+
+  Sent End Of File Transfer message of size 4 bytes in 2.94s.
+
+  All commands from config file are executed !!!
+  Connect to UART in 5 seconds to see logs from UART !!!
+  \endcode
+  \else
   \code
   Sending the UART bootloader sbl_prebuilt/{board}/sbl_uart.release.tiimage ...
   Sent bootloader sbl_prebuilt/{board}/sbl_uart.release.tiimage of size 243975 bytes in 23.94s.
@@ -790,6 +857,7 @@ and waits for 5 seconds before running the application binary
   [STATUS] Application load SUCCESS !!!
   Connect to UART in 2 seconds to see logs from UART !!!
   \endcode
+  \endif
 
 
 \cond SOC_AM243X || SOC_AM64X
@@ -850,7 +918,7 @@ and waits for 5 seconds before running the application binary
 \endcond
 
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM65X
 
 ## Linux Appimage Generator Tool {#LINUX_APPIMAGE_GEN_TOOL}
 
@@ -861,7 +929,11 @@ and waits for 5 seconds before running the application binary
     - `#Input linux binaries`\n
        `ATF_BIN_NAME=bl31.bin`\n
        `OPTEE_BIN_NAME=bl32.bin`\n
+       \if SOC_AM65X
+       `SPL_BIN_NAME=u-boot-spl.bin-am65xx-evm`\n
+       \else
        `SPL_BIN_NAME=u-boot-spl.bin-am64xx-evm`\n
+       \endif
 - The load address for ATF, OPTEE and SPL need to be mentioned in the `config.mak` file.
     - `#Linux image load address`\n
       `ATF_LOAD_ADDR=0x0701a0000`\n

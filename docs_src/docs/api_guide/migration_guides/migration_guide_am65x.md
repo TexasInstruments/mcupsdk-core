@@ -6,6 +6,8 @@ Some TI SOCs offer the Processor SDK RTOS package for developing application on 
 If you are a user of Processor SDK RTOS, the references listed on this page point to information that will assist you in
 migration to MCU+ SDK.
 
+This page also contains information regarding migration between GP and HS devices.
+
 -# Change list between Processor SDK RTOS and MCU+ SDK, see this \htmllink{../mcu_plus_sdk_and_processor_sdk_rtos_change_list.xlsx, XLS}
 -# OS Kernel
    -# FreeRTOS comparison with SysBIOS, see \ref KERNEL_FREERTOS_PAGE
@@ -17,3 +19,5 @@ migration to MCU+ SDK.
    -# \subpage PINMUX_MIGRATION_GUIDE
    -# \subpage UART_MIGRATION_GUIDE
    -# \subpage UDMA_MIGRATION_GUIDE
+-# Device Type
+   -# \subpage HS_MIGRATION_GUIDE

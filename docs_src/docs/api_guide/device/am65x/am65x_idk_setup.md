@@ -62,6 +62,96 @@
   - In this screenshot this happens to be COM13 and COM14 however on your machine this could be different.
     One tip to make sure there is no mistake in identifying the UART port is to disconnect all other UART to USB devices other than this IDK before checking in device manager.
 
+## Flash SOC Initialization Binary {#EVM_FLASH_SOC_INIT}
+
+\note We have mentioned the steps for GP device.If you have an HS device, please
+refer to the migration guide \ref HS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS for differences
+
+### AM65X-IDK
+\attention This is a recommended one time step that needs to be done before
+           you can load and run programs via CCS
+
+\attention If this step fails, maybe due to bad flash in IDK, then try one of the other SOC initialization steps
+           mentioned at \ref EVM_SOC_INIT
+
+\attention This step needs to be done once unless the OSPI flash has been erased
+           or some other application has been flashed
+
+- A quick recap of steps done so far that are needed for the flashing to work
+  - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+  - Make sure python3 is installed as mentioned in \ref INSTALL_PYTHON3
+  - Make sure you have the IDK power cable and UART cable connected as shown in \ref EVM_CABLES
+
+- **POWER-OFF** the IDK
+
+- Set boot mode to UART BOOTMODE as shown in below image
+
+  \imageStyle{boot_pins_uart_mode.png,width:30%}
+  \image html boot_pins_uart_mode.png "UART BOOT MODE"
+
+- **POWER-ON** the IDK
+
+- You should see character "C" getting printed on the UART terminal every 2-3 seconds as shown below
+
+  \imageStyle{uart_rom_boot.png,width:80%}
+  \image html uart_rom_boot.png "UART output in UART BOOT MODE"
+
+- Close the UART terminal as shown below. This is important, else the UART script in next step wont be able to connect to the UART port.
+
+  \imageStyle{ccs_uart_close.png,width:80%}
+  \image html ccs_uart_close.png "Close UART terminal"
+
+- Open a command prompt and run the below command to flash the SOC initialization binary to the IDK.
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_null.cfg
+
+  - Here COM<x> is the port name of the identified UART port in Windows.
+  - On Linux,
+    - The name for UART port is typically something like `/dev/ttyUSB0`
+    - On some Linux systems, one needs to use `python3` to invoke python3.x, just `python` command may invoke python 2.x which will not work with the flashing script.
+
+- When the flashing is in progress you will see something like below
+
+  \imageStyle{flash_soc_init_in_progress.png,width:100%}
+  \image html flash_soc_init_in_progress.png "Flash in progress"
+
+- After all the flashing is done, you will see something like below
+
+  \imageStyle{flash_soc_init_success.png,width:80%}
+  \image html flash_soc_init_success.png "Flashing successful"
+
+- If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
+
+- If flashing is successful, do the next steps ...
+
+- **POWER-OFF** the IDK
+
+- Switch the IDK boot mode to OSPI mode as shown below,
+
+  \imageStyle{boot_pins_ospi_mode.png,width:30%}
+  \image html boot_pins_ospi_mode.png "OSPI BOOT MODE"
+
+- Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
+
+- **POWER-ON** the IDK
+
+- You should see output like below on the UART terminal
+
+        Starting NULL Bootloader ...
+
+        DMSC Firmware Version 21.1.1--v2021.01a (Terrific Lla
+        DMSC Firmware revision 0x15
+        DMSC ABI revision 3.1
+
+        INFO: Bootloader_loadSelfCpu:207: CPU r5f0-0 is initialized to 400000000 Hz !!!
+        INFO: Bootloader_loadSelfCpu:207: CPU r5f0-1 is initialized to 400000000 Hz !!!
+        INFO: Bootloader_runSelfCpu:217: All done, reseting self ...
+
+- Congratulations now the IDK is setup for loading and running from CCS !!!
+- You dont need to do these steps again unless you have flashed some other binary to the flash.
+- Now you can build a example of interest (see \ref GETTING_STARTED_BUILD) and then run it (see \ref CCS_LAUNCH_PAGE)
+
 ## Additional Details
 
 \note This section has more details on @VAR_BOARD_NAME. This is mainly for reference and can be skiped unless referred to by
@@ -173,6 +263,53 @@ This mode is used in conjunction with the `load_dmsc.js` script described here \
   \imageStyle{boot_pins_noboot_mode.png,width:30%}
   \image html boot_pins_noboot_mode.png "NO BOOT MODE"
 
+#### UART BOOT MODE  {#BOOTMODE_UART}
+##### AM65X-IDK
+
+This mode is used to flash files to the IDK flash via UART. It can also be used to boot applications via UART.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 0010 0000
+    BOOTMODE [ 8 : 15 ] (SW3) = 0101 0000
+    BOOTMODE [0:1]      (SW4) = 00
+    \endcode
+
+  \imageStyle{boot_pins_uart_mode.png,width:30%}
+  \image html boot_pins_uart_mode.png "UART BOOT MODE"
+
+#### OSPI BOOT MODE  {#BOOTMODE_OSPI}
+##### AM65X-IDK
+This mode is used to boot flashed applications via IDK flash like OSPI flash
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1000 0000
+    BOOTMODE [ 8 : 15 ] (SW3) = 1000 0000
+    BOOTMODE [0:1]      (SW4) = 00
+    \endcode
+
+  \imageStyle{boot_pins_ospi_mode.png,width:30%}
+  \image html boot_pins_ospi_mode.png "OSPI BOOT MODE"
+
+#### SD BOOT MODE  {#BOOTMODE_SD}
+##### AM65X-IDK
+This mode is used to boot applications via SD card on the IDK.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 0010 0000
+    BOOTMODE [ 8 : 15 ] (SW3) = 0110 0000
+    BOOTMODE [0:1]      (SW4) = 00
+    \endcode
+
+  \imageStyle{boot_pins_sd_mode.png,width:30%}
+  \image html boot_pins_sd_mode.png "SD BOOT MODE"
+
+#### PCIE BOOT MODE  {#BOOTMODE_PCIE}
+##### AM65X-IDK
+This mode is used to boot applications via PCIe on the IDK.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 0010 1000
+    BOOTMODE [ 8 : 15 ] (SW3) = 1001 0000
+    \endcode
+
+  \imageStyle{boot_pins_pcie_mode.png,width:30%}
+  \image html boot_pins_pcie_mode.png "PCIE BOOT MODE"
 
 ## Troubleshooting IDK issues {#TROUBLESHOOT_ISSUES}
 

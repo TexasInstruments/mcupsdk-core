@@ -29,6 +29,15 @@ This section describes CCS utility scripts that can optionally be used to make y
         <td>runAfterLoad
         <td>set to `true` or `false`, depending on if want to run the application after loading.
     </tr>
+    \if SOC_AM65X
+    <tr>
+        <td>examplePath
+        <td>Relative example path from `sdkPath` above, e.g. `examples/empty`
+    </tr>
+    <tr>
+        <td>exampleName
+        <td>Example name, e.g. `empty`
+    \else
     <tr>
         <td>examplePath
         <td>Relative example path from `sdkPath` above, e.g. `examples/drivers/ipc/ipc_rpmsg_echo`
@@ -36,6 +45,7 @@ This section describes CCS utility scripts that can optionally be used to make y
     <tr>
         <td>exampleName
         <td>Example name, e.g. `ipc_rpmsg_echo`
+    \endif
     <tr>
         <td>os
         <td>OS name, `nortos` or `freertos`
@@ -44,10 +54,17 @@ This section describes CCS utility scripts that can optionally be used to make y
         <td>profile
         <td>Build profile to use, `debug` or `release`
     </tr>
+    \if SOC_AM65X
+    <tr>
+        <td>board
+        <td>Board to use. e.g. `am65x-idk`
+    </tr>
+    \else
     <tr>
         <td>board
         <td>Board to use. e.g. `@VAR_BOARD_NAME_LOWER`
     </tr>
+    \endif
     </table>
 
 -# Launch the SOC target connection in CCS and do the SOC initialization, however DO NOT connect to any CPUs or load applications via CCS GUI.
@@ -58,7 +75,17 @@ This section describes CCS utility scripts that can optionally be used to make y
         js:> loadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/@VAR_SOC_NAME_LOWER/load.js"
 
    - **NOTE** replace `C:/ti/mcu_plus_sdk` with the absolute path to where the SDK is installed.
+\if SOC_AM65X
+-# After successful execution you should see a log like below. Example used here is "empty"
 
+        js:> loadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/@VAR_SOC_NAME_LOWER/load.js"
+        Connecting, halting, reseting ...
+        [r5fss-0] Loading ... C:/ti/mcu_plus_sdk/examples/empty/am65x-idk/r5fss0-0_freertos/ti-arm-clang/empty.release.out
+        [r5fss-1] Loading ... C:/ti/mcu_plus_sdk/examples/empty/am65x-idk/r5fss0-1_freertos/ti-arm-clang/empty.release.out
+        [r5fss-1] Running ...
+        [r5fss-0] Running ...
+        All DONE !!!
+\else
 -# After successful execution you should see a log like below. Example used here is "ipc_rpmsg_echo"
 
         js:> loadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/@VAR_SOC_NAME_LOWER/load.js"
@@ -73,6 +100,7 @@ This section describes CCS utility scripts that can optionally be used to make y
         [r5fss1-1] Running ...
         [r5fss0-0] Running ...
         All DONE !!!
+\endif
 
 -# Please note that if a .out is not found, that CPU is skipped over with a information message on the console.
 

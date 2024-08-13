@@ -65,6 +65,17 @@ This example is more or less like a flashing server, and will never terminate un
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_uart_uniflash
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is mainly a flash-writer application, this is sent via the UART unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.

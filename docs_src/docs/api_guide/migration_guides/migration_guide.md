@@ -5,6 +5,9 @@
 Some TI SOCs offer the Processor SDK RTOS package for developing application on the RTOS/NORTOS CPUs.
 If you are a user of Processor SDK RTOS, the references listed on this page point to information that will assist you in
 migration to MCU+ SDK.
+\cond SOC_AM65X
+This page also contains information regarding migration between GP and HS devices.
+\endcond
 \cond SOC_AM64X || SOC_AM243X
 This page also contains information regarding migration between GP and HS_FS devices.
 \endcond
@@ -28,4 +31,8 @@ This page also contains information regarding migration between GP and HS_FS dev
    -# \subpage UDMA_MIGRATION_GUIDE
 -# Networking
 -# Device Type
+\if SOC_AM65X
+   -# \subpage HS_MIGRATION_GUIDE
+\else
    -# \subpage HSFS_MIGRATION_GUIDE
+\endif
