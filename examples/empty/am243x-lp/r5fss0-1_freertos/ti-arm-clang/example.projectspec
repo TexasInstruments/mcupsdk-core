@@ -19,7 +19,7 @@
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
-        cgtVersion="3.2.2"
+        cgtVersion="4.0.0"
         device="Cortex R.AM2434_ALX"
         deviceCore="MAIN_PULSAR_Cortex_R5_0_1"
         ignoreDefaultDeviceSettings="true"
