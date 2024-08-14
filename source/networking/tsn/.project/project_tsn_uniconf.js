@@ -102,7 +102,6 @@ const defines = {
         'PRINT_FORMAT_NO_WARNING',
         'UB_LOGCAT=2',
         'UB_LOGTSTYPE=UB_CLOCK_REALTIME',
-        '__STDC_LIBC_EXT1__',
         '__STDC_WANT_LIB_EXT1__=1',
     ],
 };
