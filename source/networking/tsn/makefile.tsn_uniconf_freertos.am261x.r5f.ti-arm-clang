@@ -108,7 +108,6 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
-    -D__STDC_LIBC_EXT1__ \
     -D__STDC_WANT_LIB_EXT1__=1 \
 
 CFLAGS_common := \
@@ -140,11 +139,12 @@ CFLAGS_cpp_common := \
     -Wno-extern-c-compat \
     -Wno-c++11-narrowing \
     -Wno-reorder-init-list \
-    -Wno-deprecated-register \
+    -Wno-register \
     -Wno-writable-strings \
     -Wno-enum-compare \
     -Wno-reserved-user-defined-literal \
     -Wno-unused-const-variable \
+    -Wno-vla-cxx-extension \
     -x c++ \
 
 ARFLAGS_common := \
