@@ -27,6 +27,7 @@ SDK features and tools.
 \endcond
 - \subpage MCU_RESET_ISOLATION
 -\subpage ICSSG0_USAGE_GUIDE
+-\subpage SYSFW_PLL_UPDATE_GUIDE
 \endcond
 
 \cond SOC_AM273X
