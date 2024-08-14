@@ -332,7 +332,7 @@ int_xbar2.$name      = "ADC_CAP_TRIG_INT_XBAR1";
 output_xbar1.$name                         = "APWM_ECAP_OUTPUT_XBAR0";
 output_xbar1.xbarOutput                    = ["ECAP0_OUT"];
 output_xbar1.OUTPUTXBAR.$assign            = "OUTPUTXBAR13";
-output_xbar1.OUTPUTXBAR.OUTPUTXBAR.$assign = "GPIO119";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO119";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

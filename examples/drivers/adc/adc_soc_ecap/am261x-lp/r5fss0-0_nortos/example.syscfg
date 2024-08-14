@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+161"}
+ * @versions {"tool":"1.22.999+169"}
  */
 
 /**
@@ -329,10 +329,10 @@ int_xbar2.xbarOutput = ["ADC1_INT1"];
 int_xbar2.instance   = "INT_XBAR_1";
 int_xbar2.$name      = "ADC_CAP_TRIG_INT_XBAR1";
 
-output_xbar1.$name                         = "APWM_ECAP_OUTPUT_XBAR0";
-output_xbar1.xbarOutput                    = ["ECAP0_OUT"];
-output_xbar1.OUTPUTXBAR.$assign            = "OUTPUTXBAR13";
-output_xbar1.OUTPUTXBAR.OUTPUTXBAR.$assign = "GPIO119";
+output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput                 = ["ECAP0_OUT"];
+output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR13";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO119";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
