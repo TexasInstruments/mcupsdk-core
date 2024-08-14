@@ -45,9 +45,6 @@ const firewall_service1 = firewall_service.addInstance();
  */
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
-ipc.r5fss1_0 = "NONE";
-ipc.r5fss1_1 = "NONE";
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";

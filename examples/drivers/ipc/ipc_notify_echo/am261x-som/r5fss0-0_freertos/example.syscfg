@@ -43,8 +43,6 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ipc.r5fss0_1 = "notify";
-ipc.r5fss1_0 = "notify";
-ipc.r5fss1_1 = "notify";
 
 debug_log.enableCssLog             = false;
 debug_log.enableUartLog            = true;
