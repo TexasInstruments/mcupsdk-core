@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM243x_ALV_beta" --part "ALV" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCBGA (ALV)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -18,7 +19,7 @@ const i2c2       = i2c.addInstance();
 const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1   = pruicss.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
@@ -46,11 +47,13 @@ eeprom1.peripheralDriver = i2c1;
 i2c1.I2C.$assign         = "I2C0";
 i2c1.I2C.SCL.$assign     = "I2C0_SCL";
 i2c1.I2C.SDA.$assign     = "I2C0_SDA";
+i2c1.I2C_child.$name     = "drivers_i2c_v0_i2c_v0_template1";
 
 i2c2.$name           = "CONFIG_I2C1";
 i2c2.I2C.$assign     = "I2C1";
 i2c2.I2C.SCL.$assign = "I2C1_SCL";
 i2c2.I2C.SDA.$assign = "I2C1_SDA";
+i2c2.I2C_child.$name = "drivers_i2c_v0_i2c_v0_template2";
 
 pruicss1.$name                           = "CONFIG_PRU_ICSS1";
 pruicss1.instance                        = "ICSSG1";
@@ -59,6 +62,11 @@ pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
 debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;
 debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -95,32 +103,28 @@ mpu_armv77.$name    = "CONFIG_MPU_REGION6";
 mpu_armv77.size     = 27;
 mpu_armv77.baseAddr = 0x60000000;
 
-enet_cpsw1.$name                               = "CONFIG_ENET_CPSW0";
-enet_cpsw1.mdioMode                            = "MDIO_MODE_MANUAL";
+enet_cpsw1.$name                          = "CONFIG_ENET_CPSW0";
+enet_cpsw1.mdioMode                       = "MDIO_MODE_MANUAL";
+enet_cpsw1.enableTsOut                    = true;
 enet_cpsw1.txDmaChannel.create(2);
-enet_cpsw1.txDmaChannel[0].$name               = "ENET_DMA_TX_CH0";
-enet_cpsw1.txDmaChannel[0].useGlobalEvt        = true;
-enet_cpsw1.txDmaChannel[0].PacketsCount        = 8;
-enet_cpsw1.txDmaChannel[1].$name               = "ENET_DMA_TX_CH_LLDP";
-enet_cpsw1.txDmaChannel[1].useGlobalEvt        = true;
-enet_cpsw1.txDmaChannel[1].PacketsCount        = 8;
+enet_cpsw1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
+enet_cpsw1.txDmaChannel[0].useGlobalEvt   = true;
+enet_cpsw1.txDmaChannel[0].PacketsCount   = 8;
+enet_cpsw1.txDmaChannel[1].$name          = "ENET_DMA_TX_CH_LLDP";
+enet_cpsw1.txDmaChannel[1].useGlobalEvt   = true;
+enet_cpsw1.txDmaChannel[1].PacketsCount   = 8;
 enet_cpsw1.rxDmaChannel.create(2);
-enet_cpsw1.rxDmaChannel[0].$name               = "ENET_DMA_RX_CH0";
-enet_cpsw1.rxDmaChannel[0].useGlobalEvt        = true;
-enet_cpsw1.rxDmaChannel[0].sizeThreshEn        = 0x0;
-enet_cpsw1.rxDmaChannel[0].PacketsCount        = 16;
-enet_cpsw1.rxDmaChannel[1].$name               = "ENET_DMA_RX_CH_LLDP";
-enet_cpsw1.rxDmaChannel[1].useDefaultFlow      = false;
-enet_cpsw1.rxDmaChannel[1].useGlobalEvt        = true;
-enet_cpsw1.rxDmaChannel[1].macAddrCount        = 0;
-enet_cpsw1.rxDmaChannel[1].sizeThreshEn        = 0x0;
-enet_cpsw1.rxDmaChannel[1].PacketsCount        = 16;
-enet_cpsw1.$name                     = "CONFIG_ENET_CPSW0";
-enet_cpsw1.enableTsOut               = true;
-enet_cpsw1.MDIO.$assign              = "MDIO0";
-enet_cpsw1.RGMII1.$assign            = "RGMII1";
-enet_cpsw1.RGMII2.$assign            = "RGMII2";
-enet_cpsw1.CPSW_CPTS.TS_SYNC.$assign = "PRG0_PRU0_GPO17";
+enet_cpsw1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
+enet_cpsw1.rxDmaChannel[0].useGlobalEvt   = true;
+enet_cpsw1.rxDmaChannel[0].sizeThreshEn   = 0x0;
+enet_cpsw1.rxDmaChannel[0].PacketsCount   = 16;
+enet_cpsw1.rxDmaChannel[1].$name          = "ENET_DMA_RX_CH_LLDP";
+enet_cpsw1.rxDmaChannel[1].useDefaultFlow = false;
+enet_cpsw1.rxDmaChannel[1].useGlobalEvt   = true;
+enet_cpsw1.rxDmaChannel[1].macAddrCount   = 0;
+enet_cpsw1.rxDmaChannel[1].sizeThreshEn   = 0x0;
+enet_cpsw1.rxDmaChannel[1].PacketsCount   = 16;
+enet_cpsw1.CPSW_CPTS.TS_SYNC.$assign      = "PRG0_PRU0_GPO17";
 
 const udma         = scripting.addModule("/drivers/udma/udma", {}, false);
 const udma1        = udma.addInstance({}, false);
@@ -131,33 +135,35 @@ enet_cpsw1.udmaDrv = udma1;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution             = "USART0";
-debug_log.uartLog.UART.RXD.$suggestSolution         = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution         = "UART0_TXD";
-enet_cpsw1.MDIO.MDC.$suggestSolution      = "PRG0_PRU1_GPO19";
-enet_cpsw1.MDIO.MDIO.$suggestSolution     = "PRG0_PRU1_GPO18";
-enet_cpsw1.RGMII1.RD0.$suggestSolution    = "PRG0_PRU1_GPO7";
-enet_cpsw1.RGMII1.RD1.$suggestSolution    = "PRG0_PRU1_GPO9";
-enet_cpsw1.RGMII1.RD2.$suggestSolution    = "PRG0_PRU1_GPO10";
-enet_cpsw1.RGMII1.RD3.$suggestSolution    = "PRG0_PRU1_GPO17";
-enet_cpsw1.RGMII1.RX_CTL.$suggestSolution = "PRG0_PRU0_GPO9";
-enet_cpsw1.RGMII1.RXC.$suggestSolution    = "PRG0_PRU0_GPO10";
-enet_cpsw1.RGMII1.TD0.$suggestSolution    = "PRG1_PRU1_GPO7";
-enet_cpsw1.RGMII1.TD1.$suggestSolution    = "PRG1_PRU1_GPO9";
-enet_cpsw1.RGMII1.TD2.$suggestSolution    = "PRG1_PRU1_GPO10";
-enet_cpsw1.RGMII1.TD3.$suggestSolution    = "PRG1_PRU1_GPO17";
-enet_cpsw1.RGMII1.TX_CTL.$suggestSolution = "PRG1_PRU0_GPO9";
-enet_cpsw1.RGMII1.TXC.$suggestSolution    = "PRG1_PRU0_GPO10";
-enet_cpsw1.RGMII2.RD0.$suggestSolution    = "PRG1_PRU1_GPO0";
-enet_cpsw1.RGMII2.RD1.$suggestSolution    = "PRG1_PRU1_GPO1";
-enet_cpsw1.RGMII2.RD2.$suggestSolution    = "PRG1_PRU1_GPO2";
-enet_cpsw1.RGMII2.RD3.$suggestSolution    = "PRG1_PRU1_GPO3";
-enet_cpsw1.RGMII2.RX_CTL.$suggestSolution = "PRG1_PRU1_GPO4";
-enet_cpsw1.RGMII2.RXC.$suggestSolution    = "PRG1_PRU1_GPO6";
-enet_cpsw1.RGMII2.TD0.$suggestSolution    = "PRG1_PRU1_GPO11";
-enet_cpsw1.RGMII2.TD1.$suggestSolution    = "PRG1_PRU1_GPO12";
-enet_cpsw1.RGMII2.TD2.$suggestSolution    = "PRG1_PRU1_GPO13";
-enet_cpsw1.RGMII2.TD3.$suggestSolution    = "PRG1_PRU1_GPO14";
-enet_cpsw1.RGMII2.TX_CTL.$suggestSolution = "PRG1_PRU1_GPO15";
-enet_cpsw1.RGMII2.TXC.$suggestSolution    = "PRG1_PRU1_GPO16";
-enet_cpsw1.CPSW_CPTS.$suggestSolution     = "CP_GEMAC_CPTS0";
+debug_log.uartLog.UART.$suggestSolution         = "USART0";
+debug_log.uartLog.UART.RXD.$suggestSolution     = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution     = "UART0_TXD";
+enet_cpsw1.MDIO.$suggestSolution                = "MDIO0";
+enet_cpsw1.MDIO.MDC.$suggestSolution            = "PRG0_PRU1_GPO19";
+enet_cpsw1.MDIO.MDIO.$suggestSolution           = "PRG0_PRU1_GPO18";
+enet_cpsw1.RGMII.$suggestSolution               = "CPSW";
+enet_cpsw1.RGMII.RGMII1_RD0.$suggestSolution    = "PRG0_PRU1_GPO7";
+enet_cpsw1.RGMII.RGMII1_RD1.$suggestSolution    = "PRG0_PRU1_GPO9";
+enet_cpsw1.RGMII.RGMII1_RD2.$suggestSolution    = "PRG0_PRU1_GPO10";
+enet_cpsw1.RGMII.RGMII1_RD3.$suggestSolution    = "PRG0_PRU1_GPO17";
+enet_cpsw1.RGMII.RGMII1_RX_CTL.$suggestSolution = "PRG0_PRU0_GPO9";
+enet_cpsw1.RGMII.RGMII1_RXC.$suggestSolution    = "PRG0_PRU0_GPO10";
+enet_cpsw1.RGMII.RGMII1_TD0.$suggestSolution    = "PRG1_PRU1_GPO7";
+enet_cpsw1.RGMII.RGMII1_TD1.$suggestSolution    = "PRG1_PRU1_GPO9";
+enet_cpsw1.RGMII.RGMII1_TD2.$suggestSolution    = "PRG1_PRU1_GPO10";
+enet_cpsw1.RGMII.RGMII1_TD3.$suggestSolution    = "PRG1_PRU1_GPO17";
+enet_cpsw1.RGMII.RGMII1_TX_CTL.$suggestSolution = "PRG1_PRU0_GPO9";
+enet_cpsw1.RGMII.RGMII1_TXC.$suggestSolution    = "PRG1_PRU0_GPO10";
+enet_cpsw1.RGMII.RGMII2_RD0.$suggestSolution    = "PRG1_PRU1_GPO0";
+enet_cpsw1.RGMII.RGMII2_RD1.$suggestSolution    = "PRG1_PRU1_GPO1";
+enet_cpsw1.RGMII.RGMII2_RD2.$suggestSolution    = "PRG1_PRU1_GPO2";
+enet_cpsw1.RGMII.RGMII2_RD3.$suggestSolution    = "PRG1_PRU1_GPO3";
+enet_cpsw1.RGMII.RGMII2_RX_CTL.$suggestSolution = "PRG1_PRU1_GPO4";
+enet_cpsw1.RGMII.RGMII2_RXC.$suggestSolution    = "PRG1_PRU1_GPO6";
+enet_cpsw1.RGMII.RGMII2_TD0.$suggestSolution    = "PRG1_PRU1_GPO11";
+enet_cpsw1.RGMII.RGMII2_TD1.$suggestSolution    = "PRG1_PRU1_GPO12";
+enet_cpsw1.RGMII.RGMII2_TD2.$suggestSolution    = "PRG1_PRU1_GPO13";
+enet_cpsw1.RGMII.RGMII2_TD3.$suggestSolution    = "PRG1_PRU1_GPO14";
+enet_cpsw1.RGMII.RGMII2_TX_CTL.$suggestSolution = "PRG1_PRU1_GPO15";
+enet_cpsw1.RGMII.RGMII2_TXC.$suggestSolution    = "PRG1_PRU1_GPO16";
+enet_cpsw1.CPSW_CPTS.$suggestSolution           = "CP_GEMAC_CPTS0";

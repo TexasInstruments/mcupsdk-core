@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM243x_ALV_beta" --part "ALV" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCBGA (ALV)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -16,7 +17,7 @@ const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const i2c2            = i2c.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -232,8 +233,7 @@ enet_cpsw1.$name                 = "CONFIG_ENET_CPSW0";
 enet_cpsw1.DisableMacPort2       = true;
 enet_cpsw1.mdioMode              = "MDIO_MODE_MANUAL";
 enet_cpsw1.macport1LoopbackMode  = "LOOPBACK_MODE_MAC";
-enet_cpsw1.MDIO.$assign          = "MDIO0";
-enet_cpsw1.RGMII1.$assign        = "RGMII1";
+enet_cpsw1.MDIO.MDC.$assign      = "PRG0_PRU1_GPO19";
 enet_cpsw1.txDmaChannel[0].$name = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name = "ENET_DMA_RX_CH0";
 
@@ -246,20 +246,21 @@ enet_cpsw1.udmaDrv = udma1;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution     = "USART0";
-debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";
-enet_cpsw1.MDIO.MDC.$suggestSolution        = "PRG0_PRU1_GPO19";
-enet_cpsw1.MDIO.MDIO.$suggestSolution       = "PRG0_PRU1_GPO18";
-enet_cpsw1.RGMII1.RD0.$suggestSolution      = "PRG0_PRU1_GPO7";
-enet_cpsw1.RGMII1.RD1.$suggestSolution      = "PRG0_PRU1_GPO9";
-enet_cpsw1.RGMII1.RD2.$suggestSolution      = "PRG0_PRU1_GPO10";
-enet_cpsw1.RGMII1.RD3.$suggestSolution      = "PRG0_PRU1_GPO17";
-enet_cpsw1.RGMII1.RX_CTL.$suggestSolution   = "PRG0_PRU0_GPO9";
-enet_cpsw1.RGMII1.RXC.$suggestSolution      = "PRG0_PRU0_GPO10";
-enet_cpsw1.RGMII1.TD0.$suggestSolution      = "PRG1_PRU1_GPO7";
-enet_cpsw1.RGMII1.TD1.$suggestSolution      = "PRG1_PRU1_GPO9";
-enet_cpsw1.RGMII1.TD2.$suggestSolution      = "PRG1_PRU1_GPO10";
-enet_cpsw1.RGMII1.TD3.$suggestSolution      = "PRG1_PRU1_GPO17";
-enet_cpsw1.RGMII1.TX_CTL.$suggestSolution   = "PRG1_PRU0_GPO9";
-enet_cpsw1.RGMII1.TXC.$suggestSolution      = "PRG1_PRU0_GPO10";
+debug_log.uartLog.UART.$suggestSolution         = "USART0";
+debug_log.uartLog.UART.RXD.$suggestSolution     = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution     = "UART0_TXD";
+enet_cpsw1.MDIO.$suggestSolution                = "MDIO0";
+enet_cpsw1.MDIO.MDIO.$suggestSolution           = "PRG0_PRU1_GPO18";
+enet_cpsw1.RGMII.$suggestSolution               = "CPSW";
+enet_cpsw1.RGMII.RGMII1_RD0.$suggestSolution    = "PRG0_PRU1_GPO7";
+enet_cpsw1.RGMII.RGMII1_RD1.$suggestSolution    = "PRG0_PRU1_GPO9";
+enet_cpsw1.RGMII.RGMII1_RD2.$suggestSolution    = "PRG0_PRU1_GPO10";
+enet_cpsw1.RGMII.RGMII1_RD3.$suggestSolution    = "PRG0_PRU1_GPO17";
+enet_cpsw1.RGMII.RGMII1_RX_CTL.$suggestSolution = "PRG0_PRU0_GPO9";
+enet_cpsw1.RGMII.RGMII1_RXC.$suggestSolution    = "PRG0_PRU0_GPO10";
+enet_cpsw1.RGMII.RGMII1_TD0.$suggestSolution    = "PRG1_PRU1_GPO7";
+enet_cpsw1.RGMII.RGMII1_TD1.$suggestSolution    = "PRG1_PRU1_GPO9";
+enet_cpsw1.RGMII.RGMII1_TD2.$suggestSolution    = "PRG1_PRU1_GPO10";
+enet_cpsw1.RGMII.RGMII1_TD3.$suggestSolution    = "PRG1_PRU1_GPO17";
+enet_cpsw1.RGMII.RGMII1_TX_CTL.$suggestSolution = "PRG1_PRU0_GPO9";
+enet_cpsw1.RGMII.RGMII1_TXC.$suggestSolution    = "PRG1_PRU0_GPO10";
