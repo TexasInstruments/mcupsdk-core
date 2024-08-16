@@ -71,7 +71,6 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 int main(void)
 {
     int32_t status;
-    uint32_t hsmrt_size = 0U;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -87,13 +86,14 @@ int main(void)
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
-
+    
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 

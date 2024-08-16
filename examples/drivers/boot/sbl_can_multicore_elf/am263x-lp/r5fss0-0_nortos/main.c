@@ -90,7 +90,6 @@ int main()
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
 
     status = Board_driversOpen();

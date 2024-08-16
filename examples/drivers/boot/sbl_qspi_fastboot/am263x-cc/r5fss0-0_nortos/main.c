@@ -114,12 +114,12 @@ int main(void)
     Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
     CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
 
-
+    Bootloader_socInitL2MailBoxMemory();
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 

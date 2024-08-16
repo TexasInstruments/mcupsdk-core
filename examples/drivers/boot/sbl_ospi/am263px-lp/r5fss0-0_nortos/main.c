@@ -91,18 +91,22 @@ int main(void)
     Bootloader_profileAddProfilePoint("System_init");
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
+    
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
+
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
-    DebugP_assert(status == SystemP_SUCCESS);
+    DebugP_assert(status == SystemP_SUCCESS); 
     Bootloader_profileAddProfilePoint("Board_driversOpen");
+
     DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
 
     if (SystemP_SUCCESS == status)
@@ -127,7 +131,7 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
                 status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
 
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].rprcOffset != BOOTLOADER_INVALID_ID) {
+				if ((status == SystemP_SUCCESS) && (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].rprcOffset != BOOTLOADER_INVALID_ID)) {
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
 				}
             }
@@ -137,7 +141,7 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
                 status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
 
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].rprcOffset != BOOTLOADER_INVALID_ID) {
+				if ((status == SystemP_SUCCESS) && (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].rprcOffset != BOOTLOADER_INVALID_ID)) {
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
 				}
             }
@@ -147,7 +151,7 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
                 status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
 
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID) {
+				if ((status == SystemP_SUCCESS) && (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID)) {
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
 				}
             }

@@ -110,12 +110,14 @@ int main(void)
 
     System_init();
     Drivers_open();
+
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
-    DebugP_assert(status == SystemP_SUCCESS);
+    DebugP_assert(status == SystemP_SUCCESS); 
+    
     /* 
         Calculate the HSM Runtime image size from the flash offset specified. 
     */
@@ -127,11 +129,11 @@ int main(void)
     Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
     CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
 
+    Bootloader_socInitL2MailBoxMemory();
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, hsmrt_size);
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
 
     /* 
         Keyring init
