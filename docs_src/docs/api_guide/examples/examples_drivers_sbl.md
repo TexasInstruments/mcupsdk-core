@@ -43,7 +43,7 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_SD
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
    -# \subpage EXAMPLES_DRIVERS_SBL_UART

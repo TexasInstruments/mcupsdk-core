@@ -3,7 +3,7 @@
 This page lists all the examples related to usage of RTOS and no-RTOS APIs,
 including driver porting layer examples.
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 -# \subpage EXAMPLES_KERNEL_DPL_DEMO
 -# \subpage EXAMPLES_KERNEL_DPL_INTERRUPT_PRIORITIZATION
 -# \subpage EXAMPLES_KERNEL_DPL_LOW_LATENCY_INTERRUPT

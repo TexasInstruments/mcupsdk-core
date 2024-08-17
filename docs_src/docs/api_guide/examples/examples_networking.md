@@ -119,7 +119,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
-\cond  SOC_AM263PX
+\cond  SOC_AM263PX || SOC_AM261X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
@@ -188,7 +188,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
 
-\cond  SOC_AM263PX || SOC_AM263X
+\cond  SOC_AM263PX || SOC_AM263X || SOC_AM261X
 ### ICSS-EMAC Example using LwIP Stack
 -# \subpage EXAMPLES_ICSS_EMAC_LWIP
 \endcond

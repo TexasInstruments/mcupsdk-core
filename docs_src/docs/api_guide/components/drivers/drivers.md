@@ -176,6 +176,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_IPC_RPMESSAGE_PAGE
 - \subpage DRIVERS_LIN_PAGE
 - \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_CANFD_PAGE
 - \subpage DRIVERS_MCSPI_PAGE
 - \subpage DRIVERS_MDIO_PAGE
 - \subpage DRIVERS_MPU_FIREWALL_PAGE

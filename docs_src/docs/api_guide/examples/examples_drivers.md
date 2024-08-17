@@ -222,7 +222,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 -# ADC
    -# \subpage EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSAMPLING
    -# \subpage EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM
@@ -247,7 +247,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_POLLING
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE
    -# \subpage EXAMPLES_DRIVERS_ADC_DAC_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_ADC_ALTERNATE_DMA_TRIGGER
@@ -271,7 +271,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
    -# \subpage EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM
    -# \subpage EXAMPLES_DRIVERS_ECAP_EDMA
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_ECAP_SIGNAL_MONITORING
 \endcond
 -# EDMA
@@ -297,7 +297,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_HRPWM_PHASE_SHIFT_SFO
    -# \subpage EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO
    -# \subpage EXAMPLES_DRIVERS_EPWM_UP_AQ
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_EPWM_DCCAP
    -# \subpage EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION
    -# \subpage EXAMPLES_DRIVERS_EPWM_XCMP_MULTIPLE_EDGES
@@ -384,7 +384,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT_LLD
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_FILE_IO
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 -# OSPI
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO
@@ -409,13 +409,13 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_DMAREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK
 \endcond
 
 -# SPINLOCK
    -# \subpage EXAMPLE_SPINLOCK
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 -# TMU
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
    -# \subpage EXAMPLES_DRIVERS_TMU_CORES_SUPPORT

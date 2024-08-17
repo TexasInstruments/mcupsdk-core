@@ -27,12 +27,12 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_ROM_CHECKSUM
 \endcond
 
-\cond SOC_AM263X 
+\cond SOC_AM263X || SOC_AM261X
 -# INTEGRATED SDL AND MCAN DRIVER
     # \subpage EXAMPLES_SDL_INTEGRATED_MCAN
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX  || SOC_AM261X
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
 -# RTI
@@ -63,7 +63,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_R5F_CPU_STATIC_REGISTER
 \endcond
 
-\cond  SOC_AM263PX
+\cond  SOC_AM263PX || SOC_AM261X
 -# TMU_ROM_CHECKSUM
    -# \subpage EXAMPLES_SDL_TMU_ROM_CHECKSUM
 -# STOG

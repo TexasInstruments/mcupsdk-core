@@ -28,7 +28,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 -# \subpage EXAMPLES_PRU_IO
 \endcond
 
@@ -54,7 +54,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_HELLO_WORLD_SAFERTOS
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 -# \subpage EXAMPLES_BENCHMARKS
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD
