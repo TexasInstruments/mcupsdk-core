@@ -45,6 +45,11 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+/** This application segment can be encrypted. */
+#define BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED      (0xA5U)
+/** This application segment can never be encrypted. */
+#define BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED   (0x5AU)
+
 /**
  *  \anchor DevTypes
  *  \name Device Types

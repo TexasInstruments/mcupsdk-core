@@ -542,7 +542,7 @@ int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
 
     gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)SOC_virtToPhy((void *)startAddr);
     gSecureBootStreamArray[gStreamId].dataLen = size;
-    gSecureBootStreamArray[gStreamId].canBeEncrypted = 0x0U;
+    gSecureBootStreamArray[gStreamId].canBeEncrypted = BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED;
 
     status = HsmClient_procAuthBootStart(&gHSMClient, &gSecureBootStreamArray[gStreamId]);
 
@@ -572,7 +572,7 @@ int32_t Bootloader_authFinish(void)
 
     gSecureBootStreamArray[gStreamId].dataIn = 0x0U;
     gSecureBootStreamArray[gStreamId].dataLen = 0x0U;
-    gSecureBootStreamArray[gStreamId].canBeEncrypted = 0x0U;
+    gSecureBootStreamArray[gStreamId].canBeEncrypted = BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED;
 
     status = HsmClient_procAuthBootFinish(&gHSMClient, &gSecureBootStreamArray[gStreamId]);
 

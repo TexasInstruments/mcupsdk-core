@@ -55,22 +55,22 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* The maximum size of the vector table. */
+/** The maximum size of the vector table. */
 #define MAX_VECTOR_TABLE_SIZE (80U)
 
 /*RPRC image ID for linux load only images */
 #define RPRC_LINUX_LOAD_ONLY_IMAGE_ID (21U)
 #define SEGMENT_MAP_NOTE_TYPE (0xBBBB7777)
 
-/* Maximum allowed length of application certificate. */
+/** Maximum allowed length of application certificate. */
 #define MAX_APP_CERT_LENGTH (0x1000U)
 
-/* This application segment can be encrypted. */
-#define BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED      (0x1U)
-/* This application segment can never be encrypted. */
-#define BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED   (0x0U)
+/** This application segment can be encrypted. */
+#define BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED      (0xA5U)
+/** This application segment can never be encrypted. */
+#define BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED   (0x5AU)
 
-/* The maximum possibel size of RS note segment placed at the end of MCELF appimage. */
+/** The maximum possible size of RS note segment placed at the end of MCELF appimage. */
 #define BOOTLOADER_MAX_RS_NOTE_SEGMENT_SIZE (48)
 
 /* ========================================================================== */
@@ -88,8 +88,10 @@ uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
 uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
 uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
 
-/* Buffer to store the Application X509 cert if present. */
+/** Buffer to store the Application X509 cert if present. */
 uint8_t gX509Cert[MAX_APP_CERT_LENGTH];
+
+volatile uint8_t* vector_table_loc = 0U;
 
 /* ========================================================================== */
 /*                             Function Definitions                           */
@@ -847,22 +849,43 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     uint32_t imgOffset = 0U;
     uint64_t parsedImageSize = 0U;
 
-    uint32_t rdSz = ELFCLASS_IDX + 1;
+    uint32_t rdSz = ELFCLASS_IDX + 1U;
 
     uint8_t randomStringBuffer[BOOTLOADER_MAX_RS_NOTE_SEGMENT_SIZE];
     uint8_t vec_addrs[MAX_VECTOR_TABLE_SIZE];
     uint8_t vec_present = 0U;
     uint32_t vec_size = 0U;
+    uint32_t doAuth = FALSE;
+    
+    uint32_t phoff = 0U;
+    uint32_t phtSize = 0U;
+    uint32_t numSegments = 0U;
+
+    Bootloader_ELFH32 *elfPtr32 = NULL;
+    Bootloader_ELFH64 *elfPtr64 = NULL;
+
+    Bootloader_ELFPH32 *elfPhdrPtr32 = NULL;
+    Bootloader_ELFPH64 *elfPhdrPtr64 = NULL;
+
+    uint32_t noteSegmentSz = 0U;
+    uint32_t noteSegmentOffset = 0U;
 
     Bootloader_Config *config = (Bootloader_Config *)handle;
+
+    uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0};
+    char ELFSTR[] = { 0x7F, 'E', 'L', 'F' };    
 
     if(config->fxns->imgReadFxn == NULL || config->fxns->imgSeekFxn == NULL)
     {
         status = SystemP_FAILURE;
     }
-	config->fxns->imgSeekFxn(0, config->args);
 
-    uint32_t doAuth = ((Bootloader_socIsAuthRequired() == TRUE) && (config->isAppimageSigned == TRUE));
+    if (status == SystemP_SUCCESS)
+    {
+        config->fxns->imgSeekFxn(0, config->args);
+
+        doAuth = ((Bootloader_socIsAuthRequired() == TRUE) && (config->isAppimageSigned == TRUE));
+    }
 
     /* 
         If authentication is required, copy and parse the certificate for length and application image length.
@@ -894,11 +917,12 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         /* Parse the ELF magic bytes and match with the intended value. */
         config->fxns->imgSeekFxn(imgOffset, config->args);
         status = config->fxns->imgReadFxn(gElfHBuffer, rdSz, config->args);
-        char ELFSTR[] = { 0x7F, 'E', 'L', 'F' };
+        
         if(memcmp(ELFSTR, gElfHBuffer, 4) != 0)
         {
             status = SystemP_FAILURE;
         }
+        
         elfClass = gElfHBuffer[ELFCLASS_IDX];
         
         if(elfClass == ELFCLASS_64)
@@ -921,37 +945,43 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         status = Bootloader_authUpdate((uintptr_t)gElfHBuffer, elfSize, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
     }
 
-    Bootloader_ELFH32 *elfPtr32 = (Bootloader_ELFH32 *)gElfHBuffer;
-    Bootloader_ELFH64 *elfPtr64 = (Bootloader_ELFH64 *)gElfHBuffer;
-
-    /* Calculate the Program Header Table size. */
-    uint32_t phtSize = ((elfPtr32->e_phnum) * (elfPtr32->e_phentsize));
-
-    if(elfClass == ELFCLASS_64)
+    if (status == SystemP_SUCCESS)
     {
-        phtSize = ((elfPtr64->e_phnum) * (elfPtr64->e_phentsize));
-    }
+        elfPtr32 = (Bootloader_ELFH32 *)gElfHBuffer;
+        elfPtr64 = (Bootloader_ELFH64 *)gElfHBuffer;
 
-    uint32_t numSegments = elfPtr32->e_phnum;
-    if(elfClass == ELFCLASS_64)
-    {
-        numSegments = elfPtr64->e_phnum;
-    }
+        /* Calculate the Program Header Table size. */
+        phtSize = ((elfPtr32->e_phnum) * (elfPtr32->e_phentsize));
 
-    /* Check if number of PHT entries are <= MAX */
-    if(numSegments > ELF_MAX_SEGMENTS)
-    {
-        status = SystemP_FAILURE;
+        if(elfClass == ELFCLASS_64)
+        {
+            phtSize = ((elfPtr64->e_phnum) * (elfPtr64->e_phentsize));
+        }
+
+        numSegments = elfPtr32->e_phnum;
+
+        if(elfClass == ELFCLASS_64)
+        {
+            numSegments = elfPtr64->e_phnum;
+        }
+
+        /* Check if number of PHT entries are <= MAX */
+        if(numSegments > ELF_MAX_SEGMENTS)
+        {
+            status = SystemP_FAILURE;
+        }
     }
 
     if(status == SystemP_SUCCESS)
     {
         /* From the PHT offset, read the PHT and place it in the buffer. */
-        uint32_t phoff = elfPtr32->e_phoff;
+        phoff = elfPtr32->e_phoff;
+        
         if(elfClass == ELFCLASS_64)
         {
             phoff = elfPtr64->e_phoff;
         }
+        
         config->fxns->imgSeekFxn(imgOffset + phoff, config->args);
         status = config->fxns->imgReadFxn((void *)(gPHTBuffer), phtSize, config->args);
         parsedImageSize += phtSize;
@@ -963,19 +993,22 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         status = Bootloader_authUpdate((uintptr_t)(gPHTBuffer), phtSize, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
     }
 
-    Bootloader_ELFPH32 *elfPhdrPtr32 = (Bootloader_ELFPH32 *)gPHTBuffer;
-    Bootloader_ELFPH64 *elfPhdrPtr64 = (Bootloader_ELFPH64 *)gPHTBuffer;
-
-    /* Note segment is always the first segment at index 0. */
-    uint32_t noteSegmentSz = elfPhdrPtr32[0].filesz;
-    uint32_t noteSegmentOffset = elfPhdrPtr32[0].offset;
-
-    if(elfClass == ELFCLASS_64)
+    if (status == SystemP_SUCCESS)
     {
-        noteSegmentSz = elfPhdrPtr64[0].filesz;
-        noteSegmentOffset = elfPhdrPtr64[0].offset;
-    }
+        elfPhdrPtr32 = (Bootloader_ELFPH32 *)gPHTBuffer;
+        elfPhdrPtr64 = (Bootloader_ELFPH64 *)gPHTBuffer;
 
+        /* Note segment is always the first segment at index 0. */
+        noteSegmentSz = elfPhdrPtr32[0].filesz;
+        noteSegmentOffset = elfPhdrPtr32[0].offset;
+
+        if(elfClass == ELFCLASS_64)
+        {
+            noteSegmentSz = elfPhdrPtr64[0].filesz;
+            noteSegmentOffset = elfPhdrPtr64[0].offset;
+        }
+    }
+    
     if (status == SystemP_SUCCESS)
     {
         /* Read the note segment buffer from the note segment flash offset. */
@@ -996,16 +1029,13 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
         status = Bootloader_authUpdate((uintptr_t)gNoteSegBuffer, noteSegmentSz, BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED);
     }
 
-    int32_t i;
-	uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0};
-
     if((status == SystemP_SUCCESS) && (elfClass == ELFCLASS_32))
     {
         /*
             Note segment is the first segment in MCELF. The loadable are expected to be present after that.
             So we set the index i to be 1 in the following loop.
         */
-        for(i = 1; ((i < elfPtr32->e_phnum) && (status == SystemP_SUCCESS)); i++)
+        for(int32_t i = 1; ((i < elfPtr32->e_phnum) && (status == SystemP_SUCCESS)); i++)
         {
             if((elfPhdrPtr32[i].filesz != 0) && (((doAuth == TRUE) && (elfPhdrPtr32[i].filesz <= (bootImageLen - parsedImageSize))) || (doAuth == FALSE)))
             {
@@ -1081,7 +1111,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
             Note segment is the first segment in MCELF. The loadable are expected to be present after that.
             So we set the index i to be 1 in the following loop.
         */
-        for(i = 1; ((i < elfPtr64->e_phnum) && (status == SystemP_SUCCESS)); i++)
+        for(int32_t i = 1; ((i < elfPtr64->e_phnum) && (status == SystemP_SUCCESS)); i++)
         {
             if((elfPhdrPtr64[i].filesz != 0) && (((doAuth == TRUE) && (elfPhdrPtr64[i].filesz <= (bootImageLen - parsedImageSize))) || (doAuth == FALSE)))
             {
@@ -1183,7 +1213,20 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     if ((status == SystemP_SUCCESS) && (vec_present == 1U))
     {
         /* Since authentication is complete now replace the vector table with the one from the application image if required. */
-        (void) memcpy(0U, vec_addrs, vec_size);
+
+        /* 
+            Invalidate the local cache so as to read the value of the vectors from the Shared memory.
+            This is required in the case of decryption where the HSM core has decrypted the contents
+            but the modified contents do not show up in the cache.
+        */
+        CacheP_inv(vec_addrs, vec_size, CacheP_TYPE_ALLD);
+            
+        (void) memcpy((void *)vector_table_loc, vec_addrs, vec_size);
+        
+        /*
+            Write the contents of the vector address in shared memory so that these are used by the CPU after reset.
+        */
+        CacheP_wbInv((void *)vector_table_loc, vec_size, CacheP_TYPE_ALLD);
     }
     
     return status;
