@@ -8,6 +8,9 @@ The Flash driver provides API to read and write to xSPI based flash devices pres
 \cond SOC_AM263X
 The Flash driver provides API to read and write to QSPI based flash devices present in the board.
 \endcond
+\cond SOC_AM65X
+The Flash driver provides API to read and write to OSPI based flash devices present in the board.
+\endcond
 The driver takes care of all sequencing necessary to perform writes across pages and
 the application need not take care of the programming intricacies.
 
@@ -42,6 +45,10 @@ the application need not take care of the programming intricacies.
 \cond SOC_AM273X || SOC_AWR294X
 - Supported flash devices
     - GD25B64C
+\endcond
+\cond SOC_AM65X
+- Supported flash devices
+    - MT35XU512A
 \endcond
 
 ## Features NOT Supported

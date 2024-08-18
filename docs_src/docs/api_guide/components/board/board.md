@@ -18,5 +18,6 @@ It consists of below sub-modules
 - \subpage BOARD_LED_PAGE
 \endcond
 \cond SOC_AM65X
+- \subpage BOARD_FLASH_PAGE
 - \subpage BOARD_LED_PAGE
 \endcond

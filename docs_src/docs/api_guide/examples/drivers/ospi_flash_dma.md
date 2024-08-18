@@ -47,6 +47,17 @@ The average time for transfers is then printed out, and if all transfers were su
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/ospi/ospi_flash_dma
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -60,6 +71,27 @@ The average time for transfers is then printed out, and if all transfers were su
 \ref DRIVERS_OSPI_PAGE
 
 # Sample Output
+
+\if SOC_AM65X
+
+\code
+[OSPI] DMA low latency example started...
+OSPI Write 32 bytes in 78280 ns
+OSPI Read 32 bytes in 4015 ns
+OSPI Read 32 bytes in 2292 ns
+OSPI Read 32 bytes in 2257 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+OSPI Read 32 bytes in 2207 ns
+Average time for OSPI Read 32 bytes in 2400 ns
+All tests have passed !!!
+\endcode
+
+\else
 
 \code
 [OSPI] DMA low latency example started...
@@ -77,3 +109,5 @@ OSPI Read 16 bytes in 1498 ns
 Average time for OSPI Read 16 bytes in 1546 ns
 All tests have passed !!!
 \endcode
+
+\endif

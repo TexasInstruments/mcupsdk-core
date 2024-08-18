@@ -453,6 +453,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# MMCSD
    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
    -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
+-# OSPI
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_EP

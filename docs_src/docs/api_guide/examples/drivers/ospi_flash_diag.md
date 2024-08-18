@@ -50,6 +50,17 @@ in 1s1s1s mode.
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/ospi/ospi_flash_diag
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -63,6 +74,108 @@ in 1s1s1s mode.
 \ref DRIVERS_OSPI_PAGE
 
 # Sample Output
+
+\if SOC_AM65X
+
+\code
+[OSPI Flash Diagnostic Test] Starting ...
+[OSPI Flash Diagnostic Test] Flash Manufacturer ID : 0x2C
+[OSPI Flash Diagnostic Test] Flash Device ID       : 0x5B1A
+[OSPI Flash Diagnostic Test] Executing Flash Erase on first block...
+[OSPI Flash Diagnostic Test] Done !!!
+[OSPI Flash Diagnostic Test] Performing Write-Read Test...
+[OSPI Flash Diagnostic Test] Write-Read Test Passed!
+[QSPI Flash Diagnostic Test] SFDP Information :
+================================================
+                      SFDP
+================================================
+SFDP Major Revision                       : 0x1
+SFDP Minor Revision                       : 0x6
+Number of Parameter Headers in this Table : 2
+
+Types of Additional Parameter Tables in this flash
+---------------------------------------------------
+4 BYTE ADDRESSING MODE INSTRUCTIONS TABLE
+JSON Data for the flash :
+
+{
+
+        "flashSize": 67108864,
+        "flashPageSize": 256,
+        "flashManfId": "0x2C",
+        "flashDeviceId": "0x5B1A",
+        "flashBlockSize": 131072,
+        "flashSectorSize": 4096,
+        "cmdBlockErase3B": "0xD8",
+        "cmdBlockErase4B": "0xDC",
+        "cmdSectorErase3B": "0x20",
+        "cmdSectorErase4B": "0x21",
+        "protos": {
+                "p111": {
+                        "isDtr": false,
+                        "cmdRd": "0x03",
+                        "cmdWr": "0x02",
+                        "modeClksCmd": 0,
+                        "modeClksRd": 0,
+                        "dummyClksCmd": 0,
+                        "dummyClksRd": 0,
+                        "enableType": "0",
+                        "enableSeq": "0x00",
+                        "dummyCfg": null,
+                        "protoCfg": null,
+                        "strDtrCfg": null
+                },
+                "p112": null,
+                "p114": null,
+                "p118": {
+                        "isDtr": false,
+                        "cmdRd": "0x7C",
+                        "cmdWr": "0x84",
+                        "modeClksCmd": 0,
+                        "modeClksRd": 0,
+                        "dummyClksCmd": 0,
+                        "dummyClksRd": 0,
+                        "enableType": "255",
+                        "enableSeq": "0x00",
+                        "dummyCfg": null,
+                        "protoCfg": null,
+                        "strDtrCfg": null
+                },
+                "p444s": null,
+                "p444d": null,
+                "p888s": null,
+                "p888d": null,
+                "pCustom": {
+                        "fxn": null
+                }
+        },
+        "addrByteSupport": "1",
+        "fourByteAddrEnSeq": "0x36",
+        "cmdExtType": "NONE",
+        "resetType": "0x30",
+        "deviceBusyType": "0",
+        "cmdWren": "0x06",
+        "cmdRdsr": "0x05",
+        "srWip":  0,
+        "srWel":  0,
+        "cmdChipErase": "0xC7",
+        "rdIdSettings": {
+                "cmd": "0x9F",
+                "numBytes": 5,
+                "dummy4": 0,
+                "dummy8": 0
+        },
+        "xspiWipRdCmd": "0x00",
+        "xspiWipReg": "0x00000000",
+        "xspiWipBit": 0,
+        "flashDeviceBusyTimeout": 128000000,
+        "flashPageProgTimeout": 120
+}
+
+All tests have passed!!
+\endcode
+
+\else
 
 \code
 [Cortex_R5_0] [OSPI Flash Diagnostic Test] Starting ...
@@ -202,3 +315,5 @@ JSON Data for the flash :
 
 All tests have passed!!
 \endcode
+
+\endif
