@@ -1654,10 +1654,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sbl_qspi_fastboot_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_fastboot/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_qspi_mcelf_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+ sbl_qspi_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_qspi_mcelf_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+ sbl_qspi_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_sd_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
@@ -3624,10 +3624,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_qspi_fastboot_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_fastboot/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_qspi_mcelf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ sbl_qspi_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_qspi_mcelf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+ sbl_qspi_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_sd_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -5594,10 +5594,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_qspi_fastboot_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_fastboot/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_qspi_mcelf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sbl_qspi_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_qspi_mcelf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sbl_qspi_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_qspi_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_sd_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:

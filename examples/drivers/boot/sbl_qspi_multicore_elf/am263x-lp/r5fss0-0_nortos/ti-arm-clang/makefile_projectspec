@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME=sbl_qspi_mcelf_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+PROJECT_NAME=sbl_qspi_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
