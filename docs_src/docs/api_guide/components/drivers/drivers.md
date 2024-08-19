@@ -74,6 +74,7 @@ It consists of below sub-modules
 \endcond
 \cond SOC_AM273X
 - \subpage DRIVERS_MCASP_PAGE
+- \subpage DRIVERS_CANFD_PAGE
 \endcond
 - \subpage DRIVERS_MCAN_PAGE
 - \subpage DRIVERS_MIBSPI_PAGE
