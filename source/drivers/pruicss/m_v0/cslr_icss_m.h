@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2021 Texas Instruments Incorporated.
+ * Copyright (C) 2021-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -2643,10 +2643,10 @@ typedef struct {
 
 /* SA_MX_REG */
 
-#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_MASK                       (0x000000FFU)
-#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_SHIFT                      (0x00000000U)
+#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_MASK                       (0x00000080U)
+#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_SHIFT                      (0x00000007U)
 #define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_RESETVAL                   (0x00000000U)
-#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_MAX                        (0x000000FFU)
+#define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_SA_MUX_SEL_MAX                        (0x00000001U)
 
 #define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_PWM0_REMAP_EN_MASK                    (0x00000300U)
 #define CSL_ICSS_M_PR1_CFG_SLV_SA_MX_REG_PWM0_REMAP_EN_SHIFT                   (0x00000008U)
