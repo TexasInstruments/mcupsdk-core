@@ -127,7 +127,7 @@ static void Lwip2Emac_initConfig(Lwip2Emac_Handle hLwip2Emac)
     status = app_getEmacHandle(hLwip2Emac);
     if(hLwip2Emac->emacHandle == NULL)
     {
-        DebugP_log("[LWIPIF_LWIP]ICSS EMAC Handle is not initilialised.\r\n");
+        DebugP_log("[LWIPIF_LWIP_EMAC]ICSS EMAC Handle is not initilialised.\r\n");
     }
 
     uint32_t semInitCnt              = 0U;
@@ -141,11 +141,11 @@ static void Lwip2Emac_initConfig(Lwip2Emac_Handle hLwip2Emac)
 
     if(port)
     {
-        DebugP_log("[LWIPIF_LWIP]Link is Up on port %d\r\n",port);
+        DebugP_log("[LWIPIF_LWIP_EMAC]Link is Up on port %d\r\n",port);
     }
     else
     {
-        DebugP_log("[LWIPIF_LWIP]Link is down");
+        DebugP_log("[LWIPIF_LWIP_EMAC]Link is down");
     }
 
      /* Init aleTicks */
@@ -305,7 +305,7 @@ int32_t Lwip2Emac_sendTxPackets(Lwip2Emac_Handle hLwip2Emac, struct pbuf *p)
 
 
 /*!
- *  @b Lwip2Enet_ioctl
+ *  @b Lwip2Emac_ioctl
  *  @n
  *  Low level driver Ioctl interface. This interface can be used for
  *  ALE configuration, control, statistics
@@ -374,7 +374,7 @@ int32_t Lwip2Emac_serviceRx(void *icssEmacHandleVoidPtr, void *queueNum, void *u
                     /* Fill in the necessary packet header fields */
                     hPbufPacket->len = hPbufPacket->tot_len = (uint16_t)(packetLength) & (0xFFFFU);
                     /* Pass the received packet to the LwIP stack */
-                    LWIPIF_LWIP_input(hLwip2emac->netif, hPbufPacket);
+                    LWIPIF_LWIP_EMAC_input(hLwip2emac->netif, hPbufPacket);
                 }
                 else
                 {
@@ -384,13 +384,13 @@ int32_t Lwip2Emac_serviceRx(void *icssEmacHandleVoidPtr, void *queueNum, void *u
         else
         {
             retVal = SystemP_FAILURE;
-            DebugP_log("[LWIPIF_LWIP]Packet Dropped!: Rx pbuf is empty");
+            DebugP_log("[LWIPIF_LWIP_EMAC]Packet Dropped!: Rx pbuf is empty");
 
         }
     }
     else
     {
-        DebugP_log("[LWIPIF_LWIP]Packet Dropped!: Rx callback is called before Interface layer handle initilaisation");
+        DebugP_log("[LWIPIF_LWIP_EMAC]Packet Dropped!: Rx callback is called before Interface layer handle initialization");
         /*TO DO: Update low level driver Rx related pointers before dropping packet*/
         retVal = SystemP_FAILURE;
     }
@@ -531,6 +531,6 @@ static void Lwip2Emac_allocRxPackets(Lwip2Emac_Handle hLwip2Emac)
     }
     else
     {
-        DebugP_log("[LWIPIF_LWIP]ERROR: Rx Pbuf_alloc() failure.!\n");
+        DebugP_log("[LWIPIF_LWIP_EMAC]ERROR: Rx Pbuf_alloc() failure.!\n");
     }
 }

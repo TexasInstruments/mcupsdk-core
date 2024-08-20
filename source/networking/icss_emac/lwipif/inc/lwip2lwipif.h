@@ -72,7 +72,7 @@ extern "C" {
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-err_t LWIPIF_LWIP_init(struct netif *netif);
+err_t LWIPIF_LWIP_EMAC_init(struct netif *netif);
 
 /* ========================================================================== */
 /*                        Deprecated Function Declarations                    */

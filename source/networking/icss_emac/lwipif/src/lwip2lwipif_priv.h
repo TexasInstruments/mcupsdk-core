@@ -72,7 +72,7 @@ extern "C" {
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void LWIPIF_LWIP_input(struct netif *netif,
+void LWIPIF_LWIP_EMAC_input(struct netif *netif,
                        struct pbuf *hPbufPacket);
 
 /* ========================================================================== */

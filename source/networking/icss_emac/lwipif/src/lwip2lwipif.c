@@ -114,7 +114,7 @@ __attribute__ ((aligned(32)));
 extern int32_t Lwip2Emac_sendTxPackets(Lwip2Emac_Handle hLwip2Emac, struct pbuf *p);
 
 /*!
- *  @b LWIPIF_LWIP_send
+ *  @b LWIPIF_LWIP_EMAC_send
  *  @n
  *  This function should do the actual transmission of the packet. The packet is
  * contained in the pbuf that is passed to the function. This pbuf
@@ -130,7 +130,7 @@ extern int32_t Lwip2Emac_sendTxPackets(Lwip2Emac_Handle hLwip2Emac, struct pbuf 
  *  \retval
  *      an err_t value if the packet couldn't be sent
  */
-static err_t LWIPIF_LWIP_send(struct netif *netif,
+static err_t LWIPIF_LWIP_EMAC_send(struct netif *netif,
                          struct pbuf *p)
 {
     Lwip2Emac_Handle hLwip2Emac;
@@ -155,7 +155,7 @@ static err_t LWIPIF_LWIP_send(struct netif *netif,
 }
 
 /*!
- *  @b LWIPIF_LWIP_input
+ *  @b LWIPIF_LWIP_EMAC_input
  *  @n
  *  This is currently a task which consumes the RX packets retrieved from
  *  the driver in RX packet task, and passes them to the LwIP stack via
@@ -167,7 +167,7 @@ static err_t LWIPIF_LWIP_send(struct netif *netif,
  *  \retval
  *      void
  */
-void LWIPIF_LWIP_input(struct netif *netif,
+void LWIPIF_LWIP_EMAC_input(struct netif *netif,
                        struct pbuf *hPbufPacket)
 {
     /* Pass the packet to the LwIP stack */
@@ -195,7 +195,7 @@ void LWIPIF_LWIP_input(struct netif *netif,
         }
         else
         {
-            DebugP_log("[LWIPIF_LWIP]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_INPUT failure.!\n");
+            DebugP_log("[LWIPIF_LWIP_EMAC]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_EMAC_INPUT failure.!\n");
         }
     }
 
@@ -207,7 +207,7 @@ void LWIPIF_LWIP_input(struct netif *netif,
  * arg0 : netif
  * arg1 : Semaphore
  */
-static void LWIPIF_LWIP_poll(void *arg0)
+static void LWIPIF_LWIP_EMAC_poll(void *arg0)
 {
     /* Call the driver's periodic polling function */
     volatile bool flag = 1;
@@ -249,7 +249,7 @@ static void LWIPIF_LWIP_poll(void *arg0)
     }
 }
 
-static void LWIPIF_LWIP_postPollLink(ClockP_Object *clkObj, void *arg)
+static void LWIPIF_LWIP_EMAC_postPollLink(ClockP_Object *clkObj, void *arg)
 {
     if(arg != NULL)
     {
@@ -259,7 +259,7 @@ static void LWIPIF_LWIP_postPollLink(ClockP_Object *clkObj, void *arg)
 }
 
 /*!
- *  @b LWIPIF_LWIP_Start
+ *  @b LWIPIF_LWIP_EMAC_Start
  *  @n
  *  The function is used to initialize and start the Enet
  *  controller and device.
@@ -272,7 +272,7 @@ static void LWIPIF_LWIP_postPollLink(ClockP_Object *clkObj, void *arg)
  *  \retval
  *      Error   -   <0
  */
-static int LWIPIF_LWIP_start(struct netif *netif)
+static int LWIPIF_LWIP_EMAC_start(struct netif *netif)
 {
     int retVal = -1;
     Lwip2Emac_Handle hLwip2Emac;
@@ -294,12 +294,12 @@ static int LWIPIF_LWIP_start(struct netif *netif)
 
         /* Initialize the poll function as a thread */
         TaskP_Params_init(&params);
-        params.name = "Lwipif_Lwip_poll";
+        params.name = "Lwipif_Lwip_emac_poll";
         params.priority       = LWIP_POLL_TASK_PRI;
         params.stack          = gLwip2LwipIfPollTaskStack;
         params.stackSize      = sizeof(gLwip2LwipIfPollTaskStack);
         params.args           = netif;
-        params.taskMain       = &LWIPIF_LWIP_poll;
+        params.taskMain       = &LWIPIF_LWIP_EMAC_poll;
 
         status = TaskP_construct(&hLwip2Emac->lwipif2lwipPollTaskObj, &params);
         DebugP_assert(status == SystemP_SUCCESS);
@@ -308,7 +308,7 @@ static int LWIPIF_LWIP_start(struct netif *netif)
         clkPrms.start     = 0;
         clkPrms.period    = EMACLWIPAPP_POLL_PERIOD;
         clkPrms.args      = &hLwip2Emac->pollLinkSemObj;
-        clkPrms.callback  = &LWIPIF_LWIP_postPollLink;
+        clkPrms.callback  = &LWIPIF_LWIP_EMAC_postPollLink;
         clkPrms.timeout   = EMACLWIPAPP_POLL_PERIOD;
 
         /* Creating timer and setting timer callback function*/
@@ -331,13 +331,13 @@ static int LWIPIF_LWIP_start(struct netif *netif)
 
         /* Filter not defined */
         /* Inform the world that we are operational. */
-        DebugP_log("[LWIPIF_LWIP] Interface layer handle is Initialised \r\n");
+        DebugP_log("[LWIPIF_LWIP_EMAC] Interface layer handle is Initialised \r\n");
 
         retVal = 0;
     }
     else
     {
-        DebugP_log("[LWIPIF_LWIP] Failed to initialise Interface layer handle  \r\n");
+        DebugP_log("[LWIPIF_LWIP_EMAC] Failed to initialise Interface layer handle  \r\n");
     }
 
     return retVal;
@@ -345,7 +345,7 @@ static int LWIPIF_LWIP_start(struct netif *netif)
 
 
 /*!
- *  @b LWIPIF_LWIP_Stop
+ *  @b LWIPIF_LWIP_EMAC_Stop
  *  @n
  *  The function is used to de-initialize and stop the Enet
  *  controller and device.
@@ -353,7 +353,7 @@ static int LWIPIF_LWIP_start(struct netif *netif)
  *  \param[in] netif
  *      NETIF structure pointer.
  */
-static void LWIPIF_LWIP_stop(struct netif *netif)
+static void LWIPIF_LWIP_EMAC_stop(struct netif *netif)
 {
     Lwip2Emac_Handle hLwip2Emac;
 
@@ -370,7 +370,7 @@ static void LWIPIF_LWIP_stop(struct netif *netif)
 }
 
 /*!
- *  @b LWIPIF_LWIP_Init
+ *  @b LWIPIF_LWIP_EMAC_Init
  *  @n
  *  The function is used to initialize and register the peripheral
  *  with the stack.
@@ -381,7 +381,7 @@ static void LWIPIF_LWIP_stop(struct netif *netif)
  *  \retval
  *      Success -   ERR_OK
  */
-err_t LWIPIF_LWIP_init(struct netif *netif)
+err_t LWIPIF_LWIP_EMAC_init(struct netif *netif)
 {
 #ifdef LWIPIF_CHECKSUM_SUPPORT
     /* TODO: Add checksum support */
@@ -398,14 +398,14 @@ err_t LWIPIF_LWIP_init(struct netif *netif)
     netif->mtu = ETH_FRAME_SIZE - ETHHDR_SIZE - VLAN_TAG_SIZE;
 
     /* Populate the Driver Interface Functions. */
-    netif->remove_callback      = LWIPIF_LWIP_stop;
+    netif->remove_callback      = LWIPIF_LWIP_EMAC_stop;
     netif->output               = etharp_output;
-    netif->linkoutput           = LWIPIF_LWIP_send;
+    netif->linkoutput           = LWIPIF_LWIP_EMAC_send;
     netif->flags               |= NETIF_FLAG_ETHARP;
 
-    LWIPIF_LWIP_start(netif);
+    LWIPIF_LWIP_EMAC_start(netif);
 
-    DebugP_log("[LWIPIF_LWIP] NETIF INIT SUCCESS\r\n");
+    DebugP_log("[LWIPIF_LWIP_EMAC] NETIF INIT SUCCESS\r\n");
 
     return ERR_OK;
 }

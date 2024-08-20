@@ -34,13 +34,13 @@
 #include <lwip/tcpip.h>
 #include <lwip2lwipif.h>
 
-static struct netif netif;
+static struct netif emac_netif;
 
 void init_default_netif(const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, const ip4_addr_t *gw)
 {
-    netif_add(&netif, ipaddr, netmask, gw, NULL, LWIPIF_LWIP_init, tcpip_input);
-    netif_set_default(&netif);
-    netif.flags               |= NETIF_FLAG_ETHARP;
+    netif_add(&emac_netif, ipaddr, netmask, gw, NULL, LWIPIF_LWIP_EMAC_init, tcpip_input);
+    netif_set_default(&emac_netif);
+    emac_netif.flags               |= NETIF_FLAG_ETHARP;
 }
 
 void default_netif_poll(void)
@@ -51,7 +51,7 @@ void default_netif_shutdown(void)
 {
     /* netif_default will internally be reset */
     LOCK_TCPIP_CORE();
-    netif_remove(&netif);
+    netif_remove(&emac_netif);
     UNLOCK_TCPIP_CORE();
 }
 
