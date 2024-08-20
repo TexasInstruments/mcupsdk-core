@@ -65,7 +65,7 @@ endif
 
 # Key id in keyring for application authentication and decryption
 APP_SIGNING_KEY_KEYRING_ID?=0
-APP_ENCRYPTION_KEY_KEYRING_ID?=0
+APP_ENCRYPTION_KEY_KEYRING_ID?=1
 
 # Macros for multicore-elf genimage.py script
 MCELF_MERGE_SEGMENTS_FLAG?=true
