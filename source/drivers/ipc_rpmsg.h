@@ -109,6 +109,8 @@ typedef struct RPMessage_Object_s {
  *       When callback returns the message buffer is released back to the sender.
  *       If the message contents are needed for deferred processing then take a copy of the message contents
  *
+ * \warning Do not call blocking apis such as 'RPMessage_send()' from this callback which runs in isr context
+ *
  * \param obj   [in] RPMessage end point object created with \ref RPMessage_construct
  * \param arg  [in] Arguments specified by user during \ref RPMessage_construct
  * \param data  [in] Pointer to message
