@@ -42,9 +42,11 @@ extern "C" {
 /* this file has define's and inline function's to program the HW mailbox registers */
 
 /* max limits for HW mailbox's */
-#define MAILBOX_MAX_MSGS_IN_FIFO                ( 8u)
 #define MAILBOX_MAX_FIFO                        (16u)
 #define MAILBOX_MAX_USER                        ( 4u)
+
+/* Bitmask to extract number of msgs in mailbox */
+#define MAILBOX_NUM_OF_MSGS_BITMASK             ( 7u)
 
 /* HW mailbox register address, parameterized via base addr, hw fifo num, user id that is used */
 #define MAILBOX_MESSAGE(base, fifo)             (volatile uint32_t*)((base) + 0x040u + (0x04u*((fifo) & (MAILBOX_MAX_FIFO-1U))))
@@ -66,7 +68,7 @@ extern "C" {
 static inline uint32_t IpcNotify_mailboxGetNumMsg(uint32_t mailboxBaseAddr, uint32_t hwFifoNum)
 {
     volatile uint32_t *addr = MAILBOX_MSG_STATUS(mailboxBaseAddr, hwFifoNum);
-    return *addr & (MAILBOX_MAX_MSGS_IN_FIFO-1U);
+    return *addr & (MAILBOX_NUM_OF_MSGS_BITMASK);
 }
 
 /* check if HW fifo is full within a mailbox */
