@@ -41,6 +41,7 @@ extern "C"
 
 #include <kernel/dpl/HwiP.h>
 #include <drivers/hw_include/soc_config.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 /* compile flag to enable VIC mode of operation, undef this to use non-VIC mode */
 #if !defined (SOC_AM65X)
@@ -50,7 +51,12 @@ extern "C"
 
 #define HWI_SECTION __attribute__((section(".text.hwi")))
 
+#if defined (CSL_CORE_R5F_INTR_MAX)
+#define HwiP_MAX_INTERRUPTS     CSL_CORE_R5F_INTR_MAX
+#else
 #define HwiP_MAX_INTERRUPTS     (512u)
+#endif
+
 #define HwiP_MAX_PRIORITY       (16u)
 
 #define VIM_BIT_POS(j)   ( (j) & 0x1Fu )

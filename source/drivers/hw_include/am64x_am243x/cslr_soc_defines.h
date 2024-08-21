@@ -104,6 +104,8 @@ extern "C" {
 /** @brief Number of ePWM instances */
 #define CSL_EPWM_PER_CNT (9U)
 
+/** @brief Maximum number of interrupts for r5f interrupts for this device */
+#define CSL_CORE_R5F_INTR_MAX  (256U)      
 /**
  * \brief  MCAN Maximum Message RAM words
  */

@@ -166,6 +166,9 @@ extern "C" {
 #define CSL_ARM_R5_CPU_ID_1                          ((uint32_t) 0x01U)
 /** @} */
 
+/** @brief Maximum number of interrupts for r5f interrupts for this device */
+#define CSL_CORE_R5F_INTR_MAX  (247U)      
+
 /***********************************************************************
  * Cache line size definitions
  ***********************************************************************/
