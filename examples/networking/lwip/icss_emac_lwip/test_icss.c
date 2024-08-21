@@ -77,8 +77,8 @@
 #include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
 #elif SOC_AM261X
 #include <drivers/hw_include/am261x/cslr_mss_ctrl.h>
-
 #endif
+
 #include <drivers/pinmux.h>
 #include<drivers/pruicss/m_v0/pruicss.h>
 #include <drivers/hw_include/hw_types.h>
@@ -96,26 +96,36 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE  (0x0001077F)
+#define MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE  (0x0001077FU)
 
-#define LWIPINIT_TASK_PRIORITY            (8)
-#define LWIPINIT_TASK_STACK_SIZE          (0x4000)
+#define LWIPINIT_TASK_PRIORITY                  (8U)
+#define LWIPINIT_TASK_STACK_SIZE                (0x4000U)
 
 /*I2C Instance and Index for IO Expander programming*/
-#define MDIO_MDC_MUX_SEL1                       (0x12)
-#define IO_EXP_I2C_INSTANCE                     (0x01)
+#define MDIO_MDC_MUX_SEL1                       (0x12U)
+#define IO_EXP_I2C_INSTANCE                     (0x01U)
 
 /*ICSS_EMAC Tx API Call Task*/
-#define ICSS_EMAC_Tx_TASK_PRIORITY            (10)
-#define ICSS_EMAC_Tx_TASK_STACK_SIZE          (0x4000)
+#define ICSS_EMAC_Tx_TASK_PRIORITY              (10U)
+#define ICSS_EMAC_Tx_TASK_STACK_SIZE            (0x4000U)
 
-uint32_t gtaskLwipInitStack[LWIPINIT_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
+#define ICSS_EMAC_MAXMTU                        (1518U)
+#define ICSS_EMAC_TEST_PKT_TX_COUNT             (100U)
 
-TaskP_Object taskLwipInitObject;
+#if defined SOC_AM263X || defined SOC_AM263PX || defined (SOC_AM261X)
+#define I2C_EEPROM_MAC0_DATA_OFFSET             (0x43U)
+#else
+#define I2C_EEPROM_MAC0_DATA_OFFSET             (0x3DU)
+#endif
 
-uint32_t gtaskIcssEmacTxStack[ICSS_EMAC_Tx_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
+#define I2C_EEPROM_MAC1_DATA_OFFSET             (0x49U)
 
-TaskP_Object taskIcssEmacTxObject;
+/* Wait time for PHY Reset and Other configuration changes to take effect (in microseconds) */
+#define PHY_RESET_WAIT_TIME                     (300000U)
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
 #if defined AM263X_LP || defined AM263PX_LP
 void icssmMuxSelection(void);
@@ -123,8 +133,17 @@ void icssmMuxSelection(void);
 
 #ifdef AM263PX_CC
 void setIOExpMuxSelection(void *args);
-static TCA6424_Config  gTCA6424_Config;
 #endif
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+uint32_t gtaskLwipInitStack[LWIPINIT_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
+TaskP_Object taskLwipInitObject;
+
+uint32_t gtaskIcssEmacTxStack[ICSS_EMAC_Tx_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
+TaskP_Object taskIcssEmacTxObject;
 
 uint8_t ICSS_EMAC_testPktPromiscuous[] = {
     0x02, 0xb0, 0xc3, 0xdd, 0xee, 0xff, /* broadcast mac */
@@ -512,9 +531,7 @@ uint8_t ICSS_EMAC_testPktPromiscuous[] = {
     0xd8,0xd9,0xda,0xdb,
 };
 
-#define ICSS_EMAC_MAXMTU  (1518U)
-#define ICSS_EMAC_TEST_PKT_TX_COUNT 100
-
+uint8_t ICSS_EMAC_testLclMac0[6];
 
 /** \brief PRU-ICSS Handle */
 PRUICSS_Handle pruicssHandle;
@@ -527,16 +544,9 @@ extern void Lwip2Emac_getHandle(Lwip2Emac_Handle *AppLwipHandle);
 /** \brief LwIP Interface Layer Handle */
 Lwip2Emac_Handle lwipifHandle;
 
-#if defined SOC_AM263X || defined SOC_AM263PX || defined (SOC_AM261X)
-#define I2C_EEPROM_MAC0_DATA_OFFSET      (0x43)
-#else
-#define I2C_EEPROM_MAC0_DATA_OFFSET      (0x3D)
+#ifdef AM263PX_CC
+static TCA6424_Config  gTCA6424_Config;
 #endif
-
-#define I2C_EEPROM_MAC1_DATA_OFFSET      (0x49)
-uint8_t ICSS_EMAC_testLclMac0[6];
-
-
 
 void print_cpu_load()
 {
@@ -563,14 +573,8 @@ void print_cpu_load()
     }
 }
 
-#if defined AM263X_CC || AM263PX_CC
-void ICSS_EMAC_testBoardInit(void)
+void ICSS_EMAC_testPinmuxConfig(void)
 {
-    ETHPHY_DP83869_LedSourceConfig ledConfig0;
-    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig0;
-    ETHPHY_DP83826E_LedSourceConfig ledConfig1;
-    ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig1;
-
     Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
 
     // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
@@ -578,6 +582,27 @@ void ICSS_EMAC_testBoardInit(void)
     HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
 
     DebugP_log("MII mode\r\n");
+
+#if defined AM263X_LP || defined AM263PX_LP
+    /* Setup GPIO for ICSSM MDIO Mux selection */
+    icssmMuxSelection();
+#elif AM263PX_CC
+    /* Set MDIO/MDC_MUX_SEL1 to low using IO Expander */
+    setIOExpMuxSelection(NULL);
+#endif
+
+    /* Wait for the configuration changes to take effect */
+    ClockP_usleep(PHY_RESET_WAIT_TIME);
+    /* MDIOALIVE register gets the value at this point. Required PHY Configuration can be done now. */
+}
+
+#if defined AM263X_CC || AM263PX_CC
+void ICSS_EMAC_testPHYInitConfig(void)
+{
+    ETHPHY_DP83869_LedSourceConfig ledConfig0;
+    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig0;
+    ETHPHY_DP83826E_LedSourceConfig ledConfig1;
+    ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig1;
 
     /* PHY pin LED_0 as link */
     ledConfig0.ledNum = ETHPHY_DP83869_LED0;
@@ -611,26 +636,18 @@ void ICSS_EMAC_testBoardInit(void)
     /* Enable MII mode for DP83869 PHY */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
 
-    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
+    /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
 
     /*Wait for PHY to come out of reset*/
-    ClockP_sleep(1);
+    ClockP_usleep(PHY_RESET_WAIT_TIME);
 }
 #else
-void ICSS_EMAC_testBoardInit(void)
+void ICSS_EMAC_testPHYInitConfig(void)
 {
     ETHPHY_DP83869_LedSourceConfig ledConfig;
     ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig;
-
-    Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
-
-    // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-
-    DebugP_log("MII mode\r\n");
 
     /* PHY pin LED_0 as link */
     ledConfig.ledNum = ETHPHY_DP83869_LED0;
@@ -658,7 +675,7 @@ void ICSS_EMAC_testBoardInit(void)
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
 
-    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
+    /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
 
@@ -667,7 +684,7 @@ void ICSS_EMAC_testBoardInit(void)
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
 
     /*Wait for PHY to come out of reset*/
-    ClockP_sleep(1);
+    ClockP_usleep(PHY_RESET_WAIT_TIME);
 }
 #endif
 
@@ -697,7 +714,6 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
 
     icssemacHandle2 = ICSS_EMAC_open(CONFIG_ICSS_EMAC0, &icssEmacParams);
     DebugP_assert(icssemacHandle2 != NULL);
-
 
     return 0;
 }
@@ -729,38 +745,9 @@ void lwipIcss_socgetMACAddress()
     DebugP_assert(SystemP_SUCCESS == status);
 }
 
-int icss_lwip_example(void *args)
+void ICSS_EMAC_testSetupRATConfig(void)
 {
-    uint32_t                status = SystemP_FAILURE;
-    uint32_t                icssBaseAddr;
-    bool                    retVal = false;
-    uint32_t                result_flag = 0;
-    uint32_t                pru0FwPtr = 0;
-    uint32_t                pru0FwLength = 0;
-    uint32_t                pru1FwPtr = 0;
-    uint32_t                pru1FwLength = 0;
-
-    Drivers_open();
-    status = Board_driversOpen();
-    DebugP_assert(status==SystemP_SUCCESS);
-
-#if defined AM263X_LP || defined AM263PX_LP
-    icssmMuxSelection();
-#else
-    ICSS_EMAC_testBoardInit();
-#endif
-
-#ifdef AM263PX_CC
-    setIOExpMuxSelection(NULL);
-#endif
-
-    pruicssHandle = PRUICSS_open(CONFIG_PRU_ICSS1);
-    DebugP_assert(pruicssHandle != NULL);
-
-    /*Setup the local MAC Addresses of Port from EEPROM*/
-    lwipIcss_socgetMACAddress();
-
-    ICSS_EMAC_testPruicssInstanceSetup();
+    uint32_t    icssBaseAddr;
 
     /* Setup RAT configuration for buffer region*/
     /* Setting up RAT config to map emacBaseAddr->l3OcmcBaseAddr to C30 constant of PRUICSS */
@@ -776,6 +763,16 @@ int icss_lwip_example(void *args)
     HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x28, (0x70000000));         /*rat0 trans_low0 */
     HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x2C, (0x00000000));         /*rat0 trans_low0 */
     HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x20, (1u << 31) | (22));    /*rat0 ctrl0 */
+}
+
+int32_t ICSS_EMAC_testLoadPRUFirmware(void)
+{
+    int32_t     retVal          =   SystemP_FAILURE;
+    uint32_t    result_flag     =   0;
+    uint32_t    pru0FwPtr       =   0;
+    uint32_t    pru0FwLength    =   0;
+    uint32_t    pru1FwPtr       =   0;
+    uint32_t    pru1FwLength    =   0;
 
     PRUICSS_disableCore(pruicssHandle, PRUICSS_PRU0);
     PRUICSS_disableCore(pruicssHandle, PRUICSS_PRU1);
@@ -785,34 +782,66 @@ int icss_lwip_example(void *args)
     result_flag = PRUICSS_writeMemory(pruicssHandle, PRUICSS_IRAM_PRU(0), 0, (uint32_t *)pru0FwPtr, pru0FwLength);
     if(result_flag)
     {
-        DebugP_log("load to PRU0 passed\r\n");
-        retVal = true;
+        DebugP_log("Firmware load to PRU0 passed\r\n");
+        retVal = SystemP_SUCCESS;
     }
     else
     {
-        DebugP_log("load to PRU0 failed\r\n");
-    }
-    result_flag = PRUICSS_writeMemory(pruicssHandle, PRUICSS_IRAM_PRU(1), 0, (uint32_t *)pru1FwPtr, pru1FwLength);
-    if(result_flag)
-    {
-        DebugP_log("load to PRU1 passed\r\n");
-        retVal = true;
-    }
-    else
-    {
-        DebugP_log("load to PRU0 failed\r\n");
+        DebugP_log("Firmware load to PRU0 failed\r\n");
+        retVal = SystemP_FAILURE;
     }
 
-    if( retVal)
+    result_flag = PRUICSS_writeMemory(pruicssHandle, PRUICSS_IRAM_PRU(1), 0, (uint32_t *)pru1FwPtr, pru1FwLength);
+    if(result_flag && retVal == SystemP_SUCCESS)
+    {
+        DebugP_log("Firmware load to PRU1 passed\r\n");
+        retVal = SystemP_SUCCESS;
+    }
+    else
+    {
+        DebugP_log("Firmware load to PRU1 failed\r\n");
+        retVal = SystemP_FAILURE;
+    }
+
+    if(retVal == SystemP_SUCCESS)
     {
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU0);
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU1);
     }
 
-#if defined AM263X_LP || defined AM263PX_LP
-    ICSS_EMAC_testBoardInit();
-#endif
+    return retVal;
+}
+    
+int icss_lwip_example(void *args)
+{
+    uint32_t                status = SystemP_FAILURE;
 
+    Drivers_open();
+    status = Board_driversOpen();
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    /* Perform the Pinmux config */
+    ICSS_EMAC_testPinmuxConfig();
+
+    /* Perform PRUICSS Open */
+    pruicssHandle = PRUICSS_open(CONFIG_PRU_ICSS1);
+    DebugP_assert(pruicssHandle != NULL);
+
+    /* Setup the local MAC Addresses of Port from EEPROM */
+    lwipIcss_socgetMACAddress();
+    ICSS_EMAC_testPruicssInstanceSetup();
+
+    /* Setup RAT configuration for buffer region */
+    ICSS_EMAC_testSetupRATConfig();
+
+    /* Load the PRU Firmware */
+    status = ICSS_EMAC_testLoadPRUFirmware();
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    /* Perform the PHY Configuration */
+    ICSS_EMAC_testPHYInitConfig();
+
+    /* Start the main loop */
     main_loop(NULL);
 
     return 0;
