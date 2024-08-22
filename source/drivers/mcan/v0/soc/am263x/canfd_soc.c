@@ -54,11 +54,11 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, void* data)
+int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
-    int32_t                 retVal = MCAN_STATUS_FAILURE;
+    int32_t                 retVal = SystemP_FAILURE;
     uint32_t                baseAddr = 0U;
     MCAN_TxBufElement       txBuffElem;
     uint32_t                index;
@@ -72,35 +72,31 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
         baseAddr = ptrCanFdObj->regBaseAddress;
-
-        if((data == NULL) || (ptrCanMsgObj->dataLength < 1U) || (ptrCanMsgObj->dataLength > 64U) || (numMsgs < 1U))
-        {
-            retVal = SystemP_FAILURE;
-        }
+        retVal = CANFD_isDataSizeValid(ptrCanMsgObj->dataLength);
 
         /* Check for pending messages */
         index = (uint32_t)1U << ptrCanMsgObj->txElement;
-        if ((index == (MCAN_getTxBufReqPend(baseAddr) & index)) || (retVal == SystemP_SUCCESS))
+        if ((index == (MCAN_getTxBufReqPend(baseAddr) & index)) || (retVal != SystemP_SUCCESS))
         {
-            retVal = MCAN_STATUS_BUSY;
+            retVal = SystemP_FAILURE;
         }
         else
         {
             /* populate the Tx buffer message element */
-            txBuffElem.rtr = 0;
-            txBuffElem.esi = 0;
-            txBuffElem.efc = 0;
-            txBuffElem.mm = 0;
+            txBuffElem.rtr = (uint32_t)0;
+            txBuffElem.esi = (uint32_t)0;
+            txBuffElem.efc = (uint32_t)0;
+            txBuffElem.mm = (uint32_t)0;
 
             if(frameType == CANFD_MCANFrameType_CLASSIC)
             {
-                txBuffElem.brs = 0;
-                txBuffElem.fdf = 0;
+                txBuffElem.brs = (uint32_t)0;
+                txBuffElem.fdf = (uint32_t)0;
             }
             else
             {
-                txBuffElem.brs = 1U;
-                txBuffElem.fdf = 1U;
+                txBuffElem.brs = (uint32_t)1U;
+                txBuffElem.fdf = (uint32_t)1U;
             }
             /* Populate the Id */
             if (ptrCanMsgObj->msgIdType == CANFD_MCANXidType_11_BIT)
@@ -118,12 +114,12 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
             (void)memcpy ((void*)&txBuffElem.data, data, ptrCanMsgObj->dataLength);
 
             /* Compute the DLC value */
-            for(index = 0U ; index < 16U ; index++)
+            for(index = (uint32_t)0U ; index < 16U ; index++)
             {
-                if(ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
+                if((uint8_t)ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
                 {
                     txBuffElem.dlc = index;
-                    padSize = (uint8_t)(ptrCanFdObj->mcanDataSize[index] - ptrCanMsgObj->dataLength);
+                    padSize = (uint8_t)(ptrCanFdObj->mcanDataSize[index] - (uint8_t)ptrCanMsgObj->dataLength);
                     break;
                 }
             }
@@ -153,7 +149,7 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
 
                 retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
 
-                ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 1;
+                ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
 
                 /* Release the critical section: */
                 //HwiP_restore(key);
@@ -205,7 +201,7 @@ int32_t CANFD_writeDmaTriggerNext(CANFD_MsgObjHandle handle)
     {
         retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
 
-        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 1;
+        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
     }
     return retVal;
 }

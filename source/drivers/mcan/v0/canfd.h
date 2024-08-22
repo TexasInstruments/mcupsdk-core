@@ -375,17 +375,18 @@ typedef enum CANFD_MCANTimeOutSelect_t
 /**
  *  \anchor CANFD_MCANECCErrType
  *  \name   CANFD ECC error type
- *
+ *  @{
+ */
+/**
  *  \brief    This enumeration defines the MCAN ECC Error Types
  */
-typedef enum CANFD_MCANECCErrType_t
-{
-    /*! ECC Single Error Correction */
-    CANFD_MCANECCErrType_SEC = 0U,
+typedef uint32_t CANFD_MCANECCErrType;
 
-    /*! ECC Single Error Detection */
-    CANFD_MCANECCErrType_DED = 1U
-}CANFD_MCANECCErrType;
+#define CANFD_MCAN_ECC_ERR_TYPE_SEC                   (0U)
+/**< ECC Single Error Correction */
+#define CANFD_MCAN_ECC_ERR_TYPE_DED                   (1U)
+/**< ECC Single Error Detection */
+/** @} */
 
 /**
  *  \anchor CANFD_MCANLoopBackMode
@@ -1008,16 +1009,13 @@ typedef struct CANFD_MCANECCErrStatus_t
  * \brief
  *  Response structure definition for Error and status information.
  */
-typedef struct CANFD_ErrStatusResp_t
+typedef union CANFD_ErrStatusResp_t
 {
-    union
-    {
-        /*! ECC Error Status. */
-        CANFD_MCANECCErrStatus      eccErrStatus;
+    /*! ECC Error Status. */
+    CANFD_MCANECCErrStatus      eccErrStatus;
 
-        /*! Protocol Status. */
-        CANFD_MCANProtocolStatus    protocolStatus;
-    }u;
+    /*! Protocol Status. */
+    CANFD_MCANProtocolStatus    protocolStatus;
 } CANFD_ErrStatusResp;
 
 
@@ -1750,7 +1748,7 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle);
  *  \return SystemP_SUCCESS on success, else failure
  * 
  */
-int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, void* data);
+int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data);
 
 /**
  *   \brief
@@ -1787,7 +1785,7 @@ int32_t CANFD_writeCancel(CANFD_MsgObjHandle handle);
  *  \return SystemP_SUCCESS on success, else failure 
  * 
  */
-int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, void* data);
+int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data);
 
 /**
  *   \brief
@@ -1809,7 +1807,6 @@ uint32_t CANFD_getFilterEventConfig(uint32_t eventNum);
 /**
  *   \brief
  *      Function is used by the application to get the CAN message from message RAM using a receive message object.
- *      NOTE: This API must ONLY be called from the callback context.
  *
  *  \param  handle
  *      Handle to the message object
@@ -1873,12 +1870,12 @@ int32_t CANFD_setOptions(CANFD_Handle handle, const CANFD_OptionTLV* ptrOptInfo)
 /**
  *   \brief  The function is the registered interrupt 0 ISR for the CANFD Driver.
  */
-void CANFD_int0Isr (void *);
+void CANFD_int0Isr (void *args);
 
 /**
  *  \brief The function is the registered interrupt 1 ISR for the CANFD Driver.
  */
-void CANFD_int1Isr (void *);
+void CANFD_int1Isr (void *args);
 
 /**
  * \brief
@@ -2031,6 +2028,15 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
  *
  */
 void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType) __attribute__((weak));
+
+
+/**
+ * \brief Function to verify the the data Size is valid or not.
+ *
+ * \param dataSize  CANFD data Size
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t CANFD_isDataSizeValid(uint32_t dataSize);
 
 /** @} */
 

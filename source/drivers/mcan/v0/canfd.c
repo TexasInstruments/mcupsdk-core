@@ -110,7 +110,7 @@ static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
                               uint32_t* id,
                               CANFD_MCANFrameType* ptrFrameType,
                               CANFD_MCANXidType* idType,
-                              uint8_t* data);
+                              const uint8_t* data);
 
 static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj,
                                          uint32_t fifoNum);
@@ -121,7 +121,14 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
                                       uint32_t id,
                                       CANFD_MCANFrameType frameType,
                                       const uint8_t* data);
-
+static int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
+                                          uint32_t id,
+                                          CANFD_MCANFrameType frameType,
+                                          const uint8_t* data);
+static int32_t CANFD_writePollProcessFIFO(CANFD_MsgObjHandle handle,
+                                          uint32_t id,
+                                          CANFD_MCANFrameType frameType,
+                                          const uint8_t* data);
 static int32_t CANFD_configInstance(CANFD_Handle hCanfd);
 static int32_t CANFD_deConfigInstance(CANFD_Handle handle);
 
@@ -190,7 +197,7 @@ static void CANFD_processFIFOElements(CANFD_Handle handle, MCAN_RxFIFONum fifoNu
         MCAN_getRxFIFOStatus(baseAddr, &fifoStatus);
         fillLevel = fifoStatus.fillLvl;
 
-        for(index = 0; index < fillLevel; index++)
+        for(index = (uint32_t)0U; index < fillLevel; index++)
         {
             /* Get the message object pointer */
             ptrCanMsgObj = ptrCanFdObj->rxMapping[fifoStatus.getIdx];
@@ -212,7 +219,7 @@ static void CANFD_processFIFOElements(CANFD_Handle handle, MCAN_RxFIFONum fifoNu
                 CANFD_transferCallBack((CANFD_MsgObjHandle)ptrCanMsgObj, CANFD_Reason_RX);
 
                 /* Acknowledge the data read */
-                MCAN_writeRxFIFOAck(baseAddr, (uint32_t)fifoNum, fifoStatus.getIdx);
+                (void)MCAN_writeRxFIFOAck(baseAddr, (uint32_t)fifoNum, fifoStatus.getIdx);
 
                 MCAN_getRxFIFOStatus(baseAddr, &fifoStatus);
             }
@@ -339,7 +346,7 @@ static void CANFD_transCompleteInterrupt(CANFD_Handle handle)
         status      = MCAN_getTxBufTransmissionStatus(baseAddr);
 
         /* Process all 32 Tx buffers */
-        for(index = 0; index < MCAN_MAX_TX_BUFFERS; index++)
+        for(index = (uint32_t)0U; index < MCAN_MAX_TX_BUFFERS; index++)
         {
             buffIndex = ((uint32_t)1U << index);
             if(buffIndex == (status & buffIndex))
@@ -352,9 +359,9 @@ static void CANFD_transCompleteInterrupt(CANFD_Handle handle)
                     /* Increment the number of interrupts received */
                     ptrCanMsgObj->interruptsRxed++;
 
-                    if(ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] == 1)
+                    if(ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] == (uint8_t)1)
                     {
-                        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 0;
+                        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)0;
                         if (config->attrs->operMode != CANFD_OPER_MODE_DMA)
                         {
                             /* Call the registered callback. */
@@ -396,7 +403,7 @@ static void CANFD_receiveBufferInterrupt(CANFD_Handle handle)
 
         /* Process the low 32 buffers */
         status = newDataStatus.statusLow;
-        index = 0U;
+        index = (uint32_t)0U;
         while (status != (uint32_t)0U)
         {
             if ((status & (uint32_t)1U) == (uint32_t)1U)
@@ -444,7 +451,7 @@ static void CANFD_transferCancelInterrupt(CANFD_Handle handle)
         status = MCAN_txBufCancellationStatus(baseAddr);
 
         /* Process all 32 Tx buffers */
-        for(index = 0; index < MCAN_MAX_TX_BUFFERS; index++)
+        for(index = (uint32_t)0; index < MCAN_MAX_TX_BUFFERS; index++)
         {
             buffIndex = ((uint32_t)1U << index);
             if(buffIndex == (status & buffIndex))
@@ -455,9 +462,9 @@ static void CANFD_transferCancelInterrupt(CANFD_Handle handle)
                 /* Increment the number of interrupts received */
                 ptrCanMsgObj->interruptsRxed++;
 
-                if(ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] == (uint8_t)1U)
+                if(ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] == (uint8_t)1)
                 {
-                    ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)0U;
+                    ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)0;
 
                     /* Call the registered callback. */
                     CANFD_transferCallBack((CANFD_MsgObjHandle)ptrCanMsgObj, CANFD_Reason_TX_CANCELED);
@@ -511,23 +518,23 @@ void CANFD_int1Isr (void* args)
         MCAN_eccGetErrorStatus(baseAddr, &errStatusResp);
         if (errStatusResp.secErr == (uint32_t)1U)
         {
-            MCAN_eccClearErrorStatus(baseAddr, CANFD_MCANECCErrType_SEC);
+            MCAN_eccClearErrorStatus(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_SEC);
         }
         if (errStatusResp.dedErr == (uint32_t)1U)
         {
-            MCAN_eccClearErrorStatus(baseAddr, CANFD_MCANECCErrType_DED);
+            MCAN_eccClearErrorStatus(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_DED);
         }
 
         /* Call the registered callback. */
-        errStatusInfo.u.eccErrStatus.bit1 = errStatusResp.bit1;
-        errStatusInfo.u.eccErrStatus.bit2 = errStatusResp.bit2;
-        errStatusInfo.u.eccErrStatus.dedErr = errStatusResp.dedErr;
-        errStatusInfo.u.eccErrStatus.row    = errStatusResp.row;
-        errStatusInfo.u.eccErrStatus.secErr = errStatusResp.secErr;
+        errStatusInfo.eccErrStatus.bit1 = errStatusResp.bit1;
+        errStatusInfo.eccErrStatus.bit2 = errStatusResp.bit2;
+        errStatusInfo.eccErrStatus.dedErr = errStatusResp.dedErr;
+        errStatusInfo.eccErrStatus.row    = errStatusResp.row;
+        errStatusInfo.eccErrStatus.secErr = errStatusResp.secErr;
         CANFD_errStatusCallBack(canFdHandle, CANFD_Reason_ECC_ERROR, &errStatusInfo);
 
-        MCAN_eccWriteEOI(baseAddr, CANFD_MCANECCErrType_SEC);
-        MCAN_eccWriteEOI(baseAddr, CANFD_MCANECCErrType_DED);
+        MCAN_eccWriteEOI(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_SEC);
+        MCAN_eccWriteEOI(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_DED);
     }
 
     return;
@@ -560,9 +567,9 @@ static int32_t CANFD_configMessageRAM(uint32_t baseAddr, const CANFD_MCANMsgRAMC
     int32_t                 status = SystemP_SUCCESS;
 
     /* Compute the start Address and populate the Message RAM configuration parameters */
-    startAddr = 0U;
+    startAddr = (uint32_t)0U;
 
-    if((configParams != NULL) & (baseAddr != 0U))
+    if((configParams != NULL) && (baseAddr != (uint32_t)0U))
     {
         status = MCAN_configParamsLss(configParams->lss);
         status += MCAN_configParamsLse(configParams->lse);
@@ -579,7 +586,7 @@ static int32_t CANFD_configMessageRAM(uint32_t baseAddr, const CANFD_MCANMsgRAMC
         msgRAMConfigParams.txBufCnt  = configParams->txBufNum;
         msgRAMConfigParams.txFIFOCnt = configParams->txFIFOSize;
         msgRAMConfigParams.txBufMode = configParams->txBufMode;
-        msgRAMConfigParams.txBufElemSize = CANFD_MCANElemSize_64BYTES;
+        msgRAMConfigParams.txBufElemSize = (uint32_t)CANFD_MCANElemSize_64BYTES;
 
         /* Rx Buffer configuration */
         startAddr += (configParams->txBufNum * MCAN_MSG_RAM_TX_RX_ELEM_SIZE * 4U);
@@ -632,7 +639,7 @@ static int32_t CANFD_configMessageRAM(uint32_t baseAddr, const CANFD_MCANMsgRAMC
 
 static void CANFD_initCslMcanInitParams(const CANFD_OpenParams* configParams, MCAN_InitParams *cslMcanInitPrms)
 {
-    if((configParams != NULL_PTR) & (cslMcanInitPrms != NULL_PTR))
+    if((configParams != NULL_PTR) && (cslMcanInitPrms != NULL_PTR))
     {
         cslMcanInitPrms->autoWkupEnable  = configParams->autoWkupEnable;
         cslMcanInitPrms->brsEnable       = configParams->brsEnable;
@@ -654,13 +661,13 @@ static void CANFD_initCslMcanInitParams(const CANFD_OpenParams* configParams, MC
 
 static void CANFD_initCslMcanConfigParams(const CANFD_OpenParams* configParams, MCAN_ConfigParams *cslMcanConfigPrms)
 {
-    if((configParams != NULL_PTR) & (cslMcanConfigPrms != NULL_PTR))
+    if((configParams != NULL_PTR) && (cslMcanConfigPrms != NULL_PTR))
     {
         cslMcanConfigPrms->asmEnable         = configParams->asmEnable;
         cslMcanConfigPrms->monEnable         = configParams->monEnable;
         cslMcanConfigPrms->timeoutCntEnable  = configParams->timeoutCntEnable;
         cslMcanConfigPrms->timeoutPreload    = configParams->timeoutPreload;
-        cslMcanConfigPrms->timeoutSelect     = configParams->timeoutSelect;
+        cslMcanConfigPrms->timeoutSelect     = (uint32_t)configParams->timeoutSelect;
         cslMcanConfigPrms->tsPrescalar       = configParams->tsPrescalar;
         cslMcanConfigPrms->tsSelect          = configParams->tsSelect;
         cslMcanConfigPrms->filterConfig.anfe = configParams->filterConfig.anfe;
@@ -672,7 +679,7 @@ static void CANFD_initCslMcanConfigParams(const CANFD_OpenParams* configParams, 
 
 static void CANFD_initCslMcanECCConfigParams(const CANFD_OpenParams* configParams, MCAN_ECCConfigParams *cslMcanEccConfigPrms)
 {
-    if((configParams != NULL_PTR) & (cslMcanEccConfigPrms != NULL_PTR))
+    if((configParams != NULL_PTR) && (cslMcanEccConfigPrms != NULL_PTR))
     {
         cslMcanEccConfigPrms->enable = configParams->eccConfig.enable;
         cslMcanEccConfigPrms->enableChk = configParams->eccConfig.enableChk;
@@ -693,6 +700,7 @@ CANFD_Handle CANFD_open(uint32_t index, CANFD_OpenParams *openPrms)
     if((index >= gCANFDConfigNum) && (openPrms == NULL))
     {
         status = SystemP_FAILURE;
+        DebugP_assert(NULL_PTR != openPrms);
     }
     else
     {
@@ -702,7 +710,7 @@ CANFD_Handle CANFD_open(uint32_t index, CANFD_OpenParams *openPrms)
     DebugP_assert(NULL_PTR != gCANFDDrvObj.lock);
     status += SemaphoreP_pend(&gCANFDDrvObj.lockObj, SystemP_WAIT_FOREVER);
 
-    if(SystemP_SUCCESS == status)
+    if((SystemP_SUCCESS == status) && (config != NULL_PTR))
     {
         obj = config->object;
         DebugP_assert(NULL_PTR != obj);
@@ -715,26 +723,18 @@ CANFD_Handle CANFD_open(uint32_t index, CANFD_OpenParams *openPrms)
             obj->canfdDmaHandle = gCanfdDmaHandle[0];
             obj->canfdDmaChCfg  = gCanfdDmaChCfg;
         }
-    }
-    obj->handle = (CANFD_Handle) config;
-    handle = obj->handle;
-
-    if(NULL == openPrms)
-    {
-        status = SystemP_FAILURE;
-    }
-    else
-    {
+        obj->handle = (CANFD_Handle) config;
+        handle = obj->handle;
+    
         status += CANFD_configInstance(handle);
-
         if(status == SystemP_SUCCESS)
         {
             /* Create read transfer sync semaphore */
-            status = SemaphoreP_constructBinary(&obj->readTransferSemObj, 0U);
+            status += SemaphoreP_constructBinary(&obj->readTransferSemObj, 0U);
             obj->readTransferSem = &obj->readTransferSemObj;
 
             /* Create write transfer sync semaphore */
-            status = SemaphoreP_constructBinary(&obj->writeTransferSemObj, 0U);
+            status += SemaphoreP_constructBinary(&obj->writeTransferSemObj, 0U);
             obj->writeTransferSem = &obj->writeTransferSemObj;
 
             /* Register interrupt */
@@ -759,7 +759,7 @@ CANFD_Handle CANFD_open(uint32_t index, CANFD_OpenParams *openPrms)
         SemaphoreP_post(&gCANFDDrvObj.lockObj);
 
         /* Free-up resources in case of error */
-        if ((SystemP_SUCCESS != status) && ((NULL != config)))
+        if (SystemP_SUCCESS != status)
         {
             CANFD_close((CANFD_Handle) config);
         }
@@ -816,7 +816,7 @@ void CANFD_init(void)
     int32_t        status = SystemP_SUCCESS;
 
     /* Init each driver instance object */
-    for (cnt = 0U; cnt < gCANFDConfigNum; cnt++)
+    for (cnt = (uint32_t)0U; cnt < gCANFDConfigNum; cnt++)
     {
         /* initialize object varibles */
         obj = gCanfdConfig[cnt].object;
@@ -951,22 +951,22 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
                 status = CANFD_updateOpMode(baseAddr, MCAN_OPERATION_MODE_NORMAL);
 
                 /* Initialize the datalength to DLC mapping */
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_0BYTES] = 0;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_1BYTES] = 1U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_2BYTES] = 2U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_3BYTES] = 3U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_4BYTES] = 4U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_5BYTES] = 5U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_6BYTES] = 6U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_7BYTES] = 7U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_8BYTES] = 8U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_12BYTES] = 12U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_16BYTES] = 16U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_20BYTES] = 20U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_24BYTES] = 24U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_32BYTES] = 32U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_48BYTES] = 48U;
-                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_64BYTES] = 64U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_0BYTES] = (uint8_t)0;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_1BYTES] = (uint8_t)1U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_2BYTES] = (uint8_t)2U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_3BYTES] = (uint8_t)3U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_4BYTES] = (uint8_t)4U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_5BYTES] = (uint8_t)5U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_6BYTES] = (uint8_t)6U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_7BYTES] = (uint8_t)7U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_8BYTES] = (uint8_t)8U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_12BYTES] = (uint8_t)12U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_16BYTES] = (uint8_t)16U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_20BYTES] = (uint8_t)20U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_24BYTES] = (uint8_t)24U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_32BYTES] = (uint8_t)32U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_48BYTES] = (uint8_t)48U;
+                ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_64BYTES] = (uint8_t)64U;
 
                 /* Initialize the CAN driver state */
                 ptrCanFdObj->state = CANFD_DriverState_STARTED;
@@ -1015,7 +1015,7 @@ static int32_t CANFD_deConfigInstance(CANFD_Handle handle)
         ptrCanFdObj->state = CANFD_DriverState_STOPPED;
 
         /* Delete the message objects */
-        for (index = 0; index < MCAN_MAX_MSG_OBJECTS; index++)
+        for (index = (uint32_t)0; index < MCAN_MAX_MSG_OBJECTS; index++)
         {
             if (ptrCanFdObj->msgObjectHandle[index] != NULL)
             {
@@ -1132,7 +1132,7 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
         ptrCanMsgObj->canfdHandle = (CANFD_Config*) handle;
 
         /* Loop to find a free message object handle */
-        for (i = 0U; i < MCAN_MAX_MSG_OBJECTS; i++)
+        for (i = (uint32_t)0U; i < MCAN_MAX_MSG_OBJECTS; i++)
         {
             if (ptrCanFdObj->msgObjectHandle[i] == NULL)
             {
@@ -1162,7 +1162,7 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
                 if (config->attrs->operMode == CANFD_OPER_MODE_DMA)
                 {
                     /* msg obj created for dma mode, allocate from 0 to MCAN_MAX_TX_DMA_BUFFERS */
-                    txElemStart = 0;
+                    txElemStart = (uint32_t)0;
                     txElemEnd = MCAN_MAX_TX_DMA_BUFFERS;
                 }
                 else
@@ -1176,7 +1176,7 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
             {
                 /* dma mode not enabled in can driver,
                  any available tx buffer elements can be allocated. */
-                txElemStart = 0;
+                txElemStart = (uint32_t)0;
                 txElemEnd = MCAN_MAX_TX_MSG_OBJECTS;
             }
 
@@ -1223,7 +1223,7 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
         if ((retVal == SystemP_SUCCESS) && (ptrCanMsgObj->direction == CANFD_Direction_RX))
         {
             /* Get a free Rx element */
-            for (i = 0U; i < MCAN_MAX_RX_MSG_OBJECTS; i++)
+            for (i = (uint32_t)0U; i < MCAN_MAX_RX_MSG_OBJECTS; i++)
             {
                 if (ptrCanFdObj->rxMapping[i] == NULL)
                 {
@@ -1266,8 +1266,8 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
                     }
 
                     /* Store the message in rx buffer */
-                    stdMsgIdFilter.sfec = 0x7U;
-                    stdMsgIdFilter.sft = 0U;
+                    stdMsgIdFilter.sfec = (uint32_t)0x7U;
+                    stdMsgIdFilter.sft = (uint32_t)0U;
                     MCAN_addStdMsgIDFilter(baseAddr, i, &stdMsgIdFilter);
                 }
                 else
@@ -1282,7 +1282,7 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
                     }
 
                     /* Store the message in rx buffer */
-                    extMsgIdFilter.efec = 0x7U;
+                    extMsgIdFilter.efec = (uint32_t)0x7U;
                     extMsgIdFilter.eft = (uint32_t)0U;
                     MCAN_addExtMsgIDFilter(baseAddr, i, &extMsgIdFilter);
                 }
@@ -1342,7 +1342,7 @@ int32_t CANFD_createRxRangeMsgObject(CANFD_Handle handle, CANFD_MessageObject* p
             ptrCanMsgObj->canfdHandle->object = ptrCanFdObj;
             ptrCanMsgObj->direction = CANFD_Direction_RX;
 
-            for (i = 0U; i < MCAN_MAX_MSG_OBJECTS; i++)
+            for (i = (uint32_t)0U; i < MCAN_MAX_MSG_OBJECTS; i++)
             {
                 if (ptrCanFdObj->msgObjectHandle[i] == NULL)
                 {
@@ -1365,7 +1365,7 @@ int32_t CANFD_createRxRangeMsgObject(CANFD_Handle handle, CANFD_MessageObject* p
             if (retVal == SystemP_SUCCESS)
             {
                 /* Get a free Rx element */
-                for (i = 0U; i < MCAN_MAX_RX_MSG_OBJECTS; i++)
+                for (i = (uint32_t)0U; i < MCAN_MAX_RX_MSG_OBJECTS; i++)
                 {
                     if (ptrCanFdObj->rxMapping[i] == NULL)
                     {
@@ -1392,7 +1392,7 @@ int32_t CANFD_createRxRangeMsgObject(CANFD_Handle handle, CANFD_MessageObject* p
 
                         /* Store the message in FIFO */
                         stdMsgIdFilter.sfec = (ptrCanFdObj->useFifoNum + (uint32_t)1U);
-                        stdMsgIdFilter.sft = 0;
+                        stdMsgIdFilter.sft = (uint32_t)0;
                         MCAN_addStdMsgIDFilter(baseAddr, i, &stdMsgIdFilter);
                     }
                     else
@@ -1507,23 +1507,22 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle)
  *  @retval
  *      Error       - <0
  */
-int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, void* data)
+int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object           *ptrCanFdObj;
-    int32_t                 retVal = SystemP_SUCCESS;
+    int32_t                 retVal = SystemP_FAILURE;
     const CANFD_Attrs      *attrs;
     CANFD_Config           *config = NULL;
     uint32_t                dataLength;
 
-    if((NULL != txMsgHandle) ||
-       (frameType != CANFD_MCANFrameType_CLASSIC) ||
-       (frameType != CANFD_MCANFrameType_FD))
+    if(NULL != txMsgHandle)
     {
         /* Get the message object pointer */
         ptrCanMsgObj = (CANFD_MessageObject*)txMsgHandle;
-        dataLength   = ptrCanMsgObj->dataLength;
-        if ((ptrCanMsgObj == NULL) || (data == NULL) || (dataLength < (uint32_t)1U) || (dataLength > (uint32_t)64U))
+        DebugP_assert(NULL_PTR != ptrCanMsgObj);
+        dataLength = ptrCanMsgObj->dataLength;
+        if ((data == NULL_PTR) || (dataLength < (uint32_t)1U) || (dataLength > (uint32_t)64U))
         {
             retVal = SystemP_FAILURE;
         }
@@ -1533,47 +1532,41 @@ int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id, CANFD_MCANFrame
             config = (CANFD_Config*)ptrCanMsgObj->canfdHandle;
             ptrCanFdObj = (CANFD_Object*)config->object;
             attrs = config->attrs;
-            if(ptrCanFdObj == NULL)
+            if(ptrCanFdObj != NULL)
             {
-                retVal = SystemP_FAILURE;
-                return retVal;
-            }
-
-            if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
-                (CANFD_OPER_MODE_DMA == attrs->operMode))
-            {
-                if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
+                if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
+                    (CANFD_OPER_MODE_DMA == attrs->operMode))
                 {
-                    retVal = CANFD_writeIntr(ptrCanMsgObj, id, frameType, (uint8_t*)data);
-                }
-                else
-                {
-                    retVal = CANFD_writeDma(ptrCanMsgObj, id, frameType, numMsgs, data);
-                }
-                if (retVal == SystemP_SUCCESS)
-                {
-                    if (ptrCanFdObj->openParams->transferMode == CANFD_TRANSFER_MODE_BLOCKING)
+                    if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
                     {
-                        /* Block on transferSem till the transfer completion. */
-                        DebugP_assert(NULL_PTR != ptrCanFdObj->writeTransferSem);
-                        retVal = SemaphoreP_pend(&ptrCanFdObj->writeTransferSemObj, SystemP_WAIT_FOREVER);
-                        if (retVal != SystemP_SUCCESS)
+                        retVal = CANFD_writeIntr(ptrCanMsgObj, id, frameType, (uint8_t*)data);
+                    }
+                    else
+                    {
+                        retVal = CANFD_writeDma(ptrCanMsgObj, id, frameType, numMsgs, data);
+                    }
+                    if (retVal == SystemP_SUCCESS)
+                    {
+                        if (ptrCanFdObj->openParams->transferMode == CANFD_TRANSFER_MODE_BLOCKING)
                         {
-                            CANFD_deConfigInstance(ptrCanFdObj);
+                            /* Block on transferSem till the transfer completion. */
+                            DebugP_assert(NULL_PTR != ptrCanFdObj->writeTransferSem);
+                            retVal = SemaphoreP_pend(&ptrCanFdObj->writeTransferSemObj, SystemP_WAIT_FOREVER);
+                            if (retVal != SystemP_SUCCESS)
+                            {
+                                retVal = CANFD_deConfigInstance(ptrCanFdObj);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                retVal = CANFD_writePoll(ptrCanMsgObj, id, frameType, (uint8_t*)data);
+                else
+                {
+                    retVal = CANFD_writePoll(ptrCanMsgObj, id, frameType, (uint8_t*)data);
+                }
             }
         }
     }
-    else
-    {
-        retVal = SystemP_FAILURE;
-    }
+    
     return retVal;
 }
 
@@ -1658,17 +1651,17 @@ int32_t CANFD_writeCancel(CANFD_MsgObjHandle handle)
  *  @retval
  *      Error       - <0
  */
-int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t id, CANFD_MCANFrameType ptrFrameType, CANFD_MCANXidType idType, uint8_t* data)
+int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t msgId, CANFD_MCANFrameType canfdFrameType, CANFD_MCANXidType canfdIdType, uint8_t* data)
 {
-    CANFD_MessageObject*    ptrCanMsgObj;
-    int32_t                 retVal = SystemP_SUCCESS;
+    CANFD_MessageObject    *ptrCanMsgObj;
+    int32_t                 retVal = SystemP_FAILURE;
     const CANFD_Attrs      *attrs;
     CANFD_Config           *config = NULL;
-    uint32_t                dataLength;
+    uint32_t                dataLength, id = msgId;
+    CANFD_MCANXidType       idType = canfdIdType;
+    CANFD_MCANFrameType     frameType = canfdFrameType;
 
-    if((NULL != rxMsgHandle) ||
-       (ptrFrameType != CANFD_MCANFrameType_CLASSIC) ||
-       (ptrFrameType != CANFD_MCANFrameType_FD))
+    if(NULL != rxMsgHandle)
     {
         /* Get the message object pointer */
         ptrCanMsgObj = (CANFD_MessageObject*)rxMsgHandle;
@@ -1676,7 +1669,7 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t id, CANFD_MCANFrameT
         attrs = config->attrs;
         dataLength = ptrCanMsgObj->dataLength;
 
-        if (((dataLength < (uint32_t)1U) && (dataLength > (uint32_t)64U)) || (data == NULL))
+        if (((dataLength < (uint32_t)1U) || (dataLength > (uint32_t)64U)) || (data == NULL))
         {
             retVal = SystemP_FAILURE;
         }
@@ -1687,23 +1680,20 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t id, CANFD_MCANFrameT
             {
                 if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
                 {
-                    retVal = CANFD_readIntr(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
+                    retVal = CANFD_readIntr(ptrCanMsgObj, &id, &frameType, &idType, data);
                 }
                 else
                 {
-                    retVal = CANFD_readDma(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
+                    retVal = CANFD_readDma(ptrCanMsgObj, &id, &frameType, &idType, data);
                 }
             }
             else
             {
-                retVal = CANFD_readPoll(ptrCanMsgObj, &id, &ptrFrameType, &idType, data);
+                retVal = CANFD_readPoll(ptrCanMsgObj, &id, &frameType, &idType, data);
             }
         }
     }
-    else
-    {
-        retVal = SystemP_FAILURE;
-    }
+    
     return retVal;
 }
 
@@ -1720,16 +1710,17 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCA
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
 
+        retVal = CANFD_isDataSizeValid(ptrCanFdObj->rxBuffElem.dlc);
         /* Get the data length from DLC */
-        if(((int32_t)ptrCanFdObj->rxBuffElem.dlc >= MCAN_DATA_SIZE_0BYTES) & (ptrCanFdObj->rxBuffElem.dlc <= MCAN_DATA_SIZE_64BYTES))
+        if(retVal == SystemP_SUCCESS)
         {
-            dataLength = ptrCanFdObj->mcanDataSize[ptrCanFdObj->rxBuffElem.dlc];
+            dataLength = (uint32_t)ptrCanFdObj->mcanDataSize[ptrCanFdObj->rxBuffElem.dlc];
             /*
-                * Check if the size of buffer is large enough to hold the received data.
-                * If yes, store the data in buffer and update ptrDataLength to the actual
-                * size of received data or else, return error. This is to prevent buffer
-                * overflow if the buffer size is not sufficient.
-                */
+             * Check if the size of buffer is large enough to hold the received data.
+             * If yes, store the data in buffer and update ptrDataLength to the actual
+             * size of received data or else, return error. This is to prevent buffer
+             * overflow if the buffer size is not sufficient.
+             */
             if(ptrCanMsgObj->dataLength >= dataLength)
             {
                 ptrCanMsgObj->dataLength = dataLength;
@@ -1786,14 +1777,15 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCA
     return retVal;
 }
 
-static int32_t CANFD_readPollProcessBuff(CANFD_MessageObject *ptrCanMsgObj, uint8_t *data)
+static int32_t CANFD_readPollProcessBuff(CANFD_MessageObject *ptrCanfdMsgObj, uint8_t *data)
 {
     uint32_t                baseAddr;
-    uint32_t                index;
-    int32_t                 status = SystemP_SUCCESS;
+    uint32_t                index, status;
+    int32_t                 retVal = SystemP_SUCCESS;
     MCAN_RxNewDataStatus    newDataStatus = {0};
     CANFD_Object*           ptrCanFdObj;
     CANFD_Config           *config;
+    CANFD_MessageObject    *ptrCanMsgObj = ptrCanfdMsgObj;
 
     if(ptrCanMsgObj != NULL)
     {
@@ -1808,7 +1800,7 @@ static int32_t CANFD_readPollProcessBuff(CANFD_MessageObject *ptrCanMsgObj, uint
 
         /* Process the low 32 buffers */
         status = newDataStatus.statusLow;
-        index = 0U;
+        index = (uint32_t)0U;
         while (status != (uint32_t)0U)
         {
             if ((status & (uint32_t)1U) == (uint32_t)1U)
@@ -1836,24 +1828,26 @@ static int32_t CANFD_readPollProcessBuff(CANFD_MessageObject *ptrCanMsgObj, uint
     }
     else
     {
-        status = SystemP_FAILURE;
+        retVal = SystemP_FAILURE;
     }
 
-    return status;
+    return retVal;
 }
 
-static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj, uint32_t fifoNum)
+static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanfdMsgObj, uint32_t fifoNum)
 {
     int32_t retVal =        SystemP_SUCCESS;
     uint32_t                baseAddr;
     MCAN_RxFIFOStatus       fifoStatus = {0};
     uint32_t                fillLevel, index;
     CANFD_Object*           ptrCanFdObj = NULL;
+    CANFD_MessageObject    *ptrCanMsgObj = ptrCanfdMsgObj;
 
     if(ptrCanMsgObj != NULL)
     {
-        baseAddr = ptrCanFdObj->regBaseAddress;
-
+        /* Get the pointer to the CAN Driver Block */
+        ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
+        baseAddr    = ptrCanFdObj->regBaseAddress;
         /* Get the FIFO status */
         fifoStatus.num = (uint32_t)fifoNum;
         MCAN_getRxFIFOStatus(baseAddr, &fifoStatus);
@@ -1862,7 +1856,7 @@ static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj, uint
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
 
-        for(index = 0; index < fillLevel; index++)
+        for(index = (uint32_t)0; index < fillLevel; index++)
         {
             MCAN_readMsgRam(baseAddr, MCAN_MEM_TYPE_FIFO, fifoStatus.getIdx, (uint32_t)fifoNum, &ptrCanFdObj->rxBuffElem);
 
@@ -2458,10 +2452,10 @@ static int32_t MCAN_CheckRegBaseAddr(uint32_t baseAddr)
     return status;
 }
 
-int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
-                                   uint32_t id,
-                                   CANFD_MCANFrameType frameType,
-                                   const uint8_t* data)
+static int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
+                                          uint32_t id,
+                                          CANFD_MCANFrameType frameType,
+                                          const uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
@@ -2485,39 +2479,40 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
     else
     {
         /* populate the Tx buffer message element */
-        txBuffElem.rtr = 0U;
-        txBuffElem.esi = 0U;
-        txBuffElem.efc = 0U;
-        txBuffElem.mm =  0U;
+        txBuffElem.rtr = (uint32_t)0U;
+        txBuffElem.esi = (uint32_t)0U;
+        txBuffElem.efc = (uint32_t)0U;
+        txBuffElem.mm =  (uint32_t)0U;
 
         /* Update fields based on Frame type - Classic CAN or CAN FD */
         if(frameType == CANFD_MCANFrameType_CLASSIC)
         {
-            txBuffElem.brs = 0U;
-            txBuffElem.fdf = 0U;
+            txBuffElem.brs = (uint32_t)0U;
+            txBuffElem.fdf = (uint32_t)0U;
         }
         else
         {
-            txBuffElem.brs = 1U;
-            txBuffElem.fdf = 1U;
+            txBuffElem.brs = (uint32_t)1U;
+            txBuffElem.fdf = (uint32_t)1U;
         }
         /* Populate the Id */
         if (ptrCanMsgObj->msgIdType == CANFD_MCANXidType_11_BIT)
         {
-            txBuffElem.xtd = CANFD_MCANXidType_11_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_11_BIT;
             txBuffElem.id = (id & STD_MSGID_MASK) << STD_MSGID_SHIFT;
         }
         else
         {
-            txBuffElem.xtd = CANFD_MCANXidType_29_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_29_BIT;
             txBuffElem.id = id & XTD_MSGID_MASK;
         }
 
         /* Copy the data */
         (void)memcpy ((void*)&txBuffElem.data, data, ptrCanMsgObj->dataLength);
-
+                
+        txBuffElem.dlc = 0U;
         /* Compute the DLC value */
-        for(index = 0U ; index < (uint32_t)16U ; index++)
+        for(index = (uint32_t)0U ; index < (uint32_t)16U ; index++)
         {
             if((uint8_t)ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
             {
@@ -2526,7 +2521,6 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
                 break;
             }
         }
-        txBuffElem.dlc = index;
         if (index == (uint32_t)CANFD_MAX_DLC_MAPPING)
         {
             retVal = SystemP_FAILURE;
@@ -2545,15 +2539,15 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
 
         MCAN_writeMsgRam(baseAddr, MCAN_MEM_TYPE_BUF, ptrCanMsgObj->txElement, &txBuffElem);
         /* Add request for transmission, This function will trigger transmission */
-        retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
-        bitPos = (1U << ptrCanMsgObj->txElement);
+        retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
+        bitPos = ((uint32_t)1U << ptrCanMsgObj->txElement);
         /* Poll for Tx completion */
         do
         {
             txStatus = MCAN_getTxBufTransmissionStatus(baseAddr);
         }while((txStatus & bitPos) != bitPos);
 
-        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 1;
+        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
 
         /* Increment the stats */
         ptrCanMsgObj->messageProcessed++;
@@ -2561,10 +2555,10 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
     return retVal;
  }
 
- int32_t CANFD_writePollProcessFIFO(CANFD_MsgObjHandle handle,
-                                   uint32_t id,
-                                   CANFD_MCANFrameType frameType,
-                                   const uint8_t* data)
+static int32_t CANFD_writePollProcessFIFO(CANFD_MsgObjHandle handle,
+                                          uint32_t id,
+                                          CANFD_MCANFrameType frameType,
+                                          const uint8_t* data)
  {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
@@ -2588,38 +2582,39 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
     else
     {
          /* populate the Tx buffer message element */
-        txBuffElem.rtr = 0U;
-        txBuffElem.esi = 0U;
-        txBuffElem.efc = 0U;
-        txBuffElem.mm =  0U;
+        txBuffElem.rtr = (uint32_t)0U;
+        txBuffElem.esi = (uint32_t)0U;
+        txBuffElem.efc = (uint32_t)0U;
+        txBuffElem.mm =  (uint32_t)0U;
 
         /* Update fields based on Frame type - Classic CAN or CAN FD */
         if(frameType == CANFD_MCANFrameType_CLASSIC)
         {
-            txBuffElem.brs = 0U;
-            txBuffElem.fdf = 0U;
+            txBuffElem.brs = (uint32_t)0U;
+            txBuffElem.fdf = (uint32_t)0U;
         }
         else
         {
-            txBuffElem.brs = 1U;
-            txBuffElem.fdf = 1U;
+            txBuffElem.brs = (uint32_t)1U;
+            txBuffElem.fdf = (uint32_t)1U;
         }
         /* Populate the Id */
         if (ptrCanMsgObj->msgIdType == CANFD_MCANXidType_11_BIT)
         {
-            txBuffElem.xtd = CANFD_MCANXidType_11_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_11_BIT;
             txBuffElem.id = (id & STD_MSGID_MASK) << STD_MSGID_SHIFT;
         }
         else
         {
-            txBuffElem.xtd = CANFD_MCANXidType_29_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_29_BIT;
             txBuffElem.id = id & XTD_MSGID_MASK;
         }
         /* Copy the data */
         (void)memcpy ((void*)&txBuffElem.data, data, ptrCanMsgObj->dataLength);
-
+        
+        txBuffElem.dlc = 0U;
         /* Compute the DLC value */
-        for(index = 0U ; index < (uint32_t)16U ; index++)
+        for(index = (uint32_t)0U ; index < (uint32_t)16U ; index++)
         {
             if((uint8_t)ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
             {
@@ -2628,7 +2623,6 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
                 break;
             }
         }
-        txBuffElem.dlc = index;
         if (index == (uint32_t)CANFD_MAX_DLC_MAPPING)
         {
             retVal = SystemP_FAILURE;
@@ -2647,15 +2641,15 @@ int32_t CANFD_writePollProcessBuff(CANFD_MsgObjHandle handle,
 
         MCAN_writeMsgRam(baseAddr, MCAN_MEM_TYPE_FIFO, ptrCanMsgObj->txElement, &txBuffElem);
         /* Add request for transmission, This function will trigger transmission */
-        retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
-        bitPos = (1U << ptrCanMsgObj->txElement);
+        retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
+        bitPos = ((uint32_t)1U << ptrCanMsgObj->txElement);
         /* Poll for Tx completion */
         do
         {
             txStatus = MCAN_getTxBufTransmissionStatus(baseAddr);
         }while((txStatus & bitPos) != bitPos);
 
-        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 1;
+        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
 
         /* Increment the stats */
         ptrCanMsgObj->messageProcessed++;
@@ -2700,13 +2694,13 @@ static int32_t CANFD_writeIntr(CANFD_MsgObjHandle handle,
     ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
     baseAddr = ptrCanFdObj->regBaseAddress;
 
-    if(baseAddr !=0U)
+    if(baseAddr != (uint32_t)0U)
     {
         if (ptrCanFdObj->openParams->eccConfig.enable == (uint32_t)1U)
         {
             /* Enable ECC Interrupt */
-            MCAN_eccEnableIntr(baseAddr, CANFD_MCANECCErrType_SEC, 1U);
-            MCAN_eccEnableIntr(baseAddr, CANFD_MCANECCErrType_DED, 1U);
+            MCAN_eccEnableIntr(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_SEC, 1U);
+            MCAN_eccEnableIntr(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_DED, 1U);
         }
 
         MCAN_enableIntr(baseAddr, MCAN_INTR_MASK_ALL, (uint32_t)TRUE);
@@ -2757,39 +2751,40 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
     else
     {
         /* populate the Tx buffer message element */
-        txBuffElem.rtr = 0U;
-        txBuffElem.esi = 0U;
-        txBuffElem.efc = 0U;
-        txBuffElem.mm =  0U;
+        txBuffElem.rtr = (uint32_t)0U;
+        txBuffElem.esi = (uint32_t)0U;
+        txBuffElem.efc = (uint32_t)0U;
+        txBuffElem.mm =  (uint32_t)0U;
 
         /* Update fields based on Frame type - Classic CAN or CAN FD */
         if(frameType == CANFD_MCANFrameType_CLASSIC)
         {
-            txBuffElem.brs = 0U;
-            txBuffElem.fdf = 0U;
+            txBuffElem.brs = (uint32_t)0U;
+            txBuffElem.fdf = (uint32_t)0U;
         }
         else
         {
-            txBuffElem.brs = 1U;
-            txBuffElem.fdf = 1U;
+            txBuffElem.brs = (uint32_t)1U;
+            txBuffElem.fdf = (uint32_t)1U;
         }
         /* Populate the Id */
         if (ptrCanMsgObj->msgIdType == CANFD_MCANXidType_11_BIT)
         {
-            txBuffElem.xtd = CANFD_MCANXidType_11_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_11_BIT;
             txBuffElem.id = (id & STD_MSGID_MASK) << STD_MSGID_SHIFT;
         }
         else
         {
-            txBuffElem.xtd = CANFD_MCANXidType_29_BIT;
+            txBuffElem.xtd = (uint32_t)CANFD_MCANXidType_29_BIT;
             txBuffElem.id = id & XTD_MSGID_MASK;
         }
 
         /* Copy the data */
         (void)memcpy ((void*)&txBuffElem.data, data, ptrCanMsgObj->dataLength);
-
+        
+        txBuffElem.dlc = 0U;
         /* Compute the DLC value */
-        for(index = 0U ; index < (uint32_t)16U ; index++)
+        for(index = (uint32_t)0U ; index < (uint32_t)16U ; index++)
         {
             if((uint8_t)ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
             {
@@ -2798,7 +2793,6 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
                 break;
             }
         }
-        txBuffElem.dlc = index;
         if (index == (uint32_t)CANFD_MAX_DLC_MAPPING)
         {
             retVal = SystemP_FAILURE;
@@ -2817,9 +2811,9 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
 
         MCAN_writeMsgRam(baseAddr, ptrCanMsgObj->txMemType, ptrCanMsgObj->txElement, &txBuffElem);
         /* Add request for transmission, This function will trigger transmission */
-        retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
+        retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
 
-        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = 1;
+        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
         /* Increment the stats */
         ptrCanMsgObj->messageProcessed++;
     }
@@ -2831,11 +2825,39 @@ static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
                               uint32_t* id,
                               CANFD_MCANFrameType* ptrFrameType,
                               CANFD_MCANXidType* idType,
-                              uint8_t* data)
+                              const uint8_t* data)
 {
     int32_t retVal = SystemP_SUCCESS;
 
     retVal =  CANFD_readDmaConfig(handle, data, handle->dataLength);
 
     return retVal;
+}
+
+int32_t CANFD_isDataSizeValid(uint32_t dataSize)
+{
+    uint32_t canfdDataSize = dataSize;
+    int32_t status = SystemP_FAILURE;
+
+    if((canfdDataSize == MCAN_DATA_SIZE_0BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_1BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_2BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_3BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_4BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_5BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_6BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_7BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_8BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_12BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_16BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_20BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_24BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_32BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_48BYTES) ||
+       (canfdDataSize == MCAN_DATA_SIZE_64BYTES))
+    {
+        status = SystemP_SUCCESS;
+    }
+
+    return status;
 }

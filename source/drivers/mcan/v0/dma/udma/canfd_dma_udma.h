@@ -40,7 +40,7 @@ extern "C"
 {
 #endif
 
-typedef struct CANFD_UdmaArgs
+typedef struct CANFD_UdmaArgs_s
 {
     void            *drvHandle;
     /**< UDMA driver handle */

@@ -45,6 +45,7 @@
 #include <drivers/mcan/v0/dma/edma/canfd_dma_edma.h>
 #include <drivers/mcan/v0/canfd.h>
 #include <kernel/dpl/CacheP.h>
+#include "canfd_dma_edma.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -96,12 +97,12 @@ int32_t CANFD_dmaOpen(CANFD_Handle canfdHandle, CANFD_DmaChConfig dmaChCfg)
             /* Check if interrupt is enabled */
             isEdmaInterruptEnabled = EDMA_isInterruptEnabled(canfdEdmaHandle);
 
-            if((baseAddr != 0U) && (regionId < SOC_EDMA_NUM_REGIONS) && (isEdmaInterruptEnabled == TRUE))
+            if((baseAddr != (uint32_t)0U) && (regionId < (uint32_t)SOC_EDMA_NUM_REGIONS) && (isEdmaInterruptEnabled == (uint32_t)TRUE))
             {
                 /* Validate the EDMA parameters for MCAN */
-                edmaChCfg->isOpen = TRUE;
-                edmaChCfg->edmaTxChAlloc = 0U;
-                edmaChCfg->edmaRxChAlloc = 0U;
+                edmaChCfg->isOpen = (uint32_t)TRUE;
+                edmaChCfg->edmaTxChAlloc = (uint32_t)0U;
+                edmaChCfg->edmaRxChAlloc = (uint32_t)0U;
                 status = SystemP_SUCCESS;
             }
         }
@@ -130,11 +131,11 @@ int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
         canfdEdmaHandle = (EDMA_Handle) ptrCanFdObj->canfdDmaHandle;
         edmaChCfg       = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
         /* Check the free Tx dma event to program */
-        for (i = 0U; i < MCAN_MAX_TX_DMA_BUFFERS; i++)
+        for (i = (uint32_t)0U; i < MCAN_MAX_TX_DMA_BUFFERS; i++)
         {
-            if ((edmaChCfg->edmaTxChAlloc && (uint32_t)(1U << i)) == 0U)
+            if ((((uint32_t)edmaChCfg->edmaTxChAlloc & ((uint32_t)1U << i)) == (uint32_t)0U))
             {
-                edmaChCfg->edmaTxChAlloc |= (1U << i);
+                edmaChCfg->edmaTxChAlloc |= ((uint32_t)1U << i);
                 ptrCanMsgObj->dmaEventNo = i;
                 break;
             }
@@ -163,7 +164,7 @@ int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
                 ret = EDMA_configureChannelRegion(edmaChCfg->edmaBaseAddr, edmaChCfg->edmaRegionId, EDMA_CHANNEL_TYPE_DMA,
                         edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo], edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo],
                         edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo], EDMA_CANFD_TX_EVT_QUEUE_NO);
-                if(ret == (uint32_t)TRUE)
+                if((uint32_t)ret == (uint32_t)TRUE)
                 {
                     status = SystemP_SUCCESS;
                 }
@@ -183,15 +184,15 @@ int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
                 /* Free all allocated resources of edma */
                 if ((chAllocStatus == SystemP_SUCCESS) && (edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY))
                 {
-                    EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo]));
                 }
                 if (edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo]));
                 }
                 if (edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo]));
                 }
             }
         }
@@ -210,7 +211,7 @@ int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
     EDMA_Handle         canfdEdmaHandle;
     CANFD_EdmaChConfig *edmaChCfg;
 
-    if ((ptrCanFdObj != NULL) || (ptrCanMsgObj != NULL))
+    if ((ptrCanFdObj != NULL) && (ptrCanMsgObj != NULL))
     {
         canfdEdmaHandle = (EDMA_Handle) ptrCanFdObj->canfdDmaHandle;
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
@@ -224,18 +225,18 @@ int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
             /* Free all allocated resources of edma */
             if (edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo]));
+                status += EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo]));
             }
 
             if (edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo]));
+                status += EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo]));
                 edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo] = EDMA_RESOURCE_ALLOC_ANY;
             }
 
             if (edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo]));
+                status += EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo]));
                 edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo] = EDMA_RESOURCE_ALLOC_ANY;
             }
         }
@@ -272,12 +273,12 @@ void CANFD_dmaTxCallBack(CANFD_MessageObject* ptrCanMsgObj)
             dmaTxCh     = edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo];
 
             /* Disable event trigger transfer */
-            EDMA_disableTransferRegion(baseAddr,
+            (void)EDMA_disableTransferRegion(baseAddr,
                                     regionId,
                                     dmaTxCh,
                                     EDMA_TRIG_MODE_EVENT);
 
-            CANFD_dmaTxCompletionCallback(ptrCanMsgObj,
+            (void)CANFD_dmaTxCompletionCallback(ptrCanMsgObj,
                                         (void *)(currentDataPtr),
                                         CANFD_DMA_TX_COMPLETION_FINAL);
         }
@@ -300,11 +301,6 @@ void CANFD_dmaTxCallBack(CANFD_MessageObject* ptrCanMsgObj)
     return;
 }
 
-__attribute__((weak)) void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType)
-{
-
-}
-
 int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj,
                              uint32_t dataLengthPerMsg, uint32_t numMsgs, const void* data)
 {
@@ -313,18 +309,18 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
     uint32_t            dmaTxCh, tccTx, paramTx;
     EDMACCPaRAMEntry    edmaTxParam;
     CANFD_EdmaChConfig *edmaChCfg = NULL;
-    uint32_t            srcAddr, dstAddr;
+    uint32_t            srcAddr, dstAddr, retVal = (uint32_t)FALSE;
 
     if((NULL != ptrCanFdObj) && (NULL != ptrCanMsgObj) &&
-       (dataLengthPerMsg != 0U) && (numMsgs != 0U) && (NULL != data))
+       (dataLengthPerMsg != (uint32_t)0U) && (numMsgs != (uint32_t)0U) && (NULL != data))
     {
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
         /* Store the current Tx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;
         /* numMsg should numMsg - 1 because 1st transmission is done by the CANFD IP itself */
-        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - 1U;
+        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - (uint32_t)1U;
         ptrCanMsgObj->dmaMsgConfig.data             = data;
-        ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = 1;
+        ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = (uint32_t)1U;
 
         /* Fetch the EDMA paramters for CANFD transfer */
         baseAddr   = edmaChCfg->edmaBaseAddr;
@@ -352,14 +348,14 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
             edmaTxParam.destAddr      = (uint32_t) SOC_virtToPhy((uint8_t *) dstAddr);
             edmaTxParam.aCnt          = (uint16_t) dataLengthPerMsg;
             edmaTxParam.bCnt          = (uint16_t) numMsgs;
-            edmaTxParam.cCnt          = (uint16_t) 1;
+            edmaTxParam.cCnt          = (uint16_t) 1U;
             edmaTxParam.bCntReload    = (uint16_t) edmaTxParam.bCnt;
             edmaTxParam.srcBIdx       = (int16_t)  edmaTxParam.aCnt;
-            edmaTxParam.destBIdx      = (int16_t) 0;
-            edmaTxParam.srcCIdx       = (int16_t) 0;
-            edmaTxParam.destCIdx      = (int16_t) 0;
-            edmaTxParam.linkAddr      = 0xFFFFU;
-            edmaTxParam.opt           = 0;
+            edmaTxParam.destBIdx      = (int16_t) 0U;
+            edmaTxParam.srcCIdx       = (int16_t) 0U;
+            edmaTxParam.destCIdx      = (int16_t) 0U;
+            edmaTxParam.linkAddr      = (uint16_t)0xFFFFU;
+            edmaTxParam.opt           = (uint32_t)0U;
             edmaTxParam.opt          |=
                 (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
@@ -367,13 +363,21 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
             EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
 
             /* Set event trigger to start CANFD TX transfer */
-            EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
-                EDMA_TRIG_MODE_EVENT);
+            retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
+                                               EDMA_TRIG_MODE_EVENT);
+            if(retVal == (uint32_t)TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
         }
     }
     else
     {
-        return SystemP_FAILURE;
+        status = SystemP_FAILURE;
     }
 
     return status;
@@ -396,8 +400,8 @@ int32_t CANFD_cancelDmaTx(const CANFD_Object *ptrCanFdObj, const CANFD_MessageOb
         dmaTxCh   = edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo];
 
         /* Set event trigger to start CANFD TX transfer */
-        EDMA_disableTransferRegion(baseAddr, regionId, dmaTxCh,
-                                   EDMA_TRIG_MODE_EVENT);
+        (void)EDMA_disableTransferRegion(baseAddr, regionId, dmaTxCh,
+                                         EDMA_TRIG_MODE_EVENT);
     }
     else
     {
@@ -433,7 +437,7 @@ static void CANFD_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
             dmaTxCh  = edmaChCfg->edmaTxChId[ptrCanMsgObj->dmaEventNo];
 
             /* Disable event trigger transfer */
-            EDMA_disableTransferRegion(baseAddr, regionId, dmaTxCh, EDMA_TRIG_MODE_EVENT);
+            (void)EDMA_disableTransferRegion(baseAddr, regionId, dmaTxCh, EDMA_TRIG_MODE_EVENT);
             CANFD_dmaTxCompletionCallback(ptrCanMsgObj, (void *)(currentDataPtr), CANFD_DMA_TX_COMPLETION_FINAL);
         }
         else
@@ -467,7 +471,7 @@ static void CANFD_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
             dmaRxCh   = edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo];
 
             /* Disable event trigger transfer */
-            EDMA_disableTransferRegion(baseAddr, regionId, dmaRxCh, EDMA_TRIG_MODE_EVENT);
+            (void)EDMA_disableTransferRegion(baseAddr, regionId, dmaRxCh, EDMA_TRIG_MODE_EVENT);
             CANFD_dmaRxCompletionCallback(ptrCanMsgObj, (void *)(currentDataPtr), CANFD_DMA_RX_COMPLETION_FINAL);
         }
         else
@@ -475,11 +479,6 @@ static void CANFD_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
             CANFD_dmaRxCompletionCallback(ptrCanMsgObj, (void *)(currentDataPtr), CANFD_DMA_RX_COMPLETION_INTERMEDIATE);
         }
     }
-}
-
-__attribute__((weak)) void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType)
-{
-
 }
 
 int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj)
@@ -495,7 +494,7 @@ int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
         canfdEdmaHandle = (EDMA_Handle) ptrCanFdObj->canfdDmaHandle;
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
 
-        if((NULL == canfdEdmaHandle) && (NULL != edmaChCfg))
+        if((NULL == canfdEdmaHandle) && (NULL == edmaChCfg))
         {
             status = SystemP_FAILURE;
         }
@@ -526,10 +525,10 @@ int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
 
             if(status == SystemP_SUCCESS)
             {
-                ret = EDMA_configureChannelRegion(edmaChCfg->edmaBaseAddr, edmaChCfg->edmaRegionId, EDMA_CHANNEL_TYPE_DMA,
+                ret = (uint32_t)EDMA_configureChannelRegion(edmaChCfg->edmaBaseAddr, edmaChCfg->edmaRegionId, EDMA_CHANNEL_TYPE_DMA,
                     edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo], edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo],
                     edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo], EDMA_CANFD_RX_EVT_QUEUE_NO);
-                if(ret == (bool)TRUE)
+                if(ret == (bool)true)
                 {
                     status = SystemP_SUCCESS;
                 }
@@ -550,15 +549,15 @@ int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
                 /* Free all allocated resources of edma */
                 if ((chAllocStatus == SystemP_SUCCESS) && (edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY))
                 {
-                    EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo]));
                 }
                 if (edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo]));
                 }
                 if (edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo]));
+                    status += EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo]));
                 }
             }
         }
@@ -592,16 +591,16 @@ int32_t CANFD_deleteDmaRxMsgObject(const CANFD_Object *ptrCanFdObj,
             /* Free all allocated resources of edma */
             if (edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo]));
+                status += EDMA_freeDmaChannel(canfdEdmaHandle, &(edmaChCfg->edmaRxChId[ptrCanMsgObj->dmaEventNo]));
             }
             if (edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo]));
+                status +=  EDMA_freeTcc(canfdEdmaHandle, &(edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo]));
                 edmaChCfg->edmaRxTcc[ptrCanMsgObj->dmaEventNo] = EDMA_RESOURCE_ALLOC_ANY;
             }
             if (edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo] != EDMA_RESOURCE_ALLOC_ANY)
             {
-                EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo]));
+                status +=  EDMA_freeParam(canfdEdmaHandle, &(edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo]));
                 edmaChCfg->edmaRxParam[ptrCanMsgObj->dmaEventNo] = EDMA_RESOURCE_ALLOC_ANY;
             }
         }
@@ -625,7 +624,7 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
     uint32_t            dmaRxCh, tccRx, paramRx;
     EDMACCPaRAMEntry    edmaRxParam;
     CANFD_EdmaChConfig *edmaChCfg = NULL;
-    uint32_t            srcAddr, dstAddr;
+    uint32_t            srcAddr, dstAddr, retVal = (uint32_t)FALSE;
 
     if((NULL != ptrCanFdObj) && (NULL != ptrCanMsgObj))
     {
@@ -633,9 +632,9 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
         /* Store the current Rx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;
         /* numMsg should numMsg - 1 because 1st transmission is done by the CANFD IP itself */
-        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - 1U;
+        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - (uint32_t)1;
         ptrCanMsgObj->dmaMsgConfig.data             = data;
-        ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = 0;
+        ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = (uint32_t)0;
 
         if(edmaChCfg == NULL)
         {
@@ -671,14 +670,14 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
             edmaRxParam.destAddr      = (uint32_t) SOC_virtToPhy((uint8_t *) dstAddr);
             edmaRxParam.aCnt          = (uint16_t) dataLengthPerMsg;
             edmaRxParam.bCnt          = (uint16_t) numMsgs;
-            edmaRxParam.cCnt          = (uint16_t) 1;
+            edmaRxParam.cCnt          = (uint16_t) 1U;
             edmaRxParam.bCntReload    = (uint16_t) edmaRxParam.bCnt;
-            edmaRxParam.srcBIdx       = (int16_t) 0;
+            edmaRxParam.srcBIdx       = (int16_t) 0U;
             edmaRxParam.destBIdx      = (int16_t) edmaRxParam.aCnt;
-            edmaRxParam.srcCIdx       = (int16_t) 0;
-            edmaRxParam.destCIdx      = (int16_t) 0;
-            edmaRxParam.linkAddr      = 0xFFFFU;
-            edmaRxParam.opt           = 0;
+            edmaRxParam.srcCIdx       = (int16_t) 0U;
+            edmaRxParam.destCIdx      = (int16_t) 0U;
+            edmaRxParam.linkAddr      = (uint16_t)0xFFFFU;
+            edmaRxParam.opt           = (uint32_t)0U;
             edmaRxParam.opt          |=
                 (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
@@ -686,8 +685,16 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
             EDMA_setPaRAM(baseAddr, paramRx, &edmaRxParam);
 
             /* Set event trigger to start CANFD Rx transfer */
-            EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
-                EDMA_TRIG_MODE_EVENT);
+            retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
+                                                EDMA_TRIG_MODE_EVENT);
+            if(retVal == (uint32_t)TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
         }
     }
 
