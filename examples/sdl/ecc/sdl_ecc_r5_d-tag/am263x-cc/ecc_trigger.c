@@ -313,7 +313,6 @@ int32_t ECC_Test_run_R5FSS0_CORE0_D_TAG_2BitInjectTest(uint32_t ram_Id)
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
 
-    // disableABORT();
     injectErrorConfig.flipBitMask = 0x03;
     result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
                                  (SDL_ECC_MemSubType)ram_Id,

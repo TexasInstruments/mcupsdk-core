@@ -32,6 +32,14 @@ This page lists all the examples related to usage of SDL.
     # \subpage EXAMPLES_SDL_INTEGRATED_MCAN
 \endcond
 
+\cond SOC_AM263X
+-# ECC
+   -# \subpage EXAMPLES_SDL_R5F_ECC_DDATA
+   -# \subpage EXAMPLES_SDL_R5F_ECC_DTAG
+   -# \subpage EXAMPLES_SDL_R5F_ECC_IDATA
+   -# \subpage EXAMPLES_SDL_R5F_ECC_ITAG
+\endcond
+
 \cond SOC_AM263X || SOC_AM263PX  || SOC_AM261X
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
