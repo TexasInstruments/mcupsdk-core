@@ -105,7 +105,7 @@ void canfd_loopback_polling_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    DebugP_log("[MCAN] Loopback Interrupt mode, application started ...\r\n");
+    DebugP_log("[MCAN] Loopback Polling mode, application started ...\r\n");
 
     /* Configure the CAN driver */
     retVal = CANFD_configBitTime (gCanfdHandle[CONFIG_MCAN0], gBitTimingParams);
