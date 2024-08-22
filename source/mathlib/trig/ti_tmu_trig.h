@@ -42,8 +42,7 @@
 
 #include <stdint.h>
 #include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/am263px/cslr_tmu.h>
-#include <drivers/hw_include/am263px/cslr_soc_r5_baseaddress.h>
+#include <mathlib/trig/soc/tmu_soc.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/HwiP.h>

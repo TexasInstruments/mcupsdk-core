@@ -37,8 +37,7 @@
 #define CSLR_SOC_R5_BASEADDRESS_H_
 
 #include <drivers/hw_include/cslr.h>
-#include <ti/csl/tistdtypes.h>
-#include <ti/csl/soc/am261/src/cslr_soc_baseaddress.h>
+#include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {

@@ -47,25 +47,17 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 MULTI_CORE_APP_PARAMS = \
 	../tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 	../tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
-	../tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
-	../tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
 	../tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 	../tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
-	../tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
-	../tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 CORE_0_IMG=../tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-0_nortos_ti-arm-clang.out
 CORE_1_IMG=../tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss0-1_nortos_ti-arm-clang.out
-CORE_2_IMG=../tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-0_nortos_ti-arm-clang.out
-CORE_3_IMG=../tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang/$(PROFILE)/tmu_cores_support_am261x-lp_r5fss1-1_nortos_ti-arm-clang.out
 
 CORE_IMG_ARGS :=
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
-CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
-CORE_IMG_ARGS +=--core-img=3:$(CORE_3_IMG)
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)
@@ -77,7 +69,7 @@ else
 
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) ...
 
-	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE)
 
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
@@ -88,25 +80,32 @@ ifeq ($(ENC_ENABLED),no)
 ifeq ($(RSASSAPSS_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF).hs
 else
 	@echo Boot image signing: Encryption is disabled. RSASSA-PSS is enabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs --rsassa_pss
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF).hs --rsassa_pss
 endif
 else
 ifeq ($(RSASSAPSS_ENABLED),no)
 	@echo Boot image signing: Encryption is enabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)-enc
 else
 	@echo Boot image signing: Encryption is enabled. RSASSA-PSS is enabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs --rsassa_pss
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF).hs --rsassa_pss
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
 endif
 
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF).hs Done !!!
 else
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs Done !!!
 endif

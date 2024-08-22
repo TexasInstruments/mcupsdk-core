@@ -38,12 +38,16 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/HwiP.h>
-#include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-
+#if defined (SOC_AM263PX)
+#include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
+#endif
+#if defined (SOC_AM261X)
+#include <drivers/hw_include/am261x/cslr_mss_ctrl.h>
+#endif
 /* # Example Description
 
  The example uses demonstartes the Context Save and Restore feature of TMU. In this example, the

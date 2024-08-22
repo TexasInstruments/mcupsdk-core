@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,21 +30,25 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-#include "ti_drivers_config.h"
-#include "ti_board_config.h"
+#ifndef TMU_SOC_H_
+#define TMU_SOC_H_
 
-void tmu_cores_support_main(void *args);
-
-int main(void)
+#ifdef __cplusplus
+extern "C"
 {
-    System_init();
-    Board_init();
+#endif
 
-    tmu_cores_support_main(NULL);
+#if defined (SOC_AM263PX)
+#include <drivers/hw_include/am263px/cslr_tmu.h>
+#include <drivers/hw_include/am263px/cslr_soc_r5_baseaddress.h>
+#endif
+#if defined (SOC_AM261X)
+#include <drivers/hw_include/am261x/cslr_tmu.h>
+#include <drivers/hw_include/am261x/cslr_soc_r5_rom_baseaddress.h>
+#endif
 
-    Board_deinit();
-    System_deinit();
-
-    return 0;
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* TMU_SOC_H_ */
