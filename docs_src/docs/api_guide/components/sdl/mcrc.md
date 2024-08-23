@@ -63,15 +63,63 @@ SDL_MCRC_InstType instance = DSS_MCRC;
 \endcode
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AWR294X || SOC_AM273X
+Initialize additional configuration parameters.
+\code{.c}
+static SDL_MCRC_Config_t SDL_MCRC_Config[4] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+ };
+\endcode
+\endcond
+
 \code{.c}
 result = SDL_MCRC_init(instance, SDL_MCRC_CHANNEL_1, MCRC_DEF_WATCHDOG_PRELOAD, MCRC_DEF_BLOCK_PRELOAD);
 \endcode
 
 Reset and configure the MCRC channel
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AWR294X || SOC_AM273X
+\code{.c}
+result = SDL_MCRC_channelReset(instance, SDL_MCRC_CHANNEL_1);
+SDL_MCRC_config(instance, SDL_MCRC_CHANNEL_1, MCRC_DEF_PATTERN_COUNT, MCRC_DEF_SECTOR_COUNT, SDL_MCRC_OPERATION_MODE_FULLCPU);
+SDL_MCRC_addconfig(instance, SDL_MCRC_CHANNEL_1,&SDL_MCRC_Config[0]);
+\endcode
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
 result = SDL_MCRC_channelReset(instance, SDL_MCRC_CHANNEL_1);
 SDL_MCRC_config(instance, SDL_MCRC_CHANNEL_1, MCRC_DEF_PATTERN_COUNT, MCRC_DEF_SECTOR_COUNT, SDL_MCRC_OPERATION_MODE_FULLCPU);
 \endcode
+\endcond
+
 
 Verify the configuration
 \code{.c}
@@ -85,14 +133,14 @@ if (result == SDL_PASS)
 Compute the signature
 \code{.c}
 SDL_MCRC_dataConfig_t mcrcData;
-        SDL_MCRC_Signature_t  sectSignVal;
+SDL_MCRC_Signature_t  sectSignVal;
 
-        mcrcData.pMCRCData      = (uint32_t *)testParams[testCase].sourceMemory;
-        mcrcData.size           = testParams[testCase].dataSize;
-        mcrcData.dataBitSize    = SDL_MCRC_DATA_32_BIT;
+mcrcData.pMCRCData      = (uint32_t *)testParams[testCase].sourceMemory;
+mcrcData.size           = testParams[testCase].dataSize;
+mcrcData.dataBitSize    = SDL_MCRC_DATA_32_BIT;
 
-        /* Pass the data to MCRC and get the signature */
-        result = SDL_MCRC_computeSignCPUmode(instance, SDL_MCRC_CHANNEL_1, &mcrcData, &sectSignVal);
+/* Pass the data to MCRC and get the signature */
+result = SDL_MCRC_computeSignCPUmode(instance, SDL_MCRC_CHANNEL_1, &mcrcData, &sectSignVal);
 \endcode
 
 Check the calculated signature

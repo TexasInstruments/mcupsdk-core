@@ -38,6 +38,7 @@
  *         1. SDL_MCRC_channelReset()
  *         2. SDL_MCRC_init()
  *         3. SDL_MCRC_config()
+ *         4. SDL_MCRC_addconfig() (not applicable for AM64x and AM243x)
  *         4. SDL_MCRC_enableIntr() - if needed
  *         5. Transfer data to PSA signature for generation of signature value
  *             - DMA is utilized in Semi-CPU mode
