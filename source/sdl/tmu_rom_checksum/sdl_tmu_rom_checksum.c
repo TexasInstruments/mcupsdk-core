@@ -58,7 +58,16 @@
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-/* None */
+ static SDL_MCRC_Config_t SDL_MCRC_TmuRomCrcConfig[] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_DISABLE
+      }
+ };
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -110,8 +119,8 @@ int32_t SDL_TMU_ROM_Checksum_compute(SDL_MCRC_Channel_t mcrcChannelNumber,
     }
     if (result == SDL_PASS)
     {
-        result = SDL_MCRC_configDataWidth(MCRC0, mcrcChannelNumber,
-                                          SDL_MCRC_DATAWIDTH_SEL_32BIT);
+        result = SDL_MCRC_addConfig(MCRC0, mcrcChannelNumber,
+                                    &SDL_MCRC_TmuRomCrcConfig[0]);
     }
     if (result == SDL_PASS)
     {
