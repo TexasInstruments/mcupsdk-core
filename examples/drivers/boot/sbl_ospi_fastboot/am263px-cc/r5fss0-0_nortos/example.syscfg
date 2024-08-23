@@ -30,6 +30,12 @@ const mpu_armv74  = mpu_armv7.addInstance();
 const mpu_armv75  = mpu_armv7.addInstance();
 const mpu_armv76  = mpu_armv7.addInstance();
 const mpu_armv77  = mpu_armv7.addInstance();
+const mpu_armv78  = mpu_armv7.addInstance();
+const mpu_armv79  = mpu_armv7.addInstance();
+const mpu_armv710 = mpu_armv7.addInstance();
+const mpu_armv711 = mpu_armv7.addInstance();
+const mpu_armv712 = mpu_armv7.addInstance();
+const mpu_armv713 = mpu_armv7.addInstance();
 const general     = scripting.addModule("/memory_configurator/general", {}, false);
 const general1    = general.addInstance();
 const region      = scripting.addModule("/memory_configurator/region", {}, false);
@@ -141,6 +147,36 @@ mpu_armv77.baseAddr   = 0x88000000;
 mpu_armv77.attributes = "Device";
 mpu_armv77.size       = 27;
 
+mpu_armv78.$name = "CONFIG_MPU_REGION7";
+mpu_armv78.attributes = "Cached+Sharable";
+mpu_armv78.baseAddr   = 0x7007FFE0;
+mpu_armv78.size       = 5;
+
+mpu_armv79.$name = "CONFIG_MPU_REGION8";
+mpu_armv79.attributes = "Cached+Sharable";
+mpu_armv79.baseAddr   = 0x700FFFE0;
+mpu_armv79.size       = 5;
+
+mpu_armv710.$name = "CONFIG_MPU_REGION9";
+mpu_armv710.attributes = "Cached+Sharable";
+mpu_armv710.baseAddr   = 0x7017FFE0;
+mpu_armv710.size       = 5;
+
+mpu_armv711.$name = "CONFIG_MPU_REGION10";
+mpu_armv711.attributes = "Cached+Sharable";
+mpu_armv711.baseAddr   = 0x701FFFE0;
+mpu_armv711.size       = 5;
+
+mpu_armv712.$name = "CONFIG_MPU_REGION11";
+mpu_armv712.attributes = "Cached+Sharable";
+mpu_armv712.baseAddr   = 0x7027FFE0;
+mpu_armv712.size       = 5;
+
+mpu_armv713.$name = "CONFIG_MPU_REGION12";
+mpu_armv713.attributes = "Cached+Sharable";
+mpu_armv713.baseAddr   = 0x702FFFE0;
+mpu_armv713.size       = 5;
+
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
 general1.stack_size     = 8192;
@@ -189,7 +225,7 @@ region1.memory_region[8].manualStartAddress = 0x60080000;
 region1.memory_region[8].size               = 0x1000;
 region1.memory_region[8].$name              = "FLASH_BOOTINFO_SECTOR";
 region1.memory_region[9].$name              = "MSRAM_1";
-region1.memory_region[9].size               = 0x19800;
+region1.memory_region[9].size               = 0x2F800;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
