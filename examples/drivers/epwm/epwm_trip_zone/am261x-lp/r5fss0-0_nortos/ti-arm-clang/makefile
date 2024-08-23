@@ -83,11 +83,12 @@ CFLAGS_cpp_common := \
 	-Wno-extern-c-compat \
 	-Wno-c++11-narrowing \
 	-Wno-reorder-init-list \
-	-Wno-deprecated-register \
+	-Wno-register \
 	-Wno-writable-strings \
 	-Wno-enum-compare \
 	-Wno-reserved-user-defined-literal \
 	-Wno-unused-const-variable \
+	-Wno-vla-cxx-extension \
 	-x c++ \
 
 CFLAGS_debug := \
@@ -278,7 +279,12 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
 else
-  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+  UNAME_S = $(shell uname -s)
+  ifeq ($(UNAME_S), Darwin)
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out.mac
+  else
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
