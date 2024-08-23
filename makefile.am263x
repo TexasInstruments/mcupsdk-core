@@ -1632,10 +1632,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sbl_can_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_can_uniflash_mutlicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+ sbl_can_uniflash_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_can_uniflash_mutlicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+ sbl_can_uniflash_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
@@ -3618,10 +3618,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_can_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_can_uniflash_mutlicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ sbl_can_uniflash_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_can_uniflash_mutlicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+ sbl_can_uniflash_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -5604,10 +5604,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_can_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_can_uniflash_mutlicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sbl_can_uniflash_multicore_elf_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_can_uniflash_mutlicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sbl_can_uniflash_multicore_elf_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:

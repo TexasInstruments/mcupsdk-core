@@ -1651,8 +1651,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Can Uniflash Mutlicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_can_uniflash_mutlicore_elf",
+        "description": "A Sbl Can Uniflash Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
@@ -1684,8 +1684,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Can Uniflash Mutlicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_can_uniflash_mutlicore_elf",
+        "description": "A Sbl Can Uniflash Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263"
