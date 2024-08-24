@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -73,17 +74,17 @@ flash1.fourByteEnableSeq                  = "0";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
 flash1.peripheralDriver.phyEnable         = true;
-flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D7.$assign   = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D6.$assign   = "MCAN1_RX";
-flash1.peripheralDriver.OSPI.D5.$assign   = "MCAN0_TX";
-flash1.peripheralDriver.OSPI.D4.$assign   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
-flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);

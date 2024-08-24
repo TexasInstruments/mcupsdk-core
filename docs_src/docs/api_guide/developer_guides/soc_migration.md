@@ -11,6 +11,10 @@
 $ node --version
 ```
 - If not present, download it from [here](https://nodejs.org/en/download). **Download v14.0.0 or above.**
+- Once node is installed, download yargs package using:
+```bash
+$ npm install yargs
+```
 
 ## Setup
 

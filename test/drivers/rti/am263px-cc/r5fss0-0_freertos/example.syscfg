@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -43,7 +44,7 @@ const section12       = section.addInstance();
  */
 gpio1.$name          = "GPIO_LED";
 gpio1.pinDir         = "OUTPUT";
-gpio1.GPIO_n.$assign = "EPWM11_B";
+gpio1.GPIO_n.$suggestSolution = "EPWM11_B";
 
 rti1.$name          = "CONFIG_RTI0";
 rti1.compareSource1 = "1";
