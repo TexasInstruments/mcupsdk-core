@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -127,6 +127,16 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         printf("\r\nLow Priority Interrupt Executed\r\n");
     }
     retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Errata i2427  - Applicable for MSS-L2 and MBOX memories.*/
+    /* Check if the callback API is called because of Single Bit Error. */
+    if(intSrc == 0x13U)
+    {
+        /* SEC error for MSS-L2. */
+        /* Check if the error address is configured as non-cacheble. */
+        /* Take additional required steps as this single bit error may cause SED and not correction because of known errata. */
+        /* If the error address is configured as cacheble, SEC feature works corrctly. */
+    }
 
     /* Any additional customer specific actions can be added here */
     retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
