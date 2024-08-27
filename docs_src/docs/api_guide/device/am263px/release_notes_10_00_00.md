@@ -183,6 +183,21 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> PROC_SDL-7347
+    <td> MCRC does not provide API to configure data width, CRC algo etc.
+    <td> MCRC
+    <td> 09.00.00 Onwards
+    <td> AM263x, AM263Px
+    <td>
+<tr>
+    <td> PROC_SDL-6910
+    <td> Update to move some of the non static registers.
+    <td> R5F CPU UTILS
+    <td> 09.00.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Updated R5F UTILS structure to move some of the non static registers.
+</tr>
 </table>
 
 ## Known Issues
@@ -311,6 +326,20 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> ECC example fails for SEC and DED for TPTC memories.
     <td> SDL
     <td> 09.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8392
+    <td> In ECC bus safety example, ECC error is not properly cleared at the source.
+    <td> SDL
+    <td> 09.00.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8393
+    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> SDL
+    <td> 09.00.00 onwards
     <td> None
 </tr>
 </table>

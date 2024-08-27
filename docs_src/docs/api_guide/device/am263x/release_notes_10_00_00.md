@@ -160,7 +160,7 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F Cache
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F data Cache(DED)
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
@@ -174,6 +174,29 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Module
     <th> Applicable Releases
     <th> Resolution/Comments
+</tr>
+<tr>
+    <td> PROC_SDL-7347
+    <td> MCRC does not provide API to configure data width, CRC algo etc.
+    <td> MCRC
+    <td> 08.06.00 Onwards
+    <td> AM263x, AM263Px
+    <td>
+<tr>
+    <td> PROC_SDL-6910
+    <td> Update to move some of the non static registers.
+    <td> R5F CPU UTILS
+    <td> 09.00.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Updated R5F UTILS structure to move some of the non static registers.
+</tr>
+<tr>
+    <td> PROC_SDL-5979
+    <td> ECC test on R5F cache memories needed to be implemented.
+    <td> ECC on Cache memory
+    <td> 08.06.00 Onwards
+    <td> AM263x
+    <td> Added examples for ECC test on R5F cache memories.
 </tr>
 </table>
 
@@ -305,7 +328,34 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 09.00.00 onwards
     <td> None
 </tr>
-
+<tr>
+    <td> PROC_SDL-8392
+    <td> In ECC bus safety example, ECC error is not properly cleared at the source.
+    <td> SDL
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8393
+    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> SDL
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8519
+    <td> In ECC for R5F data cache only, double bit test is not supported.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> ECC test for single bit injection on R5F data cache, release profile binary is showing some inconsistency on result.
+</tr>
+<tr>
+    <td> PROC_SDL-8518
+    <td> Integrated example should have checked ECC for TPTC, ATCM, BTCM memories.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> None.
+</tr>
 </table>
 
 ## Errata
