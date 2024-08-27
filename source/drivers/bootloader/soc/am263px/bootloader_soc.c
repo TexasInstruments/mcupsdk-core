@@ -510,7 +510,9 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
 
 void Bootloader_socSetAutoClock()
 {
-    if (((ptrTopCtrlRegs->EFUSE1_ROW_12) & CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MASK) == BOOTLOADER_R5SS_FREQ_200MHz)
+    uint32_t eFuseFreq = (((ptrTopCtrlRegs->EFUSE1_ROW_12) & CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MASK) >>
+                          CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_SHIFT);
+    if (eFuseFreq == BOOTLOADER_R5SS_FREQ_200MHz)
     {
 
         uint32_t cpuFreq = 200 * 1000000, sysClkFreq = 200 * 1000000;
