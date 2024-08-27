@@ -3109,6 +3109,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This Example Demonstrates the Global Load Functionalities of EPWM. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_global_load_and_link",
+        "location": "../../examples/drivers/epwm/epwm_global_load_and_link/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_global_load_and_link",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This Example Demonstrates the Global Load Functionalities of EPWM. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_global_load_and_link",
+        "location": "../../examples/drivers/epwm/epwm_global_load_and_link/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_global_load_and_link",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example demonstrates the deadband functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_deadband",
         "location": "../../examples/drivers/epwm/epwm_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

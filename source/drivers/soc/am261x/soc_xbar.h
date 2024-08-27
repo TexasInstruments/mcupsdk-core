@@ -509,7 +509,7 @@ SOC_xbarInvertOutputXBarOutputSignal(uint32_t base, uint32_t invertout)
  * \param group7_mask [in] Mask to OR inputs from group 7
  * \param group8_mask [in] Mask to OR inputs from group 8
  * \param group9_mask [in] Mask to OR inputs from group 9
- * \param group10_mask [in] Mask to OR inputs from group 10
+ * \param group10_mask [in] Left for API Backward Compatibility.
  *
  */
 static inline void

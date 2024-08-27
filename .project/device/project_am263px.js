@@ -108,6 +108,7 @@ const example_file_list = [
 	"examples/drivers/epwm/epwm_deadband/.project/project.js",
     "examples/drivers/epwm/epwm_dccap/.project/project.js",
 	"examples/drivers/epwm/epwm_dma/.project/project.js",
+	"examples/drivers/epwm/epwm_global_load_and_link/.project/project.js",
     "examples/drivers/epwm/epwm_xcmp_dma/.project/project.js",
 	"examples/drivers/epwm/epwm_hr_duty_cycle/.project/project.js",
 	"examples/drivers/epwm/epwm_hr_updown/.project/project.js",

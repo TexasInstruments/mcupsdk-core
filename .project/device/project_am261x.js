@@ -101,6 +101,7 @@ const example_file_list = [
 	"examples/drivers/edma/edma_polled_transfer/.project/project.js",
 	"examples/drivers/epwm/epwm_chopper/.project/project.js",
 	"examples/drivers/epwm/epwm_configure_signal/.project/project.js",
+	"examples/drivers/epwm/epwm_global_load_and_link/.project/project.js",
 	// "examples/drivers/epwm/epwm_dccap/.project/project.js",
 	"examples/drivers/epwm/epwm_deadband/.project/project.js",
 	// "examples/drivers/epwm/epwm_diode_emulation/.project/project.js",
