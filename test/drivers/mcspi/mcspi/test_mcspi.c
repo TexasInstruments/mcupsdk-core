@@ -418,14 +418,14 @@ void test_main(void *args)
     RUN_TEST(test_mcspi_loopback_turbo_mode,  11537, (void*)&testParams);
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
-    test_mcspi_set_params(&testParams, 2397);
-    //RUN_TEST(test_mcspi_loopback_multimaster_dma,  2397, (void*)&testParams); /* udma_Deinit fails after this test*/
     test_mcspi_set_params(&testParams, 2394);
     RUN_TEST(test_mcspi_loopback_dma,  2394, (void*)&testParams);
     test_mcspi_set_params(&testParams, 7356);
     RUN_TEST(test_mcspi_loopback_dma,  7356, (void*)&testParams);
     test_mcspi_set_params(&testParams, 7357);
     RUN_TEST(test_mcspi_loopback_dma,  7357, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 2397);
+    RUN_TEST(test_mcspi_loopback_multimaster_dma,  2397, (void*)&testParams);
 #endif
     test_mcspi_set_params(&testParams, 1009);
     RUN_TEST(test_mcspi_loopback_simultaneous, 1009, (void*)&testParams);
@@ -1236,7 +1236,7 @@ void test_mcspi_loopback_multimaster_dma(void *args)
         CacheP_wb(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
 
         /* Initiate transfer */
-        spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
+        spiTransaction.channel   = gConfigMcspi3ChCfg[chCnt].chNum;
         spiTransaction.dataSize  = dataWidth;
         spiTransaction.csDisable = TRUE;
         spiTransaction.count     = APP_MCSPI_MSGSIZE / (dataWidth / 8);
@@ -1914,14 +1914,10 @@ void test_mcspi_transfer_cancel(void *args)
 
     TaskP_destruct(&gMcspiTransferTaskObject);
     TaskP_destruct(&gMcspiTransferCancelTaskObject);
-
-    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
-#if defined(SOC_AM65X)
-    /* Requires delay to wait for the created task "MCSPI Transfer Task" to exit */
     ClockP_usleep(1000);
-#endif
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
 
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 }
 
 void test_mcspi_transfer_cancel_transfer(void *args)
