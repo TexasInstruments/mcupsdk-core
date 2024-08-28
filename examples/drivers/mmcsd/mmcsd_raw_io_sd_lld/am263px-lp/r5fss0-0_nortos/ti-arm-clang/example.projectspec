@@ -45,6 +45,7 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
             -m=mmcsd_raw_io_sd_lld.${ConfigName}.map
             --diag_suppress=10063
@@ -68,6 +69,7 @@
             linkerBuildOptions="
                 -lnortos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
+                -lboard.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -79,6 +81,7 @@
             linkerBuildOptions="
                 -lnortos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
+                -lboard.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
