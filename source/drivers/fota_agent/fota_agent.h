@@ -30,15 +30,33 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ *  \defgroup DRV_FOTA_AGENT_MODULE APIs for FOTA Agent
+ *  \ingroup DRV_MODULE
+ *
+ *  This module contains APIs to program and use the FOTA Agent driver.
+ *
+ *  @{
+ */
+
+/**
+ *  \file fota_agent.h
+ *
+ *  \brief FOTA Agent Driver API/interface file.
+ *
+ */
+
 #ifndef __FOTAAgent__H_
 #define __FOTAAgent__H_
-
-/* FOTA Agent Middleware */
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
 
 #include <stdio.h>
 #include <kernel/dpl/DebugP.h>
@@ -48,21 +66,43 @@ extern "C"
 #include <middleware/tiELFuParser/tielfup32.h>
 #include <drivers/spinlock.h>
 
-#define CHUNK_SIZE 4096
+/* ========================================================================== */
+/*                             Macros & Typedefs                              */
+/* ========================================================================== */
+
+/** \brief Size of write chunk  */
+#define CHUNK_SIZE  (4096U)
 #define LOCK_NUM0   (0U)
 #define LOCK_NUM1   (1U)
 
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
+
+/**
+ *  \brief FOTA Agent Driver Handle
+ */
+
 typedef struct
-{
-    uint8_t chunk[CHUNK_SIZE];
-    uint32_t chunkOffset;
-    uint32_t currWriteOffset;
-    uint32_t prevWriteOffset;
-    uint32_t flashBaseOffset;
-    uint32_t isXip;
-    ELFUP_ELFPH pht[20];
-    ELFUP_Handle elfuph;
+{   
+    uint8_t         chunk[CHUNK_SIZE];
+    /**< Internal buffer to write data in smaller chunks*/
+    uint32_t        chunkOffset;
+    /**< Offset of the chunk buffer*/
+    uint32_t        currWriteOffset;
+    /**< Current Flash write offset*/
+    uint32_t        prevWriteOffset;
+    /**< Previous Flash write offset */
+    uint32_t        flashBaseOffset;
+    /**< Flash Base address */
+    uint32_t        isXip;
+    /**< Flag to check whether the current file is Xip or not */
+    ELFUP_ELFPH     pht[20];
+    /**< ELF Program Header Table */
+    ELFUP_Handle    elfuph;
+    /**< ELF Parser Handle for parsing the elf file*/
     FLSOPSKD_handle FLSOPSKDhandle;
+    /**< Flash Operation Scheduler handle to schedule write operations */
 } FOTAAgent_handle;
 
 /**
@@ -76,6 +116,7 @@ int32_t FOTAAgent_init(FOTAAgent_handle *pHandle);
 /**
  * @brief Starts Fota write operation.
  * 
+ * @param pHandle handle
  * @param baseAddr Flash Base Address
  * @param wrOffset Flash Write Offset
  * @param isXip variable to check whether file is Xip
@@ -108,3 +149,5 @@ int32_t FOTAAgent_writeEnd(FOTAAgent_handle *pHandle);
 #endif
 
 #endif /* __FOTAAgent__H_ */
+
+/** @} */

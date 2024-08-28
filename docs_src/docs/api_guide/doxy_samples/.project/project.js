@@ -140,6 +140,7 @@ const files_am263px = {
         "Edma_sample.c",
         "Ethphy_sample.c",
         "EventP_sample.c",
+        "Fota_agent_sample.c",
         "HeapP_sample.c",
         "HwiP_sample.c",
         "IpcNotify_sample.c",

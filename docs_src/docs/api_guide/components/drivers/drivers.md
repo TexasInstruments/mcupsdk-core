@@ -132,6 +132,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_EDMA_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_EQEP_PAGE
+- \subpage DRIVERS_FOTA_AGENT_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
 - \subpage DRIVERS_HSMCLIENT_PAGE
