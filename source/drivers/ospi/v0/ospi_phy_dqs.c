@@ -493,12 +493,19 @@ void OSPI_phySetRdDelayTxRxDLL(OSPI_Handle handle, OSPI_PhyConfig *configPoint)
 int32_t OSPI_phyReadAttackVector(OSPI_Handle handle, uint32_t offset)
 {
     int32_t status = SystemP_SUCCESS;
+    OSPI_Object *obj = ((OSPI_Config *)handle)->object;
     uint32_t flashDataBaseAddr = OSPI_getFlashDataBaseAddr(handle);
     uint8_t *src = (uint8_t *)(flashDataBaseAddr + offset);
     uint8_t *dst = (uint8_t *)gReadBuf;
     uint32_t count = OSPI_FLASH_ATTACK_VECTOR_SIZE;
+    uint32_t dacState;
 
-    OSPI_enableDacMode(handle);
+    /* Enable Direct Access Mode */
+    dacState = obj->isDacEnable;
+    if(dacState == FALSE)
+    {
+        OSPI_enableDacMode(handle);
+    }
 
     while(count--)
     {
@@ -510,6 +517,12 @@ int32_t OSPI_phyReadAttackVector(OSPI_Handle handle, uint32_t offset)
         status = SystemP_FAILURE;
     }
 
+    /* Switch to INDAC mode if DAC was initially in disabled state */
+    if(dacState == FALSE)
+    {
+        OSPI_disableDacMode(handle);
+    }
+    
     return status;
 }
 
