@@ -69,18 +69,15 @@ void HsmFirewallApp(HsmClient_t *client);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+extern HsmClient_t gHSMClient ;
+
 /* Demo Application code on R5 */
 void HsmClientApp_start(void)
 {
-    int32_t status ;
-    HsmClient_t client ;
-
-    status = HsmClient_register(&client,APP_CLIENT_ID);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     /*Function call to the desired services*/
-    getUIDApp(&client);
-    getVersionApp(&client);
-    HsmRngApp_start(&client);
-    HsmFirewallApp(&client);
+    getUIDApp(&gHSMClient);
+    getVersionApp(&gHSMClient);
+    HsmRngApp_start(&gHSMClient);
+    HsmFirewallApp(&gHSMClient);
 }

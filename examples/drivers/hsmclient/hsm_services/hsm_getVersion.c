@@ -50,7 +50,7 @@
 /* ========================================================================== */
 
 #define APP_CLIENT_ID                  (0x02)
-#define PARSED_VER_SIZE                (0X96)
+#define PARSED_VER_SIZE                (0X100)
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -63,17 +63,18 @@ void getVersionApp(HsmClient_t *client)
     /* also calculate the time spent doing get version */
     int32_t status ;
     char parsedVer[PARSED_VER_SIZE];
-    HsmVer_t *hsmVer = malloc(sizeof(HsmVer_t)) ;
-
+    HsmVer_t hsmVer;
+    
+    memset(&hsmVer, 0, sizeof(HsmVer_t));
     memset(parsedVer, '\0' , PARSED_VER_SIZE);
 
     /* Send Request for TIFS-MCU version to HSM Server */
-    status = HsmClient_getVersion(client,hsmVer,SystemP_WAIT_FOREVER);
+    status = HsmClient_getVersion(client, &hsmVer,SystemP_WAIT_FOREVER);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* print version */
-    DebugP_log("[HSM CLIENT] TIFS-MCU 64bit version string = 0x00%llx\r\n",hsmVer->HsmrtVer);
+    DebugP_log("[HSM CLIENT] TIFS-MCU 64bit version string = 0x00%llx\r\n",hsmVer.HsmrtVer);
     DebugP_log("\r\n [HSM CLIENT] TIFS-MCU Information");
-    status = HsmClient_parseVersion(hsmVer, parsedVer);
+    status = HsmClient_parseVersion(&hsmVer, parsedVer);
     DebugP_log("%s \r\n\r\n", parsedVer);
 }

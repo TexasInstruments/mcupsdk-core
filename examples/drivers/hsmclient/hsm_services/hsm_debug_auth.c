@@ -63,7 +63,7 @@ void getUIDApp(HsmClient_t *client)
     /* also calculate the time spent doing get version */
     int32_t status ;
     uint16_t uidSize;
-    uint8_t *uid = malloc(HSM_UID_SIZE) ;
+    uint8_t uid[HSM_UID_SIZE] = {0U} ;
     uint32_t startCycleCount, endCycleCount;
     const uint32_t cpuMHz = SOC_getSelfCpuClk()/1000000;
 
