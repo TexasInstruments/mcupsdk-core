@@ -297,6 +297,7 @@ const example_file_list = [
 	// "test/drivers/soc/soc_r5f/.project/project.js",
 	"test/drivers/uart/.project/project.js",
 	// "test/kernel/dpl/.project/project.js",
+    "test/drivers/optiflash/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/DebugP_log/.project/project.js",
