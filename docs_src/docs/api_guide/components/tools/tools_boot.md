@@ -60,7 +60,19 @@ This section describes the various tools that are used to create boot images for
     <td>Python script used to flash SBL and applications to EVM flash using UART. See \ref TOOLS_FLASH for more details.
 </tr>
 \endif
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+<tr>
+    <td>genimage.py
+    <td>Python script used to generate multicore elf image from individual core elf images.
+</tr>
+\endcond
 </table>
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+\note RPRC tools (Out2RPRC and Multi-core Image Gen) would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
+
+\endcond
 
 ## Out2RPRC
 
@@ -225,6 +237,107 @@ CORE        | CORE ID
 ------------|--------
 r5fss0-0    | 4
 r5fss0-1    | 5
+
+\endcond
+
+## MCELF Image Gen {#MCELF_GEN_TOOL}
+
+- This tool takes individual core ELF files as input and combines their segments to create a single ELF file.
+
+- Shown below is the file format for an mcelf image file and its metacontent as seen by `readelf`
+
+  \imageStyle{tools_mcelf_format.png,width:60%}
+  \image html tools_mcelf_format.png "MCELF Image File Format"
+
+- Segment data from each input ELF file is extracted and appended together to form a single list of segments.
+- The program header table fields are then re-calculated and the header table is regenerated using information from this new segment list.
+- Once that is done, from the updated program header, the ELF header is regenerated.
+- The first segment is the note segment. It can be customized to store information according to your application. By default the note segment contains vendor information, segment to core mapping and entry points.
+- The segment sizes can be manipulated using appropriate arguments.
+
+
+  Argument                | Description
+  ------------------------|-------------------
+  `--core-img`            | Path to individual binaries of each core. It is a mandatory argument. Input is given in this format: `--core-img=0:<core0_binary.out> --core-img=1:<core1_binary.out>`
+  `--output`              | The output file name. It is a mandatory argument. `--output=<file_name>.mcelf`
+  `--merge-segments`      | Enable merging segments based on a tolerance limit. Default value is false.
+  `--tolerance-limit`     | The maximum difference (in bytes) between the end address of previous segment and start address of current segment for merging the segments. Default value is zero.
+  `--ignore-context`      | Enable merging of segments that are of different cores. Default value is false.
+  `--xip`                 | XIP section's start and end address seperated by a colon. It creates a new file `<filename>.mcelf_xip`. Default value is 'none' (XIP is disabled). To enable XIP creation: `--xip=0x60100000:0x60200000`
+  `--max_segment_size`    | Maximum allowed size of a loadable segment. This feature can only be used with merge_segments disabled. Default value is 8192 bytes.
+  `--xlat`                | SOC specific Address Translation. (Under development, reserved for future use)
+  `--sso`                 | Shared static objects. (Under development, reserved for future use)
+
+- The input for arguments 3-7 are defined in {MCU_SDK_PATH}/devconfig/devconfig.mak file.
+
+- Given below are the structs used in the bootloader library to parse a 32 bit MCELF binary
+
+```C
+#define E_IDENT 16
+
+/* ELF HEADER */
+typedef struct Bootloader_ELFH32_s
+{
+    uint8_t  e_ident[E_IDENT];
+    uint16_t e_type;
+    uint16_t e_machine;
+    uint32_t e_version;
+    uint32_t e_entry;
+    uint32_t e_phoff;
+    uint32_t e_shoff;
+    uint32_t e_flags;
+    uint16_t e_ehsize;
+    uint16_t e_phentsize;
+    uint16_t e_phnum;
+    uint16_t e_shentsize;
+    uint16_t e_shnum;
+    uint16_t e_shstrndx;
+
+} Bootloader_ELFH32;
+
+/* PROGRAM HEADER */
+typedef struct Bootloader_ELFPH32_s
+{
+	uint32_t type;
+    uint32_t offset;
+    uint32_t vaddr;
+    uint32_t paddr;
+    uint32_t filesz;
+    uint32_t memsz;
+    uint32_t flags;
+    uint32_t align;
+
+} Bootloader_ELFPH32;
+
+/* NOTE SEGMENT */
+typedef struct Bootloader_ELFNote_s
+{
+    uint32_t namesz;
+    uint32_t descsz;
+    uint32_t type;
+} Bootloader_ELFNote;
+```
+
+- Use the following command to invoke this script to generate a basic `.mcelf` image from input `.out` files without any segment manipulations
+
+```bash
+$ cd tools/boot/multicore-elf
+
+$ pip install -r requirements.txt
+
+$ {PYTHON} genimage.py --core-img={CORE_0_ID}:{core0_app.out} --core-img={CORE_1_ID}:{core1_app.out} --core-img={CORE_2_ID}:{core2_app.out} --core-img={CORE_3_ID}:{core3_app.out} --output={application.mcelf} 
+```
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+- The various core ID to be used are as below.
+
+CORE        | CORE ID
+------------|--------
+r5fss0-0    | 0
+r5fss0-1    | 1
+r5fss1-0    | 2
+r5fss1-1    | 3
 
 \endcond
 

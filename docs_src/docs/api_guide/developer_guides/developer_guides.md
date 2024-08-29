@@ -64,6 +64,7 @@ SDK features and tools.
 - \subpage IPC_GUIDE
 - \subpage LLD_GUIDE
 - \subpage BOOTFLOW_GUIDE
+- \subpage MCELF_LANDING
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE

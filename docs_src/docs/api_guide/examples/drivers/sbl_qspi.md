@@ -6,7 +6,31 @@
 
 This bootloader does SOC initializations and attempts to boot a multicore appimage present at 0xA0000 location in the QSPI Flash. To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
 
-If a multicore appimage is found at the location, the SBL parses it, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+If a multicore appimage is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+
+\endcond
+
+# SBL QSPI MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_QSPI_MCELF}
+
+To flash an **mcelf** file, use the project **examples/drivers/boot/sbl_qspi_multicore_elf**
+
+When an mcelf image is found, the SBL parses it, loads each segment to its specified address location. Then the core is released from reset.
+
+The steps to run the example is same irrespective of the image format.
+
+# SBL QSPI FASTBOOT {#EXAMPLES_DRIVERS_SBL_QSPI_FASTBOOT_MCELF}
+
+This is a variant of SBL_QSPI_MULTICORE_ELF that gives the fastest boot time numbers.
+
+hsmrt point
+
+It has all Profile logs disabled.
+
+Steps to run the example is same as SBL_QSPI.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_QSPI_COMBOS}
 

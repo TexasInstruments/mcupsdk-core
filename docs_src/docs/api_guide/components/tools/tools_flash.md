@@ -195,23 +195,86 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     will boot the user application file for all the CPUs
 </tr>
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263X
 <tr>
     <td>sbl_qspi
     <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
-    will boot the user application file for all the CPUs
+    will boot the user appimage file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_qspi_multicore_elf
+    <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
+    will boot the user mcelf application file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_qspi_fastboot
+    <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
+    will boot the user mcelf file for all the CPUs with the fastest boot time.
 </tr>
 <tr>
     <td>sbl_can
-    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file for all the CPUs
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user appimage file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_can_multicore_elf
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the mcelf application file for all the CPUs
 </tr>
 <tr>
     <td>sbl_can_uniflash
-    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in QSPI boot mode, this uniflash application will wait for CAN packets to flash the user application file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
+    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in QSPI boot mode, this uniflash application will wait for CAN packets to flash the user appimage file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
+</tr>
+<tr>
+    <td>sbl_can_uniflash_multicore_elf
+    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in QSPI boot mode, this uniflash application will wait for CAN packets to flash the user mcelf application file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
 </tr>
 <tr>
     <td>sbl_sd
-    <td>SD bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file from SD card for all the CPUs
+    <td>SD bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user appimage file from SD card for all the CPUs
+</tr>
+<tr>
+    <td>sbl_sd_multicore_elf
+    <td>SD bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user mcelf application file from SD card for all the CPUs
+</tr>
+\endcond
+\cond SOC_AM263PX || SOC_AM261X
+<tr>
+    <td>sbl_ospi
+    <td>OSPI bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application
+    will boot the user appimage file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_ospi_multicore_elf
+    <td>OSPI bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application
+    will boot the user mcelf application file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_ospi_fastboot
+    <td>OSPI bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application
+    will boot the user mcelf file for all the CPUs with the fastest boot time.
+</tr>
+<tr>
+    <td>sbl_can
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application will boot the user appimage file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_can_multicore_elf
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application will boot the mcelf application file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_can_uniflash
+    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in OSPI boot mode, this uniflash application will wait for CAN packets to flash the user appimage file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
+</tr>
+<tr>
+    <td>sbl_can_uniflash_multicore_elf
+    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in OSPI boot mode, this uniflash application will wait for CAN packets to flash the user mcelf application file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
+</tr>
+<tr>
+    <td>sbl_sd
+    <td>SD bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application will boot the user appimage file from SD card for all the CPUs
+</tr>
+<tr>
+    <td>sbl_sd_multicore_elf
+    <td>SD bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application will boot the user mcelf application file from SD card for all the CPUs
 </tr>
 \endcond
 <tr>
@@ -323,11 +386,11 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 \endcond
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 
 #### Getting ready to flash
 
-- Make sure the flashing application (`sbl_uart_uniflash`), QSPI bootloader (`sbl_qspi`), and the user application (`*.appimage`) you want to flash is built for the EVM.
+- Make sure the flashing application (`sbl_uart_uniflash`), QSPI bootloader (`sbl_qspi`), and the user application (`*.appimage / *.mcelf`) you want to flash is built for the EVM.
   - For every supported EVM pre-built flashing application and QSPI bootloader can be found below
 
         {SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}
@@ -340,7 +403,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     that are generated as part of the build.
 
   - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
-    Note the path to the `*.appimage` file that is generated as part of the build.
+    Note the path to the `*.appimage / *.mcelf` file that is generated as part of the build.
 
 - Make sure you have installed python as mention in \ref INSTALL_PYTHON3
 
@@ -360,6 +423,54 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 - Edit below line to point to the user application (`.appimage`) file
 
         --file={path to your application .appimage file} --operation=flash --flash-offset=0x80000
+
+\endcond
+
+\cond SOC_AM263PX || SOC_AM261X
+
+#### Getting ready to flash
+
+- Make sure the flashing application (`sbl_uart_uniflash`), OSPI bootloader (`sbl_ospi`), and the user application (`*.appimage / *.mcelf`) you want to flash is built for the EVM.
+  - For every supported EVM pre-built flashing application and OSPI bootloader can be found below
+
+        {SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}
+
+  - The flashing application and OSPI bootloader source code can be found at below path
+
+        {SDK_INSTALL_PATH}/examples/drivers/boot
+
+  - If you have modified the flashing or bootloader applications, make sure to rebuild these applications and note the path to the `.tiimage` files
+    that are generated as part of the build.
+
+  - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
+    Note the path to the `*.appimage / *.mcelf` file that is generated as part of the build.
+
+- Make sure you have installed python as mention in \ref INSTALL_PYTHON3
+
+- Make sure you have identified the UART port on the EVM as mentioned in \ref EVM_SETUP_PAGE
+
+#### Flash configuration file
+
+- Create a flash configuration file, using the default flash configuration file present at below as reference
+
+        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_ospi.cfg
+
+- In this config file, modify the paths to the flashing application and OSPI bootloader, in case you are not using the pre-built applications
+
+        --flash-writer={path to flash application .tiimage}
+        --file={path to OSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
+
+- Edit below line to point to the user application (`.appimage`) file
+
+        --file={path to your application .appimage file} --operation=flash --flash-offset=0x81000
+
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+#### Configuration file for MCELF image flashing
+
+- Similar to the default_sbl_xx.cfg file for flashing appimage binaries, for mcelf binaries refer to **mcelf_sbl_xx.cfg** file in the same path.
 
 \endcond
 
@@ -468,11 +579,11 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   - Verify a previously flashed file at a given offset in the flash
   - Erase a region of flash memory
 - The flashing application as such does not care what the file contains, it will simply flash it at the user specified location.
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
 - However typically one needs to at least send the below files to flash
   - Send a QSPI flash bootloader application and flash it at offset 0x0 (`sbl_qspi.release.tiimage`). If the QSPI bootloader is
     already flashed previously then this step can be skipped.
-  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
+  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage / *.mcelf`).
     The offset 0x80000 is the offset that is specified in the QSPI bootloader and when the EVM boots in QSPI mode, it
     will attempt to find a application at this location.
 - After flashing is done, power OFF the EVM
@@ -482,6 +593,22 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 - The initial flashing application and the subsequent commands to send and flash the QSPI bootloader and application files are all specified
   in a single configuration file which is provided as input to the tool.
 \endcond
+
+\cond SOC_AM263PX || SOC_AM261X
+- However typically one needs to at least send the below files to flash
+  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.tiimage`). If the OSPI bootloader is
+    already flashed previously then this step can be skipped.
+  - Send your application image multi-core image and flash it at offset 0x81000 (`*.appimage / *.mcelf`).
+    The offset 0x81000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it
+    will attempt to find a application at this location.
+- After flashing is done, power OFF the EVM
+- Set EVM in OSPI boot mode and power ON the EVM.
+  - The ROM bootloader will now boot the OSPI bootloader by reading offset 0x0
+  - And the OSPI bootloader will boot the application by reading from offset 0x81000.
+- The initial flashing application and the subsequent commands to send and flash the OSPI bootloader and application files are all specified
+  in a single configuration file which is provided as input to the tool.
+\endcond
+
 \cond SOC_AM243X || SOC_AM64X
 - However typically one needs to at least send the below files to flash
   - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.hs_fs.tiimage`). If the OSPI bootloader is

@@ -329,7 +329,13 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \endcond
 
-### SBL Boot
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+\note RPRC format would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
+
+\endcond
+
+### Booting RPRC application {#BOOTFLOW_RPRC_BOOT}
 
 - An SBL typically does a bunch of SOC specific initializations and proceeds to the application loading.
 - Depending on the type of SBL loaded, SBL looks for the **multicore appimage** (refer \ref TOOLS_BOOT for more on multicore appimage)
@@ -341,7 +347,19 @@ However the steps to convert the application `.out` into a bootable image are di
 - The SBL uses this information to initialize each core which has a valid RPRC. It then loads the RPRC according to the
   sections specified, sets the entry points and releases the core from reset. Now the core will start running.
 
-\inlineVideo{sbl_boot.mp4,SBL BOOT,width=50%}
+\inlineVideo{sbl_boot.mp4,SBL BOOT for RPRC,width=50%}
+
+### Booting MCELF application {#BOOTFLOW_MCELF_BOOT}
+
+- In this case, SBL looks for the **multicore elf** image (refer \ref TOOLS_BOOT for more on multicore elf image)
+  of the application binary at a specified location in a boot media.
+- If the mcelf file is found, it is parsed into multiple **loadable segments**. These are
+  then loaded into individual CPUs.
+- The **Note segment** of the MCELF image will have information regarding the core on which each segment that application binary needs to be loaded
+- The SBL uses this information to initialize each core, loads the segments to specified addresses, and then releases the core from reset. Now the core will start running.
+
+\imageStyle{mcelf_sbl_boot.png,width:70%}
+\image html mcelf_sbl_boot.png "SBL Boot for MCELF"
 
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263PX || SOC_AM261X
 - To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
@@ -379,13 +397,24 @@ and booting
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
+
+##### RPRC Image
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
   - `multiCoreGen` is then used to combine all the RPRC files per CPU into a single `.appimage` file which is a concatenation of the
      individual CPU specific RPRC files.
-- This `.appimage` is then flash to the board.
+  - This `.appimage` is then flashed to the board.
 
 \imageStyle{bootflow_post_build_steps_no_xip.png,width:50%}
-\image html bootflow_post_build_steps_no_xip.png "Post build steps"
+\image html bootflow_post_build_steps_no_xip.png "Post build steps RPRC"
+
+##### MCELF Image
+  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+  - This .mcelf file contains metadata and segments along with information like segment type, load address, size, alignment.
+  - The `.mcelf` file is then flashed to the board.
+
+\imageStyle{mcelf_bootflow_post_build_steps_no_xip.png,width:60%}
+\image html mcelf_bootflow_post_build_steps_no_xip.png "Post build steps MCELF"
+
 \endcond
 
 #### Flashing the application for boot
@@ -395,7 +424,7 @@ and booting
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
-- Once the application images (`.appimage`) is created one needs to copy or flash these
+- Once the application image (`.appimage`/`.mcelf`) is created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
 - When flashing the application we also need to flash a bootloader or SBL image.
@@ -529,7 +558,7 @@ some details regarding those.
 
 - To boot an application using the `sbl_sd`, the system firmware and application image needs to be copied to the SD card as a file named as "sysfw.bin" and "app" respectively. Make sure that the SD card is formatted to have a FAT partition.
 
-- Follow the steps in the above referred page to partition the SD card. For a complete boot from SD card,the `sbl_sd` binary, system firmware and the application image binary has to be present as files in the SD card. You have to rename the `sbl_sd` appimage as 'tiboot3.bin'.
+- Follow the steps in the above referred page to partition the SD card. For a complete boot from SD card,the `sbl_sd` binary, system firmware and the application image binary has to be present as files in the SD card. You have to rename the `sbl_sd` .appimage/.mcelf file as 'tiboot3.bin'.
 
         copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_sd.release.tiimage
         rename in SD card as => tiboot3.bin
@@ -631,7 +660,7 @@ some details regarding those.
 
 - To boot an application using the `sbl_ospi`, the application image needs to be flashed at a particular location in the OSPI flash memory.
 
-- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x80000. This offset is chosen under the assumption that the `sbl_ospi`
+- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x81000. This offset is chosen under the assumption that the `sbl_ospi`
   application takes at max 512 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
   size of the bootloader which is being flashed and also aligns with the block size of the flash.
 

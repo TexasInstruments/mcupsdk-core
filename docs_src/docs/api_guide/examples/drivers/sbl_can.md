@@ -4,7 +4,7 @@
 
 # Introduction
 
-This bootloader does SOC initializations and attempts to boot a multicore appimage received over CAN via custom-made protocol (see below). The image file is sent using a python script (See \ref CAN_BOOTLOADER_PYTHON_SCRIPT). Once image is received, the SBL then parses it, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+This bootloader does SOC initializations and attempts to boot a multicore application file received over CAN via custom-made protocol (see below). The image file is sent using a python script (See \ref CAN_BOOTLOADER_PYTHON_SCRIPT). Once image is received, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
 \imageStyle{sbl_can_uniflash_process.PNG,width:60%}
 \image html sbl_can_uniflash_process.PNG MCAN SBL CAN UNIFLASH Process
@@ -15,6 +15,20 @@ This bootloader runs in two steps:
 
 \imageStyle{am263x_sbl_can_flow.png,width:15%}
 \image html am263x_sbl_can_flow.png MCAN SBL CAN Flow Overview
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+
+\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+
+\endcond
+
+# SBL CAN MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_CAN_MCELF}
+
+To parse and load an **mcelf** file via CAN bootloader, use the project **examples/drivers/boot/sbl_can_multicore_elf**
+
+When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset.
+
+The steps to run the example is same irrespective of the image format.
 
 # Protocol
 A simple custom made protocol is created for communication between the Host Machine and the Board. Messages between a CAN bootloader host and the target use a simple command and acknowledge
