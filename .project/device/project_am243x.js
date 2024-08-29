@@ -180,6 +180,7 @@ const example_file_list = [
     "examples/kernel/nortos/wfi_standby_demo/.project/project_am243x.js",
     "examples/kernel/nortos/basic_smart_placement/.project/project_nortos.js",
     "examples/mathlib/benchmark/.project/project.js",
+    "examples/otp/runtime_keyrev/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/.project/project.js",

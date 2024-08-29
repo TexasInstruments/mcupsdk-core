@@ -435,6 +435,7 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -2582,6 +2583,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ runtime_keyrev_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -4472,6 +4476,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ runtime_keyrev_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6364,6 +6371,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ runtime_keyrev_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -6871,6 +6881,7 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_emmc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6892,6 +6903,7 @@ sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_emmc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -6913,6 +6925,7 @@ sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 
 

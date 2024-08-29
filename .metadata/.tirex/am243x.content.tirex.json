@@ -12601,6 +12601,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Runtime Keyrev Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "runtime_keyrev",
+        "location": "../../examples/otp/runtime_keyrev/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "otp",
+            "runtime_keyrev",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_aes_cbc_256",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
