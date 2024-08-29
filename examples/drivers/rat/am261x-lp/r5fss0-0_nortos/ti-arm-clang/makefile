@@ -24,19 +24,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=flc.$(PROFILE).out
+OUTNAME:=rat.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=flc.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=flc.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=flc.$(PROFILE).appimage.signed
-BOOTIMAGE_NAME_MCELF:=flc.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=flc.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=flc.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=flc.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=flc.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=flc.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=flc.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=rat.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=rat.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=rat.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=rat.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=rat.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=rat.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=rat.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=rat.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=rat.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=rat.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,7 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	flc.c \
+	rat.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -103,13 +103,11 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -122,14 +120,12 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -203,7 +199,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang flc ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang rat ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -244,11 +240,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2612 --package ZFG --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -349,12 +345,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for flc.$(PROFILE) ...
+	@echo Creating Coverage Report for rat.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o flc.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=flc.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=flc.$(PROFILE).profdata > coverage/flc.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/flc.$(PROFILE).profdata.json --output-json=coverage/flc.$(PROFILE).analysis.json --output=../flc.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o rat.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=rat.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=rat.$(PROFILE).profdata > coverage/rat.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/rat.$(PROFILE).profdata.json --output-json=coverage/rat.$(PROFILE).analysis.json --output=../rat.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

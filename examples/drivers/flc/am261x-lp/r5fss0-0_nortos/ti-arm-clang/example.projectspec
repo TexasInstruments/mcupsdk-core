@@ -11,7 +11,7 @@
 
     <project
         title="Flc"
-        name = "flc_am261x-som_r5fss0-0_nortos_ti-arm-clang"
+        name = "flc_am261x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -57,7 +57,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2611 --package ZCZ
+            --context r5fss0-0 --part AM2612 --package ZFG
         "
 
         description="A Flc NORTOS project">
