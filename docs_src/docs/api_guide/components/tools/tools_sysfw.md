@@ -13,6 +13,9 @@ This section describes the various tools used in conjunction with System Control
 
 - The tools mentioned are implemented using python and needs python version 3.x
 - Refer to the page, \ref INSTALL_PYTHON3 , to install python and the required python packages on your PC.
+\cond SOC_AM243X || SOC_AM64X
+- SysConfig tool for using K3 Resource Partitioning Tool: [Download SysConfig](https://www.ti.com/tool/download/SYSCONFIG)
+\endcond
 
 ## Important files and folders
 
@@ -33,9 +36,28 @@ This section describes the various tools used in conjunction with System Control
 </tr>
 </table>
 
+\cond SOC_AM243X || SOC_AM64X
+## K3 Resource Partitioning Tool {#K3_RESPART_TOOL}
+
+This tool is based on Texas Instrument's SysConfig tool. It allows you to configure various system level
+parameters and generate the data which can be fed into many software components.
+Typical usage for this tool is for System integrators, where one would be  able
+to partition **various resources** across different software components. These
+resources includes DMA channels, rings, proxies, interrupts, etc. Apart from
+this, the tool supports configuration of QoS (Quality of Service) and Firewall
+parameters which helps in ensuring partitioning of **peripheral devices** across
+different CPUs or virtual machines.
+
+Please refer to \ref RESOURCE_ALLOCATION_GUIDE guide if you want to modify the default resources using K3 Resource Partitioning Tool.
+\endcond
+
 ## SYSFW Board Config Generation {#BOARCFG_GEN}
 
+\if (SOC_AM243X || SOC_AM64X)
+\note Please refer to \ref K3_RESPART_TOOL section if you want to modify the default resources.
+\else
 \note Please refer this \ref RESOURCE_ALLOCATION_GUIDE guide if you want to modify the default resources.
+\endif
 
 SYSFW Board Config is a SOC specific configuration data regarding the various system attributes controlled by the SYSFW. These include resources, power and clock, security etc. This configuration is sent to SYSFW during boot time. The default configuration is stored in `source/drivers/sciclient/sciclient_defaultBoardCfg/{SOC}/`
 
