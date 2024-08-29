@@ -164,7 +164,7 @@ function getccsPruPostBuildSteps(cpu, board)
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_PRU_ADC_ads127";
+const readmeDoxygenPageTag = "EXAMPLES_PRU_ADC_ADS127";
 
 const templates_freertos_r5f =
 [
