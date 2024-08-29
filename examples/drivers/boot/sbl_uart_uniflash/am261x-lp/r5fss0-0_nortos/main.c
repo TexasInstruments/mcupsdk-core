@@ -107,7 +107,6 @@ int main(void)
             uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
             uniflashConfig.verifyBuf = gUniflashVerifyBuf;
             uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
-
             /* Process the flash commands and return a response */
             Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
 
