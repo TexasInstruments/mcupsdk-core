@@ -57,7 +57,7 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: "am263px", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
+    { device: "am261x", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty() {

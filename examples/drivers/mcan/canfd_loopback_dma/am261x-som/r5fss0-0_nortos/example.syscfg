@@ -1,17 +1,16 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+161"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.999+169"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const flash           = scripting.addModule("/board/flash/flash", {}, false);
-const flash1          = flash.addInstance();
-const clock           = scripting.addModule("/kernel/dpl/clock");
+const mcan            = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1           = mcan.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -19,9 +18,6 @@ const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
 const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
-const mpu_armv75      = mpu_armv7.addInstance();
-const mpu_armv76      = mpu_armv7.addInstance();
-const mpu_armv77      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -41,86 +37,57 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
-const section13       = section.addInstance();
-const FLC             = scripting.addModule("/optiflash/FLC/FLC", {}, false);
-const FLC1            = FLC.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                         = "CONFIG_FLASH0";
-flash1.proto_isAddrReg               = true;
-flash1.proto_cmdRegRd                = "0x85";
-flash1.proto_cmdRegWr                = "0x81";
-flash1.proto_mask                    = "0xff";
-flash1.dummy_isAddrReg               = true;
-flash1.dummy_cfgReg                  = "1";
-flash1.dummy_cmdRegRd                = "0x85";
-flash1.dummy_cmdRegWr                = "0x81";
-flash1.strDtr_isAddrReg              = true;
-flash1.strDtr_cmdRegRd               = "0x85";
-flash1.strDtr_cmdRegWr               = "0x81";
-flash1.strDtr_mask                   = "255";
-flash1.xspiWipRdCmd                  = "0x05";
-flash1.strDtr_shift                  = 255;
-flash1.proto_cfgReg                  = "0";
-flash1.dummy_mask                    = "0xFF";
-flash1.protocol                      = "8d_8d_8d";
-flash1.fourByteEnableSeq             = "0";
-flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable    = true;
-flash1.peripheralDriver.inputClkFreq = 100000000;
-flash1.peripheralDriver.OSPI.$assign = "OSPI0";
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.sdkInfra        = "HLD";
+mcan1.operMode        = "DMA";
+mcan1.MCAN.$assign    = "MCAN0";
+mcan1.MCAN.RX.$assign = "GPIO7";
+mcan1.MCAN.TX.$assign = "GPIO8";
 
-const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                        = edma.addInstance({}, false);
-edma1.$name                        = "CONFIG_EDMA0";
-flash1.peripheralDriver.edmaDriver = edma1;
-edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM4";
-edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
-edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
-edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+mcan1.edmaDriver            = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+const mcan_v1_template_hld  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template_hld", {}, false);
+const mcan_v1_template_hld1 = mcan_v1_template_hld.addInstance({}, false);
+mcan_v1_template_hld1.$name = "drivers_mcan_v1_mcan_v1_template_hld0";
+mcan1.child                 = mcan_v1_template_hld1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
-mpu_armv71.attributes        = "Device";
 
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.size              = 15;
 mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
 
 mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
 mpu_armv73.size              = 15;
 mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv73.baseAddr          = 0x80000;
 
 mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv75.$name      = "CONFIG_MPU_REGION4";
-mpu_armv75.baseAddr   = 0x60000000;
-mpu_armv75.size       = 27;
-mpu_armv75.attributes = "Device";
-
-mpu_armv76.$name      = "CONFIG_MPU_REGION5";
-mpu_armv76.baseAddr   = 0x88000000;
-mpu_armv76.size       = 27;
-mpu_armv76.attributes = "Device";
-
-mpu_armv77.$name             = "CONFIG_MPU_REGION6";
-mpu_armv77.baseAddr          = 0x70000000;
-mpu_armv77.size              = 12;
-mpu_armv77.accessPermissions = "Supervisor RD, User RD";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -128,7 +95,7 @@ general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                                = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(12);
+region1.memory_region.create(11);
 region1.memory_region[0].type                = "TCMA";
 region1.memory_region[0].$name               = "R5F_VECS";
 region1.memory_region[0].size                = 0x40;
@@ -184,8 +151,6 @@ region1.memory_region[10].manualStartAddress = 0x44000400;
 region1.memory_region[10].size               = 0x3CE;
 region1.memory_region[10].isShared           = true;
 region1.memory_region[10].shared_cores       = ["r5fss0-1"];
-region1.memory_region[11].$name              = "MEMORY_REGION0";
-region1.memory_region[11].size               = 0x1000;
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;
@@ -312,29 +277,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-section13.$name                   = "CONFIG_SECTION0";
-section13.load_memory             = "SBL";
-section13.output_section.create(1);
-section13.output_section[0].$name = ".data.gRxBuf";
-
-FLC1.$name              = "FLC0";
-FLC1.sourceStartAddress = 0x60200000;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "GPIO62";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
-flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO10";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO8";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO67";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO0";
-debug_log.uartLog.UART.$suggestSolution            = "UART0";

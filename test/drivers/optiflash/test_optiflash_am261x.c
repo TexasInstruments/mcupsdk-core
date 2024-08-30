@@ -44,7 +44,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/optiflash/v0/rl2/rl2.h>
 #include <drivers/optiflash/v0/flc/flc.h>
-#include <drivers/hw_include/am263px/cslr_soc_baseaddress.h>
+#include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
 #include "main.h"
 
 #ifdef SOC_AM261X
