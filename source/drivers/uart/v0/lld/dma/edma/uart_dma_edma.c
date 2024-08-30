@@ -297,7 +297,7 @@ int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction *transact
     /* Link  dummy param ID */
     EDMA_linkChannel(baseAddr, paramTx, paramDummy);
 
-    if(FALSE == UART_checkCharsAvailInFifo(hUart->baseAddr))
+    if(TRUE == UART_spaceAvail(hUart->baseAddr))
     {
         isTxFifoEmpty = TRUE;
     }
@@ -581,13 +581,14 @@ static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
         else
         {
             hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
-            bytesRemain = hUart->writeTrans.count % hUart->hUartInit->txTrigLvl;
             if(hUart->writeTrans.count >= hUart->hUartInit->txTrigLvl)
             {
+                bytesRemain = hUart->writeTrans.count % hUart->hUartInit->txTrigLvl;
                 bytesSent = hUart->writeTrans.count - bytesRemain;
             }
             else
             {
+                bytesRemain = 0;
                 bytesSent = bytesRemain;
             }
             if(bytesRemain > 0)
