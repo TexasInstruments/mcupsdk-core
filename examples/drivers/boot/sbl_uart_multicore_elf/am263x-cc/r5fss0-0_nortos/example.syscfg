@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -15,7 +16,7 @@ const hsmclient1      = hsmclient.addInstance();
 const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1           = uart.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -50,6 +51,7 @@ uart1.intrEnable       = "DISABLE";
 uart1.UART.$assign     = "UART0";
 uart1.UART.RXD.$assign = "UART0_RXD";
 uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 debug_log.enableCssLog      = false;
 debug_log.enableLogZoneInfo = true;
@@ -102,15 +104,14 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x25700;
+region1.memory_region[4].size               = 0x3C700;
 region1.memory_region[5].$name              = "MSRAM_2";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70180000;
 region1.memory_region[5].size               = 0x80000;
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
-region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x70027800;
-region1.memory_region[6].size               = 0x40000;
+region1.memory_region[6].size               = 0x2E800;
 region1.memory_region[7].type               = "CUSTOM";
 region1.memory_region[7].$name              = "MAILBOX_HSM";
 region1.memory_region[7].auto               = false;

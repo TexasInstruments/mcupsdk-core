@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -26,7 +27,7 @@ const mcan1       = mcan.addInstance();
 const mcspi       = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1      = mcspi.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
@@ -97,6 +98,11 @@ mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN4";
 mcan1.MCAN.RX.$assign = "EPWM9_A";
 mcan1.MCAN.TX.$assign = "EPWM9_B";
+
+const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
+const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
+mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
+mcan1.child             = mcan_v1_template1;
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -176,15 +182,14 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x3DF00;
+region1.memory_region[4].size               = 0x4DF00;
 region1.memory_region[5].$name              = "MSRAM_1";
-region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70080000;
 region1.memory_region[5].size               = 0x170000;
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
-region1.memory_region[6].manualStartAddress = 0x70040000;
 region1.memory_region[6].size               = 0x40000;
 region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x70050000;
 
 section1.group                                    = false;
 section1.$name                                    = "Vector Table";

@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -19,7 +20,7 @@ const mcspi1        = mcspi.addInstance();
 const freertos_fat  = scripting.addModule("/fs/freertos_fat/freertos_fat", {}, false);
 const freertos_fat1 = freertos_fat.addInstance();
 const debug_log     = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg       = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7     = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71    = mpu_armv7.addInstance();
 const mpu_armv72    = mpu_armv7.addInstance();
@@ -65,8 +66,9 @@ edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
-freertos_fat1.$name                  = "CONFIG_FREERTOS_FAT0";
-freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";
+freertos_fat1.$name                              = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name             = "CONFIG_MMCSD0";
+freertos_fat1.peripheralDriver.MMCSD_child.$name = "drivers_mmcsd_v1_mmcsd_v1_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -130,15 +132,15 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x3DF00;
+region1.memory_region[4].size               = 0x42F00;
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70180000;
 region1.memory_region[5].size               = 0x80000;
 region1.memory_region[5].$name              = "MSRAM_2";
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
-region1.memory_region[6].auto               = false;
 region1.memory_region[6].size               = 0x40000;
-region1.memory_region[6].manualStartAddress = 0x70040000;
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x70045000;
 region1.memory_region[7].type               = "CUSTOM";
 region1.memory_region[7].$name              = "MAILBOX_HSM";
 region1.memory_region[7].auto               = false;
