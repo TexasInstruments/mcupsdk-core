@@ -39,52 +39,6 @@
 #include <drivers/pinmux.h>
 #include <drivers/gtc.h>
 
-/* Workaround to initialize MMC SD Pinmux (Later will be done in SPL) */
-static Pinmux_PerCfg_t gPinMuxMMCSDCfg[] = {
-    /* MyMMC11 -> MMC1_CMD -> J19 */
-    {
-        PIN_MMC1_CMD, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_CLK -> L20 */
-    {
-        PIN_MMC1_CLK, PIN_MODE(0) | \
-        ((PIN_PULL_DISABLE | PIN_INPUT_ENABLE) & (~PIN_PULL_DIRECTION))
-    },
-    /* MyMMC11 -> MMC1_CLKLB */
-    {
-        PIN_MMC1_CLKLB, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_DAT0 -> K21 */
-    {
-        PIN_MMC1_DAT0, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_DAT1 -> L21 */
-    {
-        PIN_MMC1_DAT1, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_DAT2 -> K19 */
-    {
-        PIN_MMC1_DAT2, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_DAT3 -> K18 */
-    {
-        PIN_MMC1_DAT3, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-    /* MyMMC11 -> MMC1_SDCD -> D19 */
-    {
-        PIN_MMC1_SDCD, PIN_MODE(0) | \
-        ((PIN_PULL_DIRECTION | PIN_INPUT_ENABLE) & (~PIN_PULL_DISABLE))
-    },
-
-    {PINMUX_END, PINMUX_END}
-};
-
 
 /*  In this sample bootloader, we load appimages for RTO/Baremetal and Linux at different offset
     i.e the appimage for Linux (for A53) and RTOS/Baremetal (for R5, M4) is flashed at different offset in flash
@@ -97,6 +51,12 @@ static Pinmux_PerCfg_t gPinMuxMMCSDCfg[] = {
     RTOS/Baremetal appimage (for R5, M4 cores) flash at offset 0x80000
     Linux appimage (for A53) flash at offset 0x280000
 */
+
+/* This buffer needs to be defined for OSPI boot in case of HS device for
+ * image decryption and authentication
+ * The size of the buffer should be large enough to accomodate the appimage
+ */
+uint8_t gAppimage[0x800000] __attribute__ ((section (".app"), aligned (4096)));
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -227,12 +187,6 @@ int32_t App_runLinuxCpu(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *
 
     /* Initialize GTC by enabling using Syscfg */
 
-    /* Change the dev stat register to SD card bootmode so that SPL loads uBoot and linux kernel from SD card */
-	SOC_setDevStat(SOC_BOOTMODE_MMCSD);
-
-    /* Enable pinmux for MMCSD (Workaround as MMC SD pinmux is not initialized in A53 SPL) */
-    Pinmux_config(gPinMuxMMCSDCfg, PINMUX_DOMAIN_ID_MAIN);
-
     /* Unlock all the control MMRs. Linux/U-boot expects all the MMRs to be unlocked */
     SOC_unlockAllMMR();
 
@@ -298,10 +252,12 @@ int main(void)
         Bootloader_BootImageInfo bootImageInfo;
 		Bootloader_Params bootParams;
         Bootloader_Handle bootHandle;
+        Bootloader_Config *bootConfig;
 
 		Bootloader_BootImageInfo bootImageInfoLinux;
 		Bootloader_Params bootParamsLinux;
         Bootloader_Handle bootHandleLinux;
+        Bootloader_Config *bootConfigLinux;
 
         Bootloader_Params_init(&bootParams);
 		Bootloader_Params_init(&bootParamsLinux);
@@ -311,20 +267,25 @@ int main(void)
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_FLASH0, &bootParams);
 		bootHandleLinux = Bootloader_open(CONFIG_BOOTLOADER_FLASH_LINUX, &bootParamsLinux);
-        if(bootHandle != NULL)
-        {
-			status = App_loadImages(bootHandle, &bootImageInfo);
-            Bootloader_profileAddProfilePoint("App_loadImages");
-        }
+
+		if(bootHandleLinux != NULL)
+		{
+            bootConfigLinux = (Bootloader_Config *)bootHandleLinux;
+            bootConfigLinux->scratchMemPtr = gAppimage;
+			status = App_loadLinuxImages(bootHandleLinux, &bootImageInfoLinux);
+            Bootloader_profileAddProfilePoint("App_loadLinuxImages");
+		}
 
 		if(SystemP_SUCCESS == status)
 		{
-			if(bootHandleLinux != NULL)
-			{
-				status = App_loadLinuxImages(bootHandleLinux, &bootImageInfoLinux);
-                Bootloader_profileAddProfilePoint("App_loadLinuxImages");
-			}
-		}
+            if(bootHandle != NULL)
+            {
+                bootConfig = (Bootloader_Config *)bootHandle;
+                bootConfig->scratchMemPtr = gAppimage;
+                status = App_loadImages(bootHandle, &bootImageInfo);
+                Bootloader_profileAddProfilePoint("App_loadImages");
+            }
+        }
 
 		if(SystemP_SUCCESS == status)
 		{
