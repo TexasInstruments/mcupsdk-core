@@ -83,7 +83,7 @@ The receive path has been explained in \ref ICSS_EMAC_DESIGN_DATA_PATH_RX sectio
 
 The first step is to identify the exact problem. To do that please perform these steps in order.
 
-1. Check if Rx is disabled : It is possible to disable Rx in firmware through IOCTL. This is controlled through a location in ICSS memory. Check the memory correspnding to `portControlAddr` configured in \ref ICSS_EMAC_FwStaticMmap. See \ref ICSS_EMAC_DEBUG_GUIDE_ACCESSING_MEMORY for details how to check this memory. `0x1` value for this byte means Rx is disabled , and `0x0` means Rx is enabled. Check this as a very first step. It is not a common error but it is possible that user is invoking the IOCTL for disabling by mistake.
+1. Check if Rx is disabled : It is possible to disable Rx in firmware through IOCTL. This is controlled through a location in ICSS memory. Check the memory correspnding to `portControlAddr` configured in \ref ICSS_EMAC_FwStaticMmap. See \ref ICSS_EMAC_DEBUG_GUIDE_ACCESSING_MEMORY for details how to check this memory. `0x1` value for this byte means Rx is enabled , and `0x0` means Rx is disabled. Check this as a very first step. It is not a common error but it is possible that user is invoking the IOCTL for disabling by mistake.
 
 2. Check if firmware is receiving packets : See \ref ICSS_EMAC_DEBUG_GUIDE_CHECKING_STATISTICS section to find out if PRU is receiving the frames. Failure to receive frames in firmware can indicate other issues like corrupted frames, link negotiation failure or PHY related issues.
 
