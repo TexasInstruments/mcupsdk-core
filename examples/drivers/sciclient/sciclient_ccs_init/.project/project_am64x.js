@@ -58,6 +58,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "sciclient_ccs_init";
     property.isInternal = false;
+    property.stripOutFile = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

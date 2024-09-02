@@ -455,6 +455,12 @@ $(OUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	$(RM) `args.linuxFwName`
 	$(STRIP) -o=`args.linuxFwName` $@
 % }
+% if (args.project.cgt == "ti-arm-clang") {
+% if (args.project.stripOutFile) {
+	$(RM) `args.project.name`.$(PROFILE).strip.out
+	$(STRIP) -o=`args.project.name`.$(PROFILE).strip.out $@
+% }
+% }
 % }
 % }
 % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
@@ -471,6 +477,11 @@ clean:
 % } else {
 % if (args.project.isLinuxFwGen) {
 	$(RM) `args.linuxFwName`
+% }
+% if (args.project.cgt == "ti-arm-clang") {
+% if (args.project.stripOutFile) {
+	$(RM) `args.project.name`.$(PROFILE).strip.out
+% }
 % }
 % }
 % if (args.project.isBootLoader) {
@@ -511,6 +522,11 @@ scrub:
 % } else {
 % if (args.project.isLinuxFwGen) {
 	$(RM) `args.linuxFwName`
+% }
+% if (args.project.cgt == "ti-arm-clang") {
+% if (args.project.stripOutFile) {
+	$(RM) `args.project.name`.$(PROFILE).strip.out
+% }
 % }
 % }
 ifeq ($(OS),Windows_NT)

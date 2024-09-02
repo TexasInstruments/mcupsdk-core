@@ -598,22 +598,23 @@ and flash driver is not yet available for that EVM.
   - In the @VAR_SOC_NAME "CIO" console, this is log from the R5F.
 
         [MAIN_Cortex_R5_0_0]
-        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
-        DMSC Firmware revision 0xNN
-        DMSC ABI revision x.y
+        DMSC Firmware Version 10.0.8--v10.00.08 (Fiery Fox)
+        DMSC Firmware revision 0xa
+        DMSC ABI revision 4.0
 
-        [SCICLIENT] ABI check PASSED
+        [SCICLIENT] ABI check PASSED 
         [SCICLIENT] Board Configuration with Debug enabled ...
-        [SCICLIENT] Common Board Configuration PASSED
-        [SCICLIENT] PM Board Configuration PASSED
-        [SCICLIENT] RM Board Configuration PASSED
-        [SCICLIENT] Security Board Configuration PASSED
+        [SCICLIENT] Common Board Configuration PASSED 
+        [SCICLIENT] PM Board Configuration PASSED 
+        [SCICLIENT] RM Board Configuration PASSED 
+        [SCICLIENT] Security Board Configuration PASSED 
 
-        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
-        DMSC Firmware revision 0xNN
-        DMSC ABI revision x.y
+        DMSC Firmware Version 10.0.8--v10.00.08 (Fiery Fox)
+        DMSC Firmware revision 0xa
+        DMSC ABI revision 4.0
 
-        All tests have passed!!
+        Starting SOC Initialization ...
+        Resetting self cluster ...
 
   - In the @VAR_SOC_NAME console, this is log from the GEL scripts.
     \imageStyle{ccs_load_dmsc_03.png,width:50%}

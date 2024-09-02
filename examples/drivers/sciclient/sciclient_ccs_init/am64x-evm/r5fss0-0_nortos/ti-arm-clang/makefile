@@ -183,6 +183,8 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am64x:r5fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	$(RM) sciclient_ccs_init.$(PROFILE).strip.out
+	$(STRIP) -o=sciclient_ccs_init.$(PROFILE).strip.out $@
 	@echo  Linking: am64x:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
@@ -190,6 +192,7 @@ clean:
 	@echo  Cleaning: am64x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
+	$(RM) sciclient_ccs_init.$(PROFILE).strip.out
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
@@ -202,6 +205,7 @@ clean:
 scrub:
 	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang sciclient_ccs_init ...
 	$(RMDIR) obj
+	$(RM) sciclient_ccs_init.$(PROFILE).strip.out
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
 	$(RM) \*.map
