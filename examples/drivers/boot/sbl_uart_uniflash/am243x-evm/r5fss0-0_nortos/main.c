@@ -68,12 +68,13 @@ int main(void)
 
 
     Bootloader_socWaitForFWBoot();
+    
+    System_init();
+    
     Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
 
-
-    System_init();
     Drivers_open();
 
     status = Board_driversOpen();

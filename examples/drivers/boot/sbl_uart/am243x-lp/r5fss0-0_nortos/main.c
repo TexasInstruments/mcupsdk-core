@@ -96,13 +96,14 @@ int main(void)
         Bootloader_enableMCUPLL();
     }
 
+    System_init();
+    
     status = Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
 
     DebugP_assertNoLog(status == SystemP_SUCCESS);
 
-    System_init();
     Drivers_open();
 
     status = Board_driversOpen();

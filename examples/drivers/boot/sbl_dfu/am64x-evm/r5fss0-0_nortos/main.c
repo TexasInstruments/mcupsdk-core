@@ -139,11 +139,11 @@ int main(void)
         Bootloader_enableMCUPLL();
     }
 
+    System_init();
+    
     Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
-
-    System_init();
 
     Drivers_open();
 

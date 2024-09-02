@@ -221,12 +221,12 @@ int main(void)
         Bootloader_enableMCUPLL();
     }
 
+    System_init();
+    Bootloader_profileAddProfilePoint("System_init");
+    
     Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
-
-    System_init();
-    Bootloader_profileAddProfilePoint("System_init");
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");

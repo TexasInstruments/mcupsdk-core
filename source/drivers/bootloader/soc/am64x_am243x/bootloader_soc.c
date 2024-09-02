@@ -1106,12 +1106,12 @@ static int32_t Bootloader_socOpenFirewallRegion(uint16_t fwl, uint16_t region, u
 {
     int32_t status = SystemP_FAILURE;
 
-    /* Change ownership of firewall to R5F0-0 (Host ID = TISCI_HOST_ID_MAIN_0_R5_0 because SBL would be secure host) */
+    /* Change ownership of firewall to R5F0-0 (Host ID = TISCI_HOST_ID_MAIN_0_R5_1 as FWL msg use non-secure context) */
     const struct tisci_msg_fwl_change_owner_info_req fwl_owner_req =
     {
         .fwl_id = fwl,
         .region = region,
-        .owner_index = TISCI_HOST_ID_MAIN_0_R5_0,
+        .owner_index = TISCI_HOST_ID_MAIN_0_R5_1,
     };
 
     struct tisci_msg_fwl_change_owner_info_resp fwl_owner_resp = { {0} };
