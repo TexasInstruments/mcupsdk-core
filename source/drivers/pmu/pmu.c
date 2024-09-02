@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -136,12 +136,6 @@ int32_t PMU_init(PMU_Config *cfg)
     for(i = 0; i < cfg->numEventCounters; i++)
     {
         CSL_armR5PmuCfgCntr(i, (cfg->eventCounters[i].type & 0xFF));
-    }
-    /* Configure cycle counter */
-    if(cfg->bCycleCounter == TRUE)
-    {
-        CSL_armR5PmuCfgCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM, 
-                            CSL_ARM_R5_PMU_EVENT_TYPE_CYCLE_CNT);
     }
 
     /* Disable counter overflow interrupt */
