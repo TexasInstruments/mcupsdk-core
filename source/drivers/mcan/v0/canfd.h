@@ -1043,6 +1043,9 @@ typedef struct CANFD_Attrs_s
     /**< Interrupt priority */
     uint8_t                 intrPriority;
 
+    /**< Driver operating mode. Polling, DMA, interrupt */
+    uint32_t                OptionTLVtype;
+
     /* MCAN Loopback parameters. */
     CANFD_MCANLoopbackCfgParams    CANFDMcanloopbackParams;
 
@@ -1741,14 +1744,14 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle);
  *  \param  frameType
  *      Frame type - Classic or FD
  *  \param  numMsgs
- *      Number of msgs to be transmitted Only applicale in DMA Mode for other pass 0.
+ *      Number of msgs to be transmitted Only applicale in DMA Mode.
  *  \param  data
  *      Data to be transmitted
  *
  *  \return SystemP_SUCCESS on success, else failure
  * 
  */
-int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data);
+int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const uint8_t* data);
 
 /**
  *   \brief
@@ -1810,18 +1813,14 @@ uint32_t CANFD_getFilterEventConfig(uint32_t eventNum);
  *
  *  \param  handle
  *      Handle to the message object
- *  \param  id
- *      Message Identifier
- *  \param  ptrFrameType
- *      Frame type - Classic or FD
- *  \param  idType
- *      Meassage Id type - 11 bit standard or 29 bit extended
+ *  \param  numMsgs
+ *      Number of message count. Applicale only for DMA Mode, for other modes, provide 0.
  *  \param  data
  *      Received data.
  *  \return SystemP_SUCCESS on success, else failure
  * 
  */
-int32_t CANFD_read(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType ptrFrameType, CANFD_MCANXidType idType, uint8_t* data);
+int32_t CANFD_read(CANFD_MsgObjHandle handle, uint32_t numMsgs, uint8_t* data);
 
 /**
  *   \brief
@@ -1981,7 +1980,7 @@ int32_t CANFD_cancelDmaTx(const CANFD_Object *ptrCanFdObj, const CANFD_MessageOb
  * \param completionType  specifie completion type for the callback
  *
  */
-void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType) __attribute__((weak));
+void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType);
 
 /**
  * \brief API to configure dma for the Rx message object. Called from the CANFD_createMsgObject.
@@ -2027,7 +2026,7 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
  * \param completionType  specifie completion type for the callback
  *
  */
-void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType) __attribute__((weak));
+void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType);
 
 
 /**

@@ -906,6 +906,57 @@ int32_t MCAN_getWriteMsgElemAddress(uint32_t    baseAddr,
     return status;
 }
 
+void MCAN_writeHeaderToMsgRam(uint32_t                 baseAddr,
+                              uint32_t                 memType,
+                              uint32_t                 bufNum,
+                              const MCAN_TxBufElement *elem)
+{
+    uint32_t startAddr = 0U, elemSize = 0U, elemAddr = 0U;
+    uint32_t idx       = 0U, enableMod = 0U;
+    uint32_t tempElemAddr = elemAddr;
+    uint32_t regVal = 0;
+
+    if (MCAN_MEM_TYPE_BUF == memType)
+    {
+        idx       = bufNum;
+        enableMod = (uint32_t)1U;
+    }
+    if (MCAN_MEM_TYPE_FIFO == memType)
+    {
+        idx       = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_TXFQS, MCAN_TXFQS_TFQPI);
+        enableMod = (uint32_t)1U;
+    }
+    if ((uint32_t)1U == enableMod)
+    {
+        startAddr = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_TXBC,
+                                  MCAN_TXBC_TBSA);
+        elemSize = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_TXESC,
+                                 MCAN_TXESC_TBDS);
+        startAddr = (uint32_t) (startAddr << (uint32_t)2U);
+        elemSize  = gMsgObjSize[elemSize];
+        elemSize *= (uint32_t)4U;
+        elemAddr  = startAddr + (elemSize * idx);
+        elemAddr += MCAN_MCAN_MSG_MEM;
+
+        regVal  = (uint32_t)0U;
+        regVal |= (((uint32_t) ((elem->id << MCANSS_TX_BUFFER_ELEM_ID_SHIFT)   & MCANSS_TX_BUFFER_ELEM_ID_MASK))  |
+                   ((uint32_t) ((elem->rtr << MCANSS_TX_BUFFER_ELEM_RTR_SHIFT) & MCANSS_TX_BUFFER_ELEM_RTR_MASK)) |
+                   ((uint32_t) ((elem->xtd << MCANSS_TX_BUFFER_ELEM_XTD_SHIFT) & MCANSS_TX_BUFFER_ELEM_XTD_MASK)) |
+                   ((uint32_t) ((elem->esi << MCANSS_TX_BUFFER_ELEM_ESI_SHIFT) & MCANSS_TX_BUFFER_ELEM_ESI_MASK)));
+        HW_WR_REG32(baseAddr + tempElemAddr, regVal);
+        tempElemAddr += (uint32_t)4U;
+
+        regVal  = (uint32_t)0U;
+        regVal |= (((uint32_t)((elem->dlc << MCANSS_TX_BUFFER_ELEM_DLC_SHIFT) & MCANSS_TX_BUFFER_ELEM_DLC_MASK))  |
+                   ((uint32_t) ((elem->brs << MCANSS_TX_BUFFER_ELEM_BRS_SHIFT) & MCANSS_TX_BUFFER_ELEM_BRS_MASK)) |
+                   ((uint32_t) ((elem->fdf << MCANSS_TX_BUFFER_ELEM_FDF_SHIFT) & MCANSS_TX_BUFFER_ELEM_FDF_MASK)) |
+                   ((uint32_t) ((elem->efc << MCANSS_TX_BUFFER_ELEM_EFC_SHIFT) & MCANSS_TX_BUFFER_ELEM_EFC_MASK)) |
+                   ((uint32_t) ((elem->mm << MCANSS_TX_BUFFER_ELEM_MM_SHIFT) & MCANSS_TX_BUFFER_ELEM_MM_MASK)));
+        HW_WR_REG32(baseAddr + tempElemAddr, regVal);
+    }
+
+}
+
 void MCAN_writeMsgRam(uint32_t                 baseAddr,
                       uint32_t                 memType,
                       uint32_t                 bufNum,
@@ -2611,7 +2662,7 @@ int32_t MCAN_writeDmaHeader( const void* data, const MCAN_TxBufElement *elem)
                 ((uint32_t) ((elem->xtd << MCANSS_TX_BUFFER_ELEM_XTD_SHIFT) & MCANSS_TX_BUFFER_ELEM_XTD_MASK)) |
                 ((uint32_t) ((elem->esi << MCANSS_TX_BUFFER_ELEM_ESI_SHIFT) & MCANSS_TX_BUFFER_ELEM_ESI_MASK)));
 
-        *((uint32_t*)(((uint32_t*)data)+4))= (((uint32_t)((elem->dlc << MCANSS_TX_BUFFER_ELEM_DLC_SHIFT) & MCANSS_TX_BUFFER_ELEM_DLC_MASK)) |
+        *((uint32_t*)(((uint32_t*)data) + 1))= (((uint32_t)((elem->dlc << MCANSS_TX_BUFFER_ELEM_DLC_SHIFT) & MCANSS_TX_BUFFER_ELEM_DLC_MASK)) |
                 ((uint32_t) ((elem->brs << MCANSS_TX_BUFFER_ELEM_BRS_SHIFT) & MCANSS_TX_BUFFER_ELEM_BRS_MASK)) |
                 ((uint32_t) ((elem->fdf << MCANSS_TX_BUFFER_ELEM_FDF_SHIFT) & MCANSS_TX_BUFFER_ELEM_FDF_MASK)) |
                 ((uint32_t) ((elem->efc << MCANSS_TX_BUFFER_ELEM_EFC_SHIFT) & MCANSS_TX_BUFFER_ELEM_EFC_MASK)) |

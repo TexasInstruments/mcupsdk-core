@@ -71,7 +71,6 @@
 
 static void CANFD_processFIFOElements(CANFD_Handle handle, MCAN_RxFIFONum fifoNum);
 static int32_t CANFD_configMessageRAM(uint32_t baseAddr, const CANFD_MCANMsgRAMCfgParams* configParams);
-void CANFD_dmaTxCallBack(CANFD_MessageObject* ptrCanMsgObj);
 static int32_t CANFD_updateOpMode(uint32_t baseAddr, uint32_t mode);
 static void CANFD_transCompleteInterrupt(CANFD_Handle handle);
 static void CANFD_receiveBufferInterrupt(CANFD_Handle handle);
@@ -94,22 +93,12 @@ static int32_t CANFD_writeIntr(CANFD_MsgObjHandle handle,
                                 CANFD_MCANFrameType frameType,
                                 const uint8_t* data);
 
-static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle,
-                              uint32_t* id,
-                              CANFD_MCANFrameType* ptrFrameType,
-                              CANFD_MCANXidType* idType,
-                              uint8_t* data);
+static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint8_t* data);
 
-static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle,
-                              uint32_t* id,
-                              CANFD_MCANFrameType* ptrFrameType,
-                              CANFD_MCANXidType* idType,
-                              uint8_t* data);
+static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint8_t* data);
 
 static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
-                              uint32_t* id,
-                              CANFD_MCANFrameType* ptrFrameType,
-                              CANFD_MCANXidType* idType,
+                              uint32_t numMsgs,
                               const uint8_t* data);
 
 static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanMsgObj,
@@ -156,7 +145,6 @@ extern uint32_t gCANFDConfigNum;
 extern CANFD_Config gCanfdConfig[];
 extern CANFD_DmaHandle gCanfdDmaHandle[];
 extern CANFD_DmaChConfig gCanfdDmaChCfg;
-
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -871,6 +859,9 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
     MCAN_ECCConfigParams    cslMcanEccConfigPrms;
     CANFD_Object           *ptrCanFdObj = NULL;
     CANFD_Config           *config;
+    CANFD_MCANBitTimingParams  *bitTimingParams;
+    CANFD_OptionTLV             optionTLV;
+    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
 
     if(handle == NULL)
     {
@@ -880,6 +871,8 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
     {
         config = (CANFD_Config*) handle;
         ptrCanFdObj = (CANFD_Object *) config->object;
+        bitTimingParams = (&config->attrs->CANFDMcanBitTimingParams);
+        optionTLV.type  = (CANFD_Option)config->attrs->OptionTLVtype;
         if(ptrCanFdObj->state != CANFD_DriverState_UNINIT)
         {
             status = SystemP_FAILURE;
@@ -970,6 +963,22 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
 
                 /* Initialize the CAN driver state */
                 ptrCanFdObj->state = CANFD_DriverState_STARTED;
+
+                /* Configure the Bit timing */
+                if (status == SystemP_SUCCESS)
+                {
+                    status = CANFD_configBitTime (handle, bitTimingParams);
+                }
+                /* 
+                * Configure the driver options. Option info in TLV format 
+                * which is configures the driver 
+                */
+                if (status == SystemP_SUCCESS)
+                {
+                    optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
+                    optionTLV.value  = (void*) &mcanloopbackParams;
+                    status = CANFD_setOptions(handle, &optionTLV);
+                }
             }
         }
     }
@@ -1507,7 +1516,7 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle)
  *  @retval
  *      Error       - <0
  */
-int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data)
+int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object           *ptrCanFdObj;
@@ -1651,22 +1660,19 @@ int32_t CANFD_writeCancel(CANFD_MsgObjHandle handle)
  *  @retval
  *      Error       - <0
  */
-int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t msgId, CANFD_MCANFrameType canfdFrameType, CANFD_MCANXidType canfdIdType, uint8_t* data)
+int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* data)
 {
     CANFD_MessageObject    *ptrCanMsgObj;
+    CANFD_Object           *ptrCanFdObj;
     int32_t                 retVal = SystemP_FAILURE;
     const CANFD_Attrs      *attrs;
     CANFD_Config           *config = NULL;
-    uint32_t                dataLength, id = msgId;
-    CANFD_MCANXidType       idType = canfdIdType;
-    CANFD_MCANFrameType     frameType = canfdFrameType;
+    uint32_t                dataLength;
 
     if(NULL != rxMsgHandle)
     {
         /* Get the message object pointer */
         ptrCanMsgObj = (CANFD_MessageObject*)rxMsgHandle;
-        config = (CANFD_Config*)ptrCanMsgObj->canfdHandle;
-        attrs = config->attrs;
         dataLength = ptrCanMsgObj->dataLength;
 
         if (((dataLength < (uint32_t)1U) || (dataLength > (uint32_t)64U)) || (data == NULL))
@@ -1675,21 +1681,41 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t msgId, CANFD_MCANFra
         }
         else
         {
-            if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
-               (CANFD_OPER_MODE_DMA == attrs->operMode))
+            config = (CANFD_Config*)ptrCanMsgObj->canfdHandle;
+            ptrCanFdObj = (CANFD_Object*)config->object;
+            attrs = config->attrs;
+            if((config != NULL) && (ptrCanFdObj != NULL) && (attrs != NULL))
             {
-                if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
+                if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
+                   (CANFD_OPER_MODE_DMA == attrs->operMode))
                 {
-                    retVal = CANFD_readIntr(ptrCanMsgObj, &id, &frameType, &idType, data);
+                    if(CANFD_OPER_MODE_INTERRUPT == attrs->operMode)
+                    {
+                        retVal = CANFD_readIntr(ptrCanMsgObj, data);
+                    }
+                    else
+                    {
+                        retVal = CANFD_readDma(ptrCanMsgObj, numMsgs, data);
+                    }
                 }
                 else
                 {
-                    retVal = CANFD_readDma(ptrCanMsgObj, &id, &frameType, &idType, data);
+                    retVal = CANFD_readPoll(ptrCanMsgObj, data);
                 }
-            }
-            else
-            {
-                retVal = CANFD_readPoll(ptrCanMsgObj, &id, &frameType, &idType, data);
+
+                if (retVal == SystemP_SUCCESS)
+                {
+                    if (ptrCanFdObj->openParams->transferMode == CANFD_TRANSFER_MODE_BLOCKING)
+                    {
+                        /* Block on transferSem till the read completion. */
+                        DebugP_assert(NULL_PTR != ptrCanFdObj->readTransferSem);
+                        retVal += SemaphoreP_pend(&ptrCanFdObj->readTransferSemObj, SystemP_WAIT_FOREVER);
+                        if (retVal != SystemP_SUCCESS)
+                        {
+                            retVal = CANFD_deConfigInstance(ptrCanFdObj);
+                        }
+                    }
+                }
             }
         }
     }
@@ -1697,7 +1723,7 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t msgId, CANFD_MCANFra
     return retVal;
 }
 
-static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCANFrameType* ptrFrameType, CANFD_MCANXidType* idType, uint8_t* data)
+static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
@@ -1732,32 +1758,6 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCA
         }
         if(retVal == SystemP_SUCCESS)
         {
-            /* Get the message Identifier */
-            if(ptrCanFdObj->rxBuffElem.xtd == MCAN_ID_TYPE_29_BIT)
-            {
-                /* Received frame with Extended ID */
-                *id = (uint32_t)(ptrCanFdObj->rxBuffElem.id);
-                *idType = CANFD_MCANXidType_29_BIT;
-            }
-            else
-            {
-                /* Received frame with Standard ID */
-                *id = (uint32_t)((ptrCanFdObj->rxBuffElem.id >> STD_MSGID_SHIFT) & STD_MSGID_MASK);
-                *idType = CANFD_MCANXidType_11_BIT;
-            }
-
-            /* Get the frame type */
-            if(ptrCanFdObj->rxBuffElem.fdf == MCAN_FRAME_TYPE_FD)
-            {
-                /* FD frame Received */
-                *ptrFrameType = CANFD_MCANFrameType_FD;
-            }
-            else
-            {
-                /* Classic frame Received */
-                *ptrFrameType = CANFD_MCANFrameType_CLASSIC;
-            }
-
             /* Copy the data */
             (void)memcpy ((void *)data, ptrCanFdObj->rxBuffElem.data, ptrCanMsgObj->dataLength);
 
@@ -1886,7 +1886,7 @@ static int32_t CANFD_readPollProcessFIFO(CANFD_MessageObject* ptrCanfdMsgObj, ui
     return retVal;
 }
 
-static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCANFrameType* ptrFrameType, CANFD_MCANXidType* idType, uint8_t* data)
+static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint8_t* data)
 {
     CANFD_MessageObject*    ptrCanMsgObj;
     int32_t                 retVal = SystemP_SUCCESS;
@@ -1909,43 +1909,6 @@ static int32_t CANFD_readPoll(CANFD_MsgObjHandle handle, uint32_t* id, CANFD_MCA
         retVal = SystemP_FAILURE;
     }
 
-    return retVal;
-}
-
-int32_t CANFD_readDmaConfig(CANFD_MsgObjHandle handle, const void* data, uint32_t numMsgs)
-{
-    CANFD_MessageObject*    ptrCanMsgObj;
-    CANFD_Object*           ptrCanFdObj;
-    int32_t                 retVal = SystemP_SUCCESS;
-
-    if(handle != NULL)
-    {
-        /* Get the message object pointer */
-        ptrCanMsgObj = (CANFD_MessageObject*)handle;
-
-        if (data == NULL)
-        {
-            retVal = SystemP_FAILURE;
-        }
-        else
-        {
-            /* Get the pointer to the CAN Driver Block */
-            ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
-
-            if (ptrCanFdObj == NULL)
-            {
-                retVal = SystemP_FAILURE;
-            }
-            else
-            {
-                retVal = CANFD_configureDmaRx(ptrCanFdObj, ptrCanMsgObj, handle->dataLength, numMsgs, data);
-            }
-        }
-    }
-    else
-    {
-        retVal = SystemP_FAILURE;
-    }
     return retVal;
 }
 
@@ -2822,42 +2785,112 @@ static int32_t CANFD_writeIntrProcess(CANFD_MsgObjHandle handle,
 }
 
 static int32_t CANFD_readDma(CANFD_MsgObjHandle handle,
-                              uint32_t* id,
-                              CANFD_MCANFrameType* ptrFrameType,
-                              CANFD_MCANXidType* idType,
+                              uint32_t numMsgs,
                               const uint8_t* data)
 {
-    int32_t retVal = SystemP_SUCCESS;
+    CANFD_MessageObject*    ptrCanMsgObj;
+    CANFD_Object*           ptrCanFdObj;
+    int32_t                 retVal = SystemP_SUCCESS;
 
-    retVal =  CANFD_readDmaConfig(handle, data, handle->dataLength);
+    if(handle != NULL)
+    {
+        /* Get the message object pointer */
+        ptrCanMsgObj = (CANFD_MessageObject*)handle;
 
+        if (data == NULL)
+        {
+            retVal = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Get the pointer to the CAN Driver Block */
+            ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
+
+            if (ptrCanFdObj == NULL)
+            {
+                retVal = SystemP_FAILURE;
+            }
+            else
+            {
+                retVal = CANFD_configureDmaRx(ptrCanFdObj, ptrCanMsgObj, handle->dataLength, numMsgs, data);
+            }
+        }
+    }
+    else
+    {
+        retVal = SystemP_FAILURE;
+    }
     return retVal;
 }
 
 int32_t CANFD_isDataSizeValid(uint32_t dataSize)
 {
-    uint32_t canfdDataSize = dataSize;
     int32_t status = SystemP_FAILURE;
+    uint32_t i;
 
-    if((canfdDataSize == MCAN_DATA_SIZE_0BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_1BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_2BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_3BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_4BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_5BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_6BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_7BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_8BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_12BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_16BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_20BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_24BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_32BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_48BYTES) ||
-       (canfdDataSize == MCAN_DATA_SIZE_64BYTES))
+    uint32_t canfdDataSize[CANFD_MAX_DLC_MAPPING] = 
+                    {0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
+                     12U, 16U, 20U, 24U, 32U, 48U, 64U};
+
+    for(i = 0U; i < CANFD_MAX_DLC_MAPPING; i++)
     {
-        status = SystemP_SUCCESS;
+        if(dataSize == canfdDataSize[i])
+        {
+            status = SystemP_SUCCESS;
+            break;
+        }
     }
 
     return status;
+}
+
+void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType)
+{
+    CANFD_Object*           ptrCanFdObj;
+
+    if(ptrCanMsgObj != NULL)
+    {
+        /* Get the pointer to the CAN Driver Block */
+        ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
+        /* Send next data over Tx message object */
+        (void) CANFD_writeDmaTriggerNext(ptrCanMsgObj);
+        
+        if(completionType == CANFD_DMA_TX_COMPLETION_FINAL)
+        {
+            if((ptrCanFdObj->openParams->transferMode) == CANFD_TRANSFER_MODE_CALLBACK)
+            {
+                ptrCanFdObj->openParams->transferCallbackFxn(ptrCanMsgObj, CANFD_Reason_TX_COMPLETION);
+            }
+            else
+            {
+                SemaphoreP_post((SemaphoreP_Object *)&ptrCanFdObj->writeTransferSemObj);
+            }
+        }
+    }
+
+    return;
+}
+
+void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType)
+{
+    CANFD_Object*           ptrCanFdObj;
+
+    if(ptrCanMsgObj != NULL)
+    {
+        /* Get the pointer to the CAN Driver Block */
+        ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
+        if(completionType == CANFD_DMA_RX_COMPLETION_FINAL)
+        {
+            if((ptrCanFdObj->openParams->transferMode) == CANFD_TRANSFER_MODE_CALLBACK)
+            {
+                ptrCanFdObj->openParams->transferCallbackFxn(ptrCanMsgObj, CANFD_Reason_RX);
+            }
+            else
+            {
+                SemaphoreP_post(&ptrCanMsgObj->canfdHandle->object->readTransferSemObj);
+            }
+        }
+    }
+    
+    return;
 }

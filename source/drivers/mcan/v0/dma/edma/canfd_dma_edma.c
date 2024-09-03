@@ -317,8 +317,7 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
         /* Store the current Tx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;
-        /* numMsg should numMsg - 1 because 1st transmission is done by the CANFD IP itself */
-        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - (uint32_t)1U;
+        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs;
         ptrCanMsgObj->dmaMsgConfig.data             = data;
         ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = (uint32_t)1U;
 
@@ -330,7 +329,7 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
         paramTx    = edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo];
 
         /* First msg is already copied to msg ram. Program the dma to transfer from second msg. */
-        srcAddr = (uint32_t) data + dataLengthPerMsg;
+        srcAddr = (uint32_t) data;
         /* Get the buffer address in message ram. */
         status = MCAN_getWriteMsgElemAddress(ptrCanFdObj->regBaseAddress, MCAN_MEM_TYPE_BUF,  ptrCanMsgObj->txElement, &dstAddr);
 
@@ -357,7 +356,7 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
             edmaTxParam.linkAddr      = (uint16_t)0xFFFFU;
             edmaTxParam.opt           = (uint32_t)0U;
             edmaTxParam.opt          |=
-                (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+                (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | ((((uint32_t)tccTx) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
             /* Write Tx param set */
             EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
@@ -365,14 +364,12 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
             /* Set event trigger to start CANFD TX transfer */
             retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
                                                EDMA_TRIG_MODE_EVENT);
-            if(retVal == (uint32_t)TRUE)
-            {
-                status = SystemP_SUCCESS;
-            }
-            else
-            {
-                status = SystemP_FAILURE;
-            }
+            DebugP_assert(retVal == (uint32_t)TRUE);
+
+            /* Set event trigger to start CANFD TX transfer */
+            retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
+                                               EDMA_TRIG_MODE_MANUAL);
+            DebugP_assert(retVal == (uint32_t)TRUE);
         }
     }
     else
@@ -425,8 +422,8 @@ static void CANFD_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
         ptrCanMsgObj->dmaMsgConfig.currentMsgNum++;
         currentDataPtr = (uint8_t *)(ptrCanMsgObj->dmaMsgConfig.data);
         currentDataPtr = currentDataPtr + ((ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg * ptrCanMsgObj->dmaMsgConfig.currentMsgNum));
-
-        if (ptrCanMsgObj->dmaMsgConfig.currentMsgNum == (ptrCanMsgObj->dmaMsgConfig.numMsgs))
+        /* Add 1 to numMsg to check complete msg has been transmitted or not, as 1st msg is already transferred by IP. */
+        if (ptrCanMsgObj->dmaMsgConfig.currentMsgNum == (ptrCanMsgObj->dmaMsgConfig.numMsgs + 1U))
         {
             /* All msgs are transmitted. */
             ptrCanFdObj = ptrCanMsgObj->canfdHandle->object;
@@ -449,15 +446,26 @@ static void CANFD_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
 
 static void CANFD_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
 {
-    uint8_t *currentDataPtr;
-    CANFD_MessageObject* ptrCanMsgObj = NULL;
+    uint8_t                *currentDataPtr;
+    uint32_t                mcanBaseAddr;
+    CANFD_Object           *ptrCanFdObj;
+    CANFD_MessageObject    *ptrCanMsgObj = NULL;
+    MCAN_RxNewDataStatus    newDataStatus = {0};
 
     if(NULL != args)
     {
         ptrCanMsgObj   = (CANFD_MessageObject *)(args);
+        /* Get the pointer to the CAN Driver Block */
+        ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
         ptrCanMsgObj->dmaMsgConfig.currentMsgNum++;
         currentDataPtr = (uint8_t *)(ptrCanMsgObj->dmaMsgConfig.data);
+        mcanBaseAddr    = ptrCanFdObj->regBaseAddress;
         currentDataPtr = currentDataPtr + ((ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg * ptrCanMsgObj->dmaMsgConfig.currentMsgNum));
+
+        /* Get the new data status */
+        MCAN_getNewDataStatus(mcanBaseAddr, &newDataStatus);
+        /* Clear NewData status to accept new messages */
+        MCAN_clearNewDataStatus(mcanBaseAddr, &newDataStatus);
 
         if (ptrCanMsgObj->dmaMsgConfig.currentMsgNum == (ptrCanMsgObj->dmaMsgConfig.numMsgs))
         {
@@ -624,15 +632,14 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
     uint32_t            dmaRxCh, tccRx, paramRx;
     EDMACCPaRAMEntry    edmaRxParam;
     CANFD_EdmaChConfig *edmaChCfg = NULL;
-    uint32_t            srcAddr, dstAddr, retVal = (uint32_t)FALSE;
+    uint32_t            srcAddr = 0U, dstAddr, retVal = (uint32_t)FALSE;
 
     if((NULL != ptrCanFdObj) && (NULL != ptrCanMsgObj))
     {
         edmaChCfg = (CANFD_EdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
         /* Store the current Rx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;
-        /* numMsg should numMsg - 1 because 1st transmission is done by the CANFD IP itself */
-        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs - (uint32_t)1;
+        ptrCanMsgObj->dmaMsgConfig.numMsgs          = numMsgs;
         ptrCanMsgObj->dmaMsgConfig.data             = data;
         ptrCanMsgObj->dmaMsgConfig.currentMsgNum    = (uint32_t)0;
 
@@ -660,7 +667,7 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
         if(status == SystemP_SUCCESS)
         {
             /* Add base address to the offset. */
-            srcAddr += ptrCanFdObj->regBaseAddress;
+            srcAddr += ptrCanFdObj->regBaseAddress + 8U;
             /* Program the dma to receive the msg. */
             dstAddr = (uint32_t) data;
 
@@ -668,7 +675,8 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
             EDMA_ccPaRAMEntry_init(&edmaRxParam);
             edmaRxParam.srcAddr       = (uint32_t) SOC_virtToPhy((void*) srcAddr);
             edmaRxParam.destAddr      = (uint32_t) SOC_virtToPhy((uint8_t *) dstAddr);
-            edmaRxParam.aCnt          = (uint16_t) dataLengthPerMsg;
+            /* DMA need to copy complete frame aCnt should be data + offset */
+            edmaRxParam.aCnt          = (uint16_t) dataLengthPerMsg; 
             edmaRxParam.bCnt          = (uint16_t) numMsgs;
             edmaRxParam.cCnt          = (uint16_t) 1U;
             edmaRxParam.bCntReload    = (uint16_t) edmaRxParam.bCnt;
@@ -687,14 +695,7 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
             /* Set event trigger to start CANFD Rx transfer */
             retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
                                                 EDMA_TRIG_MODE_EVENT);
-            if(retVal == (uint32_t)TRUE)
-            {
-                status = SystemP_SUCCESS;
-            }
-            else
-            {
-                status = SystemP_FAILURE;
-            }
+            DebugP_assert(retVal == (uint32_t)TRUE);
         }
     }
 

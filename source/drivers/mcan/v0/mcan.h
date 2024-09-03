@@ -1824,6 +1824,22 @@ int32_t MCAN_getWriteMsgElemAddress(uint32_t                 baseAddr,
                                      uint32_t                 *elemAddr);
 
 /**
+ * \brief   This API is used to write Tx message Header to message RAM.
+ *
+ * \param   baseAddr        Base Address of the MCAN Registers.
+ * \param   memType         Part of message ram to which given message to write.
+ *                          Refer enum MCAN_MemType.
+ * \param   bufNum          Buffer  number where message to write.
+ *                          This parameter will ignored if memType is FIFO/Q.
+ * \param   elem            Message Object.
+ *                          Refer struct MCAN_TxBufElement.
+ */
+void MCAN_writeHeaderToMsgRam(uint32_t                 baseAddr,
+                              uint32_t                 memType,
+                              uint32_t                 bufNum,
+                              const MCAN_TxBufElement *elem);
+
+/**
  * \brief   This API is used to write Tx message to message RAM.
  *
  * \param   baseAddr        Base Address of the MCAN Registers.

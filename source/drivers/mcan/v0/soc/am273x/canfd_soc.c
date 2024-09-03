@@ -51,6 +51,10 @@
 #include <drivers/mcan/v0/canfd.h>
 
 /* ========================================================================== */
+/*                              GLobal Variables                              */
+/* ========================================================================== */
+
+/* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
@@ -126,7 +130,7 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
             txBuffElem.dlc = index;
             if (index == 16U)
             {
-                retVal = MCAN_INVALID_PARAM;
+                retVal = SystemP_FAILURE;
             }
             else
             {
@@ -138,22 +142,13 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
                     index++;
                     padSize--;
                 }
-                /* Copy the first msg in msg ram. Subsequent msgs are written by the dma. */
-                MCAN_writeMsgRam(baseAddr, MCAN_MEM_TYPE_BUF, ptrCanMsgObj->txElement, &txBuffElem);
+
+                /* Copy the header to Tx Buffer. */
+                MCAN_writeHeaderToMsgRam(baseAddr, MCAN_MEM_TYPE_BUF, ptrCanMsgObj->txElement, &txBuffElem);
 
                 /* Configure the dma to copy the subsequent msgs */
                 retVal = CANFD_configureDmaTx(ptrCanFdObj, ptrCanMsgObj, ptrCanMsgObj->dataLength, numMsgs, data);
-
-                /* Critical Section Protection */
-                //key = HwiP_disable();
-
-                retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
-
                 ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
-
-                /* Release the critical section: */
-                //HwiP_restore(key);
-
                 /* Increment the stats */
                 ptrCanMsgObj->messageProcessed++;
             }
