@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -235,6 +235,9 @@ void test_fsi_txrx(void *args)
 
     SemaphoreP_pend(&txTestParams->taskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
     SemaphoreP_pend(&rxTestParams->taskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
+
+    TaskP_destruct(&gFsiRxTaskObject);
+    TaskP_destruct(&gFsiTxTaskObject);
 
     /* Compare data */
     if ((rxTestParams->rxFrameWDTest != TRUE) && (rxTestParams->rxPingWDTest != TRUE) )

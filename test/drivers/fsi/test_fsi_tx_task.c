@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -176,7 +176,12 @@ void fsi_tx_main(void *args)
     }
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
-    TaskP_exit();
+
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 void fsi_tx_hwPingTest(void *args)
