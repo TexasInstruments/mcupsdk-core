@@ -54,7 +54,7 @@ With OptiFlash technology the following hardware blocks has been introduced for 
 
 #### OSPI
 
-QSPI has been replaced with OSPI or Octal-SPI. The main difference is in the bus width and clock frequency. In AM263Px, OSPI is running at max 133MHz DDR over 8 data lines.
+QSPI has been replaced with OSPI or Octal-SPI. The main difference is in the bus width and clock frequency. In AM263Px, OSPI is running at max 133MHz DDR on 8 data lines.
 
 #### RL2
 
@@ -63,8 +63,6 @@ RL2 or remote Layer 2 cache is added. This, basically, is a L2 cache which can b
 What this allows is to have a L1 and L2 cache architecture in microcontroller. L1 cache being the CPU cache and L2 being RL2 cache. One point to note is that since external flash only contains read-only data, L2 cache is effectively caching code and rodata only.
 
 #### FLC For Overlays
-
-\note This will be part of future release.
 
 FLC or Fast Local Copy is essentially a very simplified DMA but with the ability to allow concurrent execution.
 
@@ -85,18 +83,25 @@ Smart placement is a name given to a process, using which functions and other li
 
 All the above different blocks can be used together to boost the system level performance and the way that can be achieved is
 1. Configure OSPI to work in highest speed configuration.
-2. Enable RL2
-3. Use Smart Placement to identify critical functions and place them in faster memory.
-4. Use Overlay schemes to download function at runtime.
+2. Use Smart Placement to identify critical functions and place them in faster memory.
+3. Use Overlay schemes to download function at runtime.
+4. Enable RL2
 
-However, step 3 and 4 are optional.
 
-The Logic behind these steps is, suppose, all the functions in a program are in external FLASH and are being XIPed and to improve system performance, it is required to bring a few functions in the internal memory because internal memory is limited. Now the question is what functions are to be brought in the internal memory? Answer to this question is smart placement. Using smart placement, all the performance critical function can be brought in the internal memory which is fast. For few functions, overlay schemes can be used. So all critical function's performance is improved by bringing them in internal memory, however, for rest of the functions which are either not critical or were impossible to be accommodated in the internal memory, then can be accelerated by using L2 cache or RL2.
+The Logic behind these steps is, suppose, all the functions in a program are in external FLASH and are being XIPed and to improve system performance, it is required to bring a few functions in the internal memory because internal memory is limited. Now the question is what functions are to be brought in the internal memory? Answer to this question is smart placement. Using smart placement, all the performance critical function can be brought in the internal memory (which is fast). 
+
+However, there can functions which are performance critical but couldn't be placed in internal memory (lets say the internal memory is full). These functions can be accelerated using runtime function overlays. So such critical function's performance is improved by bringing them in internal memory.
+
+For rest of the functions which are either not critical or were impossible to be accommodated in the internal memory, then can be accelerated by using L2 cache or RL2.
+
+Notice that, the effort here is place critical function in the faster memory and all these tools are used to achieve this. 
+
+Enabling RL2 is the easiest and quickest step. So, enabling it in during the starting of the development is also possible.
 
 
 ### Safety & Security
 
-\note This will be part of future release.
+\note Not released.
 
 \imageStyle{am263px_saf_sec_perf.png,width:50%}
 \image html am263px_saf_sec_perf.png "AM2x devices with OptiFlash technology. Blocks marked in RED are specifically put to provide safety and security."
@@ -113,7 +118,7 @@ This allows XIP with full safety and security using hardware accelerators. Using
 
 ### Improving startup time
 
-\note This will be part of future release.
+\note Not released.
 
 There are many situations, where startup time of any application should be less to achieve system level performance goal. OptiFlash technology brings in some hardware and software features that helps to reduce boot/startup time of an application.
 
@@ -151,7 +156,7 @@ In context to the above diagram, the way FLC would solve this problem is that fo
 
 ### OptiShare: Removing Redundant Code
 
-\note This will be part of future release.
+\note Not released.
 
 When it comes to high performance MCU which has many cores, using traditional method of compilation is not efficient. Normally, for a microcontroller, compilation goes like the follows:
 1. Compilation/assembling of source code written in different programming languages.
@@ -190,8 +195,6 @@ At run time, this hardware needs to be programmed by the application software be
 
 ### How to perform Firmware-Upgrade-Over-Air
 
-\note This will be part of future release.
-
 In typical microcontroller with embedded flash, to be able to perform FOTA, embedded flash size should be more than the double the size of application, because, at a time 2 copy of same application would be stored, in flash. One would be an active application and other would be different version of the application. However, this puts high constraint on embedded flash requirement and this requirement translates to increased BOM cost. Effectively, for an active application, available internal memory is half of total internal memory.
 
 With external flash solution with OptiFlash technology technology, entire internal memory can be used for active image of application. For example, in AM263Px, internal RAM is 3.5MB of total internal memory. An active image of application can use entire internal memory and for new version image of application can be stored in external Flash. Therefore, when looking from typical microcontroller perspective, effective total memory available in AM263Px is alteast 7MB.
@@ -211,7 +214,9 @@ To read more on this please refer to
 
 ## XIP Performance Benchmarks
 
-### Benchmark 1
+### Benchmark 1 (Internal)
+
+\note not released
 
 An application has been developed on which XIP performance benchmarks has been done to see how much performance degradation is seen with OptiFlash technology.
 
@@ -236,4 +241,6 @@ RL2 Cache Size (KB) | Performance Degradation
  32KB               | 1.73x
  128KB              | 1.10x
 
-When on same application, Smart Placement is applied, then 10% boost in performance is seen. More on this can be read at \ref BENCHMARK_SMART_PLACEMENT.
+### Benchmark 2
+
+When on same application (Benchmark #1), Smart Placement is applied, then 10% boost in performance is seen. More on this can be read at \ref BENCHMARK_SMART_PLACEMENT.
