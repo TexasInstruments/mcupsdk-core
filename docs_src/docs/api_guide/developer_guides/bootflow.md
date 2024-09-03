@@ -265,17 +265,19 @@ However the steps to convert the application `.out` into a bootable image are di
   - This copies the loadable sections from the .out into a binary image stripping all symbol and section information.
   - If there are two loadable sections in the image which are not contiguous then `objcopy` fills the gaps with `0x00`.
   - It is highly recommended to keep all loadable sections together within a SBL application.
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X || SOC_AM65X
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+- This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
+   - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
+- Refer \ref SBL_SIGNING for details on signing SBL image.
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AWR294X || SOC_AM65X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
    - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
    - The rom_degenerateKey.pem is used for this.
    - This is a ROM bootloader requirement and is needed even on a non-secure device.
    - The signing tools take the `.bin` file
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
-- The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM. This firmware provides various foundational security services. For HS-FS ,this can be found at source/drivers/hsmclient/soc/am263x/hsmRtImg.h. For HS-SE devices, more information can be found at MySecureSW. For integrating HSM RunTime with SBL, the following should be taken care of:
-   - HSMClient should be initialized and registered.
-   - HSMRT (TIFS-MCU) image signed appropriately should be available. For HS-FS, this is already part of the SDK, for HS-SE, this can be compiled with TIFS-MCU package (available on MySecureSW)
-\endcond
 \cond SOC_AM273X || SOC_AWR294X
 - The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM on HS-SE devices. This firmware provides various foundational security services. More information can be found at MySecureSW. Support for HS-FS will be provided in upcoming releases. For integrating HSM RunTime with SBL, the following should be taken care of:
    - HSMClient should be initialized and registered.
@@ -288,7 +290,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - **HS-FS** device:
     - `sbl_xxx.release.hs_fs.tiimage` [`hs_fs` prefix before `.tiimage`]
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X
   - **HS-FS** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
 \endcond
@@ -304,7 +306,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM64X || SOC_AM243X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device.
 \endcond
 - The `.tiimage` file can then be flashed or copied to a boot image using the \ref TOOLS_FLASH
@@ -318,7 +320,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \image html tiimage_k3.png "TIIMAGE"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X
 \imageStyle{tiimage_normal.png,width:20%}
 \image html tiimage_normal.png "TIIMAGE"
 \endcond
@@ -332,8 +334,6 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 \note RPRC format would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
-
-\endcond
 
 ### Booting RPRC application {#BOOTFLOW_RPRC_BOOT}
 
@@ -349,6 +349,10 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \inlineVideo{sbl_boot.mp4,SBL BOOT for RPRC,width=50%}
 
+\cond !SOC_AM263X 
+- To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
+\endcond
+
 ### Booting MCELF application {#BOOTFLOW_MCELF_BOOT}
 
 - In this case, SBL looks for the **multicore elf** image (refer \ref TOOLS_BOOT for more on multicore elf image)
@@ -361,12 +365,42 @@ However the steps to convert the application `.out` into a bootable image are di
 \imageStyle{mcelf_sbl_boot.png,width:70%}
 \image html mcelf_sbl_boot.png "SBL Boot for MCELF"
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX || SOC_AM261X
+\cond !SOC_AM263X 
 - To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
 \endcond
 
-- Now, as mentioned above, to boot an application with SBL it has to be specially prepared after it's compiled.
+\endcond
 
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+### SBL Boot
+
+- An SBL typically does a bunch of SOC specific initializations and proceeds to the application loading.
+- Depending on the type of SBL loaded, SBL looks for the **multicore appimage** (refer \ref TOOLS_BOOT for more on multicore appimage)
+  of the application binary at a specified location in a boot media.
+- If the appimage is found, the multicore appimage is parsed into multiple **RPRCs**. These are optimized binaries which
+  are then loaded into individual CPUs.
+- Each RPRC image will have information regarding the core on which it is to be loaded, entry points and multiple sections
+  of that application binary
+- The SBL uses this information to initialize each core which has a valid RPRC. It then loads the RPRC according to the
+  sections specified, sets the entry points and releases the core from reset. Now the core will start running.
+
+\inlineVideo{sbl_boot.mp4,SBL BOOT,width=50%}
+
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+- To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+Now, as mentioned above, to boot an application with SBL it has to be specially prepared. Refer here \ref BUILDING_APPLICATION to see how an application is prepared to be bootable.
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+Now, as mentioned above, to boot an application with SBL it has to be specially prepared after it's compiled.
+\endcond
+
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 #### Preparing the application for boot
 
 \note To see the exact sequence of steps in which applications and secondary bootloader (SBL) are converted from compiler generated .out files to
@@ -394,11 +428,10 @@ and booting
 \image html bootflow_post_build_steps.png "Post build steps"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
 
-##### RPRC Image
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
   - `multiCoreGen` is then used to combine all the RPRC files per CPU into a single `.appimage` file which is a concatenation of the
      individual CPU specific RPRC files.
@@ -406,14 +439,6 @@ and booting
 
 \imageStyle{bootflow_post_build_steps_no_xip.png,width:50%}
 \image html bootflow_post_build_steps_no_xip.png "Post build steps RPRC"
-
-##### MCELF Image
-  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
-  - This .mcelf file contains metadata and segments along with information like segment type, load address, size, alignment.
-  - The `.mcelf` file is then flashed to the board.
-
-\imageStyle{mcelf_bootflow_post_build_steps_no_xip.png,width:60%}
-\image html mcelf_bootflow_post_build_steps_no_xip.png "Post build steps MCELF"
 
 \endcond
 
@@ -423,12 +448,14 @@ and booting
 - Once the application images (`.appimage` and `.appimage_xip`) are created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X
 - Once the application image (`.appimage`/`.mcelf`) is created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
 - When flashing the application we also need to flash a bootloader or SBL image.
 - See \ref TOOLS_FLASH for detailed steps that are done to flash a user application
+
+\endcond
 
 #### Booting the application
 
@@ -532,6 +559,8 @@ pBIST (parallel Built-In Self-Test) can be performed for both 200MHz and 400MHz 
 
 To know more about pBIST and overall SDL support for pBIST, please take a look at \ref SDL_PBIST_PAGE
 \endcond
+
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 ## Deep Dive into SBLs
 
 The SBL is like any other example of the SDK. They use the bootloader library APIs to carry out the bootloading process.
@@ -756,6 +785,8 @@ board running \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST.
 - This location or offset is specified in the SysConfig of the `sbl_emmc_linux` application. Currently this is 0x800000 for RTOS/NORTOS images and 0xA00000 for Linux application image. In most cases you wouldn't need to change this.
 
 - To flash an application (or any file in fact) to a location in the eMMC, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
+
+\endcond
 
 \endcond
 

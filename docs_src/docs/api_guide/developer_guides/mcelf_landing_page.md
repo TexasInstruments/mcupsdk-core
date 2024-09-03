@@ -50,9 +50,9 @@ For more information on ELF format please refer https://man7.org/linux/man-pages
     <td>Supported
 </tr>
 <tr>
-    <td bgcolor=#F0F0F0>Secure boot time for application size x KB</td>
-    <td>x ms
-    <td>x ms
+    <td bgcolor=#F0F0F0>Secure boot time</td>
+    <td>Slow
+    <td>Very fast
 </tr>
 </table>
 

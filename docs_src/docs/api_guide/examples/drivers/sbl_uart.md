@@ -10,8 +10,6 @@ This bootloader does SOC initializations and attempts to boot a multicore appima
 
 \note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
 
-\endcond
-
 # SBL UART MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_UART_MCELF}
 
 To parse and load an **mcelf** file via UART bootloader, use the project **examples/drivers/boot/sbl_uart_multicore_elf**
@@ -19,6 +17,8 @@ To parse and load an **mcelf** file via UART bootloader, use the project **examp
 When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset. For more information refer \ref BOOTFLOW_GUIDE
 
 The steps to run the example is same irrespective of the image format.
+
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_UART_COMBOS}
 

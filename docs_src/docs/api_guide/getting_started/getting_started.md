@@ -113,7 +113,16 @@ I2C Target              | I2C device which responds to I2C Controller
 \else
 - **Step 3:** Setup EVM for program execution, see \subpage EVM_SETUP_PAGE
 
-\cond SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+- **Step 4:** Building, Loading and running the example, see \subpage BUILD_LOAD_RUN_EXAMPLE
+      - **Step 4.a:** \subpage BUILDING_APPLICATION
+      - **Step 4.b:** \subpage LOADING_APPLICATION
+      - **Step 4.c:** \subpage RUNNING_APPLICATION
+
+- **Step 5:** Additional Details, see \subpage ADDITIONAL_DETAILS_PAGE
+\endcond
+
+\cond  SOC_AM273X
 - **Step 4:** Loading and running the example, see \subpage LOAD_RUN_EXAMPLE
 
 - **Step 5:** Additional Details, see \subpage ADDITIONAL_DETAILS_PAGE

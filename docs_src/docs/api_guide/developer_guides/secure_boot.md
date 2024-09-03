@@ -275,7 +275,7 @@ For signing the binaries, two different scripts are used:
 
 ### Generating Secure Boot Image
 
-#### SBL Image Generation
+#### SBL Image Generation {#SBL_SECURE_IMAGE}
 
 \cond SOC_AM64X || SOC_AM243X
 In AM64x/AM243x devices, a combined boot method is employed, by virtue of which the SBL, SYSFW and the SYSFW-BoardConfig are combined and signed with the same certificate. This is built into the make system of the SBL applications in the SDK - SBL_UART, SBL_OSPI, SBL_SD, SBL_NULL, etc. So whenever an SBL application is built, the loadable `*.tiimage` will be a concatenation of the x509 certificate, SBL binary, SYSFW binary and the boardcfg binary blob. In case of HS devices, the SYSFW inner certificate will also be concatenated.
@@ -415,7 +415,7 @@ For certificate generation script usage, see \ref KEYRING_CERT_GEN_PYTHON_SCRIPT
 As mentioned above, since we follow a combined boot method, SYSFW and SBL is signed with the same certificate using the same key. In case of a GP device this will be a degenerate key for easy parsing from ROM. In the case of an HS device, SYSFW will be already signed with TI MPK (and encrypted). This is then countersigned again with dummy customer MPK during the combined image generation process.
 \endcond
 
-#### Secure application image Generation
+#### Secure application image Generation {#APPLICATION_SECURE_IMAGE}
 
 Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` file generated would be signed with customer MPK (and encrypted with customer MEK if that option is selected).
 \cond SOC_AM64X | SOC_AM243X

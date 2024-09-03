@@ -34,7 +34,7 @@ To build applications using this SDK, one needs below host PC machine
 
 ## Download and Install Additional SDK Tools
 
-### SysConfig
+### SysConfig {#INSTALL_SYSCONFIG}
 
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
 - Download SysConfig 1.21.0 and Install at below path,

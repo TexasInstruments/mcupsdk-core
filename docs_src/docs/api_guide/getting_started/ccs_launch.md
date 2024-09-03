@@ -94,7 +94,7 @@ A quick recap of the steps that need to have been done before you proceed
 
 \endcond
 
-## Load and run example binaries {#CCS_LOAD_RUN}
+## Load and run example binaries in CCS {#CCS_LOAD_RUN}
 
 \cond SOC_AM64X
 \note When debugging R5/M4 Core applications along with Linux running on A53 core,

@@ -23,8 +23,6 @@ This bootloader runs in three steps:
 
 \note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
 
-\endcond
-
 # SBL SD MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_SD_MCELF}
 
 To parse and load an **mcelf** file via SD bootloader, use the project **examples/drivers/boot/sbl_sd_multicore_elf**
@@ -32,6 +30,8 @@ To parse and load an **mcelf** file via SD bootloader, use the project **example
 When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset.
 
 The steps to run the example is same irrespective of the image format.
+
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_SD_COMBOS}
 

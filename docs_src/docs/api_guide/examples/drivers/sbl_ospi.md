@@ -12,11 +12,10 @@ This bootloader does SOC initializations and attempts to boot a multicore appima
 
 If a multicore appimage is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX || SOC_AM261X
 
 \note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
 
-\endcond
 
 # SBL OSPI MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_OSPI_MCELF}
 
@@ -28,15 +27,19 @@ The steps to run the example is same irrespective of the image format.
 
 # SBL OSPI FASTBOOT {#EXAMPLES_DRIVERS_SBL_OSPI_FASTBOOT_MCELF}
 
-This is a variant of SBL_OSPI_MULTICORE_ELF that gives the fastest boot time numbers.
-
-hsmrt point
-
-It has all Profile logs disabled.
-
-Steps to run the example is same as SBL_OSPI.
+ADD STUFF HERE
 
 # SBL OSPI SWAP {#EXAMPLES_DRIVERS_SBL_OSPI_SWAP}
+
+SBL_OSPI_SWAP provides boot region swaping mechanism based on information provided in the boot sector (4KB) 0x80000.
+
+If the byte at address 0x80080 is 0, 0x80081 is 0, 0x80082 is 0, 0x80083 is 1, then this SBL will boot from 2nd half of flash and if there is any other value in any of the above address then this SBL will boot from 1st half of flash.  
+
+For more on exact mechanism of this switching please refer \ref bootseg_ip_working. If it fails to boot from selected boot region, then it will try to boot from other region and if it fails again then SBL fails to boot application.
+
+This also has anti-rollback support. User Application needs to make sure that minimum application number in the HSM should corresponds to the intended application version.
+
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_OSPI_COMBOS}
 

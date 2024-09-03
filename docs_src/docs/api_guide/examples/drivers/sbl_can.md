@@ -20,8 +20,6 @@ This bootloader runs in two steps:
 
 \note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
 
-\endcond
-
 # SBL CAN MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_CAN_MCELF}
 
 To parse and load an **mcelf** file via CAN bootloader, use the project **examples/drivers/boot/sbl_can_multicore_elf**
@@ -29,6 +27,8 @@ To parse and load an **mcelf** file via CAN bootloader, use the project **exampl
 When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset.
 
 The steps to run the example is same irrespective of the image format.
+
+\endcond
 
 # Protocol
 A simple custom made protocol is created for communication between the Host Machine and the Board. Messages between a CAN bootloader host and the target use a simple command and acknowledge

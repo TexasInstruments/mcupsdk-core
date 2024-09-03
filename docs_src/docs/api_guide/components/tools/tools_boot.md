@@ -74,7 +74,7 @@ This section describes the various tools that are used to create boot images for
 
 \endcond
 
-## Out2RPRC
+## Out2RPRC {#OUT2RPRC_TOOL}
 
 - This tool converts the application executable (.out) into custom TI RPRC (.rprc) image - an image loadable by the secondary bootloader (SBL).
 - This tool strips out the initialized sections from the executable file (*.out) and places them in a compact format that the SBL can understand.
@@ -130,7 +130,7 @@ GROUP {
     } > OCRAM
 ```
 
-## Multi-core Image Gen
+## Multi-core Image Gen {#MULTICOREIMAGEGEN_TOOL}
 
 - This tool converts the RPRC files created for each CPU into a single combined multicore application image that can be booted by the secondary bootloader (SBL)
 - Shown below is the file format for multicore image files.
