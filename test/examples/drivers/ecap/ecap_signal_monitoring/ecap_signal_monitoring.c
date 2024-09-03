@@ -72,12 +72,12 @@
  *         for the signal monitoring to be working.
  *
  *      2. For Edge Monitoring, there needs to be a Sync pulse from an EPWM to
- *         restart the monitoring.
+ *         reset the monitoring.
  *
  *      3. For Pulse or Peroid Monitoring there should not be a Sync in enabled.
  *
  *      4. The error1 and error2 are used for the min window violation error and
- *         the max window violation error in the pulse/ period monitoring.
+ *         the max window violation error in the monitoring.
  *         Once these are set, in order to restart the monitoring, one needs to
  *         re-enable the monitoring unit and start timestamping on ecap.
  *
@@ -141,7 +141,6 @@ volatile uint16_t gPwm_period = PWM_INIT_PERIOD;
 uint8_t gPwm_updateFlag = FALSE;
 uint8_t testCase = TEST_STATE_PULSE;
 
-// static SemaphoreP_Object  gEcapSyncSemObject;
 static SemaphoreP_Object  gEpwmSyncSemObject;
 
 int32_t             status;
@@ -171,7 +170,7 @@ ECAP base addresses :
 
 
 /* Function Prototypes */
-/* Common ISR for the Signal Monitoring errors from All the ECAPs  */
+/* Common ISR for the Signal Monitoring errors from All the ECAPs */
 
 /* ISR to update the EPWM Signal controllably */
 void App_registerInterrupt(void);
@@ -215,9 +214,9 @@ void ecap_signal_monitoring_main(void *args)
                     2. the Low Pulse Width Low error
                 */
 
-                /* Pulse or Period monitoring, once passed an error, will be disabled immediately. If we want to restart the monitoring, please uncomment the following */
-                // App_restartMonitoring(MON_PULSE_HIGH_BASE_ADDR);
-                // App_restartMonitoring(MON_PULSE_LOW_BASE_ADDR);
+                /* Signal monitoring, once passed an error, will be disabled immediately. restarting the monitoring for this test */
+                App_restartMonitoring(MON_PULSE_HIGH_BASE_ADDR);
+                App_restartMonitoring(MON_PULSE_LOW_BASE_ADDR);
 
                 /* Update the input to cross bounds */
                 App_updateEpwmInput(PWM_INIT_ON_EDGE_TIME - 50, PWM_INIT_OFF_EDGE_TIME + 50, PWM_INIT_PERIOD);
@@ -266,7 +265,9 @@ void ecap_signal_monitoring_main(void *args)
                     Sync event restarts the Monitoring.
                 */
 
-                /* Edge Monitoring will automatically restart if there is a sync in coming. */
+                /* Signal monitoring, once passed an error, will be disabled immediately. restarting the monitoring for this test */
+                App_restartMonitoring(MON_POSEDGE_BASE_ADDR);
+                App_restartMonitoring(MON_NEGEDGE_BASE_ADDR);
 
                 App_updateEpwmInput(PWM_INIT_ON_EDGE_TIME - 150, PWM_INIT_OFF_EDGE_TIME + 150, PWM_INIT_PERIOD);
 
@@ -308,9 +309,9 @@ void ecap_signal_monitoring_main(void *args)
                 this should trigger Both Period monitors High error
                 */
 
-                /* Pulse or Period monitoring, once passed an error, will be disabled immediately. If we want to restart the monitoring, please uncomment the following */
-                // App_restartMonitoring(MON_PERIOD_HIGH_BASE_ADDR);
-                // App_restartMonitoring(MON_PERIOD_LOW_BASE_ADDR);
+                /* Signal monitoring, once passed an error, will be disabled immediately. restarting the monitoring for this test */
+                App_restartMonitoring(MON_PERIOD_HIGH_BASE_ADDR);
+                App_restartMonitoring(MON_PERIOD_LOW_BASE_ADDR);
 
                 App_updateEpwmInput(PWM_INIT_ON_EDGE_TIME, PWM_INIT_OFF_EDGE_TIME, PWM_INIT_PERIOD + 150);
 
@@ -449,33 +450,15 @@ static void App_ecapIsr(void* args)
     }
     if(ECAP_getGlobalInterruptStatus(MON_POSEDGE_BASE_ADDR) == TRUE)
     {
-        /* preserve read state because the sync in will restart the monitoring. */
-        if(testCase == TEST_STATE_EDGE)
-        {
-            gPosedgeMonErrorStatus = ECAP_getInterruptSource(MON_POSEDGE_BASE_ADDR);
-        }
-        else
-        {
-            /*  */
-        }
+        gPosedgeMonErrorStatus = ECAP_getInterruptSource(MON_POSEDGE_BASE_ADDR);
         ECAP_clearInterrupt(MON_POSEDGE_BASE_ADDR, ECAP_ISR_SOURCE_ALL);
         ECAP_clearGlobalInterrupt(MON_POSEDGE_BASE_ADDR);
-        // App_restartMonitoring(MON_POSEDGE_BASE_ADDR);
     }
     if(ECAP_getGlobalInterruptStatus(MON_NEGEDGE_BASE_ADDR) == TRUE)
     {
-        /* preserve read state because the sync in will restart the monitoring. */
-        if(testCase == TEST_STATE_EDGE)
-        {
-            gNegedgeMonErrorStatus = ECAP_getInterruptSource(MON_NEGEDGE_BASE_ADDR);
-        }
-        else
-        {
-            /*  */
-        }
+        gNegedgeMonErrorStatus = ECAP_getInterruptSource(MON_NEGEDGE_BASE_ADDR);
         ECAP_clearInterrupt(MON_NEGEDGE_BASE_ADDR, ECAP_ISR_SOURCE_ALL);
         ECAP_clearGlobalInterrupt(MON_NEGEDGE_BASE_ADDR);
-        // App_restartMonitoring(MON_NEGEDGE_BASE_ADDR);
     }
 }
 
@@ -516,7 +499,6 @@ void App_updateEpwmInput(uint16_t onTime, uint16_t offTime, uint16_t period)
 
 void App_restartMonitoring(uint32_t base)
 {
-    /* Once the Edge Monitoring is  */
     ECAP_enableSignalMonitoringUnit(base, ECAP_MONITORING_UNIT_1);
     ECAP_enableTimeStampCapture(base);
 

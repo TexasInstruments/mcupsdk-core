@@ -25,10 +25,10 @@ Debug Mode is present, for when enabled, the events occuring in the min-max wind
 \note
 1. The ECAP should be in Absolute mode where no CAPEVT reset the counters for the signal monitoring to be working.
 
-2. For Edge Monitoring, there needs to be a Sync pulse from an EPWM to restart the monitoring.
+2. For Edge Monitoring, there needs to be a Sync pulse from an EPWM to reset the monitoring but not restart.
 3. For Pulse or Peroid Monitoring there should not be a Sync in enabled.
 
-4. The error1 and error2 are used for min window violation error and max window violation error in the pulse/ period monitoring. once these are set, in order to restart the monitoring, one needs to re-enable the monitoring unit and start timestamping on ecap.
+4. The error1 and error2 are used for min window violation error and max window violation error in the monitoring. once these are set, in order to restart the monitoring, one needs to re-enable the monitoring unit and start timestamping on ecap.
 
 5. On the Edge monitoring modes, the error1 is set for min or max window violation. the error2 is set if there is never an edge between two sync events. For every sync pulse, the edge monitoring restarts.
 
