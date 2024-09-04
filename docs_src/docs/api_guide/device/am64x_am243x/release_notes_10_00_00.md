@@ -2,9 +2,12 @@
 
 [TOC]
 
-\attention Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled. See **Known Issues** below.
 
-\attention A53 support is applicable for AM64x only. It is NOT applicable for AM243x. \n
+\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+
+\attention 3. A53 support is applicable for AM64x only. It is NOT applicable for AM243x. \n
+
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless noted otherwise, the SW modules would work in both FreeRTOS and NORTOS environment. \n
@@ -514,6 +517,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Applicable Releases
     <th> Applicable Devices
     <th> Workaround
+</tr>
+<tr>
+    <td> MCUSDK-13641
+    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
+    <td> Build
+    <td> 10.00.00 onwards
+    <td> All SoCs
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-13350

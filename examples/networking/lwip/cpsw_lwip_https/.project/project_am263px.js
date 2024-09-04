@@ -89,6 +89,7 @@ const defines_r5f = {
 const cflags_r5f = {
     release: [
         "-Oz",
+        "-flto",
     ],
 };
 
@@ -96,7 +97,8 @@ const lflags_r5f = {
     common: [
         "--zero_init=on",
         "--use_memset=fast",
-        "--use_memcpy=fast"
+        "--use_memcpy=fast",
+        "--mapfile_contents=noltosymrefs"
     ],
 };
 

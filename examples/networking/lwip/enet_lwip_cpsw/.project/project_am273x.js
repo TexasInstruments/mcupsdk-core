@@ -100,13 +100,14 @@ const lflags_r5f = {
     common: [
         "--zero_init=on",
         "--use_memset=fast",
-        "--use_memcpy=fast"
+        "--use_memcpy=fast",
     ],
     debug: [
         "--rom_model",
     ],
     release: [
         "--rom_model",
+        "--mapfile_contents=noltosymrefs"
     ],
 };
 

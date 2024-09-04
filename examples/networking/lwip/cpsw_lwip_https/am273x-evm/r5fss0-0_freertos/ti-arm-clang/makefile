@@ -98,6 +98,7 @@ DEFINES_common := \
 CFLAGS_release := \
 	-Os \
 	-Oz \
+	-flto \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -158,6 +159,7 @@ LFLAGS_common = \
 	-Wl,--zero_init=on \
 	-Wl,--use_memset=fast \
 	-Wl,--use_memcpy=fast \
+	-Wl,--mapfile_contents=noltosymrefs \
 
 LNKOPTFLAGS_release = \
 		   -mcpu=cortex-r5 \

@@ -164,6 +164,7 @@ LFLAGS_debug = \
 
 LFLAGS_release = \
 	-Wl,--rom_model \
+	-Wl,--mapfile_contents=noltosymrefs \
 
 LNKOPTFLAGS_release = \
 		   -mcpu=cortex-r5 \

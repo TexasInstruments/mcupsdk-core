@@ -82,7 +82,8 @@ const lflags_r5f = {
     common: [
         "--zero_init=on",
         "--use_memset=fast",
-        "--use_memcpy=fast"
+        "--use_memcpy=fast",
+        "--mapfile_contents=noltosymrefs"
     ],
 };
 

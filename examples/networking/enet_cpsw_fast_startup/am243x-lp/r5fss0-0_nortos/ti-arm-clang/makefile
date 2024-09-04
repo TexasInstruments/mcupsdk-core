@@ -138,6 +138,7 @@ LFLAGS_common = \
 	-Wl,--zero_init=on \
 	-Wl,--use_memset=fast \
 	-Wl,--use_memcpy=fast \
+	-Wl,--mapfile_contents=noltosymrefs \
 
 
 LIBS_NAME = \

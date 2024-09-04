@@ -1,8 +1,9 @@
 # Release Notes 10.00.00 {#RELEASE_NOTES_10_00_00_PAGE}
 
 [TOC]
+\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled. See **Known Issues** below.
 
-\attention Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -217,6 +218,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Module
     <th> Reported in release
     <th> Workaround
+</tr>
+<tr>
+    <td> MCUSDK-13641
+    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
+    <td> Build
+    <td> 10.00.00 onwards
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-7319
