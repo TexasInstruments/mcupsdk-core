@@ -173,6 +173,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Head Line
     <th> Module
     <th> Applicable Releases
+    <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
 <tr>
@@ -197,6 +198,14 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 08.06.00 Onwards
     <td> AM263x
     <td> Added examples for ECC test on R5F cache memories.
+</tr>
+<tr>
+    <td> PINDSW-8097
+    <td> Wrong PHY Config when using the QSPI Boot mode
+    <td> ICSS-EMAC
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the application intiialization sequence and added required delay for PHY Powerup to SMI ready.
 </tr>
 </table>
 
@@ -289,6 +298,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
 <tr>
     <td> PINDSW-7746
     <td> icss_emac_lwip example having low iperf values in TCP and UDP
+    <td> ICSS-EMAC
+    <td> 09.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8118
+    <td> Enabling DHCP mode in icss_emac_lwip example causes assert
     <td> ICSS-EMAC
     <td> 09.02.00 onwards
     <td> None

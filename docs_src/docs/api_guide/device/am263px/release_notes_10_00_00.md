@@ -198,6 +198,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263x, AM263Px
     <td> Updated R5F UTILS structure to move some of the non static registers.
 </tr>
+<tr>
+    <td> PINDSW-8097
+    <td> Wrong PHY Config when using the QSPI Boot mode
+    <td> ICSS-EMAC
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the application intiialization sequence and added required delay for PHY Powerup to SMI ready.
+</tr>
 </table>
 
 ## Known Issues
@@ -310,6 +318,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
 <tr>
     <td> PINDSW-7746
     <td> Low iperf values in TCP and UDP
+    <td> ICSS-EMAC
+    <td> 09.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8118
+    <td> Enabling DHCP mode in icss_emac_lwip example causes assert
     <td> ICSS-EMAC
     <td> 09.02.00 onwards
     <td> None
