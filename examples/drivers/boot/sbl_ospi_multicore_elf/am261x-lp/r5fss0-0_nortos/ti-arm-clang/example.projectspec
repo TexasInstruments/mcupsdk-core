@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Spinlock Example"
-        name = "spinlock_example_am261x-som_r5fss0-0_nortos_ti-arm-clang"
+        title="Sbl Ospi Multicore Elf"
+        name = "sbl_ospi_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -31,6 +31,7 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/security
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -45,8 +46,10 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=spinlock_example.${ConfigName}.map
+            -m=sbl_ospi_multicore_elf.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -56,10 +59,10 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2611 --package ZCZ
+            --context r5fss0-0 --part AM2612 --package ZFG
         "
 
-        description="A Spinlock Example NORTOS project">
+        description="A Sbl Ospi Multicore Elf NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -68,6 +71,8 @@
             linkerBuildOptions="
                 -lnortos.am261x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.debug.lib
+                -lboard.am261x.r5f.ti-arm-clang.debug.lib
+                -lsecurity.am261x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -79,6 +84,8 @@
             linkerBuildOptions="
                 -lnortos.am261x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.release.lib
+                -lboard.am261x.r5f.ti-arm-clang.release.lib
+                -lsecurity.am261x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -86,9 +93,11 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../board.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLE_SPINLOCK.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_SBL_OSPI.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
