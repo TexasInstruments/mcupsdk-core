@@ -32,8 +32,8 @@ Secure boot process, like the normal boot, consists of two stages - ROM loading 
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
-## Public Keyring Support
-The keyring is a set of keys which can be imported by SBL after importing the HSM runtime binary on an **HS-SE** device. For importing keyring TIFS-MCU expects an X.509 certificate signed by customer active root of trust (MPK). For certificate generation script usage, see \ref KEYRING_CERT_GEN_PYTHON_SCRIPT.
+## Keyring Support
+The keyring is a set of keys which can be imported by SBL after importing the HSM runtime binary on an **HS-SE** device. For importing keyring TIFS-MCU expects an X.509 certificate signed by customer active root of trust (MPK). If X.509 certificate is containing symmetric keyring extension, the symmetric keyring blob must be encrypted with active root key. For certificate generation script usage, see \ref KEYRING_CERT_GEN_PYTHON_SCRIPT.
 
 TIFS-MCU supports application authentication using the following algorithms with Keyring.
 
@@ -417,8 +417,13 @@ As mentioned above, since we follow a combined boot method, SYSFW and SBL is sig
 
 #### Secure application image Generation {#APPLICATION_SECURE_IMAGE}
 
-Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` file generated would be signed with customer MPK (and encrypted with customer MEK if that option is selected).
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
+Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` file generated would be signed with private key mentioned in the devconfig (and encrypted with encryption key specifed in devconfig if that option is selected).
+\endcond
+
 \cond SOC_AM64X | SOC_AM243X
+Depending on the options given in the device configuration file (devconfig.mak mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` file generated would be signed with customer MPK (and encrypted with customer MEK if that option is selected).
+
 To dig into the details of the process, one can refer to https://software-dl.ti.com/tisci/esd/latest/6_topic_user_guides/secure_boot_signing.html
 
 The SBL doesn't have innate abilities to do the image integrity check, or verify the SHA512 of the application image. It relies on SYSFW for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
@@ -521,7 +526,9 @@ make -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang all DEVI
 \note Sample auxiliary keys are present at location `${SDK_INSTALL_PATH}/tools/keyring_cert/aux_keys`.
 \note RSASSA-PSS algorithm can be used with RSA auxiliary keys.
 
-The auxiliary keys in the keyring begin at index 32. If the application binary is signed with an auxiliary private key, the corresponding public key hash of which is available in the keyring, the customer must specify the keyring index corresponding to the auxiliary key used for authentication.
+The auxiliary keys in both symmetric keyring and asymmetric keyring begin at index 32. The application binary can be signed with an auxiliary private key that has the corresponding public key hash in the keyring.
+Similarly application binary can be encrypted with auxiliary aes key for which the corresponding aes key is available in the keyring.
+The customer must specify the keyring index corresponding to the auxiliary key used for authentication and encyrption.
 
 If imported public key is available at index 38 in keyring for brainpoolp512r1_private.pem,
 the application images can be built with the following flags for appending the
@@ -585,8 +592,8 @@ sign_key_id = INTEGER:38
 enc_key_id  = INTEGER:0
 \endcode
 \endcond
+
 ### Encryption support for application images
-\note Support for encryption with auxiliary keys will be added in future releases.
 
 Optionally, one can encrypt the application image to meet security goals.
 This can be accomplished with adding one more flag ENC_ENABLED with the make command:
@@ -659,6 +666,69 @@ iterationCnt =  INTEGER:1
 salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c99125254619e4a513b
 \endcode
 \endcond
+
+#### Encryption support for application images using auxiliary keys
+
+If imported aes key is available at index 32 in keyring, the application images can be encrypted with the following flags using auxiliary keys support:
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\code
+make -s -C examples/hello_world/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS ENC_ENABLED=yes APP_ENCRYPTION_KEY_KEYRING_ID=32 APP_ENCRYPTION_KEY=/home/fargo/ti/mcu_plus_sdk/source/security/security_common/tools/keyring_cert/aux_keys/aes128.key
+\endcode
+\endcond
+
+
+Here is an example of x509 certificate template for application image encrypted with auxiliary key:
+\code
+[ req ]
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+prompt                 = no
+
+dirstring_type = nobmp
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = SC
+L                      = New York
+O                      = Texas Instruments., Inc.
+OU                     = DSP
+CN                     = Albert
+emailAddress           = Albert@gt.ti.com
+
+[ v3_ca ]
+basicConstraints = CA:true
+1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
+1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
+1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+1.3.6.1.4.1.294.1.4 = ASN1:SEQUENCE:encryption
+1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:keyring_index
+
+[ boot_seq ]
+certType     =  INTEGER:2779054080
+bootCore     =  INTEGER:0
+bootCoreOpts =  INTEGER:0
+destAddr     =  FORMAT:HEX,OCT:00000000
+imageSize    =  INTEGER:31348
+
+[ image_integrity ]
+shaType = OID:2.16.840.1.101.3.4.2.3
+shaValue = FORMAT:HEX,OCT:ae97e94625db3a363107a904d6f898457e6252e7110e5151b3c0e86e6f9e49892b0b37b9f508b8c1f9c9a6749b98fb180b730f7f0ff0da8dbd660b86bb67ad14
+
+[ swrv ]
+swrv = INTEGER:1
+
+[ keyring_index ]
+sign_key_id = INTEGER:0
+enc_key_id  = INTEGER:32
+
+
+[ encryption ]
+initalVector =  FORMAT:HEX,OCT:45867ae0013b6d27942817dbb2b75e4f
+randomString =  FORMAT:HEX,OCT:cfdcd84bddbc1ecfdb74bfa6abddb3f6bdb329d99f223fd938c9eaf3b84aacb3
+iterationCnt =  INTEGER:1
+salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c99125254619e4a513b
+\endcode
 
 ## Limitations in Secure Boot
 
