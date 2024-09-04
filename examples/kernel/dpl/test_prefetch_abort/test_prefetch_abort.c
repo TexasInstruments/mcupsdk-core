@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,27 +36,45 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/HwiP.h>
+
 #define RESTRICTED_ADDRESS 0xE0000000
-void HwiP_user_prefetch_abort_handler_c(IFSR ifsr,AIFSR aifsr,volatile uint32_t ifar,volatile uint32_t address,volatile uint32_t spsr){
-    /*Provides information about the prefetch abort exception
-    Contents of IFSR(Instructiton Fault Status Register) register
-    1. status: indicates the type of fault generated
-    2. sd: distinguishes between an AXI Decode or Slave error on an external abort.
-    This bit is only valid for external aborts. For all other aborts types of abort,
-    this bit is set to zero
 
-    Contents of AIFSR(Auxillary Instruction Fault Status Register) register
-    1. index: returns the index value for the access giving the error
-    2. side_ext: value returned in this field indicates the source of the error
-    3. recoverable_error:  value returned in this field indicates if the error is recoverable
-        (0=Unrecoverable error, 1=Recoverable Error)
-    4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred
-
-    address: Instruction causing the exception
-    Please refer to R5F TRM for more information*/
-    (void)ifsr;(void)aifsr;(void)ifar;(void)address;(void)spsr;
+/**
+ * @brief Provides information about the prefetch abort exception
+ * 
+ *  Contents of IFSR(Instructiton Fault Status Register) register
+ *      1. status: indicates the type of fault generated
+ *      2. sd: distinguishes between an AXI Decode or Slave error on an external abort. This bit is only valid for external aborts. For all other aborts types of abort, this bit is set to zero
+ *
+ *    Contents of AIFSR(Auxillary Instruction Fault Status Register) register
+ *      1. index: returns the index value for the access giving the error
+ *      2. side_ext: value returned in this field indicates the source of the error
+ *      3. recoverable_error:  value returned in this field indicates if the error is recoverable
+ *        (0=Unrecoverable error, 1=Recoverable Error)
+ *      4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred
+ *    
+ *  Please refer to R5F TRM for more information
+ * 
+ * Note that in this case, value of ifar and address should be same..
+ * 
+ * @param ifsr Instructiton Fault Status Register
+ * @param aifsr Auxillary Instruction Fault Status Register
+ * @param ifar instruction fault address register 
+ * @param address Instruction causing the exception
+ * @param spsr Saved Program status registers to get the program status when the exception occured.
+ */
+void HwiP_user_prefetch_abort_handler_c(IFSR ifsr,AIFSR aifsr,volatile uint32_t ifar,volatile uint32_t address,volatile uint32_t spsr)
+{
     volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
+    while(loop != 0U)
+    { 
+        ; 
+    }
+    (void)ifsr;
+    (void)aifsr;
+    (void)ifar;
+    (void)address;
+    (void)spsr;
 }
 void prefetch_abort_main(void *args)
 {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,14 +36,24 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/HwiP.h>
-void HwiP_user_undefined_handler_c(volatile uint32_t address,volatile uint32_t spsr){
-    /*Provides information about the undef exception
-    address-Instruction causing the exception
-    spsr-Saved Program Status Register
-    Please refer to R5F TRM for more information*/
-    (void) address;(void) spsr;
+
+/**
+ * @brief Provides information about the undef exception
+ * 
+ * Please refer to R5F TRM for more information
+ * 
+ * @param address Instruction causing the exception
+ * @param spsr Saved Program Status Register
+ */
+void HwiP_user_undefined_handler_c(volatile uint32_t address,volatile uint32_t spsr)
+{ 
     volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
+    while(loop != 0U)
+    { 
+        ; 
+    }
+    (void) address;
+    (void) spsr;
 }
 
 void undef_main(void *args)

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,33 +36,46 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/HwiP.h>
+
+
 #define RESTRICTED_ADDRESS 0xE0000000
 #define VALUE 0xFFFFFFFF
 
-void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr){
-    /*Provides information about the prefetch abort exception
-    Contents of DFSR(Data Fault Status Register) register
-    1. status: indicates the type of fault generated
-    2. sd: distinguishes between an AXI Decode or Slave error on an external abort.
-    This bit is only valid for external aborts. For all other aborts types of abort,
-    this bit is set to zero
-    3. rw:  Indicates whether a read or write access caused an abort
-        (0=read abort; 1=write abort)
-
-    Contents of ADFSR(Auxillary Data Fault Status Register) register
-    1. index: returns the index value for the access giving the error
-    2. side_ext: value returned in this field indicates the source of the error
-    3. recoverable_error:  value returned in this field indicates if the error is recoverable
-        (0=Unrecoverable error, 1=Recoverable Error)
-    4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred
-
-    dfar(Data Fault Address Register): Address of the data trying to be accessed
-    address: Instruction causing the exception
-    Please refer to R5F TRM for more information*/
-    (void)dfsr;(void)adfsr;(void)dfar;(void)address;(void)spsr;
+/**
+ * @brief  Provides information about the data abort exception
+ * 
+ * Contents of DFSR(Data Fault Status Register) register
+ *       1. status: indicates the type of fault generated
+ *       2. sd: distinguishes between an AXI Decode or Slave error on an external abort. This bit is only valid for external aborts. For all other aborts types of abort, this bit is set to zero
+ *       3. rw:  Indicates whether a read or write access caused an abort (0=read abort; 1=write abort)
+ *
+ * Contents of ADFSR(Auxillary Data Fault Status Register) register
+ *      1. index: returns the index value for the access giving the error
+ *      2. side_ext: value returned in this field indicates the source of the error
+ *      3. recoverable_error:  value returned in this field indicates if the error is recoverable (0=Unrecoverable error, 1=Recoverable Error)
+ *      4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred
+ * 
+ * Please refer to R5F TRM for more information
+ * @param dfsr DFSR(Data Fault Status Register) register
+ * @param adfsr ADFSR(Auxillary Data Fault Status Register) register
+ * @param dfar Data Fault Address Register, address of the data trying to be accessed
+ * @param address Instruction causing the exception
+ * @param spsr Saved Program status registers to get the program status when the exception occured.
+ */
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t address, volatile uint32_t spsr)
+{
     volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
+    while(loop != 0U)
+    { 
+        ;
+    }
+    (void)dfsr;
+    (void)adfsr;
+    (void)dfar;
+    (void)address;
+    (void)spsr;
 }
+
 void data_abort_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
