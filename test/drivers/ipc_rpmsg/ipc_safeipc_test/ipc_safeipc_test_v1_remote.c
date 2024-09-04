@@ -188,7 +188,7 @@ void ipc_safeipc_test_main(void *args)
         /* wait for all cores to be ready */
         IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         *(volatile uint32_t*) (0x72000000) = 0xABABABAB;
         volatile uint32_t regVal = *(volatile uint32_t*) (0x72000000);
 #endif

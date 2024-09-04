@@ -485,6 +485,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am263px-cc_system_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_safeipc_echo_am263px-lp_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am263px-cc_system_nortos_build
@@ -1970,6 +1972,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec all
 
+ ipc_safeipc_echo_am263px-cc_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos -f makefile_projectspec all
+
+ ipc_safeipc_echo_am263px-lp_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec all
+
  ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/system_freertos_nortos -f makefile_projectspec all
 
@@ -2491,6 +2499,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am263px-cc_system_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_safeipc_echo_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am263px-cc_system_nortos_clean
@@ -3976,6 +3986,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec clean
 
+ ipc_safeipc_echo_am263px-cc_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos -f makefile_projectspec clean
+
+ ipc_safeipc_echo_am263px-lp_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec clean
+
  ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/system_freertos_nortos -f makefile_projectspec clean
 
@@ -4497,6 +4513,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am263px-cc_system_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_safeipc_echo_am263px-lp_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am263px-cc_system_nortos_export
@@ -5982,6 +6000,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec export
 
+ ipc_safeipc_echo_am263px-cc_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos -f makefile_projectspec export
+
+ ipc_safeipc_echo_am263px-lp_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec export
+
  ipc_spinlock_sharedmem_am263px-cc_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/system_freertos_nortos -f makefile_projectspec export
 
@@ -6527,6 +6551,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am263px-cc/system_nortos -f makefile_projectspec [export all clean]

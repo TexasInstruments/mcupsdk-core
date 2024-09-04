@@ -7754,6 +7754,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_spinlock_sharedmem",
         "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17704,6 +17836,66 @@
             "drivers",
             "ipc",
             "ipc_rpmsg_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo System Example.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo System Example.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am263px-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
             "system_freertos_nortos"
         ],
         "mainCategories": [

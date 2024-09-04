@@ -342,9 +342,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# IPC
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
-\cond SOC_AM263X
    -# \subpage EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO
-\endcond
    -# \subpage EXAMPLES_DRIVERS_IPC_SPINLOCK_SHAREDMEM
 -# LIN
    -# \subpage EXAMPLES_DRIVERS_LIN_INTERNAL_LOOPBACK_INTERRUPT

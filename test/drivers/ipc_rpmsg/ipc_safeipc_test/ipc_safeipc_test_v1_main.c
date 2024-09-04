@@ -210,16 +210,12 @@ void ipc_safeipc_test_main(void *args)
     int32_t status = SystemP_SUCCESS;
     HsmClient_t client ;
     FirewallReq_t FirewallReqObj;
-    uint8_t *uid = malloc(HSM_UID_SIZE) ;
 
     Drivers_open();
     Board_driversOpen();
 
     status = HsmClient_register(&client,APP_CLIENT_ID);
     DebugP_assert(status == SystemP_SUCCESS);
-
-    /* Send Request for UID to HSM Server */
-    status = HsmClient_getUID(&client, (uint8_t *)uid, SystemP_WAIT_FOREVER);
 
     /* Configure firewalls */
     FirewallReqObj.regionCount = FIREWALL_ARRAY0_NUM_REGIONS;
