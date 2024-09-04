@@ -182,6 +182,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
 \cond SOC_AM273X
    -# \subpage EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO
+   -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_DMA
 \endcond
 \cond SOC_AM273X
 -# HSMCLIENT
@@ -354,6 +355,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_POLLING
+   -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_POLLING
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT

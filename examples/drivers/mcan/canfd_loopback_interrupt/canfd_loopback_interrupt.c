@@ -87,36 +87,12 @@ void canfd_loopback_interrupt_main(void *args)
     CANFD_MsgObjHandle          txMsgObjHandle;
     CANFD_MsgObjHandle          rxMsgObjHandle;
     int32_t                     retVal = SystemP_SUCCESS;
-    CANFD_OptionTLV             optionTLV;
-    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
-    CANFD_MCANBitTimingParams  *gBitTimingParams;
-
-    gBitTimingParams = (&gCanfdConfig[CONFIG_MCAN0].attrs->CANFDMcanBitTimingParams);
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("[MCAN] Loopback Interrupt mode, application started ...\r\n");
-
-    /* Configure the CAN driver */
-    retVal = CANFD_configBitTime (gCanfdHandle[CONFIG_MCAN0], gBitTimingParams);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD Module configure bit time failed\n");
-        return;
-    }
-
-    optionTLV.type   = CANFD_Option_MCAN_LOOPBACK;
-    optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
-    optionTLV.value  = (void*) &mcanloopbackParams;
-
-    retVal =  CANFD_setOptions(gCanfdHandle[CONFIG_MCAN0], &optionTLV);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD set option Loopback failed\n");
-        return;
-    }
 
     /* Setup the transmit message object */
     txMsgObject.direction = CANFD_Direction_TX;

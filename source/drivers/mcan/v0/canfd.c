@@ -1697,24 +1697,23 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* da
                     {
                         retVal = CANFD_readDma(ptrCanMsgObj, numMsgs, data);
                     }
+                    if (retVal == SystemP_SUCCESS)
+                    {
+                        if (ptrCanFdObj->openParams->transferMode == CANFD_TRANSFER_MODE_BLOCKING)
+                        {
+                            /* Block on transferSem till the read completion. */
+                            DebugP_assert(NULL_PTR != ptrCanFdObj->readTransferSem);
+                            retVal += SemaphoreP_pend(&ptrCanFdObj->readTransferSemObj, SystemP_WAIT_FOREVER);
+                            if (retVal != SystemP_SUCCESS)
+                            {
+                                retVal = CANFD_deConfigInstance(ptrCanFdObj);
+                            }
+                        }
+                    }
                 }
                 else
                 {
                     retVal = CANFD_readPoll(ptrCanMsgObj, data);
-                }
-
-                if (retVal == SystemP_SUCCESS)
-                {
-                    if (ptrCanFdObj->openParams->transferMode == CANFD_TRANSFER_MODE_BLOCKING)
-                    {
-                        /* Block on transferSem till the read completion. */
-                        DebugP_assert(NULL_PTR != ptrCanFdObj->readTransferSem);
-                        retVal += SemaphoreP_pend(&ptrCanFdObj->readTransferSemObj, SystemP_WAIT_FOREVER);
-                        if (retVal != SystemP_SUCCESS)
-                        {
-                            retVal = CANFD_deConfigInstance(ptrCanFdObj);
-                        }
-                    }
                 }
             }
         }

@@ -364,12 +364,26 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
             /* Set event trigger to start CANFD TX transfer */
             retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
                                                EDMA_TRIG_MODE_EVENT);
-            DebugP_assert(retVal == (uint32_t)TRUE);
+            if(retVal == (uint32_t)TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
 
             /* Set event trigger to start CANFD TX transfer */
             retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
                                                EDMA_TRIG_MODE_MANUAL);
-            DebugP_assert(retVal == (uint32_t)TRUE);
+            if(retVal == (uint32_t)TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
         }
     }
     else
@@ -695,7 +709,14 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj,
             /* Set event trigger to start CANFD Rx transfer */
             retVal = EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
                                                 EDMA_TRIG_MODE_EVENT);
-            DebugP_assert(retVal == (uint32_t)TRUE);
+            if(retVal == (uint32_t)TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
         }
     }
 

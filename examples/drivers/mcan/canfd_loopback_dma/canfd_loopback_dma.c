@@ -47,47 +47,41 @@
  *
  */
 
-#include <string.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <drivers/mcan/v0/canfd.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 /** \brief Number of messages sent */
 #define MCAN_APP_TEST_MESSAGE_COUNT         10U
 /** \brief Number of messages sent */
 #define MCAN_APP_TEST_DATA_SIZE             64U
 
-volatile uint32_t           gTxDoneFlag = 0U;
-volatile uint32_t           iterationCount = 0U;
-volatile uint32_t           gRxDoneFlag = 0U;
 CANFD_MessageObject         txMsgObject;
 CANFD_MessageObject         rxMsgObject;
 CANFD_Object               *canfdObject;
-uint8_t                     txData[MCAN_APP_TEST_MESSAGE_COUNT][MCAN_APP_TEST_DATA_SIZE] = {{0}};
-CANFD_DmaRxBuf              rxData[MCAN_APP_TEST_MESSAGE_COUNT] = {{0}};
+static SemaphoreP_Object gMcanTxDoneSem, gMcanRxDoneSem;
+uint8_t  txData[MCAN_APP_TEST_MESSAGE_COUNT][MCAN_APP_TEST_DATA_SIZE] = {{0}};
+uint8_t  rxData[MCAN_APP_TEST_MESSAGE_COUNT][MCAN_APP_TEST_DATA_SIZE] = {{0}};
 
 void canfd_loopback_dma_main(void *args)
 {
     CANFD_MsgObjHandle          txMsgObjHandle;
     CANFD_MsgObjHandle          rxMsgObjHandle;
     int32_t                     status = 0;
-    CANFD_OptionTLV             optionTLV;
-    CANFD_MCANBitTimingParams  *bitTimingParams;
-    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
+    int32_t                     errDataMismatch = SystemP_SUCCESS;
     uint32_t                    i,j;
-    CANFD_Config               *config;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
-    config          = (CANFD_Config*) gCanfdHandle[CONFIG_MCAN0];
-    canfdObject     = config->object;
-    bitTimingParams = (&config->attrs->CANFDMcanBitTimingParams);
+    status = SemaphoreP_constructBinary(&gMcanTxDoneSem, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
+    status = SemaphoreP_constructBinary(&gMcanRxDoneSem, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
 
     /* initialize the data buffers */
     for (i = 0; i < MCAN_APP_TEST_MESSAGE_COUNT; i++)
@@ -95,36 +89,14 @@ void canfd_loopback_dma_main(void *args)
         for (j = 0; j < MCAN_APP_TEST_DATA_SIZE; j++)
         {
             txData[i][j] = i + j;
-            rxData[i].data[j] = 0U;
+            rxData[i][j] = 0U;
         }
     }
     /* Writeback buffer */
     CacheP_wb(&txData[0U], sizeof(txData), CacheP_TYPE_ALLD);
     CacheP_wb(&rxData[0U], sizeof(rxData), CacheP_TYPE_ALLD);
 
-    DebugP_log("\n\n[MCAN] Loopback DMA mode, application started ...\r\n");
-
-    /* Configure the CAN driver */
-    status = CANFD_configBitTime (gCanfdHandle[CONFIG_MCAN0], bitTimingParams);
-    if (status != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD Module configure bit time failed \n");
-        return;
-    }
-
-    optionTLV.type   = CANFD_Option_MCAN_LOOPBACK;
-    optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
-    optionTLV.value  = (void*) &mcanloopbackParams;
-
-    status = CANFD_setOptions(gCanfdHandle[CONFIG_MCAN0], &optionTLV);
-    if (status != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD set option Loopback failed \n");
-        return;
-    }
-
-    gTxDoneFlag = 0;
-    gRxDoneFlag = 0;
+    DebugP_log("\n\n[MCAN] CANFD Loopback DMA mode, application started ...\r\n");
 
     /* Setup the receive message object */
     rxMsgObject.direction  = CANFD_Direction_RX;
@@ -160,38 +132,39 @@ void canfd_loopback_dma_main(void *args)
     }
     txMsgObjHandle = &txMsgObject;
 
-    status = CANFD_readDmaConfig(rxMsgObjHandle, rxData, MCAN_APP_TEST_MESSAGE_COUNT);
+    status = CANFD_read(rxMsgObjHandle, MCAN_APP_TEST_MESSAGE_COUNT, &rxData[0][0]);
     if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD read dma config failed\n");
         return;
     }
 
-    status = CANFD_write(txMsgObjHandle, txMsgObject.startMsgId, CANFD_MCANFrameType_FD, MCAN_APP_TEST_MESSAGE_COUNT, &txData[0]);
+    status = CANFD_write(txMsgObjHandle, txMsgObject.startMsgId, CANFD_MCANFrameType_FD, MCAN_APP_TEST_MESSAGE_COUNT, &txData[0][0]);
     if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD write dma config failed\n");
         return;
     }
 
-    while (iterationCount != MCAN_APP_TEST_MESSAGE_COUNT)
+    /* Wait for Tx completion */
+    SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);
+    /* Wait for Rx completion */
+    SemaphoreP_pend(&gMcanRxDoneSem, SystemP_WAIT_FOREVER);
+    /* Invalidate cache */
+    CacheP_inv(&rxData, sizeof(rxData), CacheP_TYPE_ALLD);
+
+    /* Compare data */
+    for(int32_t i = 0U; i < MCAN_APP_TEST_MESSAGE_COUNT; i++)
     {
-        /* wait for last transaction to complete. */
-        while (gTxDoneFlag == 0U);
-        gTxDoneFlag = 0U;
-
-        while (gRxDoneFlag == 0U);
-        gRxDoneFlag = 0U;
-
-        /* Send next data over Tx message object */
-        status = CANFD_writeDmaTriggerNext(txMsgObjHandle);
-        if (status != SystemP_SUCCESS)
+        for(int32_t j = 0U; j < MCAN_APP_TEST_DATA_SIZE; j++)
         {
-            DebugP_log ("Error: CANFD transmit next data for iteration %d failed \n", iterationCount);
-            return;
+            if(txData[i][j] != rxData[i][j])
+            {
+                errDataMismatch = SystemP_FAILURE;   /* Data mismatch */
+                DebugP_log("Data Mismatch for message count %d at offset %d\r\n", i, j);
+                break;
+            }
         }
-
-        iterationCount++;
     }
 
     status = CANFD_deleteMsgObject(txMsgObjHandle);
@@ -208,14 +181,14 @@ void canfd_loopback_dma_main(void *args)
         return;
     }
 
-    if (status == SystemP_SUCCESS)
+    if ((status == SystemP_SUCCESS) && (errDataMismatch == SystemP_SUCCESS))
     {
-        DebugP_log("[MCAN] Internal loopback testing for %d iterations Passed\n", iterationCount);
+        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Passed\n", MCAN_APP_TEST_MESSAGE_COUNT);
         DebugP_log(" All tests have passed.\n");
     }
     else
     {
-        DebugP_log("[MCAN] Internal loopback testing for %d iterations Failed\n", iterationCount);
+        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Failed\n", MCAN_APP_TEST_MESSAGE_COUNT);
         DebugP_log(" Some tests have failed.\n");
     }
 
@@ -226,32 +199,19 @@ void canfd_loopback_dma_main(void *args)
     return;
 }
 
-void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType)
+void App_CANFDTransferCallback(void *args, CANFD_Reason reason)
 {
-    if ((ptrCanMsgObj == &txMsgObject) && (completionType == CANFD_DMA_TX_COMPLETION_FINAL))
+    if (reason == CANFD_Reason_TX_COMPLETION)
     {
-        SemaphoreP_post(&ptrCanMsgObj->canfdHandle->object->writeTransferSemObj);
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanTxDoneSem);
     }
-
-    if ((ptrCanMsgObj == &txMsgObject) && (completionType == CANFD_DMA_TX_COMPLETION_INTERMEDIATE))
+    if (reason == CANFD_Reason_RX)
     {
-        gTxDoneFlag = 1U;
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanRxDoneSem);
     }
-
-    return;
 }
 
-void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, void *data, uint32_t completionType)
+void App_CANFDErrorCallback(void *args, CANFD_Reason reason)
 {
-    if ((ptrCanMsgObj == &txMsgObject) && (completionType == CANFD_DMA_RX_COMPLETION_FINAL))
-    {
-        SemaphoreP_post(&ptrCanMsgObj->canfdHandle->object->readTransferSemObj);
-    }
-
-    if ((ptrCanMsgObj == &txMsgObject) && (completionType == CANFD_DMA_RX_COMPLETION_INTERMEDIATE))
-    {
-        gRxDoneFlag = 1U;
-    }
-
-    return;
+    /* Do nothing. */
 }

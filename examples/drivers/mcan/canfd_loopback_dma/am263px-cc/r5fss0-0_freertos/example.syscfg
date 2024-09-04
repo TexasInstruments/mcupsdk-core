@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -42,25 +43,28 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-mcan1.$name           = "CONFIG_MCAN0";
-mcan1.sdkInfra        = "HLD";
-mcan1.MCAN.$assign    = "MCAN4";
-mcan1.MCAN.RX.$assign = "EPWM9_A";
-mcan1.MCAN.TX.$assign = "EPWM9_B";
+mcan1.$name               = "CONFIG_MCAN0";
+mcan1.sdkInfra            = "HLD";
+mcan1.operMode            = "DMA";
+mcan1.transferMode        = "CALLBACK";
+mcan1.errorCallbackFxn    = "App_CANFDErrorCallback";
+mcan1.transferCallbackFxn = "App_CANFDTransferCallback";
+mcan1.MCAN.$assign        = "MCAN1";
 
-edma1.$name                                = "CONFIG_EDMA0";
-mcan1.edmaDriver                           = edma1;
-edma1.edmaRmDmaCh[0].$name                 = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name                = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name                   = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name                 = "CONFIG_EDMA_RM3";
+edma1.$name                              = "CONFIG_EDMA0";
+mcan1.edmaDriver                         = edma1;
+edma1.edmaRmDmaCh[0].$name               = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name              = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name                 = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name               = "CONFIG_EDMA_RM3";
 edma1.edmaChannel.create(2);
-edma1.edmaChannel[0].$name                 = "CONFIG_EDMA_CH0";
-edma1.edmaChannel[0].xbarConfig.$name      = "CONFIG_DMA_TRIG_XBAR0";
-edma1.edmaChannel[1].$name                 = "CONFIG_EDMA_CH1";
-edma1.edmaChannel[1].xbarConfig.$name      = "CONFIG_DMA_TRIG_XBAR1";
-edma1.edmaChannel[1].xbarConfig.xbarOutput = scripting.forceWrite("DMA_TRIG_XBAR_LIN0_RXDMA");
-edma1.edmaChannel[1].xbarConfig.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_1";
+edma1.edmaChannel[0].$name               = "CONFIG_EDMA_CH0";
+edma1.edmaChannel[0].channelTrigger      = "DMA_TRIG_XBAR_MCANSS1_FE_0";
+edma1.edmaChannel[0].xbarConfig.$name    = "CONFIG_DMA_TRIG_XBAR0";
+edma1.edmaChannel[1].$name               = "CONFIG_EDMA_CH1";
+edma1.edmaChannel[1].channelTrigger      = "DMA_TRIG_XBAR_MCANSS0_TX_DMA_0";
+edma1.edmaChannel[1].xbarConfig.$name    = "CONFIG_DMA_TRIG_XBAR1";
+edma1.edmaChannel[1].xbarConfig.instance = "DMA_TRIG_XBAR_EDMA_MODULE_1";
 
 const mcan_v1_template_hld  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template_hld", {}, false);
 const mcan_v1_template_hld1 = mcan_v1_template_hld.addInstance({}, false);
@@ -287,4 +291,6 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+mcan1.MCAN.RX.$suggestSolution          = "MCAN1_RX";
+mcan1.MCAN.TX.$suggestSolution          = "MCAN1_TX";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

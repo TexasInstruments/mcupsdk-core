@@ -94,37 +94,12 @@ void canfd_loopback_polling_main(void *args)
     CANFD_MsgObjHandle          txMsgObjHandle;
     CANFD_MsgObjHandle          rxMsgObjHandle;
     int32_t                     retVal = 0;
-    int32_t                     errCode = 0;
-    CANFD_OptionTLV             optionTLV;
-    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
-    CANFD_MCANBitTimingParams  *gBitTimingParams;
-
-    gBitTimingParams = (&gCanfdConfig[CONFIG_MCAN0].attrs->CANFDMcanBitTimingParams);
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("[MCAN] Loopback Polling mode, application started ...\r\n");
-
-    /* Configure the CAN driver */
-    retVal = CANFD_configBitTime (gCanfdHandle[CONFIG_MCAN0], gBitTimingParams);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD Module configure bit time failed [Error code %d]\n", errCode);
-        return;
-    }
-
-    optionTLV.type = CANFD_Option_MCAN_LOOPBACK;
-    optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
-    optionTLV.value = (void*) &mcanloopbackParams;
-
-    retVal =  CANFD_setOptions(gCanfdHandle[CONFIG_MCAN0], &optionTLV);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD set option Loopback failed [Error code %d]\n", errCode);
-        return;
-    }
 
     /* Setup the transmit message object */
     txMsgObject.direction  = CANFD_Direction_TX;
@@ -168,11 +143,7 @@ void canfd_loopback_polling_main(void *args)
                                &txData[0]);
 
         /* Send data over Tx message object */
-        retVal += CANFD_read (rxMsgObjHandle,
-                              txMsgObject.startMsgId,
-                              CANFD_MCANFrameType_FD,
-                              CANFD_MCANXidType_29_BIT,
-                              &rxData[0]);
+        retVal += CANFD_read (rxMsgObjHandle, 0, &rxData[0]);
 
         /* Compare data */
         for(int i = 0U; i < MCAN_APP_TEST_DATA_SIZE; i++)
