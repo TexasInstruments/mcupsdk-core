@@ -120,7 +120,7 @@ default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
-general1.stack_size     = 8192;
+general1.stack_size     = 16384;
 general1.heap_size      = 8192;
 general1.linker.$name   = "TIARMCLANG0";
 
@@ -161,7 +161,7 @@ region1.memory_region[7].auto               = false;
 region1.memory_region[7].size               = 0x3CE;
 region1.memory_region[7].manualStartAddress = 0x44000400;
 region1.memory_region[8].$name              = "MSRAM_1";
-region1.memory_region[8].size               = 0x2F800;
+region1.memory_region[8].size               = 0x1B000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;

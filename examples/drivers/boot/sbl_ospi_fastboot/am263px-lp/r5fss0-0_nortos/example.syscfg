@@ -214,7 +214,7 @@ region1.memory_region[8].manualStartAddress = 0x60080000;
 region1.memory_region[8].size               = 0x1000;
 region1.memory_region[8].$name              = "FLASH_BOOTINFO_SECTOR";
 region1.memory_region[9].$name              = "MSRAM_1";
-region1.memory_region[9].size               = 0x2F800;
+region1.memory_region[9].size               = 0x1B000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
