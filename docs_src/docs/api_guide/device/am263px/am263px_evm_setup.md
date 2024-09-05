@@ -166,12 +166,11 @@ BOOTMODE [ 1 : 4 ] (SW6) = 1100
   \imageStyle{boot_pins_ospi_mode.jpg,width:30%}
   \image html boot_pins_ospi_mode.jpg "OSPI BOOT MODE"
 
-<!-- 
 ##### AM263PX-LP
 This mode is used to boot flashed applications via EVM flash like OSPI flash
 
-  \imageStyle{am263px_lp_boot_pins_qspi_mode.png,width:30%}
-  \image html am263px_lp_boot_pins_qspi_mode.png "QSPI BOOT MODE" -->
+  \imageStyle{am263px_lp_boot_pins_ospi.png,width:30%}
+  \image html am263px_lp_boot_pins_ospi.png "OSPI BOOT MODE"
 
 #### UART BOOT MODE  {#BOOTMODE_UART}
 
