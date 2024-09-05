@@ -71,6 +71,13 @@ uint8_t gflag = 0 ;
 uint32_t gDataAbortReceived = 0;
 
 /* ========================================================================== */
+/*                          Function Declarations                              */
+/* ========================================================================== */
+
+/* Strong declaration of user defined data abort exception. */
+extern void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr);
+
+/* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
