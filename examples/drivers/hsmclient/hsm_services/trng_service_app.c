@@ -51,7 +51,7 @@ void HsmRngApp_start(HsmClient_t *client)
     /* also calculate the time spent doing the generation */
     int32_t status;
     uint32_t length = 16,startCycleCount, endCycleCount;
-    uint32_t val[length/4];
+    uint32_t val[4];
     const uint32_t cpuMHz = SOC_getSelfCpuClk()/1000000;
     /* struct instance used for sending get random num request */
     RNGReq_t getRNG;
