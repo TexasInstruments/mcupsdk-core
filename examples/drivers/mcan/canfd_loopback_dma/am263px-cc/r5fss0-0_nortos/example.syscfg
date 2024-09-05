@@ -62,7 +62,7 @@ edma1.edmaChannel[0].$name               = "CONFIG_EDMA_CH0";
 edma1.edmaChannel[0].channelTrigger      = "DMA_TRIG_XBAR_MCANSS1_FE_0";
 edma1.edmaChannel[0].xbarConfig.$name    = "CONFIG_DMA_TRIG_XBAR0";
 edma1.edmaChannel[1].$name               = "CONFIG_EDMA_CH1";
-edma1.edmaChannel[1].channelTrigger      = "DMA_TRIG_XBAR_MCANSS0_TX_DMA_0";
+edma1.edmaChannel[1].channelTrigger      = "DMA_TRIG_XBAR_MCANSS1_TX_DMA_0";
 edma1.edmaChannel[1].xbarConfig.$name    = "CONFIG_DMA_TRIG_XBAR1";
 edma1.edmaChannel[1].xbarConfig.instance = "DMA_TRIG_XBAR_EDMA_MODULE_1";
 
