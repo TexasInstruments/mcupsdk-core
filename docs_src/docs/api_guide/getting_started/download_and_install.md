@@ -126,7 +126,7 @@ To build applications using this SDK, one needs below host PC machine
   - Install below additional packages via "pip" that are needed for the flashing tools. If you are behind a corporate firewall
     make sure to pass the server name and port for the proxy as shown below. If proxy is not needed keep `--proxy=` as blank.
 
-        C:\> python -m pip install pyserial xmodem tqdm --proxy={your proxy server web-link and port}
+        C:\> python -m pip install pyserial xmodem tqdm pyelftools construct --proxy={your proxy server web-link and port}
 
 - In Linux,
   - Do below in Linux bash shell to install python3
@@ -144,7 +144,7 @@ To build applications using this SDK, one needs below host PC machine
   - Install below additional packages via "pip" that are needed for the flashing tools. If you are behind a corporate firewall
     make sure to pass the server name and port for the proxy as shown below. If proxy is not needed keep `--proxy=` as blank.
 
-        $ pip3 install pyserial xmodem tqdm --proxy={your proxy server web-link and port}
+        $ pip3 install pyserial xmodem tqdm pyelftools construct --proxy={your proxy server web-link and port}
 
 - In MacOS,
   - Do below in MacOS zsh shell to install python3
@@ -162,7 +162,7 @@ To build applications using this SDK, one needs below host PC machine
   - Install below additional packages via "pip" that are needed for the flashing tools. If you are behind a corporate firewall
     make sure to pass the server name and port for the proxy as shown below. If proxy is not needed keep `--proxy=` as blank.
 
-        $ pip3 install pyserial xmodem tqdm --proxy={your proxy server web-link and port}
+        $ pip3 install pyserial xmodem tqdm pyelftools construct --proxy={your proxy server web-link and port}
 
 ### OpenSSL {#INSTALL_OPENSSL}
 
