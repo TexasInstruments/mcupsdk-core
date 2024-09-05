@@ -27,7 +27,17 @@ The steps to run the example is same irrespective of the image format.
 
 # SBL OSPI FASTBOOT {#EXAMPLES_DRIVERS_SBL_OSPI_FASTBOOT_MCELF}
 
-ADD STUFF HERE
+This SBL is optimized for performance. It utilizes caching and disables logs which are present in other SBLs.
+Only MCELF application image format is supported with this SBL.
+
+To flash an mcelf file, use the project examples/drivers/boot/sbl_ospi_fastboot.
+
+In addition to the SBL and application, the HSM runtime firmware should also be flashed at an address known to the this SBL.
+This flash address can be configured via sysconfig and must match the one present in flash writer tool.
+
+When an mcelf image is found, the SBL parses it, loads each segment to its specified address location. Then the core is released from reset.
+
+The steps to run the example is same irrespective of the image format. Please follow the steps mentioned in \ref FAST_SECURE_BOOT.
 
 # SBL OSPI SWAP {#EXAMPLES_DRIVERS_SBL_OSPI_SWAP}
 

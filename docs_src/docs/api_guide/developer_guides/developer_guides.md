@@ -69,6 +69,7 @@ SDK features and tools.
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
 - \subpage SECURE_BOOT
+- \subpage FAST_SECURE_BOOT
 - \subpage SYSCONFIG_INTRO_PAGE
 - \subpage TIREX_INTRO_PAGE
 - \subpage CUSTOM_FLASH_SUPPORT_GUIDE
