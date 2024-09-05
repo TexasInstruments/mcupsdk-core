@@ -170,7 +170,7 @@ void ipc_safeipc_echo_main(void *args)
 {
     int32_t status = SystemP_SUCCESS;
     HsmClient_t client ;
-    FirewallReq_t FirewallReqObj;
+    FirewallReq_t FirewallReqObj __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));;
 
     Drivers_open();
     Board_driversOpen();
