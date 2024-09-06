@@ -1,4 +1,4 @@
-# Security Tools {#TOOLS_SECURITY}
+# Security Related Tools {#TOOLS_SECURITY}
 
 ## Signing Scripts {#TOOLS_BOOT_SIGNING}
 
@@ -644,5 +644,9 @@ hash_algo=INTEGER:2
 public_key=FORMAT:HEX,OCT:b502e951a5f5ed4bc99191511b530597d3a2d356d0f83887a54253a7ec46fb2c081c7d39391f846932357a57133f8c11
     \endcode
 
-
 \endcond
+
+##  Boot time calculator tool
+
+Checkout the secure boot time calculator tool <a href="../boottime_calculator/index.html">here</a>.
+

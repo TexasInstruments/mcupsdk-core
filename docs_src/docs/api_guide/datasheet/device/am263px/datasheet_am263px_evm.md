@@ -62,6 +62,10 @@ SBL : Total time taken                  |   287440
 
 - Please note that the total time taken provided at the end is not including the ROM boot time.
 
+### SBL OSPI Fastboot performance
+
+Please check out the secure boot times using the boot time calculator tool <a href="../boottime_calculator/index.html">here</a>. 
+
 ### EDMA performance
 
 EDMA Memory Copy Benchmark Numbers
