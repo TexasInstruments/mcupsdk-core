@@ -9,6 +9,7 @@ part of the SDK.
 
 It consists of below sub-modules
 - \subpage TOOLS_BOOT
+- \subpage TOOLS_SECURITY
 - \subpage TOOLS_CCS
 - \subpage TOOLS_FLASH
 \cond SOC_AM64X || SOC_AM243X || SOC_AM65X

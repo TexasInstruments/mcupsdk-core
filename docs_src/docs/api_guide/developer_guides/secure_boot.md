@@ -418,7 +418,12 @@ As mentioned above, since we follow a combined boot method, SYSFW and SBL is sig
 #### Secure application image Generation {#APPLICATION_SECURE_IMAGE}
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
-Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` file generated would be signed with private key mentioned in the devconfig (and encrypted with encryption key specifed in devconfig if that option is selected).
+\note 
+    * Signing and Encryption steps for **RPRC** and **MCELF** application images are the **same**. 
+    * For Signing, the DEVICE and DEVICE_TYPE=HS options must be provided. 
+    * For Encryption along with signing, the DEVICE, DEVICE_TYPE=HS and ENC_ENABLED=yes options must be provided.
+
+Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` or `.mcelf.hs` file generated would be signed with private key mentioned in the devconfig (and encrypted with encryption key specifed in devconfig if that option is selected).
 \endcond
 
 \cond SOC_AM64X | SOC_AM243X
@@ -430,7 +435,8 @@ The SBL doesn't have innate abilities to do the image integrity check, or verify
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
-The SBL doesn't have innate abilities to do the image integrity check, or verify the hash of the application image. It relies on HSMRt for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
+The SBL doesn't have innate abilities to do the image integrity check, or verify the hash of the application image. It relies on the HSMRt for this.
+The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X
@@ -595,6 +601,11 @@ enc_key_id  = INTEGER:0
 
 ### Encryption support for application images
 
+\note
+    * Encrypted MCELF application images retain header informations which allows them to be parsed by tools like readelf.
+    * Booting Signed + Encrypted application images from Flash is now supported. Please refer to the MCELF QSPI/OSPI SBLs and FASTBOOT QSPI/OSPI SBLs.
+    * \ref FAST_SECURE_BOOT
+
 Optionally, one can encrypt the application image to meet security goals.
 This can be accomplished with adding one more flag ENC_ENABLED with the make command:
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
@@ -734,15 +745,6 @@ salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c991
 
 \cond SOC_AM64X || SOC_AM243X
 - **XIP boot** : Secure boot is yet to be supported for XIP applications. This is due to the fact that the XIP sections are loaded before the SBL parses the other sections. Secure boot of XIP applications will be made available in an upcoming release.
-
-- **Encryption of application image not possible in SBL OSPI** : In other bootloaders like UART and SD, application image can be encrypted using the `ENC_ENABLED` option in the devconfig.mak. But this is not possible when you load the image using SBL OSPI. This is due to the fact that HSM does an in-place authentication and decryption of the image and we load the image directly from the FLASH memory in case of SBL OSPI. FLASH memory, as you would know is most often not directly writable. Due to this limitation not being taken care in the HSM, we can do decryption of images only in the case where the image resides in a volatile RAM-like memory. That is MSMC or DDR.
-\endcond
-
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
-- **Authentication of application image directly from flash in SBL QSPI** : Only authentication of application
-image from flash is supported in SBL QSPI. This is susceptible to Man-in-The-Middle (MiTM) attacks if Flash is overwritten post-auth.
-
-- **Encryption of application image not supported in SBL QSPI** : In UART bootloader, application image can be encrypted using the `ENC_ENABLED` option in the devconfig.mak. But this is not possible when you load the image using SBL QSPI. This is due to the fact that HSM does an in-place authentication and decryption of the image and we load the image directly from the FLASH memory in case of SBL QSPI. FLASH memory, as you would know is most often not directly writable. Due to this limitation not being taken care in the HSM, we can do decryption of images only in the case where the image resides in a volatile RAM-like memory like OCRAM.
 
 \cond ~SOC_AWR294X
 - **Secure Boot is untested on SBL SD and SBL CAN**
