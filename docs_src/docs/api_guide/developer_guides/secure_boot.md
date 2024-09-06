@@ -747,6 +747,16 @@ salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c991
 
 \cond SOC_AM64X || SOC_AM243X
 - **XIP boot** : Secure boot is yet to be supported for XIP applications. This is due to the fact that the XIP sections are loaded before the SBL parses the other sections. Secure boot of XIP applications will be made available in an upcoming release.
+\endcond
+\cond SOC_AM243X
+- **Decryption of application image size greater than 256kb is not possible in SBL OSPI** : In **am243x-lp** board, in case of booting multicore application only 256KB is available in MSRAM( Please refer \ref MEMORY_MAP). In SBL OSPI the HSM does an in-place authentication and decryption of the image and we load the image directly from the FLASH memory . FLASH memory, as you would know is most often not directly writable. Due to this limitation not being taken care in the HSM, we can do decryption of images only in case where the image resides in a volatile RAM-like memory. So we are copying the image from flash to MSRAM and decrypting the image. Therefore in case of secure boot, the available memory for decrypting the image is 256KB( greater than 256KB can be problematic in multi-core image scenarios).
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X || SOC_AM261X
+- **Authentication of application image directly from flash in SBL QSPI** : Only authentication of application
+image from flash is supported in SBL QSPI. This is susceptible to Man-in-The-Middle (MiTM) attacks if Flash is overwritten post-auth.
+
+- **Encryption of application image not supported in SBL QSPI** : In UART bootloader, application image can be encrypted using the `ENC_ENABLED` option in the devconfig.mak. But this is not possible when you load the image using SBL QSPI. This is due to the fact that HSM does an in-place authentication and decryption of the image and we load the image directly from the FLASH memory in case of SBL QSPI. FLASH memory, as you would know is most often not directly writable. Due to this limitation not being taken care in the HSM, we can do decryption of images only in the case where the image resides in a volatile RAM-like memory like OCRAM.
 
 \cond ~SOC_AWR294X
 - **Secure Boot is untested on SBL SD and SBL CAN**
