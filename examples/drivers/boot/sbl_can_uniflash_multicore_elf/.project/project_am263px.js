@@ -104,7 +104,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_can_uniflash_mutlicore_elf";
+    property.name = "sbl_can_uniflash_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
