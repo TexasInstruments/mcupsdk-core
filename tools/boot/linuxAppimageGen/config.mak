@@ -11,15 +11,14 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/
 # The prebuilt images available with Linux SDK is the signed ATF, OPTEE and A53 SPL,
 # but we requires unsigned images to create the linux.appimage and sign the final image
 # for HS-FS/HS devices
-PSDK_LINUX_IMAGE_PATH=$(HOME)/prebuilt_spl
-
+PSDK_LINUX_IMAGE_PATH=$(HOME)/ti-processor-sdk-linux-am64xx-evm-10.00.07.04
 #Path for prebuit images in Processor SDK linux
-PSDK_LINUX_PREBUILT_IMAGES=$(PSDK_LINUX_IMAGE_PATH)
+PSDK_LINUX_PREBUILT_IMAGES=$(PSDK_LINUX_IMAGE_PATH)/board-support/prebuilt-images/am64xx-evm
 
 #Input linux binaries
 ATF_BIN_NAME=bl31.bin
 OPTEE_BIN_NAME=bl32.bin
-SPL_BIN_NAME=u-boot-spl.bin
+SPL_BIN_NAME=u-boot-spl.bin-am64xx-evm
 
 #Linux image load address
 ATF_LOAD_ADDR=0x0701a0000

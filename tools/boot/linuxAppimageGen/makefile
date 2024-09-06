@@ -94,6 +94,9 @@ endif
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo Combined boot image: $@ Done !!!
 
+	@echo Copying u-boot.img
+	$(COPY) $(PSDK_LINUX_PREBUILT_IMAGES)/u-boot.img .
+
 $(ATF_RPRC): $(ATF_ELF)
 	@echo Creating ATF RPRC image
 	$(OUTRPRC_CMD) $(ATF_ELF) $(ATF_RPRC)
@@ -120,3 +123,4 @@ clean:
 	$(RM) $(LINUX_BOOTIMAGE_NAME)*
 	$(RM) *.elf
 	$(RM) *.rprc
+	$(RM) *.img
