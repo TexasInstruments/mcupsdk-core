@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1 style="background-color:powderblue;"><img src="favicon.png" alt="logo" /> Secure Boot Time Calculator </h1>
+
+    <p>
+      This secure boot time calculator is intended to help users with an accurate representation of secure boot
+      performance for their needs.<br>
+      AutoSAR application runtime should be incremented to boot time interpolated from graphs below.
+    </p>
+
+    Select the SOC:
+    <select id="mySOC">
+      <option value="am263x">AM263x</option>
+      <option value="am263px">AM263Px</option>
+    </select>
+    <button onclick="onSubmitInfo()">Get boot time data</button>
+  </header>
+
+  <div class="container">
+    <canvas id="myChart" style="width:50%;max-width:800px"></canvas>
+    <div id="table-container"></div>
+  </div>
+
+</body>
+
+</html>
