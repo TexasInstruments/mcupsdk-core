@@ -38,9 +38,9 @@
 extern "C" {
 #endif
 void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler_c(volatile uint32_t var);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler_c(volatile uint32_t var);
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler_c(volatile uint32_t var);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(volatile uint32_t var);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_prefetch_abort_handler_c(volatile uint32_t var);
+void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak)) HwiP_undefined_handler_c(volatile uint32_t var);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t DFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_prefetch_abort_handler_c(IFSR ifsr,AIFSR aifsr,volatile uint32_t IFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR);
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak)) HwiP_user_undefined_handler_c(volatile uint32_t ADDRESS,volatile uint32_t SPSR);

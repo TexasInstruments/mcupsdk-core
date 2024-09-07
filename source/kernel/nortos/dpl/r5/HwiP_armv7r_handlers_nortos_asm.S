@@ -117,8 +117,16 @@ HwiP_data_abort_handler:
         /*   Push used registers. */
         PUSH	{r0-r4, r12}
 
-        /*  Subtract LR to obtain address of instruction. */
-        SUB lr, lr, #8
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
+        MRS r0, SPSR
+        AND r1, r0, #0x20
+        CMP R1, #0
+
+        /* branches to label HwiP_data_abort_handler_ARM_STATE if the thumb state bit is not set */
+        BEQ HwiP_data_abort_handler_ARM_STATE
+        SUB lr, lr, #2
+        HwiP_data_abort_handler_ARM_STATE:
+        SUB lr, lr, #4
 
         /*   Push the return address and SPSR. */
         PUSH	{lr}
