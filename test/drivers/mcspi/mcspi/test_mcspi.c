@@ -1902,6 +1902,9 @@ void test_mcspi_transfer_cancel(void *args)
     SemaphoreP_pend(&gMcspiTransferTaskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
     SemaphoreP_pend(&gMcspiTransferCancelTaskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
 
+    TaskP_destruct(&gMcspiTransferTaskObject);
+    TaskP_destruct(&gMcspiTransferCancelTaskObject);
+
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
 #if defined(SOC_AM65X)
     /* Requires delay to wait for the created task "MCSPI Transfer Task" to exit */
@@ -2058,7 +2061,11 @@ void test_mcspi_transfer_cancel_transfer(void *args)
     }
 
     SemaphoreP_post(&gMcspiTransferTaskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 
     return;
 }
@@ -2071,7 +2078,11 @@ void test_mcspi_transfer_cancel_cancel(void *args)
     DebugP_assert(transferOK == SystemP_SUCCESS);
 
     SemaphoreP_post(&gMcspiTransferCancelTaskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 void test_mcspi_callback(MCSPI_Handle handle, MCSPI_Transaction *trans)
@@ -2750,7 +2761,15 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
             attrParams->operMode           = MCSPI_OPER_MODE_POLLED;
             break;
         case 973:
+#if defined (SOC_AM263PX)
+            /* Due to some hardware constraint D0 cannot be used for SPI instance 2. */
+            attrParams->baseAddr         = MCSPI2_BASE_ADDRESS;
+            chConfig->inputSelect        = MCSPI_IS_D1;
+            chConfig->dpe0               = MCSPI_DPE_DISABLE;
+            chConfig->dpe1               = MCSPI_DPE_ENABLE;
+#else
             attrParams->baseAddr           = MCSPI2_BASE_ADDRESS;
+#endif
             attrParams->intrNum            = MCSPI2_INT_NUM;
             testParams->dataSize           = 16;
             break;
