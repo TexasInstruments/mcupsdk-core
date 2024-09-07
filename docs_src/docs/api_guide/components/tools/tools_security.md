@@ -469,7 +469,7 @@ if Image Encryption OID is available in the certificate.
 
  **enc_key_id**:
  This is the index used in keyring for retrieving the aes key for decryption of application image.
-\endcond
+
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X ||SOC_AWR294X || SOC_AM261X
 ### Application Signing
