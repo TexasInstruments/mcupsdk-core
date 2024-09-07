@@ -108,7 +108,7 @@ extern "C" {
  *  return immediately on resource not available. */
 #define MMCSD_NO_WAIT                           ((uint32_t)0)
 /** \brief Value to use when needing a timeout of infinity or
- *  wait forver until resource is available */
+ *  wait forever until resource is available */
 #define MMCSD_WAIT_FOREVER                      ((uint32_t)-1)
 
 /** @} */
@@ -187,7 +187,9 @@ extern "C" {
  *  @{
  */
 
+/** \brief Default Speed */
 #define MMCSD_SD_MODE_DS                        ((uint32_t) 10U)
+/** \brief High Speed */
 #define MMCSD_SD_MODE_HS                        ((uint32_t) 11U)
 
 /** @} */
@@ -290,9 +292,9 @@ typedef struct {
 } MMCSD_SdDeviceData;
 
 /**
- *  \brief  MMCSDLLD Transaction
+ *  \brief  MMCSD LLD Transaction
  *
- *  This structure defines the nature of the MMCSD transaction. This structure
+ *  This structure defines the nature of a MMCSD transaction. This structure
  *  specifies the buffer and buffer's size that is to be written to or read from
  *  the MMC peripheral.
  */
@@ -332,11 +334,11 @@ typedef struct {
     bool                    autoAssignMaxSpeed;
 /** User Assigned Bus Speed */
     uint32_t                uaBusSpeed;
-/** Supported bus width \ref MMCSDBusWidth */
+/** Supported bus width \ref MMCSDLLD_BusWidth */
     uint32_t                busWidth;
 /** DMA enable */
     bool                    enableDma;
-/** Pointer to device Data Structure, allocated and assigned by syscfg */
+/** Pointer to device Data Structure, allocated and assigned by Syscfg */
     void                    *deviceData;
 /** Pointer to a 512 byte dataBuffer used for temporary data
  * transactions internal to driver like ECSD read, tuning etc.
@@ -370,9 +372,9 @@ typedef struct {
 /** MMCSDLLD_Transaction object used by driver */
     MMCSDLLD_Transaction    mmcsdTxn;
 /** Set transfer Speed for the Device
- * \ref MMCSDSpeedModesSD \ref MMCSDSpeedModesEMMC*/
+ * \ref MMCSDSpeedModesSD */
     uint32_t                setBusSpeed;
-/** Set bus width \ref MMCSDBusWidth */
+/** Set bus width \ref MMCSDLLD_BusWidth */
     uint32_t                setBusWidth;
 /** Stores the MMCSD Transaction state \ref MMCSD_XferStates*/
     uint8_t                 xferState;
@@ -417,7 +419,7 @@ int32_t MMCSD_lld_deInit(MMCSDLLD_Handle handle);
  *  \param  startBlk    [IN] Block to start Writing data from.
  *  \param  numBlks     [IN] Number of blocks to write.
  *
- *  \return #MMCSD_STS_SUCCESS on successful execution of API; else error on failure.
+ *  \return \ref MMCSD_StatusCode
  */
 int32_t MMCSD_lld_write_SD_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
                                 uint32_t startBlk, uint32_t numBlks);
@@ -430,7 +432,7 @@ int32_t MMCSD_lld_write_SD_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
  *  \param  startBlk    [IN] Block to start reading data from.
  *  \param  numBlks     [IN] Number of blocks to read.
  *
- *  \return #MMCSD_STS_SUCCESS on successful execution of API; else error on failure.
+ *  \return \ref MMCSD_StatusCode
  */
 int32_t MMCSD_lld_read_SD_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
                                uint32_t startBlk, uint32_t numBlks);
@@ -443,7 +445,7 @@ int32_t MMCSD_lld_read_SD_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
  *  \param  startBlk    [IN] Block to start Writing data from.
  *  \param  numBlks     [IN] Number of blocks to write.
  *
- *  \return #MMCSD_STS_SUCCESS on successful execution of API; else error on failure.
+ *  \return \ref MMCSD_StatusCode
  */
 int32_t MMCSD_lld_write_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
                                 uint32_t startBlk, uint32_t numBlks);
@@ -456,7 +458,7 @@ int32_t MMCSD_lld_write_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
  *  \param  startBlk    [IN] Block to start reading data from.
  *  \param  numBlks     [IN] Number of blocks to read.
  *
- *  \return #MMCSD_STS_SUCCESS on successful execution of API; else error on failure.
+ *  \return \ref MMCSD_StatusCode
  */
 int32_t MMCSD_lld_read_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
                                uint32_t startBlk, uint32_t numBlks);

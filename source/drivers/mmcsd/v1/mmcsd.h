@@ -31,7 +31,7 @@
  */
 
 /**
- *  \defgroup DRV_MMCSD_MODULE APIs for MMCSD
+ *  \defgroup DRV_MMCSD_HLD_MODULE APIs for MMCSD HLD
  *  \ingroup DRV_MODULE
  *
  *  This module contains APIs to program and use the MMCSD module. The APIs

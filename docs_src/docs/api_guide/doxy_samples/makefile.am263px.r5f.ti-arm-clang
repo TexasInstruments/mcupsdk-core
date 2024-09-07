@@ -38,6 +38,7 @@ FILES_common := \
     Mcspi_lld_sample.c \
     Mdio_sample.c \
     MpuP_arm_v7_sample.c \
+    Mmcsd_lld_v1_sample.c \
     Pmu_sample.c \
     Pruicss_sample_m_v0.c \
     QueueP_sample.c \
