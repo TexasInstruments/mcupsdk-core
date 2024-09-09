@@ -1682,9 +1682,10 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* da
         else
         {
             config = (CANFD_Config*)ptrCanMsgObj->canfdHandle;
+            DebugP_assert(NULL != config);
             ptrCanFdObj = (CANFD_Object*)config->object;
             attrs = config->attrs;
-            if((config != NULL) && (ptrCanFdObj != NULL) && (attrs != NULL))
+            if((ptrCanFdObj != NULL) && (attrs != NULL))
             {
                 if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
                    (CANFD_OPER_MODE_DMA == attrs->operMode))

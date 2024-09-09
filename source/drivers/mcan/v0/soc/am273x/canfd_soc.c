@@ -167,37 +167,29 @@ int32_t CANFD_writeDmaTriggerNext(CANFD_MsgObjHandle handle)
 
     /* Get the message object pointer */
     ptrCanMsgObj = (CANFD_MessageObject*)handle;
-    if (ptrCanMsgObj == NULL)
-    {
-        retVal = MCAN_INVALID_PARAM;
-    }
-    if (retVal == MCAN_STATUS_SUCCESS)
+    if (ptrCanMsgObj != NULL)
     {
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
-
-        if (ptrCanFdObj == NULL)
+        if (ptrCanFdObj != NULL)
         {
-            retVal = MCAN_INVALID_PARAM;
+            baseAddr = ptrCanFdObj->regBaseAddress;
+            /* Check for pending messages */
+            index = (uint32_t)1U << ptrCanMsgObj->txElement;
+            if (index == (MCAN_getTxBufReqPend(baseAddr) & index))
+            {
+                retVal = MCAN_STATUS_BUSY;
+            }
+            retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
+
+            ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
         }
     }
-    if (retVal == MCAN_STATUS_SUCCESS)
+    else
     {
-        baseAddr = ptrCanFdObj->regBaseAddress;
-
-        /* Check for pending messages */
-        index = (uint32_t)1U << ptrCanMsgObj->txElement;
-        if (index == (MCAN_getTxBufReqPend(baseAddr) & index))
-        {
-            retVal = MCAN_STATUS_BUSY;
-        }
+        retVal = MCAN_STATUS_FAILURE;
     }
-    if (retVal == MCAN_STATUS_SUCCESS)
-    {
-        retVal = MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
 
-        ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
-    }
     return retVal;
 }
 
