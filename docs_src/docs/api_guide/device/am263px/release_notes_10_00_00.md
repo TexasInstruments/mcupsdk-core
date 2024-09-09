@@ -36,6 +36,7 @@ Blackbird PMIC Driver support                                                   
 Smart Layout Tool support                                                                       | OptiFlash
 FOTA Accelerator support (\ref FLSOPSKD_IP)                                                     | OptiFlash
 Fota A/B Swap support (\ref bootseg_ip_working)                                                 | OptiFlash
+Support for Ethernet Add-on boards - [Industrial](https://www.ti.com/tool/DP83826-EVM-AM2) and [Automotive](https://www.ti.com/tool/DP83TG720-EVM-AM2) PHYs  | Ethernet
 
 # Modules Not tested/supported in this release
 
