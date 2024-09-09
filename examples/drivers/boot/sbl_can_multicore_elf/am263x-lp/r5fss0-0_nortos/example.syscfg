@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -120,7 +120,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(6);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -144,7 +144,11 @@ region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x44F00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].manualStartAddress = 0x70040000;
-region1.memory_region[5].size               = 0x1B0000;
+region1.memory_region[5].size               = 0x170000;
+region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].manualStartAddress = 0x70047000;
+region1.memory_region[6].size               = 0x2E400;
+region1.memory_region[6].auto               = false;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;

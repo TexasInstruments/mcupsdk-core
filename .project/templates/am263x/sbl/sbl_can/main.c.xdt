@@ -64,6 +64,7 @@ const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.h
 extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
+void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -111,6 +112,8 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
+
+    mcanEnableTransceiver();
 
     DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);

@@ -63,6 +63,7 @@ uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((align
 uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
 
 uint32_t gRunApp;
+void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -114,6 +115,7 @@ int main()
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
+    mcanEnableTransceiver();
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
     DebugP_log("\r\n");

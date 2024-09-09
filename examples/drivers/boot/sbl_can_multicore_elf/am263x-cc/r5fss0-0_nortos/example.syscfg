@@ -35,6 +35,7 @@ const section2        = section.addInstance();
 const section3        = section.addInstance();
 const section4        = section.addInstance();
 const section5        = section.addInstance();
+const section6        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -97,7 +98,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(6);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -120,8 +121,13 @@ region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x43F00;
 region1.memory_region[5].$name              = "MSRAM_1";
-region1.memory_region[5].manualStartAddress = 0x70040000;
-region1.memory_region[5].size               = 0x1B0000;
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x70074400;
+region1.memory_region[5].size               = 0x170000;
+region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].size               = 0x2E400;
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x70046000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -199,3 +205,8 @@ section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
+
+section6.load_memory             = "MSRAM_HSMRT";
+section6.$name                   = "Hsmrt";
+section6.output_section.create(1);
+section6.output_section[0].$name = ".rodata.hsmrt";
