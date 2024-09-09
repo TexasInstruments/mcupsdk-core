@@ -115,7 +115,7 @@ Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSP
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter                                                                                                                                           | CMPSS Dac LoopBack feature
 CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
-ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes                                                                                         | -
+ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes, ecap signal monitoring example                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features           | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement                                                                                                           | -
@@ -211,6 +211,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 09.00.00 Onwards
     <td> AM263x, AM263Px
     <td>
+</tr>
 <tr>
     <td> PROC_SDL-6910
     <td> Update to move some of the non static registers.
@@ -218,6 +219,30 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 09.00.00 Onwards
     <td> AM263x, AM263Px
     <td> Updated R5F UTILS structure to move some of the non static registers.
+</tr>
+<tr>
+    <td> MCUSDK-12247
+    <td> Syscfg: ouptutxbar generated code doesnt change the instance
+    <td> Control Drivers
+    <td> 10.00
+    <td> AM263Px
+    <td> Updated SOC_xbar syscfg device data.
+</tr>
+<tr>
+    <td> MCUSDK-13491
+    <td> API EPWM_setActionQualifierShadowLoadMode does not set Shadow Mode
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td>
+</tr>
+<tr>
+    <td> MCUSDK-13199
+    <td> EPWM : HRPWM_setHiResCounterCompareValue writes incorrect value
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td>
 </tr>
 <tr>
     <td> PINDSW-8097
@@ -302,6 +327,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
+    <td> MCUSDK-12262
+    <td> AM263Px: EPWM deadband example failure
+    <td> EPWM
+    <td> 09.02.00
+    <td> remove sync between the epwms and use the global tbclksync to synchronize the EPWMs
+</tr>
+<tr>
     <td> MCUSDK-11507
     <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble
     <td> CPSW
@@ -335,20 +367,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDFM
     <td> 09.01.00
     <td> None
-</tr>
-<tr>
-    <td> MCUSDK-12264
-    <td> EQEP position speed example failure on am263px-lp
-    <td> EQEP
-    <td> 09.01.00
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-12247
-    <td> Syscfg: ouptutxbar generated code doesnt change the instance
-    <td> XBAR
-    <td> 09.01.00
-    <td> Use XBAR driver API to configure the output xbar instance
 </tr>
 <tr>
     <td> MCUSDK-11675
@@ -647,6 +665,48 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> EPWM
+    <td> TBCLKSYNC and Halt configurations moved to ti_drivers_open_close.c
+    <td> The TBCLKSYNC should be not enabled until the init configurations are done. The individual control to enable the tbclksyn in the init or not is added. Refer to SOC_setMultipleEpwmTbClk for usage in the applications.
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> SDFM
+    <td> Added Pinmux configurations for clock loopback   
+    <td> Default is set as disabled, to maintain backward compatibility
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> CMPSS
+    <td> Added LoopBack configurations for DAC   
+    <td> Default is set as disabled, to maintain backward compatibility
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> ADC
+    <td> Added Internal Refernece enable controls, Loop back controls 
+    <td> Default is set as enabled, to maintain backward compatibility
+</tr>
+<tr>
+    <td> ADC
+    <td> SOC_enableAdcInternalReference, SOC_enableAdcReferenceMonitor, SOC_getAdcReferenceStatus
+    <td> Added Internal Refernece enable controls in drivers
+    <td> Reference monitoring status should be checked before powering up the ADC analog converter.
+</tr>
+<tr>
+    <td> EPWM
+    <td> EPWM_setActionQualifierShadowLoadMode
+    <td> updated parenthesis for API operations
+    <td> -
+</tr>
+<tr>
+    <td> EPWM
+    <td> HRPWM_setHiResCounterCompareValue
+    <td> Updated the Assert check. Fixed Overwriting to the CMPx register.
+    <td> -
 </tr>
 <tr>
     <td> Security

@@ -193,6 +193,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 08.06.00 Onwards
     <td> AM263x, AM263Px
     <td>
+</tr>
 <tr>
     <td> PROC_SDL-6910
     <td> Update to move some of the non static registers.
@@ -208,6 +209,22 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 08.06.00 Onwards
     <td> AM263x
     <td> Added examples for ECC test on R5F cache memories.
+</tr>
+<tr>
+    <td> MCUSDK-13491
+    <td> API EPWM_setActionQualifierShadowLoadMode does not set Shadow Mode
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td>
+</tr>
+<tr>
+    <td> MCUSDK-13199
+    <td> EPWM : HRPWM_setHiResCounterCompareValue writes incorrect value
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td>
 </tr>
 <tr>
     <td> PINDSW-8097
@@ -275,6 +292,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Module
     <th> Reported in release
     <th> Workaround
+</tr>
+<tr>
+    <td> MCUSDK-13164
+    <td> AM263x: EPWM deadband example failure
+    <td> EPWM
+    <td> 09.02.00
+    <td> remove sync between the epwms and use the global tbclksync to synchronize the EPWMs
 </tr>
 <tr>
     <td> MCUSDK-13641, CODEGEN-12832
@@ -619,6 +643,36 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> EPWM
+    <td> TBCLKSYNC and Halt configurations moved to ti_drivers_open_close.c
+    <td> The TBCLKSYNC should be not enabled until the init configurations are done. The individual control to enable the tbclksyn in the init or not is added. Refer to SOC_setMultipleEpwmTbClk for usage in the applications.
+</tr>
+<tr>
+    <td> Sysconfig
+    <td> ADC
+    <td> Added Internal Refernece enable controls
+    <td> Default is set as enabled, to maintain backward compatibility
+</tr>
+<tr>
+    <td> ADC
+    <td> SOC_enableAdcInternalReference, SOC_enableAdcReferenceMonitor, SOC_getAdcReferenceStatus
+    <td> Added Internal Refernece enable controls in drivers
+    <td> Reference monitoring status should be checked before powering up the ADC analog converter.
+</tr>
+<tr>
+    <td> EPWM
+    <td> EPWM_setActionQualifierShadowLoadMode
+    <td> updated parenthesis for API operations
+    <td> -
+</tr>
+<tr>
+    <td> EPWM
+    <td> HRPWM_setHiResCounterCompareValue
+    <td> Updated the Assert check. Fixed Overwriting to the CMPx register.
+    <td> -
 </tr>
 <tr>
     <td> Security
