@@ -7,11 +7,11 @@
 //! [include]
 
 /** \brief Number of messages sent */
+#define MCAN_APP_TEST_MESSAGE_COUNT         100U
+/** \brief Data size for each transfer */
 #define MCAN_APP_TEST_DATA_SIZE             64U
 #define CONFIG_MCAN0                       (0U)
 
-CANFD_MessageObject         txMsgObject;
-CANFD_MessageObject         rxMsgObject;
 CANFD_Handle                gCanfdHandle;
 CANFD_Config                gCanfdConfig[CONFIG_MCAN0];
 CANFD_OpenParams            openParams[CONFIG_MCAN0];
@@ -66,34 +66,12 @@ void close(void)
 void transfer_blocking(void *args)
 {
 //! [transfer_blocking]
+    CANFD_MessageObject         txMsgObject;
+    CANFD_MessageObject         rxMsgObject;
     CANFD_MsgObjHandle          txMsgObjHandle;
     CANFD_MsgObjHandle          rxMsgObjHandle;
+    uint32_t                    iterationCount = 0U;
     int32_t                     retVal = SystemP_SUCCESS;
-    CANFD_OptionTLV             optionTLV;
-    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
-    CANFD_MCANBitTimingParams  *gBitTimingParams;
-    
-    gBitTimingParams = (&gCanfdConfig[CONFIG_MCAN0].attrs->CANFDMcanBitTimingParams);
-
-    // Configure CANFD Bit Timing Parameters
-    retVal = CANFD_configBitTime (gCanfdHandle, gBitTimingParams);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD Module configure bit time failed\n");
-        return;
-    }
-
-    //configure driver options
-    optionTLV.type   = CANFD_Option_MCAN_LOOPBACK;
-    optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
-    optionTLV.value  = (void*) &mcanloopbackParams;
-
-    retVal =  CANFD_setOptions(gCanfdHandle, &optionTLV);
-    if (retVal != SystemP_SUCCESS)
-    {
-        DebugP_log ("Error: CANFD set option Loopback failed\n");
-        return;
-    }
 
     /* Setup the transmit message object */
     txMsgObject.direction = CANFD_Direction_TX;
@@ -127,22 +105,33 @@ void transfer_blocking(void *args)
     }
     rxMsgObjHandle = &rxMsgObject;
 
-    /* Send data over Tx message object */
-    retVal += CANFD_write (txMsgObjHandle,
-                            txMsgObject.startMsgId,
-                            CANFD_MCANFrameType_FD,
-                            0,
-                            &txData[0]);
-
-    /* Compare data */
-    for(int32_t i = 0U; i < MCAN_APP_TEST_DATA_SIZE; i++)
+    while (iterationCount != MCAN_APP_TEST_MESSAGE_COUNT)
     {
-        if(txData[i] != rxData[i])
+        /* Send data over Tx message object */
+        retVal += CANFD_write (txMsgObjHandle,
+                               txMsgObject.startMsgId,
+                               CANFD_MCANFrameType_FD,
+                               0,
+                               &txData[0]);
+
+        /* Compare data */
+        for(int32_t i = 0U; i < MCAN_APP_TEST_DATA_SIZE; i++)
         {
-            retVal = SystemP_FAILURE;   /* Data mismatch */
-            DebugP_log("Data Mismatch at offset %d\r\n", i);
-            break;
+            if(txData[i] != rxData[i])
+            {
+                retVal = SystemP_FAILURE;   /* Data mismatch */
+                DebugP_log("Data Mismatch at offset %d\r\n", i);
+                break;
+            }
         }
+
+        if (retVal != SystemP_SUCCESS)
+        {
+            DebugP_log ("Error: CANFD transmit data for iteration %d failed\n", iterationCount);
+            return;
+        }
+
+        iterationCount++;
     }
 
     // Delete Message Object
@@ -162,12 +151,12 @@ void transfer_blocking(void *args)
 
     if (retVal == SystemP_SUCCESS)
     {
-        DebugP_log("[MCAN] Internal loopback testing Passed\n");
+        DebugP_log("[MCAN] Internal loopback testing for %d iterations Passed\n", iterationCount);
         DebugP_log("All tests have passed\n");
     }
     else
     {
-        DebugP_log("[MCAN] Internal loopback testing FAiled\n");
+        DebugP_log("[MCAN] Internal loopback testing for %d iterations Failed\n", iterationCount);
         DebugP_log("Some tests have Failed\n");
     }
 

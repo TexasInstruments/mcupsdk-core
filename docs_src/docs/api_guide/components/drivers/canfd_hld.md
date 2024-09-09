@@ -1,4 +1,4 @@
-# CANFD {#DRIVERS_CANFD_PAGE}
+# CANFD (HLD) {#DRIVERS_CANFD_HLD_PAGE}
 
 [TOC]
 
@@ -134,7 +134,7 @@ There are two options:
 - Two or more dedicated Tx Buffers are configured with the same Message ID. In this case the Tx Buffer with
 the lowest buffer number is transmitted first.
 
-\note Please refer \ref DRV_MCAN_MODULE for more details and \ref MCAN_EXAMPLE_USAGE for code snippets.
+\note Please refer \ref DRV_CANFD_MODULE for more details and \ref MCAN_EXAMPLE_USAGE for code snippets.
 
 ## Important Usage Guidelines
 

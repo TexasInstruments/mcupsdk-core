@@ -31,9 +31,9 @@
  */
 
 /**
- *  \defgroup DRV_CANFD_MODULE CANFD Driver
+ *  \defgroup DRV_CANFD_MODULE APIs for CANFD
  *  \ingroup  DRV_MODULE
- * 
+ *  @{
  *  \file  canfd.h
  * 
  *  \brief
@@ -2044,3 +2044,5 @@ int32_t CANFD_isDataSizeValid(uint32_t dataSize);
 #endif
 
 #endif /* #ifndef CANFD__H_ */
+
+/** @} */

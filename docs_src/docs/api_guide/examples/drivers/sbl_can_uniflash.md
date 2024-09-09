@@ -86,7 +86,7 @@ In this application, the CAN settings are:
 - Make Sure to set correct timing parameters. Current parameters is as per SDK-CAN driver.
     - BitrateFD : f_clock_mhz=80, nom_brp=1, nom_tseg1=67, nom_tseg2=12, nom_sjw=12, data_brp=1, data_tseg1=13, data_tseg2=2, data_sjw=1
 - CAN-FD is supported
-- Refer to \subpage DRIVERS_MCAN_PAGE, for MCAN dependencies.
+- Refer to \ref DRIVERS_MCAN_PAGE, for MCAN dependencies.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_COMBOS}
 

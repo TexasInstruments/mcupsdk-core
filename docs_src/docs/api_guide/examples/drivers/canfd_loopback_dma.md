@@ -90,7 +90,7 @@ one, then the example is completed.
 
 # See Also
 
-\ref DRIVERS_CANFD_PAGE
+\ref DRIVERS_CANFD_HLD_PAGE
 
 # Sample Output
 
