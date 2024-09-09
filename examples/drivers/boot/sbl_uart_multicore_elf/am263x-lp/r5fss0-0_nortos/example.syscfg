@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -106,8 +106,9 @@ region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x3C700;
 region1.memory_region[5].$name              = "MSRAM_2";
-region1.memory_region[5].manualStartAddress = 0x70067800;
 region1.memory_region[5].size               = 0x80000;
+region1.memory_region[5].manualStartAddress = 0x70180000;
+region1.memory_region[5].auto               = false;
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
 region1.memory_region[6].manualStartAddress = 0x70027800;
 region1.memory_region[6].size               = 0x2E000;
