@@ -601,10 +601,12 @@ enc_key_id  = INTEGER:0
 
 ### Encryption support for application images
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \note
     * Encrypted MCELF application images retain header informations which allows them to be parsed by tools like readelf.
     * Booting Signed + Encrypted application images from Flash is now supported. Please refer to the MCELF QSPI/OSPI SBLs and FASTBOOT QSPI/OSPI SBLs.
     * \ref FAST_SECURE_BOOT
+\endcond
 
 Optionally, one can encrypt the application image to meet security goals.
 This can be accomplished with adding one more flag ENC_ENABLED with the make command:
