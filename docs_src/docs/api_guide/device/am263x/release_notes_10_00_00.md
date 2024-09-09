@@ -1,9 +1,12 @@
 # Release Notes 10.00.00 {#RELEASE_NOTES_10_00_00_PAGE}
 
 [TOC]
-\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled. See **Known Issues** below.
+\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled.
+              Similar issue will be observed when enabling LTO on other examples. See **Known Issues** below.
 
 \attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+
+\attention 3. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -14,6 +17,12 @@
 Feature                                                                                                  | Module
 ---------------------------------------------------------------------------------------------------------|-----------------------------------
 Sysconfig support for PRU Projects                                                                       | PRUICSS
+Fast Boot support for Improved boot time (\ref FAST_SECURE_BOOT)                                         | SBL
+MacOS support                                                                                            | Infra
+Multi Core ELF(MCELF) image format support (\ref MCELF_LANDING)                                          | Build
+QSPI Flash File System support (\ref EXAMPLES_DRIVERS_QSPI_FLASH_FILE_IO)                                | QSPI
+MMCSD LLD support (\ref DRIVERS_MMCSD_V1_LLD_PAGE)                                                       | MMCSD
+MCAN LLD support (\ref DRIVERS_CANFD_PAGE)                                                               | MCAN
 
 ## Device and Validation Information
 
@@ -31,10 +40,10 @@ AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-l
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.7.0
-SysConfig               | R5F            | 1.20.0 build, build 3587
-TI ARM CLANG            | R5F            | 3.2.2.LTS
-FreeRTOS Kernel         | R5F            | 8.3.12
+Code Composer Studio    | R5F            | 12.8.0
+SysConfig               | R5F            | 1.21.0 build, build 3721
+TI ARM CLANG            | R5F            | 4.0.0.LTS
+FreeRTOS Kernel         | R5F            | 10.4.3
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
 Mbed-TLS                | R5F            | mbedtls-3.0.0
 
@@ -84,7 +93,7 @@ Timer             | R5F             | YES               | FreeRTOS, NORTOS | Con
 
 Module     | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                         | Key features not tested / NOT supported
 -----------|-----------------|-------------------|------------------|-----------------------------------------------------------------------------|----------------------------------------------------
-Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: QSPI, UART. All R5F's. RPRC, multi-core image format            | Force Dual Core Mode, Disable Dual Core Switch and R5SS1 only not tested
+Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: QSPI, UART. All R5F's. RPRC, MCELF, multi-core image format     | Force Dual Core Mode, Disable Dual Core Switch and R5SS1 only not tested
 
 ### SOC Device Drivers
 
@@ -208,6 +217,54 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> AM263x, AM263Px
     <td> Fixed the application intiialization sequence and added required delay for PHY Powerup to SMI ready.
 </tr>
+<tr>
+    <td> MCUSDK-13531
+    <td> UART DMA transfer fail
+    <td> UART
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Added typecasting for UART Transaction in driver.
+</tr>
+<tr>
+    <td> MCUSDK-13427
+    <td> McSPI 3 Pin mode failure in DMA mode
+    <td> McSPI
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Update XBAR config in 3 Pin mode.
+</tr>
+<tr>
+    <td> MCUSDK-13275
+    <td> UART Clock selection missing options in SysCfg
+    <td> UART
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Updated SysCfg module to add UART clock selection.
+</tr>
+<tr>
+    <td> MCUSDK-13210
+    <td> GPMC PSRAM IO failure
+    <td> GPMC
+    <td> 09.02.00 Onwards
+    <td> AM263x
+    <td> BP Input pin pulled down in GPIO SysCfg.
+</tr>
+<tr>
+    <td> MCUSDK-12651
+    <td> Data flush missing DMA mode
+    <td> UART
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Added Data flush in UART DMA TX ISR.
+</tr>
+<tr>
+    <td> MCUSDK-9459
+    <td> UART DMA transfer fail for Trigger level > 1
+    <td> UART
+    <td> 09.02.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Added trigger level selection support in SysCfg.
+</tr>
 </table>
 
 ## Known Issues
@@ -220,7 +277,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Workaround
 </tr>
 <tr>
-    <td> MCUSDK-13641
+    <td> MCUSDK-13641, CODEGEN-12832
     <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
     <td> Build
     <td> 10.00.00 onwards
@@ -234,24 +291,10 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> Avoid back-to-back writes within three SD-modulator clock cycles or have the SDCPARMx register bit fields configured in one register write.
 </tr>
 <tr>
-    <td> MCUSDK-8073
-    <td> UART1 not working as expected while configuring two uarts i.e UART0 and UART1 for two different cores
-    <td> UART
-    <td> 08.04.00 onwards
-    <td> UART1 configuration from other core should be done after UART0 is configured and initialized
-</tr>
-<tr>
     <td> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 08.06.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-9459
-    <td> UART LLD EDMA Mode not generating interrupt with TX and RX trigger levels greater than 1
-    <td> UART
-    <td> 09.01.00 onwards
     <td> -
 </tr>
 <tr>
@@ -380,6 +423,48 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 10.00.00 onwards
     <td> None.
 </tr>
+<tr>
+    <td> MCUSDK-13466
+    <td> UART Transfer fails in 10MHz Auto Baud mode
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> Use different mode for 10MHz clock
+</tr>
+<tr>
+    <td> MCUSDK-13193
+    <td> SBL SD transfer time increased w.r.t SDK 9.2
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> MCUSDK-13511
+    <td> MPU region count incorrect in SysCfg
+    <td> MPU Firewall
+    <td> 09.02.00 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> MCUSDK-13473
+    <td> UART uniflash script fails with large images ( > 1MB)
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> Use JTAG based flashing
+</tr>
+<tr>
+    <td> MCUSDK-11730
+    <td> A wrong counter is used for Event 2 in PMU configuration
+    <td> PMU
+    <td> 10.00.00 onwards
+    <td> Comment out the code in PMU_init() whcih configures Cycle Counter.
+</tr>
+<tr>
+    <td> MCUSDK-13630
+    <td> Cache should not be enabled at L2 Bank boundaries
+    <td> Cache
+    <td> Cache should not be enabled at last 32Bytes of L2 Bank
+    <td> Create MPU configurations for end of each L2 Bank with Non Cached attribute
+</tr>
 </table>
 
 ## Errata
@@ -498,6 +583,20 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 08.05.00 onwards
     <td> Disable TCPUDP checksum offload in receive (THOST) direction.
 </tr>
+<tr>
+    <td> MCUSDK-13630
+    <td> Cache should not be enabled at L2 Bank boundaries
+    <td> Cache
+    <td> 09.02.00 onwards
+    <td> Create MPU configurations for end of each L2 Bank with Non Cached attribute
+</tr>
+<tr>
+    <td> MCUSDK-13220
+    <td> Multi Core Elf format has few limitations documented at \ref MCELF_LANDING
+    <td> Infra
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Upgrade and Compatibility Information
@@ -520,6 +619,12 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> Security
+    <td> HSM Client, Secure IPC Notify, Crypto driver
+    <td> These drivers are moved to "source/security/security_common". All drivers will be part of security libs.
+    <td> Update the include paths and included libraries for application build.
 </tr>
 </table>
 
