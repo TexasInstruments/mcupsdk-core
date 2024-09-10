@@ -49,6 +49,32 @@ extern "C"
 #define CSL_FW_SECURITY                                                                            (0U)
 #define CSL_FW_CHANNEL                                                                             (1U)
 #define CSL_FW_MST                                                                                 (2U)
+#define FWL_MAX_PRIV_ID_SLOTS                                                                      (3U)
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct { 
+    volatile uint32_t CTRL;
+    volatile uint32_t PERMISSION[FWL_MAX_PRIV_ID_SLOTS]; 
+    volatile uint32_t START_ADDR_L; 
+    volatile uint32_t START_ADDR_H; 
+    volatile uint32_t END_ADDR_L; 
+    volatile uint32_t END_ADDR_H;
+} CSL_firewall_cfgRegs;
+
+typedef struct {
+    volatile uint32_t REV;     
+    volatile uint32_t DEST_ID;     
+    volatile uint32_t RSVD0[6];     
+    volatile uint32_t CTRL;     
+    volatile uint32_t HDR[2];     
+    volatile uint32_t DATA[4];     
+    volatile uint32_t RSVD1;     
+    volatile uint32_t PEND_SET;     
+    volatile uint32_t PEND_CLR; 
+} CSL_firewall_exceptionLogRegs;
 
 /* Standard Security Master Firewall Definitions */
 
