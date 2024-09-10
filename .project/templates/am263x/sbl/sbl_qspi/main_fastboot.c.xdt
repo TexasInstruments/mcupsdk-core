@@ -180,7 +180,6 @@ int main(void)
     DebugP_assert(status == SystemP_SUCCESS);
 
 %if(enableFastBoot === false) {
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 %}
 

@@ -97,7 +97,6 @@ int main(void)
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 
     if(SystemP_SUCCESS == status)

@@ -85,11 +85,11 @@ int main(void)
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("Starting QSPI Bootloader ... \r\n");
-
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
+
+    DebugP_log("Starting QSPI Bootloader ... \r\n");
 
     if(SystemP_SUCCESS == status)
     {
