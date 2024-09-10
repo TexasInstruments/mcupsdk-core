@@ -294,6 +294,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Workaround
 </tr>
 <tr>
+    <td> MCUSDK-13702
+    <td> am263x-lp: sbl sd not working for multicore appimages
+    <td> MMCSD, SBL
+    <td> 10.00.00
+    <td> -
+</tr>
+<tr>
     <td> MCUSDK-13164
     <td> AM263x: EPWM deadband example failure
     <td> EPWM
