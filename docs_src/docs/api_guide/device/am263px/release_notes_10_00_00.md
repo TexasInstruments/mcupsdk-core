@@ -27,7 +27,7 @@ MacOS support                                                                   
 Multi Core ELF(MCELF) image format support (\ref MCELF_LANDING)                                 | Build
 OSPI Flash File System support (\ref EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO)                       | QSPI
 MMCSD LLD support (\ref DRIVERS_MMCSD_V1_LLD_PAGE)                                              | MMCSD
-CAN HLD support (\ref DRIVERS_CANFD_PAGE)                                                       | MCAN
+CANFD HLD support (\ref DRIVERS_CANFD_HLD_PAGE)                                                 | MCAN
 SBL CAN support (\ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH)                                        | SBL
 JTAG Based Flashing support (\ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH)                           | SBL
 C++ Example project                                                                             | Examples

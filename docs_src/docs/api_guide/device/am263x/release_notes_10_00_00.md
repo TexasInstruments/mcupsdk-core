@@ -22,7 +22,7 @@ MacOS support                                                                   
 Multi Core ELF(MCELF) image format support (\ref MCELF_LANDING)                                          | Build
 QSPI Flash File System support (\ref EXAMPLES_DRIVERS_QSPI_FLASH_FILE_IO)                                | QSPI
 MMCSD LLD support (\ref DRIVERS_MMCSD_V1_LLD_PAGE)                                                       | MMCSD
-MCAN LLD support (\ref DRIVERS_CANFD_PAGE)                                                               | MCAN
+CANFD HLD support (\ref DRIVERS_CANFD_HLD_PAGE)                                                               | MCAN
 
 ## Device and Validation Information
 
