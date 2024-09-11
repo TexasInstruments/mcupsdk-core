@@ -165,7 +165,8 @@ void test_main(void *args)
     gFsiTxTestParams.intrLine = CONFIG_FSI_TX0_INTR1;
     RUN_TEST(test_fsi_txrx, 1530, (void*)&testParams);
 #endif
-#else
+#endif
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) 
     gFsiTxTestParams.baseAddr = CONFIG_FSI_TX1_BASE_ADDR;
     gFsiTxTestParams.intrLine = CONFIG_FSI_TX1_INTR1;
     gFsiRxTestParams.baseAddr = CONFIG_FSI_RX1_BASE_ADDR;

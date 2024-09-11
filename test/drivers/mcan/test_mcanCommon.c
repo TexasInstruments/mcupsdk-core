@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -354,7 +354,7 @@ int32_t App_mcanRegisterInterrupt(uint32_t modIdx)
     status              = HwiP_construct(&gMcanHwiObject1, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     /* Register MCAN0 interrupt */
     HwiP_Params_init(&hwiPrms);
     hwiPrms.intNum      = CONFIG_MCAN2_INTR;
@@ -394,7 +394,7 @@ int32_t App_mcanUnRegisterInterrupt(uint32_t modIdx)
     HwiP_destruct(&gMcanHwiObject1);
     HwiP_destruct(&gMcanHwiObject2);
     HwiP_destruct(&gMcanHwiObject3);
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     HwiP_destruct(&gMcanHwiObject4);
     HwiP_destruct(&gMcanHwiObject5);
 #endif
@@ -462,7 +462,7 @@ void App_mcanIntr1ISR(void *arg)
     }
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 void App_mcanIntr2ISR(void *arg)
 {
     uint32_t intrStatus;

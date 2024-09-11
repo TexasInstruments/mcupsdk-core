@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -10,16 +11,10 @@
  */
 const fsi_rx          = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
 const fsi_rx1         = fsi_rx.addInstance();
-const fsi_rx2         = fsi_rx.addInstance();
-const fsi_rx3         = fsi_rx.addInstance();
-const fsi_rx4         = fsi_rx.addInstance();
 const fsi_tx          = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
 const fsi_tx1         = fsi_tx.addInstance();
-const fsi_tx2         = fsi_tx.addInstance();
-const fsi_tx3         = fsi_tx.addInstance();
-const fsi_tx4         = fsi_tx.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -52,65 +47,29 @@ const section12       = section.addInstance();
  */
 fsi_rx1.$name                  = "CONFIG_FSI_RX0";
 fsi_rx1.FSIRX.$assign          = "FSIRX0";
+fsi_rx1.FSIRX.CLK.$assign      = "GPIO32";
+fsi_rx1.FSIRX.D0.$assign       = "GPIO33";
+fsi_rx1.FSIRX.D1.$assign       = "GPIO34";
 fsi_rx1.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR0";
 fsi_rx1.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR1";
 fsi_rx1.fsiRxIntXbar1.instance = "INT_XBAR_1";
 
-fsi_rx2.$name                  = "CONFIG_FSI_RX1";
-fsi_rx2.FSIRX.$assign          = "FSIRX1";
-fsi_rx2.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR2";
-fsi_rx2.fsiRxIntXbar0.instance = "INT_XBAR_2";
-fsi_rx2.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR3";
-fsi_rx2.fsiRxIntXbar1.instance = "INT_XBAR_3";
-
-fsi_rx3.$name                  = "CONFIG_FSI_RX2";
-fsi_rx3.FSIRX.$assign          = "FSIRX2";
-fsi_rx3.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR4";
-fsi_rx3.fsiRxIntXbar0.instance = "INT_XBAR_4";
-fsi_rx3.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR5";
-fsi_rx3.fsiRxIntXbar1.instance = "INT_XBAR_5";
-
-fsi_rx4.$name                  = "CONFIG_FSI_RX3";
-fsi_rx4.FSIRX.$assign          = "FSIRX3";
-fsi_rx4.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR6";
-fsi_rx4.fsiRxIntXbar0.instance = "INT_XBAR_6";
-fsi_rx4.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR7";
-fsi_rx4.fsiRxIntXbar1.instance = "INT_XBAR_7";
-
 fsi_tx1.$name                  = "CONFIG_FSI_TX0";
 fsi_tx1.FSITX.$assign          = "FSITX0";
 fsi_tx1.FSITX.CLK.$assign      = "GPIO29";
+fsi_tx1.FSITX.D0.$assign       = "GPIO30";
+fsi_tx1.FSITX.D1.$assign       = "GPIO31";
 fsi_tx1.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR8";
 fsi_tx1.fsiTxIntXbar0.instance = "INT_XBAR_8";
 fsi_tx1.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR9";
 fsi_tx1.fsiTxIntXbar1.instance = "INT_XBAR_9";
-
-fsi_tx2.$name                  = "CONFIG_FSI_TX1";
-fsi_tx2.FSITX.$assign          = "FSITX1";
-fsi_tx2.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR10";
-fsi_tx2.fsiTxIntXbar0.instance = "INT_XBAR_10";
-fsi_tx2.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR11";
-fsi_tx2.fsiTxIntXbar1.instance = "INT_XBAR_11";
-
-fsi_tx3.$name                  = "CONFIG_FSI_TX2";
-fsi_tx3.FSITX.$assign          = "FSITX2";
-fsi_tx3.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR12";
-fsi_tx3.fsiTxIntXbar0.instance = "INT_XBAR_12";
-fsi_tx3.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR13";
-fsi_tx3.fsiTxIntXbar1.instance = "INT_XBAR_13";
-
-fsi_tx4.$name                  = "CONFIG_FSI_TX3";
-fsi_tx4.FSITX.$assign          = "FSITX3";
-fsi_tx4.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR14";
-fsi_tx4.fsiTxIntXbar0.instance = "INT_XBAR_14";
-fsi_tx4.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR15";
-fsi_tx4.fsiTxIntXbar1.instance = "INT_XBAR_15";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -172,13 +131,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -329,32 +288,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-fsi_rx1.FSIRX.CLK.$suggestSolution = "GPIO16";
-fsi_rx1.FSIRX.D0.$suggestSolution  = "GPIO33";
-fsi_rx1.FSIRX.D1.$suggestSolution  = "GPIO34";
-fsi_rx2.FSIRX.CLK.$suggestSolution = "GPIO38";
-fsi_rx2.FSIRX.D0.$suggestSolution  = "GPIO56";
-fsi_rx2.FSIRX.D1.$suggestSolution  = "GPIO57";
-fsi_rx3.FSIRX.CLK.$suggestSolution = "GPIO62";
-fsi_rx3.FSIRX.D0.$suggestSolution  = "EPWM10_A";
-fsi_rx3.FSIRX.D1.$suggestSolution  = "EPWM10_B";
-fsi_rx4.FSIRX.CLK.$suggestSolution = "GPIO116";
-fsi_rx4.FSIRX.D0.$suggestSolution  = "GPIO117";
-fsi_rx4.FSIRX.D1.$suggestSolution  = "GPIO118";
-fsi_tx1.FSITX.D0.$suggestSolution  = "GPIO30";
-fsi_tx1.FSITX.D1.$suggestSolution  = "GPIO31";
-fsi_tx2.FSITX.CLK.$suggestSolution = "GPIO35";
-fsi_tx2.FSITX.D0.$suggestSolution  = "GPIO53";
-fsi_tx2.FSITX.D1.$suggestSolution  = "GPIO54";
-fsi_tx3.FSITX.CLK.$suggestSolution = "GPIO107";
-fsi_tx3.FSITX.D0.$suggestSolution  = "GPIO60";
-fsi_tx3.FSITX.D1.$suggestSolution  = "GPIO61";
-fsi_tx4.FSITX.CLK.$suggestSolution = "GPIO113";
-fsi_tx4.FSITX.D0.$suggestSolution  = "GPIO114";
-fsi_tx4.FSITX.D1.$suggestSolution  = "GPIO115";
