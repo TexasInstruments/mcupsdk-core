@@ -496,6 +496,20 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> Cache should not be enabled at last 32Bytes of L2 Bank
     <td> Create MPU configurations for end of each L2 Bank with Non Cached attribute
 </tr>
+<tr>
+    <td> MCUSDK-13165
+    <td> SBL QSPI flow has incorrect addressing for Secure Boot flow
+    <td> SBL, QSPI
+    <td> SBL QSPI flow has incorrect addressing for Secure Boot flow since it expects MEMMAP configuration
+    <td> Use MCELF Image format
+</tr>
+<tr>
+    <td> MCUSDK-13652
+    <td> Readelf throws warning while parsing RS note
+    <td> SBL, QSPI
+    <td> Readelf command throws error when trying to read the RS note segment from an mcelf file.
+    <td> -
+</tr>
 </table>
 
 ## Errata

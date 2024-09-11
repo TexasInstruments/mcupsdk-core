@@ -156,7 +156,7 @@ CAN FD EXTENDED FORMAT | 1                         | 5                  |  6510 
 
 Local Core  | Remote Core | Average Message Latency (us)
 ------------|-------------|------------------------------
- r5f0-0	| r5f0-1	|  3.63
+ r5f0-0	| r5f0-1	|  1.68
  r5f0-0	| r5f1-0	|  1.87
  r5f0-0	| r5f1-1	|  1.93
 

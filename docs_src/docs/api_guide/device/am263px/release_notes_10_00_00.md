@@ -529,6 +529,20 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 09.02.00 onwards
     <td> Create MPU configurations for end of each L2 Bank with Non Cached attribute
 </tr>
+<tr>
+    <td> MCUSDK-13652
+    <td> Readelf throws warning while parsing RS note
+    <td> SBL, QSPI
+    <td> Readelf command throws error when trying to read the RS note segment from an mcelf file.
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13182
+    <td> SysCfg unexpectedly changes OSPI Pin
+    <td> OSPI
+    <td> If OSPI module is added in syscfg, then changing any field in ospi module changes the pin settings.  
+    <td> Reconfigure OSPI Pins to original state after updating OSPI configurables.
+</tr>
 </table>
 
 ## Errata
