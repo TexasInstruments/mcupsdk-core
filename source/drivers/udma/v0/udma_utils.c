@@ -247,7 +247,14 @@ uint64_t Udma_defaultVirtToPhyFxn(const void *virtAddr,
                                   uint32_t chNum,
                                   void *appData)
 {
-    return ((uint64_t) virtAddr);
+#if defined (__aarch64__)
+    uint64_t temp = (uint64_t) virtAddr;
+#else
+    /* R5 is 32-bit machine, typecasting ptr to uint64_t directly causes sign extension in gcc */
+    uint32_t temp = (uint32_t) virtAddr;
+#endif
+
+    return ((uint64_t) temp);
 }
 
 void *Udma_defaultPhyToVirtFxn(uint64_t phyAddr,
