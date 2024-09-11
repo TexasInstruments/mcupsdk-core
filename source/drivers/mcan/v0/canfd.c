@@ -861,7 +861,6 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
     CANFD_Config           *config;
     CANFD_MCANBitTimingParams  *bitTimingParams;
     CANFD_OptionTLV             optionTLV;
-    CANFD_MCANLoopbackCfgParams mcanloopbackParams;
 
     if(handle == NULL)
     {
@@ -976,7 +975,7 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
                 if (status == SystemP_SUCCESS)
                 {
                     optionTLV.length = sizeof(CANFD_MCANLoopbackCfgParams);
-                    optionTLV.value  = (void*) &mcanloopbackParams;
+                    optionTLV.value  = (void*) (&config->attrs->CANFDMcanloopbackParams);
                     status = CANFD_setOptions(handle, &optionTLV);
                 }
             }
