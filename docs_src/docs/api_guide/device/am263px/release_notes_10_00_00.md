@@ -9,6 +9,8 @@
 
 \attention 3. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
+\attention 4. There is a known issue of OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash. So, Phy tuning is disabled by default in Examples and SBL OSPI.
+
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
@@ -210,7 +212,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> MCRC
     <td> 09.00.00 Onwards
     <td> AM263x, AM263Px
-    <td>
+    <td> -
 </tr>
 <tr>
     <td> PROC_SDL-6910
@@ -234,7 +236,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> EPWM
     <td> 09.02.00
     <td> AM263x, AM263Px
-    <td>
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-13199
@@ -242,7 +244,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> EPWM
     <td> 09.02.00
     <td> AM263x, AM263Px
-    <td>
+    <td> -
 </tr>
 <tr>
     <td> PINDSW-8097
@@ -533,15 +535,22 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> MCUSDK-13652
     <td> Readelf throws warning while parsing RS note
     <td> SBL, QSPI
-    <td> Readelf command throws error when trying to read the RS note segment from an mcelf file.
+    <td> 10.00.00 onwards
     <td> -
 </tr>
 <tr>
     <td> MCUSDK-13182
     <td> SysCfg unexpectedly changes OSPI Pin
     <td> OSPI
-    <td> If OSPI module is added in syscfg, then changing any field in ospi module changes the pin settings.  
+    <td> 10.00.00 onwards
     <td> Reconfigure OSPI Pins to original state after updating OSPI configurables.
+</tr>
+<tr>
+    <td> MCUSDK-13727
+    <td> OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash
+    <td> OSPI
+    <td> 09.02.00 onwards
+    <td> Disable Phy tuning in application.
 </tr>
 </table>
 

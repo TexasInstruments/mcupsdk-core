@@ -1,20 +1,20 @@
-
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1       = gpio.addInstance();
 const flash       = scripting.addModule("/board/flash/flash", {}, false);
 const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
@@ -39,6 +39,7 @@ const section4    = section.addInstance();
 const section5    = section.addInstance();
 const section6    = section.addInstance();
 const section7    = section.addInstance();
+
 /**
  * Write custom configuration values to the imported modules.
  */
@@ -51,15 +52,12 @@ flash1.strDtr_isAddrReg                   = true;
 flash1.strDtr_cmdRegRd                    = "0x85";
 flash1.strDtr_cmdRegWr                    = "0x81";
 flash1.strDtr_mask                        = "255";
-flash1.xspiWipRdCmd                       = "0x05";
 flash1.strDtr_shift                       = 255;
 flash1.protocol                           = "8d_8d_8d";
-flash1.fourByteEnableSeq                  = "0";
 flash1.cmdRd                              = "0x7c";
 flash1.dummy_mask                         = "0xff";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
 flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
@@ -81,11 +79,12 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
-hsmclient1.$name = "CONFIG_HSMCLIENT0";
 gpio1.pinDir         = "OUTPUT";
 gpio1.$name          = "GPIO_OSPI_RST";
 gpio1.defaultValue   = "1";
 gpio1.GPIO_n.$assign = "EPWM11_B";
+
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
