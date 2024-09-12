@@ -36,6 +36,8 @@
 #include "ti_board_config.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "ti_drivers_open_close.h"
+#include "board.h"
 
 #define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
 
@@ -49,6 +51,9 @@ void ospi_flash_file_io_main(void *args);
 
 void freertos_main(void *args)
 {
+    Drivers_i2cOpen();
+    i2c_flash_reset();
+    Drivers_i2cClose();
     ospi_flash_file_io_main(NULL);
 
     vTaskDelete(NULL);

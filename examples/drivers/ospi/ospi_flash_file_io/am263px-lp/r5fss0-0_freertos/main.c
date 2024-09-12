@@ -46,6 +46,7 @@ StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
 void ospi_flash_file_io_main(void *args);
+void board_flash_reset(void);
 
 void freertos_main(void *args)
 {
@@ -61,6 +62,7 @@ int main(void)
     System_init();
     Board_init();
 
+    board_flash_reset();
     /* This task is created at highest priority, it should create more tasks and then delete itself */
     gMainTask = xTaskCreateStatic( freertos_main,   /* Pointer to the function that implements the task. */
                                   "freertos_main", /* Text name for the task.  This is to facilitate debugging only. */

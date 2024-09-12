@@ -6,6 +6,7 @@ const files = {
     common: [
         "ospi_flash_dma.c",
         "main.c",
+        "board.c"
     ],
 };
 
@@ -45,17 +46,6 @@ const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_FLASH_DMA";
 
-const templates_nortos_r5f =
-[
-    {
-        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ospi_flash_dma_main",
-        },
-    }
-];
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"}
@@ -85,7 +75,6 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
     }
 
     return build_property;

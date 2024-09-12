@@ -6,6 +6,7 @@ const files = {
     common: [
         "ospi_flash_file_io.c",
         "main.c",
+        "board.c"
     ],
 };
 
@@ -73,27 +74,6 @@ const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO";
 
-const templates_nortos_r5f =
-[
-    {
-        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ospi_flash_file_io_main",
-        },
-    }
-];
-
-const templates_freertos_r5f =
-[
-    {
-        input: ".project/templates/am263px/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ospi_flash_file_io_main",
-        },
-    }
-];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
@@ -129,11 +109,9 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
-            build_property.templates = templates_freertos_r5f;
         }
         else {
             build_property.libs = libs_nortos_r5f;
-            build_property.templates = templates_nortos_r5f;
         }
     }
 
