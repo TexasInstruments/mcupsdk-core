@@ -112,7 +112,7 @@ void canfd_loopback_polling_main(void *args)
     retVal = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &txMsgObject);
     if (retVal != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD create Tx message object failed\n");
+        DebugP_log ("Error: CANFD create Tx message object failed\r\n");
         return;
     }
     txMsgObjHandle = &txMsgObject;
@@ -128,7 +128,7 @@ void canfd_loopback_polling_main(void *args)
     retVal = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &rxMsgObject);
     if (retVal != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD create Rx message object failed\n");
+        DebugP_log ("Error: CANFD create Rx message object failed\r\n");
         return;
     }
     rxMsgObjHandle = &rxMsgObject;
@@ -158,7 +158,7 @@ void canfd_loopback_polling_main(void *args)
 
         if (retVal != SystemP_SUCCESS)
         {
-            DebugP_log ("Error: CANFD transmit data for iteration %d failed\n", iterationCount);
+            DebugP_log ("Error: CANFD transmit data for iteration %d failed\r\n", iterationCount);
             return;
         }
 
@@ -168,26 +168,26 @@ void canfd_loopback_polling_main(void *args)
     retVal = CANFD_deleteMsgObject(txMsgObjHandle);
     if (retVal != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD delete Tx message object failed\n");
+        DebugP_log ("Error: CANFD delete Tx message object failed\r\n");
         return;
     }
 
     retVal = CANFD_deleteMsgObject(rxMsgObjHandle);
     if (retVal != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD delete Rx message object failed\n");
+        DebugP_log ("Error: CANFD delete Rx message object failed\r\n");
         return;
     }
 
     if (retVal == SystemP_SUCCESS)
     {
-        DebugP_log("[MCAN] Internal loopback testing for %d iterations Passed\n", iterationCount);
-        DebugP_log("All tests have passed\n");
+        DebugP_log("[MCAN] Internal loopback testing for %d iterations Passed\r\n", iterationCount);
+        DebugP_log("All tests have passed\r\n");
     }
     else
     {
-        DebugP_log("[MCAN] Internal loopback testing for %d iterations Failed\n", iterationCount);
-        DebugP_log("Some tests have Failed\n");
+        DebugP_log("[MCAN] Internal loopback testing for %d iterations Failed\r\n", iterationCount);
+        DebugP_log("Some tests have Failed\r\n");
     }
 
     Board_driversClose();

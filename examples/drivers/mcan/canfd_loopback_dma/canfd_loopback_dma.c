@@ -110,7 +110,7 @@ void canfd_loopback_dma_main(void *args)
     status = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &rxMsgObject);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD create Rx message object failed\n");
+        DebugP_log ("Error: CANFD create Rx message object failed\r\n");
         return;
     }
     rxMsgObjHandle = &rxMsgObject;
@@ -127,7 +127,7 @@ void canfd_loopback_dma_main(void *args)
     status = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &txMsgObject);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD create Tx message object failed\n");
+        DebugP_log ("Error: CANFD create Tx message object failed\r\n");
         return;
     }
     txMsgObjHandle = &txMsgObject;
@@ -135,14 +135,14 @@ void canfd_loopback_dma_main(void *args)
     status = CANFD_read(rxMsgObjHandle, MCAN_APP_TEST_MESSAGE_COUNT, &rxData[0][0]);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD read dma config failed\n");
+        DebugP_log ("Error: CANFD read dma config failed\r\n");
         return;
     }
 
     status = CANFD_write(txMsgObjHandle, txMsgObject.startMsgId, CANFD_MCANFrameType_FD, MCAN_APP_TEST_MESSAGE_COUNT, &txData[0][0]);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD write dma config failed\n");
+        DebugP_log ("Error: CANFD write dma config failed\r\n");
         return;
     }
 
@@ -170,26 +170,26 @@ void canfd_loopback_dma_main(void *args)
     status = CANFD_deleteMsgObject(txMsgObjHandle);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD delete Tx message object failed \n");
+        DebugP_log ("Error: CANFD delete Tx message object failed \r\n");
         return;
     }
 
     status = CANFD_deleteMsgObject(rxMsgObjHandle);
     if (status != SystemP_SUCCESS)
     {
-        DebugP_log ("Error: CANFD delete Rx message object failed \n");
+        DebugP_log ("Error: CANFD delete Rx message object failed \r\n");
         return;
     }
 
     if ((status == SystemP_SUCCESS) && (errDataMismatch == SystemP_SUCCESS))
     {
-        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Passed\n", MCAN_APP_TEST_MESSAGE_COUNT);
-        DebugP_log(" All tests have passed.\n");
+        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Passed\r\n", MCAN_APP_TEST_MESSAGE_COUNT);
+        DebugP_log(" All tests have passed.\r\n");
     }
     else
     {
-        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Failed\n", MCAN_APP_TEST_MESSAGE_COUNT);
-        DebugP_log(" Some tests have failed.\n");
+        DebugP_log("[MCAN] CANFD Internal loopback testing for %d iterations Failed\r\n", MCAN_APP_TEST_MESSAGE_COUNT);
+        DebugP_log(" Some tests have failed.\r\n");
     }
 
     /* Open drivers to open the UART driver for console */

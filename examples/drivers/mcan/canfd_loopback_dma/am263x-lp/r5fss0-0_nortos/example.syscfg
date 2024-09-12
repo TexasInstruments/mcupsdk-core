@@ -67,6 +67,10 @@ const mcan_v1_template_hld1 = mcan_v1_template_hld.addInstance({}, false);
 mcan_v1_template_hld1.$name = "drivers_mcan_v1_mcan_v1_template_hld0";
 mcan1.child                 = mcan_v1_template_hld1;
 
+debug_log.enableUartLog       = true;
+debug_log.uartLog.$name       = "CONFIG_UART0";
+debug_log.uartLog.child.$name = "drivers_uart_v2_uart_v2_template0";
+
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
@@ -287,5 +291,8 @@ dma_trig_xbar2.xbarOutput = "DMA_TRIG_XBAR_MCANSS1_TX_DMA_0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcan1.MCAN.RX.$suggestSolution = "MCAN1_RX";
-mcan1.MCAN.TX.$suggestSolution = "MCAN1_TX";
+mcan1.MCAN.RX.$suggestSolution              = "MCAN1_RX";
+mcan1.MCAN.TX.$suggestSolution              = "MCAN1_TX";
+debug_log.uartLog.UART.$suggestSolution     = "UART0";
+debug_log.uartLog.UART.RXD.$suggestSolution = "MMC_CLK";
+debug_log.uartLog.UART.TXD.$suggestSolution = "MMC_CMD";
