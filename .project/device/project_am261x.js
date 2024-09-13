@@ -285,7 +285,7 @@ const example_file_list = [
 	"test/drivers/fsi/.project/project.js",
 	"test/drivers/gpio/.project/project.js",
 	// "test/drivers/gpmc/.project/project.js",
-	// "test/drivers/i2c/.project/project.js",
+	"test/drivers/i2c/.project/project.js",
 	"test/drivers/ipc_notify/.project/project.js",
 	// "test/drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am261x/.project/project.js",
 	"test/drivers/ipc_rpmsg/.project/project.js",
