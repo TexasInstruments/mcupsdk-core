@@ -62,6 +62,14 @@ When using AM263x-LP
 - Feed analog input on J5/J6 Pin 66
 - Capture and analyze waveforms on DS2 LED and boosterpack header J6/J8 pin 59
 
+\cond SOC_AM261X
+## AM261x-LP
+When using AM261x-LP 
+- Feed the Analog input on J7 Pin 63
+- Capture the Trip out on OUTXBAR OUT 0 ON GPIO1 or J8 Pin 51
+- Capture the EPWM output on J7 Pin 70
+\endcond 
+
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP_COMBOS}
 
 \cond SOC_AM263X || SOC_AM263PX

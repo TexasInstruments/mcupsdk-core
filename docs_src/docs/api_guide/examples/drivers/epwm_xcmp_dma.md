@@ -40,6 +40,13 @@ connect the following EPWM outputs to an oscilloscope to view the waveform.
     - EPWM3_A and EPWM3_B pin ie, HSEC 54, HSEC 56.
     - EPWM4_A and EPWM4_B pin ie, HSEC 57, HSEC 59.
 
+## AM261x-LP
+    - EPWM5_A/B pin ie, J6 80/ J6 79.
+    - EPWM6_A/B pin ie, J6 78/ J6 77.
+    - EPWM2_A/B pin ie, J2 40/ J2 39.
+    - EPWM3_A/B pin ie, J2 38/ J2 37.
+    - EPWM4_A/B pin ie, J2 36/ J2 35.
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_XCMP_DMA_COMBOS}
 
 \cond SOC_AM263X || SOC_AM263PX

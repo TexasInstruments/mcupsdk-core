@@ -47,13 +47,13 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EPWM_XCMP_DMA";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "epwm_xcmp_dma_main",
-        },
-    }
+    // {
+    //     input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
+    //     output: "../main.c",
+    //     options: {
+    //         entryFunction: "epwm_xcmp_dma_main",
+    //     },
+    // }
 ];
 
 const buildOptionCombos = [

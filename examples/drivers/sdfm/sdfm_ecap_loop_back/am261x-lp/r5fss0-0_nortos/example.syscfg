@@ -9,10 +9,12 @@
 /**
  * Import the modules used in this configuration.
  */
-const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
-const ioexp1          = ioexp.addInstance();
-const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
-const dac1            = dac.addInstance();
+const ecap            = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1           = ecap.addInstance();
+const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1           = epwm.addInstance();
+const sdfm            = scripting.addModule("/drivers/sdfm/sdfm", {}, false);
+const sdfm1           = sdfm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -20,8 +22,6 @@ const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
 const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
-const timer           = scripting.addModule("/kernel/dpl/timer", {}, false);
-const timer1          = timer.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -41,29 +41,85 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
+const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1       = int_xbar.addInstance();
+const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1    = output_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-ioexp1.$name                                     = "CONFIG_IOEXP0";
-ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ecap1.$name             = "CONFIG_ECAP0";
+ecap1.ecapBase          = "CSL_CONTROLSS_ECAP4_U_BASE";
+ecap1.ecapMode          = "APWM";
+ecap1.emulationMode     = "ECAP_EMULATION_FREE_RUN";
+ecap1.enableLoadCounter = true;
+ecap1.apwmPolarity      = "ECAP_APWM_ACTIVE_LOW";
+ecap1.apwmPeriod        = 65535;
+ecap1.apwmCompare       = 32767;
 
-dac1.$name        = "CONFIG_DAC0";
-dac1.enableOutput = true;
+epwm1.$name                                                    = "CONFIG_EPWM0";
+epwm1.epwmTimebase_syncInPulseSource                           = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP4";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_phaseEnable                                 = true;
+epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable                = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar        = "1";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitEnable  = true;
+epwm1.epwmTimebase_period                                      = 65535;
+epwm1.epwmCounterCompare_cmpA                                  = 49999;
+epwm1.EPWM.$assign                                             = "EPWM0";
 
-const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1              = i2c.addInstance({}, false);
-i2c1.$name              = "CONFIG_I2C1";
-ioexp1.peripheralDriver = i2c1;
-i2c1.I2C.$assign        = "I2C0";
-i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template1";
+sdfm1.$name                         = "CONFIG_SDFM0";
+sdfm1.Use_FilterChannel_2           = true;
+sdfm1.Use_FilterChannel_3           = true;
+sdfm1.Ch2_DataFilterEnable          = true;
+sdfm1.Ch2_FilterType_D              = "SDFM_FILTER_SINC_1";
+sdfm1.Ch2_FIFO_Enable               = true;
+sdfm1.Ch2_SDFFIL                    = "16";
+sdfm1.Ch3_DataFilterEnable          = true;
+sdfm1.Ch3_FilterType_D              = "SDFM_FILTER_SINC_1";
+sdfm1.useInterrupts                 = true;
+sdfm1.Ch2_DataFilter_Representation = "SDFM_DATA_FORMAT_16_BIT";
+sdfm1.Ch3_DataFilter_Representation = "SDFM_DATA_FORMAT_16_BIT";
+sdfm1.Use_FilterChannel_1           = true;
+sdfm1.Ch1_DataFilterEnable          = true;
+sdfm1.Ch1_FilterType_D              = "SDFM_FILTER_SINC_1";
+sdfm1.Ch3_SDCLKSEL                  = "SDFM_CLK_SOURCE_SD1_CLK";
+sdfm1.Ch2_SDCLKSEL                  = "SDFM_CLK_SOURCE_SD1_CLK";
+sdfm1.SDFFINT                       = ["SDFM_FILTER_2","SDFM_FILTER_3"];
+sdfm1.AE                            = ["SDFM_FILTER_2","SDFM_FILTER_3"];
+sdfm1.SDFM.$assign                  = "SDFM1";
+sdfm1.SDFM.CLK0.outputOverride      = true;
 
-debug_log.enableUartLog            = true;
-debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "GPIO27";
-debug_log.uartLog.UART.TXD.$assign = "GPIO28";
-debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
+sdfm.soc_ctrl_sdfm     = soc_ctrl_sdfm1;
+
+debug_log.enableUartLog       = true;
+debug_log.uartLog.$name       = "CONFIG_UART0";
+debug_log.uartLog.child.$name = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -84,11 +140,6 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
-
-timer1.$name         = "CONFIG_TIMER0";
-timer1.usecPerTick   = 50;
-timer1.timerCallback = "timerISR";
-timer1.RTI.$assign   = "RTI1";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -279,11 +330,29 @@ section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["SD0_FILT1_DRINT","SD0_FILT2_DRINT","SD1_FILT1_DRINT","SD1_FILT2_DRINT"];
+
+output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput         = ["ECAP4_OUT"];
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR0";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution           = "GPIO135";
-i2c1.I2C.SDA.$suggestSolution           = "GPIO134";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+epwm1.EPWM.A.$suggestSolution                    = "GPIO43";
+epwm1.EPWM.B.$suggestSolution                    = "GPIO44";
+sdfm1.SDFM.CLK0.$suggestSolution                 = "GPIO130";
+sdfm1.SDFM.CLK1.$suggestSolution                 = "GPIO132";
+sdfm1.SDFM.CLK2.$suggestSolution                 = "GPIO134";
+sdfm1.SDFM.CLK3.$suggestSolution                 = "GPIO135";
+sdfm1.SDFM.D0.$suggestSolution                   = "GPIO124";
+sdfm1.SDFM.D1.$suggestSolution                   = "GPIO126";
+sdfm1.SDFM.D2.$suggestSolution                   = "GPIO128";
+sdfm1.SDFM.D3.$suggestSolution                   = "GPIO137";
+debug_log.uartLog.UART.$suggestSolution          = "UART0";
+debug_log.uartLog.UART.RXD.$suggestSolution      = "GPIO27";
+debug_log.uartLog.UART.TXD.$suggestSolution      = "GPIO28";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO1";

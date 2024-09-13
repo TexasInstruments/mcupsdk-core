@@ -76,6 +76,7 @@
 
 #define EDMA_TEST_EVT_QUEUE_NO (0)
 
+extern EPWM_CurrentLink App_linkPwm;
 
 /* base address varaible for EDMA */
 uint32_t gEdmaBaseAddr;
@@ -174,7 +175,7 @@ void epwm_xcmp_dma_main(void *args)
     /* xlinking xload register */
     for(int base = 0; base <= NUM_TEST_PWM; base++)
     {
-        EPWM_setupEPWMLinks(gEpwmBaseAddr[base], EPWM_LINK_WITH_EPWM_0, EPWM_LINK_XLOAD);
+        EPWM_setupEPWMLinks(gEpwmBaseAddr[base], App_linkPwm, EPWM_LINK_XLOAD);
     }
 
     /* register the epwm update ISR */

@@ -24,19 +24,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=epwm_xcmp_dma.$(PROFILE).out
+OUTNAME:=sdfm_ecap_loop_back.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=epwm_xcmp_dma.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=epwm_xcmp_dma.$(PROFILE).appimage.signed
-BOOTIMAGE_NAME_MCELF:=epwm_xcmp_dma.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=epwm_xcmp_dma.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_xcmp_dma.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_xcmp_dma.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_xcmp_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_xcmp_dma.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=sdfm_ecap_loop_back.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sdfm_ecap_loop_back.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=sdfm_ecap_loop_back.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=sdfm_ecap_loop_back.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=sdfm_ecap_loop_back.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=sdfm_ecap_loop_back.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sdfm_ecap_loop_back.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sdfm_ecap_loop_back.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=sdfm_ecap_loop_back.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=sdfm_ecap_loop_back.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,7 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	epwm_xcmp_dma.c \
+	sdfm_ecap_loop_back.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -203,7 +203,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang epwm_xcmp_dma ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang sdfm_ecap_loop_back ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -349,12 +349,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for epwm_xcmp_dma.$(PROFILE) ...
+	@echo Creating Coverage Report for sdfm_ecap_loop_back.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_xcmp_dma.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_xcmp_dma.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_xcmp_dma.$(PROFILE).profdata > coverage/epwm_xcmp_dma.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_xcmp_dma.$(PROFILE).profdata.json --output-json=coverage/epwm_xcmp_dma.$(PROFILE).analysis.json --output=../epwm_xcmp_dma.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdfm_ecap_loop_back.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdfm_ecap_loop_back.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdfm_ecap_loop_back.$(PROFILE).profdata > coverage/sdfm_ecap_loop_back.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdfm_ecap_loop_back.$(PROFILE).profdata.json --output-json=coverage/sdfm_ecap_loop_back.$(PROFILE).analysis.json --output=../sdfm_ecap_loop_back.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -57,10 +57,10 @@
  * that is provided to CMPIN1P as input to CMPSS.
  *
  * When a low input(VSS) is provided to CMPIN1P,
- *     - Trip signal(OUTPUTXBAR0) output is low
+ *     - Trip signal(OUTPUTXBAR) output is low
  *
  * When a high input(higher than VDD/2) is provided to CMPIN1P,
- *     - Trip signal(OUTPUTXBAR0) output turns high
+ *     - Trip signal(OUTPUTXBAR) output turns high
  *
  * External Connections \n
  *

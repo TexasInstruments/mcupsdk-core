@@ -65,17 +65,7 @@ uint32_t gSdfmBase = CONFIG_SDFM0_BASE_ADDR;
  * demonstrates the configurations and usage of such internal loopback.
  * In AM263Px, the loopback configurations can be done to leverage the following
  * pairs.
- *      SDFM instance   |   Clock       | ECAP instances
- *      ----------------|---------------|-----------------
- *              0       |       0       |   4(default), 12
- *              0       |       1       |   5(default), 13
- *              0       |       2       |   6(default), 14
- *              0       |       3       |   7(default), 15
- *              1       |       0       |   7(default), 15
- *              1       |       1       |   6(default), 14
- *              1       |       2       |   5(default), 13
- *              1       |       3       |   4(default), 12
- *
+ * for the Loopback configurations please refer to the example docs 
  * In this example, SDFM filters 2,3 are configured for the clock input to have
  * from filter 1 and filter 1 is configured to take the loopback clock. The Data
  * interrupts from the SDFM filter 2,3 invoke the ISR, where the CPU reads the data

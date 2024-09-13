@@ -34,16 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void epwm_xcmp_dma_main(void *args);
-
-EPWM_CurrentLink App_linkPwm = EPWM_LINK_WITH_EPWM_0; 
+void sdfm_ecap_loop_back_main(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-    epwm_xcmp_dma_main(NULL);
+    sdfm_ecap_loop_back_main(NULL);
 
     Board_deinit();
     System_deinit();

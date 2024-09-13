@@ -2680,6 +2680,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ECAP APWM mode example. This example sets up ECAP in APWM mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_apwm_mode",
+        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP APWM mode example. This example sets up ECAP in APWM mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_apwm_mode",
+        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_capture_pwm",
         "location": "../../examples/drivers/ecap/ecap_capture_pwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -2729,6 +2795,72 @@
             "drivers",
             "ecap",
             "ecap_capture_pwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP triggering EDMA example. This example demonstrates EDMA triggering from ECAP. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_edma",
+        "location": "../../examples/drivers/ecap/ecap_edma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_edma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP triggering EDMA example. This example demonstrates EDMA triggering from ECAP. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_edma",
+        "location": "../../examples/drivers/ecap/ecap_edma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_edma",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -3257,6 +3389,72 @@
             "drivers",
             "epwm",
             "epwm_global_load_and_link",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the dccap functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_dccap",
+        "location": "../../examples/drivers/epwm/epwm_dccap/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_dccap",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the dccap functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_dccap",
+        "location": "../../examples/drivers/epwm/epwm_dccap/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_dccap",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -4000,6 +4198,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the xcmp features of the epwm, and registers populated by edma. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_dma",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the xcmp features of the epwm, and registers populated by edma. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_dma",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM xcmp example. This example is used to generate multiple edges in pwm cycle CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_xcmp_multiple_edges",
         "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -4247,6 +4511,72 @@
             "drivers",
             "epwm",
             "hrpwm_phase_shift_sfo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Frequency Measurement example. This example measures frequency of signal generated by ePWM module. CPU is R5FSS0-0 running NORTOS.",
+        "name": "eqep_frequency_measurement",
+        "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_frequency_measurement",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Frequency Measurement example. This example measures frequency of signal generated by ePWM module. CPU is R5FSS0-0 running NORTOS.",
+        "name": "eqep_frequency_measurement",
+        "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_frequency_measurement",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -8664,6 +8994,72 @@
             "rti",
             "rti_led_blink",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_ecap_loop_back",
+        "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_ecap_loop_back",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_ecap_loop_back",
+        "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_ecap_loop_back",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [

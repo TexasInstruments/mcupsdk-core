@@ -1,19 +1,23 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
+const ioexp2          = ioexp.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const eqep            = scripting.addModule("/drivers/eqep/eqep", {}, false);
 const eqep1           = eqep.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -44,6 +48,17 @@ const int_xbar1       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
+
+ioexp2.$name                                        = "CONFIG_IOEXP1";
+ioexp2.i2cAddress                                   = 33;
+ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_mode  = 0;
+ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_state = 1;
+
 epwm1.$name                                                      = "CONFIG_EPWM0";
 epwm1.epwmCounterCompare_enableShadowLoadModeCMPA                = false;
 epwm1.epwmCounterCompare_enableShadowLoadModeCMPB                = false;
@@ -76,15 +91,46 @@ eqep1.capPrescale          = "EQEP_CAPTURE_CLK_DIV_128";
 eqep1.enableCapture        = true;
 eqep1.captureConfig        = true;
 eqep1.EQEP.$assign         = "EQEP0";
-eqep1.EQEP.A.$assign       = "EQEP0_A";
-eqep1.EQEP.B.$assign       = "EQEP0_B";
-eqep1.EQEP.STROBE.$assign  = "EQEP0_STROBE";
-eqep1.EQEP.INDEX.$assign   = "EQEP0_INDEX";
+eqep1.EQEP.A.$assign       = "GPIO33";
+eqep1.EQEP.B.$assign       = "GPIO34";
+eqep1.EQEP.STROBE.$assign  = "GPIO36";
+eqep1.EQEP.INDEX.$assign   = "GPIO35";
+
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+ioexp2.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -303,4 +349,6 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+i2c1.I2C.SCL.$suggestSolution           = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution           = "GPIO134";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

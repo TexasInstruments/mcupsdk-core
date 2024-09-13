@@ -9,6 +9,7 @@
 
 ## Example Description
 ECAP in its APWM mode can be used a Clock for the SDFM. This example demonstrates the configurations and usage of such internal loopback. In AM263Px, the loopback configurations can be done to leverage the following pairs.
+\cond SOC_AM263PX
 SDFM instance   |   Clock       | ECAP instances
 ----------------|---------------|-----------------
         0       |       0       |   4(default), 12
@@ -19,7 +20,19 @@ SDFM instance   |   Clock       | ECAP instances
         1       |       1       |   6(default), 14
         1       |       2       |   5(default), 13
         1       |       3       |   4(default), 12
-
+\endcond
+\cond SOC_AM261X
+SDFM instance   |   Clock       | ECAP instances
+----------------|---------------|-----------------
+        0       |       0       |   0(default), 7
+        0       |       1       |   1(default), 6
+        0       |       2       |   2(default), 5
+        0       |       3       |   3(default), 4
+        1       |       0       |   4(default), 3
+        1       |       1       |   5(default), 2
+        1       |       2       |   6(default), 1
+        1       |       3       |   7(default), 0
+\endcond
 
 In this example, SDFM filters 2,3 are configured for the clock input to have from filter 1 and filter 1 is configured to take the loopback clock. The Data interrupts from the SDFM filter 2,3 invoke the ISR, where the CPU reads the data form FIFO of Filter 2 and Data result of Filter 3.
 ## Configurations

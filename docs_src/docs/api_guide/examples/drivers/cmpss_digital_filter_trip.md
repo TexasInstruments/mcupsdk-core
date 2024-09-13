@@ -38,9 +38,15 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
     - For DAC loop back as input, connect DAC_OUT (HSEC Pin 9) to CMPIN1P
 
 ## AM263PX-LP or AM263X-LP
-    - Give input on CMPIN1P (Pin j7.66)
+    - Give input on CMPIN1P (Pin j7.63)
     - Outputs can be observed on OUTPUTXBAR8 (j5.50)
     - For DAC loop back as input, connect DAC_OUT (J3.30) to CMPIN1P
+
+\cond SOC_AM261X
+    - Give input on CMPIN1P (Pin J7.66)
+    - Outputs can be observed on OUTPUTXBAR5 (j5.48)
+    - For DAC loop back as input, connect DAC_OUT (J3.30) to CMPIN1P
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_DIGITAL_FILTER_TRIP_COMBOS}
 

@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Ecap Edma"
-        name = "ecap_edma_am261x-som_r5fss0-0_nortos_ti-arm-clang"
+        title="Sdfm Ecap Loop Back"
+        name = "sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=ecap_edma.${ConfigName}.map
+            -m=sdfm_ecap_loop_back.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -57,10 +57,10 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2611 --package ZCZ
+            --context r5fss0-0 --part AM2612 --package ZFG
         "
 
-        description="A Ecap Edma NORTOS project">
+        description="A Sdfm Ecap Loop Back NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -87,13 +87,13 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../ecap_edma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../sdfm_ecap_loop_back.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_ECAP_EDMA.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

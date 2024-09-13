@@ -1,13 +1,17 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
+const ioexp2          = ioexp.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const eqep            = scripting.addModule("/drivers/eqep/eqep", {}, false);
@@ -15,7 +19,7 @@ const eqep1           = eqep.addInstance();
 const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -46,6 +50,17 @@ const int_xbar1       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
+
+ioexp2.$name                                        = "CONFIG_IOEXP1";
+ioexp2.i2cAddress                                   = 33;
+ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_mode  = 0;
+ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_state = 1;
+
 epwm1.$name                                                      = "CONFIG_EPWM0";
 epwm1.epwmCounterCompare_enableShadowLoadModeCMPA                = false;
 epwm1.epwmCounterCompare_enableShadowLoadModeCMPB                = false;
@@ -79,18 +94,53 @@ eqep1.enableModule         = true;
 eqep1.selectSourceA        = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.selectSourceB        = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.selectSourceIndex    = "EQEP_SOURCE_DEVICE_PIN";
-eqep1.EQEP.$assign         = "EQEP2";
-eqep1.EQEP.A.$assign       = "GPIO134";
+eqep1.EQEP.$assign         = "EQEP0";
+eqep1.EQEP.A.$assign       = "GPIO33";
+eqep1.EQEP.B.$assign       = "GPIO34";
+eqep1.EQEP.STROBE.$assign  = "GPIO36";
+eqep1.EQEP.INDEX.$assign   = "GPIO35";
 
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "GPIO48";
+gpio1.$name          = "CONFIG_GPIO0";
+gpio1.pinDir         = "OUTPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "GPIO48";
+
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+ioexp2.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -143,13 +193,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -309,9 +359,7 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution      = "GPIO43";
-epwm1.EPWM.B.$suggestSolution      = "GPIO44";
-eqep1.EQEP.B.$suggestSolution      = "GPIO135";
-eqep1.EQEP.STROBE.$suggestSolution = "MCAN2_TX";
-eqep1.EQEP.INDEX.$suggestSolution  = "MCAN2_RX";
-gpio1.GPIO.$suggestSolution        = "GPIO";
+epwm1.EPWM.A.$suggestSolution = "GPIO43";
+epwm1.EPWM.B.$suggestSolution = "GPIO44";
+i2c1.I2C.SCL.$suggestSolution = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution = "GPIO134";
