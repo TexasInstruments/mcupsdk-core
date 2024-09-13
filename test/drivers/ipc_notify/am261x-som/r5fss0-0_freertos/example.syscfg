@@ -42,10 +42,14 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ipc.r5fss0_1 = "notify";
+
+debug_log.enableCssLog             = false;
 debug_log.enableUartLog            = true;
 debug_log.enableSharedMemLog       = true;
 debug_log.enableSharedMemLogReader = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
 
@@ -83,9 +87,9 @@ mpu_armv76.baseAddr     = 0x72000000;
 
 mpu_armv77.$name        = "CONFIG_MPU_REGION6";
 mpu_armv77.baseAddr     = 0x701D0000;
-mpu_armv77.size         = 16;
-mpu_armv77.allowExecute = false;
+mpu_armv77.size         = 15;
 mpu_armv77.attributes   = "NonCached";
+mpu_armv77.allowExecute = false;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -275,10 +279,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-debug_log.uartLog.UART.$suggestSolution = "UART0";
