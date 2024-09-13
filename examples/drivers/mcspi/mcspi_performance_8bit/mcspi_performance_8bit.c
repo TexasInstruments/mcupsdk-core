@@ -57,14 +57,12 @@
 
 /* Global variables */
 uint8_t     gMcspiTxBuffer[APP_MCSPI_MSGSIZE];
-uint8_t     gMcspiRxBuffer[APP_MCSPI_MSGSIZE];
 uint32_t    gChEnableRegVal, gChDisableRegVal;
 uint32_t    gCsAssertRegVal, gCsDeAssertRegVal;
 
 static void mcspi_low_latency_transfer_8bit(uint32_t baseAddr,
                                             uint32_t  chNum,
-                                            uint8_t   *txBuff,
-                                            uint8_t   *rxBuff,
+                                            uint8_t  *txBuff,
                                             uint32_t  length,
                                             uint32_t  dataWidth);
 
@@ -85,7 +83,6 @@ void *mcspi_performance_main(void *args)
     for(i = 0U; i < APP_MCSPI_MSGSIZE; i++)
     {
         gMcspiTxBuffer[i] = i;
-        gMcspiRxBuffer[i] = 0;
     }
 
     /* Initialize SPI Channel Number */
@@ -144,17 +141,9 @@ void *mcspi_performance_main(void *args)
     for(j = 0U; j < APP_MCSPI_TRANSFER_LOOPCOUNT; j++)
     {
         mcspi_low_latency_transfer_8bit(baseAddr, chNum,
-                                   &gMcspiTxBuffer[0], &gMcspiRxBuffer[0], dataLength, bufWidthShift);
+                                   &gMcspiTxBuffer[0], dataLength, bufWidthShift);
     }
     elapsedTimeInUsecs = ClockP_getTimeUsec() - startTimeInUSec;
-
-    for (j = 0U; j < dataLength; j++) {
-        if (gMcspiTxBuffer[j] != gMcspiRxBuffer[j])
-        {
-            DebugP_log("mcspi_low_latency_transfer_8bit: Data Mismatch at offset %d \r\n", j);
-            break;
-        }
-    }
 
     DebugP_log("----------------------------------------------------------\r\n");
     DebugP_log("McSPI Clock %d Hz\r\n", bitRate);
@@ -173,15 +162,13 @@ void *mcspi_performance_main(void *args)
 
 static void mcspi_low_latency_transfer_8bit(uint32_t baseAddr,
                                             uint32_t chNum,
-                                            uint8_t  *txBuff,
-                                            uint8_t  *rxBuff,
+                                            uint8_t *txBuff,
                                             uint32_t length,
                                             uint32_t bufWidthShift)
 {
     /* Effective FIFO depth in bytes(64/32/16) depending on datawidth */
     uint32_t effTxFifoDepth = (uint32_t)((uint32_t) MCSPI_FIFO_LENGTH / 2U) >> bufWidthShift;
-    uint32_t i, numWordsWritten = 0U, numWordsRead = 0U, transferLengthTx = length, transferLengthRx = length;
-    uint8_t  *rxBuffer = rxBuff;
+    uint32_t i, numWordsWritten = 0U, transferLength = length;
     uint8_t  *txBuffer = txBuff;
 
     /* Enable the McSPI channel for communication.*/
@@ -192,42 +179,26 @@ static void mcspi_low_latency_transfer_8bit(uint32_t baseAddr,
     /* Updated for write only operation. */
     MCSPI_writeChConfReg(baseAddr, chNum, gCsAssertRegVal);
 
-    while (transferLengthTx != 0U)
+    while (transferLength != 0U)
     {
-        if (0U != (MCSPI_readChStatusReg(baseAddr, chNum) &
+        /* Write Effective TX FIFO depth */
+        if (transferLength >= effTxFifoDepth)
+        {
+            transferLength = effTxFifoDepth;
+        }
+        while (0U == (MCSPI_readChStatusReg(baseAddr, chNum) &
                         CSL_MCSPI_CH0STAT_TXFFE_MASK))
         {
-            /* Write Effective TX FIFO depth */
-            if (transferLengthTx >= effTxFifoDepth)
-            {
-                transferLengthTx = effTxFifoDepth;
-            }
-            /* Write the data in Tx FIFO. */
-            for (i = 0U; i < transferLengthTx; i++)
-            {
-                MCSPI_writeTxDataReg(baseAddr, (uint8_t) *txBuffer, chNum);
-                txBuffer++;
-            }
-            numWordsWritten  += transferLengthTx;
-            transferLengthTx    = length - numWordsWritten;
+            /* Wait fot Tx FIFO to be empty before writing the data. */
         }
-        if (0U != (MCSPI_readChStatusReg(baseAddr, chNum) &
-                        CSL_MCSPI_CH0STAT_RXFFF_MASK))
+        /* Write the data in Tx FIFO. */
+        for (i = 0U; i < transferLength; i++)
         {
-            /* Write Effective TX FIFO depth */
-            if (transferLengthRx >= effTxFifoDepth)
-            {
-                transferLengthRx = effTxFifoDepth;
-            }
-            /* Write the data in Tx FIFO. */
-            for (i = 0; i < transferLengthRx; i++)
-            {
-                *rxBuffer = (uint8_t) MCSPI_readRxDataReg(baseAddr, chNum);
-                rxBuffer++;
-            }
-            numWordsRead  += transferLengthRx;
-            transferLengthRx    = length - numWordsRead;
+            MCSPI_writeTxDataReg(baseAddr, (uint8_t) *txBuffer, chNum);
+            txBuffer++;
         }
+        numWordsWritten  += transferLength;
+        transferLength    = length - numWordsWritten;
     }
 
     while (0U == (MCSPI_readChStatusReg(baseAddr, chNum) &
@@ -235,22 +206,6 @@ static void mcspi_low_latency_transfer_8bit(uint32_t baseAddr,
     {
         /* Wait fot Tx FIFO to be empty for the last set of data. */
     }
-    /* read out all the remaining bytes in RXS */
-    if (0U != (MCSPI_readChStatusReg(baseAddr, chNum) &
-                    CSL_MCSPI_CH0STAT_RXS_MASK))
-    {
-            if (transferLengthRx >= effTxFifoDepth)
-            {
-                transferLengthRx = effTxFifoDepth;
-            }
-            /* Write the data in Tx FIFO. */
-            for (i = 0U; i < transferLengthRx; i++)
-            {
-                *rxBuffer = (uint8_t) MCSPI_readRxDataReg(baseAddr, chNum);
-                rxBuffer++;
-            }
-    }
-
     while (0U == (MCSPI_readChStatusReg(baseAddr, chNum) &
                     CSL_MCSPI_CH0STAT_EOT_MASK))
     {
