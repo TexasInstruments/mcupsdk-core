@@ -1,6 +1,6 @@
 %%{
     products = "";
-    if((args.project.device == "am263px") && (args.utils.getProductNameProjectSpec(args.project.device) != "MCU_PLUS_SDK_AMXXX")) {
+    if(((args.project.device == "am263px") || (args.project.device == "am261x")) && (args.utils.getProductNameProjectSpec(args.project.device) != "MCU_PLUS_SDK_AMXXX")) {
     products+="MCU-PLUS-SDK-"+args.project.device.toUpperCase()
     } else {
     products+=`com.ti.${args.utils.getProductNameProjectSpec(args.project.projects[0].device)}`
