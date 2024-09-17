@@ -64,7 +64,7 @@ const lnkfiles = {
 };
 
 const template_options_lp = {
-    bootformat: "RPRC",
+    bootformat: "MCELF",
     board: "am261x-lp"
 }
 
@@ -90,7 +90,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_dfu";
+    property.name = "sbl_dfu_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.description = "A SBL USB-DFU example"

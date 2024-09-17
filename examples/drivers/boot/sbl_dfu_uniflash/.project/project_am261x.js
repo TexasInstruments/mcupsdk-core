@@ -30,6 +30,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/middleware/lib",
         "${MCU_PLUS_SDK_PATH}/source/security/lib",
         "${MCU_PLUS_SDK_PATH}/source/usb/synp/lib",
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib",
@@ -50,6 +51,7 @@ const libs_nortos_r5f = {
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "middleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "usbd_synp_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "usbd_tusb_dfu_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "security.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -63,23 +65,9 @@ const lnkfiles = {
     ]
 };
 
-const template_options_lp = {
-    bootformat: "RPRC",
-    board: "am261x-lp"
-}
-
-const templates_lp =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_dfu/main.c.xdt",
-        output: "../main.c",
-        options: template_options_lp
-    },
-];
-
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_DFU";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
@@ -90,10 +78,10 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_dfu";
+    property.name = "sbl_dfu_uniflash";
     property.isInternal = false;
     property.isBootLoader = true;
-    property.description = "A SBL USB-DFU example"
+    property.description = "A SBL USB-DFU Flashwriter example"
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -108,11 +96,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.defines = defines;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-
-    if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.includes = includes_nortos_r5f;

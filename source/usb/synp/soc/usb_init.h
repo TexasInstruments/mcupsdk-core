@@ -75,6 +75,11 @@ void USB_init();
  **/
 void USB_dwcTask();
 
+/**
+ * \brief USB De-Initialization function
+ */
+void USB_deinit();
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

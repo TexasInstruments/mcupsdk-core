@@ -52,7 +52,7 @@ void usbdIntrConfig();
 void usbCoreIntrHandler(void *args);
 
 /*
- *  ======== borad_init ========
+ *  ======== USB Init ========
  */
 void USB_init()
 {
@@ -68,6 +68,15 @@ void USB_init()
         DebugP_assert(FALSE);
     }
 }
+
+/*
+ *  ======== USB De-Init ========
+ */
+void USB_deinit()
+{
+    dwc_usb3_driver_remove();
+}
+
 
 void USB_dwcTask()
 {
@@ -154,8 +163,6 @@ UsbPhy_ret_t usb_phy_power_sequence(void){
 	uint32_t startTime = CycleCounterP_getCount32() ; 
 	uint32_t curTime = startTime ;  
 	UsbPhy_ret_t status = USB_PHY_OK;
-	/* Enable clock and route to USB PHY  Need to check this */
-	per_pll_usb_clk_cfg();
 	
     /* Configuring ocp2scp to sync ocp and scp clock */ 
     HW_WR_FIELD32_RAW(USB_OCP2SCP_REG + USB_OCP2SCP_REG_TIMING, 0x00000001,0,1);
