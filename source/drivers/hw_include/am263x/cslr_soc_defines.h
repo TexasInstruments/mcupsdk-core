@@ -107,6 +107,12 @@ extern "C" {
 /*! @brief  Maximum number of Tx Dma buffers. */
 #define MCAN_MAX_TX_DMA_BUFFERS             (4U)
 
+/*! @brief  Maximum number of FSI Tx Dma buffers. */
+#define FSI_MAX_TX_DMA_BUFFERS              (2U)
+
+/*! @brief  Maximum number of FSI Rx Dma buffers. */
+#define FSI_MAX_RX_DMA_BUFFERS              (2U)
+
 /**
  * \anchor CSL_CoreID
  * \name Core ID's of core or CPUs present on this SOC

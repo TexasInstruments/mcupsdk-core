@@ -40,6 +40,9 @@ FILES_common := \
     flc.c \
     fsi_rx.c \
     fsi_tx.c \
+    fsi_rx_hld.c \
+    fsi_tx_hld.c \
+    fsi_dma_edma.c \
     gpio.c \
     i2c_v1.c \
     i2c_v1_lld.c \
@@ -103,6 +106,7 @@ FILES_PATH_common = \
     epwm/v1 \
     eqep/v1 \
     fsi/v1 \
+    fsi/v1/dma/edma \
     gpio/v0 \
     i2c/v1 \
     i2c/v1/lld \

@@ -40,6 +40,9 @@ FILES_common := \
     etpwm.c \
     fsi_rx.c \
     fsi_tx.c \
+    fsi_rx_hld.c \
+    fsi_tx_hld.c \
+    fsi_dma_edma.c \
     gpio.c \
     gpmc_v0.c \
     gpmc_priv_v0.c \
@@ -98,6 +101,7 @@ FILES_PATH_common = \
     eqep/v1 \
     epwm/v1 \
     fsi/v1 \
+    fsi/v1/dma/edma \
     gpio/v0 \
     gpmc/v0 \
     gpmc/v0/dma \

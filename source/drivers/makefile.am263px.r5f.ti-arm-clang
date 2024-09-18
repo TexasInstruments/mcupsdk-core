@@ -43,6 +43,9 @@ FILES_common := \
     fota_agent.c \
     fsi_rx.c \
     fsi_tx.c \
+    fsi_rx_hld.c \
+    fsi_tx_hld.c \
+    fsi_dma_edma.c \
     fss_v0.c \
     gpio.c \
     i2c_v1.c \
@@ -111,6 +114,7 @@ FILES_PATH_common = \
     eqep/v1 \
     fota_agent \
     fsi/v1 \
+    fsi/v1/dma/edma \
     fss/v0 \
     gpio/v0 \
     i2c/v1 \
