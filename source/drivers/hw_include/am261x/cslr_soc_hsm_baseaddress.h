@@ -33,25 +33,22 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
-#ifndef CSLR_SOC_R5_BASEADDRESS_H_
-#define CSLR_SOC_R5_BASEADDRESS_H_
+#ifndef CSLR_SOC_HSM_M4_BASEADDRESS_H_
+#define CSLR_SOC_HSM_M4_BASEADDRESS_H_
 
-#include <drivers/hw_include/cslr.h>
-#include <ti/csl/tistdtypes.h>
-#include <ti/csl/soc/am261/src/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
 #define CSL_HSM_M4_ROM_BASE               (0x00000000U)
-#define CSL_HSM_M4_ROM_SIZE               (0x0000C000ul)  /* 48 KB */
+#define CSL_HSM_M4_ROM_SIZE               (0x00018000ul)  /* 96 KB */
 
 #define CSL_HSM_M4_SEC_ROM_BASE           (0x00010000U)
-#define CSL_HSM_M4_SEC_ROM_SIZE           (0x0000C000ul)  /* 48 KB */
+#define CSL_HSM_M4_SEC_ROM_SIZE           (0x00018000ul)  /* 96 KB */
 
 #define CSL_HSM_M4_RAM_BASE               (0x00020000U)
-#define CSL_HSM_M4_RRM_SIZE               (0x00030000ul) /* 192 KB */
+#define CSL_HSM_M4_RAM_SIZE               (0x00030000ul) /* 192 KB */
 
 #define CSL_CM4_ICFG_BASE                 (0xE0000000U)
 

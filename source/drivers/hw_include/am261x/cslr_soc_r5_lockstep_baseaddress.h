@@ -37,21 +37,21 @@
 #define CSLR_SOC_R5_BASEADDRESS_H_
 
 #include <drivers/hw_include/cslr.h>
-#include <ti/csl/tistdtypes.h>
-#include <ti/csl/soc/am261/src/cslr_soc_baseaddress.h>
+
+#include <ti/csl/soc/am261x/src/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
 #define CSL_MSS_TCMA_RAM_BASE               (0x00000000U)
-#define CSL_MSS_TCMA_RAM_SIZE               (0x00010000ul)  /* 64KB */
+#define CSL_MSS_TCMA_RAM_SIZE               (0x00040000ul)  /* 256KB */
 
 #define CSL_MSS_TMU_BASE                    (0x00060000U)
 #define CSL_MSS_TMU_SIZE                    (0x00080000ul)   /* 128KB */
 
 #define CSL_MSS_TCMB_RAM_BASE               (0x00080000U)
-#define CSL_MSS_TCMB_RAM_SIZE               (0x00030000ul)   /* 192KB */
+#define CSL_MSS_TCMB_RAM_SIZE               (0x00040000ul)   /* 256KB */
 
 
 #ifdef __cplusplus

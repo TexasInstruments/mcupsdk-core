@@ -52,8 +52,8 @@ extern "C"
 
 typedef struct {
 	volatile uint32_t	PID;
-	volatile uint32_t	SYS_RST_CAUSE;
-	volatile uint32_t	SYS_RST_CAUSE_CLR;
+	volatile uint32_t	WARM_RST_CAUSE;
+	volatile uint32_t	WARM_RST_CAUSE_CLR;
 	volatile uint32_t	WARM_RESET_REQ;
 	volatile uint32_t	WARM_RSTTIME1;
 	volatile uint32_t	WARM_RSTTIME2;
@@ -195,8 +195,8 @@ typedef struct {
 
 /*--------TOP_RCM_--------*/
 #define CSL_TOP_RCM_PID                                                         (0x00000000U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE                                               (0x00000004U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CLR                                           (0x00000008U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE                                              (0x00000004U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CLR                                          (0x00000008U)
 #define CSL_TOP_RCM_WARM_RESET_REQ                                              (0x0000000CU)
 #define CSL_TOP_RCM_WARM_RSTTIME1                                               (0x00000010U)
 #define CSL_TOP_RCM_WARM_RSTTIME2                                               (0x00000014U)
@@ -347,19 +347,19 @@ typedef struct {
 
 
 
-/* SYS_RST_CAUSE */
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CAUSE_MASK                      (0x07FFFFFFU)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CAUSE_SHIFT                     (0x00000000U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CAUSE_RESETVAL                  (0x00000041U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CAUSE_MAX                       (0x07FFFFFFU)
+/* WARM_RST_CAUSE */
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CAUSE_MASK                      (0x07FFFFFFU)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CAUSE_SHIFT                     (0x00000000U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CAUSE_RESETVAL                  (0x00000041U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CAUSE_MAX                       (0x07FFFFFFU)
 
 
 
-/* SYS_RST_CAUSE_CLR */
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CLR_CLEAR_MASK              (0x00000007U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CLR_CLEAR_SHIFT             (0x00000000U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CLR_CLEAR_RESETVAL          (0x00000000U)
-#define CSL_TOP_RCM_SYS_RST_CAUSE_CLR_CLEAR_MAX               (0x00000007U)
+/* WARM_RST_CAUSE_CLR */
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR_MASK              (0x00000007U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR_SHIFT             (0x00000000U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR_RESETVAL          (0x00000000U)
+#define CSL_TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR_MAX               (0x00000007U)
 
 
 
