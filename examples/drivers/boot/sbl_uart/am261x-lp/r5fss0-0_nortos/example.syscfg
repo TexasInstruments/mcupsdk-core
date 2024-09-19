@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+161"}
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -39,8 +39,8 @@ const section8    = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-bootloader1.bootMedia   = "MEM";
-bootloader1.$name       = "CONFIG_BOOTLOADER_0";
+bootloader1.bootMedia = "MEM";
+bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
@@ -100,8 +100,8 @@ region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x25700;
 region1.memory_region[5].$name              = "MSRAM_2";
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70067800;
 region1.memory_region[5].size               = 0x80000;
+region1.memory_region[5].manualStartAddress = 0x70100000;
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x70027800;
