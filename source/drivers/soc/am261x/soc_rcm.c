@@ -925,13 +925,13 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gOspiClkSrcValMap[clkSource];
             break;
         }
-        // case SOC_RcmPeripheralId_OSPI1:
-        // {
-        //     *clkSrcReg  = &(ptrMSSRCMRegs->OSPI1_CLK_SRC_SEL);
-        //     *clkdDivReg = &(ptrMSSRCMRegs->OSPI1_CLK_DIV_VAL);
-        //     *clkSrcVal = gOspiClkSrcValMap[clkSource];
-        //     break;
-        // }
+        case SOC_RcmPeripheralId_OSPI1:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->OSPI1_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->OSPI1_CLK_DIV_VAL);
+            *clkSrcVal = gOspiClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_RTI0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->RTI0_CLK_SRC_SEL);
@@ -2401,19 +2401,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
-        // case SOC_RcmPeripheralId_OSPI1:
-        // {
-        //     if(enable==1)
-        //     {
-        //         ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_RESETVAL;
-        //     }
-        //     else
-        //     if(enable==0)
-        //     {
-        //         ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_GATED_MASK;
-        //     }
-        //     break;
-        // }
+        case SOC_RcmPeripheralId_OSPI1:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_RTI0:
         {
             if(enable==1)
