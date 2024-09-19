@@ -2902,18 +2902,18 @@ void SOC_rcmR5SS0PowerOnReset(void)
     ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
 
     regVal = ptrRCMRegs->R5SS0_RST2ASSERTDLY;
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE1_COUNT, 0x0);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE0_COUNT, 0x0);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE1_COUNT, 0x0);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE1_COUNT, 0x0);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE0_COUNT, 0x0);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5_CORE1_COUNT, 0x0);
     ptrRCMRegs->R5SS0_RST2ASSERTDLY = regVal;
 
     /* WR_MEM_32(MSS_RCM_U_BASE+RST_WFICHECK, 0x00000707); */ //RSTWFI CHECK
     regVal = ptrRCMRegs->R5SS0_RST_WFICHECK;
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE0, 0x7);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE1, 0x7);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE0, 0x7);
-    // CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE1, 0x7);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE0, 0x7);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5SS_CORE1, 0x7);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE0, 0x7);
+    CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE1, 0x7);
     ptrRCMRegs->R5SS0_RST_WFICHECK = regVal;
 }
 
@@ -2972,19 +2972,19 @@ void SOC_configureWarmResetSource(uint32_t source)
 
 SOC_WarmResetCause SOC_getWarmResetCause(void)
 {
-    //CSL_top_rcmRegs *ptrTOPRCMRegs;
+    CSL_top_rcmRegs *ptrTOPRCMRegs;
     uint16_t     resetCause = 0U;
 
-    //ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
+    ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
     /* Read the Reset Cause Register bits */
-    //resetCause = SOC_rcmExtract16 (ptrTOPRCMRegs->WARM_RST_CAUSE, 11U, 0U);
+    resetCause = SOC_rcmExtract16 (ptrTOPRCMRegs->WARM_RST_CAUSE, 11U, 0U);
 
     /* clear the reset cause */
-    //CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
+    CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
@@ -2994,14 +2994,14 @@ SOC_WarmResetCause SOC_getWarmResetCause(void)
 
 void SOC_clearWarmResetCause(void)
 {
-    //CSL_top_rcmRegs *ptrTOPRCMRegs;
+    CSL_top_rcmRegs *ptrTOPRCMRegs;
 
-    //ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
+    ptrTOPRCMRegs = SOC_rcmGetBaseAddressTOPRCM();
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
-    //CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
+    CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);

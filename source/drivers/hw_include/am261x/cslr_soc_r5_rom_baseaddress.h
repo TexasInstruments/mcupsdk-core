@@ -38,7 +38,7 @@
 
 #include <drivers/hw_include/cslr.h>
 
-#include <ti/csl/soc/am261x/src/cslr_soc_baseaddress.h>
+#include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
 #ifdef __cplusplus
 extern "C"
 {
