@@ -10034,6 +10034,402 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A simple example to test data abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_data_abort",
+        "location": "../../examples/kernel/dpl/test_data_abort/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_data_abort",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test data abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_data_abort",
+        "location": "../../examples/kernel/dpl/test_data_abort/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_data_abort",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test data abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_data_abort",
+        "location": "../../examples/kernel/dpl/test_data_abort/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_data_abort",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test data abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_data_abort",
+        "location": "../../examples/kernel/dpl/test_data_abort/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_data_abort",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test prefetch abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_prefetch_abort",
+        "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_prefetch_abort",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test prefetch abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_prefetch_abort",
+        "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_prefetch_abort",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test prefetch abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_prefetch_abort",
+        "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_prefetch_abort",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test prefetch abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_prefetch_abort",
+        "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_prefetch_abort",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test undefined abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_undef",
+        "location": "../../examples/kernel/dpl/test_undef/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_undef",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test undefined abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_undef",
+        "location": "../../examples/kernel/dpl/test_undef/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_undef",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test undefined abort. CPU is R5FSS0-0 running NORTOS.",
+        "name": "test_undef",
+        "location": "../../examples/kernel/dpl/test_undef/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_undef",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A simple example to test undefined abort. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "test_undef",
+        "location": "../../examples/kernel/dpl/test_undef/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "test_undef",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
