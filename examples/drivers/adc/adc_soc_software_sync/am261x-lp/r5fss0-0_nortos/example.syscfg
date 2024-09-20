@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -15,7 +16,7 @@ const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const gpio2           = gpio.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -61,24 +62,47 @@ adc1.ADC.$assign         = "ADC1";
 adc2.$name             = "CONFIG_ADC2";
 adc2.adcClockPrescaler = "ADC_CLK_DIV_3_0";
 adc2.enableConverter   = true;
-adc2.soc1Channel       = "ADC_CH_ADCIN1";
 adc2.soc0Trigger       = "ADC_TRIGGER_INPUT_XBAR_OUT5";
 adc2.soc1Trigger       = "ADC_TRIGGER_INPUT_XBAR_OUT5";
+adc2.soc1Channel       = "ADC_CH_ADCIN4";
 adc2.ADC.$assign       = "ADC2";
 
-gpio1.$name                = "GPIO_23_INPUT";
-gpio1.GPIO.$assign         = "GPIO";
-gpio1.GPIO.gpioPin.$assign = "GPIO23";
+gpio1.$name          = "GPIO_23_INPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "GPIO23";
 
-gpio2.pinDir               = "OUTPUT";
-gpio2.$name                = "GPIO_24_OUTPUT";
-gpio2.GPIO.$assign         = "GPIO";
-gpio2.GPIO.gpioPin.$assign = "GPIO24";
+gpio2.pinDir         = "OUTPUT";
+gpio2.$name          = "GPIO_24_OUTPUT";
+gpio2.rx             = true;
+gpio2.GPIO_n.$assign = "GPIO24";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+adc.adcReferences     = soc_ctrl_adc1;
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -131,13 +155,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];

@@ -32,6 +32,15 @@ EPWM4A(B) on CC <--> EPWM9A(B) on LP   \n
 EPWM5A(B) on CC <--> EPWM13A(B) on LP  \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP  \n
 \endcond
+\cond SOC_AM261X
+EPWM0A(B) on CC <--> EPWM0A(B) on LP   \n
+EPWM1A    on CC <--> EPWM1A on LP      \n
+EPWM2B    on CC <--> EPWM2B on LP      \n
+EPWM3A(B) on CC <--> EPWM3A(B) on LP   \n
+EPWM4A(B) on CC <--> EPWM4A(B) on LP   \n
+EPWM5A(B) on CC <--> EPWM5A(B) on LP   \n
+EPWM6A(B) on CC <--> EPWM6A(B) on LP   \n
+\endcond
 
 ## XOR and XNOR
 
@@ -143,6 +152,7 @@ X                  | 1                 | 1                     | 0 (both cannot 
 - EPWM2_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM3_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM4_A/B, pin can be connected to an oscilloscope to view the waveform.
+- EPWM5_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM6_A/B, pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263X-CC or AM263Px-CC
@@ -175,6 +185,17 @@ When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Basebo
 - Connect J6/J8 pin 75, 76 to scope for EPWM9A(B)
 - Connect J6/J8 pin 79, 80 to scope for EPWM13A(B)
 - Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
+\endcond
+
+\cond SOC_AM261X
+## AM261X-LP
+- Connect J5/J7 pin 70, J6/J8 pin 57 to scope for EPWM0A(B)
+- Connect J5/J7 pin 69 to scope for EPWM1A
+- Connect J2/J4 pin 39 to scope for EPWM2B
+- Connect J2/J4 pin 38, 37 to scope for EPWM3A(B)
+- Connect J2/J4 pin 36, 35 to scope for EPWM4A(B)
+- Connect J6/J8 pin 80, J2/7 pin 13 to scope for EPWM5A(B)
+- Connect J6/J8 pin 78, 77 to scope for EPWM6A(B)
 \endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_ILLEGAL_COMBO_LOGIC_COMBOS}

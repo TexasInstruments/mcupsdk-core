@@ -3241,6 +3241,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_diode_emulation",
+        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_diode_emulation",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_diode_emulation",
+        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_diode_emulation",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM DMA test example. This example generates waveforms according to the values updated by DMA channels in EPWM registers. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_dma",
         "location": "../../examples/drivers/epwm/epwm_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -3422,6 +3488,138 @@
             "drivers",
             "epwm",
             "epwm_hr_updown",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "The purpose of the example is to show some of the operations that can be done using ICL.We can route a signal of EPWM instance through some other EPWM instance without even configuring the latter.We use ICLXBar along with the ICL block functionalities provided inside each instance to get the desired results. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_illegal_combo_logic",
+        "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_illegal_combo_logic",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "The purpose of the example is to show some of the operations that can be done using ICL.We can route a signal of EPWM instance through some other EPWM instance without even configuring the latter.We use ICLXBar along with the ICL block functionalities provided inside each instance to get the desired results. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_illegal_combo_logic",
+        "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_illegal_combo_logic",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "In this example ePWM uses Minimum Deadband to do various operations on the signal coming to the MDL block. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_minimum_deadband",
+        "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_minimum_deadband",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "In this example ePWM uses Minimum Deadband to do various operations on the signal coming to the MDL block. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_minimum_deadband",
+        "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_minimum_deadband",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -3637,6 +3835,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EPWM Valley Switching test example. This example uses the valley switching module to delay the digital compare signals by a software defined DELAY value. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_valley_switching",
+        "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_valley_switching",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM Valley Switching test example. This example uses the valley switching module to delay the digital compare signals by a software defined DELAY value. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_valley_switching",
+        "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_valley_switching",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM xcmp example. This example is used to generate multiple edges in pwm cycle CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_xcmp_multiple_edges",
         "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -3736,6 +4000,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "HRPWM Deadband SFO example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "hrpwm_deadband_sfo",
+        "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "hrpwm_deadband_sfo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "HRPWM Duty Cycle SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_duty_cycle_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -3769,11 +4066,77 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "HRPWM Duty Cycle SFO example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "hrpwm_duty_cycle_sfo",
+        "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "hrpwm_duty_cycle_sfo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "HRPWM Phase Shift SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_phase_shift_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "hrpwm_phase_shift_sfo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "HRPWM Phase Shift SFO example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "hrpwm_phase_shift_sfo",
+        "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"

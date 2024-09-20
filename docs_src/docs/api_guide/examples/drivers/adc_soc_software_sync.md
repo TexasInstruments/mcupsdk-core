@@ -20,7 +20,7 @@ software to toggle to the loopback GPIO trigger the conversions.
 - ADC 2
      - SOC 0,1 triggers are set to InputXbar[5]
      - SOC 0 samples Channel 0
-     - SOC 1 samples Channel 2
+     - SOC 1 samples Channel 1 (SOC 1 samples Channel 4 in case of AM261x-LP)
 ## Interrupt Configurations
 - ADC1INT1 source is set to EOC/SOC1
 - INTXbar[0] is configured for ADC1INT1
@@ -49,11 +49,18 @@ software to toggle to the loopback GPIO trigger the conversions.
          - ADC 1 Channel 1 : J1/3 PIN 29
          - ADC 2 Channel 0 : J1/3 PIN 25
          - ADC 2 Channel 1 : J5/7 PIN 63
+## AM2631x-LP
+     - Connect loopback on GPIO 24, GPIO 23, i.e., J5/7 PINS 49,50.
+     - Feed Analog voltage on
+         - ADC 1 Channel 0 : J1/3 PIN 24
+         - ADC 1 Channel 1 : J5/7 PIN 42
+         - ADC 2 Channel 0 : J1/3 PIN 25
+         - ADC 2 Channel 4 : J1/3 PIN 28
 # Watch Variables
 - gAdc1Result0 : Digital representation of Voltages on ADC 1 Channel 0
 - gAdc1Result1 : Digital representation of Voltages on ADC 1 Channel 1
 - gAdc2Result0 : Digital representation of Voltages on ADC 2 Channel 0
-- gAdc2Result1 : Digital representation of Voltages on ADC 2 Channel 1
+- gAdc2Result1 : Digital representation of Voltages on ADC 2 Channel 1 (Channel 4 in case of AM261x-LP)
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_SYNC_COMBOS}
 

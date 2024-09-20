@@ -30,7 +30,15 @@ EPWM4A(B) on CC <--> EPWM9A(B) on LP  \n
 EPWM5A(B) on CC <--> EPWM13A(B) on LP \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP \n
 \endcond
-
+\cond SOC_AM261X
+EPWM0A(B) on CC <--> EPWM0A(B) on LP  \n
+EPWM1A    on CC <--> EPWM1A on LP     \n
+EPWM2A(B) on CC <--> EPWM2A(B) on LP  \n
+EPWM3A(B) on CC <--> EPWM3A(B) on LP  \n
+EPWM4A(B) on CC <--> EPWM4A(B) on LP  \n
+EPWM5A(B) on CC <--> EPWM5A(B) on LP  \n
+EPWM6A(B) on CC <--> EPWM6A(B) on LP  \n
+\endcond
 \imageStyle{am263_epwm_de_basic_config.PNG,width:40%}
  \image html am263_epwm_de_basic_config.PNG "Figure 1.a Basic waveform configuration"
 The above diagram shows the configuration for EPWM0A (TripH) and EPWM1A (TripL) and the ones marked as Channel A and B are consistent across the remaining 5 epwm instances.
@@ -192,9 +200,18 @@ When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Connect J6/J8 pin 51, 52 to scope for EPWM11A(B)
 - Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
 
+## AM261X-LP
+- Connect J5/J7 pin 70, J6/J8 pin 57 to scope for EPWM0A(B)
+- Connect J5/J7 pin 69 to scope for EPWM1A
+- Connect J2/J4 pin 40, 39 to scope for EPWM2A(B)
+- Connect J2/J4 pin 38, 37 to scope for EPWM3A(B)
+- Connect J2/J4 pin 36, 35 to scope for EPWM4A(B)
+- Connect J6/J8 pin 80, J2/J4 pin 13 to scope for EPWM5A(B)
+- Connect J6/J8 pin 78, 77 to scope for EPWM6A(B)
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

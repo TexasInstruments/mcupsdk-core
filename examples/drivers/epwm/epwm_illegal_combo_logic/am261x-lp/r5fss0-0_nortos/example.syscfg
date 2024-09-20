@@ -1,13 +1,16 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
@@ -17,7 +20,7 @@ const epwm5           = epwm.addInstance();
 const epwm6           = epwm.addInstance();
 const epwm7           = epwm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -55,6 +58,12 @@ const icl_xbar6       = icl_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                     = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
+
 epwm1.$name                                                    = "CONFIG_EPWM0";
 epwm1.epwmXCMP_SplitCheck                                      = true;
 epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
@@ -76,6 +85,8 @@ epwm1.epwmICL_useICLB                                          = true;
 epwm1.epwmICLB_LUTDEC_1                                        = "1";
 epwm1.epwmICLB_LUTDEC_5                                        = "1";
 epwm1.EPWM.$assign                                             = "EPWM0";
+epwm1.EPWM.A.$assign                                           = "GPIO43";
+epwm1.EPWM.B.$assign                                           = "GPIO44";
 
 epwm2.$name                                                    = "CONFIG_EPWM1";
 epwm2.epwmCounterCompare_cmpA                                  = 8000;
@@ -86,6 +97,8 @@ epwm2.epwmTimebase_counterMode                                 = "EPWM_COUNTER_M
 epwm2.epwmTimebase_period                                      = 24000;
 epwm2.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm2.EPWM.$assign                                             = "EPWM1";
+epwm2.EPWM.A.$assign                                           = "GPIO45";
+epwm2.EPWM.B.$assign                                           = "GPIO46";
 
 epwm3.$name              = "CONFIG_EPWM2";
 epwm3.epwmICL_useICLA    = true;
@@ -100,6 +113,8 @@ epwm3.epwmICLB_LUTDEC_5  = "1";
 epwm3.epwmICLB_LUTDEC_6  = "1";
 epwm3.epwmICLB_LUTDEC_7  = "1";
 epwm3.EPWM.$assign       = "EPWM2";
+epwm3.EPWM.A.$assign     = "GPIO47";
+epwm3.EPWM.B.$assign     = "GPIO48";
 
 epwm4.$name                                                      = "CONFIG_EPWM3";
 epwm4.epwmTimebase_period                                        = 24000;
@@ -126,6 +141,8 @@ epwm4.epwmICLB_LUTDEC_3                                          = "1";
 epwm4.epwmICLB_LUTDEC_7                                          = "1";
 epwm4.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm4.EPWM.$assign                                               = "EPWM3";
+epwm4.EPWM.A.$assign                                             = "GPIO49";
+epwm4.EPWM.B.$assign                                             = "GPIO50";
 
 epwm5.$name              = "CONFIG_EPWM4";
 epwm5.epwmICL_useICLA    = true;
@@ -140,8 +157,7 @@ epwm5.epwmICLB_LUTDEC_6  = "1";
 epwm5.epwmICLB_LUTDEC_7  = "1";
 epwm5.epwmICLA_IN3source = "2";
 epwm5.epwmICLB_IN3source = "3";
-epwm5.EPWM.$assign       = "EPWM9";
-epwm5.EPWM.B.$assign     = "GPIO62";
+epwm5.EPWM.$assign       = "EPWM4";
 
 epwm6.$name                                                      = "CONFIG_EPWM5";
 epwm6.epwmTimebase_period                                        = 24000;
@@ -167,9 +183,9 @@ epwm6.epwmICLA_LUTDEC_4                                          = "1";
 epwm6.epwmICLA_LUTDEC_6                                          = "1";
 epwm6.epwmICLB_LUTDEC_0                                          = "1";
 epwm6.epwmICLB_LUTDEC_4                                          = "1";
-epwm6.EPWM.$assign                                               = "EPWM13";
-epwm6.EPWM.A.$assign                                             = "EPWM13_A";
-epwm6.EPWM.B.$assign                                             = "EPWM13_B";
+epwm6.EPWM.$assign                                               = "EPWM5";
+epwm6.EPWM.A.$assign                                             = "GPIO53";
+epwm6.EPWM.B.$assign                                             = "GPIO54";
 
 epwm7.$name              = "CONFIG_EPWM6";
 epwm7.epwmICL_useICLA    = true;
@@ -184,13 +200,44 @@ epwm7.epwmICLB_LUTDEC_4  = "1";
 epwm7.epwmICLB_LUTDEC_5  = "1";
 epwm7.epwmICLB_LUTDEC_6  = "1";
 epwm7.epwmICLB_LUTDEC_7  = "1";
-epwm7.EPWM.$assign       = "EPWM12";
-epwm7.EPWM.B.$assign     = "EPWM12_B";
+epwm7.EPWM.$assign       = "EPWM6";
+epwm7.EPWM.A.$assign     = "GPIO55";
+epwm7.EPWM.B.$assign     = "GPIO56";
+
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -243,13 +290,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -421,26 +468,20 @@ icl_xbar4.xbarOutput = ["MDL3_OUTB"];
 icl_xbar4.instance   = "ICL_XBAR_3";
 
 icl_xbar5.$name      = "CONFIG_ICL_XBAR4";
-icl_xbar5.xbarOutput = ["MDL13_OUTA"];
 icl_xbar5.instance   = "ICL_XBAR_4";
+icl_xbar5.xbarOutput = ["MDL5_OUTA"];
 
 icl_xbar6.$name      = "CONFIG_ICL_XBAR5";
-icl_xbar6.xbarOutput = ["MDL13_OUTB"];
 icl_xbar6.instance   = "ICL_XBAR_5";
+icl_xbar6.xbarOutput = ["MDL5_OUTB"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$assign           = "GPIO43";
-epwm1.EPWM.B.$assign           = "GPIO44";
-epwm2.EPWM.A.$assign           = "GPIO45";
-epwm2.EPWM.B.$assign           = "GPIO46";
-epwm3.EPWM.A.$assign           = "GPIO47";
-epwm3.EPWM.B.$assign           = "GPIO48";
-epwm4.EPWM.A.$assign           = "GPIO49";
-epwm4.EPWM.B.$assign           = "GPIO50";
-epwm5.EPWM.A.$assign           = "GPIO61";
-epwm7.EPWM.A.$assign           = "EPWM12_A";
+epwm5.EPWM.A.$suggestSolution           = "GPIO51";
+epwm5.EPWM.B.$suggestSolution           = "GPIO52";
+i2c1.I2C.SCL.$suggestSolution           = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution           = "GPIO134";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

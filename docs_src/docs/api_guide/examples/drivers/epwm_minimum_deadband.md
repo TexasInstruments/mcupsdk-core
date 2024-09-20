@@ -18,7 +18,7 @@ EPWM0A(B) on CC <--> EPWM0A(B) on LP    \n
 EPWM1A(B) on CC <--> EPWM1A(B) on LP    \n
 EPWM2A(B) on CC <--> EPWM2A(B) on LP    \n
 EPWM3A(B) on CC <--> EPWM3A(B) on LP    \n
-EPWM4A(B) on CC <--> EPWM9A(B) on LP (EPWM4A(B) in case of AM261x-LP)   \n
+EPWM4A(B) on CC <--> EPWM9A(B) on LP  (EPWM4A(B) in case of AM261x-LP)   \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP (EPWM6A(B) in case of AM261x-LP)   \n
 
 ## Add falling edge delay on same channel
@@ -33,13 +33,13 @@ In our example, EPWM3A is used as the reference for comparing with EPWM2A. EPWM3
 1.	Enable MINBCFG[ENABLEA] = 1
 2.	Select MINDBCFG[SELA] = 0 i.e. EPWMxA_DE.sclk
 3.	MINDBCFG[INVERTA] = 0 i.e. no inversion of the reference signal going inside the Delay logic block
-4.	MINDBCFG[DELAYA] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us
+4.	MINDBCFG[DELAYA] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us (2000 * SYSCLK (4ns) = 8 Us in case of AM261X-LP)
 5.	Select Block A as the blocking signal. MINDBCFG[SELBLOCKA] = 0
 6.	MINDBCFG[POLSELA] = 1 i.e. OR EPWMxA_DE with the selected block signal (BLOCKA)
 
 The first waveform shows the signal before entering into the MINDB logic block.
 The second one shows the BLOCK signal which is falling edge stretched version of the reference signal.
-The third shows OR-ed result of BLOCK and the original signal that comes out of the MDL block. The shift in the falling edge (marked in red) is 10 Us.
+The third shows OR-ed result of BLOCK and the original signal that comes out of the MDL block. The shift in the falling edge (marked in red) is 10 Us (8 Us in case of AM261X-LP).
 
 Note that there's no way to tap the first 2 waveforms from inside the block. We have configured one ePWM instance with same configuration other than the MDL enabled just for reference.
 
@@ -55,13 +55,13 @@ In our example, EPWM3B is used as the reference for comparing with EPWM2B. EPWM3
 1.	Enable MINBCFG[ENABLEB] = 1
 2.	Select MINDBCFG[SELB] = 0 i.e. EPWMxB_DE.sclk
 3.	MINDBCFG[INVERTB] = 1 i.e. inversion of the reference signal going inside the Delay logic block
-4.	MINDBCFG[DELAYB] = 3000 i.e. 3000 * SYSCLK (5ns) = 15 Us
+4.	MINDBCFG[DELAYB] = 3000 i.e. 3000 * SYSCLK (5ns) = 15 Us (3000 * SYSCLK (4ns) = 12 Us in case of AM261X-LP)
 5.	Select Block B as the blocking signal. MINDBCFG[SELBLOCKB] = 0
 6.	MINDBCFG[POLSELB] = 0 i.e. AND EPWMxA_DE with the inverted selected block signal (BLOCKB)
 
 The first waveform shows the signal before entering into the MINDB logic block.
 The second one shows the BLOCK signal which is the falling edge stretched and inverted version of the reference signal.
-The third shows inverted BLOCK signal AND-ed with the original signal to get a shift in the rising edge (marked in green). The value of it is 15 Us.
+The third shows inverted BLOCK signal AND-ed with the original signal to get a shift in the rising edge (marked in green). The value of it is 15 Us (12 Us in case of AM261X-LP).
 
 
 ## Add rising edge delay wrt falling edge of other channel of same instance
@@ -81,14 +81,14 @@ For output channel A:
 1.	Enable MINBCFG[ENABLEA] = 1
 2.	Select MINDBCFG[SELA] = 0 i.e. EPWMxA_DE.sclk
 3.	MINDBCFG[INVERTA] = 0 i.e. no inversion of the reference signal going inside the Delay logic block
-4.	MINDBCFG[DELAYA] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us
+4.	MINDBCFG[DELAYA] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us (2000 * SYSCLK (4ns) = 8 Us in case of AM261X-LP)
 5.	Select Block B as the blocking signal. MINDBCFG[SELBLOCKA] = 1
 6.	MINDBCFG[POLSELA] = 0 i.e. AND EPWMxA_DE with the inverted selected block signal (BLOCKB)
 For output channel B:
 1.	Enable MINBCFG[ENABLEB] = 1
 2.	Select MINDBCFG[SELB] = 0 i.e. EPWMxB_DE.sclk
 3.	MINDBCFG[INVERTB] = 0 i.e. no inversion of the reference signal going inside the Delay logic block
-4.	MINDBCFG[DELAYB] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us
+4.	MINDBCFG[DELAYB] = 2000 i.e. 2000 * SYSCLK (5ns) = 10 Us (2000 * SYSCLK (4ns) = 8 Us in case of AM261X-LP)
 5.	Select Block A as the blocking signal. MINDBCFG[SELBLOCKB] = 1
 6.	MINDBCFG[POLSELB] = 0 i.e. AND EPWMxA_DE with the inverted selected block signal (BLOCKA)
 
@@ -129,7 +129,7 @@ We select EPWM3A_sclk as the output for MDLXBAR_1.
 1.	Enable MINBCFG[ENABLEA] = 1
 2.	Select MINDBCFG[SELA] = 1 i.e. Output from MDLXBar_1 (which routes the EPWM3A_sclk)
 3.	MINDBCFG[INVERTA] = 0 i.e. no inversion of the reference signal going inside the Delay logic block
-4.	MINDBCFG[DELAYA] = 4000 i.e. 4000 * SYSCLK (5ns) = 20 Us
+4.	MINDBCFG[DELAYA] = 4000 i.e. 4000 * SYSCLK (5ns) = 20 Us (4000 * SYSCLK (4ns) = 16 Us in case of AM261X-LP)
 5.	Select Block A as the blocking signal. MINDBCFG[SELBLOCKA] = 0
 6.	MINDBCFG[POLSELA] = 0 i.e. AND EPWMxA_DE with the inverted selected block signal (BLOCKB)
 
