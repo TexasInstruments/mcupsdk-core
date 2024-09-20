@@ -65,6 +65,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/lin/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/sdfm/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/sdfm/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -145,6 +146,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am261x-som/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am261x-lp/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am261x-som/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -249,6 +252,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_lin_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_lin_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sdfm_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_uart_am261x-som_r5fss0-0_freertos_ti-arm-clang
@@ -328,6 +332,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am261x-som_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am261x-som_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am261x-lp_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos
 
 
 
@@ -404,6 +410,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/sdfm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -636,6 +645,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ipc_rpmsg_am261x-lp_system_freertos:
 	$(MAKE) -C drivers/ipc_rpmsg/am261x-lp/system_freertos -f makefile all
 
+ test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-som/system_freertos_nortos -f makefile all
+
+ test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-lp/system_freertos_nortos -f makefile all
+
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -660,6 +675,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_lin_am261x-som_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_lin_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdfm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
@@ -738,6 +754,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-som_system_freertos_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am261x-som_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am261x-lp_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos_clean
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -810,6 +828,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/sdfm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1042,6 +1063,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_ipc_rpmsg_am261x-lp_system_freertos_clean:
 	$(MAKE) -C drivers/ipc_rpmsg/am261x-lp/system_freertos -f makefile clean
 
+ test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-som/system_freertos_nortos -f makefile clean
+
+ test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-lp/system_freertos_nortos -f makefile clean
+
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -1066,6 +1093,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_lin_am261x-som_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_lin_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdfm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -1144,6 +1172,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-som_system_freertos_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am261x-som_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am261x-lp_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos_scrub
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -1216,6 +1246,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/sdfm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -1447,6 +1480,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_ipc_rpmsg_am261x-lp_system_freertos_scrub:
 	$(MAKE) -C drivers/ipc_rpmsg/am261x-lp/system_freertos -f makefile scrub
+
+ test_mcspi_controller_peripheral_am261x-som_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-som/system_freertos_nortos -f makefile scrub
+
+ test_mcspi_controller_peripheral_am261x-lp_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am261x-lp/system_freertos_nortos -f makefile scrub
 
 
 sbl: libs

@@ -44,11 +44,24 @@
  *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D1(Pin 12)
  *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D0(Pin 5)
  *
- * Please connect pins as described below on AM263x LP.
+ *  Please connect pins as described below on AM263x LP.
  *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
  *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
  *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
  *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
+ *  
+ *  Please connect pins as described below on AM263x LP.
+ *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
+ *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
+ *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
+ *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
+ *
+ *  Please connect pins as described below on AM261x LP.
+ *  MCU_SPI0_CS0(Pin 19) (B13)  ------------>  MCU_SPI2_CS1(Pin 59) A18  
+ *  MCU_SPI0_CLK(Pin 7) (A13)   ------------>  MCU_SPI2_CLK(Pin 47) D17 
+ *  MCU_SPI0_D0(Pin 15) (B12)   ------------>  MCU_SPI2_D1(Pin 54)  B18
+ *  MCU_SPI0_D1(Pin 14) (C12)   ------------>  MCU_SPI2_D0(Pin 55)  A16
+ * 
  */
 
 #include "string.h"
@@ -57,6 +70,7 @@
 #include <kernel/dpl/ClockP.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include <unity.h>
 
 #define APP_MCSPI_MSGSIZE       (128U)
@@ -127,6 +141,7 @@ void test_mcspi_controller_main(void *args)
     testParams.mcspiChConfigParams = gConfigMcspiChCfg[MCSPI_CHANNEL_0];
 
     Drivers_open();
+    Board_driversOpen();
 
     UNITY_BEGIN();
 
@@ -148,8 +163,10 @@ void test_mcspi_controller_main(void *args)
     RUN_TEST(test_mcspi_controller_transfer,  949, (void*)&testParams);
     test_mcspi_set_controller_params(&testParams, 950);
     RUN_TEST(test_mcspi_controller_transfer,  950, (void*)&testParams);
+#if !defined (SOC_AM261X)
     test_mcspi_set_controller_params(&testParams, 951);
     RUN_TEST(test_mcspi_controller_transfer,  951, (void*)&testParams);
+#endif
     test_mcspi_set_controller_params(&testParams, 952);
     RUN_TEST(test_mcspi_controller_transfer,  952, (void*)&testParams);
     test_mcspi_set_controller_params(&testParams, 953);
@@ -225,6 +242,7 @@ void test_mcspi_controller_main(void *args)
 
     UNITY_END();
 
+    Board_driversClose();
     Drivers_close();
 
     return;

@@ -73,13 +73,17 @@
 #define MCSPI1_BASE_ADDRESS             (CSL_MCSPI1_U_BASE)
 #define MCSPI2_BASE_ADDRESS             (CSL_MCSPI2_U_BASE)
 #define MCSPI3_BASE_ADDRESS             (CSL_MCSPI3_U_BASE)
+#if !(defined (SOC_AM261X))
 #define MCSPI4_BASE_ADDRESS             (CSL_MCSPI4_U_BASE)
+#endif
 
 #define MCSPI0_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI0_INTR)
 #define MCSPI1_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI1_INTR)
 #define MCSPI2_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI2_INTR)
 #define MCSPI3_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI3_INTR)
+#if !(defined (SOC_AM261X))
 #define MCSPI4_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI4_INTR)
+#endif
 
 #elif defined(SOC_AM64X)
 
@@ -286,8 +290,10 @@ void test_main(void *args)
 #endif
 #endif
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+#if !defined(SOC_AM261X)
     test_mcspi_set_params(&testParams, 972);
     RUN_TEST(test_mcspi_loopback,  972, (void*)&testParams);
+#endif
 #endif
 #if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX) || !defined (SOC_AM261X)
     test_mcspi_set_params(&testParams, 973);
@@ -296,8 +302,10 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 974);
     RUN_TEST(test_mcspi_loopback,  974, (void*)&testParams);
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+#if !defined(SOC_AM261X)
     test_mcspi_set_params(&testParams, 975);
     RUN_TEST(test_mcspi_loopback,  975, (void*)&testParams);
+#endif
 #endif
     test_mcspi_set_params(&testParams, 980);
     RUN_TEST(test_mcspi_loopback_performance,  980, (void*)&testParams);
@@ -1651,8 +1659,10 @@ void test_mcspi_loopback_simultaneous(void *args)
     MCSPI_Attrs       *attrParams2 = (MCSPI_Attrs *)config2->attrs;
     MCSPI_TestParams   testParams2;
     MCSPI_OpenParams   *mcspiOpenParams2    = &(testParams2.mcspiOpenParams);
+#if !(defined (SOC_AM261X))
     attrParams2->baseAddr           = MCSPI4_BASE_ADDRESS;
     attrParams2->intrNum            = MCSPI4_INT_NUM;
+#endif
     attrParams2->operMode           = MCSPI_OPER_MODE_POLLED;
     testParams2.mcspiChConfigParams = gConfigMcspiChCfg[2];
     test_mcspi_set_params(&testParams2, 1009);
@@ -2757,7 +2767,9 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
 #endif
 #endif
         case 972:
+#if !(defined (SOC_AM261X))
             attrParams->baseAddr           = MCSPI4_BASE_ADDRESS;
+#endif
             attrParams->operMode           = MCSPI_OPER_MODE_POLLED;
             break;
         case 973:
@@ -2778,8 +2790,10 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
             attrParams->intrNum            = MCSPI0_INT_NUM;
             break;
         case 975:
+#if !defined(SOC_AM261X)
             attrParams->baseAddr           = MCSPI4_BASE_ADDRESS;
             attrParams->intrNum            = MCSPI4_INT_NUM;
+#endif
             break;
         case 980:
             testParams->dataSize           = 8;
