@@ -148,6 +148,7 @@ static int handle_disconnect_intr(dwc_usb3_pcd_t *pcd)
  */
 static void handle_usb_reset_intr(dwc_usb3_pcd_t *pcd)
 {
+	dwc_usb3_device_t *dev = pcd->usb3_dev;
 	dwc_usb3_pcd_ep_t *ep;
 	u32 i;
 
@@ -162,6 +163,7 @@ static void handle_usb_reset_intr(dwc_usb3_pcd_t *pcd)
 		dwc_print0(pcd->usb3_dev, "fake DISCONNECT\n");
 		dwc_usb3_clr_eps_enabled(pcd);
 		dwc_usb3_pcd_stop(pcd);
+		dwc_usb3_close_all_ep(dev);
 	} else
 #endif
 	{
