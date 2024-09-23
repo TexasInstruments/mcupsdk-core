@@ -38,6 +38,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=`args.project.name`.$(PROFILE).out
+COREOUTNAME:=`args.project.name`.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 % if (args.project.isBootLoader) {
@@ -445,7 +446,7 @@ $(OUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  Linking: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $@ ...
 % if (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") {
 % if (args.project.cgt == "ti-arm-clang") {
-	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) `linker_option_prefix`-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) `linker_option_prefix`-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
 % } else {
 	$(LNK) $(LFLAGS) $(LIBS_PATH) `linker_option_prefix`-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
 % }
@@ -468,6 +469,20 @@ $(OUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 % }
 	@echo  Linking: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $@ Done !!!
 	@echo  .
+
+% if (args.project.cgt == "ti-arm-clang") {
+coreout: $(COREOUTNAME)
+% if ( args.project.syscfgfile ) {
+$(COREOUTNAME):  $(SYSTEM_COMMAND)
+% } else {
+$(COREOUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+% }
+	@echo  .
+	@echo  Relinking Linking: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $@ with OptiShare SSO..
+	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) `linker_option_prefix`-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
+	@echo  Relinking with optishare: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  .
+%}
 
 clean:
 	@echo  Cleaning: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(OUTNAME) ...
@@ -536,6 +551,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) \*.mcelf
@@ -551,6 +568,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) *.mcelf

@@ -1,0 +1,63 @@
+
+{
+    "mem_spec":
+    {
+        "device_mem_regions" : [
+            {
+                "name": "OCRAM",
+                "origin": "0x70000000",
+                "length": "0x300000",
+                "kind":"system"
+            },
+            {
+                "name": "FLASH",
+                "origin": "0x60000000",
+                "length": "0x8000000",
+                "kind":"system"
+            },
+            {
+                "name": "TCMA",
+                "origin": "0x0",
+                "length": "0x8000",
+                "kind":"local"
+            },
+            {
+                "name": "TCMB",
+                "origin": "0x80000",
+                "length": "0x8000",
+                "kind":"local"
+            },
+            {
+                "name": "CUSTOM",
+                "origin": "0x0",
+                "length": "0xffffffff",
+                "kind":"system"
+            }
+        ],
+        "shared_mem_regions" : [
+            {
+                "name" : "SSO_SHM",
+                "origin" : "0x702A0000",
+                "length" : "0x8000"
+            }
+        ],
+        "shared_os_placement_instrs" : [
+            {
+                "name" : ".shared.text",
+                "placement" : "> SSO_SHM, palign(4096)"
+            },
+            {
+                "name" : ".shared.rodata",
+                "placement" : "> SSO_SHM, palign(4096)"
+            },
+            {
+                "name" : ".shared.bss",
+                "placement" : "> SSO_SHM, palign(4096)"
+            },
+            {
+                "name" : ".shared.data",
+                "placement" : "> SSO_SHM, palign(4096)"
+            }
+        ]
+    }
+}
