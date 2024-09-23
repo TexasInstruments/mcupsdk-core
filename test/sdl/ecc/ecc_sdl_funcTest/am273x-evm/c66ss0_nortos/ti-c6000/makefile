@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=sdl_ecc_test_app.$(PROFILE).out
+COREOUTNAME:=sdl_ecc_test_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=sdl_ecc_test_app.$(PROFILE).appimage
@@ -186,6 +187,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am273x:c66ss0:nortos:ti-c6000 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am273x:c66ss0:nortos:ti-c6000 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -207,6 +209,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -214,6 +218,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

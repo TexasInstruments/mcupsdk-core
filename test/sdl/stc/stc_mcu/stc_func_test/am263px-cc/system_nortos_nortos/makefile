@@ -14,12 +14,14 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=stc_func_test_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=stc_func_test_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=stc_func_test_system.$(PROFILE).appimage_xip
-MULTI_CORE_BOOTIMAGE_NAME_MCELF:=stc_func_test_system.$(PROFILE).mcelf
-MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=stc_func_test_system.$(PROFILE).mcelf.hs
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
@@ -28,6 +30,9 @@ CORES = \
     $(CORE_0) \
 
 CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).out
+
+COREXMLS = \
+	../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -44,6 +49,37 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+CC=$(CG_TOOL_ROOT)/bin/tiarmclang
+LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
+
+sso: all optisave
+
+coreout: sso.out
+	@echo .
+	@echo generating files with sso
+	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_nortos_nortos/sso.out
+	@echo generating files with sso done!
+	@echo .
+
+sso.out: sso.cmd
+	@echo .
+	@echo generating sso.out
+	$(CC) -Wl,sso.cmd.tmp -o sso.out -Wl,--xml_link_info=sso.lnkxml -Wl,--gen_xml_func_hash
+	@echo done
+	@echo .
+
+sso.cmd: all $(COREXMLS)
+	@echo .
+	@echo generating sso.cmd.tmp
+	$(OPTISHARE) -o sso.cmd.tmp $(COREXMLS) -s sso.info.tmp --mem_spec 
+	@echo generating sso.cmd done
+	@echo .
+
+optisave: coreout
+	$(OPTISAVE) ../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).lnkxml ../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).optishare.lnkxml > ../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).ossr
+
 clean:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ clean
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
@@ -57,12 +93,20 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

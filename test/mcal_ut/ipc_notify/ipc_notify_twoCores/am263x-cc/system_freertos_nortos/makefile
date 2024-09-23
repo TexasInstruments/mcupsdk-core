@@ -14,12 +14,14 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=ipc_notify_twoCores_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=ipc_notify_twoCores_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=ipc_notify_twoCores_system.$(PROFILE).appimage_xip
-MULTI_CORE_BOOTIMAGE_NAME_MCELF:=ipc_notify_twoCores_system.$(PROFILE).mcelf
-MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=ipc_notify_twoCores_system.$(PROFILE).mcelf.hs
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
@@ -31,6 +33,10 @@ CORES = \
 
 CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_notify_twoCores.$(PROFILE).out
 CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_notify_twoCores.$(PROFILE).out
+
+COREXMLS = \
+	../r5fss0-0_freertos/ti-arm-clang/ipc_notify_twoCores.$(PROFILE).lnkxml\
+	../r5fss0-1_nortos/ti-arm-clang/ipc_notify_twoCores.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -48,6 +54,7 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ clean
@@ -63,12 +70,20 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

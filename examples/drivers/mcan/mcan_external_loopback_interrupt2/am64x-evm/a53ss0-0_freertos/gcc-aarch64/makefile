@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=mcan_external_loopback_interrupt2.$(PROFILE).out
+COREOUTNAME:=mcan_external_loopback_interrupt2.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=mcan_external_loopback_interrupt2.$(PROFILE).appimage
@@ -170,6 +171,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am64x:a53ss0-0:freertos:gcc-aarch64 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am64x:a53ss0-0:freertos:gcc-aarch64 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -193,6 +195,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -200,6 +204,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=edma_polled_transfer.$(PROFILE).out
+COREOUTNAME:=edma_polled_transfer.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=edma_polled_transfer.$(PROFILE).appimage
@@ -176,6 +177,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: awr294x:c66ss0:nortos:ti-c6000 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: awr294x:c66ss0:nortos:ti-c6000 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -201,6 +203,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -208,6 +212,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 
@@ -260,7 +266,12 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
 else
-  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+  UNAME_S = $(shell uname -s)
+  ifeq ($(UNAME_S), Darwin)
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out.mac
+  else
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \

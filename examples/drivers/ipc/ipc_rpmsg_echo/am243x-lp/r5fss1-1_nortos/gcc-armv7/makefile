@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=ipc_rpmsg_echo.$(PROFILE).out
+COREOUTNAME:=ipc_rpmsg_echo.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=ipc_rpmsg_echo.$(PROFILE).appimage
@@ -179,6 +180,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss1-1:nortos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss1-1:nortos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -202,6 +204,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -209,6 +213,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

@@ -70,6 +70,7 @@
             --diag_suppress=10063
             --ram_model
             --reread_libs
+            --gen_xml_func_hash
             --zero_init=on
         "
 

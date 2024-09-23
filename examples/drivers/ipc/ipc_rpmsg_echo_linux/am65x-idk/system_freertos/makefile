@@ -14,10 +14,12 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=ipc_rpmsg_echo_linux_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=ipc_rpmsg_echo_linux_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=ipc_rpmsg_echo_linux_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
@@ -26,6 +28,10 @@ CORE_1=--script ../r5fss0-1_freertos/example.syscfg --context r5fss0-1 --output 
 CORES = \
     $(CORE_1) \
     $(CORE_0) \
+
+COREXMLS = \
+	../r5fss0-0_freertos/ti-arm-clang/ipc_rpmsg_echo_linux.$(PROFILE).lnkxml\
+	../r5fss0-1_freertos/ti-arm-clang/ipc_rpmsg_echo_linux.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -42,6 +48,7 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ clean
@@ -56,8 +63,16 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

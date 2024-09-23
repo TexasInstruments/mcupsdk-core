@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=uart_echo.$(PROFILE).out
+COREOUTNAME:=uart_echo.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=uart_echo.$(PROFILE).appimage
@@ -170,6 +171,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am273x:c66ss0:nortos:ti-c6000 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am273x:c66ss0:nortos:ti-c6000 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -191,6 +193,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -198,6 +202,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

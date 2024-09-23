@@ -19,7 +19,7 @@
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
-        cgtVersion="3.2.2"
+        cgtVersion="4.0.0"
         device="Cortex M.AM64x.AM62x_SK_EVM"
         deviceCore="Cortex_M4F_0"
         ignoreDefaultDeviceSettings="true"
@@ -48,6 +48,7 @@
             -m=uart_echo_low_latency_polling.${ConfigName}.map
             --ram_model
             --reread_libs
+            --gen_xml_func_hash
         "
 
         postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am62x"

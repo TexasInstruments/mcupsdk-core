@@ -25,6 +25,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=enet_l2_cpsw_switch.$(PROFILE).out
+COREOUTNAME:=enet_l2_cpsw_switch.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=enet_l2_cpsw_switch.$(PROFILE).appimage
@@ -141,6 +142,7 @@ LFLAGS_common = \
 	-Wl,--diag_suppress=10063 \
 	-Wl,--ram_model \
 	-Wl,--reread_libs \
+	-Wl,--gen_xml_func_hash \
 	-Wl,--zero_init=on \
 	-Wl,--use_memset=fast \
 	-Wl,--use_memcpy=fast \
@@ -228,8 +230,16 @@ endif
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ ...
-	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
 	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  .
+
+coreout: $(COREOUTNAME)
+$(COREOUTNAME):  $(SYSTEM_COMMAND)
+	@echo  .
+	@echo  Relinking Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ with OptiShare SSO..
+	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
+	@echo  Relinking with optishare: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
@@ -254,6 +264,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
@@ -265,6 +277,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 	$(RM) *.mcelf
 	$(RM) *.mcelf_xip
 	$(RM) *.mcelf-enc

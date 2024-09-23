@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=mcspi_loopback_turbo_mode.$(PROFILE).out
+COREOUTNAME:=mcspi_loopback_turbo_mode.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=mcspi_loopback_turbo_mode.$(PROFILE).appimage
@@ -179,6 +180,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss0-0:nortos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss0-0:nortos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -202,6 +204,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -209,6 +213,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=pmu_multievent.$(PROFILE).out
+COREOUTNAME:=pmu_multievent.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=pmu_multievent.$(PROFILE).appimage
@@ -175,6 +176,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss0-1:nortos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss0-1:nortos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -198,6 +200,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -205,6 +209,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

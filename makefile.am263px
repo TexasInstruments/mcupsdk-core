@@ -590,6 +590,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_peripheral_transfer/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -1456,6 +1457,7 @@ BUILD_COMBO_EXAMPLE_ALL += mpu_firewall_services_demo_am263px-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += i2c_peripheral_transfer_am263px-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos
@@ -2965,6 +2967,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ipc_notify_echo_am263px-lp_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos -f makefile all
 
+ ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos -f makefile all
+
  ipc_rpmsg_echo_am263px-cc_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos -f makefile all
 
@@ -3470,6 +3475,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mpu_firewall_services_demo_am263px-cc_system_no
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_peripheral_transfer_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos_clean
@@ -4975,6 +4981,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ipc_notify_echo_am263px-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos -f makefile clean
 
+ ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos -f makefile clean
+
  ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos -f makefile clean
 
@@ -5480,6 +5489,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mpu_firewall_services_demo_am263px-cc_system_no
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_peripheral_transfer_am263px-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am263px-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_echo_am263px-cc_system_freertos_nortos_scrub
@@ -6984,6 +6994,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ipc_notify_echo_am263px-lp_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos -f makefile scrub
+
+ ipc_notify_echo_optishare_am263px-cc_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos -f makefile scrub
 
  ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos -f makefile scrub

@@ -23,6 +23,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=enet_cpsw_loopback_mac_end.$(PROFILE).out
+COREOUTNAME:=enet_cpsw_loopback_mac_end.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=enet_cpsw_loopback_mac_end.$(PROFILE).appimage
@@ -222,6 +223,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss0-0:freertos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss0-0:freertos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -246,6 +248,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -253,6 +257,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 	$(RM) $(LNK_FILES_common)

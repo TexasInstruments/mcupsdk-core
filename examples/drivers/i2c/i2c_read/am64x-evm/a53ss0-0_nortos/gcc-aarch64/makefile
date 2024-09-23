@@ -22,6 +22,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=i2c_read.$(PROFILE).out
+COREOUTNAME:=i2c_read.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=i2c_read.$(PROFILE).appimage
@@ -171,6 +172,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am64x:a53ss0-0:nortos:gcc-aarch64 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am64x:a53ss0-0:nortos:gcc-aarch64 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -194,6 +196,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -201,6 +205,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 
