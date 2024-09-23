@@ -212,6 +212,7 @@ const example_file_list = [
 	// "examples/kernel/nortos/wfi_standby_demo/.project/project.js",
 	// "examples/mathlib/benchmark/.project/project.js",
 	// "examples/networking/enet_cpsw_est/.project/project.js",
+	"examples/benchmarks/ocmc_benchmarking/.project/project_freertos_am261x.js",
 	// "examples/networking/enet_layer2_cpsw/.project/project.js",
 	// "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
 	// "examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/.project/project.js",

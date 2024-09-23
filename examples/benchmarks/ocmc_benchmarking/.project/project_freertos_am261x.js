@@ -78,35 +78,10 @@ const readmeDoxygenPageTag = "BENCHMARK_SMART_PLACEMENT";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
 ];
 
-const systemProjects = [
-    {
-        name: "ocmc_benchmarking",
-        tag: "dual_core",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am261x-som",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-        ],
-    },
-    {
-        name: "ocmc_benchmarking",
-        tag: "tri_core",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am261x-som",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-        ],
-    }
-];
+const systemProjects = [];
 
 function getComponentProperty() {
     let property = {};
