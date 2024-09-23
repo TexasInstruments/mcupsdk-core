@@ -18,7 +18,7 @@ const epwm4           = epwm.addInstance();
 const epwm5           = epwm.addInstance();
 const epwm6           = epwm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -119,7 +119,9 @@ epwm1.epwmXLOADCTL_RepeatBuf3                                = 5;
 epwm1.epwmXLOADCTL_RepeatBuf2                                = 5;
 epwm1.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
 epwm1.epwmXLOADCTL_Loadmode                                  = "EPWM_XCMP_XLOADCTL_LOADMODE_LOADMULTIPLE";
-epwm1.EPWM.$assign                                           = "EPWM0";
+epwm1.EPWM.$assign                                           = "EPWM5";
+epwm1.EPWM.A.$assign                                         = "GPIO53";
+epwm1.EPWM.B.$assign                                         = "GPIO54";
 
 epwm2.$name                                                  = "CONFIG_EPWM1";
 epwm2.epwmTimebase_period                                    = 100;
@@ -184,7 +186,9 @@ epwm2.epwmXLOADCTL_RepeatBuf2                                = 5;
 epwm2.epwmXLOADCTL_RepeatBuf3                                = 5;
 epwm2.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
 epwm2.epwmXLOADCTL_Loadmode                                  = "EPWM_XCMP_XLOADCTL_LOADMODE_LOADMULTIPLE";
-epwm2.EPWM.$assign                                           = "EPWM1";
+epwm2.EPWM.$assign                                           = "EPWM6";
+epwm2.EPWM.A.$assign                                         = "GPIO55";
+epwm2.EPWM.B.$assign                                         = "GPIO56";
 
 epwm3.$name                                                  = "CONFIG_EPWM2";
 epwm3.epwmTimebase_period                                    = 100;
@@ -250,6 +254,8 @@ epwm3.epwmXLOADCTL_RepeatBuf2                                = 5;
 epwm3.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
 epwm3.epwmXLOADCTL_Loadmode                                  = "EPWM_XCMP_XLOADCTL_LOADMODE_LOADMULTIPLE";
 epwm3.EPWM.$assign                                           = "EPWM2";
+epwm3.EPWM.A.$assign                                         = "GPIO47";
+epwm3.EPWM.B.$assign                                         = "GPIO48";
 
 epwm4.$name                                                  = "CONFIG_EPWM3";
 epwm4.epwmTimebase_period                                    = 100;
@@ -315,6 +321,8 @@ epwm4.epwmXLOADCTL_RepeatBuf2                                = 5;
 epwm4.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
 epwm4.epwmXLOADCTL_Loadmode                                  = "EPWM_XCMP_XLOADCTL_LOADMODE_LOADMULTIPLE";
 epwm4.EPWM.$assign                                           = "EPWM3";
+epwm4.EPWM.A.$assign                                         = "GPIO49";
+epwm4.EPWM.B.$assign                                         = "GPIO50";
 
 epwm5.$name                                                  = "CONFIG_EPWM4";
 epwm5.epwmTimebase_period                                    = 100;
@@ -380,6 +388,8 @@ epwm5.epwmXLOADCTL_RepeatBuf2                                = 5;
 epwm5.epwmTimebase_emulationMode                             = "EPWM_EMULATION_FREE_RUN";
 epwm5.epwmXLOADCTL_Loadmode                                  = "EPWM_XCMP_XLOADCTL_LOADMODE_LOADMULTIPLE";
 epwm5.EPWM.$assign                                           = "EPWM4";
+epwm5.EPWM.A.$assign                                         = "GPIO51";
+epwm5.EPWM.B.$assign                                         = "GPIO52";
 
 epwm6.$name                                          = "ISR_SOURCE_EPWM";
 epwm6.epwmTimebase_period                            = 100;
@@ -387,7 +397,31 @@ epwm6.epwmEventTrigger_enableInterrupt               = true;
 epwm6.epwmEventTrigger_interruptSource               = "EPWM_INT_TBCTR_PERIOD";
 epwm6.epwmEventTrigger_interruptEventCount           = "1";
 epwm6.epwmEventTrigger_interruptEventCountInitEnable = true;
-epwm6.EPWM.$assign                                   = "EPWM31";
+epwm6.EPWM.$assign                                   = "EPWM9";
+epwm6.EPWM.A.$used                                   = false;
+epwm6.EPWM.B.$used                                   = false;
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -446,13 +480,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -612,23 +646,11 @@ section13.output_section[0].palignment      = true;
 section13.output_section[0].include_defines = true;
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["EPWM31_INT"];
+int_xbar1.xbarOutput = ["EPWM9_INT"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "GPIO43";
-epwm1.EPWM.B.$suggestSolution           = "GPIO44";
-epwm2.EPWM.A.$suggestSolution           = "GPIO45";
-epwm2.EPWM.B.$suggestSolution           = "GPIO46";
-epwm3.EPWM.A.$suggestSolution           = "GPIO47";
-epwm3.EPWM.B.$suggestSolution           = "GPIO48";
-epwm4.EPWM.A.$suggestSolution           = "GPIO49";
-epwm4.EPWM.B.$suggestSolution           = "GPIO50";
-epwm5.EPWM.A.$suggestSolution           = "GPIO51";
-epwm5.EPWM.B.$suggestSolution           = "GPIO52";
-epwm6.EPWM.A.$suggestSolution           = "GPIO105";
-epwm6.EPWM.B.$suggestSolution           = "GPIO106";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

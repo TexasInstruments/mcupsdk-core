@@ -4581,14 +4581,14 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  hrpwm_phase_shift_sfo_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ hrpwm_phase_shift_sfo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  eqep_frequency_measurement_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  eqep_frequency_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- hrpwm_phase_shift_sfo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  flc_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/flc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

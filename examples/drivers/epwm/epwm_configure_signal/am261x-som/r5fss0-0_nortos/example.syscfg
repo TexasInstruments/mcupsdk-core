@@ -13,7 +13,7 @@ const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
 const epwm3           = epwm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -43,13 +43,38 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 epwm1.$name        = "CONFIG_EPWM0";
-epwm1.EPWM.$assign = "EPWM0";
+epwm1.EPWM.$assign = "EPWM2";
 
-epwm2.$name        = "CONFIG_EPWM1";
-epwm2.EPWM.$assign = "EPWM1";
+epwm2.$name                          = "CONFIG_EPWM1";
+epwm2.epwmTimebase_syncInPulseSource = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM2";
+epwm2.EPWM.$assign                   = "EPWM3";
 
-epwm3.$name        = "CONFIG_EPWM2";
-epwm3.EPWM.$assign = "EPWM2";
+epwm3.$name                          = "CONFIG_EPWM2";
+epwm3.epwmTimebase_syncInPulseSource = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM2";
+epwm3.EPWM.$assign                   = "EPWM4";
+epwm3.EPWM.B.$assign                 = "GPIO52";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -271,10 +296,9 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "GPIO43";
-epwm1.EPWM.B.$suggestSolution           = "GPIO44";
-epwm2.EPWM.A.$suggestSolution           = "GPIO45";
-epwm2.EPWM.B.$suggestSolution           = "GPIO46";
-epwm3.EPWM.A.$suggestSolution           = "GPIO47";
-epwm3.EPWM.B.$suggestSolution           = "GPIO48";
+epwm1.EPWM.A.$suggestSolution           = "GPIO47";
+epwm1.EPWM.B.$suggestSolution           = "GPIO48";
+epwm2.EPWM.A.$suggestSolution           = "GPIO49";
+epwm2.EPWM.B.$suggestSolution           = "GPIO50";
+epwm3.EPWM.A.$suggestSolution           = "GPIO51";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

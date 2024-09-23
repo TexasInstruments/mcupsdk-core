@@ -15,7 +15,7 @@ const epwm1           = epwm.addInstance();
 const sdfm            = scripting.addModule("/drivers/sdfm/sdfm", {}, false);
 const sdfm1           = sdfm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -90,7 +90,31 @@ sdfm1.Ch3_SDCLKSEL                  = "SDFM_CLK_SOURCE_SD1_CLK";
 sdfm1.Ch2_SDCLKSEL                  = "SDFM_CLK_SOURCE_SD1_CLK";
 sdfm1.SDFFINT                       = ["SDFM_FILTER_2","SDFM_FILTER_3"];
 sdfm1.AE                            = ["SDFM_FILTER_2","SDFM_FILTER_3"];
-sdfm1.SDFM.$assign                  = "SDFM0";
+sdfm1.SDFM.$assign                  = "SDFM1";
+sdfm1.SDFM.CLK0.outputOverride      = true;
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
+sdfm.soc_ctrl_sdfm     = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog       = true;
 debug_log.uartLog.$name       = "CONFIG_UART0";
@@ -147,13 +171,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -306,11 +330,11 @@ section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["SD0_FILT1_DRINT","SD0_FILT2_DRINT"];
+int_xbar1.xbarOutput = ["SD0_FILT1_DRINT","SD0_FILT2_DRINT","SD1_FILT1_DRINT","SD1_FILT2_DRINT"];
 
 output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
 output_xbar1.xbarOutput         = ["ECAP4_OUT"];
-output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
@@ -319,15 +343,15 @@ output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
  */
 epwm1.EPWM.A.$suggestSolution                    = "GPIO43";
 epwm1.EPWM.B.$suggestSolution                    = "GPIO44";
-sdfm1.SDFM.CLK0.$suggestSolution                 = "SDFM0_CLK0";
-sdfm1.SDFM.CLK1.$suggestSolution                 = "SDFM0_CLK1";
-sdfm1.SDFM.CLK2.$suggestSolution                 = "SDFM0_CLK2";
-sdfm1.SDFM.CLK3.$suggestSolution                 = "SDFM0_CLK3";
-sdfm1.SDFM.D0.$suggestSolution                   = "SDFM0_D0";
-sdfm1.SDFM.D1.$suggestSolution                   = "SDFM0_D1";
-sdfm1.SDFM.D2.$suggestSolution                   = "SDFM0_D2";
-sdfm1.SDFM.D3.$suggestSolution                   = "SDFM0_D3";
+sdfm1.SDFM.CLK0.$suggestSolution                 = "GPIO130";
+sdfm1.SDFM.CLK1.$suggestSolution                 = "GPIO132";
+sdfm1.SDFM.CLK2.$suggestSolution                 = "GPIO134";
+sdfm1.SDFM.CLK3.$suggestSolution                 = "GPIO135";
+sdfm1.SDFM.D0.$suggestSolution                   = "GPIO124";
+sdfm1.SDFM.D1.$suggestSolution                   = "GPIO126";
+sdfm1.SDFM.D2.$suggestSolution                   = "GPIO128";
+sdfm1.SDFM.D3.$suggestSolution                   = "GPIO137";
 debug_log.uartLog.UART.$suggestSolution          = "UART0";
-debug_log.uartLog.UART.RXD.$suggestSolution      = "GPIO77";
-debug_log.uartLog.UART.TXD.$suggestSolution      = "GPIO78";
-output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO24";
+debug_log.uartLog.UART.RXD.$suggestSolution      = "GPIO27";
+debug_log.uartLog.UART.TXD.$suggestSolution      = "GPIO28";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO1";

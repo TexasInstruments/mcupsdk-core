@@ -14,7 +14,8 @@ The Example sets up the following EPMWs to showcase the Deadband features, as fo
 4. CONFIG_EPWM3 : Deadband Active High Complimentary
 5. CONFIG_EPWM4 : Deadband Active Low Complimentary
 6. CONFIG_EPWM5 : Deadband Output Swap i.e., (switch A and B outputs)
-6. CONFIG_EPWM6 : Deadband On Rising and Falling edges.
+7. CONFIG_EPWM6 : Deadband On Rising and Falling edges.
+8. SYNC_PWM 	: To sync all the PWMs and the ECAPs
 
 The sequence of operations to obtain the deadband occur in the following manner,
 1. Input (EPWMx_A or EPWMx_B) is selected for operation
@@ -117,12 +118,12 @@ Shown below is a sample output when the application is run,
 \code
 EPWM DeadBand Test Started ...
 EPWM DeadBand Example runs for 5 Secs
-	Rising Edge timestamp of Reference waveform  : 			502
-	Rising Edge timestamp of Deadband Active High output B  : 	502 	(Same as Reference Rising Edge Timestamp)
-	Rising Edge timestamp of Deadband Active High output A  : 	902 	(Reference Rising Edge Timestamp + Rising Edge Delay)
-	Falling Edge timestamp of Reference waveform : 			3502
-	Falling Edge timestamp of Deadband Active High output A : 	3502 	(Same as Reference Falling Edge Timestamp)
-	Falling Edge timestamp of Deadband Active High output B : 	3702 	(Reference Falling Edge Timestamp + Falling Edge Delay)
+	Rising Edge timestamp of Reference waveform  : 			503
+	Rising Edge timestamp of Deadband Active High output B  : 	503 	(Same as Reference Rising Edge Timestamp)
+	Rising Edge timestamp of Deadband Active High output A  : 	903 	(Reference Rising Edge Timestamp + Rising Edge Delay)
+	Falling Edge timestamp of Reference waveform : 			3503
+	Falling Edge timestamp of Deadband Active High output A : 	3503 	(Same as Reference Falling Edge Timestamp)
+	Falling Edge timestamp of Deadband Active High output B : 	3703 	(Reference Falling Edge Timestamp + Falling Edge Delay)
 	Observed Rising Edege Delay : 	400
 	Observed Falling Edege Delay : 	200
 EPWM DeadBand Test Passed!!

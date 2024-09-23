@@ -181,7 +181,11 @@ void epwm_synchronization_main(void *args)
     uint32_t fallingEdgeDelay_EPWM5 = (fallingEdge_REF - fallingEdge_ECAP5);
     DebugP_log("\tObserved Phase Delay between Reference Waveform and EPWM1 Waveform : \t%d\r\n\tObserved Phase Delay between Reference Waveform and EPWM2 Waveform : \t%d\r\n\tObserved Phase Delay between Reference Waveform and EPWM3 Waveform : \t%d\r\n\tObserved Phase Delay between Reference Waveform and EPWM4 Waveform : \t%d\r\n\tObserved Phase Delay between Reference Waveform and EPWM5 Waveform : \t%d\r\n",fallingEdgeDelay_EPWM1, fallingEdgeDelay_EPWM2, fallingEdgeDelay_EPWM3, fallingEdgeDelay_EPWM4, fallingEdgeDelay_EPWM5);
 
-
+    /* 
+    When the Sync Pulse arrives, the rising edge is detected and the EPWM holds the state of the Sync singal present. 
+    The phase shift value is loaded to the TB Counter of EPWM on the next valid TBCLK. 
+    This may cause a TBCLK delay on the "Synced" PWM with the "Syncing" PWM. Hence the 1 count difference in the validation 
+    */
     if(((RISING_EDGE_DELAY_1 - fallingEdgeDelay_EPWM1) <= 1) && ((RISING_EDGE_DELAY_2 - fallingEdgeDelay_EPWM2) <= 1) && ((RISING_EDGE_DELAY_3 - fallingEdgeDelay_EPWM3) <= 1) && ((RISING_EDGE_DELAY_4 - fallingEdgeDelay_EPWM4) <= 1) && ((RISING_EDGE_DELAY_5 - fallingEdgeDelay_EPWM5) <= 1))
     {
         DebugP_log("EPWM Synchronization Test Passed!!\r\n");

@@ -45,7 +45,8 @@
  *      4. CONFIG_EPWM3 : Deadband Active High Complimentary
  *      5. CONFIG_EPWM4 : Deadband Active Low Complimentary
  *      6. CONFIG_EPWM5 : Deadband Output Swap i.e., (switch A and B outputs)
- *      6. CONFIG_EPWM6 : Deadband On Rising and Falling edges.
+ *      7. CONFIG_EPWM6 : Deadband On Rising and Falling edges.
+ *      8. SYNC_PWM     : To sync all the EPWMs and ECAPs for validation
  *
  * Note :
  *      - All the EPWM in the example are synced with CONFIG_EPWM0
@@ -109,6 +110,8 @@ uint32_t gEcap2BaseAddr = AH_B_CAPTURE_BASE_ADDR;
 /* EPWM Counter is prescaled by 16. ECAP counter is prescaled by 1*/
 #define SCALING_FACTOR (16)
 
+extern uint32_t epwmTbClkSyncDisableMask;
+
 void epwm_deadband_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
@@ -118,14 +121,8 @@ void epwm_deadband_main(void *args)
     DebugP_log("EPWM DeadBand Test Started ...\r\n");
     DebugP_log("EPWM DeadBand Example runs for 5 Secs \r\n");
 
-    /* Start all the EPWM Timebase Counters in up-down count */
-    EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm1BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm2BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm3BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm4BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm5BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
-    EPWM_setTimeBaseCounterMode(gEpwm6BaseAddr, EPWM_COUNTER_MODE_UP_DOWN);
+    /* Start all the EPWM Timebase Counters */
+    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, TRUE);
 
     ClockP_sleep(5);
     /* Rising and Falling edge timestamps for reference waveform*/
@@ -141,25 +138,21 @@ void epwm_deadband_main(void *args)
     volatile uint32_t fallingEdge_AHB = (ECAP_getEventTimeStamp(AH_B_CAPTURE_BASE_ADDR,ECAP_EVENT_2))/SCALING_FACTOR;
 
     /* Stop all the EPMW Timebase Counters */
-    EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm1BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm2BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm3BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm4BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm5BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
-    EPWM_setTimeBaseCounterMode(gEpwm6BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
+    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, FALSE);
 
     DebugP_log("\tRising Edge timestamp of Reference waveform  : \t\t\t%d\r\n",risingEdge_REF );
-    DebugP_log("\tRising Edge timestamp of Deadband Active High output B  : \t%d \t(Same as Reference Rising Edge Timestamp)\r\n",risingEdge_AHB );
-    DebugP_log("\tRising Edge timestamp of Deadband Active High output A  : \t%d \t(Reference Rising Edge Timestamp + Rising Edge Delay)\r\n",risingEdge_AHA );
     DebugP_log("\tFalling Edge timestamp of Reference waveform : \t\t\t%d\r\n",fallingEdge_REF);
+
+    DebugP_log("\tRising Edge timestamp of Deadband Active High output A  : \t%d \t(Reference Rising Edge Timestamp + Rising Edge Delay)\r\n",risingEdge_AHA );
     DebugP_log("\tFalling Edge timestamp of Deadband Active High output A : \t%d \t(Same as Reference Falling Edge Timestamp)\r\n",fallingEdge_AHA);
+    
+    DebugP_log("\tRising Edge timestamp of Deadband Active High output B  : \t%d \t(Same as Reference Rising Edge Timestamp)\r\n",risingEdge_AHB );
     DebugP_log("\tFalling Edge timestamp of Deadband Active High output B : \t%d \t(Reference Falling Edge Timestamp + Falling Edge Delay)\r\n",fallingEdge_AHB);
 
     uint32_t risingEdgeDelay_AHA = (risingEdge_AHA - risingEdge_REF);
     uint32_t fallingEdgeDelay_AHB = (fallingEdge_AHB - fallingEdge_REF);
 
-    DebugP_log("\tObserved Rising Edege Delay : \t%d\r\n\tObserved Falling Edege Delay : \t%d\r\n",risingEdgeDelay_AHA, fallingEdgeDelay_AHB);
+    DebugP_log("\tObserved Rising Edege Delay : \t%d\r\n\tObserved Falling Edege Delay : \t%d\r\n", risingEdgeDelay_AHA, fallingEdgeDelay_AHB);
 
     if( (risingEdge_REF == risingEdge_AHB)          &&
         (fallingEdge_REF == fallingEdge_AHA)        &&

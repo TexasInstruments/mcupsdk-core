@@ -10,8 +10,6 @@
  */
 const ecap            = scripting.addModule("/drivers/ecap/ecap", {}, false);
 const ecap1           = ecap.addInstance();
-const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -53,8 +51,6 @@ ecap1.interruptSourceAPWM = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
 ecap1.syncOutMode         = "ECAP_SYNC_OUT_DISABLED";
 ecap1.apwmPeriod          = 200000;
 ecap1.apwmCompare         = 100000;
-
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -284,9 +280,5 @@ output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution                  = "GPIO16";
-mcspi1.SPI.D0.$suggestSolution                   = "GPIO17";
-mcspi1.SPI.D1.$suggestSolution                   = "GPIO18";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution      = "GPIO15";
 debug_log.uartLog.UART.$suggestSolution          = "UART0";
 output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "GPIO24";
