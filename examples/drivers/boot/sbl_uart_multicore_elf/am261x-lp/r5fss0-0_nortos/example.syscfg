@@ -9,6 +9,8 @@
 /**
  * Import the modules used in this configuration.
  */
+const pmic        = scripting.addModule("/board/pmic/pmic", {}, false);
+const pmic1       = pmic.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
@@ -39,10 +41,18 @@ const section8    = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+pmic1.$name = "CONFIG_PMIC0";
+
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+const i2c              = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1             = i2c.addInstance({}, false);
+i2c1.$name             = "CONFIG_I2C0";
+pmic1.peripheralDriver = i2c1;
+i2c1.I2C_child.$name   = "drivers_i2c_v1_i2c_v1_template0";
 
 uart1.$name            = "CONFIG_UART0";
 uart1.intrEnable       = "DISABLE";
@@ -217,3 +227,12 @@ section8.$name                       = "SIPC R5F Queue Memory";
 section8.output_section.create(1);
 section8.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section8.output_section[0].alignment = 0;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+i2c1.I2C.$suggestSolution     = "I2C0";
+i2c1.I2C.SCL.$suggestSolution = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution = "GPIO134";
