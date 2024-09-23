@@ -42,6 +42,19 @@
  *  SPI0_D0 [Pin J6.12]    <----------------->     SPI3_D1[Pin J2.14]
  *  SPI0_D1 [Pin J6.14]    <----------------->     SPI3_D0[Pin J2.12]
  *  SPI0_CLK [Pin J5.13]   <----------------->     SPI3_CLK[Pin J1.13]
+ * 
+ *  Please connect pins as described below on AM263x LP.
+ *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
+ *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
+ *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
+ *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
+ *
+ *  Please connect pins as described below on AM261x LP.
+ *  MCU_SPI0_CS0(Pin 19) (B13)  ------------>  MCU_SPI2_CS1(Pin 59) A18  
+ *  MCU_SPI0_CLK(Pin 7) (A13)   ------------>  MCU_SPI2_CLK(Pin 47) D17 
+ *  MCU_SPI0_D0(Pin 15) (B12)   ------------>  MCU_SPI2_D1(Pin 54)  B18
+ *  MCU_SPI0_D1(Pin 14) (C12)   ------------>  MCU_SPI2_D0(Pin 55)  A16
+ * 
  */
 
 #include "string.h"
