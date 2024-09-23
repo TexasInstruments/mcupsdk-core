@@ -474,7 +474,7 @@ and waits for 5 seconds before running the application binary
   \endif
 
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM261X
 
 ## USB Bootloader Python Script {#USB_BOOTLOADER}
 
@@ -484,10 +484,19 @@ and waits for 5 seconds before running the application binary
 - Change the boot mode to DFU boot mode \ref EVM_SETUP_PAGE
 - **POWER cycle the EVM**
 - Open a command prompt and run the below command to send the SBL and application binary to the EVM
+\cond SOC_AM243X || SOC_AM64X 
   \code
   cd ${SDK_INSTALL_PATH}/tools/boot
   python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore appimage of application binary
   \endcode
+\endcond
+\cond SOC_AM261X 
+  \code
+  cd ${SDK_INSTALL_PATH}/tools/boot
+  python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore appimage of application binary --use-sdk-utility
+  \endcode
+- This **--use-sdk-utility** option selects the custom DFU util from the SDK to perform DFU operations.
+\endcond
 - When you execute this, the script first sends the SBL USB bootloader, and then the multicore appimage
 - Connect to the UART terminal to see the booting information
 - Below are the logs of the script after all the files have been sent
@@ -638,7 +647,12 @@ and waits for 5 seconds before running the application binary
 - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
 - Make sure you have the EVM power cable and CAN cable connected as shown in \ref EXAMPLES_DRIVERS_SBL_CAN
 - To boot applications using this script, **POWER OFF the EVM**
+\cond SOC_AM263X 
 - Switch to \ref BOOTMODE_QSPI
+\endcond
+\cond SOC_AM263PX || SOC_AM261X
+- Switch to \ref BOOTMODE_OSPI
+\endcond
 - **POWER ON the EVM**
 - Open a command prompt and run the below command to send the application binary to the EVM
 \code

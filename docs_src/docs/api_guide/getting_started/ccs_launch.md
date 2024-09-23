@@ -48,10 +48,13 @@ A quick recap of the steps that need to have been done before you proceed
 - Make sure EVM boot mode switch is setup correctly based on the SOC initilization method
   - For the **RECOMMENDED** method, \ref EVM_SOC_INIT, the boot mode should be \ref BOOTMODE_NOBOOT
 \endcond
-\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AWR294X || SOC_AM263X 
   - For the **RECOMMENDED** method, \ref EVM_FLASH_SOC_INIT, the boot mode should be \ref BOOTMODE_QSPI
 \endcond
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM263PX ||SOC_AM261X
+  - For the **RECOMMENDED** method, \ref EVM_FLASH_SOC_INIT, the boot mode should be \ref BOOTMODE_OSPI
+\endcond
+\cond SOC_AM243X || SOC_AM64X 
   - For the **RECOMMENDED** method, \ref EVM_FLASH_SOC_INIT, the boot mode should be \ref BOOTMODE_OSPI
 \endcond
 \cond SOC_AM62X

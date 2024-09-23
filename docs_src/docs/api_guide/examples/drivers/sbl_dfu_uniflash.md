@@ -69,7 +69,9 @@ Since this is mainly a flash-writer application, **this is sent via the USB DFU*
 
 \ref TOOLS_FLASH 
 
+\cond SOC_AM243X || SOC_AM64X
 \ref GETTING_STARTED_FLASH_DFU
+\endcond
 
 # Sample Output
 

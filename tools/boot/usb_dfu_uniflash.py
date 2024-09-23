@@ -6,6 +6,14 @@ import struct
 import argparse
 import subprocess
 
+dfu_cmd = ""
+if os.name == 'posix':
+    dfu_cmd = "dfu-util"
+else:
+    dfu_cmd = "dfu-util"
+
+sdk_dfu_util_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "usb_dfu_utility")
+
 BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*512 # 512KB This has to be a 256 KB aligned value, because flash writes will be block oriented
 BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
 
@@ -144,7 +152,7 @@ def create_temp_file(linecfg):
 def wait_for_enumeration():
 
     enum_done = False
-    ls_dfu = "dfu-util -l"
+    ls_dfu = "{0} -l".format(dfu_cmd)
     # To print banner that waiting for DFU enumeration 
     flag = False
     while enum_done == False:
@@ -181,7 +189,7 @@ def dfu_fw_send(filename,intf=0,alt=0,xfer_size=512,isFlashWriter=False):
     print("----------------------------------------------------------------------------")
     print("Executing DFU command with alt_setting={0} interface={1} transfer_size={2}".format(alt,intf,xfer_size))
     print("----------------------------------------------------------------------------")
-    cmd = "dfu-util -a {0} -i {1} -t {2} -D {3}".format(alt,intf,xfer_size,filename)
+    cmd = "{0} -a {1} -i {2} -t {3} -D {4}".format(dfu_cmd,alt,intf,xfer_size,filename)
     try:
         tstart = time.time()
         dfu_status = os.system(cmd)
@@ -285,8 +293,17 @@ def send_file_by_parts(l_cfg):
 
     return status, total_time_taken
 
+def get_dfu_cmd(sdk_utility):
+    if sdk_utility:
+        if os.name == 'posix':
+            return os.path.join(sdk_dfu_util_path, "dfu-util")
+        else:
+            return os.path.join(sdk_dfu_util_path, "dfu-util.exe")             
+    return dfu_cmd
+
 def main(argv):
 
+    global dfu_cmd
     config_file = None
     cmd_flash_writer_found = False
     ops_invalid = False
@@ -299,6 +316,7 @@ def main(argv):
     my_parser.add_argument('-i', '--interface', required=False,type=int, help=" Selects the interface number used for DFU. Default value = 0 ")
     my_parser.add_argument('-t', '--transfer-size', required=False,type=int, help="Defines the number of bytes that will be transfered per setup transaction. Default transfer_size = 512 Bytes ")
     my_parser.add_argument('-f', '--file', required=False, help="Filename to send for an operation. Not required if using config mode (--cfg)")
+    my_parser.add_argument('--use-sdk-utility', action="store_true", required=False, help="Selects the custom build SDK-DFU util instead of standard one")
     my_parser.add_argument('-o', '--flash-offset', required=False, help="Offset (in hexadecimal format starting with a 0x) at which the flash/verify flash is to be done. Not required if using config mode (--cfg)")
     my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc". Not required if using config mode (--cfg)')
     my_parser.add_argument('--flash-writer', required=False, help="Special option. This will load the sbl_dfu_uniflash binary which will be booted by ROM. Other arguments are irrelevant and hence ignored when --flash-writer argument is present. Not required if using config mode (--cfg)")
@@ -307,6 +325,7 @@ def main(argv):
 
     args = my_parser.parse_args()
 
+    dfu_cmd = get_dfu_cmd(args.use_sdk_utility)
     config_file = args.cfg
 
     if args.alt is not None:

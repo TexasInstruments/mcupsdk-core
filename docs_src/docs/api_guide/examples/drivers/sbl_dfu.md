@@ -18,7 +18,19 @@ After that it initializes each core and load the corresponding RPRC image. This 
 
 - Refer to \htmllink{https://www.usb.org/sites/default/files/DFU_1.1.pdf, DFU_1.1.pdf} to know more about USB DFU class. 
 
-\note This bootloader performs memory boot i.e it directly boots from the appimage received in RAM buffer. Due to this as of now the maximum boot image size supported with SBL DFU is **384KB** 
+\note This bootloader performs memory boot i.e it directly boots from the appimage received in RAM buffer. Due to this as of now the maximum boot image size supported with SBL DFU is **384KB**
+
+\cond SOC_AM261X
+
+# SBL DFU MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_DFU_MCELF}
+
+To parse and load an **mcelf** file via DFU bootloader, use the project **examples/drivers/boot/sbl_dfu_multicore_elf**
+
+When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset. For more information refer \ref BOOTFLOW_GUIDE
+
+The steps to run the example is same irrespective of the image format.
+
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_DFU_COMBOS}
 
@@ -44,6 +56,17 @@ After that it initializes each core and load the corresponding RPRC image. This 
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_dfu
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is a bootloader and is used as a SOC initialization binary, the example will be run every time you boot an application using this example. It is generally run from a boot media (OSPI Flash, SD Card or over UART) unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
@@ -54,6 +77,10 @@ Since this is a bootloader and is used as a SOC initialization binary, the examp
   make command (see \ref MAKEFILE_BUILD_PAGE )
 
 # Example Usage
+
+\cond SOC_AM261X 
+The standard DFU-Utility is not compatible with the AM261x device. Instead, please use the dfu-util executable located in ${SDK_INSTALL_PATH}/tools/boot/usb_dfu_utility, depending on your operating system, to carry out DFU operations.
+\endcond
 
 - Make sure that \ref INSTALL_DFU_UTIL tool is installed on your host pc. In case of windows make sure that appropriate windows USB generic drivers are installed. 
 - The application boot is a 4 step process. 
@@ -80,9 +107,11 @@ Since this is a bootloader and is used as a SOC initialization binary, the examp
 
 \ref TOOLS_FLASH_DFU_UNIFLASH. 
 
-\ref TOOLS_FLASH 
+\ref TOOLS_FLASH
 
+\cond SOC_AM243X || SOC_AM64X
 \ref GETTING_STARTED_FLASH_DFU
+\endcond
 
 \ref USB_BOOTLOADER 
 

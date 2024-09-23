@@ -646,7 +646,13 @@ number of lines used in the protocol is indeed 8.
 
 - **POWER-OFF** the EVM
 
+\cond SOC_AM263X
 - Change the boot mode to \ref BOOTMODE_QSPI
+\endcond
+
+\cond SOC_AM263PX || SOC_AM261X
+- Change the boot mode to \ref BOOTMODE_OSPI
+\endcond
 
 - **POWER-ON** the EVM
 

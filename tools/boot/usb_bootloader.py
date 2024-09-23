@@ -4,6 +4,14 @@ import getopt
 import time
 import subprocess
 
+dfu_cmd = ""
+if os.name == 'posix':
+    dfu_cmd = "dfu-util"
+else:
+    dfu_cmd = "dfu-util"
+
+sdk_dfu_util_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "usb_dfu_utility")
+
 usage_string = '''
 USAGE: python usb_bootloader.py [OPTIONS]
 
@@ -32,7 +40,7 @@ MAX_APPIMAGE_SIZE = 0x60000
 def wait_for_enumeration():
 
     enum_done = False
-    ls_dfu = "dfu-util -l"
+    ls_dfu = "{0} -l".format(dfu_cmd)
     while enum_done == False:
         subprocess.run(ls_dfu + " > temp_file",shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
         temp_file = open('temp_file')
@@ -66,10 +74,9 @@ def dfu_fw_send(filename,intf=0,alt=0,xfer_size=512,reset_req=False):
     print("----------------------------------------------------------------------------")
 
     if(reset_req == False):
-
-        cmd = "dfu-util -a {0} -i {1} -t {2} -D {3}".format(alt,intf,xfer_size,filename)
+        cmd = "{0} -a {1} -i {2} -t {3} -D {4}".format(dfu_cmd,alt,intf,xfer_size,filename)
     else:
-        cmd = "dfu-util -a {0} -i {1} -t {2} -R -D {3}".format(alt,intf,xfer_size,filename)
+        cmd = "{0} -a {1} -i {2} -t {3} -R -D {4}".format(dfu_cmd,alt,intf,xfer_size,filename)
 
     try:
         tstart = time.time()
@@ -91,6 +98,14 @@ def dfu_fw_send(filename,intf=0,alt=0,xfer_size=512,reset_req=False):
 
     return status,timetaken
 
+def update_dfu_command():
+    global dfu_cmd
+    if os.name == 'posix':
+        dfu_cmd = os.path.join(sdk_dfu_util_path, "dfu-util")
+    else:
+        dfu_cmd = os.path.join(sdk_dfu_util_path, "dfu-util.exe")
+    return
+   
 def main(argv):
 
     def help() :
@@ -104,7 +119,7 @@ def main(argv):
     transfer_size = 512
 
     try:
-        opts, args = getopt.getopt(argv,"hf:b:i:a:t:",["help", "file=","bootloader=","interface=","alt-setting=","transfer-size="])
+        opts, args = getopt.getopt(argv,"hf:b:i:a:t:",["help","use-sdk-utility","file=","bootloader=","interface=","alt-setting=","transfer-size="])
     except getopt.GetoptError:
         help()
         sys.exit()
@@ -112,6 +127,8 @@ def main(argv):
         if opt in ("-h", "--help"):
             help()
             sys.exit()
+        elif opt in ("--use-sdk-utility"):
+            update_dfu_command()
         elif opt in ("-f, --file"):
             appimage_file = arg
         elif opt in ("-b", "--bootloader"):
@@ -142,16 +159,13 @@ def main(argv):
                 sys.exit()
 
     status = 0
-
     if(bootloader_file == None):
         status = "[ERROR] Provide path to the usb bootloader binary with option -b or --bootloader=, use -h option to see detailed help !!!"
         print(status)
         sys.exit()
 
     if(appimage_file == None):
-        status = "[ERROR] Provide path to an appimage binary to be sent via USB DFU with option -f or --file=, , use -h option to see detailed help !!!"
-        print(status)
-        sys.exit()
+        print("No appimage binary provided to be sent via UART with option -f or --file=, , use -h option to see detailed help !!!")
 
     # check valid transfer size
     if(transfer_size != None):
@@ -161,25 +175,27 @@ def main(argv):
             sys.exit()
 
     if(status == 0):
-        # Check both SBL and appimage files exists
-        try:
-            appimage_file_handle = open(appimage_file, "r")
-        except FileNotFoundError:
-            status = '[ERROR] Application file [' + appimage_file + '] not found !!!'
-            print(status)
-            sys.exit()
+        # Check appimage files exists
+        if (appimage_file):
+            try:
+                appimage_file_handle = open(appimage_file, "r")
+            except FileNotFoundError:
+                status = '[ERROR] Application file [' + appimage_file + '] not found !!!'
+                print(status)
+                sys.exit()
+                
+            # check if app image is of valid size
+            app_size = os.path.getsize(appimage_file)
+            if(app_size > MAX_APPIMAGE_SIZE ):
+                status = "[ERROR] Currently Supported Max appimage size is {0} . Please Use Flash based Boot for appimage size greater than {1}".format(app_size, app_size)
+                print(status)
+                sys.exit()
 
+        #Check SBL file exists
         try:
             bootloader_file_handle = open(bootloader_file, "r")
         except FileNotFoundError:
             status = '[ERROR] Bootloader file [' + bootloader_file + '] not found !!!'
-            print(status)
-            sys.exit()
-
-        # check if app image is of valid size
-        app_size = os.path.getsize(appimage_file)
-        if(app_size > MAX_APPIMAGE_SIZE ):
-            status = "[ERROR] Currently Supported Max appimage size is {0} . Please Use Flash based Boot for appimage size greater than {1}".format(app_size, app_size)
             print(status)
             sys.exit()
 
@@ -194,14 +210,15 @@ def main(argv):
         print("----------------------------------------------------------------")
         print("")
 
-        print("----------------------------------------------------------------")
-        print("Sending the application {} ...".format(appimage_file))
+        if (appimage_file):
+            print("----------------------------------------------------------------")
+            print("Sending the application {} ...".format(appimage_file))
 
-        send_status, timetaken = dfu_fw_send(appimage_file, interface ,alt_setting,transfer_size)
+            send_status, timetaken = dfu_fw_send(appimage_file, interface ,alt_setting,transfer_size)
 
-        print("----------------------------------------------------------------")
-        print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
-        print("----------------------------------------------------------------")
+            print("----------------------------------------------------------------")
+            print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
+            print("----------------------------------------------------------------")
 
 if __name__ == "__main__":
     main(sys.argv[1:])

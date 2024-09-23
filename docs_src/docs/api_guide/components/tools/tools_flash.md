@@ -10,7 +10,7 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 - \ref TOOLS_TI_UNIFLASH_TOOL
 \endcond
 - \ref TOOLS_FLASH_UART_UNIFLASH
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM261X
 - \ref TOOLS_FLASH_DFU_UNIFLASH
 \endcond
 \cond !SOC_AM65X
@@ -489,8 +489,11 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
+\endcond
+\cond SOC_AM263PX || SOC_AM261X
+- If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
 
 - If flashing is not successful, then check the error messages and take appropriate action (See \ref TOOLS_FLASH_ERROR_MESSAGES).
@@ -721,7 +724,7 @@ There is also a log area which will show detailed logs in addition to the pop up
 - In manual config case, if a drop down is non blank it is assumed that the file provided there needs to be flashed. So it will be picked up and used when `FLASH` button is clicked. If this is not required, make sure to delete it and keep it blank, the drop down is editable. This is true for the config file drop down as well, but the mishap is more probable in manual config case.
 
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM261X
 
 ## USB DFU Uniflash{#TOOLS_FLASH_DFU_UNIFLASH}
 
@@ -743,6 +746,14 @@ It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
 	3. Change the boot mode to \ref BOOTMODE_OSPI and power cycle the board. First **SBL_OSPI** or **SBL_QSPI** will be booted from flash
 	and later it is responsible to boot the multicore appimages.
 
+\cond SOC_AM261X
+\code
+  cd ${SDK_INSTALL_PATH}/tools/boot
+  python usb_dfu_uniflash.py --cfg={path to your edited config file} --use-sdk-utility
+\endcode
+
+  - This **--use-sdk-utility** option selects the custom DFU util from the SDK to perform DFU operations.
+\endcond
 
   \imageStyle{dfu_flash_bootflow.png,width:40%}
   \image html dfu_flash_bootflow.png
@@ -820,8 +831,11 @@ It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
+\endcond
+\cond SOC_AM263PX || SOC_AM261X
+- If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
 
 - If flashing is not successful, then DFU device i.e EVM must have send error status in **GET_STATUS** phase of **SETUP** transfer. This error condition

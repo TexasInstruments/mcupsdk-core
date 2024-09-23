@@ -13,7 +13,13 @@ If a multicore appimage file is found at the location, the SBL reads the file in
 This bootloader runs in three steps:
 - Format the SD Card with FAT32/16 (this is necessary if the card is new) and paste the *.appimage / *.mcelf image of desired application in the first FAT partition found in the Connected SD card. For connecting the SD Card to the host PC use a card reader. Make sure that the pasted file is named "app" without any file extension.
 - Flashing the SBL SD at offset 0x0 (Setup the EVM in UART Boot Mode, \ref BASIC_STEPS_TO_FLASH_FILES). For flashing the SBL use the `default_sbl_sd` configuration file present in tools/boot/sbl_prebuilt.
+\cond SOC_AM263X 
 - Switch to \ref BOOTMODE_QSPI and Connect to UART in 5 seconds to see logs from UART
+\endcond
+\cond SOC_AM263PX || SOC_AM261X
+- Switch to \ref BOOTMODE_OSPI and Connect to UART in 5 seconds to see logs from UART
+\endcond
+
 
 \imageStyle{am263x_sbl_sd_flow.png,width:9%}
 \image html am263x_sbl_sd_flow.png SBL SD Flow Overview

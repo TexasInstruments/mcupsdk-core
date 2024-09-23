@@ -46,7 +46,7 @@ During the switcing between GP to HS or vise versa, make sure to do clean build 
    -# \subpage EXAMPLES_DRIVERS_SBL_SD
 \endcond
 
-\cond SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
@@ -57,8 +57,17 @@ During the switcing between GP to HS or vise versa, make sure to do clean build 
    -# \subpage EXAMPLES_DRIVERS_SBL_SD
 \endcond
 
-\cond SOC_AWR294X
-   -# \subpage EXAMPLES_DRIVERS_SBL_QSPI_ENET
+\cond SOC_AM261X
+   -# \subpage EXAMPLES_DRIVERS_SBL_NULL
+   -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
+   -# \subpage EXAMPLES_DRIVERS_SBL_UART
+   -# \subpage EXAMPLES_DRIVERS_SBL_CAN
+   -# \subpage EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_DFU
+   -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_SD
 \endcond
 
 \cond SOC_AM65X

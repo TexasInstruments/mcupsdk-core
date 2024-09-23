@@ -208,11 +208,17 @@ To build applications using this SDK, one needs below host PC machine
         ~/workarea/mcu_plus_sdk$ openssl version
         OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM261X
 
 ### dfu-util {#INSTALL_DFU_UTIL}
 
+\cond SOC_AM64X || SOC_AM243X 
 \note USB2.0 DFU driver and application is tested with dfu-util verson `dfu-util 0.11-dev` and `dfu-util 0.8-dev`. It is recomended to use that same version as mentioned.
+\endcond
+
+\cond SOC_AM261X 
+The standard DFU-Utility is not compatible with the AM261x device. Instead, please use the dfu-util executable located in ${SDK_INSTALL_PATH}/tools/boot/usb_dfu_utility, depending on your operating system, to carry out DFU operations.
+\endcond
 
 #### Windows
 
@@ -235,19 +241,19 @@ To build applications using this SDK, one needs below host PC machine
 
 
   \imageStyle{driver-install0.PNG,width:30%}
-  \image html driver-install0.PNG "Step 1 select AM64x DFU from the list of devices."
+  \image html driver-install0.PNG "Step 1 select @VAR_SOC_NAME DFU from the list of devices."
 
-	- Select 1.options 2. list all device. Find and select device named **AM64x DFU**. Click **Install WCID Driver**.
+	- Select 1.options 2. list all device. Find and select device named **@VAR_SOC_NAME DFU**. Click **Install WCID Driver**.
 
   \imageStyle{driver-install1.PNG,width:30%}
-  \image html driver-install1.PNG "Step 2 Install drivers for AM64x DFU device."
+  \image html driver-install1.PNG "Step 2 Install drivers for @VAR_SOC_NAME DFU device."
 
 	- Use following command to check whether ROM DFU device has been enumerated correctly or not.
 
 			$ dfu-util -l
 
   \imageStyle{rom_dfu_enum.PNG,width:60%}
-  \image html rom_dfu_enum.PNG "Step 2 Install drivers for AM64x DFU device."
+  \image html rom_dfu_enum.PNG "Step 2 Install drivers for @VAR_SOC_NAME DFU device."
 
 ##### Setps to Install drivers for using SBL DFU.
 
@@ -257,10 +263,10 @@ To build applications using this SDK, one needs below host PC machine
 
 			$ dfu-util -a 0 -i 0 -t 64 -D <path_to_sbl_dfu_uniflash.release.tiimage>
 
-	- Once booted successfully, 1. open zadig tool 2. select options. 3. select list all devices. Select USB device named **AM64x-AM243x DFU**. Now select **Install WCID Driver** to install.
+	- Once booted successfully, 1. open zadig tool 2. select options. 3. select list all devices. Select USB device named **@VAR_SOC_NAME DFU**. Now select **Install WCID Driver** to install.
 
   \imageStyle{driver-install2.PNG,width:30%}
-  \image html driver-install2.PNG "Install drivers for AM64x-AM243x DFU device."
+  \image html driver-install2.PNG "Install drivers for @VAR_SOC_NAME DFU device."
 
 Once the Drivers are installed successfully, user should be able to use the \ref TOOLS_FLASH_DFU_UNIFLASH tool to flash the application images.
 

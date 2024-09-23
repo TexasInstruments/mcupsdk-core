@@ -155,7 +155,7 @@ Important cable connections, ports and switches.
 
 ### BOOT MODE
 
-#### OSPI BOOT MODE  {#BOOTMODE_QSPI}
+#### OSPI BOOT MODE  {#BOOTMODE_OSPI}
 
 ##### AM263PX-CC
 This mode is used to boot flashed applications via EVM flash like OSPI flash
