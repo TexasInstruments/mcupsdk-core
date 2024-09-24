@@ -54,7 +54,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
@@ -125,7 +125,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
@@ -139,7 +139,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 ### TCP/IP Stack
 -\subpage NETWORKING_LWIP
 
-\cond SOC_AM64X ||  SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
+\cond SOC_AM64X ||  SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
 ### Time Sensitive Networking (TSN) Stack
 - \subpage ENET_CPSW_TSN_GPTP
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP

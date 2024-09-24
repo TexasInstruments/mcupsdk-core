@@ -6,6 +6,8 @@
 
 \attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
+\attention 3. Networking examples support has been tested only on AM261x-LP board.
+
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
@@ -95,7 +97,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter                                                                                                                                           | CMPSS Dac LoopBack feature
-CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
+CPSW         | R5F            | YES               | No                                    | PHY loopback(DP83826-EVM-AM2) with RMII 100Mbps, LWIP with DP83TG720-EVM-AM2: Getting IP, Ping, Iperf                      | MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes                                                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
@@ -141,9 +143,8 @@ IOEXPANDER | R5F            | YES               | IO configurability            
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
-LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
+LwIP                                         | R5F            | YES               | FreeRTOS    | Basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP and UDP iperf                         | Other LwIP features
+Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, PHY loopback with RMII 100Mbps(DP83826-EVM-AM2), interrupt pacing, Policer and Classifier  |  MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
@@ -206,6 +207,20 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> -
 </tr>
 <tr>
+    <td> MCUSDK-13754
+    <td> AM261x: Port 1 RX not working with DP83826-EVM-AM2 PHY
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13755
+    <td> AM261x: 10% RX align code and CRC errors in port 2
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
     <td> -
     <td> -
     <td> -
@@ -238,6 +253,13 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <th> Module
     <th> Reported in release
     <th> Workaround
+</tr>
+<tr>
+    <td> -
+    <td> DP83TG720-EVM-AM2 and DP83826-EVM-AM2 dont work simultaneously for switching traffic in AM261-LP boards
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
 </tr>
 <tr>
     <td> -

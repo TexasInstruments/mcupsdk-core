@@ -59,12 +59,6 @@ The main software components in the block diagram are described below
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Protocol Stacks and Middleware</b></td></tr>
 <tr>
-    <td>Mbed-TLS
-    <td>\ref EXAMPLES_CPSW_LWIP_HTTPS
-    <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
-</tr>
-<tr><td colspan="3" bgcolor=#F0F0F0><b>Software Diagnostics Library</b></td></tr>
-<tr>
     <td>SDL
     <td>\ref SDL_PAGE
     <td>Software Diagnostics Libaray
