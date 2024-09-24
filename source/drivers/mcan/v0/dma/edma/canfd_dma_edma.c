@@ -328,7 +328,6 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
         tccTx      = edmaChCfg->edmaTxTcc[ptrCanMsgObj->dmaEventNo];
         paramTx    = edmaChCfg->edmaTxParam[ptrCanMsgObj->dmaEventNo];
 
-        /* First msg is already copied to msg ram. Program the dma to transfer from second msg. */
         srcAddr = (uint32_t) data;
         /* Get the buffer address in message ram. */
         status = MCAN_getWriteMsgElemAddress(ptrCanFdObj->regBaseAddress, MCAN_MEM_TYPE_BUF,  ptrCanMsgObj->txElement, &dstAddr);
