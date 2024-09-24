@@ -169,7 +169,7 @@ extern "C" {
 /** @} */
 
 /** @brief Maximum number of interrupts for r5f interrupts for this device */
-#define CSL_CORE_R5F_INTR_MAX  (223U)  
+#define CSL_CORE_R5F_INTR_MAX  (256U)  
 
 /***********************************************************************
  * Cache line size definitions
