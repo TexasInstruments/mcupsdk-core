@@ -230,7 +230,7 @@ const deviceSpecificIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
     ],
     am261x : [
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/icss_emac",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/enet",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
     ],
     am273x : [

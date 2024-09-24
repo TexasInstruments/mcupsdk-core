@@ -18,7 +18,7 @@ const component_file_list = [
     "source/networking/lwip/.project/project_contrib_freertos.js",
     "source/networking/lwip/.project/project_contrib_freertos_icss_emac.js",
     "source/networking/lwip/.project/project_contrib_nortos.js",
-	"source/networking/icss_emac/.project/project.js",
+    "source/networking/icss_emac/.project/project.js",
     "source/networking/icss_emac/lwipif/.project/project.js",
     "source/networking/mbedtls_library/.project/project.js",
     "source/networking/tsn/.project/project_tsn_gptp.js",
@@ -394,12 +394,12 @@ function getSysCfgDevice(board) {
     switch (board) {
         case "am261x-lp":
             return "AM261x_ZFG";
-        default:
+        case "am261x-lp (dp83826 phy)":
+            return "AM261x_ZFG";
+        case "am261x-lp (dp83tg720 phy)":
+            return "AM261x_ZFG";
         case "am261x-som":
-            return "AM261x_ZCZ";
-        case "am261x-som-addon-ind":
-            return "AM261x_ZCZ";
-        case "am261x-som-addon-auto":
+	default:
             return "AM261x_ZCZ";
     }
 }
@@ -408,14 +408,14 @@ function getProjectSpecDevice(board) {
     switch (board) {
         case "am261x":
             return "AM261x";
-        case "am261x-lp":
+		case "am261x-lp":
+			return "AM261x";
+        case "am261x-lp (dp83826 phy)":
             return "AM261x";
-        default:
+        case "am261x-lp (dp83tg720 phy)":
+            return "AM261x";
         case "am261x-som":
-            return "AM261x";
-        case "am261x-som-addon-ind":
-            return "AM261x";
-        case "am261x-som-addon-auto":
+        default:
             return "AM261x";
     }
 }
@@ -428,12 +428,12 @@ function getSysCfgPkg(board) {
     switch (board) {
         case "am261x-lp":
             return "ZFG";
-        default:
+        case "am261x-lp (dp83826 phy)":
+            return "ZFG";
+        case "am261x-lp (dp83tg720 phy)":
+            return "ZFG";
         case "am261x-som":
-            return "ZCZ";
-        case "am261x-som-addon-ind":
-            return "ZCZ";
-        case "am261x-som-addon-auto":
+        default:
             return "ZCZ";
     }
 }
@@ -442,28 +442,28 @@ function getSysCfgPart(board) {
     switch (board) {
         case "am261x-lp":
             return "AM2612";
-        default:
+        case "am261x-lp (dp83826 phy)":
+            return "AM2612";
+        case "am261x-lp (dp83tg720 phy)":
+            return "AM2612";
         case "am261x-som":
-            return "AM2611";
-        case "am261x-som-addon-ind":
-            return "AM2611";
-        case "am261x-som-addon-auto":
+        default:
             return "AM2611";
     }
 }
 
 function getDevToolTirex(board) {
-    switch (board) {
-        case "am261x-lp":
-            return "LP-AM263P";
-        default:
-        case "am261x-som":
-            return "TMDSCNCD263P";
-        case "am261x-som-addon-ind":
-            return "TMDSCNCD263P";
-        case "am261x-som-addon-auto":
-            return "TMDSCNCD263P";
-    }
+	switch (board) {
+		case "am261x-lp":
+			return "LP-AM263P";
+		case "am261x-lp (dp83826 phy)":
+			return "LP-AM263P";
+		case "am261x-lp (dp83tg720 phy)":
+			return "LP-AM263P";
+		case "am261x-som":
+		default:
+			return "TMDSCNCD263P";
+	}
 }
 
 function getProperty() {

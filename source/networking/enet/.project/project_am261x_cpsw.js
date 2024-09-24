@@ -68,6 +68,7 @@ const files = {
         "enetphy.c",
         "generic_phy.c",
         "dp83867.c",
+        "dp83826.c",
         "dp83869.c",
         "dp83tg720.c", 
         "dp83822.c",
