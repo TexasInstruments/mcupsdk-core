@@ -53,13 +53,13 @@
 #define APP_TEST_4K_BIT_KEY_SIZE          (4096U)
 #define APP_TEST_2K_BIT_KEY_SIZE          (2048U)
 
-static uint32_t gPkaRsaOutputResult[PKA_BIGINT_MAX + 1];
+static uint32_t gPkaRsaOutputResult[RSA_MAX_LENGTH + 1];
 #define SA2UL_PKA_INSTANCE					(0U)
 #define TEST_4K_BIT_KEY_SIZE_IN_BYTES		(512)
 #define TEST_2K_BIT_KEY_SIZE_IN_BYTES		(256)
 
 /* Openssl command To generate public key : Openssl rsa -pubout -in private.pem -out public.pem*/
-static const struct PKA_RSAPubkey gPkaRsa2kPublicKey =
+static const struct AsymCrypt_RSAPubkey gPkaRsa2kPublicKey =
 {
 	{
 		64UL,
@@ -86,7 +86,7 @@ static const struct PKA_RSAPubkey gPkaRsa2kPublicKey =
 };
 
 /* Openssl command To generate private key : Openssl genrsa -out private.pem*/
-static const struct PKA_RSAPrivkey gPkaRsa2kPrivateKey =
+static const struct AsymCrypt_RSAPrivkey gPkaRsa2kPrivateKey =
 {
 	{
 		64UL,
@@ -189,7 +189,7 @@ static const struct PKA_RSAPrivkey gPkaRsa2kPrivateKey =
 
 /* Openssl command To generate public key : Openssl rsa -pubout -in private.pem -out public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPubkey gPkaRsa4kPublicKey =
+static const struct AsymCrypt_RSAPubkey gPkaRsa4kPublicKey =
 {
 	{
 		128UL,
@@ -233,7 +233,7 @@ static const struct PKA_RSAPubkey gPkaRsa4kPublicKey =
 
 /* Openssl command To generate private key : Openssl genrsa -out private.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPrivkey gPkaRsa4kPrivateKey =
+static const struct AsymCrypt_RSAPrivkey gPkaRsa4kPrivateKey =
 {
 	{
 		128UL,
@@ -465,7 +465,7 @@ static const uint32_t gPkaRsa4kMessage[] =
 };
 
 /* PKA handle for processing every api */
-PKA_Handle			gPkaHandle = NULL;
+AsymCrypt_Handle			gPkaHandle = NULL;
 
 typedef struct
 {
@@ -491,11 +491,11 @@ void test_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-	PKA_Return_t        status = PKA_RETURN_SUCCESS;
+	AsymCrypt_Return_t        status = ASYM_CRYPT_RETURN_SUCCESS;
 
 	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    gPkaHandle = PKA_open(SA2UL_PKA_INSTANCE);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    gPkaHandle = AsymCrypt_open(SA2UL_PKA_INSTANCE);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     RUN_TEST(test_pka_rsa_encrypt_decrypt_2kBit_key,  2516, NULL);
 	RUN_TEST(test_pka_rsa_encrypt_decrypt_4kBit_key,  2517, NULL);
@@ -503,8 +503,8 @@ void test_main(void *args)
     App_printPerformanceLogs();
 
     /* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	status = PKA_close(gPkaHandle);
-	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+	status = AsymCrypt_close(gPkaHandle);
+	TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     UNITY_END();
     Board_driversClose();
@@ -522,17 +522,17 @@ void tearDown(void)
 
 void test_pka_rsa_encrypt_decrypt_2kBit_key(void *args)
 {
-    PKA_Return_t        status = PKA_RETURN_SUCCESS;
+    AsymCrypt_Return_t        status = ASYM_CRYPT_RETURN_SUCCESS;
     uint32_t            t1, t2;
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
 
-	DebugP_log("[PKA] RSA Encryption and Decryption with 2048 bit key example started ...\r\n");
+	DebugP_log("[AsymCrypt] RSA Encryption and Decryption with 2048 bit key example started ...\r\n");
 
     /* Openssl Command for Encryption:: Openssl rsautl -encrypt -raw -in message.bin -pubin -inkey public.pem -out message_encrypt.bin */
-    status = PKA_RSAPublic(gPkaHandle, gPkaRsa2kMessage, &gPkaRsa2kPublicKey, gPkaRsaOutputResult);
-	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    status = AsymCrypt_RSAPublic(gPkaHandle, gPkaRsa2kMessage, &gPkaRsa2kPublicKey, gPkaRsaOutputResult);
+	TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
     App_fillPerformanceResults(t1, t2, TEST_2K_BIT_KEY_SIZE_IN_BYTES, APP_TEST_2K_BIT_KEY_SIZE, APP_OPERATION_ENCRYPT);
@@ -541,15 +541,15 @@ void test_pka_rsa_encrypt_decrypt_2kBit_key(void *args)
     t1 = CycleCounterP_getCount32();
 
     /* Openssl Command for Decryption:: Openssl rsautl -decrypt -raw -in message_encrypt.bin -inkey private.pem -out message_decrypt.bin */
-	status = PKA_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa2kPrivateKey, gPkaRsaOutputResult);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+	status = AsymCrypt_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa2kPrivateKey, gPkaRsaOutputResult);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
     App_fillPerformanceResults(t1, t2, TEST_2K_BIT_KEY_SIZE_IN_BYTES, APP_TEST_2K_BIT_KEY_SIZE, APP_OPERATION_DECRYPT);
 
     if (0 != memcmp(gPkaRsaOutputResult, gPkaRsa2kMessage, sizeof(gPkaRsa2kMessage)))
 	{
-		DebugP_log("[PKA] Decryption output did not match expected output\n");
+		DebugP_log("[AsymCrypt] Decryption output did not match expected output\n");
 		TEST_ASSERT_EQUAL_UINT32(SystemP_FAILURE, 0);
 	}
     return;
@@ -557,17 +557,17 @@ void test_pka_rsa_encrypt_decrypt_2kBit_key(void *args)
 
 void test_pka_rsa_encrypt_decrypt_4kBit_key(void *args)
 {
-    PKA_Return_t        status = PKA_RETURN_SUCCESS;
+    AsymCrypt_Return_t        status = ASYM_CRYPT_RETURN_SUCCESS;
     uint32_t            t1, t2;
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
 
-	DebugP_log("[PKA] RSA Encryption and Decryption with 4096 bit key example started ...\r\n");
+	DebugP_log("[AsymCrypt] RSA Encryption and Decryption with 4096 bit key example started ...\r\n");
 
     /* Openssl Command for Encryption:: Openssl rsautl -encrypt -raw -in message.bin -pubin -inkey public.pem -out message_encrypt.bin */
-    status = PKA_RSAPublic(gPkaHandle, gPkaRsa4kMessage, &gPkaRsa4kPublicKey, gPkaRsaOutputResult);
-	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    status = AsymCrypt_RSAPublic(gPkaHandle, gPkaRsa4kMessage, &gPkaRsa4kPublicKey, gPkaRsaOutputResult);
+	TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
     App_fillPerformanceResults(t1, t2, TEST_4K_BIT_KEY_SIZE_IN_BYTES, APP_TEST_4K_BIT_KEY_SIZE, APP_OPERATION_ENCRYPT);
@@ -576,15 +576,15 @@ void test_pka_rsa_encrypt_decrypt_4kBit_key(void *args)
     t1 = CycleCounterP_getCount32();
 
     /* Openssl Command for Decryption:: Openssl rsautl -decrypt -raw -in message_encrypt.bin -inkey private.pem -out message_decrypt.bin */
-	status = PKA_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa4kPrivateKey, gPkaRsaOutputResult);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+	status = AsymCrypt_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa4kPrivateKey, gPkaRsaOutputResult);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
     App_fillPerformanceResults(t1, t2, TEST_4K_BIT_KEY_SIZE_IN_BYTES, APP_TEST_4K_BIT_KEY_SIZE, APP_OPERATION_DECRYPT);
 
     if (0 != memcmp(gPkaRsaOutputResult, gPkaRsa4kMessage, sizeof(gPkaRsa4kMessage)))
 	{
-		DebugP_log("[PKA] Decryption output did not match expected output\n");
+		DebugP_log("[AsymCrypt] Decryption output did not match expected output\n");
 		TEST_ASSERT_EQUAL_UINT32(SystemP_FAILURE, 0);
 	}
     return;

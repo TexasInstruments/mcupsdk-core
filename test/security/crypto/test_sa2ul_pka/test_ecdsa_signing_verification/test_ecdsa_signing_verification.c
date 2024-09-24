@@ -68,7 +68,7 @@ static const uint32_t gPkaEcdsaPrivateP256Key[] =
 /* Openssl command To generate EC curve params: openssl ecparam -name prime256v1 -out prime256v1.pem
 Openssl cmd To see content of key in text form: openssl ecparam -in prime256v1.pem -text -param_enc explicit -noout
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_ECPrimeCurveP gPkaEcPrimeP256CurveParams =
+static const struct AsymCrypt_ECPrimeCurveP gPkaEcPrimeP256CurveParams =
 {
 	{
 		8UL,
@@ -106,7 +106,7 @@ static const struct PKA_ECPrimeCurveP gPkaEcPrimeP256CurveParams =
 
 /* Openssl command To generate public key: openssl ec -in ecdsa_prime256v1_private.pem -pubout -out ecdsa_prime256v1_public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format */
-static const struct PKA_ECPoint gPkaEcdsaPublicP256Key =
+static const struct AsymCrypt_ECPoint gPkaEcdsaPublicP256Key =
 {
 	{
 		8UL,
@@ -150,7 +150,7 @@ static const uint32_t gPkaEcdsaPrivateP384Key[] =
 /* Openssl command To generate EC curve params: openssl ecparam -name secp384r1 -out secp384r1.pem
 Openssl cmd To see content of key in text form: openssl ecparam -in secp384r1.pem -text -param_enc explicit -noout
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_ECPrimeCurveP gPkaEcPrimeP384CurveParams =
+static const struct AsymCrypt_ECPrimeCurveP gPkaEcPrimeP384CurveParams =
 {
 	{
 		12UL,
@@ -194,7 +194,7 @@ static const struct PKA_ECPrimeCurveP gPkaEcPrimeP384CurveParams =
 
 /* Openssl command To generate public key: openssl ec -in ecdsa_secp384r1_private.pem -pubout -out ecdsa_secp384r1_public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format */
-static const struct PKA_ECPoint gPkaEcdsaPublicP384Key =
+static const struct AsymCrypt_ECPoint gPkaEcdsaPublicP384Key =
 {
 	{
 		12UL,
@@ -247,28 +247,28 @@ void App_printPerformanceLogs();
 App_benchmark results[TEST_PKA_ECDSA_COUNT];
 
 /* PKA handle for processing every api's */
-PKA_Handle			gPkaHandle = NULL;
+AsymCrypt_Handle			gPkaHandle = NULL;
 
 void test_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
 
-	PKA_Return_t             status = PKA_RETURN_SUCCESS;
+	AsymCrypt_Return_t             status = ASYM_CRYPT_RETURN_SUCCESS;
 
-    DebugP_log("[PKA] ECDSA Signing and verification example started ...\r\n");
+    DebugP_log("[AsymCrypt] ECDSA Signing and verification example started ...\r\n");
 
   	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    gPkaHandle = PKA_open(SA2UL_PKA_INSTANCE);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    gPkaHandle = AsymCrypt_open(SA2UL_PKA_INSTANCE);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     RUN_TEST(test_pka_ecdsa_sign_verify_p_256,  2714, NULL);
 	RUN_TEST(test_pka_ecdsa_sign_verify_p_384,  2674, NULL);
 
     App_printPerformanceLogs();
     /* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	status = PKA_close(gPkaHandle);
-	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+	status = AsymCrypt_close(gPkaHandle);
+	TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     UNITY_END();
     Board_driversClose();
@@ -286,17 +286,17 @@ void tearDown(void)
 
 void test_pka_ecdsa_sign_verify_p_256(void *args)
 {
-	PKA_Return_t 		status = PKA_RETURN_SUCCESS;
-    static struct 		PKA_ECDSASig sig;
+	AsymCrypt_Return_t 		status = ASYM_CRYPT_RETURN_SUCCESS;
+    static struct 		AsymCrypt_ECDSASig sig;
     uint64_t            t1, t2, tTotal;
 
-	DebugP_log("[PKA] ECDSA signing and verification with P-256 started ...\r\n");
+	DebugP_log("[AsymCrypt] ECDSA signing and verification with P-256 started ...\r\n");
 
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_prime256v1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = PKA_ECDSASign(gPkaHandle, &gPkaEcPrimeP256CurveParams, gPkaEcdsaPrivateP256Key, gPkaEcdsaRandamP256Key, gPkaEcdsaHashP256, &sig);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP256CurveParams, gPkaEcdsaPrivateP256Key, gPkaEcdsaRandamP256Key, gPkaEcdsaHashP256, &sig);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
@@ -307,8 +307,8 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_prime256v1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = PKA_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP256CurveParams, &gPkaEcdsaPublicP256Key, &sig, gPkaEcdsaHashP256);
-    DebugP_assert(PKA_RETURN_SUCCESS == status);
+    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP256CurveParams, &gPkaEcdsaPublicP256Key, &sig, gPkaEcdsaHashP256);
+    DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
@@ -322,17 +322,17 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
 
 void test_pka_ecdsa_sign_verify_p_384(void *args)
 {
-	PKA_Return_t 		status = PKA_RETURN_SUCCESS;
-    static struct 		PKA_ECDSASig sig;
+	AsymCrypt_Return_t 		status = ASYM_CRYPT_RETURN_SUCCESS;
+    static struct 		AsymCrypt_ECDSASig sig;
     static uint64_t     t1, t2, tTotal;
 
-	DebugP_log("[PKA] ECDSA signing and verification with P-384 started ...\r\n");
+	DebugP_log("[AsymCrypt] ECDSA signing and verification with P-384 started ...\r\n");
 
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_secp384r1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = PKA_ECDSASign(gPkaHandle, &gPkaEcPrimeP384CurveParams, gPkaEcdsaPrivateP384Key, gPkaEcdsaRandamP384Key, gPkaEcdsaHashP384, &sig);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP384CurveParams, gPkaEcdsaPrivateP384Key, gPkaEcdsaRandamP384Key, gPkaEcdsaHashP384, &sig);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
@@ -343,8 +343,8 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
     t1 =ClockP_getTimeUsec();
 
     /* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_secp384r1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = PKA_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP384CurveParams, &gPkaEcdsaPublicP384Key, &sig, gPkaEcdsaHashP384);
-    TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
+    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP384CurveParams, &gPkaEcdsaPublicP384Key, &sig, gPkaEcdsaHashP384);
+    TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
