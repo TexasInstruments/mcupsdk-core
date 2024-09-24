@@ -48,8 +48,8 @@ Shown below is a sample output when the application is run.
 CCS Console:
 \code
 
-[PKA] RSA Signing and Verification example started ...
-[PKA] RSA Signing and Verification example completed!!
+[AsymCrypt] RSA Signing and Verification example started ...
+[AsymCrypt] RSA Signing and Verification example completed!!
 All tests have passed!!
 
 \endcode

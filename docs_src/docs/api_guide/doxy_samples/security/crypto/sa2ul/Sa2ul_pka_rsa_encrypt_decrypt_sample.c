@@ -4,10 +4,10 @@
 #include <string.h>
 #include <security/security_common/drivers/crypto/crypto.h>
 #include <kernel/dpl/DebugP.h>
-#include <security/security_common/drivers/crypto/pka/pka.h>
+#include <security/security_common/drivers/crypto/asym_crypt.h>
 
 /* Openssl command To generate public key : Openssl rsa -pubout -in private.pem -out public.pem*/
-static const struct PKA_RSAPubkey gPkaRsa2kPublicKey = 
+static const struct AsymCrypt_RSAPubkey gPkaRsa2kPublicKey = 
 {
 	{
 		64UL,
@@ -34,7 +34,7 @@ static const struct PKA_RSAPubkey gPkaRsa2kPublicKey =
 };
 
 /* Openssl command To generate private key : Openssl genrsa -out private.pem*/
-static const struct PKA_RSAPrivkey gPkaRsa2kPrivateKey = 
+static const struct AsymCrypt_RSAPrivkey gPkaRsa2kPrivateKey = 
 {
 	{
 		64UL,
@@ -157,9 +157,9 @@ static const uint32_t gPkaRsa2kMessage[] =
 };
 
 /* PKA handle for processing every api */
-PKA_Handle			gPkaHandle = NULL;
+AsymCrypt_Handle			gPkaHandle = NULL;
 
-static uint32_t gPkaRsaOutputResult[PKA_BIGINT_MAX ];
+static uint32_t gPkaRsaOutputResult[RSA_MAX_LENGTH ];
 
 //! [include]
 void pka_rsa_pub_priv(void)
@@ -167,19 +167,19 @@ void pka_rsa_pub_priv(void)
 //! [sa2ulpkarsa]
 
 	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    gPkaHandle = PKA_open(0U);
+    gPkaHandle = AsymCrypt_open(0U);
     DebugP_assert(gPkaHandle != NULL);
 
-    PKA_RSAPublic(gPkaHandle, gPkaRsa2kMessage, &gPkaRsa2kPublicKey, gPkaRsaOutputResult);
+    AsymCrypt_RSAPublic(gPkaHandle, gPkaRsa2kMessage, &gPkaRsa2kPublicKey, gPkaRsaOutputResult);
 
-	PKA_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa2kPrivateKey, gPkaRsaOutputResult);
+	AsymCrypt_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsa2kPrivateKey, gPkaRsaOutputResult);
 
 	/* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	PKA_close(gPkaHandle);
+	AsymCrypt_close(gPkaHandle);
 
     if (0 != memcmp(gPkaRsaOutputResult, gPkaRsa2kMessage, sizeof(gPkaRsa2kMessage)))
 	{
-		DebugP_log("[PKA] PKA_RSAPrivate output did not match expected output\n");
+		DebugP_log("[AsymCrypt] AsymCrypt_RSAPrivate output did not match expected output\n");
 	}
     
 //! [sa2ulpkarsa]

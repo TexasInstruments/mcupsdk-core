@@ -448,32 +448,32 @@ Output of #Crypto_bigIntToUint32()
 
 ## PKA API's Supported
 
-- #PKA_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
-- #PKA_RSAPrivate()     : This function performs decryption or signing operations
-- #PKA_RSAPublic()      : This function performs encryption or verification operations
-- #PKA_ECDSASign()      : This function performs ECDSA signing operations.
-- #PKA_ECDSAVerify()    : This function performs ECDSA verification operations.
-- #PKA_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
+- #AsymCrypt_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
+- #AsymCrypt_RSAPrivate()     : This function performs decryption or signing operations
+- #AsymCrypt_RSAPublic()      : This function performs encryption or verification operations
+- #AsymCrypt_ECDSASign()      : This function performs ECDSA signing operations.
+- #AsymCrypt_ECDSAVerify()    : This function performs ECDSA verification operations.
+- #AsymCrypt_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
 
 ## API Sequence for PKA (Public-key accelerator)
 
 #### RSA
 This sequence performs PKA RSA operations.
 
-- #PKA_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
-- #PKA_RSAPrivate()     : This function performs decryption or signing operations.
-- #PKA_RSAPublic()      : This function performs encryption or verification operations.
-- #PKA_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
-- Open the pka module with instance by using #PKA_open(), this call used for loading pka fw, clock enable and pka engine enable, for encryption or verification use #PKA_RSAPublic(), for decryption or signing use #PKA_RSAPrivate(), to close pka instance, disable engine, disable clock and fw unload use #PKA_close().
+- #AsymCrypt_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
+- #AsymCrypt_RSAPrivate()     : This function performs decryption or signing operations.
+- #AsymCrypt_RSAPublic()      : This function performs encryption or verification operations.
+- #AsymCrypt_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
+- Open the pka module with instance by using #AsymCrypt_open(), this call used for loading pka fw, clock enable and pka engine enable, for encryption or verification use #AsymCrypt_RSAPublic(), for decryption or signing use #AsymCrypt_RSAPrivate(), to close pka instance, disable engine, disable clock and fw unload use #AsymCrypt_close().
 
 #### ECDSA
 This sequence performs PKA ECDSA operations.
 
-- #PKA_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
-- #PKA_ECDSASign()      : This function performs ECDSA signing operations.
-- #PKA_ECDSAVerify()    : This function performs ECDSA verification operations.
-- #PKA_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
-- Open the pka module with instance by using #PKA_open(), this call used for loading pka fw, clock enable and pka engine enable, for signing use #PKA_ECDSASign(), for verification use #PKA_ECDSAVerify(), to close pka instance, disable engine, disable clock and fw unload use #PKA_close().
+- #AsymCrypt_open()           : Open PKA instance, enable PKA engine, initialize clocks and load PKA fw.
+- #AsymCrypt_ECDSASign()      : This function performs ECDSA signing operations.
+- #AsymCrypt_ECDSAVerify()    : This function performs ECDSA verification operations.
+- #AsymCrypt_close()          : Close PKA instance, disable PKA engine, un-initialize clocks and unload PKA fw.
+- Open the pka module with instance by using #AsymCrypt_open(), this call used for loading pka fw, clock enable and pka engine enable, for signing use #AsymCrypt_ECDSASign(), for verification use #AsymCrypt_ECDSAVerify(), to close pka instance, disable engine, disable clock and fw unload use #AsymCrypt_close().
 
 ## Example Usage
 \cond SOC_AM64X || SOC_AM243X
@@ -486,4 +486,4 @@ sa2ul pka rsa Encryption and Decryption Example
 \endcond
 ## API
 
-\ref SECURITY_PKA_MODULE
+\ref SECURITY_ASYMCRYPT_MODULE

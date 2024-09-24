@@ -48,8 +48,8 @@ Shown below is a sample output when the application is run.
 CCS Console:
 \code
 
-[PKA] RSA Encryption and Decryption started ...
-[PKA] RSA Encryption and Decryption completed!!
+[AsymCrypt] RSA Encryption and Decryption started ...
+[AsymCrypt] RSA Encryption and Decryption completed!!
 All tests have passed!!
 
 \endcode

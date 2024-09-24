@@ -48,8 +48,8 @@ Shown below is a sample output when the application is run.
 CCS Console:
 \code
 
-[PKA] ECDSA Signing and Verification example started ...
-[PKA] ECDSA Signing and Verification example completed!!
+[AsymCrypt] ECDSA Signing and Verification example started ...
+[AsymCrypt] ECDSA Signing and Verification example completed!!
 All tests have passed!!
 
 \endcode
