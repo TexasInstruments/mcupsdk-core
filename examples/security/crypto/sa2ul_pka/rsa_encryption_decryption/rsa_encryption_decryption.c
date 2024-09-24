@@ -38,14 +38,14 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-static uint32_t gPkaRsaOutputResult[PKA_BIGINT_MAX + 1];
+static uint32_t gPkaRsaOutputResult[RSA_MAX_LENGTH + 1];
 
 /* Sa2ul Pka Instance */
 #define SA2UL_PKA_INSTANCE				(0U)
 
 /* Openssl command To generate public key: Openssl rsa -pubout -in private.pem -out public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPubkey gPkaRsaPublicKey =
+static const struct AsymCrypt_RSAPubkey gPkaRsaPublicKey =
 {
 	{
 		128UL,
@@ -89,7 +89,7 @@ static const struct PKA_RSAPubkey gPkaRsaPublicKey =
 
 /* Openssl command To generate private key: Openssl genrsa -out private.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPrivkey gPkaRsaPrivateKey =
+static const struct AsymCrypt_RSAPrivkey gPkaRsaPrivateKey =
 {
 	{
 		128UL,
@@ -300,39 +300,39 @@ static const uint32_t gPkaRsaMessage[] =
 };
 
 /* PKA handle for processing every api */
-PKA_Handle			gPkaHandle = NULL;
+AsymCrypt_Handle			gPkaHandle = NULL;
 
 void rsa_encryption_decryption(void *args)
 {
     Drivers_open();
     Board_driversOpen();
 
-	PKA_Return_t        status = PKA_RETURN_SUCCESS;
+	AsymCrypt_Return_t        status = ASYM_CRYPT_RETURN_SUCCESS;
 
-    DebugP_log("[PKA] RSA Encryption and Decryption example started ...\r\n");
+    DebugP_log("[AsymCrypt] RSA Encryption and Decryption example started ...\r\n");
 
 	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    gPkaHandle = PKA_open(SA2UL_PKA_INSTANCE);
+    gPkaHandle = AsymCrypt_open(SA2UL_PKA_INSTANCE);
     DebugP_assert(gPkaHandle != NULL);
 
 	/* Openssl Command for Encryption: Openssl rsautl -encrypt -raw -in message.bin -pubin -inkey public.pem -out message_encrypt.bin */
-    status = PKA_RSAPublic(gPkaHandle, gPkaRsaMessage, &gPkaRsaPublicKey, gPkaRsaOutputResult);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+    status = AsymCrypt_RSAPublic(gPkaHandle, gPkaRsaMessage, &gPkaRsaPublicKey, gPkaRsaOutputResult);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Openssl Command for Decryption: Openssl rsautl -decrypt -raw -in message_encrypt.bin -inkey private.pem -out message_decrypt.bin */
-	status = PKA_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsaPrivateKey, gPkaRsaOutputResult);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+	status = AsymCrypt_RSAPrivate(gPkaHandle, gPkaRsaOutputResult, &gPkaRsaPrivateKey, gPkaRsaOutputResult);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	status = PKA_close(gPkaHandle);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+	status = AsymCrypt_close(gPkaHandle);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	if (0 != memcmp(gPkaRsaOutputResult, gPkaRsaMessage, sizeof(gPkaRsaMessage)))
 	{
-		DebugP_log("[PKA] Decryption output did not match expected output\n");
+		DebugP_log("[AsymCrypt] Decryption output did not match expected output\n");
 	}
 
-    DebugP_log("[PKA] Encryption and Decryption example completed!!\r\n");
+    DebugP_log("[AsymCrypt] Encryption and Decryption example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();

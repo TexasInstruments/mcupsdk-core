@@ -55,7 +55,7 @@ static const uint32_t gPkaEcdsaPrivateKey[] =
 /* Openssl command To generate EC curve params: openssl ecparam -name prime256v1 -out prime256v1.pem
 Openssl cmd To see content of key in text form: openssl ecparam -in prime256v1.pem -text -param_enc explicit -noout
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_ECPrimeCurveP gPkaEcPrimeCurveParams =
+static const struct AsymCrypt_ECPrimeCurveP gPkaEcPrimeCurveParams =
 {
 	{
 		8UL,
@@ -93,7 +93,7 @@ static const struct PKA_ECPrimeCurveP gPkaEcPrimeCurveParams =
 
 /* Openssl command To generate public key: openssl ec -in ecdsa_prime256v1_private.pem -pubout -out ecdsa_prime256v1_public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format */
-static const struct PKA_ECPoint gPkaEcdsaPublicKey =
+static const struct AsymCrypt_ECPoint gPkaEcdsaPublicKey =
 {
 	{
 		8UL,
@@ -129,29 +129,29 @@ void ecdsa_signing_verification(void *args)
     Board_driversOpen();
 
 	/* PKA handle for processing every api's */
-	PKA_Handle			pkaHandle = NULL;
-	PKA_Return_t		status = PKA_RETURN_SUCCESS;
-    static struct 		PKA_ECDSASig sig;
+	AsymCrypt_Handle			gAsymCryptHandle = NULL;
+	AsymCrypt_Return_t		status = ASYM_CRYPT_RETURN_SUCCESS;
+    static struct 		AsymCrypt_ECDSASig sig;
 
-	DebugP_log("[PKA] ECDSA Signing and Verification example started ...\r\n");
+	DebugP_log("[AsymCrypt] ECDSA Signing and Verification example started ...\r\n");
 
 	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    pkaHandle = PKA_open(SA2UL_PKA_INSTANCE);
-    DebugP_assert(pkaHandle != NULL);
+    gAsymCryptHandle = AsymCrypt_open(SA2UL_PKA_INSTANCE);
+    DebugP_assert(gAsymCryptHandle != NULL);
 
 	/* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_prime256v1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = PKA_ECDSASign(pkaHandle, &gPkaEcPrimeCurveParams, gPkaEcdsaPrivateKey, gPkaEcdsaRandamKey, gPkaEcdsaHash, &sig);
-    DebugP_assert(PKA_RETURN_SUCCESS == status);
+    status = AsymCrypt_ECDSASign(gAsymCryptHandle, &gPkaEcPrimeCurveParams, gPkaEcdsaPrivateKey, gPkaEcdsaRandamKey, gPkaEcdsaHash, &sig);
+    DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_prime256v1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = PKA_ECDSAVerify(pkaHandle, &gPkaEcPrimeCurveParams, &gPkaEcdsaPublicKey, &sig, gPkaEcdsaHash);
-    DebugP_assert(PKA_RETURN_SUCCESS == status);
+    status = AsymCrypt_ECDSAVerify(gAsymCryptHandle, &gPkaEcPrimeCurveParams, &gPkaEcdsaPublicKey, &sig, gPkaEcdsaHash);
+    DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	status = PKA_close(pkaHandle);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+	status = AsymCrypt_close(gAsymCryptHandle);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
-	DebugP_log("[PKA] ECDSA Signing and Verification example completed!!\r\n");
+	DebugP_log("[AsymCrypt] ECDSA Signing and Verification example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
 
 	Board_driversClose();

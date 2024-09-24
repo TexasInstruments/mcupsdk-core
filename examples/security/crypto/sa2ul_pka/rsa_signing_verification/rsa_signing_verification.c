@@ -40,11 +40,11 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-static uint32_t gPkaRsaSignOutputResult[PKA_BIGINT_MAX];
-static uint32_t gPkaRsaVerifyOutputResult[PKA_BIGINT_MAX];
-static uint32_t gPkaRsaShaHashWith32BitFormate[PKA_BIGINT_MAX];
-static uint32_t gPkaRsaShaHashWithBigIntFormate[PKA_BIGINT_MAX];
-static uint8_t gPkaRsaShaHashWithPadding[(PKA_BIGINT_MAX * 4)];
+static uint32_t gPkaRsaSignOutputResult[RSA_MAX_LENGTH];
+static uint32_t gPkaRsaVerifyOutputResult[RSA_MAX_LENGTH];
+static uint32_t gPkaRsaShaHashWith32BitFormate[RSA_MAX_LENGTH];
+static uint32_t gPkaRsaShaHashWithBigIntFormate[RSA_MAX_LENGTH];
+static uint8_t gPkaRsaShaHashWithPadding[(RSA_MAX_LENGTH * 4)];
 
 /* SHA512 length */
 #define APP_SHA512_LENGTH               (64U)
@@ -58,7 +58,7 @@ static uint8_t gPkaRsaShaHashWithPadding[(PKA_BIGINT_MAX * 4)];
 
 /* Openssl command To generate public key : Openssl rsa -pubout -in private.pem -out public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPubkey gPkaRsaPublicKey =
+static const struct AsymCrypt_RSAPubkey gPkaRsaPublicKey =
 {
 	{
 		128UL,
@@ -102,7 +102,7 @@ static const struct PKA_RSAPubkey gPkaRsaPublicKey =
 
 /* Openssl command To generate private key : Openssl genrsa -out private.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_RSAPrivkey gPkaRsaPrivateKey =
+static const struct AsymCrypt_RSAPrivkey gPkaRsaPrivateKey =
 {
 	{
 		128UL,
@@ -323,7 +323,7 @@ static uint8_t gPkaRsaMessage[APP_PKA_RSA_MSG_SIZE_IN_BYTES] =
 };
 
 /* PKA handle for processing PKA api's */
-PKA_Handle			gPkaHandle = NULL;
+AsymCrypt_Handle			gPkaHandle = NULL;
 /* Crypto handle for processing SHA api's */
 Crypto_Handle       gShaHandle;
 
@@ -344,15 +344,15 @@ void rsa_signing_verification(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    PKA_Return_t            status = PKA_RETURN_SUCCESS;
+    AsymCrypt_Return_t            status = ASYM_CRYPT_RETURN_SUCCESS;
 
-    DebugP_log("[PKA] RSA Signing and Verification example started ...\r\n");
+    DebugP_log("[AsymCrypt] RSA Signing and Verification example started ...\r\n");
 
 	gShaHandle = Crypto_open(&gCryptoShaContext);
     DebugP_assert(gShaHandle != NULL);
 
 	/* Open PKA instance, enable PKA engine, Initialize clocks and Load PKA Fw */
-    gPkaHandle = PKA_open(SA2UL_PKA_INSTANCE);
+    gPkaHandle = AsymCrypt_open(SA2UL_PKA_INSTANCE);
     DebugP_assert(gPkaHandle != NULL);
 
 	/* Perform SHA operation */
@@ -368,16 +368,16 @@ void rsa_signing_verification(void *args)
 	Crypto_Uint32ToBigInt(gPkaRsaShaHashWith32BitFormate, APP_PKA_RSA_KEY_SIZE_IN_WORDS, gPkaRsaShaHashWithBigIntFormate);
 
 	/* Openssl Command for Sign: openssl rsautl -sign -inkey privkey.pem -in sha512.dgt -out sha512_signed.dgt */
-	status = PKA_RSAPrivate(gPkaHandle, gPkaRsaShaHashWithBigIntFormate, &gPkaRsaPrivateKey, gPkaRsaSignOutputResult);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+	status = AsymCrypt_RSAPrivate(gPkaHandle, gPkaRsaShaHashWithBigIntFormate, &gPkaRsaPrivateKey, gPkaRsaSignOutputResult);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Openssl Command for Verify: openssl rsautl -verify -pubin -inkey pubkey.pem -in sha512_signed.dgt -out sha512_decrypted.dgt */
-    status = PKA_RSAPublic(gPkaHandle, gPkaRsaSignOutputResult, &gPkaRsaPublicKey, gPkaRsaVerifyOutputResult);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+    status = AsymCrypt_RSAPublic(gPkaHandle, gPkaRsaSignOutputResult, &gPkaRsaPublicKey, gPkaRsaVerifyOutputResult);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Close PKA instance, disable PKA engine, deinitialize clocks*/
-	status = PKA_close(gPkaHandle);
-	DebugP_assert(PKA_RETURN_SUCCESS == status);
+	status = AsymCrypt_close(gPkaHandle);
+	DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Close SHA instance */
     status = Crypto_close(gShaHandle);
@@ -388,10 +388,10 @@ void rsa_signing_verification(void *args)
 	/* Comparing both hash results */
 	if (0 != memcmp(gCryptoShaOutputBuf, gCryptoShaHashBufForCompare, sizeof(gCryptoShaHashBufForCompare)))
 	{
-		DebugP_log("[PKA] Verification output did not match expected output\n");
+		DebugP_log("[AsymCrypt] Verification output did not match expected output\n");
 	}
 
-    DebugP_log("[PKA] RSA Signing and Verification example completed!!\r\n");
+    DebugP_log("[AsymCrypt] RSA Signing and Verification example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
