@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.999+157"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -37,6 +38,7 @@ const section2    = section.addInstance();
 const section3    = section.addInstance();
 const section4    = section.addInstance();
 const section5    = section.addInstance();
+const section6    = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -60,6 +62,11 @@ i2c2.I2C.SDA.$assign     = "GPIO134";
 i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
 
 mcan1.$name = "CONFIG_MCAN0";
+
+const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
+const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
+mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
+mcan1.child             = mcan_v1_template1;
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
@@ -102,7 +109,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(6);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -123,11 +130,15 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x3DF00;
+region1.memory_region[4].size               = 0x35700;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70040000;
-region1.memory_region[5].size               = 0x1C0000;
+region1.memory_region[5].manualStartAddress = 0x70100000;
+region1.memory_region[5].size               = 0x80000;
+region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].size               = 0x40000;
+region1.memory_region[6].manualStartAddress = 0x70037800;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -205,6 +216,11 @@ section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
+
+section6.$name                   = "Hsmrt";
+section6.load_memory             = "MSRAM_HSMRT";
+section6.output_section.create(1);
+section6.output_section[0].$name = ".rodata.hsmrt";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

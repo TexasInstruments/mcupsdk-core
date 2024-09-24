@@ -54,6 +54,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_oversampling_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_dfu_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_dfu_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -532,6 +536,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1544,6 +1560,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_oversampling_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_dfu_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_dfu_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2022,6 +2042,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3034,6 +3066,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_oversampling_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_oversampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_undersampling_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_dfu_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_dfu_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -3512,6 +3548,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4540,6 +4588,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

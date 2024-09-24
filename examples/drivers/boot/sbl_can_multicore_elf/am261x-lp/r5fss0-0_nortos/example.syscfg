@@ -1,23 +1,26 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --package "ZFG" --part "AM2612" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp       = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1      = ioexp.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
-const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1        = i2c.addInstance();
 const mcan        = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1       = mcan.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
@@ -34,24 +37,40 @@ const section2    = section.addInstance();
 const section3    = section.addInstance();
 const section4    = section.addInstance();
 const section5    = section.addInstance();
+const section6    = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                    = "CONFIG_IOEXP0";
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_mode  = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_state = 1;
+
 bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 bootloader1.bootMedia = "MEM";
 
+gpio1.$name          = "CONFIG_GPIO0";
+gpio1.pinDir         = "OUTPUT";
+gpio1.GPIO_n.$assign = "GPIO132";
+
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C1";
-i2c1.I2C.SCL.$assign = "GPIO23";
-i2c1.I2C.SDA.$assign = "GPIO24";
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
 
 mcan1.$name           = "CONFIG_MCAN0";
-mcan1.MCAN.$assign    = "MCAN3";
-mcan1.MCAN.RX.$assign = "GPIO26";
-mcan1.MCAN.TX.$assign = "GPIO25";
+mcan1.MCAN.$assign    = "MCAN0";
+mcan1.MCAN.RX.$assign = "GPIO59";
+mcan1.MCAN.TX.$assign = "GPIO60";
+
+const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
+const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
+mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
+mcan1.child             = mcan_v1_template1;
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
@@ -94,7 +113,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(6);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -115,11 +134,15 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x3DF00;
+region1.memory_region[4].size               = 0x35700;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70040000;
-region1.memory_region[5].size               = 0x1C0000;
+region1.memory_region[5].manualStartAddress = 0x70100000;
+region1.memory_region[5].size               = 0x80000;
+region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].size               = 0x40000;
+region1.memory_region[6].manualStartAddress = 0x70037800;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -197,3 +220,16 @@ section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
+
+section6.$name                   = "Hsmrt";
+section6.load_memory             = "MSRAM_HSMRT";
+section6.output_section.create(1);
+section6.output_section[0].$name = ".rodata.hsmrt";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+i2c1.I2C.SCL.$suggestSolution = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution = "GPIO134";

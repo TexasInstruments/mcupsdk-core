@@ -154,6 +154,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1436,6 +1440,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2910,6 +2926,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4383,6 +4411,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  adc_trigger_repeater_undersampling_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ sbl_can_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_can_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_can_multicore_elf_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_can_multicore_elf_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  sbl_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -5342,6 +5382,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -5361,6 +5405,10 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5380,6 +5428,10 @@ sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
