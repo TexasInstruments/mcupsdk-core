@@ -128,7 +128,7 @@ const example_file_list = [
 	// "examples/drivers/fsi/fsi_loopback_dma/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_interrupt/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_polling/.project/project.js",
-	// "examples/drivers/gpio/gpio_input_interrupt/.project/project.js",
+	"examples/drivers/gpio/gpio_input_interrupt/.project/project.js",
 	"examples/drivers/gpio/gpio_led_blink/.project/project.js",
 	// "examples/drivers/gpio/gpio_multi_led_blink/.project/project.js",
 	// "examples/drivers/gpmc/gpmc_psram_io/.project/project.js",
