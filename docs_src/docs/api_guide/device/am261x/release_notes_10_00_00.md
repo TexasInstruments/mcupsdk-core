@@ -6,42 +6,50 @@
 
 \attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 3. Networking examples support has been tested only on AM261x-LP board.
+\attention 3. This is an early access release with limited testing to enable early development for customers.
+
+\attention 4. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog
+              using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel
+              flow is mandatory.
+\attention 5. Networking examples support has been tested only on AM261x-LP board.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
 
-\attention Current PMIC support in SDK is bare minimum meant to power up the modules and should not be used beyond this including safety use-case etc
-
-\note CSP 12.7 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
+\note Current PMIC support in SDK is bare minimum meant to disable PMIC watchdog and should not be used beyond this including safety use-case etc
 
 ## New in this Release
 
 Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+------------------------------------------------------------------------------------------------|----------------------------------- 
+USB CDC and DFU Support                                                                         | USB
+SBL DFU support for running applications from RAM                                               | USB
+SBL DFU Uniflash support for flashing applications                                              | USB
+
 
 # Modules Not tested/supported in this release
 
+- AM261x-SOM board
+- Safety Diagnostic Library (SDL)
+- NAND Boot not supported
+- TIFS
+- SBL DFU Support on MacOS
 
 ## Device and Validation Information
 
-\cond SOC_AM263PX
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263Px| R5F             | AM263Px ControlCard E2 Rev     (referred to as am263Px-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-AM263Px| R5F             | AM263Px LaunchPad              (referred to as am263Px-lp in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-\endcond
+AM261x | R5F             | AM261x Launchpad     (referred to as am261x-lp in code). \n                  | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.7.0
-SysConfig               | R5F            | 1.20.0 build, build 3587
-TI ARM CLANG            | R5F            | 3.2.2.LTS
+Code Composer Studio    | R5F            | 12.8.0
+SysConfig               | R5F            | 1.21.0 build, build 3721
+TI ARM CLANG            | R5F            | 4.0.0.LTS
 FreeRTOS Kernel         | R5F            | 10.4.3
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
 Mbed-TLS                | R5F            | mbedtls-3.0.0
@@ -58,7 +66,7 @@ Mbed-TLS                | R5F            | mbedtls-3.0.0
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
-GUI for UART Uniflash Tool                                          | Bootloader
+-                                                                   | -
 
 ### OS Kernel
 
@@ -103,7 +111,7 @@ ECAP         | R5F            | YES               | yes. Example : ecap_edma    
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features, global load and link feature           | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement                                                                                                           | -
-FSI          | R5F            | YES               | Yes. Example: fsi_loopback_dma        | RX, TX, polling, interrupt mode, Dma, single lane loopback.                                                                                                     | - FSI Spi Mode
+FSI          | R5F            | YES               | No                                    | RX, TX, polling, interrupt mode, single lane loopback.                                                                                                     | - FSI Spi Mode
 GPIO         | R5F            | YES               | NA                                    | Output, Input and Interrupt functionality                                                                                                                       | -
 I2C          | R5F            | YES               | No                                    | Controller mode, basic read/write                                                                                                                               | -
 IPC Notify   | R5F            | YES               | NA                                    | Mailbox functionality, IPC between RTOS/NORTOS CPUs                                                                                                             | M4F core
@@ -111,11 +119,10 @@ IPC Rpmsg    | R5F            | YES               | NA                          
 MCAN         | R5F            | YES               | No                                    | RX, TX, interrupt and polling mode, Corrupt Message Transmission Prevention, Error Passive state, Bus Off State, Bus Monitoring Mode                            | -
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                   | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
-MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                                                      | file IO, eMMC
 PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                                        | -
 PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                                                                       | Counter overflow detection is not enabled
 OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled                                                                                                               | OptiShare
-OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
+OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | Phy Support
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selection, comparator setup for Interrupt, DMA requests                                                                                  | Capture feature, fast enabling/disabling of events not tested
 SDFM         | R5F            | YES               | No                                    | ECAP Clock LoopBack, Filter data read from CPU                 |  Filter data read with PWM sync, triggered DMA read from the Filter FIFO
 SOC          | R5F            | YES               | NA                                    | Lock/unlock MMRs, clock enable, set Hz, Xbar configuration, SW Warm Reset, Address Translation                                                                  | -
