@@ -88,15 +88,19 @@ In this application, the CAN settings are:
 - CAN-FD is supported
 - Refer to \ref DRIVERS_MCAN_PAGE, for MCAN dependencies.
 
+\cond SOC_AM261X
+\note PORz will not work when the SBL is waiting for the application to be received via CAN. Once application receive is complete, PORz is functional.
+\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX  || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/boot/sbl_can_uniflash
 
 \endcond

@@ -208,3 +208,9 @@ void board_flash_reset(void)
 {
     i2c_flash_reset();
 }
+
+/* Dummy function for som board */
+int32_t enableOspiReset(void)
+{
+    return SystemP_SUCCESS;
+}

@@ -82,15 +82,20 @@ In this application, the CAN settings are:
     - BitrateFD : f_clock_mhz=80, nom_brp=1, nom_tseg1=67, nom_tseg2=12, nom_sjw=12, data_brp=1, data_tseg1=13, data_tseg2=2, data_sjw=1
 - CAN-FD is supported
 - Refer to \ref DRIVERS_MCAN_PAGE, for MCAN dependencies.
+
+\cond SOC_AM261X
+\note PORz will not work when the SBL is waiting for the application to be received via CAN. Once application receive is complete, PORz is functional.
+\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX  || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/boot/sbl_can
 
 **NOTE: Tested on Windows, using PCAN-USB Peripheral.**

@@ -124,3 +124,9 @@ void mcanEnableTransceiver(void)
     DebugP_assert(status == SystemP_SUCCESS);
     Board_eepromClose();
 }
+
+/* Dummy function for som board */
+int32_t enableOspiReset(void)
+{
+    return SystemP_SUCCESS;
+}
