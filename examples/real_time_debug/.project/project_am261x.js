@@ -2,9 +2,20 @@ let path = require('path');
 
 let device = "am261x";
 
-const files = {
+const files_nortos = {
     common: [
-        "edma_interrupt_transfer.c",
+        "Serial_Cmd_HAL.c",
+        "Serial_Cmd_Monitor.c",
+        "real_time_debug_no_rtos.c",
+        "main.c",
+    ],
+};
+
+const files_freertos = {
+    common: [
+        "Serial_Cmd_HAL.c",
+        "Serial_Cmd_Monitor.c",
+        "real_time_debug_free_rtos.c",
         "main.c",
     ],
 };
@@ -65,9 +76,17 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const projectspec_files = {
+    common: [
+        "../../../Serial_Cmd_HAL.h",
+        "../../../Serial_Cmd_Monitor.h",
+        "../../../device.h",
+    ]
+}
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EDMA_INTERRUPT_TRANSFER";
+const syscfgfile = "../example.syscfg"
+
+const readmeDoxygenPageTag = "EXAMPLES_REAL_TIME_DEBUG";
 
 const templates_nortos_r5f =
 [
@@ -75,7 +94,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "edma_interrupt_transfer",
+            entryFunction: "real_time_debug_main",
         },
     }
 ];
@@ -86,51 +105,26 @@ const templates_freertos_r5f =
         input: ".project/templates/am261x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "edma_interrupt_transfer",
+            entryFunction: "real_time_debug_main",
         },
     }
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
 ];
 
-const systemProjects = [
-    {
-        name: "edma_interrupt_transfer",
-        tag: "freertos_nortos",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am261x-som",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
-        ],
-    },
-    {
-        name: "edma_interrupt_transfer",
-        tag: "freertos_nortos",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am261x-lp",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
-        ],
-    },
-];
-
-function getComponentProperty() {
+function getComponentProperty(device) {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "edma_interrupt_transfer";
+    property.name = "real_time_debug";
     property.isInternal = false;
-    property.description = "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA."
+    property.description = "An example that demonstrates Real time debug feature."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -139,16 +133,17 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+    build_property.projectspec_files = projectspec_files;
 
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {
+            build_property.files = files_freertos;
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
@@ -156,6 +151,7 @@ function getComponentBuildProperty(buildOption) {
         }
         else
         {
+            build_property.files = files_nortos;
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
         }
@@ -164,13 +160,7 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
-function getSystemProjects(device)
-{
-    return systemProjects;
-}
-
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
-    getSystemProjects,
 };

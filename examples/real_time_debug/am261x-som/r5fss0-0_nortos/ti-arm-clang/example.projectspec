@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Edma Interrupt Transfer"
-        name = "edma_interrupt_transfer_am261x-lp_r5fss0-1_nortos_ti-arm-clang"
+        title="Real Time Debug"
+        name = "real_time_debug_am261x-som_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="4.0.0"
         device="Cortex R.AM261x"
-        deviceCore="Cortex_R5_1"
+        deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=edma_interrupt_transfer.${ConfigName}.map
+            -m=real_time_debug.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -57,10 +57,10 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-1 --part AM2612 --package ZFG
+            --context r5fss0-0 --part AM2611 --package ZCZ
         "
 
-        description="A Edma Interrupt Transfer NORTOS project">
+        description="A Real Time Debug NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -87,14 +87,24 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../edma_interrupt_transfer.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../Serial_Cmd_HAL.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../Serial_Cmd_Monitor.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../real_time_debug_no_rtos.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_EDMA_INTERRUPT_TRANSFER.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_REAL_TIME_DEBUG.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        <file path="../../../Serial_Cmd_HAL.h" openOnCreation="false" excludeFromBuild="true" action="copy">
+        </file>
+        <file path="../../../Serial_Cmd_Monitor.h" openOnCreation="false" excludeFromBuild="true" action="copy">
+        </file>
+        <file path="../../../device.h" openOnCreation="false" excludeFromBuild="true" action="copy">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

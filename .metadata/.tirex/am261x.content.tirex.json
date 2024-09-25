@@ -2944,6 +2944,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-1 running NORTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-1 running NORTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EDMA link transfer example. This example demonstrates linking in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_link_transfer",
         "location": "../../examples/drivers/edma/edma_link_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11814,6 +11946,130 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running NORTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running NORTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example that demonstrates Real time debug feature. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "real_time_debug",
+        "location": "../../examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "real_time_debug",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -12406,6 +12662,66 @@
             "device",
             "cdc_echo",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "system_freertos_nortos"
         ],
         "mainCategories": [
             [
