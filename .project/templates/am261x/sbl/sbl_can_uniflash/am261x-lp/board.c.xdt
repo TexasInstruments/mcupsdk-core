@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,62 +32,29 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include <stdint.h>
-#include <board/ioexp/ioexp_tca6416.h>
-#include <board/eeprom.h>
-#include <drivers/i2c.h>
 #include <drivers/gpio.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include "ti_drivers_config.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10 */
-#define IO_MUX_MCAN_STB                             (10U)
-/* MCAN_STB PIN OUTPUT   -> 0 */
-#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)
-
-/* ========================================================================== */
-/*                            Global Variables                                */
-/* ========================================================================== */
-
-static TCA6416_Config  gTCA6416_Config;
-
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
+
 void mcanEnableTransceiver(void)
 {
-    int32_t             status = SystemP_SUCCESS;
-    TCA6416_Params      tca6416Params;
+    uint32_t    gpioBaseAddr, pinNum;
 
-    TCA6416_Params_init(&tca6416Params);
-    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
-    DebugP_assert(SystemP_SUCCESS == status);
+    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
+    pinNum       = CONFIG_GPIO0_PIN;
 
-    status = TCA6416_setOutput(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
-    DebugP_assert(SystemP_SUCCESS == status);
+    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
 
-    /* Configure as output  */
-    status += TCA6416_config(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_MODE_OUTPUT);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Transceiver Setup Failure !!");
-        TCA6416_close(&gTCA6416_Config);
-    }
-
-    TCA6416_close(&gTCA6416_Config);
+    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
 }
 
 void gpio_flash_reset(void)
@@ -102,8 +69,49 @@ void gpio_flash_reset(void)
 
 }
 
-
 void board_flash_reset(void)
 {
     gpio_flash_reset();
+}
+
+/* 
+ * BP_BO_MUX_EN is set high in Board_driversOpen to enable mcan transceiver.
+ * This API pulls this signal to low once the application is received,
+ * to allow OSPI Reset to be possible.
+ */
+
+int32_t enableOspiReset(void)
+{
+    int32_t  status = SystemP_SUCCESS;
+    static TCA6408_Config  gTCA6408_Config;
+    TCA6408_Params      TCA6408Params;
+    TCA6408_Params_init(&TCA6408Params);
+    TCA6408Params.i2cAddress  = 0x20U;
+    
+    status = TCA6408_open(&gTCA6408_Config, &TCA6408Params);
+    
+    /* Configure State */
+    status = TCA6408_setOutput(
+                    &gTCA6408_Config,
+                    IO_EXP_BP_BO_MUX_EN_LINE,
+                    TCA6408_OUT_STATE_LOW);
+
+    /* Configure as output  */
+    status += TCA6408_config(
+                    &gTCA6408_Config,
+                    IO_EXP_BP_BO_MUX_EN_LINE,
+                    TCA6408_MODE_OUTPUT);
+    
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Failed to enable OSPI Reset Signal\r\n");
+        TCA6408_close(&gTCA6408_Config);
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        /* Exit gracefully */
+    }
+
+    return status;
 }

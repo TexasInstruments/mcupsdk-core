@@ -79,11 +79,12 @@ CFLAGS_cpp_common := \
 	-Wno-extern-c-compat \
 	-Wno-c++11-narrowing \
 	-Wno-reorder-init-list \
-	-Wno-deprecated-register \
+	-Wno-register \
 	-Wno-writable-strings \
 	-Wno-enum-compare \
 	-Wno-reserved-user-defined-literal \
 	-Wno-unused-const-variable \
+	-Wno-vla-cxx-extension \
 	-x c++ \
 
 CFLAGS_debug := \
@@ -99,6 +100,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
@@ -107,6 +109,7 @@ LIBS_common = \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmiddleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -121,6 +124,7 @@ LIBS_NAME = \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	middleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -128,6 +132,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
 

@@ -1789,6 +1789,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Can Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Can Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Can Uniflash Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can_uniflash_multicore_elf",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Can Uniflash Multicore Elf Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can_uniflash_multicore_elf",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can_uniflash_multicore_elf",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A SBL USB-DFU example CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_dfu",
         "location": "../../examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

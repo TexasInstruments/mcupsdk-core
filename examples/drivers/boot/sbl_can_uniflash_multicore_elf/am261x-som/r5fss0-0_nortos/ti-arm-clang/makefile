@@ -24,13 +24,13 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).out
+OUTNAME:=sbl_can_uniflash_multicore_elf.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME_GP:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).tiimage
-BOOTIMAGE_NAME_HS:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).hs.tiimage
-BOOTIMAGE_NAME_HS_FS:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).hs_fs.tiimage
-BOOTIMAGE_BIN_NAME:=sbl_can_uniflash_mutlicore_elf.$(PROFILE).bin
+BOOTIMAGE_NAME_GP:=sbl_can_uniflash_multicore_elf.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=sbl_can_uniflash_multicore_elf.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_can_uniflash_multicore_elf.$(PROFILE).hs_fs.tiimage
+BOOTIMAGE_BIN_NAME:=sbl_can_uniflash_multicore_elf.$(PROFILE).bin
 
 ifeq ($(DEVICE_TYPE),HS)
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
@@ -79,11 +79,12 @@ CFLAGS_cpp_common := \
 	-Wno-extern-c-compat \
 	-Wno-c++11-narrowing \
 	-Wno-reorder-init-list \
-	-Wno-deprecated-register \
+	-Wno-register \
 	-Wno-writable-strings \
 	-Wno-enum-compare \
 	-Wno-reserved-user-defined-literal \
 	-Wno-unused-const-variable \
+	-Wno-vla-cxx-extension \
 	-x c++ \
 
 CFLAGS_debug := \
@@ -99,6 +100,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
@@ -107,6 +109,7 @@ LIBS_common = \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmiddleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -121,6 +124,7 @@ LIBS_NAME = \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	middleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -128,6 +132,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/middleware/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
 
@@ -198,7 +203,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang sbl_can_uniflash_mutlicore_elf ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang sbl_can_uniflash_multicore_elf ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -297,12 +302,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sbl_can_uniflash_mutlicore_elf.$(PROFILE) ...
+	@echo Creating Coverage Report for sbl_can_uniflash_multicore_elf.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata > coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).profdata.json --output-json=coverage/sbl_can_uniflash_mutlicore_elf.$(PROFILE).analysis.json --output=../sbl_can_uniflash_mutlicore_elf.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sbl_can_uniflash_multicore_elf.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sbl_can_uniflash_multicore_elf.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sbl_can_uniflash_multicore_elf.$(PROFILE).profdata > coverage/sbl_can_uniflash_multicore_elf.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sbl_can_uniflash_multicore_elf.$(PROFILE).profdata.json --output-json=coverage/sbl_can_uniflash_multicore_elf.$(PROFILE).analysis.json --output=../sbl_can_uniflash_multicore_elf.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,11 +38,11 @@
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+// const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-extern HsmClient_t gHSMClient ;
+// extern HsmClient_t gHSMClient ;
 
-#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x170000) /* This has to match the size of MSRAM1 section in linker.cmd */
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0xF0000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 #define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
@@ -54,6 +54,7 @@ extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 void board_flash_reset(void);
 void mcanEnableTransceiver(void);
+int32_t enableOspiReset(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -94,12 +95,12 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+    // status = Keyring_init(&gHSMClient);
+    // DebugP_assert(status == SystemP_SUCCESS);
 
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
 
@@ -194,6 +195,12 @@ int main(void)
                     status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
                     DebugP_assert(status == SystemP_SUCCESS);
                 }
+            }
+
+            /* Release the ospi reset line */
+            if (status == SystemP_SUCCESS)
+            {
+                status = enableOspiReset();
             }
 
             /* Run CPUs */
