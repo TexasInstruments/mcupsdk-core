@@ -58,6 +58,30 @@
     \imageStyle{first_launch.png,width:50%}
     \image html first_launch.png "CCS Select Workspace"
 
+\cond SOC_AM261X
+## Enabling AM261x Device Support in Code Composer Studio (CCS)
+
+1. Add the CCS - CSP (Chip Support Package):
+   - Download the CSP from the TI Drive. Contact your TI representative to get the CSP package.
+   - Copy the CSP inside the CCS installation directory at `C:\ti\<ccs_version>\ccs\ccs_base/ccs_base`.
+   - Follow the instructions in the documentation provided with the CSP data for more details.
+2. Update the timestamp:
+   - To update the device list in CCS, close CCS and navigate to `C:\ti\<ccs_version>\ccs\ccs_base\common\targetdb`.
+   - Open a command line and run the following:
+     - Windows: `copy /b timestamp ,,+`
+     - Linux: `touch timestamp`
+   - Open CCS, and check if the AM261x is present in the device list of the new project.
+3. Import the project:
+   - Go to `File -> Import`.
+   - Select `CCS projects`.
+   - Select the search-directory and browse to `SDK_PATH/examples/hello_world/am261x-lp/r5fss0-0_nortos/ti-arm-clang/`.
+   - Click `Import`.
+   - If the SDK product was not correctly recognized in CCS, preventing the SDK project from being imported, go to the CCS menu -> `windows -> code composer studio -> products`, and refresh the products to solve the issue.
+
+\note After importing the application, go to the project settings and select the correct SysConfig that includes the AM261 device data.
+
+\endcond
+
 ## Check Packages as seen by CCS {#CCS_PACKAGE_CHECK}
 
 - Launch CCS
@@ -78,51 +102,6 @@
 
     \imageStyle{ccs_setup_02.png,width:50%}
     \image html ccs_setup_02.png "CCS Compilers"
-
-\cond SOC_AM263PX || SOC_AM261X
-## Update CSP {#CSP_UPDATE}
-\note AM263Px now supports one-click XIP .out application debugging with CSP 1.2.7. Refer to the guide below to update CSP and check for its availability.
-
-- Goto "Help -> Check for updates"
-
-    \imageStyle{ccs_update_check.png,width:30%}
-    \image html ccs_update_check.png "Check for Updates Menu"
-
-- The window will list the available updates. Select "Sitara device support" and click next.
-
-    \imageStyle{ccs_update_avail.png,width:30%}
-    \image html ccs_update_avail.png "List of available updates"
-
-- Click on next.
-
-    \imageStyle{ccs_update_details.png,width:30%}
-    \image html ccs_update_details.png "Update details"
-
-- Accept the licence agreement and click "Finish".
-
-    \imageStyle{ccs_update_accept.png,width:30%}
-    \image html ccs_update_accept.png "Review licenses"
-
-- Restart CCS.
-
-- Goto "Help -> About Code Composer Studio"
-
-    \imageStyle{ccs_update_about.png,width:30%}
-    \image html ccs_update_about.png "Help menu"
-
-- Click on "Installation details".
-
-    \imageStyle{ccs_update_inst_details.png,width:20%}
-    \image html ccs_update_inst_details.png "About CCS"
-
-- Scroll down to "Sitara device support". The CSP version should be 1.2.7 or above.
-
-    \imageStyle{ccs_update_csp_version.png,width:40%}
-    \image html ccs_update_csp_version.png "CSP version"
-
-\note If the CSP changes are not taking effect, update the CSP timestamp.
-\note Close CCS, go to "<ccs_insall_dir>\ccs\ccs_base\common\targetdb" and update the 'timestamp' file to current date and start the CCS
-\endcond
 
 \cond SOC_AM64X
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
@@ -382,12 +361,7 @@
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
-\cond SOC_AM263X
-### AM263X-CC / AM263X-LP
-\endcond
-\cond SOC_AM263PX || SOC_AM261X
-### AM263PX-CC
-\endcond
+### @VAR_BOARD_NAME / @VAR_LP_BOARD_NAME
 
 - Goto "View > Target Configuration"
 
@@ -412,8 +386,11 @@
 \cond SOC_AM263X
 - In "Board or Device" type "@VAR_SOC_NAME" and select "AM263x"
 \endcond
-\cond SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX 
 - In "Board or Device" type "@VAR_SOC_NAME" and select "AM263Px"
+\endcond
+\cond SOC_AM261X
+- In "Board or Device" type "@VAR_SOC_NAME" and select "AM261x"
 \endcond
     \imageStyle{ccs_target_config_00.png,width:50%}
     \image html ccs_target_config_00.png "Select @VAR_SOC_NAME EVM"

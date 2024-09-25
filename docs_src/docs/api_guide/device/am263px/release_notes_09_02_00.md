@@ -10,7 +10,6 @@
 
 \attention Current PMIC support in SDK is bare minimum meant to power up the modules and should not be used beyond this including safety use-case etc
 
-\note CSP 12.7 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
 
 ## New in this Release
 

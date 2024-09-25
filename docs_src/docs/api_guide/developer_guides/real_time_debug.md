@@ -43,14 +43,14 @@ which is included in the next step.
 ## Create Target Configuration File
 
 For a control card in below Figure, it offers both JTAG and UART ports in one USB port. Details on hardware
-connection can be found in AM263x Control Card User's Guide. It is necessary to create a target configuration
+connection can be found in @VAR_SOC_NAME Control Card User's Guide. It is necessary to create a target configuration
 file for the debug ports. A step-to-step guide is given below. A target configuration file is created and then
 configured with both JTAG and UART. The UART COM Port in target configuration should match PC Device Manager COM Port for
 JTAG probe Application/User UART. The Baud Rate in target configuration should be consistent with SoC UART Baud Rate configured
 in next step.
 
   \imageStyle{evm_overview_3.png,width:80%}
-  \image html evm_overview_3.png "AM263x Control Card"
+  \image html evm_overview_3.png "@VAR_SOC_NAME Control Card"
 
 - **Step 1**: Creating a new Target configuration file for the SOC.
 

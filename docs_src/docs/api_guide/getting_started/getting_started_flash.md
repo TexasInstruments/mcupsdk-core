@@ -695,7 +695,7 @@ number of lines used in the protocol is indeed 8.
         Image loading done, switching to application ...
         Hello World!
 
-- Congratulations now the AM263PX-CC is flashed with your application and you dont need CCS anymore to run the application.
+- Congratulations now the @VAR_SOC_NAME is flashed with your application and you dont need CCS anymore to run the application.
 \endcond
 
 \endcond

@@ -70,6 +70,10 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
 \endcond
 
+\cond SOC_AM261X
+-# \subpage EXAMPLES_USB
+\endcond
+
 \cond SOC_AM62X
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD

@@ -112,7 +112,7 @@ Application	is signed	|	No		    |	Yes
    - This is a ROM bootloader requirement and is needed even on a non-secure device.
    - The signing tools take the `.bin` file
 
-- The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM. This firmware provides various foundational security services. For HS-FS ,this can be found at source/drivers/hsmclient/soc/am263x/hsmRtImg.h. For HS-SE devices, more information can be found at MySecureSW. For integrating HSM RunTime with SBL, the following should be taken care of:
+- The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM. This firmware provides various foundational security services. For HS-FS ,this can be found at source/drivers/hsmclient/soc/@VAR_SOC_NAME_LOWER/hsmRtImg.h. For HS-SE devices, more information can be found at MySecureSW. For integrating HSM RunTime with SBL, the following should be taken care of:
    - HSMClient should be initialized and registered.
    - HSMRT (TIFS-MCU) image signed appropriately should be available. For HS-FS, this is already part of the SDK, for HS-SE, this can be compiled with TIFS-MCU package (available on MySecureSW)
 

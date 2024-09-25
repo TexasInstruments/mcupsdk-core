@@ -73,7 +73,7 @@ Hardware Vectored Interrupts (only IRQ)
 4. CPU branches directly to ISR.
 
 \imageStyle{Fig17.PNG,width:80%}
- \image html Fig17.PNG "Hardware Vectored Interrupt Connection Scheme in ARM Cortex R5F in AM263x"
+ \image html Fig17.PNG "Hardware Vectored Interrupt Connection Scheme in ARM Cortex R5F in @VAR_SOC_NAME_LOWER"
 
 
 #### Understanding NORTOS IRQ handler in MCU PLUS SDK DPL
@@ -115,7 +115,7 @@ Suggested Flow by ARM
 Modified IRQ Handler Flow to Work With VIM
 
 \imageStyle{Fig13.PNG,width:80%}
- \image html Fig13.PNG "ARM Cortex R5 interrupt handling in MCU PLUS SDK for AM263x"
+ \image html Fig13.PNG "ARM Cortex R5 interrupt handling in MCU PLUS SDK for @VAR_SOC_NAME_LOWER"
 
 The OS abstraction layer (DPL) of MCU PLUS SDK architected for networking applications introduces performance overheads (interrupt latencies). To support Real Time Control use cases the IRQ handlers are optimized, reducing software overheads down to 150ns. Use below steps to utilize the optimized IRQ handlers.
 

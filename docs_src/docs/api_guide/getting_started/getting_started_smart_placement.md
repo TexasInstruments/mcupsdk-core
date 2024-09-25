@@ -2,7 +2,7 @@
 [TOC]
 ## Introduction
 
-Usually used when application foot print is more than internal memory size (3.5MB for case of AM263Px). More on this can be read at \ref SMART_PLACEMENT
+Usually used when application foot print is more than internal memory size. More on this can be read at \ref SMART_PLACEMENT
 
 ### When is smart placement required:
 

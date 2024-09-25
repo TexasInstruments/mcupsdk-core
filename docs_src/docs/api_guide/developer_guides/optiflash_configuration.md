@@ -44,7 +44,7 @@ By selecting `Layer2 Cache` from the `OptiFlash` drop-down, the above configurat
 
 3. `Size of cache` is the size of L2 cache that is required to be configured.
 
-4. After this, select the memory region where the L2 cache bank should be located. This should be L2 memory (In case of am263px, L2 memory is OCRAM). The memory region that is selected is `L2_CACHE_BANK` which was configured above. Similarly, if some other cache size has to be selected then the size of the cache bank has to be changed correspondingly. 
+4. After this, select the memory region where the L2 cache bank should be located. This should be L2 memory (In case of @VAR_SOC_NAME_LOWER, L2 memory is OCRAM). The memory region that is selected is `L2_CACHE_BANK` which was configured above. Similarly, if some other cache size has to be selected then the size of the cache bank has to be changed correspondingly. 
 
 ## How to configure FLC.
 
@@ -53,7 +53,7 @@ FLC is a simplified DMA. To configure FLC, in syscfg, it can be done by clicking
 \imageStyle{flc_syscfg_initial.png,width:50%}
 \image html flc_syscfg_initial.png
 
-Use `Add` button to to add FLC instances. For AM263Px case, there are a total of 4 FLC instances per R5 core. All info that needs to be given is source address, destination address and size. Make sure that all these fields are 4K aligned.
+Use `Add` button to to add FLC instances. For @VAR_SOC_NAME_LOWER case, there are a total of 4 FLC instances per R5 core. All info that needs to be given is source address, destination address and size. Make sure that all these fields are 4K aligned.
 
 ## How to configure RAT.
 

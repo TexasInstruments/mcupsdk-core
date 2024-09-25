@@ -11,7 +11,6 @@
 \attention Current PMIC support in SDK is bare minimum meant to power up the modules and should not be used beyond this including safety use-case etc
 
 \note This SDK release supports AM263Px-LP board (ZCZ_C) package with limited validation. Please refer to test report for details
-\note CSP 1.2.7 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
 
 ## Key New features
 - Hardware resolver support (\ref DRIVERS_RESOLVER_PAGE)

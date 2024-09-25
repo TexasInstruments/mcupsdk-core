@@ -4,12 +4,12 @@
 
 ## About this document {#CHAPTER_ABOUT}
 
-This guide describes the performance optimizations of real-time applications on the Texas Instruments AM263x platform.
+This guide describes the performance optimizations of real-time applications on the Texas Instruments @VAR_SOC_NAME platform.
 
-TI’s Sitara MCU processor AM263x is designed for real-time control applications, specifically for use cases such as Traction inverters, Onboard chargers, Charging stations, DC-DC converters, Industrial AC inverters, String inverters and Industrial communication.
+TI’s Sitara MCU processor @VAR_SOC_NAME is designed for real-time control applications, specifically for use cases such as Traction inverters, Onboard chargers, Charging stations, DC-DC converters, Industrial AC inverters, String inverters and Industrial communication.
 Crucial aspect of such applications is the signal chain performance. Latency of the signal chain determines the efficiency and performance of the system.
 
-The goal of this document is to provide a comprehensive guide to performance optimization on the AM263x platform and help real-time application developers achieve their performance goals.
+The goal of this document is to provide a comprehensive guide to performance optimization on the @VAR_SOC_NAME platform and help real-time application developers achieve their performance goals.
 
 1. Signal chain performance considerations. See \ref CHAPTER_OPERATION
 2. List of \ref CHAPTER_OPTIMIZATION
@@ -23,7 +23,7 @@ The goal of this document is to provide a comprehensive guide to performance opt
 - Crucial aspect of Real Time Control applications is signal chain performance – which includes sensing, processing and actuation. Latency of the signal chain determines the efficiency and performance of the system (for example: RPM of traction motor in automotive EV application).
  - Sensing uses on-chip analog to digital converters, comparators,..
  - Actuation uses PWM generation modules
- - Processing involves the CPU core (R5F in AM263x) running control loop algorithm
+ - Processing involves the CPU core (R5F in @VAR_SOC_NAME) running control loop algorithm
 
 
 \imageStyle{Fig1.PNG,width:80%}
@@ -126,7 +126,7 @@ Optimization options and trade-offs:
 ### Operation 4: R5F executes calcuations/algorithm {#CHAPTER_OPERATION_SECTION_4}
 
 \note Execution time of the control algorithm is specific to application use case. 
-	For example: Field Oriented Control computations for AM263x traction inverter executes for 985ns. Refer application note. SPRAD32
+	For example: Field Oriented Control computations for @VAR_SOC_NAME traction inverter executes for 985ns. Refer application note. SPRAD32
     https://www.ti.com/lit/an/sprad32/sprad32.pdf
 
 This depends on 
