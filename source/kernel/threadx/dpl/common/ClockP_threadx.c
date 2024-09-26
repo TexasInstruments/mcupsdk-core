@@ -30,7 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <eclipse_threadx/threadx/dpl/common/ClockP_threadx_priv.h>
+#include <kernel/threadx/dpl/common/ClockP_threadx_priv.h>
 #include <kernel/dpl/TimerP.h>
 
 typedef struct ClockP_Struct_

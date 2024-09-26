@@ -8,9 +8,8 @@
 /**
  * Import the modules used in this configuration.
  */
-const filex           = scripting.addModule("/eclipse_threadx/filex/filex", {}, false);
+const filex           = scripting.addModule("/fs/filex/filex", {}, false);
 const filex1          = filex.addInstance();
-const threadx         = scripting.addModule("/eclipse_threadx/threadx/threadx");
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);

@@ -29,7 +29,7 @@ const filedirs = {
 const libdirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
@@ -38,8 +38,8 @@ const libdirs = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
     ],
 };
 

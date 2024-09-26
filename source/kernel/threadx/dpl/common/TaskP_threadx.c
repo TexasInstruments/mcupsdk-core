@@ -196,7 +196,7 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
                               0u,
                               TX_TRUE);
 
-    if(tx_ret == TX_SUCCESS)
+    if(tx_ret != TX_SUCCESS)
     {
         status = SystemP_FAILURE;
     }
