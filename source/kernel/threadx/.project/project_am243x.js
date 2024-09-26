@@ -257,19 +257,19 @@ const filedirs = {
         // picked from nortos DPL
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/dpl/r5",
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/dpl/common",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/src",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/src",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/dpl/common",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/dpl/r5",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/src",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/src",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/dpl/common",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/dpl/r5",
     ],
 };
 
 const includes = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/dpl/common"
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/dpl/common"
     ],
 };
 
