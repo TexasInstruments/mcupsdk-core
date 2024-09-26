@@ -36,8 +36,6 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include "ti_eclipse_threadx_config.h"
-#include "ti_eclipse_threadx_open_close.h"
 #include <fx_api.h>
 
 #define MESSAGE  "Hello world!"
@@ -53,9 +51,6 @@ void filex_hello_world_main(ULONG args)
     Drivers_open();
     
     res = Board_driversOpen();
-    DebugP_assert(res == SystemP_SUCCESS);
-
-    res = EclipseThreadx_open();
     DebugP_assert(res == SystemP_SUCCESS);
 
     DebugP_log("[FILEX HELLO WORLD] Hello world example started ...\r\n");
@@ -101,9 +96,6 @@ void filex_hello_world_main(ULONG args)
     {
         DebugP_log("All tests have passed!!\r\n");
     }
-
-    res = EclipseThreadx_close();
-    DebugP_assert(res == SystemP_SUCCESS);
 
     Board_driversClose();
     Drivers_close();
