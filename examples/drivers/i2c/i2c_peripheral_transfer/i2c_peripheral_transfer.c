@@ -67,10 +67,10 @@ I2C_Transaction gI2cControllerTransaction;
 I2C_Handle      gI2cPeripheralHandle;
 I2C_Transaction gI2cPeripheralTransaction;
 
-uint8_t         gTxControllerBuffer[2];
-uint8_t         gRxControllerBuffer[2];
-uint8_t         gTxPeripheralBuffer[2];
-uint8_t         gRxPeripheralBuffer[2];
+uint8_t         gTxControllerBuffer[4];
+uint8_t         gRxControllerBuffer[4];
+uint8_t         gTxPeripheralBuffer[4];
+uint8_t         gRxPeripheralBuffer[4];
 
 void i2c_peripheral_transfer_Controller_core_start(void)
 {
@@ -89,14 +89,16 @@ void i2c_peripheral_transfer_Controller_core_start(void)
 
     /* Override with required transaction parameters */
     gI2cControllerTransaction.readBuf        = gRxControllerBuffer;
-    gI2cControllerTransaction.readCount      = 2U;
+    gI2cControllerTransaction.readCount      = 4U;
     gI2cControllerTransaction.writeBuf       = gTxControllerBuffer;
-    gI2cControllerTransaction.writeCount     = 0U;
+    gI2cControllerTransaction.writeCount     = 4U;
     gI2cControllerTransaction.targetAddress  = i2cTargetAddr;
 
     /* Fill TX Buffer */
     gTxControllerBuffer[0] = 0x01U;
     gTxControllerBuffer[1] = 0x02U;
+    gTxControllerBuffer[2] = 0x03U;
+    gTxControllerBuffer[3] = 0x04U;
 
     /* Wait for Peripheral to initiate transaction */
     ClockP_sleep(1);
@@ -106,7 +108,8 @@ void i2c_peripheral_transfer_Controller_core_start(void)
 
     if(status == SystemP_SUCCESS)
     {
-        DebugP_log("[I2C Controller] Received Data %u %u !!!\r\n", gRxControllerBuffer[0], gRxControllerBuffer[1]);
+        DebugP_log("[I2C Controller] Received Data %u %u %u %u !!!\r\n", gRxControllerBuffer[0], gRxControllerBuffer[1], gRxControllerBuffer[2], gRxControllerBuffer[3]);
+        DebugP_log("[I2C Controller] Transmitted Data %u %u %u %u !!!\r\n", gTxControllerBuffer[0], gTxControllerBuffer[1], gTxControllerBuffer[2], gTxControllerBuffer[3]);
 
         /* Clear buffer */
         gRxControllerBuffer[0] = 0U;
@@ -126,6 +129,25 @@ void i2c_peripheral_transfer_Controller_core_start(void)
     if(status == SystemP_SUCCESS)
     {
         DebugP_log("[I2C Controller] Transmitted Data %u %u !!!\r\n", gTxControllerBuffer[0], gTxControllerBuffer[1]);
+
+        /* Clear buffer */
+        gRxControllerBuffer[0] = 0U;
+        gRxControllerBuffer[1] = 0U;
+    }
+
+    /* Wait for Peripheral to initiate transaction */
+    ClockP_sleep(1);
+
+    /* Update Transfer Parameters */
+    gI2cControllerTransaction.readCount      = 2U;
+    gI2cControllerTransaction.writeCount     = 0U;
+
+    /* Start Transfer */
+    status = I2C_transfer(gI2cControllerHandle, &gI2cControllerTransaction);
+
+    if(status == SystemP_SUCCESS)
+    {
+        DebugP_log("[I2C Controller] Received Data %u %u !!!\r\n", gRxControllerBuffer[0], gRxControllerBuffer[1]);
 
         /* Clear buffer */
         gRxControllerBuffer[0] = 0U;
@@ -152,25 +174,30 @@ void i2c_peripheral_transfer_Peripheral_core_start(void)
 
     /* Override with required transaction parameters */
     gI2cPeripheralTransaction.readBuf         = gRxPeripheralBuffer;
-    gI2cPeripheralTransaction.readCount       = 0U;
+    gI2cPeripheralTransaction.readCount       = 4U;
     gI2cPeripheralTransaction.writeBuf        = gTxPeripheralBuffer;
-    gI2cPeripheralTransaction.writeCount      = 2U;
+    gI2cPeripheralTransaction.writeCount      = 4U;
     gI2cPeripheralTransaction.controllerMode  = false;
 
     /* Fill TX Buffer */
     gTxPeripheralBuffer[0] = 0x03U;
     gTxPeripheralBuffer[1] = 0x04U;
+    gTxPeripheralBuffer[2] = 0x05U;
+    gTxPeripheralBuffer[3] = 0x06U;
 
     /* Start Transfer */
     status = I2C_transfer(gI2cPeripheralHandle, &gI2cPeripheralTransaction);
 
     if(status == SystemP_SUCCESS)
     {
-        DebugP_log("[I2C Peripheral] Transmitted Data %u %u !!!\r\n", gTxPeripheralBuffer[0], gTxPeripheralBuffer[1]);
+        DebugP_log("[I2C Peripheral] Transmitted Data %u %u %u %u !!!\r\n", gTxPeripheralBuffer[0], gTxPeripheralBuffer[1], gTxPeripheralBuffer[2], gTxPeripheralBuffer[3]);
+        DebugP_log("[I2C Peripheral] Received Data %u %u %u %u !!!\r\n", gRxPeripheralBuffer[0], gRxPeripheralBuffer[1], gRxPeripheralBuffer[2], gRxPeripheralBuffer[3]);
 
         /* Clear buffer */
         gRxPeripheralBuffer[0] = 0U;
         gRxPeripheralBuffer[1] = 0U;
+        gRxPeripheralBuffer[2] = 0U;
+        gRxPeripheralBuffer[3] = 0U;
     }
 
     /* Update Transfer Parameters */
@@ -183,7 +210,32 @@ void i2c_peripheral_transfer_Peripheral_core_start(void)
     if(status == SystemP_SUCCESS)
     {
         DebugP_log("[I2C Peripheral] Received Data %u %u !!!\r\n", gRxPeripheralBuffer[0], gRxPeripheralBuffer[1]);
+
+        /* Clear buffer */
+        gRxPeripheralBuffer[0] = 0U;
+        gRxPeripheralBuffer[1] = 0U;
+        gRxPeripheralBuffer[2] = 0U;
+        gRxPeripheralBuffer[3] = 0U;
     }
+
+    /* Update Transfer Parameters */
+    gI2cPeripheralTransaction.readCount       = 0U;
+    gI2cPeripheralTransaction.writeCount      = 2U;
+
+    /* Start Transfer */
+    status = I2C_transfer(gI2cPeripheralHandle, &gI2cPeripheralTransaction);
+
+    if(status == SystemP_SUCCESS)
+    {
+        DebugP_log("[I2C Peripheral] Transmitted Data %u %u !!!\r\n", gTxPeripheralBuffer[0], gTxPeripheralBuffer[1]);
+
+        /* Clear buffer */
+        gRxPeripheralBuffer[0] = 0U;
+        gRxPeripheralBuffer[1] = 0U;
+        gRxPeripheralBuffer[2] = 0U;
+        gRxPeripheralBuffer[3] = 0U;
+    }
+
 
     DebugP_log("[I2C Peripheral] Transaction Complete !!!\r\n");
 }
