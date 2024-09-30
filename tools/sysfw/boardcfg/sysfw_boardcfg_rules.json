@@ -2211,8 +2211,8 @@
                     {
                         "name": "RESASG_UTYPE(AM64X_DEV_DMASS0_INTAGGR_0, RESASG_SUBTYPE_IA_VINT)",
                         "type": 1802,
-                        "start_resource": 4,
-                        "num_resource": 36
+                        "start_resource": 5,
+                        "num_resource": 35
                     },
                     {
                         "name": "RESASG_UTYPE(AM64X_DEV_DMASS0_INTAGGR_0, RESASG_SUBTYPE_IA_VINT)",
