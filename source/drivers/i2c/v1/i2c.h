@@ -381,14 +381,14 @@ void I2C_init(void);
 void I2C_deinit(void);
 
 /**
- *  \brief Function to set default values of I2C_Params in params
+ *  \brief API to set default values of I2C_Params in params
  *
  *  \param params           [IN] pointer to the structure to be initialized
  */
 void I2C_Params_init(I2C_Params *params);
 
 /**
- *  \brief Open the I2C at index idx with parameters params
+ *  \brief API to Open I2C at index idx with parameters params
  *
  *  \param idx              [IN] Index of I2C to open in global config
  *  \param params           [IN] I2C_Params values to use for opening
@@ -398,7 +398,7 @@ void I2C_Params_init(I2C_Params *params);
 I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params);
 
 /**
- *  \brief Function to close the I2C Peripheral specified by the handle
+ *  \brief API to close the I2C instance specified by the handle passed
  *
  *  \pre #I2C_open() has to be called first
  *
@@ -409,7 +409,7 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params);
 void I2C_close(I2C_Handle handle);
 
 /**
- *  \brief Function to set default values of I2C_Mem_Transaction in
+ *  \brief API to set default values of I2C_Mem_Transaction in
  *  memTransaction
  *
  *  \param memTransaction   [IN] pointer to the structure to be initialized
@@ -417,16 +417,16 @@ void I2C_close(I2C_Handle handle);
 void I2C_Memory_Transaction_init(I2C_Mem_Transaction *memTransaction);
 
 /**
- *  \brief Function to set default values of I2C_Transaction in transaction
+ *  \brief API to set default values of I2C_Transaction in transaction
  *
  *  \param transaction      [IN] pointer to the structure to be initialized
  */
 void I2C_Transaction_init(I2C_Transaction *transaction);
 
 /**
- *  \brief Function to initiate a transfer from I2C
+ *  \brief API to initiate a transfer from I2C Instance
  *
- *  \param handle           [IN] handle to the I2C
+ *  \param handle           [IN] handle to the I2C Instance
  *  \param transaction      [IN] I2C_Transaction structure that contains
  *                               values for this specific transfer
  *
@@ -435,9 +435,9 @@ void I2C_Transaction_init(I2C_Transaction *transaction);
 int32_t I2C_transfer(I2C_Handle handle, I2C_Transaction *transaction);
 
 /**
- *  \brief Function to initiate a transfer from I2C
+ *  \brief API to initiate a memory transfer from I2C Instance
  *
- *  \param handle           [IN] handle to the I2C
+ *  \param handle           [IN] handle to the I2C Instance
  *  \param transaction      [IN] I2C_Mem_Transaction structure that contains
  *                               values for this memory transfer
  *
@@ -447,9 +447,9 @@ int32_t I2C_memory_transfer(I2C_Handle handle,
                             I2C_Mem_Transaction *transaction);
 
 /**
- *  \brief Function to probe I2C
+ *  \brief API to probe I2C Device
  *
- *  \param handle           [IN] handle to the I2C
+ *  \param handle           [IN] handle to the I2C Instance
  *  \param targetAddr       [IN] address of the target to probe
  *
  *  \return #SystemP_SUCCESS if successful; else error on failure
@@ -457,7 +457,7 @@ int32_t I2C_memory_transfer(I2C_Handle handle,
 int32_t I2C_probe(I2C_Handle handle, uint32_t targetAddr);
 
 /**
- *  \brief Function to set the bus frequency
+ *  \brief API to set the bus frequency of I2C Instance
  *
  *  \param handle           [IN] handle to the I2C
  *  \param busFrequency     [IN] frequency value to be set
@@ -467,7 +467,7 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t targetAddr);
 int32_t I2C_setBusFrequency(I2C_Handle handle, uint32_t busFrequency);
 
 /**
- *  \brief  This function returns the handle of an open I2C instance from the
+ *  \brief API to get the handle of an open I2C instance from the
  *  instance index
  *
  *  \pre    I2C controller has been opened using #I2C_open()

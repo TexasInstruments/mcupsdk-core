@@ -247,7 +247,7 @@ typedef struct {
 typedef struct {
 
     uint32_t                                deviceAddress;
-    /**< [IN] Target device address */
+    /**< [IN] Target device address, Not used in target Mode */
     uint8_t                                 *buffer;
     /**< [IN] Pointer to Read or Write buffer */
     uint32_t                                size;
@@ -352,17 +352,18 @@ typedef void (*I2C_Clock_uSleep) (uint32_t usec);
 typedef void (*I2C_lld_transferCompleteCallback) (void *args,
                                                   const I2CLLD_Message *msg,
                                                   int32_t transferStatus);
+
 /**
  *  \brief  The definition of a transfer completion callback function used by
  *  the I2C driver when used in Target Mode
  *
  *  \param args                         Void Pointer
- *  \param targetTxn                    Pointer to I2CLLD_targetTransaction
+ *  \param targetTxn                    Pointer to I2CLLD_Transaction
  *                                      Object
  *  \param transferStatus               Transfer Status
  */
 typedef void (*I2C_lld_targetTransferCompleteCallback) (void *args,
-                                    const I2CLLD_targetTransaction * targetTxn,
+                                    const I2CLLD_Transaction * targetTxn,
                                     int32_t transferStatus);
 
 /* ========================================================================== */
@@ -453,7 +454,7 @@ typedef struct {
 /* ========================================================================== */
 
 /**
- *  \brief This API Initializes the I2C instance
+ *  \brief API to Initializes the I2C instance
  *
  *  \param  handle              [IN] Handle to the I2C instance used
  *
@@ -462,7 +463,7 @@ typedef struct {
 int32_t I2C_lld_init(I2CLLD_Handle handle);
 
 /**
- *  \brief This API De-Initializes the I2C instance
+ *  \brief API to De-Initializes the I2C instance
  *
  *  \param  handle              [IN] Handle to the I2C instance used
  *
@@ -489,7 +490,7 @@ int32_t I2C_lld_Transaction_init(I2CLLD_Transaction *transaction);
 int32_t I2C_lld_Message_init(I2CLLD_Message *msg);
 
 /**
- *  \brief API to initiate the write transaction in polled mode
+ *  \brief API to initiate an I2C write operation in polled mode as I2C Controller
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param extendedParams       [IN] Pointer to structure containing transfer
@@ -504,7 +505,22 @@ int32_t I2C_lld_write(I2CLLD_Handle handle,
                       uint32_t timeout);
 
 /**
- *  \brief API to initiate the write transaction in Interrupt mode
+ *  \brief API to initiate an I2C write operation in polled mode as I2C Target
+ *
+ *  \param handle               [IN] Handle to the I2C instance used
+ *  \param extendedParams       [IN] Pointer to structure containing transfer
+ *                                   parameters
+ *  \param timeout              [IN] Timeout for read operation in
+ *                                   Micro Seconds \ref I2cTimeoutValues
+ *
+ *  \return \ref I2C_StatusCode
+ */
+int32_t I2C_lld_target_write(I2CLLD_Handle handle,
+                             I2C_ExtendedParams *extendedParams,
+                             uint32_t timeout);
+
+/**
+ *  \brief API to initiate an I2C write operation in interrupt mode as I2C Controller
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param extendedParams       [IN] Pointer to structure containing
@@ -516,7 +532,19 @@ int32_t I2C_lld_writeIntr(I2CLLD_Handle handle,
                           I2C_ExtendedParams *extendedParams);
 
 /**
- *  \brief API to initiate the read transaction in polled mode
+ *  \brief API to Initiate an I2C write operation in interrupt mode as I2C Target
+ *
+ *  \param handle               [IN] Handle to the I2C instance used
+ *  \param extendedParams       [IN] Pointer to structure containing
+ *                                   transfer parameters
+ *
+ *  \return \ref I2C_StatusCode
+ */
+int32_t I2C_lld_target_writeIntr(I2CLLD_Handle handle,
+                                 I2C_ExtendedParams *extendedParams);
+
+/**
+ *  \brief API to initiate an I2C read operation in polled mode as I2C Controller
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param extendedParams       [IN] Pointer to structure containing transfer
@@ -531,7 +559,22 @@ int32_t I2C_lld_read(I2CLLD_Handle handle,
                      uint32_t timeout);
 
 /**
- *  \brief API to initiate the read transaction in Interrupt mode
+ *  \brief API to initiate an I2C read Operation in polled mode as I2C Target
+ *
+ *  \param handle               [IN] Handle to the I2C instance used
+ *  \param extendedParams       [IN] Pointer to structure containing transfer
+ *                                   parameters
+ *  \param timeout              [IN] Timeout for read operation in
+ *                                   Micro Seconds \ref I2cTimeoutValues
+ *
+ *  \return \ref I2C_StatusCode
+ */
+int32_t I2C_lld_target_read(I2CLLD_Handle handle,
+                            I2C_ExtendedParams *extendedParams,
+                            uint32_t timeout);
+
+/**
+ *  \brief API to initiate an I2C read operation in interrupt mode as I2C Controller
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param extendedParams       [IN] Pointer to structure containing
@@ -543,7 +586,19 @@ int32_t I2C_lld_readIntr(I2CLLD_Handle handle,
                          I2C_ExtendedParams *extendedParams);
 
 /**
- *  \brief Function to initiate a transfer from I2C in interrupt mode
+ *  \brief API to initiate an I2C read operation in interrupt mode as I2C Target
+ *
+ *  \param handle               [IN] Handle to the I2C instance used
+ *  \param extendedParams       [IN] Pointer to structure containing
+ *                                   transfer parameters
+ *
+ *  \return \ref I2C_StatusCode
+ */
+int32_t I2C_lld_target_readIntr(I2CLLD_Handle handle,
+                                I2C_ExtendedParams *extendedParams);
+
+/**
+ *  \brief API to initiate a Memory write Operation in polling Mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param mem_extendedParams   [IN] Pointer to structure containing transfer
@@ -558,7 +613,7 @@ int32_t I2C_lld_mem_write(I2CLLD_Handle handle,
                           uint32_t timeout);
 
 /**
- *  \brief Function to initiate a transfer from I2C in interrupt mode
+ *  \brief API to initiate a Memory write operation in interrupt Mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param mem_extendedParams   [IN] Pointer to structure containing transfer
@@ -570,7 +625,7 @@ int32_t I2C_lld_mem_writeIntr(I2CLLD_Handle handle,
                               I2C_Memory_ExtendedParams * mem_extendedParams);
 
 /**
- *  \brief Function to initiate a transfer from I2C in interrupt mode
+ *  \brief API to initiate a Memory read operation in Polled mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param mem_extendedParams   [IN] Pointer to structure containing transfer
@@ -585,7 +640,7 @@ int32_t I2C_lld_mem_read(I2CLLD_Handle handle,
                          uint32_t timeout);
 
 /**
- *  \brief Function to initiate a transfer from I2C in interrupt mode
+ *  \brief API to initiate a Memory read operation in interrupt mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param mem_extendedParams   [IN] Pointer to structure containing transfer
@@ -597,7 +652,7 @@ int32_t I2C_lld_mem_readIntr(I2CLLD_Handle handle,
                              I2C_Memory_ExtendedParams * mem_extendedParams);
 
 /**
- *  \brief Function to initiate a transfer from I2C in polled mode
+ *  \brief API to initiate a transfer from I2C in polled mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param msg                  [IN] Pointer to the I2CLLD_Message structure
@@ -609,7 +664,7 @@ int32_t I2C_lld_mem_readIntr(I2CLLD_Handle handle,
 int32_t I2C_lld_transferPoll(I2CLLD_Handle handle, I2CLLD_Message * msg);
 
 /**
- *  \brief Function to initiate a transfer from I2C in interrupt mode
+ *  \brief API to initiate a transfer from I2C in interrupt mode
  *
  *  \param handle               [IN] Handle to the I2C instance used
  *  \param msg                  [IN] Pointer to the I2CLLD_Message structure
@@ -621,10 +676,10 @@ int32_t I2C_lld_transferPoll(I2CLLD_Handle handle, I2CLLD_Message * msg);
 int32_t I2C_lld_transferIntr(I2CLLD_Handle handle, I2CLLD_Message * msg);
 
 /**
- *  \brief Function to initiate a transfer from I2C in target mode
+ *  \brief API to initiate a transfer from I2C in interrupt mode as target
  *
  *  \param handle               [IN] Handle to the I2C instance used
- *  \param txn                  [IN] Poiter to the I2CLLD_targetTransaction
+ *  \param txn                  [IN] Pointer to the I2CLLD_targetTransaction
  *                                   structure that contains values for this
  *                                   specific transfer
  *
@@ -634,7 +689,7 @@ int32_t I2C_lld_targetTransferIntr(I2CLLD_Handle handle,
                                    I2CLLD_targetTransaction *txn);
 
 /**
- *  \brief Function to probe I2C
+ *  \brief API to probe I2C
  *
  *  \param handle               [IN] handle to the I2C instance used
  *  \param targetAddr           [IN] address of the target to probe
@@ -644,7 +699,7 @@ int32_t I2C_lld_targetTransferIntr(I2CLLD_Handle handle,
 int32_t I2C_lld_probe(I2CLLD_Handle handle, uint32_t targetAddr);
 
 /**
- *  \brief Function to set the bus frequency
+ *  \brief API to set the bus frequency
  *
  *  \param handle               [IN] handle to the I2C instance used
  *  \param busFrequency         [IN] frequency value to be set \ref I2cBitRates
@@ -658,7 +713,7 @@ int32_t I2C_lld_setBusFrequency(I2CLLD_Handle handle, uint32_t busFrequency);
 /* ========================================================================== */
 
 /**
- *  \brief  This is the I2C Controller ISR and can be used as IRQ handler in Controller mode.
+ *  \brief I2C Controller ISR, can be used as IRQ handler in Controller mode.
  *
  *  \param  args                [IN] Argument to the ISR
  *
@@ -666,7 +721,7 @@ int32_t I2C_lld_setBusFrequency(I2CLLD_Handle handle, uint32_t busFrequency);
 void I2C_lld_controllerIsr(void *args);
 
 /**
- *  \brief  This is the I2C Target ISR and can be used as IRQ handler in Target mode.
+ *  \brief I2C Target ISR, can be used as IRQ handler in Target mode.
  *
  *  \param  args                [IN] Argument to the ISR
  *

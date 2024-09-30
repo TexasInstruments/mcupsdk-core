@@ -139,7 +139,7 @@ void test_main(void *args)
     test_i2c_set_test_params(&testParams, 4);
     RUN_TEST(test_i2c_write_read, 265, (void*)&testParams);
 
-    for (i=0; i<CONFIG_I2C_NUM_INSTANCES; i++)
+    for (i=0; i<CONFIG_I2C_HLD_NUM_INSTANCES; i++)
     {
         probeSettings.instance = i;
         RUN_TEST(test_i2c_probe, 266 + i, (void*)&probeSettings);

@@ -36,7 +36,6 @@
  *  \brief  File containing I2C LLD Driver APIs implementation for V1.
  */
 
-
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
@@ -428,9 +427,51 @@ int32_t I2C_lld_writeIntr(  I2CLLD_Handle handle,
             object->currentMsg = &object->i2cMsg;
             object->currentTxnCount = 0U;
 
-            (void)HwiP_disableInt((uint32_t)object->intrNum);
             status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
-            (void)HwiP_enableInt((uint32_t)object->intrNum);
+        }
+        else
+        {
+            status = I2C_STS_ERR_BUS_BUSY;
+        }
+    }
+    else
+    {
+        status = I2C_STS_ERR_INVALID_PARAM;
+    }
+
+    return status;
+}
+
+int32_t I2C_lld_target_writeIntr(I2CLLD_Handle handle,
+                                 I2C_ExtendedParams *extendedParams)
+{
+    int32_t                 status = I2C_STS_SUCCESS;
+    I2CLLD_Object           *object = NULL;
+
+    if ((handle != NULL) && (extendedParams != NULL))
+    {
+        /* Get the pointer to the object */
+        object = (I2CLLD_Object*)handle;
+
+        if (object->state == I2C_STATE_IDLE)
+        {
+            /* No current transfer is going on. */
+            object->state = I2C_STATE_BUSY;
+
+            (void)I2C_lld_Transaction_init(&object->i2ctxn);
+            object->i2ctxn.writeBuf      = extendedParams->buffer;
+            object->i2ctxn.writeCount    = extendedParams->size;
+
+            (void)I2C_lld_Message_init(&object->i2cMsg);
+            object->i2cMsg.txn              = &object->i2ctxn;
+            object->i2cMsg.txnCount         = 1U;
+            object->i2cMsg.expandSA         = extendedParams->expandSA;
+            object->i2cMsg.controllerMode   = false;
+
+            object->currentMsg = &object->i2cMsg;
+            object->currentTxnCount = 0U;
+
+            status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
         }
         else
         {
@@ -492,6 +533,53 @@ int32_t I2C_lld_write(  I2CLLD_Handle handle,
     return status;
 }
 
+int32_t I2C_lld_target_write(I2CLLD_Handle handle,
+                             I2C_ExtendedParams *extendedParams,
+                             uint32_t timeout)
+{
+    int32_t                 status = I2C_STS_SUCCESS;
+    I2CLLD_Object           *object = NULL;
+
+    if ((handle != NULL) && (extendedParams != NULL))
+    {
+        /* Get the pointer to the object */
+        object = (I2CLLD_Object*)handle;
+
+        if (object->state == I2C_STATE_IDLE)
+        {
+            /* No current transfer is going on. */
+            /* TODO: This should happen automically. */
+            object->state = I2C_STATE_BUSY;
+
+            (void)I2C_lld_Transaction_init(&object->i2ctxn);
+            object->i2ctxn.writeBuf      = extendedParams->buffer;
+            object->i2ctxn.writeCount    = extendedParams->size;
+
+            (void)I2C_lld_Message_init(&object->i2cMsg);
+            object->i2cMsg.txn              = &object->i2ctxn;
+            object->i2cMsg.txnCount         = 1U;
+            object->i2cMsg.expandSA         = extendedParams->expandSA;
+            object->i2cMsg.timeout          = timeout;
+            object->i2cMsg.controllerMode   = false;
+
+            object->currentMsg = &object->i2cMsg;
+            object->currentTxnCount = 0U;
+
+            status = I2C_lld_primeTransferPoll(handle, &object->i2cMsg);
+        }
+        else
+        {
+            status = I2C_STS_ERR_BUS_BUSY;
+        }
+    }
+    else
+    {
+        status = I2C_STS_ERR_INVALID_PARAM;
+    }
+
+    return status;
+}
+
 int32_t I2C_lld_readIntr(   I2CLLD_Handle handle,
                             I2C_ExtendedParams *extendedParams)
 {
@@ -522,9 +610,52 @@ int32_t I2C_lld_readIntr(   I2CLLD_Handle handle,
             object->currentMsg = &object->i2cMsg;
             object->currentTxnCount = 0U;
 
-            (void)HwiP_disableInt((uint32_t)object->intrNum);
             status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
-            (void)HwiP_enableInt((uint32_t)object->intrNum);
+        }
+        else
+        {
+            status = I2C_STS_ERR_BUS_BUSY;
+        }
+    }
+    else
+    {
+        status = I2C_STS_ERR_INVALID_PARAM;
+    }
+
+    return status;
+}
+
+int32_t I2C_lld_target_readIntr(I2CLLD_Handle handle,
+                                I2C_ExtendedParams *extendedParams)
+{
+    int32_t                 status = I2C_STS_SUCCESS;
+    I2CLLD_Object           *object = NULL;
+
+    if ((handle != NULL) && (extendedParams != NULL))
+    {
+        /* Get the pointer to the object */
+        object = (I2CLLD_Object*)handle;
+
+        if (object->state == I2C_STATE_IDLE)
+        {
+            /* No current transfer is going on. */
+            /* TODO: This should happen automically. */
+            object->state = I2C_STATE_BUSY;
+
+            (void)I2C_lld_Transaction_init(&object->i2ctxn);
+            object->i2ctxn.readBuf      = extendedParams->buffer;
+            object->i2ctxn.readCount    = extendedParams->size;
+
+            (void)I2C_lld_Message_init(&object->i2cMsg);
+            object->i2cMsg.txn              = &object->i2ctxn;
+            object->i2cMsg.txnCount         = 1U;
+            object->i2cMsg.expandSA         = extendedParams->expandSA;
+            object->i2cMsg.controllerMode   = false;
+
+            object->currentMsg = &object->i2cMsg;
+            object->currentTxnCount = 0U;
+
+            status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
         }
         else
         {
@@ -567,6 +698,53 @@ int32_t I2C_lld_read(   I2CLLD_Handle handle,
             object->i2cMsg.targetAddress    = extendedParams->deviceAddress;
             object->i2cMsg.expandSA         = extendedParams->expandSA;
             object->i2cMsg.timeout          = timeout;
+
+            object->currentMsg = &object->i2cMsg;
+            object->currentTxnCount = 0U;
+
+            status = I2C_lld_primeTransferPoll(handle, &object->i2cMsg);
+        }
+        else
+        {
+            status = I2C_STS_ERR_BUS_BUSY;
+        }
+    }
+    else
+    {
+        status = I2C_STS_ERR_INVALID_PARAM;
+    }
+
+    return status;
+}
+
+int32_t I2C_lld_target_read(I2CLLD_Handle handle,
+                            I2C_ExtendedParams *extendedParams,
+                            uint32_t timeout)
+{
+    int32_t                 status = I2C_STS_SUCCESS;
+    I2CLLD_Object           *object = NULL;
+
+    if ((handle != NULL) && (extendedParams != NULL))
+    {
+        /* Get the pointer to the object */
+        object = (I2CLLD_Object*)handle;
+
+        if (object->state == I2C_STATE_IDLE)
+        {
+            /* No current transfer is going on. */
+            /* TODO: This should happen automically. */
+            object->state = I2C_STATE_BUSY;
+
+            (void)I2C_lld_Transaction_init(&object->i2ctxn);
+            object->i2ctxn.readBuf      = extendedParams->buffer;
+            object->i2ctxn.readCount    = extendedParams->size;
+
+            (void)I2C_lld_Message_init(&object->i2cMsg);
+            object->i2cMsg.txn              = &object->i2ctxn;
+            object->i2cMsg.txnCount         = 1U;
+            object->i2cMsg.expandSA         = extendedParams->expandSA;
+            object->i2cMsg.timeout          = timeout;
+            object->i2cMsg.controllerMode   = false;
 
             object->currentMsg = &object->i2cMsg;
             object->currentTxnCount = 0U;
@@ -646,9 +824,7 @@ int32_t I2C_lld_mem_writeIntr(I2CLLD_Handle handle,
                 object->currentMsg = &object->i2cMsg;
                 object->currentTxnCount = 0U;
 
-                (void)HwiP_disableInt((uint32_t)handle->intrNum);
                 status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
-                (void)HwiP_enableInt((uint32_t)handle->intrNum);
             }
         }
         else
@@ -799,9 +975,7 @@ int32_t I2C_lld_mem_readIntr(I2CLLD_Handle handle,
                 object->currentMsg = &object->i2cMsg;
                 object->currentTxnCount = 0U;
 
-                (void)HwiP_disableInt((uint32_t)handle->intrNum);
                 status = I2C_lld_primeTransferIntr(handle, &object->i2cMsg);
-                (void)HwiP_enableInt((uint32_t)handle->intrNum);
             }
         }
         else
@@ -903,9 +1077,7 @@ int32_t I2C_lld_transferIntr(I2CLLD_Handle handle, I2CLLD_Message * msg)
         status = I2C_lld_transferInit(handle, msg);
         if (status == I2C_STS_SUCCESS)
         {
-            (void)HwiP_disableInt((uint32_t)handle->intrNum);
             status = I2C_lld_primeTransferIntr(handle, msg);
-            (void)HwiP_enableInt((uint32_t)handle->intrNum);
         }
     }
     else
@@ -1397,12 +1569,15 @@ void I2C_lld_controllerIsr(void* args)
  */
 void I2C_lld_targetIsr(void* args)
 {
+    I2CLLD_Object           *object = NULL;
     I2CLLD_Handle           handle = NULL;
     uint32_t                intCode;
     uint32_t                intStat;
 
     /* Get the pointer to the object */
     handle = (I2CLLD_Handle)args;
+    /* Get the pointer to the object */
+    object = (I2CLLD_Object*)handle;
 
     if(args != NULL)
     {
@@ -1434,29 +1609,36 @@ void I2C_lld_targetIsr(void* args)
                         handle->writeCountIdx--;
                         handle->writeBufIdx++;
                     }
+
                 }
-                else if (handle->state == I2C_TARGET_XFER_STATE)
+                else if (object->state == I2C_TARGET_XFER_STATE)
                 {
                     /*
                     * This is a restart condition, callback to application
                     * to restart read/write
                     */
-                    handle->currentTargetTransaction->readCount -= handle->readCountIdx;
-                    handle->currentTargetTransaction->writeCount -= handle->writeCountIdx;
-                    handle->targetTransferCompleteCallback(handle,
-                                                        handle->currentTargetTransaction,
-                                                        I2C_STS_RESTART);
-                    handle->writeBufIdx = (uint8_t*)handle->currentTargetTransaction->writeBuf;
-                    handle->writeCountIdx = handle->currentTargetTransaction->writeCount;
+                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
+                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
 
-                    handle->readBufIdx = handle->currentTargetTransaction->readBuf;
-                    handle->readCountIdx = handle->currentTargetTransaction->readCount;
+                    handle->targetTransferCompleteCallback(handle,
+                                                        &(handle->currentMsg->txn[object->currentTxnCount]),
+                                                        I2C_STS_RESTART);
+
+                    object->writeBufIdx = object->currentMsg->txn[object->currentTxnCount].writeBuf;
+                    object->writeCountIdx = object->currentMsg->txn[object->currentTxnCount].writeCount;
+
+                    object->readBufIdx = object->currentMsg->txn[object->currentTxnCount].readBuf;
+                    object->readCountIdx = object->currentMsg->txn[object->currentTxnCount].readCount;
 
                     handle->state = I2C_TARGET_RESTART_STATE;
+
                     if (((handle->writeCountIdx) != 0U) &&
                         ((intStat & I2C_INT_TRANSMIT_READY) == I2C_INT_TRANSMIT_READY))
                     {
                         /* Target transmit mode with restart, send data and clear the interrupt */
+
+                        handle->writeCountIdx--;
+                        handle->writeBufIdx++;
                         I2CControllerDataPut(handle->baseAddr, *(handle->writeBufIdx));
                         handle->writeCountIdx--;
                         handle->writeBufIdx++;
@@ -1470,12 +1652,13 @@ void I2C_lld_targetIsr(void* args)
                 break;
 
             case I2C_IVR_INTCODE_NACK:
-                /* Get a NACK from controller, stop the transfer and callback */
-                handle->currentTargetTransaction->readCount -= handle->readCountIdx;
-                handle->currentTargetTransaction->writeCount -= handle->writeCountIdx;
-                handle->targetTransferCompleteCallback(handle,
-                                                    handle->currentTargetTransaction,
-                                                    I2C_STS_ERR_NO_ACK);
+                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
+                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
+
+                    handle->targetTransferCompleteCallback(handle,
+                                                        &(handle->currentMsg->txn[object->currentTxnCount]),
+                                                        I2C_STS_ERR_NO_ACK);
+
                 I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
                 I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
                 break;
@@ -1491,7 +1674,6 @@ void I2C_lld_targetIsr(void* args)
                     *(handle->readBufIdx) = I2CControllerDataGet(handle->baseAddr);
                     handle->readBufIdx++;
                     handle->readCountIdx--;
-                    I2CControllerIntClearEx(handle->baseAddr, I2C_INT_RECV_READY);
                 }
                 else
                 {
@@ -1512,7 +1694,7 @@ void I2C_lld_targetIsr(void* args)
                     }
                     else
                     {
-                        if ((handle->currentTargetTransaction->writeCount) != (uint32_t)0U)
+                        if ((object->currentMsg->txn[object->currentTxnCount].writeCount) != (uint32_t)0U)
                         {
                             /* TX buffer empty, send 0 */
                             I2CControllerDataPut(handle->baseAddr, 0U);
@@ -1522,20 +1704,27 @@ void I2C_lld_targetIsr(void* args)
                 break;
 
             case I2C_IVR_INTCODE_SCD:
-                /* stop condition detected, end of current transfer */
-                I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
-                handle->currentTargetTransaction->readCount -= handle->readCountIdx;
-                handle->currentTargetTransaction->writeCount -= handle->writeCountIdx;
+                    I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
+                    I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
+                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
+                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
 
-                /* Callback to application or post semaphore */
-                handle->targetTransferCompleteCallback(handle,
-                                                    handle->currentTargetTransaction,
-                                                    I2C_STS_SUCCESS);
+                    if(object->currentTxnCount < (object->currentMsg->txnCount - 1U))
+                    {
+                        object->currentTxnCount++;
 
-                /* No other transactions need to occur */
-                handle->currentTargetTransaction = NULL;
-                I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
-                handle->state = I2C_STATE_IDLE;
+                        (void)I2C_lld_primeTransferIntr(handle, object->currentMsg);
+
+                        object->state = I2C_STATE_BUSY;
+                    }
+                    else
+                    {
+                        handle->targetTransferCompleteCallback(handle,
+                                                            &(handle->currentMsg->txn[object->currentTxnCount]),
+                                                            I2C_STS_SUCCESS);
+                        object->currentMsg = NULL;
+                        handle->state = I2C_STATE_IDLE;
+                    }
                 break;
 
             default:
@@ -1788,7 +1977,7 @@ static int32_t I2C_lld_waitForBb(I2CLLD_Handle handle, uint32_t timeout)
 }
 
 static void I2C_lld_completeCurrTransfer(I2CLLD_Handle handle,
-                                            int32_t xferStatus)
+                                         int32_t xferStatus)
 {
     I2CLLD_Object *object = (I2CLLD_Object*)handle;
     /* Input parameter validation */
@@ -1796,7 +1985,7 @@ static void I2C_lld_completeCurrTransfer(I2CLLD_Handle handle,
     {
         if(object->currentMsg != NULL)
         {
-            /* Other thansactions available */
+            /* Other transactions available */
             if( (xferStatus == I2C_STS_SUCCESS) &&
                 (object->currentTxnCount < (object->currentMsg->txnCount - 1U)))
             {
@@ -1807,7 +1996,7 @@ static void I2C_lld_completeCurrTransfer(I2CLLD_Handle handle,
                 object->state = I2C_STATE_BUSY;
             }
 
-            /* No other thansactions available */
+            /* No other transactions available */
             else
             {
                 object->dataArray = (uint8_t*)NULL;
@@ -1823,7 +2012,7 @@ static void I2C_lld_completeCurrTransfer(I2CLLD_Handle handle,
 }
 
 static int32_t I2C_lld_primeTransferIntr(I2CLLD_Handle handle,
-                                            I2CLLD_Message *msg)
+                                         I2CLLD_Message *msg)
 {
     I2CLLD_Object           *object = NULL;
     int32_t                 status = I2C_STS_SUCCESS;
@@ -1940,6 +2129,7 @@ static int32_t I2C_lld_primeTransferIntr(I2CLLD_Handle handle,
         /* set to controller receiver mode */
         I2CModeControl(object->baseAddr, I2C_CFG_MASK_XA, xsa);
     }
+
     return status;
 }
 
@@ -1951,6 +2141,7 @@ static int32_t I2C_lld_primeTransferPoll(   I2CLLD_Handle handle,
     int32_t                 status = I2C_STS_SUCCESS;
     uint32_t                errStat = 0;
     uint32_t                xsa;
+    uint32_t                intStat;
 
     /* Get the pointer to the object */
     object = (I2CLLD_Object*)handle;
@@ -2225,10 +2416,96 @@ static int32_t I2C_lld_primeTransferPoll(   I2CLLD_Handle handle,
         }
         else
         {
-            status = I2C_STS_ERR;
+            /* Clear all interrupts */
+            I2CControllerIntClearEx(object->baseAddr, I2C_ALL_INTS);
+            /*
+            * Enable Address as Target interrupt which is the first interrupt
+            * received in target mode
+            */
+            I2CControllerIntEnableEx(object->baseAddr, I2C_INT_MASK_ADRR_TARGET);
+            /* Configure data buffer length to 0 as the actual number of bytes to
+                transmit/receive is dependant on external controller. */
+            I2CSetDataCount(object->baseAddr, 0U);
+
+            /* Start the I2C transfer in target mode */
+            I2CTargetEnable(object->baseAddr);
+
+            /* set to controller receiver mode */
+            I2CModeControl(object->baseAddr, I2C_CFG_MASK_XA, xsa);
+
+            /* Wait for address match */
+            while ( (status == I2C_STS_SUCCESS) &&
+                    (I2CControllerIntStatusEx(object->baseAddr, I2C_INT_ADRR_TARGET) == 0U))
+            {
+                if ((   object->Clock_getTicks() - object->startTicks) >
+                        object->Clock_usecToTicks((uint64_t)(object->currentMsg->timeout)))
+                {
+                    status = I2C_STS_ERR_TIMEOUT;
+                }
+            }
+
+            while (status == I2C_STS_SUCCESS)
+            {
+                intStat = I2CControllerIntStatusEx(handle->baseAddr, I2C_ALL_INTS);
+
+                if((intStat & I2C_INT_ADRR_READY_ACESS) != 0)
+                {
+                    I2CControllerIntClearEx(handle->baseAddr, I2C_INT_ADRR_READY_ACESS);
+                }
+
+                if((intStat & I2C_INT_RECV_READY) != 0)
+                {
+                    /* Read from Rx register only when read count is not exhausted */
+                    if ((handle->readCountIdx) != (uint32_t)0U)
+                    {
+                        *(handle->readBufIdx) = I2CControllerDataGet(handle->baseAddr);
+                        handle->readBufIdx++;
+                        handle->readCountIdx--;
+                    }
+                    else
+                    {
+                        /* RX buffer full, drop the data Received */
+                        (void)I2CControllerDataGet(handle->baseAddr);
+                    }
+
+                    I2CControllerIntClearEx(handle->baseAddr, I2C_INT_RECV_READY);
+                }
+
+                if((intStat & I2C_INT_TRANSMIT_READY) != 0)
+                {
+                    if (handle->writeCountIdx != 0U)
+                    {
+                        I2CControllerDataPut(handle->baseAddr, *(handle->writeBufIdx));
+                        handle->writeCountIdx--;
+                        handle->writeBufIdx++;
+                    }
+                    else
+                    {
+                        if ((object->currentMsg->txn[object->currentTxnCount].writeCount) != (uint32_t)0U)
+                        {
+                            /* TX buffer empty, send 0 */
+                            I2CControllerDataPut(handle->baseAddr, 0U);
+                        }
+                    }
+                }
+
+                if((intStat & I2C_INT_STOP_CONDITION) != 0)
+                {
+                    I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
+                    I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
+                    break;
+                }
+
+                if ((   object->Clock_getTicks() - object->startTicks) >
+                        object->Clock_usecToTicks((uint64_t)(object->currentMsg->timeout)))
+                {
+                    status = I2C_STS_ERR_TIMEOUT;
+                }
+            }
         }
 
-        if(status == I2C_STS_SUCCESS){
+        if(status == I2C_STS_SUCCESS)
+        {
             object->currentTxnCount++;
         }
         else{
@@ -2242,7 +2519,6 @@ static int32_t I2C_lld_primeTransferPoll(   I2CLLD_Handle handle,
 
     return status;
 }
-
 
 static int32_t I2C_lld_transferInit(I2CLLD_Handle handle, I2CLLD_Message *msg)
 {
@@ -2293,30 +2569,3 @@ static int32_t lld_check_param(bool expression)
     }
     return retVal;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
