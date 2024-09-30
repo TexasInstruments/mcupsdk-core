@@ -107,6 +107,8 @@ extern "C"
 #define MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI1_CFG_BASE + 0x80000000)
 #define MCU_UART0_BASE_AFTER_ADDR_TRANSLATE        (CSL_MCU_UART0_BASE + 0x80000000)
 #define MCU_UART1_BASE_AFTER_ADDR_TRANSLATE        (CSL_MCU_UART1_BASE + 0x80000000)
+#define MCU_I2C0_CFG_BASE_AFTER_ADDR_TRANSLATE     (CSL_MCU_I2C0_CFG_BASE + 0x80000000)
+#define MCU_I2C1_CFG_BASE_AFTER_ADDR_TRANSLATE     (CSL_MCU_I2C1_CFG_BASE + 0x80000000)
 
 /** \brief API to validate I2C base address. */
 static inline int32_t I2C_lld_isBaseAddrValid(uint32_t baseAddr)
@@ -117,7 +119,11 @@ static inline int32_t I2C_lld_isBaseAddrValid(uint32_t baseAddr)
     if (    (baseAddr == CSL_I2C0_CFG_BASE) ||  \
             (baseAddr == CSL_I2C1_CFG_BASE) ||  \
             (baseAddr == CSL_I2C2_CFG_BASE) ||  \
-            (baseAddr == CSL_I2C3_CFG_BASE) )
+            (baseAddr == CSL_I2C3_CFG_BASE) ||  \
+            (baseAddr == CSL_MCU_I2C0_CFG_BASE) ||  \
+            (baseAddr == CSL_MCU_I2C0_CFG_BASE) ||  \
+            (baseAddr == MCU_I2C0_CFG_BASE_AFTER_ADDR_TRANSLATE) ||  \
+            (baseAddr == MCU_I2C1_CFG_BASE_AFTER_ADDR_TRANSLATE) )
     {
         /* Set status to success */
         status = 0;
