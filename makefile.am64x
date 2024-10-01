@@ -68,7 +68,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwip-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-freertos_r5f.ti-arm-clang lwip-contrib-freertos_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-nortos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang mbedtls_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x tsn_icssg_combase-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang
@@ -114,7 +114,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwip-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-freertos_r5f.ti-arm-clang_clean lwip-contrib-freertos_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-nortos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang_clean mbedtls_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x tsn_icssg_combase-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang_clean
@@ -701,7 +701,7 @@ BUILD_COMBO_lwip-freertos = lwip-freertos_r5f.ti-arm-clang lwip-freertos_a53.gcc
 BUILD_COMBO_lwip-nortos = lwip-nortos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang lwip-contrib-freertos_a53.gcc-aarch64
 BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
-BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang
+BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang mbedtls_a53.gcc-aarch64
 BUILD_COMBO_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang
 BUILD_COMBO_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang
 BUILD_COMBO_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang
@@ -896,7 +896,7 @@ BUILD_COMBO_CLEAN_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_clean lwip-free
 BUILD_COMBO_CLEAN_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_clean lwip-contrib-freertos_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean mbedtls_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_clean
@@ -1085,7 +1085,7 @@ BUILD_COMBO_SCRUB_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_scrub lwip-free
 BUILD_COMBO_SCRUB_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_scrub lwip-contrib-freertos_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub mbedtls_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_scrub_scrub

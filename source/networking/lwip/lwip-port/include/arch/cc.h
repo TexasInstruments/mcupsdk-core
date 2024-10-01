@@ -52,11 +52,6 @@ extern "C"
 #define LWIP_TIMEVAL_PRIVATE 0
 #include <sys/select.h>
 
-/* Define byte order of the system */
-#ifndef BYTE_ORDER
-#define BYTE_ORDER LITTLE_ENDIAN
-#endif
-
 /* Use lwip provided errors as ti compiler is too granular*/
 #define LWIP_PROVIDE_ERRNO  1
 
@@ -67,7 +62,6 @@ extern "C"
 #define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
 #define PACK_STRUCT_END
 #define PACK_STRUCT_FIELD(x) x
-
 /* Different handling for unit test, normally not needed */
 #ifdef LWIP_NOASSERT_ON_ERROR
 #define LWIP_ERROR(message, expression, handler) do { if (!(expression)) { \

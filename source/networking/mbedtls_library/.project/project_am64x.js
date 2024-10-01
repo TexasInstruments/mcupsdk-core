@@ -117,7 +117,27 @@ const cflags = {
     ]
 };
 
+const cflags_a53 = {
+    common: [
+        "-Wno-extra",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
+    ],
+    release: [
+        "-flto",
+    ],
+    cpp_common: [
+        "-E",
+    ]
+};
+
 const defines_r5f = {
+    common: [
+        "MBEDTLS_CONFIG_FILE=\\\"alt_config.h\\\"",
+    ],
+};
+
+const defines_a53 = {
     common: [
         "MBEDTLS_CONFIG_FILE=\\\"alt_config.h\\\"",
     ],
@@ -125,6 +145,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "a53", cgt: "gcc-aarch64"},
 ];
 function getComponentProperty() {
     let property = {};
@@ -143,8 +164,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes;
-    build_property.cflags = cflags;
-    build_property.defines = defines_r5f;
+    if(buildOption.cpu.match(/r5f*/)) {
+	    build_property.cflags = cflags;
+        build_property.defines = defines_r5f;
+    }
+    if(buildOption.cpu.match(/a53*/)) {
+	    build_property.cflags = cflags_a53;
+	    build_property.defines = defines_a53;
+    }
     return build_property;
 }
 module.exports = {
