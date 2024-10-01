@@ -212,6 +212,18 @@ const includes = {
     ],
 };
 
+const includes_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
+    ],
+};
+
 const deviceSpecificIncludes = {
     am243x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x",
@@ -244,6 +256,16 @@ const deviceSpecificIncludes = {
 };
 
 
+
+const deviceSpecificIncludes_a53 = {
+    am64x : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53",
+    ],
+   
+};
+
+
 const cflags = {
     common: [
         "-Wno-extra",
@@ -251,6 +273,16 @@ const cflags = {
     ],
     release: [
         "-Oz",
+        "-flto",
+    ],
+};
+
+
+const cflags_a53 = {
+    common: [
+        "-Wno-extra",
+    ],
+    release: [
         "-flto",
     ],
 };
@@ -278,6 +310,12 @@ const deviceSpecific_cflags = {
     ],
 };
 
+const deviceSpecific_cflags_a53 = {
+    am64x : [
+        "-fno-strict-aliasing",
+    ],
+};
+
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
@@ -286,6 +324,7 @@ const buildOptionCombos = [
     { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am64x", cpu: "a53", cgt: "gcc-aarch64"},
     { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
@@ -316,6 +355,15 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
+
+    if(buildOption.cpu.match(/a53*/)) {
+        includes_a53.common = _.union(includes_a53.common, deviceSpecificIncludes_a53[device]);
+        build_property.includes = includes_a53;
+
+        cflags_a53.common = _.union(cflags_a53.common, deviceSpecific_cflags_a53[device]);
+        build_property.cflags = cflags_a53;
+        return build_property;
+    }
 
     includes.common = _.union(includes.common, deviceSpecificIncludes[device]);
     build_property.includes = includes;

@@ -40,8 +40,13 @@ extern "C"
 
 /* std.h functions required */
 #include <stdint.h>
+#include <sys/types.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/nortos/dpl/common/printf.h>
+
+#ifdef __aarch64__
+#define SSIZE_MAX INT_MAX
+#endif
 
 /* Disable lwIP's private definition of 'struct timeval' */
 #define LWIP_TIMEVAL_PRIVATE 0
