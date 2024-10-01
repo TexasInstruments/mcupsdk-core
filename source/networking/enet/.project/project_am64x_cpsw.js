@@ -150,7 +150,35 @@ const cflags = {
     ],
 };
 
+const cflags_a53 = {
+    common: [
+        "-Wno-extra",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
+        "-Wno-unused-function",
+    ],
+    release: [
+        "-flto",
+    ],
+};
+
 const defines_r5f = {
+    common: [
+        "MAKEFILE_BUILD",
+        "ENET_CFG_ASSERT=1",
+        "ENET_CFG_PRINT_ENABLE",
+        "ENET_CFG_TRACE_LEVEL=3",
+        "ENET_ENABLE_PER_CPSW=1",
+        "ENABLE_ENET_LOG",
+    ],
+    debug: [
+        "ENET_CFG_DEV_ERROR=1",
+        "LWIPIF_INSTRUMENTATION_ENABLED=1",
+        "ENETDMA_INSTRUMENTATION_ENABLED=1",
+    ],
+};
+
+const defines_a53 = {
     common: [
         "MAKEFILE_BUILD",
         "ENET_CFG_ASSERT=1",
@@ -168,6 +196,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "a53", cgt: "gcc-aarch64"},
 ];
 
 function getComponentProperty() {
@@ -188,10 +217,15 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
-    build_property.cflags = cflags;
     build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.defines = defines_r5f;
+        build_property.cflags = cflags;
+    }
+
+    if(buildOption.cpu.match(/a53*/)) {
+        build_property.cflags = cflags_a53;
+        build_property.defines = defines_a53;
     }
 
     return build_property;

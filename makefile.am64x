@@ -54,7 +54,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_ncm_freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_rndis_nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_rndis_freertos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am64x enet-cpsw_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x enet-cpsw_r5f.ti-arm-clang enet-cpsw_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-cpsw-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-cpsw-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x enet-icssg_r5f.ti-arm-clang
@@ -100,7 +100,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_rndis_nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x usbd_tusb_rndis_freertos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am64x enet-cpsw_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x enet-cpsw_r5f.ti-arm-clang_clean enet-cpsw_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x enet-icssg_r5f.ti-arm-clang_clean
@@ -687,7 +687,7 @@ BUILD_COMBO_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang
-BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang
+BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang enet-cpsw_a53.gcc-aarch64
 BUILD_COMBO_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang
 BUILD_COMBO_enet-icssg = enet-icssg_r5f.ti-arm-clang
@@ -882,7 +882,7 @@ BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_c
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean enet-cpsw_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_enet-icssg = enet-icssg_r5f.ti-arm-clang_clean
@@ -1071,7 +1071,7 @@ BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_s
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub enet-cpsw_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_enet-icssg = enet-icssg_r5f.ti-arm-clang_scrub_scrub
