@@ -79,6 +79,17 @@ const cflags = {
     ],
 };
 
+
+const cflags_a53 = {
+    common: [
+        "-Wno-extra",
+        "-Wno-unused-function",
+    ],
+    release: [
+        "-flto",
+    ],
+};
+
 const soc_cflags = {
     am243x : [
     ],
@@ -120,6 +131,30 @@ const defines_r5f = {
     ],
 };
 
+
+const defines_a53 = {
+    common: [
+        "MAKEFILE_BUILD",
+        "ENET_CFG_ASSERT=1",
+        "ENET_CFG_PRINT_ENABLE",
+        "ENET_CFG_TRACE_LEVEL=3",
+        "ENET_ENABLE_PER_CPSW=1",
+        "ENABLE_ENET_LOG",
+    ],
+    debug: [
+        "ENET_CFG_DEV_ERROR=1",
+        "LWIPIF_INSTRUMENTATION_ENABLED=1",
+        "ENETDMA_INSTRUMENTATION_ENABLED=1",
+    ],
+};
+
+
+
+const soc_defines = {
+    am64x : [
+    ],
+};
+
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
@@ -128,6 +163,7 @@ const buildOptionCombos = [
     { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am64x",  cpu: "a53", cgt: "gcc-aarch64"},
     { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
@@ -159,13 +195,23 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
+    includes.common = _.union(includes.common, socIncludes[device]);
+    build_property.includes = includes;
+
+    if(buildOption.cpu.match(/a53*/))
+    {
+        defines_a53.common = _.union(defines_a53.common, soc_defines[device])
+        build_property.defines = defines_a53;
+        cflags_a53.common = _.union(cflags_a53.common, soc_cflags[device])
+        build_property.cflags = cflags_a53;
+        return build_property;
+    }
 
     cflags.common = _.union(cflags.common, soc_cflags[device])
     if(buildOption.cgt.match(/ti-arm-clang*/)){
         build_property.cflags = cflags;
     }
-    includes.common = _.union(includes.common, socIncludes[device]);
-    build_property.includes = includes;
+    
     if(buildOption.cpu.match(/r5f*/))
     {
         build_property.defines = defines_r5f;
