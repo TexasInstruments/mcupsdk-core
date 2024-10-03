@@ -2,9 +2,7 @@ let path = require('path');
 
 let device = "am243x";
 
-const files = {
-    common: [
-        "filex_mmcsd.c",
+const filex_files = [
         "fx_directory_attributes_read.c",
         "fx_directory_attributes_set.c",
         "fx_directory_create.c",
@@ -217,26 +215,108 @@ const files = {
         "fx_utility_memory_set.c",
         "fx_utility_string_length_get.c",
         "fx_utility_token_length_get.c",
-    ],
+    ];
+
+const levelx_files = [
+    "lx_nor_flash_system_error.c",
+    "lx_nor_flash_simulator.c",
+    "lx_nor_flash_sector_write.c",
+    "lx_nor_flash_sector_release.c",
+    "lx_nor_flash_sector_read.c",
+    "lx_nor_flash_sector_mapping_cache_invalidate.c",
+    "lx_nor_flash_physical_sector_allocate.c",
+    "lx_nor_flash_partial_defragment.c",
+    "lx_nor_flash_open.c",
+    "lx_nor_flash_next_block_to_erase_find.c",
+    "lx_nor_flash_logical_sector_find.c",
+    "lx_nor_flash_initialize.c",
+    "lx_nor_flash_extended_cache_enable.c",
+    "lx_nor_flash_driver_write.c",
+    "lx_nor_flash_driver_read.c",
+    "lx_nor_flash_driver_block_erase.c",
+    "lx_nor_flash_defragment.c",
+    "lx_nor_flash_close.c",
+    "lx_nor_flash_block_reclaim.c",
+    "lx_nand_flash_system_error.c",
+    "lx_nand_flash_simulator.c",
+    "lx_nand_flash_sector_write.c",
+    "lx_nand_flash_sectors_write.c",
+    "lx_nand_flash_sectors_release.c",
+    "lx_nand_flash_sectors_read.c",
+    "lx_nand_flash_sector_release.c",
+    "lx_nand_flash_sector_read.c",
+    "lx_nand_flash_partial_defragment.c",
+    "lx_nand_flash_page_ecc_compute.c",
+    "lx_nand_flash_page_ecc_check.c",
+    "lx_nand_flash_open.c",
+    "lx_nand_flash_metadata_write.c",
+    "lx_nand_flash_metadata_build.c",
+    "lx_nand_flash_metadata_allocate.c",
+    "lx_nand_flash_memory_initialize.c",
+    "lx_nand_flash_mapped_block_list_remove.c",
+    "lx_nand_flash_mapped_block_list_get.c",
+    "lx_nand_flash_mapped_block_list_add.c",
+    "lx_nand_flash_initialize.c",
+    "lx_nand_flash_free_block_list_add.c",
+    "lx_nand_flash_format.c",
+    "lx_nand_flash_extended_cache_enable.c",
+    "lx_nand_flash_erase_count_set.c",
+    "lx_nand_flash_driver_page_erased_verify.c",
+    "lx_nand_flash_driver_block_status_set.c",
+    "lx_nand_flash_driver_block_status_get.c",
+    "lx_nand_flash_driver_block_erased_verify.c",
+    "lx_nand_flash_driver_block_erase.c",
+    "lx_nand_flash_defragment.c",
+    "lx_nand_flash_data_page_copy.c",
+    "lx_nand_flash_close.c",
+    "lx_nand_flash_block_status_set.c",
+    "lx_nand_flash_block_mapping_set.c",
+    "lx_nand_flash_block_find.c",
+    "lx_nand_flash_block_data_move.c",
+    "lx_nand_flash_block_allocate.c",
+    "lx_nand_flash_256byte_ecc_compute.c",
+    "lx_nand_flash_256byte_ecc_check.c",
+];
+
+const driver_files = [
+    "filex_mmcsd.c",
+    "filex_levelx_nor_driver.c",
+    "lx_nor_flash_driver.c"
+];
+
+
+const files = {
+    common : filex_files.concat(levelx_files, driver_files)
 };
+
 
 const filedirs = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/common/src",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_mmcsd"
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/src",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/src",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx"
     ],
 };
 
 const includes = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/ports/generic/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_mmcsd"
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx",
     ],
 };
 
+const defines = {
+    common : [
+        "LX_NAND_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1",
+        "LX_NOR_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1"
+    ]
+};
 
 const cflags = {
     common: [
@@ -268,6 +348,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
+    build_property.defines = defines;
     if(buildOption.cgt.match(/ti-arm-clang*/)) {
         build_property.cflags = cflags;
     }
