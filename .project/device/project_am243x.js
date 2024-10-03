@@ -330,6 +330,7 @@ const example_file_list = [
     "test/drivers/soc/soc_m4f/.project/project.js",
     "test/drivers/uart/.project/project.js",
     "test/drivers/gp_timer/.project/project.js",
+    "test/fs/filex/.project/project.js",
     "test/kernel/dpl/.project/project.js",
     "test/kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/.project/project.js",
     "test/kernel/dpl/dpl_ut/nortos/common/HeapP_nortos/.project/project.js",
