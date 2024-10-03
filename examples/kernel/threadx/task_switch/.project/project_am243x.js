@@ -21,8 +21,7 @@ const filedirs = {
 
 const libdirs = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/lib",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/lib",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
     ],
@@ -30,18 +29,14 @@ const libdirs = {
 
 const includes = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/filex/filex_src/ports/generic/inc",
-        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
     ],
 };
 
 const libs = {
     common: [
         "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "filex.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
@@ -50,7 +45,6 @@ const libs = {
 const libs_gcc = {
     common: [
         "threadx.am243x.r5f.gcc-armv7.${ConfigName}.lib",
-        "filex.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
