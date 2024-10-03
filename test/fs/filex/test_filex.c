@@ -41,8 +41,7 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include "ti_drivers_open_close.h"
-#include "ti_eclipse_threadx_open_close.h"
-#include "ti_eclipse_threadx_config.h"
+#include "ti_board_open_close.h"
 #include <filex_mmcsd.h>
 #include <fx_api.h>
 
@@ -69,17 +68,21 @@ static void test_filex_file_read_write(void *args);
 
 void test_main(ULONG args)
 {
+    int32_t res;
+
     /* Open drivers to open the UART driver for console */
     Drivers_open();
-    EclipseThreadx_open();
+    res = Board_driversOpen();
+    DebugP_assert(res == SystemP_SUCCESS);
+
     UNITY_BEGIN();
 
     for (size_t k = 0u; k < FILEX_NUM_INSTANCES; k++) {
-        RUN_TEST(test_filex_file_read_write, 20000, &gt_media[k]);
+        RUN_TEST(test_filex_file_read_write, 20000, &gMedia[k]);
     }
 
     UNITY_END();
-    EclipseThreadx_close();
+    Board_driversClose();
     Drivers_close();
 
     return;
