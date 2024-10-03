@@ -56,11 +56,11 @@ void filex_hello_world_main(ULONG args)
     DebugP_log("[FILEX HELLO WORLD] Hello world example started ...\r\n");
 
     // Create a new file 'test.bin'.
-    status = fx_file_create(&gt_media[FILEX0], "test.bin");
+    status = fx_file_create(&gMedia[FILEX0], "test.bin");
     DebugP_assert((status == FX_SUCCESS) || (status == FX_ALREADY_CREATED));
 
     // Open the file for writing.
-    status = fx_file_open(&gt_media[FILEX0], &file, "test.bin", FX_OPEN_FOR_WRITE);
+    status = fx_file_open(&gMedia[FILEX0], &file, "test.bin", FX_OPEN_FOR_WRITE);
     DebugP_assert(status == FX_SUCCESS);
 
     // Clear the whole file (in case it already exists and contains data).
@@ -76,7 +76,7 @@ void filex_hello_world_main(ULONG args)
     DebugP_assert(status == FX_SUCCESS);
 
     // Re-open the file, this time for reading.
-    status = fx_file_open(&gt_media[FILEX0], &file, "test.bin", FX_OPEN_FOR_READ);
+    status = fx_file_open(&gMedia[FILEX0], &file, "test.bin", FX_OPEN_FOR_READ);
     DebugP_assert(status == FX_SUCCESS);
 
     // Read the previously written message.
