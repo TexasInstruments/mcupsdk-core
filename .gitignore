@@ -46,6 +46,10 @@ source/fs/littlefs/LittleFS
 source/kernel/freertos/FreeRTOS-Kernel
 source/kernel/freertos/FreeRTOS-Kernel-smp
 source/kernel/freertos/FreeRTOS-POSIX
+source/kernel/threadx/threadx_src
+source/fs/filex/filex_src
+source/fs/freertos_fat/FreeRTOS-FAT
+source/fs/littlefs/LittleFS
 source/kernel/safertos/safeRTOS
 source/industrial_comms/ethercat_slave/beckhoff_stack/stack_sources/*.c
 source/industrial_comms/ethercat_slave/beckhoff_stack/stack_sources/*.h
