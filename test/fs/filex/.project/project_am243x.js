@@ -37,6 +37,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
     ],
 };
@@ -85,7 +86,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "test_filex";
     property.isInternal = true;
-    property.skipProjectSpec = true;
+    property.skipProjectSpec = false;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
