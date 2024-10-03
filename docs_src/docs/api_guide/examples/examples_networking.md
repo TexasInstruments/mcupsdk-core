@@ -150,7 +150,8 @@ This page lists all the examples related to Ethernet Communication.
 
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW (DP83TG720-EVM-AM2)
-\endcond
+\endcond 
+
 \cond SOC_AM273X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
