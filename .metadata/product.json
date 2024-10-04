@@ -12,8 +12,11 @@
         "/board/board",
         "/fs/fs",
         "/networking/networking",
-        "/memory_configurator/components",
         "/security/security",
+        "/usb/usb",
+        "/xbar/xbar",
+        "/memory_configurator/components",
+        "/optiflash/optiflash"
     ],
     "devices": [
         "AM64x",
