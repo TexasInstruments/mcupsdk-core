@@ -16,6 +16,7 @@ const files_r5f = {
         "rng.c",
         "hsmclient.c",
 		"hsmclient_loadhsmrt.c",
+        "hsmclient_wait_for_boot_notify.c",
 		"hsmclient_utils.c",
         "sipc_notify_cfg.c",
 		"sipc_notify_src.c",
