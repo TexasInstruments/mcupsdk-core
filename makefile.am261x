@@ -53,6 +53,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x lwip-contrib-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_lwip_if_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x icss_timesync_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x mbedtls_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x tsn_gptp-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x tsn_combase-freertos_r5f.ti-arm-clang
@@ -88,6 +89,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x lwip-contrib-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_lwip_if_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x icss_timesync_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x mbedtls_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x tsn_gptp-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x tsn_combase-freertos_r5f.ti-arm-clang_clean
@@ -506,6 +508,7 @@ BUILD_COMBO_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_emac_r5
 BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
 BUILD_COMBO_icss_emac = icss_emac_r5f.ti-arm-clang
 BUILD_COMBO_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang
+BUILD_COMBO_icss_timesync = icss_timesync_r5f.ti-arm-clang
 BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang
 BUILD_COMBO_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang
 BUILD_COMBO_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang
@@ -522,7 +525,7 @@ BUILD_COMBO_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_synp_nortos) $(BUILD_COMBO_usbd_synp_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_synp_nortos) $(BUILD_COMBO_usbd_synp_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos)
 
 
 # Combine all Pre-built Components
@@ -596,6 +599,9 @@ $(BUILD_COMBO_icss_emac):
 $(BUILD_COMBO_icss_emac_lwip_if):
 	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am261x.$(subst icss_emac_lwip_if_,,$@) all
 
+$(BUILD_COMBO_icss_timesync):
+	$(MAKE) -C source/networking/icss_timesync -f makefile.am261x.$(subst icss_timesync_,,$@) all
+
 $(BUILD_COMBO_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am261x.$(subst mbedtls_,,$@) all
 
@@ -657,6 +663,7 @@ BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_e
 BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_icss_emac = icss_emac_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_icss_timesync = icss_timesync_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_clean
@@ -673,7 +680,7 @@ BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-cla
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_synp_nortos) $(BUILD_COMBO_CLEAN_usbd_synp_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_synp_nortos) $(BUILD_COMBO_CLEAN_usbd_synp_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos)
 
 
 # Combine all Pre-built Components Clean
@@ -741,6 +748,9 @@ $(BUILD_COMBO_CLEAN_icss_emac):
 $(BUILD_COMBO_CLEAN_icss_emac_lwip_if):
 	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am261x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_icss_timesync):
+	$(MAKE) -C source/networking/icss_timesync -f makefile.am261x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am261x.$(subst mbedtls_,,$(subst _clean,,$@)) clean
 
@@ -802,6 +812,7 @@ BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_e
 BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_icss_emac = icss_emac_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_icss_timesync = icss_timesync_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_scrub_scrub
@@ -818,7 +829,7 @@ BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-cla
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_synp_nortos) $(BUILD_COMBO_SCRUB_usbd_synp_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_synp_nortos) $(BUILD_COMBO_SCRUB_usbd_synp_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -884,6 +895,9 @@ $(BUILD_COMBO_SCRUB_icss_emac):
 
 $(BUILD_COMBO_SCRUB_icss_emac_lwip_if):
 	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am261x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_icss_timesync):
+	$(MAKE) -C source/networking/icss_timesync -f makefile.am261x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am261x.$(subst mbedtls_,,$(subst _scrub,,$@)) scrub

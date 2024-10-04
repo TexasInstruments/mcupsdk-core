@@ -20,6 +20,7 @@ const component_file_list = [
     "source/networking/lwip/.project/project_contrib_nortos.js",
     "source/networking/icss_emac/.project/project.js",
     "source/networking/icss_emac/lwipif/.project/project.js",
+    "source/networking/icss_timesync/.project/project.js",
     "source/networking/mbedtls_library/.project/project.js",
     "source/networking/tsn/.project/project_tsn_gptp.js",
     "source/networking/tsn/.project/project_tsn_combase.js",
