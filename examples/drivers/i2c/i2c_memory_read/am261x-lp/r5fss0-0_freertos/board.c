@@ -38,7 +38,7 @@
 
 uint8_t Board_i2cGetEepromDeviceAddr()
 {
-    return 0x53;
+    return 0x51;
 }
 
 uint16_t Board_i2cGetEepromMemAddr()

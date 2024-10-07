@@ -38,7 +38,7 @@
  * Board info
  */
 
-#define I2C_TARGET_ADDR             (0x53U)
+#define I2C_TARGET_ADDR             (0x51U)
 #define EEPROM_MEM_ADDRESS          (0x0400U)
 #define EEPROM_ADDR_SIZE            (2U)
 
