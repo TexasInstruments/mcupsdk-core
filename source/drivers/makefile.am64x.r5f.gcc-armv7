@@ -113,6 +113,7 @@ FILES_common := \
     sciclient_fmwSecureProxyMap.c \
     sciclient_boardcfg.c \
     sciclient_soc_priv.c \
+    qos.c \
     soc.c \
     spinlock.c \
     csl_timer_mgr.c \
@@ -196,6 +197,8 @@ FILES_PATH_common = \
     ospi/v0/dma/soc/am64x_am243x \
     ospi/v0/dma/udma \
     ospi/v0/soc/am64x_am243x \
+    qos \
+    qos/v0 \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \

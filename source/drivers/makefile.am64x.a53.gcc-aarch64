@@ -69,6 +69,7 @@ FILES_common := \
     sciclient_fmwSecureProxyMap.c \
     sciclient_boardcfg.c \
     sciclient_soc_priv.c \
+    qos.c \
     soc.c \
     spinlock.c \
     uart_v0.c \
@@ -119,6 +120,8 @@ FILES_PATH_common = \
     ospi/v0 \
     ospi/v0/dma \
     ospi/v0/dma/udma \
+    qos \
+    qos/v0 \
     mmcsd/v0 \
     mmcsd/v0/lld \
     mmcsd/v0/lld/internal \
