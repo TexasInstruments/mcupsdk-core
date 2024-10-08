@@ -169,9 +169,9 @@ help:
 	@echo  $(MAKE) -s -C kernel/freertos/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc_stream/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cfb/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -858,13 +858,13 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1534,13 +1534,13 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -2210,13 +2210,13 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
