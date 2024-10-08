@@ -53,6 +53,27 @@ CORES = \
 CORE_`numProjects`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
     % numProjects = numProjects + 1;
 % }
+
+CORE_IMG_ARGS :=
+% for (let i = 0; i<numProjects; i++) {
+CORE_IMG_ARGS +=--core-img=`i`:$(CORE_`i`_IMG)
+% }
+%}
+% if ((args.project.device == "am263px") || (args.project.device == "am261x")) {
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
+% numProjects = 0;
+
+% for (let project of args.project.projects) {
+CORE_`numProjects`_OPTISHARE_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).optishare.out
+    % numProjects = numProjects + 1;
+% }
+
+
+CORE_IMG_OPTISHARE_ARGS :=
+% for (let i = 0; i<numProjects; i++) {
+CORE_IMG_OPTISHARE_ARGS +=--core-img=`i`:$(CORE_`i`_OPTISHARE_IMG)
+% }
+
 % }
 
 COREXMLS = \
@@ -95,7 +116,7 @@ CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
 CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 
-sso: all optisave
+sso: optisave
 
 coreout: sso.out
 	@echo .
@@ -120,10 +141,18 @@ sso.cmd: all $(COREXMLS)
 	@echo generating sso.cmd done
 	@echo .
 
-optisave: coreout
+optisave: buildmcelfsso
 % for (let core_project of args.project.projects) {
 	$(OPTISAVE) ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).lnkxml ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).optishare.lnkxml > ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).ossr
 % }
+
+buildmcelfsso: coreout
+	@echo .
+	@echo generating mcelf with sso 
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_OPTISHARE_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --sso=sso.out
+	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
 % }
 
 clean:
@@ -314,11 +343,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	@echo  .
 % }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
-
-CORE_IMG_ARGS :=
-% for (let i = 0; i<numProjects; i++) {
-CORE_IMG_ARGS +=--core-img=`i`:$(CORE_`i`_IMG)
-% }
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...
