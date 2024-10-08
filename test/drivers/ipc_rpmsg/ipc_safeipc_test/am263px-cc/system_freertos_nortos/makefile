@@ -37,6 +37,23 @@ CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 CORE_2_IMG=../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 
+CORE_IMG_ARGS :=
+CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
+
+CORE_0_OPTISHARE_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.out
+CORE_1_OPTISHARE_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.out
+CORE_2_OPTISHARE_IMG=../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.out
+
+
+CORE_IMG_OPTISHARE_ARGS :=
+CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
+CORE_IMG_OPTISHARE_ARGS +=--core-img=1:$(CORE_1_OPTISHARE_IMG)
+CORE_IMG_OPTISHARE_ARGS +=--core-img=2:$(CORE_2_OPTISHARE_IMG)
+
+
 COREXMLS = \
 	../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml\
 	../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml\
@@ -64,7 +81,7 @@ CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
 CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 
-sso: all optisave
+sso: optisave
 
 coreout: sso.out
 	@echo .
@@ -89,10 +106,18 @@ sso.cmd: all $(COREXMLS)
 	@echo generating sso.cmd done
 	@echo .
 
-optisave: coreout
+optisave: buildmcelfsso
 	$(OPTISAVE) ../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml ../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.lnkxml > ../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).ossr
 	$(OPTISAVE) ../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml ../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.lnkxml > ../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).ossr
 	$(OPTISAVE) ../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml ../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).optishare.lnkxml > ../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).ossr
+
+buildmcelfsso: coreout
+	@echo .
+	@echo generating mcelf with sso 
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_OPTISHARE_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --sso=sso.out
+	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
 
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
@@ -186,11 +211,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
-CORE_IMG_ARGS :=
-CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
-CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
-CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...

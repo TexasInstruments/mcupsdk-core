@@ -37,6 +37,11 @@ CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 CORE_2_IMG=../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).out
 
+CORE_IMG_ARGS :=
+CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
+
 COREXMLS = \
 	../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml\
 	../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_test.$(PROFILE).lnkxml\
@@ -152,11 +157,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
-CORE_IMG_ARGS :=
-CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
-CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
-CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...

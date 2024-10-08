@@ -31,6 +31,9 @@ CORES = \
 
 CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).out
 
+CORE_IMG_ARGS :=
+CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+
 COREXMLS = \
 	../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).lnkxml\
 
@@ -132,9 +135,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
-CORE_IMG_ARGS :=
-CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...
