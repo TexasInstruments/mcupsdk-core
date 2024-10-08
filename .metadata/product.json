@@ -5,6 +5,7 @@
     "documentationPath": "../docs",
     "includePaths": [
         "../source/sysconfig",
+        "../source/networking/enet/core/sysconfig",
     ],
     "components": [
         "/kernel/dpl",
