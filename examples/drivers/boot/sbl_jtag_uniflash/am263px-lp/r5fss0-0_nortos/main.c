@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,12 +65,25 @@ char gMainMenu[] = {
     " Enter Choice: "
 };
 
+/**
+ * @brief Reset that flash to start from known default state.
+ * 
+ * @param oHandle OSPI handle
+ */
+void flashFixUpOspiBoot(OSPI_Handle oHandle);
+
+/**
+ * @brief Does the actual reset of the flash on board
+ * 
+ */
+void board_flash_reset(void);
+
 int32_t sbl_jtag_uniflash_load_file(char optype)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t fileSize;
-    uint32_t eraseBlkSize;
+    uint32_t eraseSctSize;
     uint32_t flashSize;
     FILE *fp;
 
@@ -115,13 +128,13 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         }    
         else
         {
-            eraseBlkSize = flashAttrs->blockSize;
+            eraseSctSize = flashAttrs->sectorSize;
             flashSize = flashAttrs->flashSize;
 
-            if( (offset % eraseBlkSize) != 0)
+            if( (offset % eraseSctSize) != 0)
             {
-                DebugP_log(" [FLASH WRITER] Flash offset MUST be multiple of erase block size of 0x%08x !!!\r\n",
-                    eraseBlkSize
+                DebugP_log(" [FLASH WRITER] Flash offset MUST be multiple of erase sector size of 0x%08x !!!\r\n",
+                    eraseSctSize
                     );
                 status = SystemP_FAILURE;
             }
@@ -159,7 +172,7 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         if(optype == '2')
         {
             /* Operation is FLASH */
-            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH;
+            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR;
         }
         else if(optype == '3')
         {
@@ -255,6 +268,11 @@ int main(void)
     /* Open OSPI Driver, among others */
     Drivers_open();
 
+	/* ROM doesn't reset the OSPI flash. This can make the flash initialization
+    troublesome because sequences are very different in Octal DDR mode. So for a
+    moment switch OSPI controller to 8D mode and do a flash reset. */
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
+
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     if(status!=SystemP_SUCCESS)
@@ -313,4 +331,12 @@ int main(void)
 
     Board_driversClose();
     Drivers_close();
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle)
+{
+    board_flash_reset();
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
