@@ -22,23 +22,25 @@ ERROR_BAD_RESPONSE  = 3
 CONST_KB = 1024
 CONST_MB = CONST_KB * CONST_KB
 
-BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES                   = CONST_MB # This has to be a 256 KB aligned value, because flash writes will be block oriented
-BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
+BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES                    = CONST_MB # This has to be a 256 KB aligned value, because flash writes will be block oriented
+BOOTLOADER_UNIFLASH_HEADER_SIZE                       = 32 # 32 B
 
-BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER         = 0x46554C42 # BLUF
-BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER         = 0x52554C42 # BLUR
+BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER          = 0x46554C42 # BLUF
+BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER          = 0x52554C42 # BLUR
 
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH                     = 0xF0
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY              = 0xF1
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_XIP                 = 0xF2
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_XIP          = 0xF3
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_TUNING_DATA         = 0xF4
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE               = 0xFE
-BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH                = 0xF5
-BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY               = 0xF6
-BOOTLOADER_UNIFLASH_OPTYPE_MEM                       = 0xF7
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_A             = 0xF8
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_B             = 0xF9
+BOOTLOADER_UNIFLASH_FLASH_REMAP                       = 0xABCDABCD
+
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH                      = 0xF0
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY               = 0xF1
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_XIP                  = 0xF2
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_XIP           = 0xF3
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_TUNING_DATA          = 0xF4
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE                = 0xFE
+BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH                 = 0xF5
+BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY                = 0xF6
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR               = 0xF7
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP            = 0xF8
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP     = 0xF9
 BOOTLOADER_UNIFLASH_STATUSCODE_SUCCESS                = 0x00000000
 BOOTLOADER_UNIFLASH_STATUSCODE_MAGIC_ERROR            = 0x10000001
 BOOTLOADER_UNIFLASH_STATUSCODE_OPTYPE_ERROR           = 0x20000001
@@ -55,9 +57,9 @@ optypewords = {
     "erase" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE,
     "flash-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH,
     "flashverify-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY,
-    "flash-remap-A":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_A,
-    "flash-remap-B":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_REMAP_B,
-    "mem" : BOOTLOADER_UNIFLASH_OPTYPE_MEM
+    "flash-sector-write":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR,
+    "flash-mcelf-xip":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP,
+    "flashverify-mcelf-xip" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP
 }
 
 statuscodes = {
@@ -131,6 +133,8 @@ def create_temp_file(linecfg):
         /* Size of the file sent. This is needed because xmodem returns a padded file size */
 
         uint32_t rsv1;
+        /* Reserve variable can be used to remap the flash offset */
+        
         uint32_t rsv2;
         uint32_t rsv3;
         /* Reserved */
@@ -140,7 +144,7 @@ def create_temp_file(linecfg):
     '''
     file_header_str = '<LLLLLLLL'
 
-    if(linecfg.optype in ("erase", "flash-phy-tuning-data", "flash-remap-A", "flash-remap-B")):
+    if(linecfg.optype in ("erase", "flash-phy-tuning-data")):
         # No separate file required
         tempfilename = "{}_command".format(linecfg.optype)
     else:
@@ -150,11 +154,14 @@ def create_temp_file(linecfg):
 
     # Construct the header now, first define the reserved word
     rsv_word = 0xDEADBABE
+    remap_flash = 0xDEADBABE
 
     # Determine the offset if applicable
     offset_val = rsv_word
-    if(linecfg.optype not in ("flash-xip", "flashverify-xip", "flash-phy-tuning-data", "flash-remap-A", "flash-remap-B", "mem")):
+    if(linecfg.optype not in ("flash-xip", "flashverify-xip", "flash-mcelf-xip", "flashverify-mcelf-xip", "flash-phy-tuning-data")):
         offset_val = get_numword(linecfg.offset)
+        if(linecfg.remap == True):
+            remap_flash = BOOTLOADER_UNIFLASH_FLASH_REMAP
 
     # Determine the erase size if applicable
     erase_size_val = rsv_word
@@ -163,7 +170,7 @@ def create_temp_file(linecfg):
 
     # Determine the actual file size if applicable, no original file in case of erase or phy tuning
     actual_file_size = 0
-    if(linecfg.optype not in ("erase","flash-phy-tuning-data", "flash-remap-A", "flash-remap-B")):
+    if(linecfg.optype not in ("erase","flash-phy-tuning-data")):
         actual_file_size = os.path.getsize(linecfg.filename)
 
     file_header = struct.pack(file_header_str,
@@ -172,14 +179,14 @@ def create_temp_file(linecfg):
                               offset_val,
                               erase_size_val,
                               actual_file_size,
-                              rsv_word, rsv_word, rsv_word
+                              remap_flash, rsv_word, rsv_word
                              )
 
     # Write header to file
     f.write(file_header)
 
     # No original file in case of erase or phy tuning
-    if(linecfg.optype not in ("erase","flash-phy-tuning-data", "flash-remap-A", "flash-remap-B")):
+    if(linecfg.optype not in ("erase","flash-phy-tuning-data")):
         # copy the original file to this file
         original_file = open(linecfg.filename, "rb")
         f.write(original_file.read())
@@ -209,6 +216,7 @@ def parse_response_evm(filename):
         status = "[ERROR] Incorrect magic number in Response Header !!!"
 
     return status
+
 
 # Sends the file to EVM via xmodem, receives response from EVM and returns the response status
 def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response=True, read_timeout=60):
@@ -359,13 +367,12 @@ def main(argv):
     my_parser.add_argument('-p', '--serial-port', required=True, help="[Mandatory argument] Serial port to use for the transfer. COM3, COM4 etc if on windows and /dev/ttyUSB1,/dev/ttyUSB2 etc if on linux.")
     my_parser.add_argument('-f', '--file', required=False, help="Filename to send for an operation. Not required if using config mode (--cfg)")
     my_parser.add_argument('-o', '--flash-offset', required=False, help="Offset (in hexadecimal format starting with a 0x) at which the flash/verify flash is to be done. Not required if using config mode (--cfg)")
-    my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc" or "mem". Not required if using config mode (--cfg)')
+    my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-mcelf-xip" or "flashverify-mcelf-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc" or "mem". Not required if using config mode (--cfg)')
     my_parser.add_argument('--flash-writer', required=False, help="Special option. This will load the sbl_uart_uniflash binary which will be booted by ROM. Other arguments are irrelevant and hence ignored when --flash-writer argument is present. Not required if using config mode (--cfg)")
     my_parser.add_argument('--erase-size', required=False, help='Size of flash to erase. Only valid when operation is "erase"')
+    my_parser.add_argument('--flash-remap', required=False, help='flag to remap the flash offset. Default is false')
     my_parser.add_argument('--cfg', required=False, help=g_cfg_file_description)
     my_parser.add_argument('--chunk-size-kb', required=False, default=CONST_KB, help="Size of the receive buffer in multiples of KB. Defaults to 1024")
-    my_parser.add_argument('--flash-remap-A', required=False, help="Remap flash addres to region A if upported by the device")
-    my_parser.add_argument('--flash-remap-B', required=False, help="Remap flash addres to region B if upported by the device")
 
     args = my_parser.parse_args()
 
@@ -379,7 +386,8 @@ def main(argv):
     cmdlinecfg.optype = args.operation
     cmdlinecfg.flashwriter = args.flash_writer
     cmdlinecfg.erase_size = args.erase_size
-
+    cmdlinecfg.remap = True if args.flash_remap == "true" else False
+    
     if(config_file != None):
         # Check if file exists
         if not os.path.exists(config_file):
@@ -390,7 +398,7 @@ def main(argv):
         print("Parsing config file ...")
         filecfg = FileCfg(config_file)
         parse_status = filecfg.parse()
-
+            
         if(parse_status != 0):
             print(parse_status)
             sys.exit(ERROR_BAD_ARGS)
@@ -440,8 +448,8 @@ def main(argv):
                         orig_filename = linecfg.filename
                         if(linecfg.optype == "erase"):
                             print("Sent flash erase command.")
-                        elif(linecfg.optype in {"flash-phy-tuning-data", "flash-remap-A", "flash-remap-B"}):
-                            print("Sent command in {}s.".format(timetaken))
+                        elif(linecfg.optype in {"flash-phy-tuning-data"}):
+                            print("Sent flash-phy-tuning-data in {}s.".format(timetaken))
                         else:
                             print("Sent {} of size {} bytes in {}s.".format(orig_filename, os.path.getsize(orig_filename), timetaken))
                         print(status)
@@ -493,12 +501,13 @@ def main(argv):
 
 # Class definitions used
 class LineCfg():
-    def __init__(self, line=None, filename=None, optype=None, offset=None, erase_size=None, flashwriter=None, cfg_src="cfg"):
+    def __init__(self, line=None, filename=None, optype=None, offset=None, erase_size=None, flashwriter=None, remap=False, cfg_src="cfg"):
         self.line = line
         self.filename = filename
         self.optype = optype
         self.offset = offset
         self.flashwriter = flashwriter
+        self.remap = remap
         self.erase_size = erase_size
         self.found_flashwriter_cmd = False
         self.ops_invalid = False
@@ -533,7 +542,6 @@ class LineCfg():
         if(self.line!=None and self.cfg_src=="cfg"):
             # Called from config_file
             config_dict = self.parse_to_dict(self.line)
-
             if not config_dict:
                 status = "invalid_line"
             else:
@@ -548,6 +556,10 @@ class LineCfg():
                         return status
                     else:
                         self.optype = config_dict["--operation"]
+                        
+                    if "--flash-remap" in config_dict.keys():
+                        if config_dict['--flash-remap'] == "true":
+                            self.remap = True
 
                     if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flash-emmc" or\
                         self.optype == "flashverify-emmc"):
@@ -557,7 +569,8 @@ class LineCfg():
                         else:
                             self.offset = config_dict["--flash-offset"]
 
-                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or\
+                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
+                        self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or \
                         self.optype == "flash-emmc" or self.optype == "flashverify-emmc" or self.optype == "mem"):
                         if "--file" not in config_dict.keys():
                             status = "[ERROR] Operation selected was {}, but no filename provided !!!".format(self.optype)
@@ -574,7 +587,7 @@ class LineCfg():
 
                     #No errors in parsing, now validate params to the extent possible
 
-                    if(self.optype not in ("erase", "flash-phy-tuning-data", "flash-remap-A", "flash-remap-B")):
+                    if(self.optype not in ("erase", "flash-phy-tuning-data")):
                         try:
                             f = open(self.filename)
                         except FileNotFoundError:
@@ -623,7 +636,8 @@ class LineCfg():
                     else:
                         pass
 
-                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or self.optype == "flashverify-emmc") and (self.filename == None)):
+                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
+                    self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or self.optype == "flashverify-emmc") and (self.filename == None)):
                     self.ops_invalid = True
                     self.exit_now = not self.found_flashwriter_cmd
                     # flash/verify flash/erase, but no filename given. exit with help if no flashwriter
@@ -652,7 +666,7 @@ class LineCfg():
                         return status
                     else:
                         pass
-                if(self.optype not in ("erase", "flash-phy-tuning-data", "flash-remap-A", "flash-remap-B")):
+                if(self.optype not in ("erase", "flash-phy-tuning-data")):
                     try:
                         f = open(self.filename)
                     except FileNotFoundError:
