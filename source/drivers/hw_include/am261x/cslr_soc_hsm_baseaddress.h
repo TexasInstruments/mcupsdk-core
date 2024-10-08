@@ -2,7 +2,7 @@
 *
 * MCU_R5 MEMORYMAP header file
 *
-* Copyright (C) 2023 Texas Instruments Incorporated.
+* Copyright (C) 2023-24 Texas Instruments Incorporated.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -51,6 +51,8 @@ extern "C"
 #define CSL_HSM_M4_RAM_SIZE               (0x00030000ul) /* 192 KB */
 
 #define CSL_CM4_ICFG_BASE                 (0xE0000000U)
+
+#define CSL_EXT_FLASH_SIZE                (0x03FFFFFFU)
 
 #define CSL_HSM_R5SS0_CORE0_PREECLIPSE_ROM_BASE                     (0x78000000U)
 #define CSL_HSM_R5SS0_CORE0_PREECLIPSE_ROM_SIZE                     (0x00020000ul)  /* 128 KB */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -83,6 +83,7 @@ extern "C"
 #include <drivers/hw_include/am261x/cslr_rl2_of_r5fss0_core1.h>
 #include <drivers/hw_include/am261x/cslr_soc_baseaddress.h>
 #include <drivers/hw_include/am261x/cslr_soc_defines.h>
+#include <drivers/hw_include/am261x/cslr_soc_hsm_baseaddress.h>
 #include <drivers/hw_include/am261x/cslr_soc_r5_baseaddress.h>
 #include <drivers/hw_include/am261x/cslr_soc_r5_lockstep_baseaddress.h>
 #include <drivers/hw_include/am261x/cslr_soc_r5_rom_baseaddress.h>

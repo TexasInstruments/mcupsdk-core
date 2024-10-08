@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -122,7 +122,7 @@ extern "C" {
  *
  * @{
  */
-#define PRIV_ID_HSM              (1U)
+#define PRIV_ID_M4FSS0_0         (1U)
 #define PRIV_ID_R5FSS0_0         (4U)
 #define PRIV_ID_R5FSS0_1         (5U)
 #define PRIV_ID_ICSSM0           (9U)
