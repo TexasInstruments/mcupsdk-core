@@ -30,23 +30,11 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-#include "ti_drivers_config.h"
-#include "ti_board_config.h"
-
-void ospi_flash_dma_main(void *args);
-void board_flash_reset(void);
-
-int main(void)
-{
-    System_init();
-    Board_init();
-
-    board_flash_reset();
-    ospi_flash_dma_main(NULL);
-
-    Board_deinit();
-    System_deinit();
-
-    return 0;
-}
+/**
+ * @brief Reset Flash
+ *
+ * FLASH reset is connected over I2C IO expander. Use this function to
+ * reset the flash to a known state.
+ *
+ */
+void i2c_flash_reset(void);

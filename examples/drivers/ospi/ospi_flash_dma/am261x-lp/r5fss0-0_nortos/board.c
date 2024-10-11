@@ -30,23 +30,65 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
+#include <stdint.h>
+#include <drivers/gpio.h>
+#include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_config.h"
-#include "ti_board_config.h"
+#include "ti_board_open_close.h"
 
-void ospi_flash_dma_main(void *args);
-void board_flash_reset(void);
+int32_t enableLevelTranslator();
 
-int main(void)
+void gpio_flash_reset(void)
 {
-    System_init();
-    Board_init();
+    uint32_t    gpioBaseAddr, pinNum;
+    enableLevelTranslator();
+    /* Get address after translation translate */
+    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
+    pinNum       = GPIO_OSPI_RST_PIN;
+    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
+    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
+}
 
-    board_flash_reset();
-    ospi_flash_dma_main(NULL);
+int32_t enableLevelTranslator()
+{
+    int32_t  status = SystemP_SUCCESS;
+    static TCA6408_Config  gTCA6408_Config;
+    TCA6408_Params      TCA6408Params;
+    TCA6408_Params_init(&TCA6408Params);
+    TCA6408Params.i2cAddress  = 0x20U;
+    
+    status = TCA6408_open(&gTCA6408_Config, &TCA6408Params);
+    
+    /* Configure as output  */
+    status += TCA6408_config(
+                    &gTCA6408_Config,
+                    IO_EXP_BP_BO_MUX_EN_LINE,
+                    TCA6408_MODE_OUTPUT);
 
-    Board_deinit();
-    System_deinit();
+    /* Configure State */
+    status = TCA6408_setOutput(
+                    &gTCA6408_Config,
+                    IO_EXP_BP_BO_MUX_EN_LINE,
+                    TCA6408_OUT_STATE_HIGH);
 
-    return 0;
+
+    
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Failed to enable OSPI Reset Signal\r\n");
+        TCA6408_close(&gTCA6408_Config);
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        /* Exit gracefully */
+    }
+
+    return status;
+}
+
+void board_flash_reset(void)
+{
+    gpio_flash_reset();
 }
