@@ -6,3 +6,7 @@ This page lists all the examples related to OTP.
 -# \subpage EXAMPLES_RUNTIME_SWREV
 -# \subpage EXAMPLES_RUNTIME_KEYREV
 \endcond
+
+\cond SOC_AM243X
+-# \subpage EXAMPLES_RUNTIME_KEYREV
+\endcond

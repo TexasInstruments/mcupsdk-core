@@ -17,7 +17,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_PRU_IO
 \endcond
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 -# \subpage EXAMPLES_OTP
 \endcond
 
