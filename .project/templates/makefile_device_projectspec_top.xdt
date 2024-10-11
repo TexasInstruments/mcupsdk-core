@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 % if (["am243x", "am64x"].includes(args.device)) {
 export `args.sdkPath`?=$(abspath `args.relPath`)

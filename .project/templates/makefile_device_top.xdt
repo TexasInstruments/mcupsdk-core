@@ -44,9 +44,6 @@
 		}
 	}
 %%}
-#
-# Auto generated makefile
-#
 
 all:
 	$(MAKE) -f makefile.`device` libs
