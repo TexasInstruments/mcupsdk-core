@@ -91,6 +91,16 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .FracM = 0U,
         .SD = 4U,
     },
+    /* PER_2000_25MHz */
+    {
+        .Finp = 25U,
+        .N = 9U,
+        .Fout = 2000U,
+        .M2 = 1U,
+        .M = 800U,
+        .FracM = 0U,
+        .SD = 8U,
+    },
 };
 
 const SOC_RcmXTALInfo gXTALInfo[] =
@@ -103,6 +113,7 @@ const uint32_t gPLLFreqId2FOutMap[] =
     [RCM_PLL_FOUT_FREQID_CLK_500MHZ]       = 500U,
     [RCM_PLL_FOUT_FREQID_CLK_900MHZ]       = 900U,
     [RCM_PLL_FOUT_FREQID_CLK_960MHZ]       = 960U,
+    [RCM_PLL_FOUT_FREQID_CLK_2000MHZ]      = 2000U,
 };
 
 const SOC_RcmClkSrcInfo gPeripheralClkSrcInfoMap[] =
