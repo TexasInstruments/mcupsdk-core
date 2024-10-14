@@ -117,7 +117,6 @@ typedef struct Bootloader_UniflashConfig_s
 	uint32_t bufSize;
 	uint8_t *verifyBuf;
 	uint32_t verifyBufSize;
-	uint32_t imageFormatType;
 } Bootloader_UniflashConfig;
 
 int32_t Bootloader_uniflashProcessFlashCommands(Bootloader_UniflashConfig *config, Bootloader_UniflashResponseHeader *respHeader);
