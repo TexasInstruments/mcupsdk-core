@@ -46,6 +46,8 @@
 
 #define MSS_OSPI_BOOT_CONFIG_MASK              (0x840ul)
 #define MSS_OSPI_BOOT_CONFIG_SEG               (0x844ul)
+#define BOOT_REGION_A                          (0u)
+#define BOOT_REGION_B                          (1u)
 
 int32_t FSS_addressBitMask(FSS_Handle handle, uint32_t bitMask, uint8_t segment)
 {
@@ -98,6 +100,16 @@ int32_t FSS_selectRegionB(FSS_Handle handle)
     return ret;
 }
 
+uint32_t FSS_getBootRegion(FSS_Handle handle)
+{
+    uint32_t ret = 0;
+    if(handle != NULL)
+    {
+        FSS_Config *config = (FSS_Config *)handle;
+        ret = (HWREG(config->ipBaseAddress + MSS_OSPI_BOOT_CONFIG_SEG) > 0) ? BOOT_REGION_B : BOOT_REGION_A;
+    }
+    return ret;
+}
 int32_t FSS_disableAddressRemap(FSS_Handle handle)
 {
     return FSS_addressBitMask(handle, 0, 0);

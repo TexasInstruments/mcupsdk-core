@@ -39,6 +39,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 #include <drivers/fota_agent/fota_agent.h>
+#include <drivers/fss.h>
 
 /*
  * This is an empty project provided for all cores present in the device.
@@ -66,6 +67,7 @@ TaskHandle_t gWriteTask;
 StaticTask_t gLedTaskObj;
 TaskHandle_t gLedTask;
 FOTAAgent_handle fotaAgentHandle;
+FSS_Config fssConf;
 
 typedef struct bootinfo_sector_s_t
 {
@@ -80,7 +82,7 @@ typedef union bootinfo_sector_u_t
 }bootinfo_sector_t;
 
 void write_to_flash();
-void led_blink();
+void led_blink() __attribute__((section(".task0")));
 int32_t swap_to_b(uint32_t bootregion);
 void mcanEnableTransceiver(void);
 void i2c_flash_reset(void);
@@ -107,13 +109,12 @@ void write_to_flash()
     Flash_Attrs *flashAttrs;
 	flashAttrs = Flash_getAttrs(CONFIG_FLASH0);
     uint32_t flashBaseOffset;
-    bootinfo_sector_t *bootSectorInfo = (bootinfo_sector_t *)BOOT_INFO_BASE;
 
-    status = Flash_read(gFlashHandle[CONFIG_FLASH0], BOOT_INFO_BASE, bootSectorInfo->bin, FLASH_SECTOR_SIZE_2);
-    DebugP_assert(status==SystemP_SUCCESS);
+    fssConf.ipBaseAddress = CSL_MSS_CTRL_U_BASE;
+    fssConf.extFlashSize = flashAttrs->flashSize;
 
-    uint32_t bootRegion = bootSectorInfo->fields.bootRegion;
-    if(bootRegion == 1)
+    uint32_t bootRegion = FSS_getBootRegion((FSS_Handle)&fssConf);
+    if(bootRegion == REGION_B)
     {
         DebugP_log("BOOTING from Region B!!!! \r\n");
         flashBaseOffset = 0;
@@ -195,11 +196,6 @@ int32_t swap_to_b(uint32_t bootRegion)
     FLSOPSKD_handle pHandle = fotaAgentHandle.FLSOPSKDhandle;
 
     DebugP_log("Updating boot info....\r\n");
-    
-    if(SystemP_SUCCESS == status)
-    {
-        status = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, bootSectorInfo->bin, FLASH_SECTOR_SIZE_2);
-    }
 
     if(bootRegion == REGION_B)
     {

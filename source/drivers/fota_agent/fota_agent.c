@@ -30,6 +30,20 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "fota_agent.h"
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
+
+#define SIPC_QUEUE_LENGTH   (32u)
+/* Total number of secure cores */
+#define SIPC_NUM_R5_CORES   (2u)
+
+#define ERASE_OPCODE        (0x21u)
+#define ERASE_EXOPCODE		(0xDCu)
+
+uint8_t gQueue_HsmToR5[SIPC_NUM_R5_CORES][SIPC_QUEUE_LENGTH*SIPC_MSG_SIZE] __attribute__((aligned(8),section(".bss.sipc_hsm_queue_mem")));
+uint8_t gQueue_R5ToHsm[SIPC_NUM_R5_CORES][SIPC_QUEUE_LENGTH*SIPC_MSG_SIZE] __attribute__((aligned(8),section(".bss.sipc_r5f_queue_mem")));
+HsmClient_t gHSMClient ;
+
+int32_t add_HSM_firewall(void);
 
 int32_t FOTAAgent_init(FOTAAgent_handle *pHandle)
 {
@@ -48,7 +62,9 @@ int32_t FOTAAgent_init(FOTAAgent_handle *pHandle)
     status = Spinlock_lock(CSL_SPINLOCK0_BASE, LOCK_NUM1);
     if(status == SPINLOCK_LOCK_STATUS_FREE)
     {
-        status = FLSOPSKD_Init(&(pHandle->FLSOPSKDhandle));
+        status = FLSOPSKD_Init(&(pHandle->FLSOPSKDhandle),ERASE_OPCODE,ERASE_EXOPCODE);
+		if(status == SystemP_SUCCESS)
+        status = add_HSM_firewall();
     }
 
     Spinlock_unlock(CSL_SPINLOCK0_BASE, LOCK_NUM0);
@@ -164,4 +180,65 @@ int32_t FOTAAgent_writeUpdate(FOTAAgent_handle *pHandle,uint8_t *buf,uint32_t si
 		}
 	}
 	return status;
+}
+
+void HsmClient_config(void)
+{
+    SIPC_Params sipcParams;
+    int32_t status;
+
+    /* initialize parameters to default */
+    SIPC_Params_init(&sipcParams);
+
+    sipcParams.ipcQueue_eleSize_inBytes = SIPC_MSG_SIZE;
+    sipcParams.ipcQueue_length = SIPC_QUEUE_LENGTH ;
+    /* list the cores that will do SIPC communication with this core
+    * Make sure to NOT list 'self' core in the list below
+    */
+    sipcParams.numCores = 1;
+    sipcParams.coreIdList[0] = CORE_INDEX_HSM;
+
+    /* specify the priority of SIPC Notify interrupt */
+    sipcParams.intrPriority = 7U;
+
+
+    /* This is HSM -> R5F queue */
+    sipcParams.tx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_R5ToHsm[0] ;
+    sipcParams.rx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_HsmToR5[0] ;
+    sipcParams.secHostCoreId[CORE_INDEX_SEC_MASTER_0] = CORE_ID_R5FSS0_0;
+
+    /* initialize the HsmClient module */
+    status = HsmClient_init(&sipcParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    /* register a hsm client to detect bootnotify message and keyring import from HSM */
+    status = HsmClient_register(&gHSMClient, 1);
+    DebugP_assert(status==SystemP_SUCCESS);
+}
+
+void HsmClient_unRegister(void)
+{
+     /* Unregister bootnotify client */
+    HsmClient_unregister(&gHSMClient, HSM_BOOT_NOTIFY_CLIENT_ID);
+}
+
+int32_t add_HSM_firewall(void)
+{
+    int32_t status;
+    FirewallReq_t FirewallReqObj;
+    FirewallRegionReq_t gMpuFirewallRegionConfig[1] = {
+        {
+            .firewallId = 14, // CSL bug
+            .region = 2U,
+            .permissionAttributes = (0xFF) | (((0x1<<PRIV_ID_R5FSS0_0))<<10U),
+            .startAddress = CSL_FSS_PDMEM_GENREGS_REGS_BASE,
+            .endAddress   = CSL_FSS_PDMEM_GENREGS_REGS_BASE + 0x7FFu,
+        },
+    };
+    FirewallReqObj.regionCount = 1;
+    FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig;
+
+    HsmClient_config();
+    status = HsmClient_setFirewall(&gHSMClient,&FirewallReqObj,SystemP_WAIT_FOREVER);
+    return status;
 }

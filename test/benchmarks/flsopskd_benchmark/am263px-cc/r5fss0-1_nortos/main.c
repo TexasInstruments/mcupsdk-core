@@ -36,6 +36,10 @@
 
 #define CALIBRATION_DATA_LENGTH (128*1024U)
 
+#define FLASH_ERASE_OPCODE (0x21)
+
+#define FLASH_ERASE_EXOPCODE (0XDC)
+
 CSL_fss_fota_genregsRegs *fotaregs;
 
 FLSOPSKD_handle flopsdkHandle;
@@ -83,7 +87,7 @@ __attribute__((optnone))  int main(void)
 
     config_pmu();
 
-    FLSOPSKD_Init(&flopsdkHandle);
+    FLSOPSKD_Init(&flopsdkHandle,FLASH_ERASE_OPCODE,FLASH_ERASE_EXOPCODE);
 
     FLSOPSKD_Get8051Version(&flopsdkHandle, &fw8051version);
 

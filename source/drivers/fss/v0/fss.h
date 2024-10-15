@@ -104,6 +104,8 @@ int32_t FSS_selectRegionA(FSS_Handle handle);
  */
 int32_t FSS_selectRegionB(FSS_Handle handle);
 
+uint32_t FSS_getBootRegion(FSS_Handle handle);
+
 /**
  * @brief Enable ECC for Flash 
  * 

@@ -56,6 +56,8 @@ extern volatile uint32_t maxSinglePageProgramTime;
 typedef struct __tag__flash_operation_scheduler_handle
 {
     int8_t pollEnable; /**< Enable polling mode */
+    uint8_t eraseOpCode; /**< Configure Erase OpCode */
+    uint8_t eraseExOpCode;/**< Configure Erase ExOpCode*/
 } FLSOPSKD_handle;
 
 /**
@@ -64,9 +66,11 @@ typedef struct __tag__flash_operation_scheduler_handle
  * By default polling mode is enabled. 
  * 
  * @param pHandle Pointer to handle
+ * @param eraseOpCode Erase Opcode for flash
+ * @param eraseExOpCode Erase ExOpcode for flash
  * @return int32_t SystemP_SUCCESS if everything okay
  */
-int32_t FLSOPSKD_Init(FLSOPSKD_handle *pHandle);
+int32_t FLSOPSKD_Init(FLSOPSKD_handle *pHandle,uint8_t eraseOpCode, uint8_t eraseExOpCode);
 
 /**
  * @brief Sends write scheduling request to hardware IP. 

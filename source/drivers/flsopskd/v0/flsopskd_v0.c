@@ -59,7 +59,61 @@ static void FLSOPSKD_OperationCompletionIntr(void)
     HwiP_clearInt(CSLR_R5FSS0_CORE1_FOTA_WR_COMPL);
 }
 
-int32_t FLSOPSKD_Init(FLSOPSKD_handle *pHandle)
+static inline void FLSOPSKD_STIGSetGeneric(uint16_t fncode, uint16_t val)
+{
+    uint32_t nval = (val << 16) | fncode;
+    const CSL_fss_fota_genregsRegs *pReg = (const CSL_fss_fota_genregsRegs *)(CSL_FSS_FOTA_GENREGS_REGS_BASE);
+
+    CSL_REG32_WR(&pReg->FOTA_GP0, nval);
+    CSL_REG32_WR(&pReg->STS_IRQ.STATUS, 1);
+    CSL_REG32_FINS(&pReg->FOTA_CTRL, FSS_FOTA_GENREGS_FOTA_CTRL_GO, 1);
+    while (CSL_REG32_RD(&pReg->STS_IRQ.STATUS_RAW) == 0)
+        ;
+}
+
+static void FLSOPSKD_STIGSetOpcode(uint8_t opcode)
+{
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_OPCODE, opcode);
+}
+
+static void FLSOPSKD_STIGSetExopcode(uint8_t exopcode)
+{
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_EXOPCODE, exopcode);
+}
+
+static void FLSOPSKD_STIGSetReadBytesCount(uint8_t nReadBytes)
+{
+    if (nReadBytes > 0)
+    {
+        nReadBytes = ((nReadBytes - 1) + 0x8) & 0xf;
+    }
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_RDBYTECNT, nReadBytes);
+}
+
+static void FLSOPSKD_STIGSetWriteBytesCount(uint8_t nWriteBytes)
+{
+    if (nWriteBytes > 0)
+    {
+        nWriteBytes = ((nWriteBytes - 1) + 0x8) & 0xf;
+    }
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_WRBYTECNT, nWriteBytes);
+}
+
+static void FLSOPSKD_STIGSetAddressBytesCount(uint8_t nAddressBytes)
+{
+    if (nAddressBytes > 0)
+    {
+        nAddressBytes = (0x8 + ((nAddressBytes - 1) & 0x3)) & 0xf;
+    }
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_ADDRBYTECNT, nAddressBytes);
+}
+
+static void FLSOPSKD_STIGSetDummyCycles(uint8_t nDummyCycle)
+{
+    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_DUMMYCYCLES, nDummyCycle);
+}
+
+int32_t FLSOPSKD_Init(FLSOPSKD_handle *pHandle, uint8_t eraseOpCode, uint8_t eraseExOpCode)
 {
     int32_t status = SystemP_FAILURE;
     const CSL_fss_fota_genregsRegs *pReg = (const CSL_fss_fota_genregsRegs *)(CSL_FSS_FOTA_GENREGS_REGS_BASE);
@@ -67,7 +121,8 @@ int32_t FLSOPSKD_Init(FLSOPSKD_handle *pHandle)
     if (NULL != pHandle)
     {
         pHandle->pollEnable = TRUE;
-
+        pHandle->eraseOpCode = eraseOpCode;
+        pHandle->eraseExOpCode = eraseExOpCode;
         {
             /* Put FOTA in reset */
 
@@ -122,9 +177,10 @@ int32_t FLSOPSKD_Erase(FLSOPSKD_handle *pHandle, uint32_t offset)
     /* any non zero value will make 8051 to erase */
     int32_t status = SystemP_FAILURE;
     const CSL_fss_fota_genregsRegs *pReg = (const CSL_fss_fota_genregsRegs *)(CSL_FSS_FOTA_GENREGS_REGS_BASE);
-
     if (NULL != pHandle)
-    {
+    {   
+        FLSOPSKD_STIGSetOpcode(pHandle->eraseOpCode);
+        FLSOPSKD_STIGSetExopcode(pHandle->eraseExOpCode);
         CSL_REG32_WR(&pReg->FOTA_GP0, 1);
         CSL_REG32_WR(&pReg->FOTA_ADDR, offset);
         CSL_REG32_WR(&pReg->STS_IRQ.STATUS, 1);
@@ -180,59 +236,7 @@ int32_t FLSOPSKD_Write(FLSOPSKD_handle *pHandle, uint32_t destAddr, uint8_t *pSr
     return status;
 }
 
-static inline void FLSOPSKD_STIGSetGeneric(uint16_t fncode, uint16_t val)
-{
-    uint32_t nval = (val << 16) | fncode;
-    const CSL_fss_fota_genregsRegs *pReg = (const CSL_fss_fota_genregsRegs *)(CSL_FSS_FOTA_GENREGS_REGS_BASE);
 
-    CSL_REG32_WR(&pReg->FOTA_GP0, nval);
-    CSL_REG32_WR(&pReg->STS_IRQ.STATUS, 1);
-    CSL_REG32_FINS(&pReg->FOTA_CTRL, FSS_FOTA_GENREGS_FOTA_CTRL_GO, 1);
-    while (CSL_REG32_RD(&pReg->STS_IRQ.STATUS_RAW) == 0)
-        ;
-}
-
-static void FLSOPSKD_STIGSetOpcode(uint8_t opcode)
-{
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_OPCODE, opcode);
-}
-
-static void FLSOPSKD_STIGSetExopcode(uint8_t exopcode)
-{
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_EXOPCODE, exopcode);
-}
-
-static void FLSOPSKD_STIGSetReadBytesCount(uint8_t nReadBytes)
-{
-    if (nReadBytes > 0)
-    {
-        nReadBytes = ((nReadBytes - 1) + 0x8) & 0xf;
-    }
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_RDBYTECNT, nReadBytes);
-}
-
-static void FLSOPSKD_STIGSetWriteBytesCount(uint8_t nWriteBytes)
-{
-    if (nWriteBytes > 0)
-    {
-        nWriteBytes = ((nWriteBytes - 1) + 0x8) & 0xf;
-    }
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_WRBYTECNT, nWriteBytes);
-}
-
-static void FLSOPSKD_STIGSetAddressBytesCount(uint8_t nAddressBytes)
-{
-    if (nAddressBytes > 0)
-    {
-        nAddressBytes = (0x8 + ((nAddressBytes - 1) & 0x3)) & 0xf;
-    }
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_ADDRBYTECNT, nAddressBytes);
-}
-
-static void FLSOPSKD_STIGSetDummyCycles(uint8_t nDummyCycle)
-{
-    FLSOPSKD_STIGSetGeneric(FOTA_STIG_SET_DUMMYCYCLES, nDummyCycle);
-}
 
 static void FLSOPSKD_STIGSetWrite(uint64_t wrData)
 {
