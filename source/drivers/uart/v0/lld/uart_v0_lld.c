@@ -2621,7 +2621,7 @@ static uint32_t UART_fifoRead(UARTLLD_Handle hUart, uint8_t *buffer,
 
     isRxReady = UART_statusIsDataReady(hUart);
 
-    while (((Bool)TRUE == isRxReady) && (0U != readSizeRemaining))
+    while (((Bool)TRUE == isRxReady) && (0U != tempReadSizeRemaining))
     {
         /* once the H/w is ready  reading from the H/w                        */
         *tempBuffer = (UInt8) UART_readByte(hUart);
