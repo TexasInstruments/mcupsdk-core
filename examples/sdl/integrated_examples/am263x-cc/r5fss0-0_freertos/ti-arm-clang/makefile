@@ -61,6 +61,9 @@ FILES_common := \
 	ecc_mcan.c \
 	ecc_icssm.c \
 	ecc_mssl2.c \
+	ecc_atcm.c \
+	ecc_btcm.c \
+	ecc_tptc.c \
 	parity_tcm.c \
 	parity_dma.c \
 	mcrc_automode.c \
@@ -75,11 +78,15 @@ FILES_common := \
 	ti_pinmux_config.c \
 	ti_power_clock_config.c \
 
+ASMFILES_common := \
+	resetvecs.S \
+
 FILES_PATH_common = \
 	.. \
 	../../.. \
 	../../../sdl \
 	../../../../../dpl \
+	../../../../../integrated_examples/sdl \
 	generated \
 
 INCLUDES_common := \

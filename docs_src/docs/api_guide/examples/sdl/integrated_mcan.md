@@ -32,6 +32,9 @@ The table below describes the diagnostics used from SDL in this example. In gene
 | MCAN0 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MCAN0.                             |
 | ICSSM ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for ICSSM.                             |
 | MSSL2 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MSSL2.                             |
+| ATCM ECC              | Runtime        | Performs 1 bit and 2 bit injection tests for ATCM.                              |
+| BTCM ECC              | Runtime        | Performs 1 bit and 2 bit injection tests for BTCM.                              |
+| TPTC ECC              | Runtime        | Performs 1 bit injection tests for TPTC.                                        |
 | RTI                   | Runtime        | R5F0-0 UC1 RTI diagnostic.                                                      |
 | RTI                   | Runtime        | R5F0-0 UC2 RTI diagnostic.                                                      |
 | DCC                   | Runtime        | DCC diagnostic UC1.                                                             |
@@ -178,6 +181,8 @@ When runtime diagnostics are performed:
     ECC MCAN0.... PASSED. 
     ECC ICSSM.... PASSED. 
     ECC MSSL2.... PASSED. 
+    ECC ATCM0.... PASSED. 
+    ECC BTCM .... PASSED. 
     DCC UC1...... PASSED. 
     TCM Parity... PASSED. 
     DMA Parity... PASSED. 

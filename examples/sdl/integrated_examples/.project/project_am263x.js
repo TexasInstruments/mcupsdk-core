@@ -21,12 +21,27 @@ const files = {
         "ecc_mcan.c",
         "ecc_icssm.c",
         "ecc_mssl2.c",
+        "ecc_atcm.c",
+        "ecc_btcm.c",
+        "ecc_tptc.c",
         "parity_tcm.c",
         "parity_dma.c",
         "mcrc_automode.c",
         "ecc_bus_safety_main.c",
         "ecc_bus_safety_common.c",
         "ecc_bus_safety_Interrupt.c",
+    ],
+};
+
+const asmfiles_r5f = {
+    common: [
+		"resetvecs.S",
+	],
+};
+
+const projectspecfiles = {
+    common: [
+        "resetvecs.S",
     ],
 };
 
@@ -39,6 +54,7 @@ const filedirs = {
         "../../..", /* Example base */
         "../../../sdl",
         "../../../../../dpl", /* SDL dpl base add an extra lvl*/
+        "../../../../../integrated_examples/sdl",
     ],
 };
 
@@ -162,6 +178,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+    build_property.projectspecfiles = projectspecfiles;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
@@ -177,6 +194,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
             build_property.templates = templates_freertos_r5f;
+            build_property.asmfiles = asmfiles_r5f;
         }
         else
         {

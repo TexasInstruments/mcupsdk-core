@@ -152,6 +152,37 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 		(uint32_t) &gMCRCSrcBuffer[0],
     },
 };
+static SDL_MCRC_Config_t SDL_MCRC_Config[MCRC_USECASES] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+ };
 /*===========================================================================*/
 /*                   Function definitions                              */
 /*===========================================================================*/
@@ -206,7 +237,7 @@ int32_t MCRCAuto_test(void)
 			SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 
 			/* Configure CRC channel */
-			SDL_MCRC_configCRCType(instance, mcrcChannel);
+			SDL_MCRC_addConfig(params[testCase].instance,params[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 			SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, SDL_MCRC_OPERATION_MODE_FULLCPU);
 
 			/* Get CRC PSA signature register address */
@@ -240,7 +271,7 @@ int32_t MCRCAuto_test(void)
 		    /* Reset the CRC channel*/
 		    SDL_MCRC_channelReset(instance, mcrcChannel);
 		    SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, params[testCase].mcrcMode);
-		    SDL_MCRC_configCRCType(instance, mcrcChannel);
+		    SDL_MCRC_addConfig(params[testCase].instance,params[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 
 		    SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 		    SDL_MCRC_getCRCRegAddr(instance, mcrcChannel, &crcRegAddr);
@@ -313,9 +344,6 @@ int32_t MCRCAuto_test(void)
 						dmaCh0, tcc0, param0, EDMA_TEST_EVT_QUEUE_NO);
 			EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
 						dmaCh1, tcc1, param1, EDMA_TEST_EVT_QUEUE_NO);
-
-			/* Disable the interrupt for the channel*/
-			// EDMA_enableEvtIntrRegion(baseAddr, regionId, dmaCh0);
 
 			/* Program Param Set */
 			EDMA_ccPaRAMEntry_init(&edmaParam0);

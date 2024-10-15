@@ -141,6 +141,42 @@ int32_t performDiags(void *args)
   }
   DebugP_log("PASSED. \r\n");
 
+  /* check ECC for ATCM0  */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    ECC ATCM0.... ");
+  sdlstats.diagRunning = DIAGRUNNING_ECCATCM;
+  sdlResult = ECC_ATCM_test();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
+  /* check ECC for BTCM  */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    ECC BTCM.... ");
+  sdlstats.diagRunning = DIAGRUNNING_ECCBTCM;
+  sdlResult = ECC_BTCM_test();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
+  /* check ECC for TPTC  */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    ECC TPTC.... ");
+  sdlstats.diagRunning = DIAGRUNNING_ECCTPTC;
+  sdlResult = ECC_TPTC_Test();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
   /* check DCC */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    DCC UC1...... ");

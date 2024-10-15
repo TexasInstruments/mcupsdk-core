@@ -132,6 +132,12 @@
         </file>
         <file path="../../../sdl/ecc_mssl2.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../../../sdl/ecc_atcm.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../sdl/ecc_btcm.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../sdl/ecc_tptc.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../../../sdl/parity_tcm.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../sdl/parity_dma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
@@ -143,6 +149,8 @@
         <file path="../../../sdl/ecc_bus_safety_common.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../sdl/ecc_bus_safety_Interrupt.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../sdl/resetvecs.S" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

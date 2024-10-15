@@ -51,7 +51,8 @@ extern "C"
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
-
+#include <sdl/sdl_exception.h>
+#include <sdl/r5/v0/sdl_interrupt.h>
 
 
 /* ========================================================================== */
@@ -83,6 +84,9 @@ extern "C"
 #define ESMCB_PARITYTCM       6u
 #define ESMCB_PARITYDMA       7u
 #define ESMCB_ECCBUS          8u
+#define ESMCB_ATCM_ECC        9u
+#define ESMCB_BTCM_ECC        10u
+#define ESMCB_TPTC_ECC        11u
 
 /* used to denote Interrupt Source in the ESM */
 #define ESM_INT_MCAN0_ECC_CORRECTABLE       2u
@@ -127,6 +131,8 @@ extern "C"
 #define DIAGRUNNING_ECCICSSM  9u
 #define DIAGRUNNING_ECCMSSL2  10u
 #define DIAGRUNNING_ECCATCM   11u
+#define DIAGRUNNING_ECCBTCM   12u
+#define DIAGRUNNING_ECCTPTC   13u
 
 /* SDL related stats and counters we use  */
 struct s_sdlstats
@@ -215,9 +221,14 @@ extern void ecc_icssm_clearESM(void);
 extern int32_t ECC_MSSL2_test(void);
 extern void ecc_mssl2_clearESM(void);
 /* ECC R5F0 ATCM MEMORY */
-extern int32_t ECC_R5F0_ATCM_test(void);
-extern void ecc_r5f0_clearESM(SDL_ESM_IntType esmIntrType);
+extern int32_t ECC_ATCM_test(void);
+extern void ecc_atcm_clearESM(void);
+/* ECC R5F0 BTCM MEMORY */
+extern int32_t ECC_BTCM_test(void);
+extern void ecc_btcm_clearESM(void);
 
+extern int32_t ECC_TPTC_Test(void);
+extern void ecc_tptc_clearESM(void);
 /***************************************************************************/
 /*              DCC Defines                                                */
 /***************************************************************************/

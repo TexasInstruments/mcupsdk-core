@@ -45,7 +45,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "sdlexample.h"
-
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -53,22 +52,86 @@
 /* This macro shows how many ESM events are configured*/
 #define SDL_MCANA_MAX_MEM_SECTIONS                  (1u)
 #define SDL_ICSSM_MAX_MEM_SECTIONS                  (1u)
-#define SDL_MSS_L2_MAX_MEM_SECTIONS                 (1u)
-#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_MSS_MAX_MEM_SECTIONS                    (2u)
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (2u)
 #define SDL_EXAMPLE_ECC_RAM_ADDR    (0x52600000u) /* MCAN0 address */
 #define SDL_EXAMPLE_ECC_AGGR                              SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                            SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
-#define SDL_EXAMPLE_ECC_MSSL2_AGGR                        SDL_SOC_ECC_AGGR
+#define SDL_EXAMPLE_ECC_MSS_AGGR                          SDL_SOC_ECC_AGGR
 #define SDL_EXAMPLE_ECC_MSSL2_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
-#define SDL_EXAMPLE_ECC_ATCM_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
-#define SDL_EXAMPLE_ECC_ATCM_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID
-
+#define SDL_EXAMPLE_ECC_ATCM_BTCM_AGGR                    SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ATCM_RAM_ID                       SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID
+#define SDL_EXAMPLE_ECC_BTCM_RAM_ID                       SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
+#define SDL_EXAMPLE_ECC_TPTC_RAM_ID                       SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
+/* This is the list of exception handle and the parameters */
+const SDL_R5ExptnHandlers ECC_Test_R5ExptnHandlers =
+{
+    .udefExptnHandler = &SDL_EXCEPTION_undefInstructionExptnHandler,
+    .swiExptnHandler = &SDL_EXCEPTION_swIntrExptnHandler,
+    .pabtExptnHandler = &SDL_EXCEPTION_prefetchAbortExptnHandler,
+    .dabtExptnHandler = &SDL_EXCEPTION_dataAbortExptnHandler,
+    .irqExptnHandler = &SDL_EXCEPTION_irqExptnHandler,
+    .fiqExptnHandler = &SDL_EXCEPTION_fiqExptnHandler,
+    .udefExptnHandlerArgs = ((void *)0u),
+    .swiExptnHandlerArgs = ((void *)0u),
+    .pabtExptnHandlerArgs = ((void *)0u),
+    .dabtExptnHandlerArgs = ((void *)0u),
+    .irqExptnHandlerArgs = ((void *)0u),
+};
 
+void ECC_Test_undefInstructionExptnCallback(void)
+{
+    printf("\r\nUndefined Instruction exception\r\n");
+}
+
+void ECC_Test_swIntrExptnCallback(void)
+{
+    printf("\r\nSoftware interrupt exception\r\n");
+}
+
+void ECC_Test_prefetchAbortExptnCallback(void)
+{
+    printf("\r\nPrefetch Abort exception\r\n");
+}
+void ECC_Test_dataAbortExptnCallback(void)
+{
+    printf("\r\nData Abort exception\r\n");
+}
+void ECC_Test_irqExptnCallback(void)
+{
+    printf("\r\nIrq exception\r\n");
+}
+
+void ECC_Test_fiqExptnCallback(void)
+{
+    printf("\r\nFiq exception\r\n");
+}
+
+void ECC_Test_exceptionInit(void)
+{
+
+    SDL_EXCEPTION_CallbackFunctions_t exceptionCallbackFunctions =
+            {
+             .udefExptnCallback = ECC_Test_undefInstructionExptnCallback,
+             .swiExptnCallback = ECC_Test_swIntrExptnCallback,
+             .pabtExptnCallback = ECC_Test_prefetchAbortExptnCallback,
+             .dabtExptnCallback = ECC_Test_dataAbortExptnCallback,
+             .irqExptnCallback = ECC_Test_irqExptnCallback,
+             .fiqExptnCallback = ECC_Test_fiqExptnCallback,
+            };
+
+    /* Initialize SDL exception handler */
+    SDL_EXCEPTION_init(&exceptionCallbackFunctions);
+    /* Register SDL exception handler */
+    Intc_RegisterExptnHandlers(&ECC_Test_R5ExptnHandlers);
+
+    return;
+}
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -98,14 +161,15 @@ static SDL_ECC_InitConfig_t ECC_Test_ICSSM_ECCInitConfig =
     /**< Sub type list  */
 };
 
-static SDL_ECC_MemSubType ECC_Test_MSS_L2_subMemTypeList[SDL_MSS_L2_MAX_MEM_SECTIONS] =
+static SDL_ECC_MemSubType ECC_Test_MSS_L2_subMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
 {
      SDL_EXAMPLE_ECC_MSSL2_RAM_ID,
+     SDL_EXAMPLE_ECC_TPTC_RAM_ID,
 };
 
-static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
+static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
 {
-    .numRams = SDL_MSS_L2_MAX_MEM_SECTIONS,
+    .numRams = SDL_MSS_MAX_MEM_SECTIONS,
     /**< Number of Rams ECC is enabled  */
     .pMemSubTypeList = &(ECC_Test_MSS_L2_subMemTypeList[0]),
     /**< Sub type list  */
@@ -113,6 +177,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
 
 static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
 {
+    SDL_EXAMPLE_ECC_BTCM_RAM_ID,
     SDL_EXAMPLE_ECC_ATCM_RAM_ID,
 };
 
@@ -177,6 +242,10 @@ volatile static uint32_t esmcbarg = 0;
 #define ESM_ENABLE_BITMAP_CCM_G2       0x00780000u     /* CCM */
 #define ESM_PRIORITY_CCM_G2            0x00780000u
 #define ESM_ERRORP_CCM_G2              0x00780000u
+
+#define ESM_ENABLE_BITMAP_TPTC_G0      0x00180000u     /* CCM */
+#define ESM_PRIORITY_TPTC_G0           0x00180000u
+#define ESM_ERRORP_TPTC_G2             0x00180000u
 
 
 /* we will configure this  in the initlaization function for the ESM */
@@ -243,6 +312,19 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         /* MCAN ECC */
         sdlstats.esmcb = ESMCB_ECC;
         ecc_mssl2_clearESM();
+
+        sdlstats.esmcb = ESMCB_TPTC_ECC;
+        ecc_tptc_clearESM();
+    }
+    if ( (intSrc == ESM_INT_R5F0_ECC_CORRECTABLE) || (intSrc ==  ESM_INT_R5F0_ECC_UNCORRECTABLE) )
+    {
+        /* ATCM ECC */
+        sdlstats.esmcb = ESMCB_ATCM_ECC;
+        ecc_atcm_clearESM();
+    
+        /* BTCM ECC */
+        sdlstats.esmcb = ESMCB_BTCM_ECC;
+        ecc_btcm_clearESM();
     }
     else if ( (intSrc >= ESM_INT_DCC0) && (intSrc <= ESM_INT_DCC3) )
     {
@@ -335,13 +417,29 @@ int32_t ESM_init (void)
       return result;
     }
     /* Initialize MSSL2 ECC Memory */
-    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_MSSL2_AGGR, SDL_EXAMPLE_ECC_MSSL2_RAM_ID);
+    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_MSS_AGGR, SDL_EXAMPLE_ECC_MSSL2_RAM_ID);
     if (result != SDL_PASS)
     {
       return result;
     }
-    /* Initialize R5F0 ECC Memory */
-    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_ATCM_AGGR, SDL_EXAMPLE_ECC_ATCM_RAM_ID);
+
+    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_MSS_AGGR, SDL_EXAMPLE_ECC_TPTC_RAM_ID);
+    if (result != SDL_PASS)
+    {
+      return result;
+    }
+
+    /* Initialise exception handler */
+    ECC_Test_exceptionInit();
+    
+    /* Initialize R5F0 ECC Memory ATCM */
+    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_ATCM_BTCM_AGGR, SDL_EXAMPLE_ECC_ATCM_RAM_ID);
+    if (result != SDL_PASS)
+    {
+      return result;
+    }
+    /* Initialize R5F0 ECC Memory BTCM */
+    result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_ATCM_BTCM_AGGR, SDL_EXAMPLE_ECC_BTCM_RAM_ID);
     if (result != SDL_PASS)
     {
       return result;
@@ -360,9 +458,9 @@ int32_t ESM_init (void)
     /* Initialize ICSSM ECC */
     result = SDL_ECC_init(SDL_EXAMPLE_ECC_ICSSM_AGGR, &ECC_Test_ICSSM_ECCInitConfig);
     /* Initialize MSSL2 ECC */
-    result = SDL_ECC_init(SDL_EXAMPLE_ECC_MSSL2_AGGR, &ECC_Test_MSS_L2_ECCInitConfig);
+    result = SDL_ECC_init(SDL_EXAMPLE_ECC_MSS_AGGR, &ECC_Test_MSS_ECCInitConfig);
     /* Initialize R5F0 ECC */
-    result = SDL_ECC_init(SDL_EXAMPLE_ECC_ATCM_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
+    result = SDL_ECC_init(SDL_EXAMPLE_ECC_ATCM_BTCM_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
     return result;
 }
 
