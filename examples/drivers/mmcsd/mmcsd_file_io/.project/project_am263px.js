@@ -19,7 +19,7 @@ const filedirs = {
     ],
 };
 
-const includes_r5f = {
+const includes_nortos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
@@ -28,26 +28,58 @@ const includes_r5f = {
     ],
 };
 
-const libdirs = {
+const includes_freertos_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
+    ],
+};
+
+const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
     ],
 };
 
-const libs_r5f = {
+const libdirs_freertos = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
+    ],
+};
+const libs_nortos_r5f = {
     common: [
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
 const defines = {
     common: [
+    ],
+}
+
+const libs_freertos_r5f = {
+    common: [
+        "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -72,9 +104,22 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_freertos_r5f =
+[
+    {
+        input: ".project/templates/am263px/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "mmcsd_file_io_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -94,16 +139,25 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.defines = defines;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_r5f;
+        if(buildOption.os.match(/freertos*/))
+        {
+            build_property.libs = libs_freertos_r5f;
+            build_property.templates = templates_freertos_r5f;
+            build_property.includes = includes_freertos_r5f;
+            build_property.libdirs = libdirs_freertos;
+        }
+        else{
+            build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
-        build_property.includes = includes_r5f;
+            build_property.includes = includes_nortos_r5f;
+            build_property.libdirs = libdirs_nortos;
+        }
     }
 
     return build_property;

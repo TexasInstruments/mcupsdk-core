@@ -109,6 +109,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -116,6 +117,7 @@ LIBS_common = \
 	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lfreertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -131,6 +133,7 @@ LIBS_NAME = \
 	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -139,6 +142,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
+	${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

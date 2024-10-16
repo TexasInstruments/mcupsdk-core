@@ -84,7 +84,7 @@ all:
 ifeq ($(CCS_IDE_MODE),cloud)
 #	No post build steps
 else
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME)  ...
+	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_NAME)  ...
 	$(OUTRPRC_CMD) $(OUTFILE) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(COPY) $(OUTNAME).rprc $(BOOTIMAGE_RPRC_NAME)
 	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
@@ -94,14 +94,14 @@ else
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 
-	@echo  Boot multi-core ELF image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME_MCELF) ...
+	@echo  Boot multi-core ELF image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_NAME_MCELF) ...
 
 	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTFILE) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE)
 
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
@@ -130,8 +130,8 @@ else
 	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 endif
 endif

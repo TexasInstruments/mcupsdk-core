@@ -106,4 +106,4 @@ function getComponentBuildProperty(buildOption) {
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
-};
+}; 
