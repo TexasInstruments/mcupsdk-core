@@ -1915,6 +1915,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Qspi Enet Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_qspi_enet",
+        "location": "../../examples/drivers/boot/sbl_qspi_enet/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_qspi_enet",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Qspi Fastboot Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_qspi_fastboot",
         "location": "../../examples/drivers/boot/sbl_qspi_fastboot/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

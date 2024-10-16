@@ -13,8 +13,9 @@
         "/board/board",
         "/fs/fs",
         "/networking/networking",
-        "/memory_configurator/components",
         "/security/security",
+        "/xbar/xbar",
+        "/memory_configurator/components",
     ],
     "devices": [
         "AM64x",
