@@ -1,18 +1,21 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.999+169"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
+const ioexp1          = ioexp.addInstance();
 const ipc             = scripting.addModule("/drivers/ipc/ipc");
 const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -42,20 +45,32 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ioexp1.$name                                              = "CONFIG_IOEXP0";
+ioexp1.i2cAddress                                         = 33;
+ioexp1.TCA6408ARGTR_port0_pinCPSW_ICSS_BRD_CONN_DET2_mode = 0;
+
+const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1              = i2c.addInstance({}, false);
+i2c1.$name              = "CONFIG_I2C0";
+ioexp1.peripheralDriver = i2c1;
+i2c1.I2C.$assign        = "I2C0";
+i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+
 ipc.r5fss0_0 = "notify";
 
 mcspi1.$name                                      = "CONFIG_MCSPI0";
-mcspi1.mode                                       = "MULTI_CONTROLLER";
 mcspi1.intrEnable                                 = "DMA";
-mcspi1.SPI.$assign                                = "SPI1";
-mcspi1.SPI.CLK.$assign                            = "GPIO16";
-mcspi1.SPI.D0.$assign                             = "GPIO17";
-mcspi1.SPI.D1.$assign                             = "GPIO18";
+mcspi1.SPI.$assign                                = "SPI3";
+mcspi1.SPI.CLK.$assign                            = "GPIO24";
+mcspi1.SPI.D0.$assign                             = "GPIO25";
+mcspi1.SPI.D1.$assign                             = "GPIO26";
 mcspi1.mcspiChannel[0].$name                      = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].CSn.$assign                = "GPIO23";
 mcspi1.mcspiChannel[0].mcspiRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
-mcspi1.mcspiChannel[0].mcspiRxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_40";
+mcspi1.mcspiChannel[0].mcspiRxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_41";
 mcspi1.mcspiChannel[0].mcspiTxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR1";
-mcspi1.mcspiChannel[0].mcspiTxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_41";
+mcspi1.mcspiChannel[0].mcspiTxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_42";
+mcspi1.child.$name                                = "drivers_mcspi_v1_mcspi_v1_template0";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
@@ -253,4 +268,5 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
+i2c1.I2C.SCL.$suggestSolution = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution = "GPIO134";
