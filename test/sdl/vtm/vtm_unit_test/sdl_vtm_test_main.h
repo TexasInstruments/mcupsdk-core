@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,7 +51,13 @@
 #include <sdl/sdl_vtm.h>
 #include <sdl/include/hw_types.h>
 #include <kernel/dpl/DebugP.h>
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
+#endif
+
+#if defined (SOC_AM263PX)
+#include <sdl/vtm/v1/sdl_ip_vtm.h>
+#endif
 
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <test/unity/src/unity.h>

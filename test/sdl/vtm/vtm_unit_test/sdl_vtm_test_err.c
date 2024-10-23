@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,11 +39,197 @@
 
 #include "sdl_vtm_test_main.h"
 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
+#endif
+
+#if defined (SOC_AM263PX)
+SDL_VTM_configTs SDL_VTM_configTempSense1 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    155000, /* TS0 Hot*/
+    8000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense2 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    155000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense3 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    58000,   /* TS0 Cold*/
+    155000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense4 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    58000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    155000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense5 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    155000,
+    52000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense6 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    155000,
+    58000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense7 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    155000,
+    52000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense8 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    155000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense9 =
+{
+    0U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    155000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense10 =
+{
+    1U,     /* TS0 Shut*/
+    0U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    155000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense11 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    0U,
+    1U,
+    58000,
+    52000,
+    58000,
+    155000
+};
+SDL_VTM_configTs SDL_VTM_configTempSense12 =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    58000, /* TS0 Hot*/
+    52000,   /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    0U,
+    58000,
+    52000,
+    58000,
+    155000
+};
+#endif
 
 int32_t sdlVTM_errTest(void)
 {
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     int32_t                             i;
     SDL_VTM_configVd                  	vdConfig;
     SDL_VTM_configTs                  	tsConfig;
@@ -855,5 +1041,285 @@ int32_t sdlVTM_errTest(void)
         }
     }
     return (testResult);
+#endif
+
+#if defined (SOC_AM263PX)
+    int32_t                          	testResult = SDL_APP_TEST_PASS;
+    int32_t                          	sdlResult;
+    uint32_t pTempVal;
+    SDL_VTM_adc_code adccode;
+    uint32_t ptsenseCTRL;
+    bool instValid;
+    int32_t                         	tempValmDegree;
+
+    sdlResult = SDL_VTM_initTs(NULL);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense1);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense2);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense3);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense4);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense5);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense6);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense7);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense8);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense9);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense10);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense11);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense12);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    if(testResult == 0)
+    {
+        instValid = (uint32_t) SDL_VTM_getBaseAddr(NULL);
+
+        if (instValid == true)
+        {
+            DebugP_log("SDL_VTM_getBaseAddr negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    SDL_VTM_enableTs(0, 2U);
+    SDL_VTM_enableTs(5, 25U);
+    SDL_VTM_getTemp(5, &pTempVal);
+
+    sdlResult = SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_2, 0x58000, 0x52000);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setAlertTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_1, 150001, 0x52000);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setAlertTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_1, 0x58000, 150001);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setAlertTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_2, 0x58000, 0x52000);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setTShutTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_1, 150001, 0x52000);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setTShutTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_1, 0x58000, 150001);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setTShutTemp negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_2, 1, 2, 3);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setClearInterrupts negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_getSensorStatus(NULL);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getSensorStatus negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_getStaticRegistersTs(NULL);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getStaticRegistersTs negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_enableESMWarmReset(SDL_VTM_INSTANCE_TS_2);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_enableESMWarmReset negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    adccode = SDL_VTM_getAdcCode(5);
+    if (adccode != 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_tsGetCtrl(SDL_VTM_INSTANCE_TS_2, &ptsenseCTRL);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_tsGetCtrl negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_tsGetCtrl(SDL_VTM_INSTANCE_TS_0, NULL);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_tsGetCtrl negative test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    SDL_VTM_enableTc();
+    SDL_VTM_disableTc();
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvTempToAdc(155000, &adccode);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvTempToAdc negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvTempToAdc(-45000, &adccode);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvTempToAdc negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvTempToAdc(5000, NULL_PTR);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvTempToAdc negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvADCToTemp(-20, &tempValmDegree);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvADCToTemp negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvADCToTemp(131, &tempValmDegree);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvADCToTemp negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsConvADCToTemp(50, NULL_PTR);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsConvADCToTemp negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    return (testResult);
+
+#endif
+
 }
 /* Nothing past this point */

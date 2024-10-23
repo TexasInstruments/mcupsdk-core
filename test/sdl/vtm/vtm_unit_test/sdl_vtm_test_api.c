@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,11 +43,32 @@
 #define GT_THR1_DEFAULT          (105000)
 #define GT_THR2_DEFAULT          (115000)
 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
+#endif
+
+#if defined (SOC_AM263PX)
+SDL_VTM_configTs SDL_VTM_configTempSense =
+{
+    1U,     /* TS0 Shut*/
+    1U,     /* TS0 Alert*/
+    72000,//58000,  /* TS0 Hot*/
+    8000,//52000,  /* TS0 Cold*/
+    58000,  /* TSA0 Alert Hot*/
+    52000,  /* TS0 Alert Cold*/
+    1U,
+    1U,
+    58000,
+    52000,
+    58000,
+    52000
+};
+#endif
 
 int32_t sdlVTM_apiTest(void)
 {
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     uint32_t                         tempVal;
     int32_t                            i, sdlResult;
     SDL_VTM_configTs                 tsConfig;
@@ -1389,6 +1410,164 @@ int32_t sdlVTM_apiTest(void)
     }
 
     return (testResult);
+#endif
+#if defined (SOC_AM263PX)
+    int32_t                          	testResult = SDL_APP_TEST_PASS;
+    int32_t                          	sdlResult;
+    uint32_t pTempVal;
+    SDL_VTM_adc_code adccode;
+    uint32_t ptsenseCTRL;
+    SDL_VTM_Stat_val pStat_val;
+    SDL_VTM_staticRegsTs pStaticRegs;
+
+    sdlResult = SDL_VTM_initTs(&SDL_VTM_configTempSense);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_initTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    SDL_VTM_enableTc();
+    SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
+    SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL1, 0);
+    sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &pTempVal);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_1, &pTempVal);
+    if (sdlResult == SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_2, &pTempVal);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_3, &pTempVal);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, 0, 66000);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setAlertTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_1, 0, 66000);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setAlertTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_0, 66000, 74000);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setTShutTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_1, 66000, 74000);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setTShutTemp API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+
+    sdlResult = SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setClearInterrupts API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_1, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_setClearInterrupts API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_getSensorStatus(&pStat_val);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getSensorStatus API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_getStaticRegistersTs(&pStaticRegs);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_getStaticRegistersTs API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_enableESMWarmReset(SDL_VTM_INSTANCE_TS_0);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_enableESMWarmReset API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_enableESMWarmReset(SDL_VTM_INSTANCE_TS_1);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_enableESMWarmReset API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_0);
+    if (adccode != 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_1);
+    if (adccode == 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_2);
+    if (adccode == 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+    adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_3);
+    if (adccode == 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_tsGetCtrl(SDL_VTM_INSTANCE_TS_0, &ptsenseCTRL);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_tsGetCtrl API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+    sdlResult = SDL_VTM_tsGetCtrl(SDL_VTM_INSTANCE_TS_1,  &ptsenseCTRL);
+    if (sdlResult != SDL_PASS)
+    {
+        DebugP_log("\n  SDL_VTM_tsGetCtrl API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+
+     return (testResult);
+
+#endif
 
 }
 /* Nothing past this point */

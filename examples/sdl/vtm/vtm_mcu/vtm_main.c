@@ -199,10 +199,6 @@ void vtm_example_app(void)
     /* UC1 - Receive Hot and Cold Interrupt. */
     DebugP_log("\r\n UC1 : ");
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, 0, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
-    alert_th_hot = 58000; // temperatube in mc
-    alert_th_cold = 72000; // temperatube in mc
-    /* Device temperature is 0x40 => 70000mc */
-    SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
     SDL_VTM_enableTc();
@@ -211,6 +207,11 @@ void vtm_example_app(void)
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_1, &temp1);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_2, &temp2);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_3, &temp3);
+
+    alert_th_hot = temp0 - 3000; // temperatube in mc
+    alert_th_cold = temp0 + 3000; // temperatube in mc 
+
+    SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
 
     SDL_VTM_getSensorStatus(&SDL_VTM_Stat_value);
 
@@ -237,15 +238,16 @@ void vtm_example_app(void)
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
     DebugP_log("\r\n");
     DebugP_log("\r\n UC2 : ");
-    alert_th_hot = 0; // temperatube in mc
-    alert_th_cold = 66000; // temperatube in mc
-    SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);
-    /* Device temperature is 0x40 => 70000mc */
-    /* Configure cold alert temperature so that low threshold interrupt is generated. */
-    SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
+    
+    SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);  
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
     SDL_VTM_enableTc();
+    SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+    alert_th_hot = 0; // temperatube in mc
+    alert_th_cold = temp0 - 3000; // temperatube in mc
+    /* Configure cold alert temperature so that low threshold interrupt is generated. */
+    SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
 
     while(SDL_tempLowThresholdIntr != 1U);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
@@ -254,9 +256,8 @@ void vtm_example_app(void)
     DebugP_log("\r\n Low Threshold Temperature breached and received Interrupt: %d ", SDL_R5FSS0_CORE0_INTR_TSENSE_L);
 
     SDL_VTM_disableTc();
-    alert_th_hot = 66000; // temperatube in mc
-    alert_th_cold = 80000; // temperatube in mc
-    /* Device temperature is 0x40 => 70000mc */
+    alert_th_hot = temp0 - 3000; // temperatube in mc
+    alert_th_cold = temp0 + 3000; // temperatube in mc
     /* Configure hot alert temperature so that hot interrupt is generated. */
     SDL_VTM_setAlertTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, 0, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
@@ -283,8 +284,8 @@ void vtm_example_app(void)
        DebugP_log("\r\nECC_Example_init: Error initializing ESM: result = %d\r\n", retValue);
     }
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
-    alert_th_hot = 66000; // temperatube in mc
-    alert_th_cold = 74000; // temperatube in mc
+    alert_th_hot = temp0 - 3000; // temperatube in mc
+    alert_th_cold = temp0 + 3000; // temperatube in mc
     retValue = SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
