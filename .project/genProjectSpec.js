@@ -183,7 +183,7 @@ const utils = {
     },
 
     getCCSVersionProjectSpec: () => {
-        return "1280";
+        return "1281";
     },
 
     getTiClangVersionProjectSpec: () => {
