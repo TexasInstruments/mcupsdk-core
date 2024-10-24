@@ -1,5 +1,5 @@
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
@@ -10,39 +10,31 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=board.am263px.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=pmic_derby.am261x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    eeprom.c \
-    eeprom_cat24m.c \
-    ethphy.c \
-    ethphy_dp83869.c \
-    ethphy_dp83826e.c \
-    flash.c \
-    flash_nor_ospi.c \
-    flash_nand_ospi.c \
-    led.c \
-    led_gpio.c \
-    led_tpic2810.c \
-    nor_spi_sfdp.c \
-    ioexp_tca6424.c \
-    ioexp_tca6416.c \
+    pmic_core.c \
+    pmic_esm.c \
+    pmic_io.c \
+    pmic_irq.c \
+    pmic_power.c \
+    pmic_wdg.c \
+    pmic.c \
+    pmic_lld.c \
+    pmic_tps65036xx.c \
 
 FILES_PATH_common = \
-    eeprom \
-    ethphy \
-    flash \
-    flash/sfdp \
-    flash/ospi \
-    led \
-    ioexp \
+    pmic_lld/derby/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I../ \
+    -Ipmic_lld/derby/include \
 
 DEFINES_common := \
-    -DSOC_AM263PX \
+    -DSOC_AM261X \
+    -DDERBY \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -93,7 +85,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am263px/ti-arm-clang/$(PROFILE)/r5f/board/
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/pmic_derby/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

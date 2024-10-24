@@ -4,43 +4,34 @@ let device = "am263px";
 
 const files_r5f = {
     common: [
-        "eeprom.c",
-        "eeprom_cat24m.c",
-        "ethphy.c",
-        "ethphy_dp83869.c",
-        "ethphy_dp83826e.c",
-        "flash.c",
-        "flash_nor_ospi.c",
-        "flash_nand_ospi.c",
-        "led.c",
-        "led_gpio.c",
-        "led_tpic2810.c",
-        "nor_spi_sfdp.c",
-        "ioexp_tca6424.c",
-        "ioexp_tca6416.c",
+        "pmic_tps653860xx.c",
+        "pmic.c",
+        "pmic_common.c",
+        "pmic_core.c",
+        "pmic_io.c",
+        "pmic_power.c",
+        "pmic_wdg.c",
+        "pmic_lld.c"
     ],
 };
 
-const files_m4f = {
+const defines = {
     common: [
-
+        "BLACKBIRD",
     ],
 };
 
 const filedirs = {
     common: [
-        "eeprom",
-        "ethphy",
-        "flash",
-        "flash/sfdp",
-        "flash/ospi",
-        "led",
-        "ioexp",
+        "pmic_lld/blackbird/src",
     ],
 };
 
 const includes = {
     common: [
+        "../",
+        "pmic_lld/blackbird/src",
+        "pmic_lld/blackbird/include",
     ],
 };
 
@@ -51,9 +42,9 @@ const buildOptionCombos = [
 function getComponentProperty() {
     let property = {};
 
-    property.dirPath = path.resolve(__dirname, "..");
+    property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "board";
+    property.name = "pmic_blackbird";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -65,6 +56,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.includes = includes;
+    build_property.defines = defines;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
     }

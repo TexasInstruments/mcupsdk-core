@@ -277,15 +277,15 @@ void PMIC_tps653860xxClose(PMIC_Config *config)
 }
 
 /**
- * @brief  Get the PMIC driver handle
+ * @brief  Get the Pmic_CoreHandle_t driver handle
  * This function gets the PMIC driver handle for the specified index
  *
  * @param index  [in] Index within `PMIC_Config gPmicConfig[]`
  * @return  Handle to pmic driver
  */
-PMIC_Handle PMIC_getHandle(uint32_t index)
+Pmic_CoreHandle_t* PMIC_getCoreHandle(uint32_t index)
 {
-    PMIC_Handle         handle = NULL;
+    Pmic_CoreHandle_t* handle = NULL;
     /* Check index */
     if(index < gPmicConfigNum)
     {
@@ -295,7 +295,7 @@ PMIC_Handle PMIC_getHandle(uint32_t index)
         if(obj && (TRUE == obj->isOpen))
         {
             /* valid handle */
-            handle = obj->handle;
+            handle = obj->pmicCoreHandle;
         }
     }
     return handle;

@@ -1,46 +1,37 @@
 let path = require('path');
 
-let device = "am263px";
+let device = "am261x";
 
 const files_r5f = {
     common: [
-        "eeprom.c",
-        "eeprom_cat24m.c",
-        "ethphy.c",
-        "ethphy_dp83869.c",
-        "ethphy_dp83826e.c",
-        "flash.c",
-        "flash_nor_ospi.c",
-        "flash_nand_ospi.c",
-        "led.c",
-        "led_gpio.c",
-        "led_tpic2810.c",
-        "nor_spi_sfdp.c",
-        "ioexp_tca6424.c",
-        "ioexp_tca6416.c",
+        "pmic_core.c",
+        "pmic_esm.c",
+        "pmic_io.c",
+        "pmic_irq.c",
+        "pmic_power.c",
+        "pmic_wdg.c",
+        "pmic.c",
+        "pmic_lld.c",
+        "pmic_tps65036xx.c"
     ],
 };
 
-const files_m4f = {
+const defines = {
     common: [
-
+        "DERBY",
     ],
 };
 
 const filedirs = {
     common: [
-        "eeprom",
-        "ethphy",
-        "flash",
-        "flash/sfdp",
-        "flash/ospi",
-        "led",
-        "ioexp",
+        "pmic_lld/derby/src",
     ],
 };
 
 const includes = {
     common: [
+        "../",
+        "pmic_lld/derby/include",
     ],
 };
 
@@ -51,9 +42,9 @@ const buildOptionCombos = [
 function getComponentProperty() {
     let property = {};
 
-    property.dirPath = path.resolve(__dirname, "..");
+    property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "board";
+    property.name = "pmic_derby";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -63,6 +54,7 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
+    build_property.defines = defines;
     build_property.filedirs = filedirs;
     build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/)) {

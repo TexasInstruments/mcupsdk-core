@@ -30,12 +30,18 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef PMIC_TPS65036xx_H_
+#define PMIC_TPS65036xx_H_
+
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
 #include <board/pmic.h>
-#include <drivers/hw_include/csl_types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -50,59 +56,29 @@
 /* None */
 
 /* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+extern PMIC_Fxns gPmicFxns_TPS65036xx;
+
+/* ========================================================================== */
 /*                          Function Declarations                             */
+/* ========================================================================== */
+
+int32_t PMIC_tps65036xxOpen(PMIC_Config *config, const PMIC_Params *params);
+int32_t PMIC_tps65036xxConfigure(PMIC_Config *config);
+void PMIC_tps65036xxClose(PMIC_Config *config);
+
+/* ========================================================================== */
+/*                       Static Function Definitions                          */
 /* ========================================================================== */
 
 /* None */
 
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-
-PMIC_Handle PMIC_open(uint32_t instanceId, const PMIC_Params *params)
-{
-    PMIC_Config *config = NULL;
-
-    if(instanceId < gPmicConfigNum)
-    {
-        config = &gPmicConfig[instanceId];
-        if(config->fxns && config->fxns->openFxn)
-        {
-            int32_t status;
-
-            status = config->fxns->openFxn(config, params);
-            if(status != SystemP_SUCCESS)
-            {
-                config = NULL;
-            }
-        }
-    }
-
-    return (config);
+#ifdef __cplusplus
 }
+#endif
 
-int32_t PMIC_configure(PMIC_Handle handle)
-{
-    int32_t status = SystemP_FAILURE;
+#endif /* #ifndef TPS653860xx_H_ */
 
-    PMIC_Config *config = (PMIC_Config *) handle;
-
-    if(config && config->fxns && config->fxns->configureFxn)
-    {
-        status = config->fxns->configureFxn(config);
-    }
-
-    return status;
-}
-
-void PMIC_close(PMIC_Handle handle)
-{
-    PMIC_Config *config = (PMIC_Config *) handle;
-
-    if(config && config->fxns && config->fxns->closeFxn)
-    {
-        config->fxns->closeFxn(config);
-    }
-
-    return;
-}
+/** @} */
