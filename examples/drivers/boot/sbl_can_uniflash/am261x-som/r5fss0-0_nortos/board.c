@@ -45,18 +45,6 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void mcanEnableTransceiver(void)
-{
-    uint32_t    gpioBaseAddr, pinNum;
-
-    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-    pinNum       = CONFIG_GPIO0_PIN;
-
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
-
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-}
-
 void gpio_flash_reset(void)
 {
     uint32_t    gpioBaseAddr, pinNum;
@@ -72,6 +60,13 @@ void gpio_flash_reset(void)
 void board_flash_reset(void)
 {
     gpio_flash_reset();
+}
+
+/* Dummy functions for am261x-som board as it uses external transceiver */
+
+void mcanEnableTransceiver(void)
+{
+    
 }
 
 int32_t enableOspiReset(void)

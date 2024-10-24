@@ -1,18 +1,14 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.999+157"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const eeprom          = scripting.addModule("/board/eeprom/eeprom", {}, false);
-const eeprom1         = eeprom.addInstance();
-const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1            = i2c.addInstance();
-const i2c2            = i2c.addInstance();
 const mcan            = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1           = mcan.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
@@ -45,23 +41,15 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-eeprom1.$name = "CONFIG_EEPROM0";
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.MCAN.$assign    = "MCAN0";
+mcan1.MCAN.RX.$assign = "GPIO77";
+mcan1.MCAN.TX.$assign = "GPIO78";
 
-i2c1.$name           = "CONFIG_I2C0";
-i2c1.I2C.$assign     = "I2C2";
-i2c1.I2C.SCL.$assign = "GPIO25";
-i2c1.I2C.SDA.$assign = "GPIO26";
-i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
-
-eeprom1.peripheralDriver = i2c2;
-i2c2.$name               = "EEPROM_I2C_CONFIG";
-i2c2.I2C.$assign         = "I2C0";
-i2c2.I2C.SCL.$assign     = "GPIO135";
-i2c2.I2C.SDA.$assign     = "GPIO134";
-i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
-
-mcan1.$name        = "CONFIG_MCAN0";
-mcan1.MCAN.$assign = "MCAN0";
+const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
+const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
+mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
+mcan1.child             = mcan_v1_template1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -121,13 +109,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -278,11 +266,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-mcan1.MCAN.RX.$suggestSolution = "GPIO107";
-mcan1.MCAN.TX.$suggestSolution = "GPIO108";

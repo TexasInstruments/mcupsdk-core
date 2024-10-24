@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -12,8 +13,9 @@ const fsi_rx          = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false)
 const fsi_rx1         = fsi_rx.addInstance();
 const fsi_tx          = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
 const fsi_tx1         = fsi_tx.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -46,9 +48,6 @@ const section12       = section.addInstance();
  */
 fsi_rx1.$name                  = "CONFIG_FSI_RX0";
 fsi_rx1.FSIRX.$assign          = "FSIRX0";
-fsi_rx1.FSIRX.CLK.$assign      = "GPIO16";
-fsi_rx1.FSIRX.D0.$assign       = "GPIO17";
-fsi_rx1.FSIRX.D1.$assign       = "GPIO18";
 fsi_rx1.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR0";
 fsi_rx1.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR1";
 fsi_rx1.fsiRxIntXbar1.instance = "INT_XBAR_1";
@@ -56,8 +55,6 @@ fsi_rx1.fsiRxIntXbar1.instance = "INT_XBAR_1";
 fsi_tx1.$name                  = "CONFIG_FSI_TX0";
 fsi_tx1.FSITX.$assign          = "FSITX0";
 fsi_tx1.FSITX.CLK.$assign      = "GPIO29";
-fsi_tx1.FSITX.D0.$assign       = "GPIO13";
-fsi_tx1.FSITX.D1.$assign       = "GPIO14";
 fsi_tx1.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR2";
 fsi_tx1.fsiTxIntXbar0.instance = "INT_XBAR_2";
 fsi_tx1.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR3";
@@ -68,6 +65,7 @@ debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
 debug_log.uartLog.UART.TXD.$assign = "GPIO28";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -129,13 +127,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -286,3 +284,14 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsi_rx1.FSIRX.CLK.$suggestSolution = "GPIO16";
+fsi_rx1.FSIRX.D0.$suggestSolution  = "GPIO17";
+fsi_rx1.FSIRX.D1.$suggestSolution  = "GPIO18";
+fsi_tx1.FSITX.D0.$suggestSolution  = "GPIO13";
+fsi_tx1.FSITX.D1.$suggestSolution  = "GPIO14";
