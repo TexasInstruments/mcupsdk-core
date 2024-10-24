@@ -44,6 +44,7 @@ const section7    = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 pmic1.$name = "CONFIG_PMIC0";
+pmic1.name  = "TPS65036xx";
 
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";

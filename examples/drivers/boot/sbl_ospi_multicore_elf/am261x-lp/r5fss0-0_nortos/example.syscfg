@@ -44,6 +44,7 @@ const section7    = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 pmic1.$name = "CONFIG_PMIC0";
+pmic1.name  = "TPS65036xx";
 
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
@@ -137,7 +138,7 @@ general1.irq_stack_size = 4096;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(8);
+region1.memory_region.create(9);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -173,6 +174,10 @@ region1.memory_region[7].size               = 0x3CE;
 region1.memory_region[7].$name              = "MAILBOX_R5F";
 region1.memory_region[7].auto               = false;
 region1.memory_region[7].manualStartAddress = 0x44000400;
+region1.memory_region[8].$name              = "MSRAM_STACK";
+region1.memory_region[8].auto               = false;
+region1.memory_region[8].manualStartAddress = 0x70100000;
+region1.memory_region[8].size               = 0x3000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -214,8 +219,8 @@ section3.output_section[1].palignment            = true;
 section3.output_section[2].$name                 = ".stack";
 section3.output_section[2].palignment            = true;
 
-section4.load_memory                              = "MSRAM_0";
 section4.$name                                    = "Stack Segments";
+section4.load_memory                              = "MSRAM_STACK";
 section4.output_section.create(5);
 section4.output_section[0].$name                  = ".irqstack";
 section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";

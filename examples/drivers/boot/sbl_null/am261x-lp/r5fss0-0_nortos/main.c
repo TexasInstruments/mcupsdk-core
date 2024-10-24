@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
 
@@ -65,6 +66,9 @@ int main(void)
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
+
+    status = Board_driversOpen();
+    DebugP_assert(status == SystemP_SUCCESS);
 
     DebugP_log("\r\n");
     //Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);

@@ -49,6 +49,8 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib
             -i${CG_TOOL_ROOT}/lib
             -m=mcan_external_read_write.${ConfigName}.map
             --diag_suppress=10063
@@ -74,6 +76,8 @@
                 -lfreertos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.debug.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.debug.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -86,6 +90,8 @@
                 -lfreertos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.release.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.release.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

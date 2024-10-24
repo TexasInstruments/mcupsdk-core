@@ -27,6 +27,8 @@ const libdirs = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
     ],
 };
 
@@ -42,6 +44,8 @@ const libs_r5f = {
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };

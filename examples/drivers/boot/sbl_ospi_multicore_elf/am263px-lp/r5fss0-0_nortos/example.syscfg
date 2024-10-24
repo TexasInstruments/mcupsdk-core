@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -228,8 +228,8 @@ section3.output_section[1].palignment            = true;
 section3.output_section[2].$name                 = ".stack";
 section3.output_section[2].palignment            = true;
 
-section4.load_memory                              = "MSRAM_0";
 section4.$name                                    = "Stack Segments";
+section4.load_memory                              = "MSRAM_0";
 section4.output_section.create(5);
 section4.output_section[0].$name                  = ".irqstack";
 section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";

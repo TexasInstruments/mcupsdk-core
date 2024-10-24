@@ -47,6 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib
             -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${CG_TOOL_ROOT}/lib
             -m=sbl_can_multicore_elf.${ConfigName}.map
@@ -73,6 +74,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.debug.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.debug.lib
                 -lsecurity.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
@@ -86,6 +88,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.release.lib
+                -lpmic_blackbird.am263px.r5f.ti-arm-clang.release.lib
                 -lsecurity.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a

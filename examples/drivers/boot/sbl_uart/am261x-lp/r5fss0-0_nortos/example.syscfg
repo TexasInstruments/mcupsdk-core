@@ -42,6 +42,7 @@ const section8    = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 pmic1.$name = "CONFIG_PMIC0";
+pmic1.name  = "TPS65036xx";
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_0";

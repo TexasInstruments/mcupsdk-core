@@ -98,6 +98,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
@@ -106,6 +107,7 @@ LIBS_common = \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lpmic_derby.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -121,6 +123,7 @@ LIBS_NAME = \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	pmic_derby.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -128,6 +131,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/board/pmic/lib \
 	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
 
