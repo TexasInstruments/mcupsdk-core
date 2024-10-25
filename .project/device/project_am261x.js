@@ -182,6 +182,7 @@ const example_file_list = [
 	"examples/drivers/ospi/ospi_flash_diag_lld/.project/project.js",
 	"examples/drivers/ospi/ospi_flash_dma_lld/.project/project.js",
 	"examples/drivers/ospi/ospi_flash_interrupt_lld/.project/project.js",
+	"examples/drivers/ospi/ospi_dual_flash_io/.project/project.js",
 	// "examples/drivers/ospi/ospi_nand_flash_io/.project/project.js",
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
 	"examples/drivers/rat/.project/project_nortos.js",

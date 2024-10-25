@@ -35,7 +35,7 @@
 #include "ti_board_config.h"
 #include "ti_drivers_open_close.h"
 
-void ospi_flash_io_main(void *args);
+void ospi_dual_flash_io_main(void *args);
 void board_flash_reset(void);
 
 int main(void)
@@ -46,7 +46,8 @@ int main(void)
     Drivers_i2cOpen();
     board_flash_reset();
     Drivers_i2cClose();
-    ospi_flash_io_main(NULL);
+
+    ospi_dual_flash_io_main(NULL);
 
     Board_deinit();
     System_deinit();

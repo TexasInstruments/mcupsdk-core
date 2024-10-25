@@ -30,26 +30,23 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include "ti_board_open_close.h"
 #include "ti_drivers_config.h"
-#include "ti_board_config.h"
-#include "ti_drivers_open_close.h"
 
-void ospi_flash_io_main(void *args);
-void board_flash_reset(void);
-
-int main(void)
+void gpio_flash_reset(void)
 {
-    System_init();
-    Board_init();
+    uint32_t    gpioBaseAddr, pinNum;
+    /* Get address after translation translate */
+    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
+    pinNum       = GPIO_OSPI_RST_PIN;
+    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
+    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
+}
 
-    Drivers_i2cOpen();
-    board_flash_reset();
-    Drivers_i2cClose();
-    ospi_flash_io_main(NULL);
-
-    Board_deinit();
-    System_deinit();
-
-    return 0;
+void board_flash_reset(void)
+{
+    gpio_flash_reset();
 }
