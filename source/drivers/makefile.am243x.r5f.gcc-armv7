@@ -103,6 +103,7 @@ FILES_common := \
     pmu.c \
     pruicss_g_v0.c \
     pruicss_g_v0_cfg.c \
+    qos.c \
     sciclient.c \
     sciclient_pm.c \
     sciclient_rm.c \
@@ -203,6 +204,8 @@ FILES_PATH_common = \
     pinmux/am64x_am243x \
     pruicss/g_v0 \
     pruicss/soc/am64x_am243x \
+    qos \
+    qos/v0 \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \

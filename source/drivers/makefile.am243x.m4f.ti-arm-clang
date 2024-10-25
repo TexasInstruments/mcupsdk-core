@@ -123,6 +123,8 @@ FILES_PATH_common = \
     pinmux/am64x_am243x \
     pruicss/g_v0 \
     pruicss/soc/am64x_am243x \
+    qos \
+    qos/v0 \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \
