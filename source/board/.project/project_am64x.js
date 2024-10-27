@@ -40,6 +40,8 @@ const files_m4f = {
 
 const files_a53 = {
     common: [
+        "eeprom.c",
+        "eeprom_at24c.c",
 		"flash.c",
         "flash_nand_gpmc.c",
         "flash_nand_ospi.c",
@@ -67,6 +69,7 @@ const filedirs = {
         "ram/gpmc",
         "led",
         "ioexp",
+        "eeprom",
     ],
 };
 

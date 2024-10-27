@@ -38,6 +38,10 @@ void PmuP_clearCycleCounterOverflowStatus();
 void PmuP_resetAndEnableAllCounters();
 uint32_t PmuP_getCycleCount64();
 void PmuP_startCycleCounter();
+#define PMU_TEXT_SECTION __attribute__((section(".text.pmu")))
+#define PmuP_SEC_TO_NANOSEC                     (1000000000ULL)
+
+static uint64_t gCounterFreqHz=0;
 
 void CycleCounterP_reset()
 {
@@ -51,4 +55,15 @@ uint32_t CycleCounterP_getCount32()
 {
 	uint32_t count = CycleCounterP_getCount64();
 	return count;
+}
+
+void PMU_TEXT_SECTION CycleCounterP_init(const uint64_t cpuFreqHz)
+{
+    gCounterFreqHz = cpuFreqHz;
+    CycleCounterP_reset();
+}
+
+uint64_t PMU_TEXT_SECTION CycleCounterP_nsToTicks(const uint64_t nanosecs)
+{
+    return (((uint64_t)nanosecs*gCounterFreqHz)/PmuP_SEC_TO_NANOSEC);
 }

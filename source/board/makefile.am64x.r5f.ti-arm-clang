@@ -41,6 +41,7 @@ FILES_PATH_common = \
     ram/gpmc \
     led \
     ioexp \
+    eeprom \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
