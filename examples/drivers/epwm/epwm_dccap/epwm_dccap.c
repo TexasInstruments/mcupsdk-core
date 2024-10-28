@@ -104,8 +104,8 @@ int32_t status = SystemP_SUCCESS;
 
 static bool App_isCAPEVTSet(uint32_t base);
 
-extern uint32_t epwmTbClkSyncEnableMask;
-extern uint32_t epwmTbClkSyncDisableMask;
+
+
 
 void epwm_dccap_main(void *args)
 {
@@ -115,8 +115,6 @@ void epwm_dccap_main(void *args)
     Board_driversOpen();
 
     /* Get Address of ePWM */
-    // uint32_t epwmInstance0 = 0;
-    // uint32_t epwmInstance1 = 1;
     gEpwm0BaseAddr = CONFIG_EPWM0_BASE_ADDR;
     gEpwm1BaseAddr = CONFIG_EPWM1_BASE_ADDR;
 
@@ -128,7 +126,7 @@ void epwm_dccap_main(void *args)
     */
 
     /* Gate the EPWM clock for configurations */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, FALSE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, FALSE);
 
     /* Set both EPWM counters to 0 */
     EPWM_setTimeBaseCounter(gEpwm0BaseAddr, 0);
@@ -147,7 +145,7 @@ void epwm_dccap_main(void *args)
     EPWM_enableTripZoneOutput(gEpwm0BaseAddr, EPWM_TZ_SELECT_TRIPOUT_CAPEVT);
 
     /* Ungate the EPWM clock after the configurations are done */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, TRUE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, TRUE);
 
     /* wait for sometime to observe the EPWM Waveforms */
     ClockP_sleep(2);

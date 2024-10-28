@@ -157,8 +157,8 @@ void App_epwmUpdateISR(void *args);
 static void App_edmaConfig(void);
 static void App_edmaDeConfig(void);
 
-extern uint32_t epwmTbClkSyncEnableMask;
-extern uint32_t epwmTbClkSyncDisableMask;
+
+
 
 void epwm_xcmp_dma_main(void *args)
 {
@@ -169,8 +169,7 @@ void epwm_xcmp_dma_main(void *args)
     DebugP_log("EPWM XCMP EDMA Test Started ...\r\n");
 
     /* disable TBSYNC for all EPWM */
-    // uint32_t epwm_mask = (1U<<(0U)) | (1U<<(1U)) | (1U << (2U)) | (1U << (3U)) | (1U << (4U)) | (1U << (31U)); // this is added from syscfg.
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, false);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, false);
 
     /* xlinking xload register */
     for(int base = 0; base <= NUM_TEST_PWM; base++)
@@ -204,12 +203,12 @@ void epwm_xcmp_dma_main(void *args)
         EPWM_setTimeBaseCounterMode(gEpwmBaseAddr[base], EPWM_COUNTER_MODE_UP);
     }
 
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, true);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, true);
 
     while(gTransferCount < EDMA_TEST_C_COUNT);
 
     /* pausing the EPWMs */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, false);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, false);
 
     /* freezing the EPWM Counters */
     EPWM_setTimeBaseCounterMode(gEpwmIsrBaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);

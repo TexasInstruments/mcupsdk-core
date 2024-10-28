@@ -108,7 +108,7 @@
 #define APP_CMPB_STEP (1700U)
 
 uint16_t gApp_cmpa, gApp_cmpb;
-extern uint32_t epwmTbClkSyncEnableMask, epwmTbClkSyncDisableMask;
+
 
 void epwm_global_load_and_link_main(void *args)
 {
@@ -124,7 +124,7 @@ void epwm_global_load_and_link_main(void *args)
     gApp_cmpa = APP_CMPA_MAX;
     gApp_cmpb = APP_CMPB_MAX;
 
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, TRUE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncDisableMask, TRUE);
 
     while(gApp_cmpb > APP_CMPB_MIN){
         // DebugP_log("CMPA : %d\tCMPB : %d\r\n",gApp_cmpa, gApp_cmpb);
@@ -163,7 +163,7 @@ void epwm_global_load_and_link_main(void *args)
         gApp_cmpb -= APP_CMPB_STEP;
     }
     
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, FALSE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncDisableMask, FALSE);
 
     DebugP_log("EPWM Global Load and Link gTest Passed!!\r\n");
     DebugP_log("All Tests have Passed!!");

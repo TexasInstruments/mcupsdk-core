@@ -110,7 +110,7 @@ uint32_t gEcap2BaseAddr = AH_B_CAPTURE_BASE_ADDR;
 /* EPWM Counter is prescaled by 16. ECAP counter is prescaled by 1*/
 #define SCALING_FACTOR (16)
 
-extern uint32_t epwmTbClkSyncDisableMask;
+
 
 void epwm_deadband_main(void *args)
 {
@@ -122,7 +122,7 @@ void epwm_deadband_main(void *args)
     DebugP_log("EPWM DeadBand Example runs for 5 Secs \r\n");
 
     /* Start all the EPWM Timebase Counters */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, TRUE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncDisableMask, TRUE);
 
     ClockP_sleep(5);
     /* Rising and Falling edge timestamps for reference waveform*/
@@ -138,7 +138,7 @@ void epwm_deadband_main(void *args)
     volatile uint32_t fallingEdge_AHB = (ECAP_getEventTimeStamp(AH_B_CAPTURE_BASE_ADDR,ECAP_EVENT_2))/SCALING_FACTOR;
 
     /* Stop all the EPMW Timebase Counters */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncDisableMask, FALSE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncDisableMask, FALSE);
 
     DebugP_log("\tRising Edge timestamp of Reference waveform  : \t\t\t%d\r\n",risingEdge_REF );
     DebugP_log("\tFalling Edge timestamp of Reference waveform : \t\t\t%d\r\n",fallingEdge_REF);

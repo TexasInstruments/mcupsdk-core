@@ -84,8 +84,8 @@ uint32_t gEpwm0Base = CONFIG_EPWM0_BASE_ADDR;
 uint32_t gEpwm1Base = CONFIG_EPWM1_BASE_ADDR;
 uint32_t gEpwm2Base = CONFIG_EPWM2_BASE_ADDR;
 
-extern uint32_t epwmTbClkSyncEnableMask;
-extern uint32_t epwmTbClkSyncDisableMask;
+
+
 
 void configurePhase(uint32_t base, uint32_t mainBase, uint16_t phaseVal);
 
@@ -95,7 +95,6 @@ void epwm_configure_signal_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    // uint32_t epwmsMask = (1U << 0U) | (1U << 1U) | (1U << 2U);
     /* Check the syscfg for configurations */
 
     /* Note that the Sync Mechanism is added for the waveform viewability.
@@ -105,7 +104,7 @@ void epwm_configure_signal_main(void *args)
     DebugP_log("EPWM Configure Signal Example runs for 5 Secs \r\n");
 
     /* Disabling tbclk sync for EPWMs 0-2 for configurations */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, FALSE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, FALSE);
 
     /* Note that syscfg has these modules added for pinmux and
     other SOC Configurations but not for the EPWM signal configurations */
@@ -129,7 +128,7 @@ void epwm_configure_signal_main(void *args)
     EPWM_enablePhaseShiftLoad(gEpwm2Base);
 
     /* Enabling tbclk sync for EPWMs 0-2 after configurations */
-    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, TRUE);
+    SOC_setMultipleEpwmTbClk(gEpwmTbClkSyncEnableMask, TRUE);
 
     ClockP_sleep(5);
 
