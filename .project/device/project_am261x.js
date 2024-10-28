@@ -128,6 +128,7 @@ const example_file_list = [
 	"examples/drivers/epwm/hrpwm_duty_cycle_sfo/.project/project.js",
 	"examples/drivers/epwm/hrpwm_phase_shift_sfo/.project/project.js",
 	"examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
+	"examples/drivers/eqep/eqep_cw_ccw/.project/project.js",
 	// "examples/drivers/eqep/eqep_position_speed/.project/project.js",
 	"examples/drivers/flc/.project/project.js",
 	// "examples/drivers/fsi/fsi_loopback_dma/.project/project.js",

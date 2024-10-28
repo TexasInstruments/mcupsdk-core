@@ -127,6 +127,7 @@ const example_file_list = [
     "examples/drivers/epwm/epwm_up_aq/.project/project.js",
 	"examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
 	"examples/drivers/eqep/eqep_position_speed/.project/project.js",
+	"examples/drivers/eqep/eqep_cw_ccw/.project/project.js",
     "examples/drivers/flc/.project/project_am263px.js",
     "examples/drivers/fss/swap_to_b/.project/project.js",
 	"examples/drivers/fss/fota_over_can/.project/project.js",

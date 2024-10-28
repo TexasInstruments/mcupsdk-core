@@ -4990,6 +4990,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EQEP Positon speed example. This example provides position and speed measurement using capture unit and speed measurement using unit time out. CPU is R5FSS0-0 running NORTOS.",
+        "name": "eqep_cw_ccw",
+        "location": "../../examples/drivers/eqep/eqep_cw_ccw/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_cw_ccw",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Positon speed example. This example provides position and speed measurement using capture unit and speed measurement using unit time out. CPU is R5FSS0-0 running NORTOS.",
+        "name": "eqep_cw_ccw",
+        "location": "../../examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_cw_ccw",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "HRPWM Duty Cycle SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_duty_cycle_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
