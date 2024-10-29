@@ -40,7 +40,7 @@ To build applications using this SDK, one needs below host PC machine
   - Please reach out to your TI representative for assistance with downloading and installing it.
 \else
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
-- Download SysConfig 1.21.0 and Install at below path,
+- Download SysConfig 1.21.2 and Install at below path,
   - Windows, C:/ti
   - Linux and MacOS, ${HOME}/ti
 \endif
