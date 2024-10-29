@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -16,7 +17,7 @@ const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
 const epwm3           = epwm.addInstance();
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -48,6 +49,8 @@ const epwm_xbar3      = epwm_xbar.addInstance();
 const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
 const int_xbar1       = int_xbar.addInstance();
 const int_xbar2       = int_xbar.addInstance();
+const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1    = output_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -135,6 +138,29 @@ epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB    = "EPWM_AQ_O
 epwm3.epwmTimebase_period                                           = 20000;
 epwm3.epwmCounterCompare_cmpA                                       = 6000;
 epwm3.epwmCounterCompare_cmpB                                       = 10000;
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+adc.adcReferences     = soc_ctrl_adc1;
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -364,21 +390,26 @@ int_xbar2.$name      = "CONFIG_INT_XBAR1";
 int_xbar2.xbarOutput = ["ADC0_EVTINT"];
 int_xbar2.instance   = "INT_XBAR_1";
 
+output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput         = ["ADC0_EVT1"];
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR0";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution = "ADC0_AIN0";
-adc1.ADC.AIN1.$suggestSolution = "ADC0_AIN1";
-adc1.ADC.AIN2.$suggestSolution = "ADC0_AIN2";
-adc1.ADC.AIN3.$suggestSolution = "ADC0_AIN3";
-adc1.ADC.AIN4.$suggestSolution = "ADC0_AIN4";
-adc1.ADC.AIN5.$suggestSolution = "ADC0_AIN5";
-epwm1.EPWM.A.$suggestSolution  = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution  = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution  = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution  = "EPWM1_B";
-epwm3.EPWM.$suggestSolution    = "EPWM2";
-epwm3.EPWM.A.$suggestSolution  = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution  = "EPWM2_B";
+adc1.ADC.AIN0.$suggestSolution                   = "ADC0_AIN0";
+adc1.ADC.AIN1.$suggestSolution                   = "ADC0_AIN1";
+adc1.ADC.AIN2.$suggestSolution                   = "ADC0_AIN2";
+adc1.ADC.AIN3.$suggestSolution                   = "ADC0_AIN3";
+adc1.ADC.AIN4.$suggestSolution                   = "ADC0_AIN4";
+adc1.ADC.AIN5.$suggestSolution                   = "ADC0_AIN5";
+epwm1.EPWM.A.$suggestSolution                    = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution                    = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution                    = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution                    = "EPWM1_B";
+epwm3.EPWM.$suggestSolution                      = "EPWM2";
+epwm3.EPWM.A.$suggestSolution                    = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution                    = "EPWM2_B";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "OSPI0_CSn1";

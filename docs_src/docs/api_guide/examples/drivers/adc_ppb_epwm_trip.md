@@ -14,6 +14,10 @@ PWMs through ADCAEVT1 source via Digital compare submodule.
 DAC is configured to generate a ramp waveform and its output is connected as ADC input. PWM tripping is
 validated by reading different trip flags.
 
+\note
+The ADC EVT routing the Outputxbar in AM263x is missing. Hence in order to bring the ADC EVT to GPIO, we can follow other routes such as routing.
+1. ADC EVT is typically paired usage with Tripping the EPWMs. We can route the ADC EVT to PWMxbar, to DCEVT(A/B)(1/2) to Trip Zone TripOut to Outputxbar. Note that it can be a OST or CBC, but then the ADCEVT is now latched instead of its actual status. So, forward the DCEVT(A/B)(1/2) as is to the tripzone. The example showcases this routing.
+
 \imageStyle{am263_adc_ppb_epwm_trip.png,width:50%}
 \image html am263_adc_ppb_epwm_trip.png "Module Block diagram"
 
@@ -27,6 +31,7 @@ The example does the below
 - EPWM2 (EPWM4 in case of AM261x-LP) is configured for Direct trip via Digital compare submodule.
 - The ramp waveform on DAC output is routed to ADC input.
 - The watch variables storing ADC conversion outputs can be used to view the results.
+- ADC EVT is routed via OutputXbar to GPIO
 
 Watch  Variables
 - adc0Result2 - Digital representation of the voltage on pin ADC0_AIN2
@@ -36,18 +41,36 @@ Watch  Variables
 - EPWM0A, EPWM0B, EPWM1A, EPWM1B, EPWM2A, EPWM2B can be connected to an oscilloscope to validate tripping.
 - In case of AM261x-LP, these are EPWM 2A/B, 3A/B, 4A/B respectively
 
-## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1
+## AM263PX-CC E2
+When using AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+
+- Connect HSEC Pin 15 (ADC input) to HSEC Pin 9 (DAC out)
+- Capture and analyze waveforms at HSEC Pin 49, HSEC Pin 51, HSEC Pin 53, HSEC Pin 55, HSEC Pin 50, HSEC Pin 52
+- Observe ADC EVT via Output Xbar on HSEC Pin 85
+
+
+## AM263X-CC E2 or AM263X-CC E1
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 
 - Connect HSEC Pin 15 (ADC input) to HSEC Pin 9 (DAC out)
 - Capture and analyze waveforms at HSEC Pin 49, HSEC Pin 51, HSEC Pin 53, HSEC Pin 55, HSEC Pin 50, HSEC Pin 52
+- Observe ADC EVT via PWMXbar - DCEVT - Output Xbar on HSEC Pin 85
 
-## AM263PX-LP or AM263X-LP
+
+## AM263PX-LP 
+
+When using AM263Px-LP
+- Connect booster pack header J5/J7 pin 66 (ADC input) to J1/J3 pin 30 (DAC out)
+- Capture and analyze waveforms at booster pack header J2/J4 pin 11, J6/J8 pin 59, J2/J4 pin 37, J2/J4 pin 38, J2/J4 pin 39, J2/J4 pin 40.
+- Observe ADC EVT via Output Xbar on J5.50
+
+## AM263X-LP
 
 When using AM263x-LP
 - Connect booster pack header J5/J7 pin 66 (ADC input) to J1/J3 pin 30 (DAC out)
 - Capture and analyze waveforms at booster pack header J2/J4 pin 11, J6/J8 pin 59, J2/J4 pin 37, J2/J4 pin 38, J2/J4 pin 39, J2/J4 pin 40.
+- Observe ADC EVT via PWMXbar - DCEVT - Output Xbar on J5.58
 
 ## AM261X-LP
 
@@ -57,6 +80,7 @@ When using AM261x-LP
   - EPWM 2A / 2B J4 pin 40/39
   - EPWM 3A / 3B J4 pin 38/37
   - EPWM 4A / 4B J4 pin 36/35
+  - Observe ADC EVT via Output Xbar on J6.51
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_EPWM_TRIP_COMBOS}
 
@@ -95,3 +119,6 @@ ADC PPB ePWM Trip Test Started ...
 ADC PPB ePWM Trip Test Passed!!
 All tests have passed!!
 \endcode
+
+\imageStyle{am263_adc_ppb_epwm_trip_sample_output.png,width:50%}
+\image html am263_adc_ppb_epwm_trip_sample_output.png "Sample Output Capture"

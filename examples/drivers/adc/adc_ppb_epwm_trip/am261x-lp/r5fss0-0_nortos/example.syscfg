@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+161"}
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
@@ -51,6 +51,8 @@ const epwm_xbar3      = epwm_xbar.addInstance();
 const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
 const int_xbar1       = int_xbar.addInstance();
 const int_xbar2       = int_xbar.addInstance();
+const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1    = output_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -404,6 +406,11 @@ int_xbar1.xbarOutput = ["ADC0_INT1"];
 int_xbar2.$name      = "CONFIG_INT_XBAR1";
 int_xbar2.xbarOutput = ["ADC0_EVTINT"];
 int_xbar2.instance   = "INT_XBAR_1";
+
+output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput                 = ["ADC0_EVT1"];
+output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR0";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
