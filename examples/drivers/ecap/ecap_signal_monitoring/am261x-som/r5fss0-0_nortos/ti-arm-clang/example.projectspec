@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Adc Sw Interleaved Averaging"
-        name = "adc_sw_interleaved_averaging_am261x-lp_r5fss0-0_nortos_ti-arm-clang"
+        title="Ecap Signal Monitoring"
+        name = "ecap_signal_monitoring_am261x-som_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=adc_sw_interleaved_averaging.${ConfigName}.map
+            -m=ecap_signal_monitoring.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -58,10 +58,10 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2612 --package ZFG
+            --context r5fss0-0 --part AM2611 --package ZCZ
         "
 
-        description="A Adc Sw Interleaved Averaging NORTOS project">
+        description="A Ecap Signal Monitoring NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -88,13 +88,13 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../adc_sw_interleaved_averaging.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../ecap_signal_monitoring.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_DRIVERS_ECAP_SIGNAL_MONITORING.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

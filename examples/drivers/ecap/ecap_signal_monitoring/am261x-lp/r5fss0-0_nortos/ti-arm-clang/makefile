@@ -21,20 +21,20 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=adc_sw_interleaved_averaging.$(PROFILE).out
-COREOUTNAME:=adc_sw_interleaved_averaging.$(PROFILE).optishare.out
+OUTNAME:=ecap_signal_monitoring.$(PROFILE).out
+COREOUTNAME:=ecap_signal_monitoring.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=adc_sw_interleaved_averaging.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=adc_sw_interleaved_averaging.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=adc_sw_interleaved_averaging.$(PROFILE).appimage.signed
-BOOTIMAGE_NAME_MCELF:=adc_sw_interleaved_averaging.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=adc_sw_interleaved_averaging.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=adc_sw_interleaved_averaging.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc_sw_interleaved_averaging.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc_sw_interleaved_averaging.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc_sw_interleaved_averaging.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc_sw_interleaved_averaging.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=ecap_signal_monitoring.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ecap_signal_monitoring.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ecap_signal_monitoring.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=ecap_signal_monitoring.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=ecap_signal_monitoring.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=ecap_signal_monitoring.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ecap_signal_monitoring.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ecap_signal_monitoring.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=ecap_signal_monitoring.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=ecap_signal_monitoring.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -42,7 +42,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	adc_sw_interleaved_averaging.c \
+	ecap_signal_monitoring.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -210,7 +210,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang adc_sw_interleaved_averaging ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang ecap_signal_monitoring ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -255,11 +255,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2612 --package ZFG --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -360,12 +360,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for adc_sw_interleaved_averaging.$(PROFILE) ...
+	@echo Creating Coverage Report for ecap_signal_monitoring.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o adc_sw_interleaved_averaging.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=adc_sw_interleaved_averaging.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=adc_sw_interleaved_averaging.$(PROFILE).profdata > coverage/adc_sw_interleaved_averaging.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/adc_sw_interleaved_averaging.$(PROFILE).profdata.json --output-json=coverage/adc_sw_interleaved_averaging.$(PROFILE).analysis.json --output=../adc_sw_interleaved_averaging.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ecap_signal_monitoring.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecap_signal_monitoring.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ecap_signal_monitoring.$(PROFILE).profdata > coverage/ecap_signal_monitoring.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ecap_signal_monitoring.$(PROFILE).profdata.json --output-json=coverage/ecap_signal_monitoring.$(PROFILE).analysis.json --output=../ecap_signal_monitoring.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -335,15 +335,19 @@ typedef enum
     ADC_CH_ADCIN3 = 3,  //!< single-ended, ADCIN3
     ADC_CH_ADCIN4 = 4,  //!< single-ended, ADCIN4
     ADC_CH_ADCIN5 = 5,  //!< single-ended, ADCIN5
-    ADC_CH_CAL0 = 6, //!< single-ended, CAL0
-    ADC_CH_CAL1 = 7, //!< single-ended, CAL1
+    ADC_CH_ADCIN6 = 7,  //!< single-ended, ADCIN6   Note : only valid for AM261x
+    ADC_CH_CAL0 = 6, //!< single-ended, CAL0        
+    ADC_CH_CAL1 = 7, //!< single-ended, CAL1        Note : Not Valid for AM261x 
     ADC_CH_ADCIN0_ADCIN1 = 0,  //!< differential, ADCIN0 and ADCIN1
     ADC_CH_ADCIN1_ADCIN0 = 1,  //!< differential, ADCIN1 and ADCIN0
     ADC_CH_ADCIN2_ADCIN3 = 2,  //!< differential, ADCIN2 and ADCIN3
     ADC_CH_ADCIN3_ADCIN2 = 3,  //!< differential, ADCIN3 and ADCIN2
     ADC_CH_ADCIN4_ADCIN5 = 4,  //!< differential, ADCIN4 and ADCIN5
     ADC_CH_ADCIN5_ADCIN4 = 5,  //!< differential, ADCIN5 and ADCIN4
-    ADC_CH_CAL0_CAL1 = 6, //!< differential, CAL0 and CAL1
+    ADC_CH_CAL0_CAL1 = 6, //!< differential, CAL0 and CAL1      Note : Not Valid for AM261x
+    ADC_CH_CAL1_CAL0 = 7, //!< differential, CAL1 and CAL0      Note : Not Valid for AM261x
+    ADC_CH_CAL0_ADCIN6 = 6, //!< differential, CAL0 and ADCIN6  Note : only valid for AM261x
+    ADC_CH_ADCIN6_CAL0 = 7, //!< differential, ADCIN6 and CAL0  Note : only valid for AM261x
 } ADC_Channel;
 
 //*****************************************************************************

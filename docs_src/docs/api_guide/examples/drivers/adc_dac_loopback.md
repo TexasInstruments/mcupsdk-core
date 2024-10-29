@@ -3,7 +3,13 @@
 [TOC]
 
 # Introduction
-This example demostrates the ADC-DAC loopback feature. In AM263Px the DAC can be connected internally to the ADC CAL1 Channels. each ADC has two CAL channels viz. CAL Channel 1 and CAL Channel 2. these CAL channels are common to all the ADCs. While using the ADC-DAC loopback, the following needs to be taken care of,
+\cond SOC_AM263PX
+In AM263Px the DAC can be connected internally to the ADC CAL1 Channel.
+\endcond
+\cond SOC_AM261X
+In AM261x the DAC can be connected internally to the ADC CAL0 Channel.
+\endcond
+This example demostrates the ADC-DAC loopback feature. Each ADC has two CAL channels viz. CAL Channel 0 and CAL Channel 1. these CAL channels are common to all the ADCs. While using the ADC-DAC loopback, the following needs to be taken care of,
 1. ADC cal channel should be of high impedence, i.e., no source driving it.
 2. DAC output should be driven only by DAC and there should not be any other source driving it.
 3. ADC sampling times must be increased in this mode. the example uses the 256 Sample and Hold window configuration.  
@@ -11,7 +17,7 @@ This example demostrates the ADC-DAC loopback feature. In AM263Px the DAC can be
 
 ## Configurations
 - DAC is configured using syscfg
-- ADC SOC0 is configured CAL1 Channel, with sample and hold window of 256 and generate interrupt at EOC0
+- ADC SOC0 is configured CAL Channel, with sample and hold window of 256 and generate interrupt at EOC0
 
 # External Connections
 No external connections required

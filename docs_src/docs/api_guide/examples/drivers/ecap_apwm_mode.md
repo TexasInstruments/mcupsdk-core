@@ -32,7 +32,7 @@ The example does the below
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 Connect OUTPUTXBAR1 output to oscilloscope
 
@@ -52,6 +52,10 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 ## AM263X-LP
 When using AM263x-LP
+- Connect boosterpack header J6/J8 Pin 58 to oscilloscope
+
+## AM261X-LP
+When using AM261x-LP
 - Connect boosterpack header J6/J8 Pin 58 to oscilloscope
 
 \endcond

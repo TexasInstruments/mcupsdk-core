@@ -11,6 +11,13 @@
  */
 const ecap            = scripting.addModule("/drivers/ecap/ecap", {}, false);
 const ecap1           = ecap.addInstance();
+const ecap2           = ecap.addInstance();
+const ecap3           = ecap.addInstance();
+const ecap4           = ecap.addInstance();
+const ecap5           = ecap.addInstance();
+const ecap6           = ecap.addInstance();
+const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1           = epwm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -37,21 +44,151 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
+const input_xbar      = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1     = input_xbar.addInstance();
 const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
 const int_xbar1       = int_xbar.addInstance();
-const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
-const output_xbar1    = output_xbar.addInstance();
+const int_xbar2       = int_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-ecap1.$name               = "CONFIG_ECAP0";
-ecap1.ecapMode            = "APWM";
-ecap1.enableInterrupt     = true;
-ecap1.interruptSourceAPWM = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
-ecap1.syncOutMode         = "ECAP_SYNC_OUT_DISABLED";
-ecap1.apwmPeriod          = 200000;
-ecap1.apwmCompare         = 100000;
+ecap1.enableInterrupt                     = true;
+ecap1.interruptSourceAPWM                 = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
+ecap1.ecapInput                           = "ECAP_INPUT_INPUTXBAR0";
+ecap1.reArm                               = true;
+ecap1.enableLoadCounter                   = true;
+ecap1.eventStop                           = "ECAP_EVENT_2";
+ecap1.resetCounters                       = true;
+ecap1.trip_selection_signalMunit          = "ECAP_MUNIT_TRIP_EPWM_XBAR_OUT0";
+ecap1.global_strobe_selection_signalMunit = "ECAP_MUNIT_GLDSTRB_EPWM0";
+ecap1.enable_monitorunit1                 = true;
+ecap1.enableDebug_1                       = true;
+ecap1.$name                               = "MON_PULSE_HIGH";
+ecap1.eventTwoPolarity                    = "ECAP_EVNT_FALLING_EDGE";
+ecap1.interruptSourceCapture              = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap1.minValue_1                          = 9950;
+ecap1.maxValue_1                          = 10050;
+
+ecap2.enableInterrupt        = true;
+ecap2.interruptSourceAPWM    = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
+ecap2.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap2.reArm                  = true;
+ecap2.enableLoadCounter      = true;
+ecap2.eventStop              = "ECAP_EVENT_2";
+ecap2.resetCounters          = true;
+ecap2.enable_monitorunit1    = true;
+ecap2.enableDebug_1          = true;
+ecap2.interruptSourceCapture = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap2.ecapBase               = "CSL_CONTROLSS_ECAP1_U_BASE";
+ecap2.$name                  = "MON_PULSE_LOW";
+ecap2.eventOnePolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap2.monitorSelect_1        = "ECAP_MUNIT_LOW_PULSE_WIDTH";
+ecap2.minValue_1             = 9950;
+ecap2.maxValue_1             = 10050;
+
+ecap3.$name                  = "MON_PERIOD_HIGH";
+ecap3.ecapBase               = "CSL_CONTROLSS_ECAP2_U_BASE";
+ecap3.eventStop              = "ECAP_EVENT_2";
+ecap3.enableLoadCounter      = true;
+ecap3.resetCounters          = true;
+ecap3.reArm                  = true;
+ecap3.interruptSourceCapture = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap3.enableInterrupt        = true;
+ecap3.enable_monitorunit1    = true;
+ecap3.enableDebug_1          = true;
+ecap3.minValue_1             = 19950;
+ecap3.maxValue_1             = 20050;
+ecap3.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap3.monitorSelect_1        = "ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE";
+
+ecap4.$name                  = "MON_PERIOD_LOW";
+ecap4.ecapBase               = "CSL_CONTROLSS_ECAP3_U_BASE";
+ecap4.eventOnePolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap4.eventTwoPolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap4.eventStop              = "ECAP_EVENT_2";
+ecap4.enableLoadCounter      = true;
+ecap4.resetCounters          = true;
+ecap4.reArm                  = true;
+ecap4.interruptSourceCapture = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap4.enableInterrupt        = true;
+ecap4.enable_monitorunit1    = true;
+ecap4.enableDebug_1          = true;
+ecap4.minValue_1             = 19950;
+ecap4.maxValue_1             = 20050;
+ecap4.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap4.monitorSelect_1        = "ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL";
+
+ecap5.$name                  = "MON_POSEDGE";
+ecap5.ecapBase               = "CSL_CONTROLSS_ECAP4_U_BASE";
+ecap5.reArm                  = true;
+ecap5.resetCounters          = true;
+ecap5.enableLoadCounter      = true;
+ecap5.interruptSourceCapture = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap5.enableInterrupt        = true;
+ecap5.enable_monitorunit1    = true;
+ecap5.monitorSelect_1        = "ECAP_MUNIT_MONITOR_RISE_EDGE";
+ecap5.enableDebug_1          = true;
+ecap5.minValue_1             = 4900;
+ecap5.maxValue_1             = 5100;
+ecap5.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap5.syncInPulseSource      = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap5.eventStop              = "ECAP_EVENT_2";
+
+ecap6.$name                  = "MON_NEGEDGE";
+ecap6.ecapBase               = "CSL_CONTROLSS_ECAP5_U_BASE";
+ecap6.enableLoadCounter      = true;
+ecap6.resetCounters          = true;
+ecap6.reArm                  = true;
+ecap6.eventOnePolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap6.enableInterrupt        = true;
+ecap6.interruptSourceCapture = ["ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1","ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2"];
+ecap6.enable_monitorunit1    = true;
+ecap6.monitorSelect_1        = "ECAP_MUNIT_MONITOR_FALL_EDGE";
+ecap6.minValue_1             = 14900;
+ecap6.maxValue_1             = 15100;
+ecap6.enableDebug_1          = true;
+ecap6.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap6.syncInPulseSource      = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+
+epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_period                                      = 19999;
+epwm1.$name                                                    = "INPUT_EPWM";
+epwm1.epwmEventTrigger_enableInterrupt                         = true;
+epwm1.epwmEventTrigger_interruptSource                         = "EPWM_INT_TBCTR_PERIOD";
+epwm1.epwmEventTrigger_interruptEventCount                     = "1";
+epwm1.epwmEventTrigger_interruptEventCountInitEnable           = true;
+epwm1.epwmCounterCompare_cmpA                                  = 4999;
+epwm1.epwmCounterCompare_cmpB                                  = 14999;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO","EPWM_SYNC_OUT_PULSE_ON_SOFTWARE"];
+epwm1.EPWM.$assign                                             = "EPWM0";
+epwm1.EPWM.A.$assign                                           = "GPIO43";
+epwm1.EPWM.B.$used                                             = false;
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -268,14 +405,15 @@ section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
-int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["ECAP0_INT"];
-int_xbar1.instance   = "INT_XBAR_22";
+input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
+input_xbar1.xbarOutput = "GPIO43";
 
-output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
-output_xbar1.xbarOutput                 = ["ECAP0_OUT"];
-output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR0";
-output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO1";
+int_xbar1.xbarOutput = ["ECAP0_INT","ECAP1_INT","ECAP2_INT","ECAP3_INT","ECAP4_INT","ECAP5_INT"];
+int_xbar1.$name      = "ECAP_INT_XBAR0";
+
+int_xbar2.$name      = "EPWM_INT_XBAR1";
+int_xbar2.xbarOutput = ["EPWM0_INT"];
+int_xbar2.instance   = "INT_XBAR_1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

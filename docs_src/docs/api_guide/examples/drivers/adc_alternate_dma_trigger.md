@@ -18,8 +18,8 @@ ADC0-SOC0 Samples on Channel 2, where as ADC1-SOC1 samples on Channel 0.
      - Feed Analog input to ADC0_AIN2 - HSEC PIN 15  
      - Feed Analog input to ADC1_AIN0 - HSEC PIN 12  
  - on AM263Px LP
-     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 66
-     - Feed Analog Input to the ADC0_AIN2 - J3 Pin 24
+     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 63
+     - Feed Analog Input to the ADC1_AIN0 - J3 Pin 24
 
 ## Watch Variables 
  gAdc0DataBuffer[] - Buffer to store ADC0 SOC0 results, copied by DMA.
