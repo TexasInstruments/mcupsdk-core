@@ -388,14 +388,14 @@ typedef struct
  */
 typedef struct
 {
-    int16_t gain_drift_threshold_hi;
-    int16_t gain_drift_threshold_lo;
+    uint16_t gain_drift_threshold_hi;
+    uint16_t gain_drift_threshold_lo;
     uint8_t gain_drift_glitch_count;
     bool gain_drift_cos_hi;
     bool gain_drift_cos_lo;
     bool gain_drift_sin_hi;
     bool gain_drift_sin_lo;
-    bool gaindrift_en;
+    bool gain_drift_en;
 } Diag_Mon_SinCos_Gain_drift_data;
 
 //*****************************************************************************
@@ -1953,22 +1953,32 @@ typedef struct
     }
 
     /**
-     * @brief returns the Gain estimates for sin and cosine gain values
+     * @brief returns the Gain Squared estimates for sin and cosine gain values
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
-     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
-     * @param cosGainEstimate int16_t pass by reference
-     * @param sinGainEstimate int16_t pass by reference
+     *
+     * \note this is gain squared value. Perform a sqrt() over to get the actual gain value. 
+     * the calculated gain value can be used in the RDC_setGainBypassValue() as the gain_calc*(2^14)
+     * being the \b sinGainBypass or \b cosGainBypass respectively for sine and cosine gain bypass 
+     * values
+     * 
+     *  valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @param cosGainEstimateSq float pass by reference
+     * @param sinGainEstimateSq float pass by reference
      */
     static inline void
-    RDC_getGainEstimation(uint32_t base, uint8_t core, int16_t *sinGainEstimate, int16_t *cosGainEstimate)
+    RDC_getGainEstimation(uint32_t base, uint8_t core, float *sinGainEstimateSq, float *cosGainEstimateSq)
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG5_0 + (core * RDC_CORE_OFFSET);
-        uint32_t value = HW_RD_REG32(base + regOffset);
+        uint32_t cosSqAccValue = HW_RD_REG32(base + regOffset);
+        
+        *cosGainEstimateSq = ((uint32_t) 1  << 29)/cosSqAccValue;
 
-        *cosGainEstimate = (int16_t)(value >> 16);
-        *sinGainEstimate = (int16_t)value;
+        regOffset = CSL_RESOLVER_REGS_PG_EST_CFG6_0 + (core * RDC_CORE_OFFSET);
+        
+        uint32_t sinSqAccValue = HW_RD_REG32(base + regOffset);
+        *sinGainEstimateSq = ((uint32_t) 1  << 29)/sinSqAccValue;
     }
 
     //*****************************************************************************
@@ -2208,8 +2218,8 @@ typedef struct
 
     /**
      * @brief Returns the Monitor Sin or Cos Gain drift (DOS) diagnostics data
-     * \e int16_t \e gain_drift_threshold_hi - the configured gain drift threshold hi value
-     * \e int16_t \e gain_drift_threshold_lo - the configured gain drift threshold lo value
+     * \e uint16_t \e gain_drift_threshold_hi - the configured gain drift threshold hi value
+     * \e uint16_t \e gain_drift_threshold_lo - the configured gain drift threshold lo value
      * \e uint8_t \e gain_drift_glitch_count - the configured gain drift glitch count value
      * \e bool    \e gain_drift_cos_hi       - the status of the flag in the Interrupt status
      * \e bool    \e gain_drift_cos_lo       - the status of the flag in the Interrupt status
@@ -2233,10 +2243,10 @@ typedef struct
         uint32_t interruptStatus = RDC_getCoreInterruptStatus(base, resolverCore);
         uint32_t enabledInterruptSources = RDC_getCoreEnabledInterruptSources(base, resolverCore);
 
-        monitorData->gain_drift_threshold_hi = (int16_t)((uint16_t)((value &
+        monitorData->gain_drift_threshold_hi = ((uint16_t)((value &
                                                                      CSL_RESOLVER_REGS_DIAG14_0_GAINDRIFT_THRESHOLD_HI_MASK) >>
                                                                     CSL_RESOLVER_REGS_DIAG14_0_GAINDRIFT_THRESHOLD_HI_SHIFT));
-        monitorData->gain_drift_threshold_lo = (int16_t)((uint16_t)((value &
+        monitorData->gain_drift_threshold_lo = ((uint16_t)((value &
                                                                      CSL_RESOLVER_REGS_DIAG14_0_GAINDRIFT_THRESHOLD_LO_MASK) >>
                                                                     CSL_RESOLVER_REGS_DIAG14_0_GAINDRIFT_THRESHOLD_LO_SHIFT));
 
@@ -2249,7 +2259,7 @@ typedef struct
         regOffset = CSL_RESOLVER_REGS_DIAG15_0 + (RDC_CORE_OFFSET * resolverCore);
         monitorData->gain_drift_glitch_count = (uint8_t)HW_RD_REG32(base + regOffset);
 
-        monitorData->gaindrift_en = ((enabledInterruptSources &
+        monitorData->gain_drift_en = ((enabledInterruptSources &
                                       (RDC_INTERRUPT_SOURCE_GAINDRIFT_COS_HI_ERR |
                                        RDC_INTERRUPT_SOURCE_GAINDRIFT_COS_LO_ERR |
                                        RDC_INTERRUPT_SOURCE_GAINDRIFT_SIN_HI_ERR |
@@ -2258,8 +2268,8 @@ typedef struct
 
     /**
      * @brief Sets the Monitor Sin or Cos Gain drift (DOS) diagnostics Controls
-     * \e int16_t \e gain_drift_threshold_hi - the gain drift threshold hi value to be configured
-     * \e int16_t \e gain_drift_threshold_lo - the gain drift threshold lo value to be configured
+     * \e uint16_t \e gain_drift_threshold_hi - the gain drift threshold hi value to be configured
+     * \e uint16_t \e gain_drift_threshold_lo - the gain drift threshold lo value to be configured
      * \e uint8_t \e gain_drift_glitch_count - the gain drift glitch count value to be configured
      * \e bool    \e gain_drift_cos_hi       - enables interrupt on this flag if set and gain_drift_en is set
      * \e bool    \e gain_drift_cos_lo       - enables interrupt on this flag if set and gain_drift_en is set
@@ -2300,7 +2310,7 @@ typedef struct
 
         uint32_t enabledInterruptSources = RDC_getCoreEnabledInterruptSources(base, resolverCore);
 
-        if (monitorData->gaindrift_en)
+        if (monitorData->gain_drift_en)
         {
             if (monitorData->gain_drift_cos_hi)
             {
