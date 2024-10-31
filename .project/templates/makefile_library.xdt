@@ -193,7 +193,12 @@ all: $(LIBDIR)/$(LIBNAME)
 $(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
 	@echo  .
 	@echo  Archiving: $(LIBNAME) to $@ ...
+% if (args.project.name == "netxduo") {
+	$(file > $(LIBDIR)/file_list, $(addprefix $(OBJDIR), $(OBJS)))
+	$(AR) $(ARFLAGS) $@ @$(LIBDIR)/file_list
+% } else {
 	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+% }
 	@echo  Archiving: $(LIBNAME) Done !!!
 	@echo  .
 
