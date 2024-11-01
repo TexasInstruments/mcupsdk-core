@@ -39,6 +39,7 @@ source/kernel/freertos/FreeRTOS-Kernel-smp
 source/kernel/freertos/FreeRTOS-POSIX
 source/kernel/threadx/threadx_src
 source/fs/filex/filex_src
+source/fs/filex/levelx_src
 source/fs/freertos_fat/FreeRTOS-FAT
 source/fs/littlefs/LittleFS
 source/kernel/safertos/safeRTOS
@@ -57,6 +58,7 @@ source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.lib
 source/networking/enet/core
 source/security/security_common
 source/networking/lwip/lwip-stack
+source/networking/netxduo/netxduo_src
 source/cmsis
 source/commercial
 source/usb/tinyusb/tinyusb-stack
