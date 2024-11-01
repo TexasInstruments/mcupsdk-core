@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex M.AM2434_ALX"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Test Dpl"
+        name = "test_dpl_am243x-lp_m4fss0-0_freertos_ti-arm-clang"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+                Debug,
+                Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TICLANG"
+        cgtVersion="4.0.0"
+        device="Cortex M.AM2434_ALX"
+        deviceCore="Cortex_M4F_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/include/c
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CM4F
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/m4f
+            -I${MCU_PLUS_SDK_PATH}/test/unity/
+            -mcpu=cortex-m4
+            -mfloat-abi=hard
+            -mthumb
+            -Wall
+            -Werror
+            -g
+            -Wno-gnu-variable-sized-type-not-at-end
+            -Wno-unused-function
+            -DSOC_AM243X
+            -DOS_FREERTOS
+        "
+        linkerBuildOptions="
+            -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
+            -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/test/unity/lib
+            -i${CG_TOOL_ROOT}/lib
+            -m=test_dpl.${ConfigName}.map
+            --ram_model
+            --reread_libs
+        "
+
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am243x"
+
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context m4fss0-0 --part ALX --package ALX
+        "
+
+        description="A Test Dpl FREERTOS project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+                -lfreertos.am243x.m4f.ti-arm-clang.debug.lib
+                -ldrivers.am243x.m4f.ti-arm-clang.debug.lib
+                -lunity.am243x.m4f.ti-arm-clang.debug.lib
+                -llibc.a
+                -llibsysbm.a
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -Os
+            "
+            linkerBuildOptions="
+                -lfreertos.am243x.m4f.ti-arm-clang.release.lib
+                -ldrivers.am243x.m4f.ti-arm-clang.release.lib
+                -lunity.am243x.m4f.ti-arm-clang.release.lib
+                -llibc.a
+                -llibsysbm.a
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../test_dpl.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../float_ops.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>

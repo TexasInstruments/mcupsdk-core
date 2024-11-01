@@ -11084,6 +11084,72 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
+        "name": "filex_hello_world",
+        "location": "../../examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "fs",
+            "filex",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
+        "name": "filex_hello_world",
+        "location": "../../examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "fs",
+            "filex",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world",
         "location": "../../examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -12257,6 +12323,138 @@
             "nortos",
             "basic_smart_placement",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_hello_world",
+        "location": "../../examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_hello_world",
+        "location": "../../examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_task_switch",
+        "location": "../../examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "task_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_task_switch",
+        "location": "../../examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "task_switch",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -15840,6 +16038,468 @@
             "lwip",
             "enet_lwip_icssg",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_mac",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_mac",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_switch",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_switch",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_client",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_client",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_server",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_server",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_server",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_server",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_udp_client",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_udp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_udp_client",
+        "location": "../../examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_cpsw_udp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_mac",
+        "location": "../../examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_icssg_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_mac",
+        "location": "../../examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_icssg_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_switch",
+        "location": "../../examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_icssg_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_switch",
+        "location": "../../examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "netxduo",
+            "enet_netxduo_icssg_switch",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
