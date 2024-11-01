@@ -272,6 +272,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_DAC_SQUARE_WAVE
 -# ECAP
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
+   -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_PHASE_SHIFT
    -# \subpage EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM
    -# \subpage EXAMPLES_DRIVERS_ECAP_EDMA
 \cond SOC_AM263PX || SOC_AM261X

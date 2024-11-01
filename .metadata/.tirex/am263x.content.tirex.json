@@ -3038,6 +3038,72 @@
             "example.general"
         ],
         "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_apwm_phase_shift",
+        "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_phase_shift",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_apwm_phase_shift",
+        "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_phase_shift",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_capture_pwm",
         "location": "../../examples/drivers/ecap/ecap_capture_pwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [

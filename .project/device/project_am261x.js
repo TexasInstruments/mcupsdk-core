@@ -97,6 +97,7 @@ const example_file_list = [
 	"examples/drivers/dac/dac_sine_dma/.project/project.js",
 	"examples/drivers/dac/dac_sine_wave/.project/project.js",
 	"examples/drivers/dac/dac_square_wave/.project/project.js",
+    "examples/drivers/ecap/ecap_apwm_phase_shift/.project/project.js",
 	"examples/drivers/ecap/ecap_apwm_mode/.project/project.js",
 	"examples/drivers/ecap/ecap_capture_pwm/.project/project.js",
 	"examples/drivers/ecap/ecap_edma/.project/project.js",
