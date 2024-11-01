@@ -274,6 +274,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_sw_trigger_am243x-evm_r5fss0-0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_sw_trigger_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
@@ -309,6 +311,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am243x-lp_r5fss0-0_free
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += basic_smart_placement_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -405,6 +411,20 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tcpserver_am243x-evm_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -1284,6 +1304,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
  hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1388,6 +1414,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
 
  mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1676,6 +1714,48 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
 
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -2152,6 +2232,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_sw_trigger_am243x-evm_r5fss0-0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_sw_trigger_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -2187,6 +2269,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am243x-lp_r5fss0-0_free
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += basic_smart_placement_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2283,6 +2369,20 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tcpserver_am243x-evm_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3162,6 +3262,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
  hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3266,6 +3372,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
 
  mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3554,6 +3672,48 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
 
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -4030,6 +4190,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_sw_trigger_am243x-evm_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_sw_trigger_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
@@ -4065,6 +4227,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am243x-lp_r5fss0-0_fre
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += basic_smart_placement_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -4161,6 +4327,20 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tcpserver_am243x-evm_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -5040,6 +5220,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  watchdog_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ filex_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ filex_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
  hello_world_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -5144,6 +5330,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  basic_smart_placement_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ threadx_hello_world_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ threadx_hello_world_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ threadx_task_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ threadx_task_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
 
  mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5432,6 +5630,48 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
 
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -5933,6 +6173,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_sw_trigger/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5968,6 +6210,10 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -6064,6 +6310,20 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_icssg_tcpserver/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am243x-evm/icss_g0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
