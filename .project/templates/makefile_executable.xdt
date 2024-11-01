@@ -125,11 +125,6 @@ FILES_`prop` := \
 	ti_enet_lwipif.c \
 			 % }
 		% }
-        % for(val of args.project.libs["common"]){
-            % if (val.startsWith("threadx")) {
-    ti_eclipse_threadx_open_close.c \
-             % }
-        % }
 
 	% }
 % }
@@ -423,12 +418,6 @@ SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
 		 % }
 	% }
-% for(val of args.project.libs["common"]){
-    % if (val.startsWith("threadx")) {
-SYSCFG_GEN_FILES+=generated/ti_eclipse_threadx_config.h
-SYSCFG_GEN_FILES+=generated/ti_eclipse_threadx_open_close.c generated/ti_eclipse_threadx_open_close.h
-         % }
-    % }
 % }
 % if (args.project.device == "am243x" && ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) && (args.project.lnkpreprocessor_gcc != undefined)) {
 $(LNK_FILES_common): $(LNK_FILES_PREPROCESSOR_common)
