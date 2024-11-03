@@ -28,7 +28,7 @@ This example does:
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_cpsw_fast_startup
+ Example folder | source/networking/enet/core/examples/enet_cpsw_fast_startup
 
 \endcond
 
@@ -39,7 +39,7 @@ This example does:
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_cpsw_fast_startup
+ Example folder | source/networking/enet/core/examples/enet_cpsw_fast_startup
 
 \endcond
 

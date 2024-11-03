@@ -46,8 +46,8 @@ The supplied  demo TimeSync (PTP) does the task of
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_multi_channel/V0
- PTP Stack      | examples/networking/enet_layer2_multi_channel/ptp_stack
+ Example folder | source/networking/enet/core/examples/enet_layer2_multi_channel/V0
+ PTP Stack      | source/networking/enet/core/examples/enet_layer2_multi_channel/ptp_stack
 
 \endcond
 
@@ -58,8 +58,8 @@ The supplied  demo TimeSync (PTP) does the task of
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_multi_channel/V0
- PTP Stack      | examples/networking/enet_layer2_multi_channel/ptp_stack
+ Example folder | source/networking/enet/core/examples/enet_layer2_multi_channel/V0
+ PTP Stack      | source/networking/enet/core/examples/enet_layer2_multi_channel/ptp_stack
 
 \endcond
 
@@ -70,8 +70,8 @@ The supplied  demo TimeSync (PTP) does the task of
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_multi_channel/V1
- PTP Stack      | examples/networking/enet_layer2_multi_channel/ptp_stack
+ Example folder | source/networking/enet/core/examples/enet_layer2_multi_channel/V1
+ PTP Stack      | source/networking/enet/core/examples/enet_layer2_multi_channel/ptp_stack
 
 \endcond
 
@@ -82,8 +82,8 @@ The supplied  demo TimeSync (PTP) does the task of
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_multi_channel/V1
- PTP Stack      | examples/networking/enet_layer2_multi_channel/ptp_stack
+ Example folder | source/networking/enet/core/examples/enet_layer2_multi_channel/V1
+ PTP Stack      | source/networking/enet/core/examples/enet_layer2_multi_channel/ptp_stack
 
 \endcond
 

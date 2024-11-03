@@ -47,7 +47,7 @@ Few details on the operating sequence of this example is mentioned below:
  CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_intercore_icssg
+ Example folder | source/networking/enet/core/examples/lwip/enet_intercore_icssg
 
 Note: To configure any core as main core other than r5fss0-0, user needs to change the DMA channel resource allocation to the respective core, so that it can get ICSSG DMA channels for packet transfer is available for the configured main core. Please refer to  \ref RESOURCE_ALLOCATION_GUIDE to change the alter the resource allocation.
 \endcond

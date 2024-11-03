@@ -34,7 +34,7 @@ See also :\ref ENET_CPSW_TSN_GPTP
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_cpsw_app
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
 
@@ -45,7 +45,7 @@ See also :\ref ENET_CPSW_TSN_GPTP
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_cpsw_app
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
 
@@ -56,7 +56,7 @@ See also :\ref ENET_CPSW_TSN_GPTP
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_cpsw_app
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
 
@@ -67,7 +67,7 @@ See also :\ref ENET_CPSW_TSN_GPTP
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_cpsw_app
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
 
@@ -78,7 +78,7 @@ See also :\ref ENET_CPSW_TSN_GPTP
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_cpsw_app
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
 

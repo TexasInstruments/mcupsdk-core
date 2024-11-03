@@ -50,7 +50,7 @@ This example do below:
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Icssg Instance | ICSSG1
- Example folder | examples/networking/enet_vlan_icssg
+ Example folder | source/networking/enet/core/examples/enet_vlan_icssg
 
 \endcond
 
@@ -62,7 +62,7 @@ This example do below:
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Icssg Instance | ICSSG1
- Example folder | examples/networking/enet_vlan_icssg
+ Example folder | source/networking/enet/core/examples/enet_vlan_icssg
 
 \endcond
 

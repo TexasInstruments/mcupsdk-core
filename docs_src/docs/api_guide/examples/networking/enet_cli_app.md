@@ -20,7 +20,7 @@ This example does the following:
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | am243x-lp
- Example folder | examples/networking/enet_cli_app
+ Example folder | source/networking/enet/core/examples/enet_cli_app
 
 ## Steps to Run the Example
 

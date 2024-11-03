@@ -28,7 +28,7 @@ The example does below
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_rawhttpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
 
 \endcond
 
@@ -39,7 +39,7 @@ The example does below
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_rawhttpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
 
 \endcond
 
@@ -50,7 +50,7 @@ The example does below
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_rawhttpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
 
 \endcond
 
@@ -61,7 +61,7 @@ The example does below
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_rawhttpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
 
 \endcond
 
@@ -72,7 +72,7 @@ The example does below
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_rawhttpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
 
 \endcond
 

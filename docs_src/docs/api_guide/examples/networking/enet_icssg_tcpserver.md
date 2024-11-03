@@ -45,7 +45,7 @@ The example does below
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_icssg_tcpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_icssg_tcpserver
 
 \endcond
 
@@ -56,7 +56,7 @@ The example does below
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_icssg_tcpserver
+ Example folder | source/networking/enet/core/examples/lwip/enet_icssg_tcpserver
 
 \endcond
 

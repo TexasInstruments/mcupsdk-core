@@ -22,7 +22,7 @@ This guide is intended to enhance user's understanding of the TSN stack and prov
 # TSN Stack
 
 ## Compilation
-TSN stack library is pre-built in SDK and located in ``<mcu_plus_sdk>/examples/networking/tsn`` directory as .lib files. Any changes in the stack source code needs rebuild of library.
+TSN stack library is pre-built in SDK and located in ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn`` directory as .lib files. Any changes in the stack source code needs rebuild of library.
 In order to re-build the library, follow the below steps-
 \code
 cd  <mcu_plus_sdk>
@@ -45,7 +45,7 @@ The TSN Stack library is composed of the following source modules:
 
 ## Stack Initialization
 
-A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/examples/networking/tsn/tsninit.c``.
+A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/tsninit.c``.
 Prior to any module calls, it is necessary to initialize the unibase library once.
 This can be achieved by invoking the ``EnetApp_initTsnByCfg()`` function.
 
@@ -109,7 +109,7 @@ At the moment, our system supports two domains, but this feature is turned off b
 To turn on multiple domains, follow these steps:
 
 - Set ``#define GPTP_MAX_DOMAINS 2`` in the ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_buildconf/sitara_buildconf.h`` file
-- In the file ``<mcu_plus_sdk>/examples/networking/tsn/gptp_init.c``, you will see the following settings are set:
+- In the file ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/gptp_init.c``, you will see the following settings are set:
 ```
 #if GPTP_MAX_DOMAINS == 2
     {"CMLDS_MODE", XL4_EXTMOD_XL4GPTP_CMLDS_MODE, 1},
@@ -141,7 +141,7 @@ For example, to set the Sync interval to 31.25 milliseconds, set ``log-sync-inte
 To integrate the TSN stack into your application, follow these steps:
 
 - Initialize Enet LLD and setup board dependencies.  In the TSN example application,
-  the initialization routines can be found at ``<mcu_plus_sdk>/examples/networking/tsn/tsnapp_cpsw_main.c.c``,
+  the initialization routines can be found at ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/tsnapp_cpsw_main.c.c``,
   which can be used as reference.
 
   The main functions related to EVM board initialization are::
@@ -285,7 +285,7 @@ for persistence.
 Example usage:
 ``gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_USE_HW_PHASE_ADJUSTMENT,
   YDBI_CONFIG, &use_hwphase, sizeof(use_hwphase));``
-- As a reference, please consult the ``<mcu_plus_sdk>/examples/networking/tsn/tsninit.c``
+- As a reference, please consult the ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/tsninit.c``
 file.
 
 - The configuration must be done before calling the ``gptpman_run()`` function
