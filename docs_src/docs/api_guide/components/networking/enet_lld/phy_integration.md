@@ -127,6 +127,38 @@ extended register read/write functions by the DP83867 driver.
 
 Device specific drivers can be found at `source/networking/enet/core/src/phy/*`.
 
+# Custom Board Support {#CustomBoardSupport}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ----------
+The MCU+SDK enet driver supports a set of boards for each SoC out of the box
+- Refer MCU+SDK release notes for platforms/board supported for each SoC
+
+The board specific portion of the enet code is auto generated in the file ti_board_config.c for supported boards
+
+For porting enet based applications to custom board the following need to be done:
+Enable "Custom Board" syscfg option
+  \imageStyle{CustomBoardSyscfg.png,width:30%}
+  \image html CustomBoardSyscfg.png
+
+- Enabling “Custom Board” will prevent auto generation of board specific code.
+- A C file will have to be then written that is specific to the board.
+
+### Board config C file
+The board specific file should contain the following
+- **const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl**: This is a table of ENET PHY drivers supported on the board. 
+  Refer Enet custom PHY integration guide for details on how to populate this table @ref enetphy_guide_top
+- **EnetBoard_setupPorts()**: This function should setup any board level muxes and configure any SoC level 
+  RGMII internal delay/ RMII configuration for the specific port. 
+    + Refer API documentation for mcu_plus_sdk/source/networking/enet/utils/include/enet_board.h for details of function and arguments
+- **EnetBoard_getPhyCfg()**: This function should return the ETHPHY specific configuration for a given port including any extended phy 
+  configuration
+    + Refer API documentation for mcu_plus_sdk/source/networking/enet/utils/include/enet_board.h for details of function and arguments
+- **EnetBoard_getMacAddrList()**: This function should populate any board specific MAC addresses that are available on board eeprom.
+  If the board does not have any board specific macAddresses this function should set argument `*pAvailMacEntries = 0`
+- **EnetBoard_getId()**: This function should return the board id. This is not used anywhere outside this file so the board id returned 
+  will depend on the implementation of EnetBoard_setupPorts()/EnetBoard_getPhyCfg()  for the custom board if it refers the boardId to 
+  determine PHY config/setup ports.
+- Refer mcu_plus_sdk/examples/networking/enet_layer2_multi_channel
+    + enet_custom_board_config.c for example illustrating custom board integration
 
 ## PHY to Driver Binding {#enetphy_guide_binding}
 

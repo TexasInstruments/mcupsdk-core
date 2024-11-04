@@ -3,7 +3,7 @@
 \warning AM273x is single ethernet port device and hence gPTP Bridge mode is not possible to execute 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x || SOC_AM261X
 [TOC]
 
 # Introduction
@@ -21,7 +21,7 @@ In this example, We have one Rx and two Tx DMA channel to handle all the traffic
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x || SOC_AM261X
 In this example, We use two Rx and two Tx DMA channel, one Rx and one Tx channel specific to gPTP traffic.
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
@@ -71,6 +71,19 @@ See also :\ref ENET_CPSW_TSN_GPTP
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 

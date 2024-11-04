@@ -99,7 +99,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter                                                                                                                                           | CMPSS Dac LoopBack feature
-CPSW         | R5F            | YES               | No                                    | PHY loopback(DP83826-EVM-AM2) with RMII 100Mbps, LWIP with DP83TG720-EVM-AM2: Getting IP, Ping, Iperf                      | MII mode
+CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII 100Mbps, MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes                                                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
@@ -144,8 +144,9 @@ IOEXPANDER | R5F            | YES               | IO configurability            
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-LwIP                                         | R5F            | YES               | FreeRTOS    | Basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP and UDP iperf                         | Other LwIP features
-Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, PHY loopback with RMII 100Mbps(DP83826-EVM-AM2), interrupt pacing, Policer and Classifier  |  MII mode
+Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
+LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, scatter-gather                         | Other LwIP features
+Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC & PHY loopback with RMII 100Mbps(DP83826-EVM-AM2), MAC & PHY loopback with RMII 100Mbps(DP83TG720-EVM-AM2), Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier  |  MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
@@ -160,6 +161,13 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <th> Applicable Releases
     <th> Applicable Devices
     <th> Resolution/Comments
+</tr>
+<tr>
+    <td> MCUSDK-13754
+    <td> AM261x: Port 1 RX not working with DP83826-EVM-AM2 PHY
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
 </tr>
 <tr>
     <td> -
@@ -208,17 +216,52 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13754
-    <td> AM261x: Port 1 RX not working with DP83826-EVM-AM2 PHY
+    <td> MCUSDK-13755
+    <td> AM261x: 10% RX align code and CRC errors in port 2
     <td> Networking
     <td> 10.00.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13755
-    <td> AM261x: 10% RX align code and CRC errors in port 2
+    <td> SMCUAPPS-972
+    <td> AM261x: Gel files upgrade to program the HSDIVIDER clock correctly
+    <td> MCU Apps
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13828
+    <td> AM261x: ENET: Iperf TCP failing with 1Gbps
     <td> Networking
-    <td> 10.00.00 onwards
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13829
+    <td> AM261x: ENET: EST fails for priority 0 with IND phy
+    <td> Networking
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13836
+    <td> Networking examples not working in SBL null and SBL OSPI boot mode
+    <td> SBL
+    <td> 10.00.01 onwards
+    <td> Load the image in DEV/CCS boot mode
+</tr>
+<tr>
+    <td> MCUSDK-13847
+    <td> AM261x: GPTP lwIP debug example doesnt fit in RAM
+    <td> Networking
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13513
+    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
+    <td> Networking
+    <td> 10.00.01 onwards
     <td> -
 </tr>
 <tr>

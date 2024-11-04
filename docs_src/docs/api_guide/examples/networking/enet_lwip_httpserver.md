@@ -76,6 +76,19 @@ The example does below
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+
+\endcond
+
 # Configuring Syscfg
 
 - Select NoRTOS in 'TI Networking' -> 'CPSW' -> 'System Integration Config' -> 'RTOS Variant'
@@ -101,7 +114,7 @@ The example does below
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)

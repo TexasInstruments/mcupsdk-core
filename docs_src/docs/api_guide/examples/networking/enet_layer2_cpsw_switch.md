@@ -6,7 +6,7 @@
 
 The layer 2 cpsw switch example is dedicated to demonstrate usage of Enet CPSW3G peripheral operation as a basic switch.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 
@@ -106,6 +106,18 @@ This example do below:
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw_switch/V1
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+
+\endcond
 # Steps to Run the Example
 
 ## Build the example

@@ -18,7 +18,7 @@ The example does below
 - Initializes the LwIP stack for TCP/UDP IP and Starts UDP (echo) IGMP Server task.
 - UDP Server task waits for a msg to the multicast IP address from client on port 2638 and echoes back the same message.
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
 \endcond
 
@@ -78,6 +78,19 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 

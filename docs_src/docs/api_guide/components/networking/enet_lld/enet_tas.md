@@ -109,7 +109,7 @@ Enet LLD IOCTLs to configure EST/TAS on a given MAC port.
 
 # CPSW Support {#enet_est_cpsw}
 
-\if (SOC_AM263X || SOC_AM263PX)
+\if (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 
 ## CPSW EST Driver Implementation {#enet_est_cpsw_driver}
 

@@ -8,7 +8,7 @@
  - Switch Mode - packets forwarding in enabled and packets are forwarded to Host + Other MAC ports. This is the default configuration for CPSW.
  - MAC mode - packets are only given to Host port and is not forwarded to Other MAC Ports.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 ## CPSW DUAL MAC Mode
 - In this mode, both the MAC ports of @VAR_SOC_NAME are confifured to be in MAC mode.

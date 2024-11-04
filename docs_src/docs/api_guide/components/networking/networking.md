@@ -42,7 +42,7 @@ Below is the software components overview highlighting mainly the components use
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html cpdma_networking_block_diagram.png Figure: Networking Software Components Overview
 \endcond
@@ -112,7 +112,7 @@ To know more about the hardware peripherals, please refer to datasheet and Techn
 
 Below is the software components overview highlighting mainly the components used in the Networking software development.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
   \imageStyle{networking_layer_with_mbedtls.png,width:50%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
@@ -144,6 +144,12 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 - \subpage ENET_CPSW_TSN_GPTP
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 - \subpage ENET_CPSW_LLDP
+\endcond
+
+\cond SOC_AM261X
+### Time Sensitive Networking (TSN) Stack
+- \subpage ENET_CPSW_TSN_GPTP
+- \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 \endcond
 
 \cond SOC_AM243X
