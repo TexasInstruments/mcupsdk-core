@@ -390,6 +390,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_dual_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1273,6 +1277,10 @@ BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_lld_am261x-som_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am261x-som_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am261x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -2281,6 +2289,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2971,6 +2991,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_lld_am261x-som_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3974,6 +3998,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4664,6 +4700,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_lld_am261x-som_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -5666,6 +5706,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  pmu_multievent_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
