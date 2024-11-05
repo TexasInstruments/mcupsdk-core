@@ -322,6 +322,8 @@ const example_file_list = [
     "test/sdl/stog/stog_unit_test/.project/project.js",
     "test/sdl/stog/stog_func_test/.project/project.js",
     "test/sdl/vtm/vtm_unit_test/.project/project.js",
+    "test/sdl/tmu_rom_checksum/unit_test/.project/project.js",
+    "test/sdl/tmu_rom_checksum/functional_test/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	"test/board/flash/.project/project.js",
     "test/board/nand_flash/.project/project.js",
