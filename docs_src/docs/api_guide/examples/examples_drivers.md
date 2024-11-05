@@ -407,6 +407,11 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_RAT
    -# \subpage EXAMPLES_DRIVERS_SWAP_TO_B
 \endcond
+\cond SOC_AM261X
+-# PMIC
+   -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_RESET
+   -# \subpage EXAMPLES_PMIC_TRIGGER_WATCHDOG_RESET
+\endcond
 -# PMU
    -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 -# RTI
