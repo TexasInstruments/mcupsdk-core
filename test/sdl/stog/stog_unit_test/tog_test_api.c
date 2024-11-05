@@ -235,6 +235,21 @@ static int32_t TOG_apiTestLocal(uint32_t instanceIndex)
             testResult = -1;
         }
     }
+#if defined (SOC_AM263PX)
+	if (testResult == SDL_PASS)
+    {
+        testResult = SDL_TOG_registerInterrupt();
+        if (testResult != SDL_PASS)
+        {
+            DebugP_log("    SDL_TOG_registerInterrupt API test failed on line no: %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+	if (testResult == SDL_PASS)
+    {
+        SDL_TOG_irqHandler();
+    }
+#endif
     return (testResult);
 }
 
