@@ -4660,6 +4660,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This Example Demonstrates the action qualifier module using UPDOWN Count mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_updown_aq",
+        "location": "../../examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_updown_aq",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This Example Demonstrates the action qualifier module using UPDOWN Count mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_updown_aq",
+        "location": "../../examples/drivers/epwm/epwm_updown_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_updown_aq",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM Trip zone test example. This example demonstrates tripping of epwm output using OST and CBC mode. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_trip_zone",
         "location": "../../examples/drivers/epwm/epwm_trip_zone/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

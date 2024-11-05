@@ -107,6 +107,7 @@ const example_file_list = [
     "examples/drivers/epwm/epwm_illegal_combo_logic/.project/project.js",
     "examples/drivers/epwm/epwm_synchronization/.project/project.js",
     "examples/drivers/epwm/epwm_up_aq/.project/project.js",
+    "examples/drivers/epwm/epwm_updown_aq/.project/project.js",
     "examples/drivers/epwm/hrpwm_deadband_sfo/.project/project.js",
     "examples/drivers/epwm/hrpwm_duty_cycle_sfo/.project/project.js",
     "examples/drivers/epwm/hrpwm_phase_shift_sfo/.project/project.js",

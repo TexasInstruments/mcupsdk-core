@@ -125,6 +125,7 @@ const example_file_list = [
     "examples/drivers/epwm/epwm_xcmp_multiple_edges/.project/project.js",
     "examples/drivers/epwm/epwm_diode_emulation/.project/project.js",
     "examples/drivers/epwm/epwm_up_aq/.project/project.js",
+    "examples/drivers/epwm/epwm_updown_aq/.project/project.js",
 	"examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
 	"examples/drivers/eqep/eqep_position_speed/.project/project.js",
 	"examples/drivers/eqep/eqep_cw_ccw/.project/project.js",
