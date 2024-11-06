@@ -16339,7 +16339,7 @@
         ],
         "description": "A Icss Emac Lwip Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "icss_emac_lwip",
-        "location": "../../source/networking/enet/core/examples/lwip/icss_emac_lwip/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/icss_emac_lwip/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -16350,12 +16350,7 @@
             "ticlang"
         ],
         "subCategories": [
-            "..",
-            "source",
             "networking",
-            "enet",
-            "core",
-            "examples",
             "lwip",
             "icss_emac_lwip",
             "r5fss0-0_freertos"
@@ -16377,7 +16372,7 @@
         ],
         "description": "A Icss Emac Lwip Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "icss_emac_lwip",
-        "location": "../../source/networking/enet/core/examples/lwip/icss_emac_lwip/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/icss_emac_lwip/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
         ],
@@ -16388,12 +16383,7 @@
             "ticlang"
         ],
         "subCategories": [
-            "..",
-            "source",
             "networking",
-            "enet",
-            "core",
-            "examples",
             "lwip",
             "icss_emac_lwip",
             "r5fss0-0_freertos"

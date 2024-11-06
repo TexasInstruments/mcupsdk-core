@@ -84,6 +84,10 @@ const utils = {
                 return "AM263px";
             } else if (board == "am263px-lp") {
                 return "AM263px";
+            } else if (board == "am261x-lp"){
+                return "AM261x";
+            }else if (board == "am261x-som"){
+                return "AM261x";
             }
         }
 

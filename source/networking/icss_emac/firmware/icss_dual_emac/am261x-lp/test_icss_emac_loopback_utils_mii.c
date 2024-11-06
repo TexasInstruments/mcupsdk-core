@@ -64,12 +64,6 @@ void test_icssmMuxSelection(void);
 
 void ICSS_EMAC_testBoardInit(void)
 {
-    /* ICSS MUX enable */
-    test_icssmMuxSelection();
-
-    ETHPHY_DP83869_LedSourceConfig ledConfig;
-    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig;
-
     Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
 
     // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
@@ -78,40 +72,40 @@ void ICSS_EMAC_testBoardInit(void)
 
     DebugP_log("MII mode\r\n");
 
+    ETHPHY_DP83826E_LedSourceConfig ledConfig0;
+    ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig0;
+
     /* PHY pin LED_0 as link */
-    ledConfig.ledNum = ETHPHY_DP83869_LED0;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_100BTX_LINK_UP;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED0;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_MII_LINK_100BT_FD;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
 
     /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
-    ledConfig.ledNum = ETHPHY_DP83869_LED1;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_1000BT_LINK_UP;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED1;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_SPEED_10BT;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
 
     /* PHY pin LED_2 as Rx/Tx Activity */
-    ledConfig.ledNum = ETHPHY_DP83869_LED2;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED2;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
 
-    ledBlinkConfig.rate = ETHPHY_DP83869_LED_BLINK_RATE_200_MS;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
+    ledBlinkConfig0.rate = ETHPHY_DP83826E_LED_BLINK_RATE_200_MS;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig1));
 
     /* Enable MII mode for DP83869 PHY */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
 
-    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
+    /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
-
-    /*Wait for PHY to come out of reset*/
     ClockP_sleep(1);
 }
 
@@ -128,17 +122,3 @@ uint32_t ICSS_EMAC_getTestCaseId(void)
     return (uint32_t)JIRA_TEST_CASE_ID;
 }
 
-void test_icssmMuxSelection(void)
-{
-    uint32_t pinNum, gGpioBaseAddr;
-
-    pinNum = CONFIG_GPIO0_PIN;
-
-    /* Address translate */
-	gGpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-
-	/* Setup GPIO for ICSSM MDIO Mux selection */
-	GPIO_setDirMode(gGpioBaseAddr, pinNum, CONFIG_GPIO0_DIR);
-	GPIO_pinWriteHigh(gGpioBaseAddr, pinNum);
-
-}

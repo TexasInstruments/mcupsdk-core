@@ -93,9 +93,9 @@ clean:
 	-@echo ' '
 
 post-build:
-		-$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out
-		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4
-		-cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii
+		-$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.out
+		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4
+		-cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii
 	-@echo ' '
 
 .PHONY: all clean

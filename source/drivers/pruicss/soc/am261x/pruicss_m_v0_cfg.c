@@ -66,7 +66,7 @@ PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSM0 =
 
 PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSM1 =
 {
-    0,                                                                                      /* instance */
+    1,                                                                                      /* instance */
     CSL_ICSSM1_INTERNAL,                                                                    /* baseAddr */
     CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP0_IRAM_REGS_BASE,                              /* pru0CtrlRegBase */
     CSL_ICSSM1_INTERNAL + CSL_ICSS_M_PR1_PDSP1_IRAM_REGS_BASE,                              /* pru1CtrlRegBase */

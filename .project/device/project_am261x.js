@@ -243,7 +243,9 @@ const example_file_list = [
 	"source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/.project/project.js",
 	"source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/.project/project.js",
         "source/networking/enet/core/examples/lwip/enet_lwip_cpsw/.project/project.js",
-	//"source/networking/enet/core/examples/lwip/icss_emac_lwip/.project/project.js",
+	"examples/networking/lwip/icss_emac_lwip/.project/project.js",
+	"source/networking/icss_emac/firmware/icss_dual_emac/mii/.project/project.js",
+	"source/networking/icss_emac/firmware/icss_switch/mii/.project/project.js",
 	"source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
 	//"source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/.project/project.js",
     //"source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
@@ -391,6 +393,10 @@ function getProjectSpecCpu(cpu) {
     {
         "r5fss0-0": "Cortex_R5_0",
         "r5fss0-1": "Cortex_R5_1",
+		"icss_m0_pru0": "ICSS_M0_PRU_0",
+        "icss_m0_pru1": "ICSS_M0_PRU_1",
+		"icss_m1_pru0": "ICSS_M1_PRU_0",
+        "icss_m1_pru1": "ICSS_M1_PRU_1",
     }
 
     return projectSpecCpu[cpu];

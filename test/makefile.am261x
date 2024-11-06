@@ -41,6 +41,10 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/flash/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -340,6 +344,10 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_dma_am261x-lp_system
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 
@@ -348,6 +356,18 @@ examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
+ switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
 
  test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C board/eeprom/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -769,11 +789,27 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_dma_am261x-lp_
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
+ switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
 
  test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C board/eeprom/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1195,11 +1231,27 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_dma_am261x-lp_
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ dual_emac_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
 
  test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C board/eeprom/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

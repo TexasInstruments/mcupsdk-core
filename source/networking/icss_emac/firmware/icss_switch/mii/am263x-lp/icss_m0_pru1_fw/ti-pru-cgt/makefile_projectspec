@@ -1,13 +1,10 @@
-#
-# Auto generated makefile
-#
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME=icss_emac_lwip_am261x-som_r5fss0-0_freertos_ti-arm-clang
+PROJECT_NAME=switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

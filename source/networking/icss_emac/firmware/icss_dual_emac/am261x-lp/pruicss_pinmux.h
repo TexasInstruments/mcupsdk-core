@@ -33,181 +33,208 @@
 #include <drivers/pinmux.h>
 
 Pinmux_PerCfg_t gPruicssPinMuxCfg[] = {
-            /* ICSSM_IEP pin config */
-    /* PR0_IEP0_EDC_SYNC_OUT0 -> PR0_PRU1_GPIO19 (D15) */
+            /* PRU-ICSS0-IEP pin config */
+    /* PR0_IEP0_EDC_SYNC_OUT0 -> GPIO119 (C18) */
     {
-        PIN_PR0_PRU1_GPIO19,
+        PIN_GPIO119,
         ( PIN_MODE(3) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_IEP0_EDC_SYNC_OUT1 -> SDFM0_CLK1 (A16) */
+    /* PRU-ICSS0-IEP pin config */
+    /* PR0_IEP0_EDC_SYNC_OUT1 -> GPIO124 (A19) */
     {
-        PIN_SDFM0_CLK1,
+        PIN_GPIO124,
         ( PIN_MODE(3) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* ICSSM pin config */
-    /* PR0_MDIO_MDIO -> PR0_MDIO_MDIO (L17) */
+    /* PRU-ICSS0-IEP pin config */
+    /* PR0_IEP0_EDIO_DATA_IN_OUT30 -> GPIO105 (E19) */
     {
-        PIN_PR0_MDIO_MDIO,
+        PIN_GPIO105,
+        ( PIN_MODE(3) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
+    },
+    /* PRU-ICSS0-IEP pin config */
+    /* PR0_IEP0_EDIO_DATA_IN_OUT31 -> GPIO104 (E20) */
+    {
+        PIN_GPIO104,
+        ( PIN_MODE(3) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
+    },
+    /* PRU-ICSS0-MDIO pin config */
+    /* PR0_MDIO0_MDIO -> GPIO85 (R19) */
+    {
+        PIN_GPIO85,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_MDIO_MDC -> PR0_MDIO_MDC (L18) */
+    /* PRU-ICSS0-MDIO pin config */
+    /* PR0_MDIO0_MDC -> GPIO86 (R20) */
     {
-        PIN_PR0_MDIO_MDC,
+        PIN_GPIO86,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO0 -> PR0_PRU0_GPIO0 (K17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO8 -> GPIO90 (J18) */
     {
-        PIN_PR0_PRU0_GPIO0,
+        PIN_GPIO90,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO1 -> PR0_PRU0_GPIO1 (K18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO5 -> GPIO87 (K19) */
     {
-        PIN_PR0_PRU0_GPIO1,
+        PIN_GPIO87,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO2 -> PR0_PRU0_GPIO2 (J18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO6 -> GPIO91 (N20) */
     {
-        PIN_PR0_PRU0_GPIO2,
+        PIN_GPIO91,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO3 -> PR0_PRU0_GPIO3 (J17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO4 -> GPIO92 (L20) */
     {
-        PIN_PR0_PRU0_GPIO3,
+        PIN_GPIO92,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO4 -> PR0_PRU0_GPIO4 (K16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO0 -> GPIO93 (N17) */
     {
-        PIN_PR0_PRU0_GPIO4,
+        PIN_GPIO93,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO5 -> PR0_PRU0_GPIO5 (G17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO1 -> GPIO94 (N19) */
     {
-        PIN_PR0_PRU0_GPIO5,
+        PIN_GPIO94,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (K15) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO2 -> GPIO95 (M18) */
     {
-        PIN_PR0_PRU0_GPIO6,
+        PIN_GPIO95,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (G15) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO3 -> GPIO96 (M20) */
     {
-        PIN_PR0_PRU0_GPIO8,
+        PIN_GPIO96,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO9 -> PR0_PRU0_GPIO9 (F17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO16 -> GPIO97 (M19) */
     {
-        PIN_PR0_PRU0_GPIO9,
+        PIN_GPIO97,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO10 -> PR0_PRU0_GPIO10 (G18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO15 -> GPIO98 (P18) */
     {
-        PIN_PR0_PRU0_GPIO10,
+        PIN_GPIO98,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO11 -> PR0_PRU0_GPIO11 (M16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO11 -> GPIO99 (P20) */
     {
-        PIN_PR0_PRU0_GPIO11,
+        PIN_GPIO99,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO12 -> PR0_PRU0_GPIO12 (M15) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO12 -> GPIO100 (P19) */
     {
-        PIN_PR0_PRU0_GPIO12,
+        PIN_GPIO100,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO13 -> PR0_PRU0_GPIO13 (H17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO13 -> GPIO101 (K20) */
     {
-        PIN_PR0_PRU0_GPIO13,
+        PIN_GPIO101,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO14 -> PR0_PRU0_GPIO14 (H16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU0_GPIO14 -> GPIO102 (L19) */
     {
-        PIN_PR0_PRU0_GPIO14,
+        PIN_GPIO102,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO15 -> PR0_PRU0_GPIO15 (L16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO8 -> GPIO106 (G18) */
     {
-        PIN_PR0_PRU0_GPIO15,
+        PIN_GPIO106,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU0_GPIO16 -> PR0_PRU0_GPIO16 (H18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO5 -> GPIO103 (F20) */
     {
-        PIN_PR0_PRU0_GPIO16,
+        PIN_GPIO103,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO0 -> PR0_PRU1_GPIO0 (F18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO6 -> GPIO107 (F19) */
     {
-        PIN_PR0_PRU1_GPIO0,
+        PIN_GPIO107,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO1 -> PR0_PRU1_GPIO1 (G16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO4 -> GPIO108 (G19) */
     {
-        PIN_PR0_PRU1_GPIO1,
+        PIN_GPIO108,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO2 -> PR0_PRU1_GPIO2 (E17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO0 -> GPIO109 (H20) */
     {
-        PIN_PR0_PRU1_GPIO2,
+        PIN_GPIO109,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO3 -> PR0_PRU1_GPIO3 (E18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO1 -> GPIO110 (H19) */
     {
-        PIN_PR0_PRU1_GPIO3,
+        PIN_GPIO110,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO4 -> PR0_PRU1_GPIO4 (F16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO2 -> GPIO111 (H17) */
     {
-        PIN_PR0_PRU1_GPIO4,
+        PIN_GPIO111,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO5 -> PR0_PRU1_GPIO5 (F15) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO3 -> GPIO112 (G20) */
     {
-        PIN_PR0_PRU1_GPIO5,
+        PIN_GPIO112,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO6 -> PR0_PRU1_GPIO6 (E16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO16 -> GPIO113 (B20) */
     {
-        PIN_PR0_PRU1_GPIO6,
+        PIN_GPIO113,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO8 -> PR0_PRU1_GPIO8 (D18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO15 -> GPIO114 (E18) */
     {
-        PIN_PR0_PRU1_GPIO8,
+        PIN_GPIO114,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO9 -> PR0_PRU1_GPIO9 (C18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO11 -> GPIO115 (F17) */
     {
-        PIN_PR0_PRU1_GPIO9,
+        PIN_GPIO115,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO11 -> PR0_PRU1_GPIO11 (B18) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO12 -> GPIO116 (D20) */
     {
-        PIN_PR0_PRU1_GPIO11,
+        PIN_GPIO116,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO12 -> PR0_PRU1_GPIO12 (B17) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO13 -> GPIO117 (C20) */
     {
-        PIN_PR0_PRU1_GPIO12,
+        PIN_GPIO117,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
-    /* PR0_PRU1_GPIO13 -> PR0_PRU1_GPIO13 (D16) */
+    /* PRU-ICSS0 pin config */
+    /* PR0_PRU1_GPIO14 -> GPIO118 (D19) */
     {
-        PIN_PR0_PRU1_GPIO13,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU1_GPIO14 -> PR0_PRU1_GPIO14 (C17) */
-    {
-        PIN_PR0_PRU1_GPIO14,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU1_GPIO15 -> PR0_PRU1_GPIO15 (A17) */
-    {
-        PIN_PR0_PRU1_GPIO15,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU1_GPIO16 -> PR0_PRU1_GPIO16 (C16) */
-    {
-        PIN_PR0_PRU1_GPIO16,
+        PIN_GPIO118,
         ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
     },
 
