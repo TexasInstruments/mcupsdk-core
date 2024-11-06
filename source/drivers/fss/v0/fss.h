@@ -37,8 +37,23 @@
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
 #include <drivers/hw_include/cslr_fss.h>
+#include <drivers/hw_include/hw_types.h>
+#include <drivers/hw_include/csl_types.h>
+
+#define Region_Index_0    ((uint32_t)(0))
+#define Region_Index_1    ((uint32_t)(1))
+#define Region_Index_2    ((uint32_t)(2))
+#define Region_Index_3    ((uint32_t)(3))
 
 typedef void* FSS_Handle;
+
+typedef struct{
+
+    uint32_t size;
+    uint32_t startAddress;
+    uint32_t regionIndex;
+}FSS_ECCRegionConfig;
+
 
 typedef struct fss_config_s_t
 {
@@ -88,5 +103,48 @@ int32_t FSS_selectRegionA(FSS_Handle handle);
  * @return SystemP_SUCCESS on successfull execution
  */
 int32_t FSS_selectRegionB(FSS_Handle handle);
+
+/**
+ * @brief Enable ECC for Flash 
+ * 
+ * This function enabled ECC for the data that is stored in flash.
+ * For every 32 Bytes of data, 4 bytes of ECC is assumed. 
+ * Make sure the data is in flash is prepared at compile time.
+ *
+ */
+void FSS_enableECC(void);
+
+/**
+ * @brief Disable ECC 
+ * 
+ */
+void FSS_disableECC(void);
+
+/**
+ * @brief Set size of an ECCM region
+ * 
+ * @param regionIndex region ID
+ * @param size_in_bytes size of region in bytes 
+ */
+void FSS_setECCRegionSize(uint32_t regionIndex, uint32_t size_in_bytes);
+
+/**
+ * @brief Set start address of an ECCM region
+ * 
+ * @param regionIndex region ID
+ * @param ecc_reg_start start address
+ */
+void FSS_setECCRegionStart(uint32_t regionIndex, uint32_t ecc_reg_start);
+
+int32_t FSS_configECCMRegion(FSS_ECCRegionConfig *parameter);
+
+/**
+ * @brief Configure ECCM hardware
+ * 
+ * @param numRegion region ID
+ * @param parameter region config data
+ */
+int32_t FSS_ConfigEccm(uint32_t numRegion, FSS_ECCRegionConfig *parameter);
+
 
 #endif
