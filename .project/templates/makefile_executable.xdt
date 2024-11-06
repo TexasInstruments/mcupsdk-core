@@ -70,6 +70,8 @@ BOOTIMAGE_NAME_QSPI:=`args.project.name`.$(PROFILE).appimage_qspi
 % }
 BOOTIMAGE_NAME_SIGNED:=`args.project.name`.$(PROFILE).appimage.signed
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+oeconfig?=None
+
 BOOTIMAGE_NAME_MCELF:=`args.project.name`.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=`args.project.name`.$(PROFILE).mcelf.hs
 % }
@@ -880,7 +882,7 @@ endif
 % }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
