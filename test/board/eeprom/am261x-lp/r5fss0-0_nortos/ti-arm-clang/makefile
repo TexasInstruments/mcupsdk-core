@@ -28,6 +28,8 @@ BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=test_eeprom.$(PROFILE).appimage
 BOOTIMAGE_NAME_XIP:=test_eeprom.$(PROFILE).appimage_xip
 BOOTIMAGE_NAME_SIGNED:=test_eeprom.$(PROFILE).appimage.signed
+oeconfig?=None
+
 BOOTIMAGE_NAME_MCELF:=test_eeprom.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=test_eeprom.$(PROFILE).mcelf.hs
 BOOTIMAGE_RPRC_NAME:=test_eeprom.$(PROFILE).rprc
@@ -325,7 +327,7 @@ endif
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 

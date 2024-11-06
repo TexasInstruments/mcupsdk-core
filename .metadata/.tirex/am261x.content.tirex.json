@@ -12979,7 +12979,7 @@
         "name": "enet_cpsw_est",
         "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13315,7 +13315,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13330,7 +13330,7 @@
             "enet",
             "core",
             "examples",
-            "enet_layer2_cpsw_switch",
+            "enet_layer2_cpsw",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -13352,7 +13352,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13424,11 +13424,50 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13465,48 +13504,9 @@
         ],
         "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_phy_end",
-        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263P"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "enet_loopback",
-            "enet_cpsw_loopback",
-            "loopback_phy_end",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13582,7 +13582,7 @@
         "name": "enet_txsg",
         "location": "../../source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13657,7 +13657,7 @@
         "name": "cpsw_lwip_https",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13733,7 +13733,7 @@
         "name": "enet_cpsw_rawhttpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -13809,7 +13809,7 @@
         "name": "enet_cpsw_socket",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13885,7 +13885,7 @@
         "name": "enet_cpsw_tcpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -13961,7 +13961,7 @@
         "name": "enet_cpsw_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -14037,7 +14037,7 @@
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -14113,7 +14113,7 @@
         "name": "enet_cpsw_udpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -14260,7 +14260,7 @@
         "name": "gptp_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
