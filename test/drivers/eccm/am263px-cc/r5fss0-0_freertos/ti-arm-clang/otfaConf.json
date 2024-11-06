@@ -1,0 +1,11 @@
+{
+    "mac_size": 4,
+    "regions": [
+        {
+            "start": 1611661312,
+            "size": 4194304,
+            "cryptoMode":"na",
+            "eccEnable": true
+        }
+    ]
+}

@@ -328,6 +328,7 @@ const example_file_list = [
 	"test/drivers/dac/.project/project.js",
 	"test/drivers/cmpss/.project/project.js",
 	"test/drivers/ecap/.project/project.js",
+    "test/drivers/eccm/.project/project.js",
 	"test/drivers/edma/.project/project.js",
 	"test/drivers/epwm/.project/project.js",
 	"test/drivers/eqep/.project/project.js",
