@@ -55,6 +55,9 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+/** Increase variable A by number B while keping the alignemnt of C bytes */
+#define ALIGNED_INCREMENT(A,B,C) do{A = (A = A + B, (A % C) > 0 ? A + C - (A % C): A);} while(0)
+
 /** The maximum size of the vector table. */
 #define MAX_VECTOR_TABLE_SIZE (80U)
 
@@ -72,6 +75,8 @@
 
 /** The maximum possible size of RS note segment placed at the end of MCELF appimage. */
 #define BOOTLOADER_MAX_RS_NOTE_SEGMENT_SIZE (48)
+
+#define NOTE_SEGMENT_NOTE_TYPE_OTFA_CONFIG (0xDDDDBBBB)
 
 /* ========================================================================== */
 /*                             Global Variables                               */
@@ -824,6 +829,44 @@ int32_t Bootloader_parseNoteSegment(Bootloader_Handle handle,
     }
 
     return status;
+}
+
+int32_t Bootloader_getOTFAConfigFromNoteSegment(Bootloader_Handle handle,
+                                    uint32_t noteSegmentSz,
+                                    Bootloader_OtfaConfig *otfaConfig)
+{
+    int32_t status = SystemP_FAILURE;
+
+    if(NULL != handle && NULL != otfaConfig)
+    {
+        /* will walk through the entire note section */
+        uint8_t gotConfig = FALSE;
+        uint32_t index = 0;
+        do
+        {
+            uint32_t namesz = *(uint32_t*)(gNoteSegBuffer + index);
+            ALIGNED_INCREMENT(index, 4, 4);
+            uint32_t descsz = *(uint32_t*)(gNoteSegBuffer + index);
+            ALIGNED_INCREMENT(index, 4, 4);
+            uint32_t type = *(uint32_t*)(gNoteSegBuffer + index);
+            ALIGNED_INCREMENT(index, 4, 4);
+            uint8_t *name = &(gNoteSegBuffer[index]);
+            ALIGNED_INCREMENT(index, namesz, 4);
+            uint8_t *desc = &(gNoteSegBuffer[index]);
+            ALIGNED_INCREMENT(index, descsz, 4);
+
+            if(NOTE_SEGMENT_NOTE_TYPE_OTFA_CONFIG == type && strcmp((const char*)name, "otfaConfig") == 0)
+            {
+                /*this note type is for otfa configuration*/
+                memcpy((void*)otfaConfig, (void*)desc, sizeof(Bootloader_OtfaConfig));
+                status = SystemP_SUCCESS;
+                gotConfig = TRUE;
+            }
+        }
+        while(index < noteSegmentSz && gotConfig == FALSE);
+    }
+
+    return status;   
 }
 
 static int32_t Bootloader_verifySegmentAddr(uint32_t addr)

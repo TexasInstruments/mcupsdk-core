@@ -39,6 +39,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
+#include <drivers/bootloader.h>
 
 #define E_IDENT 16
 
@@ -68,6 +69,21 @@ extern "C"
 #define ELF_MAX_SEGMENTS          (1024U)
 #define ELF_P_HEADER_MAX_SIZE     (ELF_P_HEADER_64_SIZE)
 #define ELF_NOTE_SEGMENT_MAX_SIZE (512U)
+
+#define NOTE_OTFA_CONFIG_OTFA_MODE_AUTH         (0U)
+#define NOTE_OTFA_CONFIG_OTFA_MODE_ENCRYPT      (1U)
+#define NOTE_OTFA_CONFIG_OTFA_MODE_GCM          (2U)
+#define NOTE_OTFA_CONFIG_OTFA_MODE_ENCRYPT_AUTH (3U)
+
+#define NOTE_OTFA_CONFIG_MAC_SIZE_4B            (1U)
+#define NOTE_OTFA_CONFIG_MAC_SIZE_8B            (2U)
+#define NOTE_OTFA_CONFIG_MAC_SIZE_16B           (3U)
+#define NOTE_OTFA_CONFIG_MAC_SIZE_32B           (4U)
+
+#define NOTE_OTFA_CONFIG_AES_KEY_SIZE_128B      (1U)
+#define NOTE_OTFA_CONFIG_AES_KEY_SIZE_256B      (2U)
+
+#define OTFA_MAX_REGION                         (4U)
 
 typedef struct Bootloader_ELFH32_s
 {
@@ -154,7 +170,30 @@ typedef struct Bootloader_EntryPoint64_s
 
 } Bootloader_EntryPoint64;
 
+typedef struct Bootloader_OtfaRegionConfig_s
+{
+    uint32_t size;
+    uint32_t startAddress;
+    uint32_t cryptoMode;
+    uint32_t eccEnable;
+    uint8_t authKey[32];
+    uint8_t encKey[32];
+    uint8_t iv[32];
+}Bootloader_OtfaRegionConfig;
 
+typedef struct Bootloader_OfaConfig_s
+{
+    uint8_t isOTFAECCMEnabled;
+    uint8_t isMacAligned;
+    uint8_t macSize;
+    uint8_t aesKeySize;
+    uint8_t regionLen;
+    Bootloader_OtfaRegionConfig region[OTFA_MAX_REGION];
+}Bootloader_OtfaConfig;
+
+int32_t Bootloader_getOTFAConfigFromNoteSegment(Bootloader_Handle handle,
+                                    uint32_t noteSegmentSz,
+                                    Bootloader_OtfaConfig *otfaConfig);
 
 #ifdef __cplusplus
 }
