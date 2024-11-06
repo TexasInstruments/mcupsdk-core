@@ -668,7 +668,9 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
     if(((baseAddr == CSL_UART0_U_BASE) ||
         (baseAddr == CSL_UART1_U_BASE) ||
         (baseAddr == CSL_UART2_U_BASE) ||
-        (baseAddr == CSL_UART3_U_BASE) ))
+        (baseAddr == CSL_UART3_U_BASE) ||
+        (baseAddr == CSL_UART4_U_BASE) ||
+        (baseAddr == CSL_UART5_U_BASE) ))
     {
         status = 0;
     }
