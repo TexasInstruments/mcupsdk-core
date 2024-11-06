@@ -40,6 +40,7 @@
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 #include <drivers/ospi.h>
 #include <drivers/fss.h>
+#include <drivers/bootloader/bootloader_elf.h>
 
 
 
@@ -61,6 +62,13 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle);
  * 
  */
 void board_flash_reset(void);
+
+/**
+ * @brief Configure OTFA and ECCM module
+ * 
+ * @param config bootloader config
+ */
+void OTFAECCM_Config(Bootloader_OtfaConfig *config);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -154,7 +162,24 @@ int main(void)
 
         if (bootHandle != NULL)
         {
+    
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
+            OSPI_enableDacMode(ospiHandle);
+            if(SystemP_SUCCESS == status)
+            {
+                Bootloader_OtfaConfig otfaConfig;
+                status = Bootloader_getOTFAConfigFromNoteSegment(bootHandle, ELF_NOTE_SEGMENT_MAX_SIZE, &otfaConfig);
+
+                if(SystemP_SUCCESS == status)
+                {
+                    /* OTFA configuration is in NOTE section. */
+                    if(TRUE == otfaConfig.isOTFAECCMEnabled)
+                    {
+                        OTFAECCM_Config(&otfaConfig);
+                    }
+                }
+            }
 
             if (status == SystemP_SUCCESS)
             {
@@ -209,3 +234,32 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle)
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
+
+void OTFAECCM_Config(Bootloader_OtfaConfig *config)
+{
+    if(NULL != config)
+    {
+        uint8_t doEnableECC = FALSE;
+        FSS_disableECC();
+        for(unsigned int i = 0; i < config->regionLen; i++)
+        {   
+            if(config->region[i].eccEnable == TRUE)
+            {
+                OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+                uint32_t dataBaseAddress = OSPI_getFlashDataBaseAddr(ospiHandle);
+                doEnableECC = TRUE;
+                FSS_ECCRegionConfig rc;
+                rc.size = config->region[i].size;
+                rc.startAddress = config->region[i].startAddress - dataBaseAddress;
+                rc.regionIndex = i;
+                FSS_configECCMRegion(&rc);
+            }
+        }
+        
+        if(doEnableECC == TRUE)
+        {
+            FSS_enableECC();
+        }
+    }    
+}
+
