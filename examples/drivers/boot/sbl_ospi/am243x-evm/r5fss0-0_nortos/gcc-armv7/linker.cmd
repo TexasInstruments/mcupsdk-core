@@ -20,6 +20,7 @@ MEMORY
     MSRAM_VECS : ORIGIN = 0x70000000 , LENGTH = 0x100
     MSRAM_0  : ORIGIN = 0x70000100 , LENGTH = 0x70000 - 0x100
     MSRAM_1  : ORIGIN = 0x70070000 , LENGTH = 0x10000
+    APPIMAGE   : ORIGIN = 0x82000000 , LENGTH = 0x800000 
 
 }
 
@@ -35,6 +36,7 @@ SECTIONS
     .data       : ALIGN(8) {} > MSRAM_0
     .rodata     : ALIGN(8) {} > MSRAM_0
 
+    .app (NOLOAD) : { KEEP(*(.app)) } > APPIMAGE
 
     .bss : {
         __bss_start__ = .;
