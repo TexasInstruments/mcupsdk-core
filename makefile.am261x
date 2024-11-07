@@ -474,42 +474,42 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/icss_emac_lwip/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1364,42 +1364,42 @@ BUILD_COMBO_EXAMPLE_ALL += task_switch_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += basic_smart_placement_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -2547,11 +2547,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2565,95 +2565,95 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile all
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-1_freertos/ti-arm-clang -f makefile all
 
- enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3090,42 +3090,42 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am261x-som_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += basic_smart_placement_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4268,11 +4268,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4286,95 +4286,95 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-1_freertos/ti-arm-clang -f makefile clean
 
- enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4811,42 +4811,42 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am261x-som_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += basic_smart_placement_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -5989,11 +5989,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  basic_smart_placement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_est_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_est_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_est_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_est_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  real_time_debug_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -6007,95 +6007,95 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  real_time_debug_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_l2_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_l2_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_l2_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-1_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+ enet_l2_cpsw_am261x-lp-dp83826_r5fss0-1_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
 
- enet_l2_cpsw_switch_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_l2_cpsw_switch_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_l2_cpsw_switch_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_l2_cpsw_switch_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_mac_end_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_loopback_mac_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_loopback_phy_end_am261x-lp-dp83826/am261x-lp-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_loopback_phy_end_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_txsg_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_txsg_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_txsg_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_txsg_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- cpsw_lwip_https_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ cpsw_lwip_https_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- cpsw_lwip_https_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ cpsw_lwip_https_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ enet_cpsw_rawhttpserver_am261x-lp-dp83tg720_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_rawhttpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ enet_cpsw_rawhttpserver_am261x-lp-dp83826_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_socket_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_socket_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_socket_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_socket_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_tcpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_tcpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_tcpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_tcpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_tcpserver_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_tcpserver_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_tcpserver_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_tcpserver_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_udp_igmp_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_udp_igmp_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_udp_igmp_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_udp_igmp_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_udpclient_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_udpclient_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_cpsw_udpclient_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_cpsw_udpclient_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_lwip_cpsw_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_lwip_cpsw_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- enet_lwip_cpsw_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ enet_lwip_cpsw_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  icss_emac_lwip_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- gptp_app_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ gptp_app_am261x-lp-dp83tg720_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- gptp_app_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ gptp_app_am261x-lp-dp83826_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
