@@ -101,7 +101,7 @@ Enabling RL2 is the easiest and quickest step. So, enabling it in during the sta
 
 ### Safety & Security
 
-\note Not released.
+\note Enabling security is under development. 
 
 \imageStyle{am263px_saf_sec_perf.png,width:50%}
 \image html am263px_saf_sec_perf.png "AM2x devices with OptiFlash technology. Blocks marked in RED are specifically put to provide safety and security."
@@ -110,11 +110,13 @@ For safety and security, hardware blocks have been provided. These blocks provid
 
 To enable Safety and Security, all that is required is to enable the hardware. However, it is required to be made sure that the data that is stored in the external flash is also encrypted so as to be read by this safety and security module.
 
-This safety and security module is called ECCM and OTFA.
+This safety and security module is called ECCM and OTFA, respectively.
 
 The way this hardware works is that when CPU requests to fetch an instruction, the entire chunk with its metadata, corresponding to that instruction, is fetched by OSPI controller which is then passed to the ECCM and OTFA hardware which then decrypts and verify data, on-they-fly, and then the instruction is passed on to the CPU to execute.
 
 This allows XIP with full safety and security using hardware accelerators. Using hardware accelerators reduces the impact on performance.
+
+\note for more information on how to enable safety, please refer to \ref OPTIFLASH_ECCM
 
 ### Improving startup time
 

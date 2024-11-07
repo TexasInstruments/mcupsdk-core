@@ -85,6 +85,7 @@ SDK features and tools.
 - \subpage TMU_GUIDE
 - \subpage bootseg_ip_working
 - \subpage FLSOPSKD_IP
+- \subpage OPTIFLASH_ECCM
 \endcond
 
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
