@@ -11,7 +11,7 @@
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -43,7 +43,7 @@
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -75,7 +75,7 @@
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -107,7 +107,7 @@
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -139,7 +139,7 @@
         "name": "coremark_benchmark",
         "location": "../../examples/benchmarks/coremark_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -171,7 +171,7 @@
         "name": "dhrystone_benchmark",
         "location": "../../examples/benchmarks/dhrystone_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -203,7 +203,7 @@
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -236,7 +236,7 @@
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -269,7 +269,7 @@
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -302,7 +302,7 @@
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -335,7 +335,7 @@
         "name": "sbl_emmc",
         "location": "../../examples/drivers/boot/sbl_emmc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -368,7 +368,7 @@
         "name": "sbl_emmc_linux",
         "location": "../../examples/drivers/boot/sbl_emmc_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -401,7 +401,7 @@
         "name": "sbl_jtag_uniflash",
         "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -434,7 +434,7 @@
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -467,7 +467,7 @@
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -500,7 +500,7 @@
         "name": "sbl_ospi",
         "location": "../../examples/drivers/boot/sbl_ospi/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -533,7 +533,7 @@
         "name": "sbl_ospi",
         "location": "../../examples/drivers/boot/sbl_ospi/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -566,7 +566,7 @@
         "name": "sbl_ospi_linux",
         "location": "../../examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -599,7 +599,7 @@
         "name": "sbl_ospi_multi_partition",
         "location": "../../examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -632,7 +632,7 @@
         "name": "sbl_ospi_multi_partition",
         "location": "../../examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -665,7 +665,7 @@
         "name": "sbl_pcie",
         "location": "../../examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -698,7 +698,7 @@
         "name": "sbl_pcie_host",
         "location": "../../examples/drivers/boot/sbl_pcie_host/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -731,7 +731,7 @@
         "name": "sbl_sd",
         "location": "../../examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -764,7 +764,7 @@
         "name": "sbl_sd",
         "location": "../../examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -797,7 +797,7 @@
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -830,7 +830,7 @@
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -863,7 +863,7 @@
         "name": "sbl_uart_uniflash",
         "location": "../../examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -896,7 +896,7 @@
         "name": "sbl_uart_uniflash",
         "location": "../../examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -929,7 +929,7 @@
         "name": "sbl_dfu_uniflash",
         "location": "../../examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -962,7 +962,7 @@
         "name": "sbl_dfu",
         "location": "../../examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -995,7 +995,7 @@
         "name": "crc_full_cpu",
         "location": "../../examples/drivers/crc/crc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1028,7 +1028,7 @@
         "name": "crc_full_cpu",
         "location": "../../examples/drivers/crc/crc_full_cpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1061,7 +1061,7 @@
         "name": "ddr_ecc_test_main_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_main_esm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1094,7 +1094,7 @@
         "name": "ddr_ecc_test_main_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_main_esm/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -1127,7 +1127,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1160,7 +1160,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1193,7 +1193,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -1226,7 +1226,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -1259,7 +1259,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1292,7 +1292,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1325,7 +1325,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1358,7 +1358,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1391,7 +1391,7 @@
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1424,7 +1424,7 @@
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1457,7 +1457,7 @@
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1490,7 +1490,7 @@
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1523,7 +1523,7 @@
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1556,7 +1556,7 @@
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1589,7 +1589,7 @@
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1622,7 +1622,7 @@
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1655,7 +1655,7 @@
         "name": "epwm_duty_cycle_sync",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle_sync/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1688,7 +1688,7 @@
         "name": "epwm_duty_cycle_sync",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle_sync/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1721,7 +1721,7 @@
         "name": "epwm_duty_cycle_sync",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle_sync/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1754,7 +1754,7 @@
         "name": "eqep_capture",
         "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1787,7 +1787,7 @@
         "name": "eqep_capture",
         "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1820,7 +1820,7 @@
         "name": "eqep_capture",
         "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -1853,7 +1853,7 @@
         "name": "eqep_capture",
         "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1886,7 +1886,7 @@
         "name": "fsi_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1919,7 +1919,7 @@
         "name": "fsi_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -1952,7 +1952,7 @@
         "name": "fsi_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_loopback_polling/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -1985,7 +1985,7 @@
         "name": "fsi_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_loopback_polling/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2018,7 +2018,7 @@
         "name": "gp_timer_free_run",
         "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2051,7 +2051,7 @@
         "name": "gp_timer_free_run",
         "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -2084,7 +2084,7 @@
         "name": "gp_timer_free_run",
         "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2117,7 +2117,7 @@
         "name": "gp_timer_free_run",
         "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -2150,7 +2150,7 @@
         "name": "gp_timer_overflow_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2183,7 +2183,7 @@
         "name": "gp_timer_overflow_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -2216,7 +2216,7 @@
         "name": "gp_timer_overflow_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2249,7 +2249,7 @@
         "name": "gp_timer_overflow_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -2282,7 +2282,7 @@
         "name": "gp_timer_compare_match_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2315,7 +2315,7 @@
         "name": "gp_timer_compare_match_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -2348,7 +2348,7 @@
         "name": "gp_timer_compare_match_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2381,7 +2381,7 @@
         "name": "gp_timer_compare_match_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -2414,7 +2414,7 @@
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2447,7 +2447,7 @@
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2480,7 +2480,7 @@
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2513,7 +2513,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2546,7 +2546,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2579,7 +2579,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2612,7 +2612,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -2645,7 +2645,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2678,7 +2678,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2711,7 +2711,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -2744,7 +2744,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -2777,7 +2777,7 @@
         "name": "gpmc_flash_io",
         "location": "../../examples/drivers/gpmc/gpmc_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2810,7 +2810,7 @@
         "name": "gpmc_flash_io",
         "location": "../../examples/drivers/gpmc/gpmc_flash_io/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -2843,7 +2843,7 @@
         "name": "gpmc_flash_io",
         "location": "../../examples/drivers/gpmc/gpmc_flash_io/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2876,7 +2876,7 @@
         "name": "gpmc_psram_io",
         "location": "../../examples/drivers/gpmc/gpmc_psram_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2909,7 +2909,7 @@
         "name": "gpmc_psram_io",
         "location": "../../examples/drivers/gpmc/gpmc_psram_io/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2942,7 +2942,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -2975,7 +2975,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3008,7 +3008,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3041,7 +3041,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3074,7 +3074,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3107,7 +3107,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3140,7 +3140,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3173,7 +3173,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3206,7 +3206,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3239,7 +3239,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3272,7 +3272,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3305,7 +3305,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3338,7 +3338,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3371,7 +3371,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3404,7 +3404,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3437,7 +3437,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3470,7 +3470,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3503,7 +3503,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3536,7 +3536,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3569,7 +3569,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3602,7 +3602,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3635,7 +3635,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3668,7 +3668,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3701,7 +3701,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3734,7 +3734,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3767,7 +3767,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -3800,7 +3800,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3833,7 +3833,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -3866,7 +3866,7 @@
         "name": "i2c_led_blink_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3899,7 +3899,7 @@
         "name": "i2c_led_blink_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3932,7 +3932,7 @@
         "name": "i2c_led_blink_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -3965,7 +3965,7 @@
         "name": "i2c_led_blink_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -3998,7 +3998,7 @@
         "name": "i2c_led_read_write_lld",
         "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4031,7 +4031,7 @@
         "name": "i2c_led_read_write_lld",
         "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4064,7 +4064,7 @@
         "name": "i2c_memory_read_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4097,7 +4097,7 @@
         "name": "i2c_memory_read_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4130,7 +4130,7 @@
         "name": "i2c_memory_read_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4163,7 +4163,7 @@
         "name": "i2c_memory_read_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4196,7 +4196,7 @@
         "name": "i2c_temperature_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4229,7 +4229,7 @@
         "name": "i2c_temperature_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_polling_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4262,7 +4262,7 @@
         "name": "i2c_temperature_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4295,7 +4295,7 @@
         "name": "i2c_temperature_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4328,7 +4328,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -4361,7 +4361,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4394,7 +4394,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4427,7 +4427,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4460,7 +4460,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4493,7 +4493,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4526,7 +4526,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -4559,7 +4559,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4592,7 +4592,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4625,7 +4625,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4658,7 +4658,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4691,7 +4691,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4724,7 +4724,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -4757,7 +4757,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4790,7 +4790,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4823,7 +4823,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4856,7 +4856,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4889,7 +4889,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -4922,7 +4922,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -4955,7 +4955,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -4988,7 +4988,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5021,7 +5021,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5054,7 +5054,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5087,7 +5087,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5120,7 +5120,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5153,7 +5153,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5186,7 +5186,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5219,7 +5219,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5252,7 +5252,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5285,7 +5285,7 @@
         "name": "ipc_safeipc_echo",
         "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5318,7 +5318,7 @@
         "name": "ipc_safeipc_echo",
         "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5351,7 +5351,7 @@
         "name": "ipc_spinlock_sharedmem",
         "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5384,7 +5384,7 @@
         "name": "ipc_spinlock_sharedmem",
         "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5417,7 +5417,7 @@
         "name": "mcan_external_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5450,7 +5450,7 @@
         "name": "mcan_external_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5483,7 +5483,7 @@
         "name": "mcan_external_loopback_interrupt2",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5516,7 +5516,7 @@
         "name": "mcan_external_loopback_interrupt2",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5549,7 +5549,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5582,7 +5582,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5615,7 +5615,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5648,7 +5648,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5681,7 +5681,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5714,7 +5714,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -5747,7 +5747,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5780,7 +5780,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5813,7 +5813,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5846,7 +5846,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -5879,7 +5879,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -5912,7 +5912,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -5945,7 +5945,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -5978,7 +5978,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6011,7 +6011,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6044,7 +6044,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6077,7 +6077,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6110,7 +6110,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6143,7 +6143,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6176,7 +6176,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6209,7 +6209,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6242,7 +6242,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6275,7 +6275,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -6308,7 +6308,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6341,7 +6341,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6374,7 +6374,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6407,7 +6407,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6440,7 +6440,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6473,7 +6473,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -6506,7 +6506,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6539,7 +6539,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6572,7 +6572,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6605,7 +6605,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6638,7 +6638,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -6671,7 +6671,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6704,7 +6704,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6737,7 +6737,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6770,7 +6770,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -6803,7 +6803,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6836,7 +6836,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -6869,7 +6869,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -6902,7 +6902,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -6935,7 +6935,7 @@
         "name": "mcspi_loopback_multi_instances_multi_channels_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -6968,7 +6968,7 @@
         "name": "mcspi_loopback_multi_instances_multi_channels_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7001,7 +7001,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7034,7 +7034,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7067,7 +7067,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7100,7 +7100,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7133,7 +7133,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -7166,7 +7166,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7199,7 +7199,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7232,7 +7232,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7265,7 +7265,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7298,7 +7298,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7331,7 +7331,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7364,7 +7364,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -7397,7 +7397,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7430,7 +7430,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7463,7 +7463,7 @@
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7496,7 +7496,7 @@
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7529,7 +7529,7 @@
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7562,7 +7562,7 @@
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7595,7 +7595,7 @@
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -7628,7 +7628,7 @@
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7661,7 +7661,7 @@
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7694,7 +7694,7 @@
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7727,7 +7727,7 @@
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7760,7 +7760,7 @@
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -7793,7 +7793,7 @@
         "name": "mmcsd_raw_io_sd_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7826,7 +7826,7 @@
         "name": "mmcsd_raw_io_sd_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7859,7 +7859,7 @@
         "name": "mmcsd_raw_io_sd_intr_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7892,7 +7892,7 @@
         "name": "mmcsd_raw_io_sd_intr_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7925,7 +7925,7 @@
         "name": "mmcsd_raw_io_emmc_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -7958,7 +7958,7 @@
         "name": "mmcsd_raw_io_emmc_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -7991,7 +7991,7 @@
         "name": "mmcsd_raw_io_emmc_intr_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8024,7 +8024,7 @@
         "name": "mmcsd_raw_io_emmc_intr_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8057,7 +8057,7 @@
         "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8090,7 +8090,7 @@
         "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8123,7 +8123,7 @@
         "name": "ospi_flash_diag_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_diag_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8156,7 +8156,7 @@
         "name": "ospi_flash_diag_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_diag_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8189,7 +8189,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8222,7 +8222,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8255,7 +8255,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -8288,7 +8288,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8321,7 +8321,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8354,7 +8354,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -8387,7 +8387,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8420,7 +8420,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -8453,7 +8453,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8486,7 +8486,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8519,7 +8519,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -8552,7 +8552,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8585,7 +8585,7 @@
         "name": "ospi_flash_xip",
         "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8618,7 +8618,7 @@
         "name": "ospi_flash_xip",
         "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8651,7 +8651,7 @@
         "name": "ospi_flash_xip",
         "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -8684,7 +8684,7 @@
         "name": "ospi_flash_xip",
         "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8717,7 +8717,7 @@
         "name": "ospi_flash_interrupt",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8750,7 +8750,7 @@
         "name": "ospi_flash_interrupt",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8783,7 +8783,7 @@
         "name": "ospi_flash_interrupt_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8816,7 +8816,7 @@
         "name": "ospi_flash_interrupt_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8849,7 +8849,7 @@
         "name": "ospi_flash_dma_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8882,7 +8882,7 @@
         "name": "ospi_flash_dma_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -8915,7 +8915,7 @@
         "name": "pcie_benchmark_ep",
         "location": "../../examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8949,7 +8949,7 @@
         "name": "pcie_benchmark_rc",
         "location": "../../examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -8983,7 +8983,7 @@
         "name": "pcie_buf_transfer_ep",
         "location": "../../examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9017,7 +9017,7 @@
         "name": "pcie_buf_transfer_rc",
         "location": "../../examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9051,7 +9051,7 @@
         "name": "pcie_enumerate_ep",
         "location": "../../examples/drivers/pcie/pcie_enumerate_ep/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -9084,7 +9084,7 @@
         "name": "pcie_legacy_irq_ep",
         "location": "../../examples/drivers/pcie/pcie_legacy_irq/pcie_legacy_irq_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9118,7 +9118,7 @@
         "name": "pcie_legacy_irq_rc",
         "location": "../../examples/drivers/pcie/pcie_legacy_irq/pcie_legacy_irq_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9152,7 +9152,7 @@
         "name": "pcie_msi_irq_ep",
         "location": "../../examples/drivers/pcie/pcie_msi_irq/pcie_msi_irq_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9186,7 +9186,7 @@
         "name": "pcie_msi_irq_rc",
         "location": "../../examples/drivers/pcie/pcie_msi_irq/pcie_msi_irq_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9220,7 +9220,7 @@
         "name": "pcie_msix_irq_ep",
         "location": "../../examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9254,7 +9254,7 @@
         "name": "pcie_msix_irq_rc",
         "location": "../../examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9288,7 +9288,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9321,7 +9321,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9354,7 +9354,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9387,7 +9387,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9420,7 +9420,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9453,7 +9453,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9486,7 +9486,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9519,7 +9519,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9552,7 +9552,7 @@
         "name": "reset_isolation",
         "location": "../../examples/drivers/safety/reset_isolation/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9585,7 +9585,7 @@
         "name": "reset_isolation",
         "location": "../../examples/drivers/safety/reset_isolation/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9618,7 +9618,7 @@
         "name": "reset_isolation_ipc",
         "location": "../../examples/drivers/safety/reset_isolation_ipc/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -9651,7 +9651,7 @@
         "name": "reset_isolation_ipc",
         "location": "../../examples/drivers/safety/reset_isolation_ipc/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -9684,7 +9684,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9717,7 +9717,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9750,7 +9750,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9783,7 +9783,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9816,7 +9816,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9849,7 +9849,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -9882,7 +9882,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9915,7 +9915,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9948,7 +9948,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -9981,7 +9981,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10014,7 +10014,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10047,7 +10047,7 @@
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10080,7 +10080,7 @@
         "name": "sciclient_ccs_init",
         "location": "../../examples/drivers/sciclient/sciclient_ccs_init/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10113,7 +10113,7 @@
         "name": "sciclient_ccs_init",
         "location": "../../examples/drivers/sciclient/sciclient_ccs_init/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10146,7 +10146,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10179,7 +10179,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10212,7 +10212,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10245,7 +10245,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -10278,7 +10278,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10311,7 +10311,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10344,7 +10344,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -10377,7 +10377,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10410,7 +10410,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -10443,7 +10443,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10476,7 +10476,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10509,7 +10509,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -10542,7 +10542,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10575,7 +10575,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -10608,7 +10608,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10641,7 +10641,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10674,7 +10674,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -10707,7 +10707,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10740,7 +10740,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -10773,7 +10773,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10806,7 +10806,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10839,7 +10839,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -10872,7 +10872,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -10905,7 +10905,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -10938,7 +10938,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -10971,7 +10971,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -11004,7 +11004,7 @@
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11037,7 +11037,7 @@
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11070,7 +11070,7 @@
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11103,7 +11103,7 @@
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11136,7 +11136,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11169,7 +11169,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11202,7 +11202,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11235,7 +11235,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11268,7 +11268,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11301,7 +11301,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11334,7 +11334,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11367,7 +11367,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11400,7 +11400,7 @@
         "name": "uart_echo_polling_lld",
         "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11433,7 +11433,7 @@
         "name": "uart_echo_polling_lld",
         "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11466,7 +11466,7 @@
         "name": "udma_adc_read",
         "location": "../../examples/drivers/udma/udma_adc_read/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11499,7 +11499,7 @@
         "name": "udma_adc_read",
         "location": "../../examples/drivers/udma/udma_adc_read/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -11532,7 +11532,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11565,7 +11565,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11598,7 +11598,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11631,7 +11631,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -11664,7 +11664,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11697,7 +11697,7 @@
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -11730,7 +11730,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11763,7 +11763,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11796,7 +11796,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11829,7 +11829,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11862,7 +11862,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11895,7 +11895,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -11928,7 +11928,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -11961,7 +11961,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -11994,7 +11994,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12027,7 +12027,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12060,7 +12060,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12093,7 +12093,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12126,7 +12126,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12159,7 +12159,7 @@
         "name": "udma_memcpy_interrupt",
         "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12192,7 +12192,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12225,7 +12225,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12258,7 +12258,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12291,7 +12291,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12324,7 +12324,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12357,7 +12357,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12390,7 +12390,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12423,7 +12423,7 @@
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12456,7 +12456,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12489,7 +12489,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12522,7 +12522,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12555,7 +12555,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12588,7 +12588,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12621,7 +12621,7 @@
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -12654,7 +12654,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12687,7 +12687,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12720,7 +12720,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12753,7 +12753,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -12786,7 +12786,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -12819,7 +12819,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12852,7 +12852,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12885,7 +12885,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12916,7 +12916,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12947,7 +12947,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -12978,7 +12978,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13009,7 +13009,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13040,7 +13040,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13071,7 +13071,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13102,7 +13102,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13133,7 +13133,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13164,7 +13164,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13195,7 +13195,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13226,7 +13226,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13257,7 +13257,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13288,7 +13288,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13319,7 +13319,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13350,7 +13350,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13381,7 +13381,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13412,7 +13412,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13443,7 +13443,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13474,7 +13474,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13505,7 +13505,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13536,7 +13536,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13567,7 +13567,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13598,7 +13598,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13629,7 +13629,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13660,7 +13660,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13691,7 +13691,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13722,7 +13722,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13753,7 +13753,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -13784,7 +13784,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -13815,7 +13815,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13846,7 +13846,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13877,7 +13877,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13908,7 +13908,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -13939,7 +13939,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -13970,7 +13970,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14001,7 +14001,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -14032,7 +14032,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14063,7 +14063,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -14094,7 +14094,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14125,7 +14125,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -14156,7 +14156,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14187,7 +14187,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -14218,7 +14218,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14249,7 +14249,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -14282,7 +14282,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14315,7 +14315,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -14348,7 +14348,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14381,7 +14381,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -14414,7 +14414,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14447,7 +14447,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -14480,7 +14480,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14513,7 +14513,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -14546,7 +14546,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14579,7 +14579,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -14612,7 +14612,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14645,7 +14645,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14678,7 +14678,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14711,7 +14711,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-evm/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14744,7 +14744,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-evm/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14777,7 +14777,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14810,7 +14810,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-sk/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14843,7 +14843,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-sk/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14876,7 +14876,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-sk/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -14909,7 +14909,7 @@
         "name": "dhrystone_benchmark",
         "location": "../../examples/kernel/freertos/dhrystone_benchmark/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14942,7 +14942,7 @@
         "name": "interrupt_profiling",
         "location": "../../examples/kernel/freertos/interrupt_profiling/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -14975,7 +14975,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15008,7 +15008,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15041,7 +15041,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15074,7 +15074,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15107,7 +15107,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15140,7 +15140,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15173,7 +15173,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15206,7 +15206,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15239,7 +15239,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -15272,7 +15272,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15305,7 +15305,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15338,7 +15338,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-sk/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -15371,7 +15371,7 @@
         "name": "wfi_standby_demo",
         "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15404,7 +15404,7 @@
         "name": "wfi_standby_demo",
         "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15437,7 +15437,7 @@
         "name": "mathlib_benchmark",
         "location": "../../examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15469,7 +15469,7 @@
         "name": "runtime_swrev",
         "location": "../../examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15501,7 +15501,7 @@
         "name": "runtime_keyrev",
         "location": "../../examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15533,7 +15533,7 @@
         "name": "crypto_aes_cbc_256",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15567,7 +15567,7 @@
         "name": "crypto_aes_cbc_128",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15601,7 +15601,7 @@
         "name": "crypto_aes_ecb_256",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15635,7 +15635,7 @@
         "name": "crypto_aes_ecb_128",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15669,7 +15669,7 @@
         "name": "crypto_aes_cmac_128",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15703,7 +15703,7 @@
         "name": "crypto_aes_cmac_256",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15737,7 +15737,7 @@
         "name": "crypto_sha",
         "location": "../../examples/security/crypto/sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15770,7 +15770,7 @@
         "name": "crypto_hmac_sha1",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15804,7 +15804,7 @@
         "name": "crypto_hmac_sha256",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15838,7 +15838,7 @@
         "name": "crypto_hmac_sha512",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15872,7 +15872,7 @@
         "name": "crypto_hmac_sha256_multishot",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15906,7 +15906,7 @@
         "name": "sa2ul_rng",
         "location": "../../examples/security/crypto/sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15939,7 +15939,7 @@
         "name": "rsa_encryption_decryption",
         "location": "../../examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -15973,7 +15973,7 @@
         "name": "rsa_signing_verification",
         "location": "../../examples/security/crypto/sa2ul_pka/rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16007,7 +16007,7 @@
         "name": "ecdsa_signing_verification",
         "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16041,7 +16041,7 @@
         "name": "cdc_echo_nortos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16074,7 +16074,7 @@
         "name": "cdc_echo_nortos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16107,7 +16107,7 @@
         "name": "cdc_echo_freertos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16140,7 +16140,7 @@
         "name": "cdc_echo_freertos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16173,7 +16173,7 @@
         "name": "dfu_nortos",
         "location": "../../examples/usb/device/dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16206,7 +16206,7 @@
         "name": "ncm_nortos",
         "location": "../../examples/usb/device/ncm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16239,7 +16239,7 @@
         "name": "rndis_nortos",
         "location": "../../examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16272,7 +16272,7 @@
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16311,7 +16311,7 @@
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -16350,7 +16350,7 @@
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16389,7 +16389,7 @@
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -16428,7 +16428,7 @@
         "name": "cpsw_lwip_https",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16466,7 +16466,7 @@
         "name": "cpsw_lwip_mqtt",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16504,7 +16504,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16542,7 +16542,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16580,7 +16580,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -16618,7 +16618,7 @@
         "name": "enet_cpsw_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16656,7 +16656,7 @@
         "name": "enet_cpsw_rawhttpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -16694,7 +16694,7 @@
         "name": "enet_cpsw_udpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16732,7 +16732,7 @@
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16770,7 +16770,7 @@
         "name": "enet_cpsw_tcpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16808,7 +16808,7 @@
         "name": "enet_cpsw_socket",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16846,7 +16846,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16883,7 +16883,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -16920,7 +16920,7 @@
         "name": "enet_l2_multi_channel",
         "location": "../../source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16957,7 +16957,7 @@
         "name": "enet_l2_multi_channel",
         "location": "../../source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -16994,7 +16994,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17031,7 +17031,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -17068,7 +17068,7 @@
         "name": "enet_cpsw_est",
         "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17105,7 +17105,7 @@
         "name": "est_app",
         "location": "../../source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17143,7 +17143,7 @@
         "name": "est_app",
         "location": "../../source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -17181,7 +17181,7 @@
         "name": "gptp_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17219,7 +17219,7 @@
         "name": "gptp_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -17257,7 +17257,7 @@
         "name": "gptp_icssg_dualmac",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17296,7 +17296,7 @@
         "name": "gptp_icssg_switch",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17335,7 +17335,7 @@
         "name": "lldp_app",
         "location": "../../source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17373,7 +17373,7 @@
         "name": "lldp_app",
         "location": "../../source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -17411,7 +17411,7 @@
         "name": "gptp_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17449,7 +17449,7 @@
         "name": "gptp_lwip_icssg_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17487,7 +17487,7 @@
         "name": "enet_icssg_loopback",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17526,7 +17526,7 @@
         "name": "enet_icssg_tas",
         "location": "../../source/networking/enet/core/examples/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17563,7 +17563,7 @@
         "name": "icssg_layer2_dualmac",
         "location": "../../source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17601,7 +17601,7 @@
         "name": "enet_layer2_icssg",
         "location": "../../source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17639,7 +17639,7 @@
         "name": "enet_vlan_icssg",
         "location": "../../source/networking/enet/core/examples/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17676,7 +17676,7 @@
         "name": "enet_intercore_icssg",
         "location": "../../source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17714,7 +17714,7 @@
         "name": "enet_intercore_icssg",
         "location": "../../source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17752,7 +17752,7 @@
         "name": "enet_icssg_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17790,7 +17790,7 @@
         "name": "enet_lwip_icssg",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -17828,7 +17828,7 @@
         "name": "ext_otp",
         "location": "../../examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17860,7 +17860,7 @@
         "name": "mcrc_full_cpu",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17893,7 +17893,7 @@
         "name": "mcrc_full_cpu",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17926,7 +17926,7 @@
         "name": "sdl_tog",
         "location": "../../examples/sdl/stog/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17958,7 +17958,7 @@
         "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -17991,7 +17991,7 @@
         "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18024,7 +18024,7 @@
         "name": "sdl_pbist_example",
         "location": "../../examples/sdl/pbist/pbist_mpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18057,7 +18057,7 @@
         "name": "sdl_pbist_example",
         "location": "../../examples/sdl/pbist/pbist_mpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18090,7 +18090,7 @@
         "name": "mcu_esm0",
         "location": "../../examples/sdl/esm/mcu_esm0/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18123,7 +18123,7 @@
         "name": "mcu_esm0",
         "location": "../../examples/sdl/esm/mcu_esm0/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18156,7 +18156,7 @@
         "name": "pok_example",
         "location": "../../examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18189,7 +18189,7 @@
         "name": "pok_example",
         "location": "../../examples/sdl/pok/pok_mcu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18222,7 +18222,7 @@
         "name": "rom_checksum_example",
         "location": "../../examples/sdl/rom_checksum/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18254,7 +18254,7 @@
         "name": "sdl_rti_example_uc1",
         "location": "../../examples/sdl/rti/UC1/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18287,7 +18287,7 @@
         "name": "sdl_rti_example_uc1",
         "location": "../../examples/sdl/rti/UC1/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18320,7 +18320,7 @@
         "name": "sdl_rti_example_uc2",
         "location": "../../examples/sdl/rti/UC2/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18353,7 +18353,7 @@
         "name": "sdl_rti_example_uc2",
         "location": "../../examples/sdl/rti/UC2/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18386,7 +18386,7 @@
         "name": "sdl_rti_example_uc3",
         "location": "../../examples/sdl/rti/UC3/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18419,7 +18419,7 @@
         "name": "sdl_rti_example_uc3",
         "location": "../../examples/sdl/rti/UC3/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18452,7 +18452,7 @@
         "name": "sdl_rti_example_uc4",
         "location": "../../examples/sdl/rti/UC4/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18485,7 +18485,7 @@
         "name": "sdl_rti_example_uc4",
         "location": "../../examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18518,7 +18518,7 @@
         "name": "sdl_stog_r5f",
         "location": "../../examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18550,7 +18550,7 @@
         "name": "sdl_stog_r5f",
         "location": "../../examples/sdl/stog_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18582,7 +18582,7 @@
         "name": "mtog_example",
         "location": "../../examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18615,7 +18615,7 @@
         "name": "ecc_example",
         "location": "../../examples/sdl/ecc/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18647,7 +18647,7 @@
         "name": "ecc_example",
         "location": "../../examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -18679,7 +18679,7 @@
         "name": "ecc_example",
         "location": "../../examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18711,7 +18711,7 @@
         "name": "ecc_example",
         "location": "../../examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -18743,7 +18743,7 @@
         "name": "vtm_example",
         "location": "../../examples/sdl/vtm/vtm_uc/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18776,7 +18776,7 @@
         "name": "vtm_example",
         "location": "../../examples/sdl/vtm/vtm_uc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18809,7 +18809,7 @@
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18838,7 +18838,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -18868,7 +18868,7 @@
         "name": "ddr_ecc_test_mcu_esm",
         "location": "../../examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-sk/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -18898,7 +18898,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-evm/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -18928,7 +18928,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am64x-sk/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -18958,7 +18958,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-evm/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -18988,7 +18988,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am64x-sk/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -19018,7 +19018,7 @@
         "name": "ipc_rpmsg_echo_linux",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_linux/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19048,7 +19048,7 @@
         "name": "ipc_safeipc_echo",
         "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am64x-evm/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19078,7 +19078,7 @@
         "name": "ipc_spinlock_sharedmem",
         "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am64x-evm/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19108,7 +19108,7 @@
         "name": "mcan_external_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19138,7 +19138,7 @@
         "name": "mcan_external_loopback_interrupt2",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19168,7 +19168,7 @@
         "name": "reset_isolation",
         "location": "../../examples/drivers/safety/reset_isolation/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19198,7 +19198,7 @@
         "name": "reset_isolation_ipc",
         "location": "../../examples/drivers/safety/reset_isolation_ipc/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19228,7 +19228,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19258,7 +19258,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19286,7 +19286,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -19314,7 +19314,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19342,7 +19342,7 @@
         "name": "empty",
         "location": "../../examples/empty/am64x-sk/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "nortos"
@@ -19370,7 +19370,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19400,7 +19400,7 @@
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_SK_EVM"
+            "SK-AM64B"
         ],
         "kernel": [
             "freertos"
@@ -19430,7 +19430,7 @@
         "name": "wfi_standby_demo",
         "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19460,7 +19460,7 @@
         "name": "cdc_echo_nortos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19490,7 +19490,7 @@
         "name": "cdc_echo_freertos",
         "location": "../../examples/usb/device/cdc_echo/am64x-evm/system_freertos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19520,7 +19520,7 @@
         "name": "enet_intercore_icssg",
         "location": "../../source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "freertos"
@@ -19555,7 +19555,7 @@
         "name": "sdl_stog_r5f",
         "location": "../../examples/sdl/stog_r5f/am64x-evm/system_nortos/system.projectspec",
         "devtools": [
-            "AM64x_GP_EVM"
+            "TMDS64EVM"
         ],
         "kernel": [
             "nortos"
@@ -19580,8 +19580,8 @@
         "name": "User Guide",
         "location": "../../docs/api_guide_am64x/index.html",
         "devtools": [
-            "AM64x_GP_EVM",
-            "AM64x_SK_EVM"
+            "TMDS64EVM",
+            "SK-AM64B"
         ],
         "mainCategories": [
             [

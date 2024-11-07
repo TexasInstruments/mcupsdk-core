@@ -399,10 +399,10 @@ function getSysCfgPart(board) {
 function getDevToolTirex(board) {
     switch (board) {
         case "am64x-sk":
-            return "AM64x_SK_EVM";
+            return "SK-AM64B";
         default:
         case "am64x-evm":
-            return "AM64x_GP_EVM";
+            return "TMDS64EVM";
     }
 }
 

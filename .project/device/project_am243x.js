@@ -454,10 +454,10 @@ function getSysCfgPart(board) {
 function getDevToolTirex(board) {
     switch (board) {
         case "am243x-lp":
-            return "AM243x_LAUNCHPAD";
+            return "LP-AM243";
         default:
         case "am243x-evm":
-            return "AM243x_GP_EVM";
+            return "TMDS243EVM";
     }
 }
 
