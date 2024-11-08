@@ -127,7 +127,7 @@ extended register read/write functions by the DP83867 driver.
 
 Device specific drivers can be found at `source/networking/enet/core/src/phy/*`.
 
-# Custom Board Support {#CustomBoardSupport}
+# Custom Board Support {#CustomBoardPhySupport}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ----------
 The MCU+SDK enet driver supports a set of boards for each SoC out of the box
 - Refer MCU+SDK release notes for platforms/board supported for each SoC
@@ -205,7 +205,7 @@ PHY full functionality can't be guaranteed.
 The following list of steps is provided as guideline when adding a new PHY
 driver for a device which is not supported by Enet LLD.
 
-- Enable "Custom Board" (CPSW/ICSSG -> Board Config -> Custom Board) option in Sys-Cfg gui. This will enable the example specific enet_custom_board_config.c file. Please refer to \ref CustomBoardSupport
+- Enable "Custom Board" (CPSW/ICSSG -> Board Config -> Custom Board) option in Sys-Cfg gui. This will enable the example specific enet_custom_board_config.c file. Please refer to \ref CustomBoardPhySupport
 - Create the public PHY specific header file at `source/networking/enet/core/include/phy`.
    + This header file should have the device extended configuration
      structure definition (if applicable) as well as auxiliary structures or
