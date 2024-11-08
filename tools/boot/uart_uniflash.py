@@ -9,10 +9,11 @@ try:
     import serial
     from tqdm import tqdm
     from xmodem import XMODEM, XMODEM1k
+    from elftools.elf.elffile import ELFFile, ELFError
 except ImportError:
     print('[ERROR] Dependant modules not installed, use below pip command to install them. MAKE sure proxy for pip is setup if needed.')
     print('')
-    print('python -m pip install pyserial tqdm xmodem --proxy={http://your proxy server:port or leave blank if no proxy}')
+    print('python -m pip install pyserial tqdm xmodem pyelftools --proxy={http://your proxy server:port or leave blank if no proxy}')
     sys.exit(2)
 
 ERROR_BAD_ARGS      = 1
@@ -294,7 +295,6 @@ def send_file_by_parts(l_cfg, s_port):
     remain_size = len(f_bytes) % BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
     total_time_taken = 0
 
-
     for i in range(0, num_parts):
 
         start = i*BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
@@ -354,6 +354,38 @@ def send_file_by_parts(l_cfg, s_port):
     l_cfg.offset = orig_offset
 
     return status, total_time_taken
+
+def send_mcelf_xip(linecfg, serialport):
+    orig_filename = linecfg.filename
+    orig_optype = linecfg.optype
+    orig_offset = linecfg.offset
+
+    # parse elf file and send each segments 
+    try:
+        with open(linecfg.filename, "rb") as in_elffile:
+            linecfg.optype = 'flash'
+            elf_file = ELFFile(in_elffile)
+            for segment in elf_file.iter_segments(type='PT_LOAD'):
+                data = segment.data()
+                flnm = "elf_segment_address_{}.bin".format(hex(segment['p_vaddr'])[2:])
+                o_tmpfile = open(flnm, 'wb')
+                o_tmpfile.write(data)
+                o_tmpfile.close()
+                linecfg.filename = flnm
+                linecfg.offset = hex(segment['p_paddr']& 0x7ffffff)
+                if(segment['p_filesz'] + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES):
+                    status, timetaken = send_file_by_parts(linecfg, serialport)
+                else:
+                    # Send normally
+                    tempfilename = create_temp_file(linecfg)
+                    status, timetaken = xmodem_send_receive_file(tempfilename, serialport, get_response=True)
+                os.remove(flnm)
+    except ELFError:
+        print("Error while parsing {}".format(linecfg.filename))
+    
+    linecfg.filename = orig_filename
+    linecfg.optype = orig_optype
+    linecfg.offset = orig_offset
 
 def main(argv):
     serialport = None
@@ -436,10 +468,11 @@ def main(argv):
                         tempfilename = ''
                         if linecfg.filename is not None:
                             f_size = os.path.getsize(linecfg.filename)
-
                         if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (linecfg.optype in ["flash", "flashverify"])):
                             # Send by parts
                             status, timetaken = send_file_by_parts(linecfg, serialport)
+                        elif linecfg.optype in ["flash-mcelf-xip"]:
+                            send_mcelf_xip(linecfg, serialport)
                         else:
                             # Send normally
                             tempfilename = create_temp_file(linecfg)
@@ -482,6 +515,8 @@ def main(argv):
             if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (cmdlinecfg.optype in ["flash", "flashverify"])):
                 # Send by parts
                 status, timetaken = send_file_by_parts(cmdlinecfg, serialport)
+            elif linecfg.optype in ["flash-mcelf-xip"]:
+                send_mcelf_xip(linecfg, serialport)
             else:
                 # Send normally
                 tempfilename = create_temp_file(cmdlinecfg)
