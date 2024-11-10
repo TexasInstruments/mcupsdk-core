@@ -64,6 +64,7 @@ extern "C"
 #include <drivers/hw_include/cslr_soc.h>
 #include <kernel/dpl/DebugP.h>
 #include <drivers/hw_include/cslr_resolver.h>
+#include <kernel/dpl/SystemP.h>
 
 //*****************************************************************************
 //
@@ -598,8 +599,8 @@ typedef struct
 
     bool        Pg_correctionEnable;
     bool        Pg_autoCorrectionEnable;
-    int16_t     Pg_sinGainBypassValue;
-    int16_t     Pg_cosGainBypassValue;
+    uint16_t     Pg_sinGainBypassValue;
+    uint16_t     Pg_cosGainBypassValue;
     int16_t     Pg_cosPhaseBypassValue;
 
     Track2Constants_t   track2Constants;
@@ -690,6 +691,21 @@ typedef struct
              ~CSL_RESOLVER_REGS_GLOBAL_CFG_SOC_WIDTH_MASK) |
                 (((uint8_t)socWidth) << CSL_RESOLVER_REGS_GLOBAL_CFG_SOC_WIDTH_SHIFT));
     }
+    
+    /**
+     * @brief Returns the configured ADC SOC Width value
+     * 
+     * @param base RDC Base Address
+     * @return uint8_t the configured ADC SOC Width Value
+     */
+    static inline uint8_t
+    RDC_getConfiguredAdcSocWidth(uint32_t base)
+    {
+        return (
+            (uint8_t) ((HW_RD_REG32(base + CSL_RESOLVER_REGS_GLOBAL_CFG) & 
+            CSL_RESOLVER_REGS_GLOBAL_CFG_SOC_WIDTH_MASK) >> CSL_RESOLVER_REGS_GLOBAL_CFG_SOC_WIDTH_SHIFT));
+    }
+
     /**
      * @brief
      * sets the ADC Burst count, samples to be averaged.
@@ -712,6 +728,27 @@ typedef struct
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
             ~CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_MASK) |
                 ((uint32_t)(((uint8_t)burstCount) << CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_SHIFT)));
+    }
+
+    /**
+     * @brief Returns the configured Burst count value. \note this is only applicable in the Sequencer Mode 0 
+     * 
+     * @param base RDC Base Address
+     * @return uint8_t Configured Burst Count Value. Valid return values are...
+     *          \e RDC_ADC_BURST_COUNT_DISABLE     // Burst Count is disabled
+     *          \e RDC_ADC_BURST_COUNT_2           // 2    samples to be averaged
+     *          \e RDC_ADC_BURST_COUNT_4           // 4    samples to be averaged
+     *          \e RDC_ADC_BURST_COUNT_8           // 8    samples to be averaged
+     *          \e RDC_ADC_BURST_COUNT_16          // 16   samples to be averaged
+     *          \e RDC_ADC_BURST_COUNT_32          // 32   samples to be averaged
+     */
+    static inline uint8_t
+    RDC_getConfiguredAdcBurstCount(uint32_t base)
+    {
+        return(
+            (uint8_t) ((HW_RD_REG32(base + CSL_RESOLVER_REGS_GLOBAL_CFG) & 
+            CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_MASK) >> CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_SHIFT)
+        );
     }
 
     /**
@@ -745,6 +782,21 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
              ~CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_MASK));
+    }
+
+    /**
+     * @brief Returns if Single ended mode of sampling is enabled for the ADCs
+     * 
+     * @param base 
+     * @return true Single ended mode of sampling is enabled and default mode of Sifferential ended sampling is disabled
+     * @return false Single ended mode of sampling is disbaled and default mode of Differential ended sampling is enabled
+     */
+    static inline bool
+    RDC_isAdcSingleEndedModeEnabled(uint32_t base)
+    {
+        return (
+            (HW_RD_REG32(base + CSL_RESOLVER_REGS_GLOBAL_CFG) & CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_MASK) == CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_MASK
+        );
     }
 
 
@@ -839,6 +891,21 @@ typedef struct
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) |
              CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_MASK) &
                 ~((uint32_t)((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_SHIFT)));
+    }
+
+    /**
+     * @brief 
+     * Returns if Resolver is enabled
+     * @param base 
+     * @return true Resolver is enabled
+     * @return false Resolver is disabled
+     */
+    static inline bool
+    RDC_isResolverEnabled(uint32_t base)
+    {
+        return (
+            (HW_RD_REG32(base + CSL_RESOLVER_REGS_GLOBAL_CFG) & CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_MASK) == CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_MASK
+        );
     }
 
 //*****************************************************************************
@@ -974,6 +1041,20 @@ typedef struct
     }
 
     /**
+     * @brief Returns if the Excitation Sync-in Signal is enabled
+     * 
+     * @param base RDC Base Address
+     * @return true     Sync-in is enabled 
+     * @return false    Sync-in is disabled
+     */
+    static inline bool
+    RDC_isExcitationSignalSyncInEnabled(uint32_t base)
+    {   
+        return((HW_RD_REG32(base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2)  & 
+        CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_MASK) == CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_MASK);
+    }
+
+    /**
      * @brief returns if there is a sync in event after the RDC_enableResolver() has been called
      * once this returns non-zero,
      * RDC_clearExcitationSignalEventStatus(),
@@ -1041,6 +1122,21 @@ typedef struct
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_MASK) |
                 ((uint32_t)(socDelay << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_SHIFT)));
+    }
+
+    /**
+     * @brief Returns Configured Excitation Signal SOC Delay
+     * 
+     * @param base RDC base address
+     * @return uint16_t 
+     */
+    static inline uint16_t
+    RDC_getConfiguredExcitationSignalSocDelay(uint32_t base)
+    {
+        return(
+            (uint16_t) ((HW_RD_REG32(base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) &
+             CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_MASK) >> CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_SHIFT)
+        );
     }
 
 
@@ -1116,6 +1212,18 @@ typedef struct
     }
 
     /**
+     * @brief Returns if the sequencer error interrupt is enabled
+     * 
+     * @return true Sequencer error interrupt is enabled
+     * @return false Sequencer error interrutp is disabled
+     */
+    static inline bool
+    RDC_isSequencerInterruptEnabled(uint32_t base)
+    {
+        return((HW_RD_REG32(base + CSL_RESOLVER_REGS_IRQSTATUS_SYS) & CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_MASK) == CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_MASK);
+    }
+
+    /**
      * @brief Clear the Sequencer Error Interrupt status
      *
      * @param base RDC Base Address
@@ -1161,7 +1269,6 @@ typedef struct
              ~CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_MASK) |
             ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_SHIFT)));
     }
-
 
     /**
      * @brief enable Core Interrupt
@@ -1277,6 +1384,25 @@ typedef struct
      */
     static inline uint32_t
     RDC_getCoreInterruptStatus(uint32_t base, uint32_t ResolverCore)
+    {
+        DebugP_assert((ResolverCore == RDC_RESOLVER_CORE0) || (ResolverCore == RDC_RESOLVER_CORE1));
+
+        uint32_t regOffset = CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_0 + (ResolverCore * RDC_CORE_OFFSET);
+
+        return (
+            (HW_RD_REG32(
+                 base + regOffset) &
+             ((uint32_t)RDC_INTERRUPT_SOURCE_ALL)));
+    }
+    
+    /**
+     * @brief Returns Core interrupt sources
+     *
+     * @param base RDC Base Address
+     * @param ResolverCore Resovler Core
+     */
+    static inline uint32_t
+    RDC_getCoreInterruptSources(uint32_t base, uint32_t ResolverCore)
     {
         DebugP_assert((ResolverCore == RDC_RESOLVER_CORE0) || (ResolverCore == RDC_RESOLVER_CORE1));
 
@@ -1415,6 +1541,25 @@ typedef struct
     }
 
     /**
+     * @brief Returns the Configured Coefficient Values for DC Offset Estimation and correction logic
+     * 
+     * @param base RDC base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @param coef1 Configured Coef values.
+     * @param coef2 Configured Coef values.
+     */
+    static inline void
+    RDC_getConfiguredDcOffsetCalCoef(uint32_t base, uint8_t core, uint8_t* coef1, uint8_t* coef2)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
+        uint32_t value = HW_RD_REG32(base+regOffset);
+
+        *coef1  = (uint8_t)((value & CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF1_MASK) >> CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF1_SHIFT);
+        *coef2  = (uint8_t)((value & CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF2_MASK) >> CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF2_SHIFT);
+    }
+
+    /**
      * @brief enables Band Pass Filter before DC Offset logic.
      *
      * \note the BPF is only supported for oversampling ratio of 20
@@ -1459,6 +1604,23 @@ typedef struct
     }
 
     /**
+     * @brief Returns if the BPF is enabled for given RDC Core
+     * 
+     * @param base RDC Base Address
+     * @param core valid values are RDC_RESOLVER_CORE0, RDC_RESOLVER_CORE1
+     * @return true BPF is enabled
+     * @return false BPF is disabled
+     */
+    static inline bool
+    RDC_isBPFEnabled(uint32_t base, uint8_t core)
+    {
+        DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
+
+        return((HW_RD_REG32(base + regOffset) & CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_MASK) == CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_MASK);
+    }
+
+    /**
      * @brief Disbales Auto Offset correction from the estimated values
      * Enables DC Offset Manual Correction logic
      *
@@ -1476,8 +1638,28 @@ typedef struct
             base + regOffset,
             (HW_RD_REG32(
                  base + regOffset) &
-             ~CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK) |
-                ((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT)));
+             ~CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK));
+    }
+    
+    /**
+     * @brief Returns if DC Auto Offset Correction is enabled for give RDC Core
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return true Auto Offset Correction is enabled
+     * @return false Auto Offset Correction is disabled
+     */
+    static inline bool
+    RDC_isDcOffsetAutoCorrectionEnabled(uint32_t base, uint8_t core)
+    {
+        DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
+
+        return(
+            (HW_RD_REG32(base + regOffset) &
+             CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK) == CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK
+        );
     }
 
     /**
@@ -1498,8 +1680,7 @@ typedef struct
             base + regOffset,
             (HW_RD_REG32(
                  base + regOffset) |
-             CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK) &
-                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT)));
+             CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK));
     }
 
     /**
@@ -1530,6 +1711,31 @@ typedef struct
                  base + regOffset) &
              (~mask)) |
                 value);
+    }
+
+    /**
+     * @brief Gets the Sin, Cosine Manual Correction values for the Dc Offset block
+     * in the given resolver core.
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * 
+     * @param sin pointer to Return Sin Manual Correction Value Configured 
+     * @param cos pointer to Return Cos Manual Correction Value Configured 
+     */
+    static inline void
+    RDC_getDcOffsetManualCorrectionValue(uint32_t base, uint8_t core, int16_t* sin, int16_t* cos)
+    {
+        DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG2_0 + (core * RDC_CORE_OFFSET);
+        uint32_t mask = (CSL_RESOLVER_REGS_DC_OFF_CFG2_0_SIN_MAN_OFF_ADJ_MASK |
+                         CSL_RESOLVER_REGS_DC_OFF_CFG2_0_COS_MAN_OFF_ADJ_MASK);
+
+        uint32_t value = HW_RD_REG32(base + regOffset) & mask;
+
+        *sin = (int16_t) (value >> CSL_RESOLVER_REGS_DC_OFF_CFG2_0_SIN_MAN_OFF_ADJ_SHIFT);
+        *cos = (int16_t) (value >> CSL_RESOLVER_REGS_DC_OFF_CFG2_0_COS_MAN_OFF_ADJ_SHIFT);
     }
 
     /**
@@ -1580,7 +1786,23 @@ typedef struct
     }
 
     /**
-     * @brief Returns the Ideal Sample Time esitimated by the resolver core.
+     * @brief Returns the Configured Override value for the Ideal Sample Time
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return uint8_t Returns the Configured Override value for the Ideal Sample Time
+     */
+    static inline uint8_t
+    RDC_getConfiguredOverrideIdealSampleTime(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET);
+        uint32_t value = HW_RD_REG32(base + regOffset) & CSL_RESOLVER_REGS_SAMPLE_CFG1_0_IDEAL_SAMPLE_TIME_OVR_MASK;
+        return((uint8_t) (value >> CSL_RESOLVER_REGS_SAMPLE_CFG1_0_IDEAL_SAMPLE_TIME_OVR_SHIFT));
+    }
+
+    /**
+     * @brief Returns the Ideal Sample Time Esitimated by the resolver core.
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
@@ -1622,6 +1844,23 @@ typedef struct
     }
 
     /**
+     * @brief Returns the confiugured Ideal Sample Detection Threshold
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1     
+     * @return uint16_t Absolute Threshold value configured for the ideal sample detection
+     */
+    static inline uint16_t
+    RDC_getConfiguredIdealSampleDetectionThreshold(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return ((uint16_t) (
+            (HW_RD_REG32 (base + regOffset) & CSL_RESOLVER_REGS_SAMPLE_CFG2_0_SAMPLE_DET_THRESHOLD_MASK)
+             >> CSL_RESOLVER_REGS_SAMPLE_CFG2_0_SAMPLE_DET_THRESHOLD_SHIFT));
+    }
+
+    /**
      * @brief the BPF sample adjust when the BPF is turned on. This configuration takes effect
      * only on the auto mode, and doesn't take effect on the manual mode
      *
@@ -1641,6 +1880,15 @@ typedef struct
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_MASK) |
                 ((uint32_t)(sampleAdjustCount << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_SHIFT)));
+    }
+
+    static inline uint8_t
+    RDC_getConfiguredIdealSampleBpfAdjust(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return ((uint8_t) ((HW_RD_REG32(base + regOffset) &
+             ~CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_MASK) 
+             >> CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_SHIFT));
     }
 
     /**
@@ -1690,6 +1938,27 @@ typedef struct
     }
 
     /**
+     * @brief Returns the configured Ideal Sample Mode
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1     
+     * @return uint8_t 
+     * the following are the Valid outputs
+     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_0_AUTO_DETECT           - Computation on sin and cos
+     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_SIN    - Computation on sin only
+     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_2_AUTO_DETECT_ON_COS    - Computation on cos only
+     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF       - Manual Override of Ideal Sample Time
+     */
+    static inline uint8_t 
+    RDC_getConfiguredIdealSampleMode(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + (core * RDC_CORE_OFFSET);
+        uint32_t value = HW_RD_REG32(base + regOffset) & CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_MASK;
+        return ((uint8_t) (value >> CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_SHIFT));
+    }
+
+    /**
      * @brief Enables bottom Sampling. twice the sampling rate than disabled. the track2
      * loop runs twice the speed so, the velocity output needs to be converted to respective
      * rotations per second accordingly.
@@ -1708,6 +1977,23 @@ typedef struct
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_MASK) |
                 ((uint32_t)((1U) << CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_SHIFT)));
+    }
+
+    /**
+     * @brief Returns if the Bottom Sampling is enabled in the sample selection. 
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return true     Bottom Sampling is enabled
+     * @return false    Bottom Sampling is disabled
+     */
+    static inline bool
+    RDC_isIdealSampleBottomSamplingEnabled(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + (core * RDC_CORE_OFFSET);
+        return ((HW_RD_REG32(base + regOffset) & 
+            CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_MASK) == CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_MASK);
     }
 
     /**
@@ -1754,6 +2040,24 @@ typedef struct
     }
 
     /**
+     * @brief Clears the Phase Gain Estimation status. 
+     * This can be used for any udpates to the thresholds or the train limits'
+     * and can be polled on for updated values. 
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     */
+    static inline void
+    RDC_clearPhaseGainEstimationStatus(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + (core * RDC_CORE_OFFSET);
+        HW_WR_REG32(
+            base + regOffset, 
+            HW_RD_REG32(base + regOffset) | CSL_RESOLVER_REGS_PG_EST_CFG1_0_AUTOPHASEGAINREADYDONE_MASK);
+    }
+
+    /**
      * @brief Sets the Phase Gain Estimation train limit.
      * if the programmed value is x, 2^x rotations are considered for the train limit.
      *
@@ -1776,6 +2080,22 @@ typedef struct
     }
 
     /**
+     * @brief Returns the configured Phase gain Estimation Train Limit
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core Within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return uint8_t Configured Train limit for Phase Gain Estimation
+     */
+    static inline uint8_t
+    RDC_getConfiguredPhaseGainEstimationTrainLimit(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + (core * RDC_CORE_OFFSET);
+        return ((uint8_t) ((HW_RD_REG32(base + regOffset) & 
+        CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_MASK) >> CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_SHIFT));
+    }
+
+    /**
      * @brief sets the Cos Phase Manual Bypass Value
      *
      * @param base RDC Base Address
@@ -1795,6 +2115,23 @@ typedef struct
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_MASK) |
                 ((uint32_t)(cosPhaseBypass << CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_SHIFT)));
+    }
+
+    /**
+     * @brief Returns the configrued Cosine Phase Bypass value
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return int16_t Configured Phase bypass value
+     * \note the values range [-2^15, 2^15], map to -90 to 90 deg correction for the phase
+     */
+    static inline int16_t 
+    RDC_getConfiguredCosPhaseBypass(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return ((int16_t) ((HW_RD_REG32(base + regOffset) &
+             CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_MASK) >> CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_SHIFT));
     }
 
     /**
@@ -1837,6 +2174,25 @@ typedef struct
     }
 
     /**
+     * @brief Returns if the Phase Gain Estimation logic is enabled
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return true Phase Gain Estimation Logic is enabled
+     * @return false Phase Gain Estimation Logic is enabled
+     */
+    static inline bool
+    RDC_isPhaseGainEstimationEnabled(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return (
+            (HW_RD_REG32(base + regOffset) &
+             CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK) != CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK
+        );
+    }
+
+    /**
      * @brief Enables Phase Auto Correction.
      *
      * @param base RDC Base Address
@@ -1872,6 +2228,24 @@ typedef struct
                  base + regOffset) |
              CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOPHASECONTROL0_MASK) &
                 ~((1U) << CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOPHASECONTROL0_SHIFT));
+    }
+
+    /**
+     * @brief Returns if the Phase Auto Correction is enabled.
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return true Phase Auto Correction is enabled
+     * @return false Phase Auto Correction is disabled
+     */
+    static inline bool
+    RDC_isPhaseAutoCorrectionEnabled(uint32_t base, uint16_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return(
+            ((HW_RD_REG32(base + regOffset) & CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOPHASECONTROL0_MASK) == CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOPHASECONTROL0_MASK)
+        );
     }
 
     /**
@@ -1913,6 +2287,24 @@ typedef struct
     }
 
     /**
+     * @brief Returns if the Gain Auto Correction is
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @return true Gain Auto correction is enabled
+     * @return false Gain Auto correction is disabled
+     */
+    static inline bool
+    RDC_isGainAutoCorrectionEnabled(uint32_t base, uint8_t core)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
+        return(
+            (HW_RD_REG32(base + regOffset) & CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOGAINCONTROL0_MASK) == CSL_RESOLVER_REGS_PG_EST_CFG2_0_AUTOGAINCONTROL0_MASK
+        );
+    }
+
+    /**
      * @brief Sets the Manual Gain Correction values for Sin and Cos
      *
      * @param base RDC Base Address
@@ -1930,6 +2322,25 @@ typedef struct
 
         HW_WR_REG32(
             base + regOffset, value);
+    }
+
+    /**
+     * @brief Returns the sine and cosine gain bypass values configured.
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @param sinGainBypass Configured Sine Gain Bypass value
+     * @param cosGainBypass Configured Cosine Gain Bypass value
+     */
+    static inline void 
+    RDC_getConfiguredGainBypassValue(uint32_t base, uint8_t core, uint16_t* sinGainBypass, uint16_t* cosGainBypass)
+    {
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG3_0 + (core * RDC_CORE_OFFSET);
+        uint32_t value = HW_RD_REG32(base+regOffset);
+
+        *sinGainBypass = (uint16_t) ((value & CSL_RESOLVER_REGS_PG_EST_CFG3_0_GAINSINBYP0_MASK) >> CSL_RESOLVER_REGS_PG_EST_CFG3_0_GAINSINBYP0_SHIFT);
+        *cosGainBypass = (uint16_t) ((value & CSL_RESOLVER_REGS_PG_EST_CFG3_0_GAINCOSBYP0_MASK) >> CSL_RESOLVER_REGS_PG_EST_CFG3_0_GAINCOSBYP0_SHIFT);
     }
 
     /**
@@ -2011,6 +2422,21 @@ typedef struct
                  base + regOffset_cfg1) &
              (~mask_cfg1)) |
                 cfg1);
+    }
+
+    /**
+     * @brief Returns the configured Track2 Constants
+     * 
+     * @param base RDC Base Address
+     * @param core denotes Resolver Core within RDC
+     * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
+     * @param track2Constants returns the configured into the struct members
+     */
+    static inline void
+    RDC_getConfiguredTrack2Constants(uint32_t base, uint8_t core, Track2Constants_t* track2Constants)
+    {
+        uint32_t regOffset_cfg1 = CSL_RESOLVER_REGS_TRACK2_CFG1_0 + (core * RDC_CORE_OFFSET);
+        track2Constants->kvelfilt = (uint8_t) (HW_RD_REG32(base + regOffset_cfg1) >> CSL_RESOLVER_REGS_TRACK2_CFG1_0_KVELFILT_SHIFT);
     }
 
     /**
@@ -2525,7 +2951,7 @@ typedef struct
                                              uint8_t resolverCore,
                                              Diag_Mon_ExcFreq_Degradataion_data *monitorData)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_DIAG2_0 + (RDC_CORE_OFFSET * resolverCore);
+        uint32_t regOffset = CSL_RESOLVER_REGS_DIAG3_0 + (RDC_CORE_OFFSET * resolverCore);
         uint32_t value = (((uint32_t)((uint16_t)(monitorData->excfreqdrift_threshold_hi))) << CSL_RESOLVER_REGS_DIAG3_0_EXCFREQDRIFT_THRESHOLD_HI_SHIFT) |
                          (((uint32_t)((uint16_t)(monitorData->excfreqdrift_threshold_lo))) << CSL_RESOLVER_REGS_DIAG3_0_EXCFREQDRIFT_THRESHOLD_LO_SHIFT);
         uint32_t interruptSource = 0;
@@ -2540,7 +2966,7 @@ typedef struct
         HW_WR_REG32(
             base + regOffset, value);
 
-        regOffset = CSL_RESOLVER_REGS_DIAG3_0 + (RDC_CORE_OFFSET * resolverCore);
+        regOffset = CSL_RESOLVER_REGS_DIAG4_0 + (RDC_CORE_OFFSET * resolverCore);
         value = (((uint32_t)((uint16_t)(monitorData->excfreq_level))) << CSL_RESOLVER_REGS_DIAG4_0_EXCFREQ_LEVEL_SHIFT) |
                 (((uint32_t)((uint16_t)(monitorData->excfreqdrift_glitchcount))) << CSL_RESOLVER_REGS_DIAG4_0_EXCFREQDRIFT_GLITCHCOUNT_SHIFT);
 
@@ -2794,20 +3220,20 @@ typedef struct
             base + regOffset);
         uint32_t interruptStatus = RDC_getCoreInterruptStatus(base, resolverCore);
 
-        monitorData->highAmplitude_glitchcount = (value & CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_GLITCHCOUNT_MASK) >>
-                                                 CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_GLITCHCOUNT_SHIFT;
+        monitorData->highAmplitude_glitchcount = (value & CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_GLITCHCOUNT_MASK) >>
+                                                 CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_GLITCHCOUNT_SHIFT;
 
-        monitorData->highAmplitude_threshold = (value & CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_THRESHOLD_MASK) >>
-                                               CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_THRESHOLD_SHIFT;
+        monitorData->highAmplitude_threshold = (value & CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_THRESHOLD_MASK) >>
+                                               CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_THRESHOLD_SHIFT;
         regOffset = CSL_RESOLVER_REGS_DIAG8_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
 
-        monitorData->highAmplitude_sin_value = (int16_t) ((value & CSL_RESOLVER_REGS_DIAG8_1_HIGHAMPLITUDE_SIN_MASK) >> \
-                                                 CSL_RESOLVER_REGS_DIAG8_1_HIGHAMPLITUDE_SIN_SHIFT);
+        monitorData->highAmplitude_sin_value = (int16_t) ((value & CSL_RESOLVER_REGS_DIAG8_0_HIGHAMPLITUDE_SIN_MASK) >> \
+                                                 CSL_RESOLVER_REGS_DIAG8_0_HIGHAMPLITUDE_SIN_SHIFT);
 
-        monitorData->highAmplitude_cos_value = (int16_t) ((value & CSL_RESOLVER_REGS_DIAG8_1_HIGHAMPLITUDE_COS_MASK) >> \
-                                                 CSL_RESOLVER_REGS_DIAG8_1_HIGHAMPLITUDE_COS_SHIFT);
+        monitorData->highAmplitude_cos_value = (int16_t) ((value & CSL_RESOLVER_REGS_DIAG8_0_HIGHAMPLITUDE_COS_MASK) >> \
+                                                 CSL_RESOLVER_REGS_DIAG8_0_HIGHAMPLITUDE_COS_SHIFT);
         monitorData->highAmplitude_cos_error = ((interruptStatus & RDC_INTERRUPT_SOURCE_HIGHAMPLITUDE_COS_FAULT_ERR) != 0);
         monitorData->highAmplitude_sin_error = ((interruptStatus & RDC_INTERRUPT_SOURCE_HIGHAMPLITUDE_SIN_FAULT_ERR) != 0);
     }
@@ -2831,8 +3257,8 @@ typedef struct
         Diag_Mon_Sin_Cos_High_Amplitude* monitorData)
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_DIAG7_0 + (resolverCore * RDC_CORE_OFFSET);
-        uint32_t value = (((uint32_t)((uint16_t)(monitorData->highAmplitude_glitchcount))) << CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_GLITCHCOUNT_SHIFT) |
-                         (((uint32_t)((uint16_t)(monitorData->highAmplitude_threshold))) << CSL_RESOLVER_REGS_DIAG7_1_HIGHAMPLITUDE_THRESHOLD_SHIFT);
+        uint32_t value = (((uint32_t)((uint16_t)(monitorData->highAmplitude_glitchcount))) << CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_GLITCHCOUNT_SHIFT) |
+                         (((uint32_t)((uint16_t)(monitorData->highAmplitude_threshold))) << CSL_RESOLVER_REGS_DIAG7_0_HIGHAMPLITUDE_THRESHOLD_SHIFT);
         uint32_t enabledInterruptSources = 0;
         uint32_t interruptSources = 0;
         HW_WR_REG32(
@@ -2874,21 +3300,21 @@ typedef struct
         uint32_t interruptSources = RDC_getCoreInterruptStatus(base, resolverCore);
         uint32_t value = HW_RD_REG32(
             base + regOffset);
-        monitorData->lowAmplitude_threshold = (value & CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_THRESHOLD_MASK) >>
-                                              CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_THRESHOLD_SHIFT;
-        monitorData->lowAmplitude_glitchcount = (value & CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_GLITCHCOUNT_MASK) >>
-                                                CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_GLITCHCOUNT_SHIFT;
+        monitorData->lowAmplitude_threshold = (value & CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_THRESHOLD_MASK) >>
+                                              CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_THRESHOLD_SHIFT;
+        monitorData->lowAmplitude_glitchcount = (value & CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_MASK) >>
+                                                CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_SHIFT;
 
         monitorData->lowAmplitude_error = ((interruptSources & RDC_INTERRUPT_SOURCE_LOWAMPLITUDE_ERR) != 0U);
 
         regOffset = CSL_RESOLVER_REGS_DIAG6_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
-        monitorData->lowAmplitude_cos_value = (int16_t)((value & CSL_RESOLVER_REGS_DIAG6_1_LOWAMPLITUDE_COS_MASK) >>\
-        CSL_RESOLVER_REGS_DIAG6_1_LOWAMPLITUDE_COS_SHIFT);
+        monitorData->lowAmplitude_cos_value = (int16_t)((value & CSL_RESOLVER_REGS_DIAG6_0_LOWAMPLITUDE_COS_MASK) >>\
+        CSL_RESOLVER_REGS_DIAG6_0_LOWAMPLITUDE_COS_SHIFT);
 
-        monitorData->lowAmplitude_sin_value = (int16_t)((value & CSL_RESOLVER_REGS_DIAG6_1_LOWAMPLITUDE_SIN_MASK) >>\
-        CSL_RESOLVER_REGS_DIAG6_1_LOWAMPLITUDE_SIN_SHIFT);
+        monitorData->lowAmplitude_sin_value = (int16_t)((value & CSL_RESOLVER_REGS_DIAG6_0_LOWAMPLITUDE_SIN_MASK) >>\
+        CSL_RESOLVER_REGS_DIAG6_0_LOWAMPLITUDE_SIN_SHIFT);
     }
 
     /**
@@ -2910,8 +3336,8 @@ typedef struct
     )
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_DIAG5_0 + (resolverCore * RDC_CORE_OFFSET);
-        uint32_t value = ((uint32_t)(monitorData->lowAmplitude_glitchcount << CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_GLITCHCOUNT_SHIFT)) |
-                            ((uint32_t) (monitorData->lowAmplitude_threshold << CSL_RESOLVER_REGS_DIAG5_1_LOWAMPLITUDE_GLITCHCOUNT_SHIFT));
+        uint32_t value = ((uint32_t)(monitorData->lowAmplitude_glitchcount << CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_SHIFT)) |
+                            ((uint32_t) (monitorData->lowAmplitude_threshold << CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_SHIFT));
         uint32_t enabledInterruptSources = RDC_getCoreEnabledInterruptSources(base, resolverCore);
 
         HW_WR_REG32(
@@ -3043,12 +3469,37 @@ typedef struct
     RDC_paramsInit(RDC_configParams* params);
     /**
      * @brief Configures the RDC based on the parameter values
+     * \note this does not include the diagnostics configurations
      *
      * @param base
      * @param params
      */
     extern void
-    RDC_init(uint32_t base, RDC_configParams* params);
+    RDC_init(uint32_t base, RDC_configParams* params);  
+
+    /**
+     * @brief Returns the Static Configurations 
+     * \note this does not include the diagnostics configurations
+     * 
+     * @param base 
+     * @param params 
+     */
+    extern void 
+    RDC_getStaticConfigurations(uint32_t base, RDC_configParams* params);
+
+    /**
+     * @brief Returns if the configurations in paramsInit to params
+     * \note this verification does not include the diagnostics configurations
+     * 
+     * @param base RDC Base Address
+     * @param paramsInit 
+     * @param params
+     * @return int32_t SystemP_SUCCESS is verification of configurations is success 
+     * @return int32_t SystemP_FAILURE is verification of configurations is failure 
+     */
+    extern int32_t
+    RDC_verifyStaticConfigurations(uint32_t base, RDC_configParams* paramsInit, RDC_configParams* params);
+
     /**
      * @brief Inits Baseline Parameter configurations
      *

@@ -181,6 +181,7 @@ void RDC_paramsInit(RDC_configParams* params)
         params->Int_core0Interrupts = 0;
         params->Int_core1Interrupts = 0;
 }
+
 void RDC_init(uint32_t base, RDC_configParams* params)
 {
     RDC_disableResolver(base);
@@ -254,7 +255,7 @@ void RDC_init(uint32_t base, RDC_configParams* params)
                 (uint8_t) (coreParams.BpfDc_dcOffCal1),
                 (uint8_t) (coreParams.BpfDc_dcOffCal2));
 
-            if(coreParams.BpfDc_offsetCorrectionEnable)
+            if(coreParams.BpfDc_offsetCorrectionEnable == false)
             {
 
                 RDC_disableDcOffsetAutoCorrection(base, resolverCore);
@@ -340,4 +341,336 @@ void RDC_init(uint32_t base, RDC_configParams* params)
     }
     RDC_enableCoreInterrupt(base, RDC_RESOLVER_CORE0, (params->Int_core0Interrupts));
     RDC_enableCoreInterrupt(base, RDC_RESOLVER_CORE1, (params->Int_core1Interrupts));
+}
+
+
+void RDC_getStaticConfigurations(uint32_t base, RDC_configParams* params)
+{
+    /* INPUT CONFIGURATIONS */
+    params->Input_signalMode    = !RDC_isAdcSingleEndedModeEnabled(base);
+    params->Input_socWidth      = RDC_getConfiguredAdcSocWidth(base);
+    params->Input_adcBurstCount = RDC_getConfiguredAdcBurstCount(base);
+    params->Input_resolverSequencerMode = RDC_getAdcSequencerOperationalMode (base);
+
+    /* EXCITATION FREQUENCY CONFIGURATIONS */
+    params->ExcFrq_freqSel      = RDC_getExcitationSignalFrequencySelect(base);
+    params->ExcFrq_phase        = RDC_getExcitationSignalPhase(base);
+    params->ExcFrq_amplitude    = RDC_getExcitationSignalAmplitudeControl(base);
+    params->ExcFrq_enableSyncIn = RDC_isExcitationSignalSyncInEnabled(base);
+    params->ExcFrq_socDelay     = RDC_getConfiguredExcitationSignalSocDelay(base);
+
+    /*  RESOVLER resolverCore CONFIGURATIONS */
+    int resolverCore = RDC_RESOLVER_CORE0;
+    do{
+        Core_config_t* coreParams;
+
+        switch(resolverCore)
+        {
+            case 0 : {
+                coreParams = &(params->core0);
+                break;
+            }
+            case 1 : {
+                coreParams = &(params->core1);
+                break;
+            }
+            default : {
+                coreParams = &(params->core0);
+                break;
+            }
+        }
+
+        /* Band Pass or DC Offset Correction*/
+        (*coreParams).BpfDc_bpfEnable = RDC_isBPFEnabled(base, resolverCore);
+        (*coreParams).BpfDc_offsetCorrectionEnable = RDC_isDcOffsetAutoCorrectionEnabled(base, resolverCore);
+        RDC_getConfiguredDcOffsetCalCoef(base, resolverCore, &((*coreParams).BpfDc_dcOffCal1), &((*coreParams).BpfDc_dcOffCal1)); 
+        RDC_getDcOffsetManualCorrectionValue(base, resolverCore, &((*coreParams).BpfDc_manualSin) , &((*coreParams).BpfDc_manualCos));
+
+        
+        /* Ideal Sample Configurations */
+        (*coreParams).IdealSample_mode                 = RDC_getConfiguredIdealSampleMode(base, resolverCore);
+        (*coreParams).IdealSample_overrideValue        = RDC_getConfiguredOverrideIdealSampleTime(base, resolverCore);
+        (*coreParams).IdealSample_absThresholdValue    = RDC_getConfiguredIdealSampleDetectionThreshold(base, resolverCore);
+        (*coreParams).IdealSample_sampleAdjustCount    = RDC_getConfiguredIdealSampleBpfAdjust(base, resolverCore);
+        (*coreParams).IdealSample_bottomSampleEnable   = RDC_isIdealSampleBottomSamplingEnabled(base, resolverCore);
+
+        /* Phase Gain configurations */
+        (*coreParams).Pg_estimationEnable  = RDC_isPhaseGainEstimationEnabled(base, resolverCore);
+        (*coreParams).Pg_estimationLimit   = RDC_getConfiguredPhaseGainEstimationTrainLimit(base, resolverCore);
+        (*coreParams).Pg_autoCorrectionEnable  = RDC_isPhaseAutoCorrectionEnabled(base, resolverCore) && RDC_isGainAutoCorrectionEnabled(base, resolverCore);
+        RDC_getConfiguredGainBypassValue(base, resolverCore, &((*coreParams).Pg_sinGainBypassValue), &((*coreParams).Pg_cosGainBypassValue));
+        (*coreParams).Pg_cosPhaseBypassValue   = RDC_getConfiguredCosPhaseBypass(base, resolverCore);
+
+        /* track2 configurations */
+        RDC_getConfiguredTrack2Constants(base, resolverCore, &((*coreParams).track2Constants));
+
+        /* update or exit the loop */
+        if(resolverCore == RDC_RESOLVER_CORE0)    // and resolverCore = any sequencer mode that involves two cores
+        {
+            resolverCore = RDC_RESOLVER_CORE1;
+        }
+        else
+        {
+            break;
+        }
+    }while ((resolverCore == RDC_RESOLVER_CORE0) || (resolverCore == RDC_RESOLVER_CORE1));
+
+    params->Int_seqEnable = RDC_isSequencerInterruptEnabled(base);
+
+    params->Int_core0Interrupts = RDC_getCoreEnabledInterruptSources(base, RDC_RESOLVER_CORE0);
+    params->Int_core1Interrupts = RDC_getCoreEnabledInterruptSources(base, RDC_RESOLVER_CORE1);
+}
+
+int32_t RDC_verifyStaticConfigurations(uint32_t base, RDC_configParams *paramsInit, RDC_configParams *params)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    /* INPUT CONFIGURATIONS */
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Input_signalMode == params->Input_signalMode) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Input_socWidth == params->Input_socWidth) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Input_adcBurstCount == params->Input_adcBurstCount) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Input_resolverSequencerMode == params->Input_resolverSequencerMode) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* EXCITATION FREQUENCY CONFIGURATIONS */
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->ExcFrq_freqSel == params->ExcFrq_freqSel) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->ExcFrq_phase == params->ExcFrq_phase) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->ExcFrq_amplitude == params->ExcFrq_amplitude) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->ExcFrq_enableSyncIn == params->ExcFrq_enableSyncIn) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->ExcFrq_socDelay == params->ExcFrq_socDelay) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* Core 0 */
+    /* Band Pass or DC Offset Correction*/
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).BpfDc_bpfEnable == (params->core0).BpfDc_bpfEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).BpfDc_offsetCorrectionEnable == (params->core0).BpfDc_offsetCorrectionEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core0).BpfDc_offsetCorrectionEnable == true)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).BpfDc_dcOffCal1 == (params->core0).BpfDc_dcOffCal1) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).BpfDc_dcOffCal2 == (params->core0).BpfDc_dcOffCal2) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).BpfDc_manualSin == (params->core0).BpfDc_manualSin) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).BpfDc_manualCos == (params->core0).BpfDc_manualCos) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+
+    /* Ideal Sample Configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).IdealSample_mode == (params->core0).IdealSample_mode) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core0).IdealSample_mode == RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).IdealSample_overrideValue == (params->core0).IdealSample_overrideValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).IdealSample_absThresholdValue == (params->core0).IdealSample_absThresholdValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).IdealSample_sampleAdjustCount == (params->core0).IdealSample_sampleAdjustCount) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).IdealSample_bottomSampleEnable == (params->core0).IdealSample_bottomSampleEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* Phase Gain configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).Pg_estimationEnable == (params->core0).Pg_estimationEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core0).Pg_estimationEnable == true)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).Pg_estimationLimit == (params->core0).Pg_estimationLimit) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).Pg_autoCorrectionEnable == (params->core0).Pg_autoCorrectionEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).Pg_sinGainBypassValue == (params->core0).Pg_sinGainBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).Pg_cosGainBypassValue == (params->core0).Pg_cosGainBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core0).Pg_cosPhaseBypassValue == (params->core0).Pg_cosPhaseBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+
+    /* track2 configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core0).track2Constants.kvelfilt == (params->core0).track2Constants.kvelfilt) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* Core 1 */
+    /* Band Pass or DC Offset Correction*/
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).BpfDc_bpfEnable == (params->core1).BpfDc_bpfEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).BpfDc_offsetCorrectionEnable == (params->core1).BpfDc_offsetCorrectionEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core1).BpfDc_offsetCorrectionEnable == true)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).BpfDc_dcOffCal1 == (params->core1).BpfDc_dcOffCal1) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).BpfDc_dcOffCal2 == (params->core1).BpfDc_dcOffCal2) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).BpfDc_manualSin == (params->core1).BpfDc_manualSin) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).BpfDc_manualCos == (params->core1).BpfDc_manualCos) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+
+    /* Ideal Sample Configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).IdealSample_mode == (params->core1).IdealSample_mode) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core1).IdealSample_mode == RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).IdealSample_overrideValue == (params->core1).IdealSample_overrideValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).IdealSample_absThresholdValue == (params->core1).IdealSample_absThresholdValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).IdealSample_sampleAdjustCount == (params->core1).IdealSample_sampleAdjustCount) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).IdealSample_bottomSampleEnable == (params->core1).IdealSample_bottomSampleEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* Phase Gain configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).Pg_estimationEnable == (params->core1).Pg_estimationEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if((paramsInit->core1).Pg_estimationEnable == true)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).Pg_estimationLimit == (params->core1).Pg_estimationLimit) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).Pg_autoCorrectionEnable == (params->core1).Pg_autoCorrectionEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).Pg_sinGainBypassValue == (params->core1).Pg_sinGainBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).Pg_cosGainBypassValue == (params->core1).Pg_cosGainBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            status = ((paramsInit->core1).Pg_cosPhaseBypassValue == (params->core1).Pg_cosPhaseBypassValue) ? SystemP_SUCCESS : SystemP_FAILURE;
+        }
+    }
+
+    /* track2 configurations */
+    if (status == SystemP_SUCCESS)
+    {
+        status = ((paramsInit->core1).track2Constants.kvelfilt == (params->core1).track2Constants.kvelfilt) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    /* Interrupts */
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Int_seqEnable == params->Int_seqEnable) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Int_core0Interrupts == params->Int_core0Interrupts) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        status = (paramsInit->Int_core1Interrupts == params->Int_core1Interrupts) ? SystemP_SUCCESS : SystemP_FAILURE;
+    }
+
+    return status;
 }
