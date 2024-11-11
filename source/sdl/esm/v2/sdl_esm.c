@@ -128,7 +128,6 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
                 pStaticRegs->LOW           = esmRegs->LOW;
                 pStaticRegs->HI            = esmRegs->HI;
                 pStaticRegs->PIN_CTRL      = esmRegs->PIN_CTRL;
-                pStaticRegs->PIN_CNTR      = esmRegs->PIN_CNTR;
                 pStaticRegs->PIN_CNTR_PRE  = esmRegs->PIN_CNTR_PRE;
                 pStaticRegs->PWMH_PIN_CNTR_PRE          = esmRegs->PWMH_PIN_CNTR_PRE;
                 pStaticRegs->PWML_PIN_CNTR_PRE          = esmRegs->PWML_PIN_CNTR_PRE;

@@ -236,7 +236,6 @@ typedef struct {
     volatile uint32_t LOW;                       /* Low Priority Interrupt Status Register */
     volatile uint32_t HI;                        /* High Priority Interrupt Status Register */
     volatile uint32_t PIN_CTRL;                  /* Error Pin Control Register */
-    volatile uint32_t PIN_CNTR;                  /* Error Counter Value Register */
     volatile uint32_t PIN_CNTR_PRE;              /* Error Counter Value Pre-Load Register */
     volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */
     volatile uint32_t PWML_PIN_CNTR_PRE;         /* Error PWM Low Counter Value Pre-Load Register */
