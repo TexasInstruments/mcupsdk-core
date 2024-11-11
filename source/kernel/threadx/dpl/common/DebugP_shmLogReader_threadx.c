@@ -33,7 +33,7 @@
 #include <kernel/dpl/DebugP.h>
 #include "tx_api.h"
 
-#define DEBUG_SHM_LOG_READER_TASK_PRI  (TX_MAX_PRIORITIES - 1u) /* lowest priority */
+#define DEBUG_SHM_LOG_READER_TASK_PRI  ((unsigned)TX_MAX_PRIORITIES - 1u) /* lowest priority */
 #define DEBUG_SHM_LOG_READER_TASK_STACK_SIZE (4U*1024U/sizeof(uint32_t))
 static uint32_t  gDebugShmLogReaderTaskStack[DEBUG_SHM_LOG_READER_TASK_STACK_SIZE] __attribute__((aligned(32)));
 static TX_THREAD gDebugShmLogReaderTaskObj;

@@ -62,7 +62,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
 #ifdef __cplusplus
 extern "C" {
 #endif
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler_c(void);
 #ifdef __cplusplus
 }
 #endif

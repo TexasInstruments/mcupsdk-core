@@ -44,7 +44,7 @@ void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
 
     p_pool = (TX_BYTE_POOL *)heap;
 
-    (void)tx_byte_pool_create(p_pool, "dpl pool", heapAddr, heapSize);
+    (void)tx_byte_pool_create(p_pool, "dpl pool", heapAddr, (ULONG)heapSize);
 
 }
 
@@ -64,7 +64,7 @@ void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
 
     p_pool = (TX_BYTE_POOL *)heap;
 
-    (void)tx_byte_allocate(p_pool, &ptr, allocSize, TX_NO_WAIT);
+    (void)tx_byte_allocate(p_pool, &ptr, (ULONG)allocSize, TX_NO_WAIT);
 
     return ptr;
 }

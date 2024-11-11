@@ -47,7 +47,7 @@ int32_t EventP_construct(EventP_Object *obj)
 
     DebugP_assert(sizeof(EventP_Struct) <= sizeof(EventP_Object));
 
-    tx_ret = _tx_event_flags_create(&pEvent->eventObj, "dpl event");
+    tx_ret = _tx_event_flags_create(&pEvent->eventObj, (char *)"dpl event");
 
     if(tx_ret != TX_SUCCESS) {
         status = SystemP_FAILURE;
