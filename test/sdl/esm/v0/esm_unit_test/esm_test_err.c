@@ -88,7 +88,7 @@ int32_t sdl_Esm_negTest(void)
     uint32_t influence;
     esmOperationMode_t esmOpMode;
     uint32_t lowTime;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     uint32_t highTime;
 #endif
     uint32_t pinCntrPre;
@@ -477,8 +477,6 @@ int32_t sdl_Esm_negTest(void)
         return (testStatus);
     }
 
-
-
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
@@ -547,7 +545,7 @@ int32_t sdl_Esm_negTest(void)
         DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-7441 */
@@ -697,7 +695,7 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_getErrorOutMode(0U, &esmOpMode) != SDL_EBADARGS)
@@ -778,7 +776,7 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_PWML_setErrPinLowTimePreload(0U, 0x0000FFFFU) != SDL_EBADARGS)
@@ -833,7 +831,7 @@ int32_t sdl_Esm_negTest(void)
         }
     }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_PWMH_getErrPinHighTimePreload(0U, &highTime) != SDL_EBADARGS)
@@ -888,7 +886,7 @@ int32_t sdl_Esm_negTest(void)
         }
     }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(0U, &pinCntrPre) != SDL_EBADARGS)
@@ -1309,6 +1307,127 @@ int32_t sdl_Esm_negTest(void)
         }
     }
 
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_enableCriticalIntr(0u, 5u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_enableCriticalIntr(esmBaseAddr, 1025) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_enableCriticalIntr(0, 1025) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_setCriticalIntrDelay(0u, 5u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    uint32_t pEnStatus;
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(0u, 5u, &pEnStatus) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 1025u, &pEnStatus) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 5u, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 6u, &pEnStatus) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(0u, 1025u, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(0u, 1025u, &pEnStatus) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_disableCriticalIntr(0u, 5u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_disableCriticalIntr(esmBaseAddr, 1025u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+        if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_disableCriticalIntr(0u, 1025u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+#endif
 
 /* sdl_ip_esm.c APIs end     */
 

@@ -117,7 +117,7 @@ int32_t sdl_Esm_posTest(void)
         if (SDL_ESM_setNError(i) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -131,7 +131,7 @@ int32_t sdl_Esm_posTest(void)
             if (SDL_ESM_clrNError(i) != SDL_PASS)
             {
                 testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+                DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             }
         }
     }
@@ -143,7 +143,7 @@ int32_t sdl_Esm_posTest(void)
         if (SDL_ESM_getNErrorStatus(i,&val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
 
     }
@@ -154,7 +154,7 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_getStaticRegisters(i, &staticRegs)) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
 		}
     }
 
@@ -165,7 +165,7 @@ int32_t sdl_Esm_posTest(void)
                                          SDL_ESM_applicationCallbackFunction, &apparg)) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
 
     }
@@ -176,7 +176,7 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_init(i, &pCofnig, NULL, &apparg)) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -240,7 +240,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -300,7 +300,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -330,7 +330,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -360,7 +360,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -790,7 +790,7 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_init(Test_instance, &pCofnig, NULL, &apparg)) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -808,7 +808,7 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_verifyConfig(i, &pCofnig)) != SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -829,7 +829,7 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_verifyConfig(i, &pCofnig)) != SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -843,17 +843,17 @@ int32_t sdl_Esm_posTest(void)
         if ((SDL_ESM_clrNError(i)) == SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-7438 */
         if (SDL_ESM_setPinOutMode(i, SDL_ESM_PWM_PINOUT) != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -863,7 +863,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-7439 */
         if (SDL_ESM_setPinOutMode(i, SDL_ESM_LVL_PINOUT) != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -873,7 +873,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2011 */
         if (SDL_ESM_isEnableCfgIntr(0u, 0x0u, &val) != SDL_EBADARGS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -884,7 +884,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDL_ESM_isEnableCfgIntr(New_SDL_TEST_ESM_BASE, 0x0, NULL) != SDL_EBADARGS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -894,7 +894,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDL_ESM_registerCCMCallback(SDL_ESM_INST_MAIN_ESM0,0, &SDL_ESM_applicationCallbackFunction,NULL) != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -904,7 +904,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDTF_runESMInjectHigh_MAIN() != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -914,7 +914,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDTF_runESMInjectHigh_MAIN1() != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -924,7 +924,7 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDL_ESM_setCfgIntrStatusRAW(SDL_TOP_ESM_U_BASE, 1u) != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -934,11 +934,64 @@ int32_t sdl_Esm_posTest(void)
         /* Test case: PROC_SDL-2013 */
         if (SDTF_runESMInjectHigh_MAIN2() != SDL_PASS)
         {
-            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
 
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_enableCriticalIntr(esmBaseAddr, 5u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_setCriticalIntrDelay(esmBaseAddr, 5u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    uint32_t pEnStatus;
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 5u, &pEnStatus) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_disableCriticalIntr(esmBaseAddr, 5) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    /* Call the API to enable the warm reset. */
+    SDL_ESM_enableESMWarmReset();
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Since a warm reset causes the LDRA to loose the data, software test does not actually trigger a warm reset. */
+        if (SDL_ESM_getWarmResetReason() != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+#endif
 
 return (testStatus);
 }
