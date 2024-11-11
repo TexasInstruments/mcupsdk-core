@@ -32,6 +32,8 @@
 
 #include "tx_api.h"
 
+ULONG tx_threadx_stack_build_cpsr_get(void);
+
 /* Returns a copy of the current CPSR. Used by _tx_thread_stack_build()
  * in order to support both thumb and arm modes. */
 ULONG tx_threadx_stack_build_cpsr_get(void)
