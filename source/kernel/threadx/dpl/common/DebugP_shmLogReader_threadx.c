@@ -59,7 +59,7 @@ void DebugP_shmLogReaderTaskCreate(void)
                               0u,
                               TX_TRUE);
 
-    DebugP_assertNoLog(tx_ret != TX_SUCCESS);
+    DebugP_assertNoLog(tx_ret == TX_SUCCESS);
 }
 
 
