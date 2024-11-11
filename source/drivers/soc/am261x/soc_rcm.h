@@ -333,9 +333,17 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_MMC0,
     /**
+     * \brief   Value specifying ICSSM0_CORE
+     */
+    SOC_RcmPeripheralId_ICSSM0_CORE,
+    /**
      * \brief   Value specifying ICSSM0_UART0
      */
     SOC_RcmPeripheralId_ICSSM0_UART0,
+    /**
+     * \brief   Value specifying ICSSM1_CORE
+     */
+    SOC_RcmPeripheralId_ICSSM1_CORE,
     /**
      * \brief   Value specifying ICSSM1_UART0
      */

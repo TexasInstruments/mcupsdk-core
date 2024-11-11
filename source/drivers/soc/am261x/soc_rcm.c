@@ -364,6 +364,31 @@ static uint16_t gMmcClkSrcValMap[] =
 
 /**
  * @brief
+ *  Mapping Array for ICSSM Core
+ *
+ * @details
+ *  Mapping Array between Clock mode and Clock Mode Value for ICSSM CORE
+ */
+static uint16_t gIcssmCoreClkSrcValMap[] =
+{
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
+    [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
+    [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,
+    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
+};
+
+/**
+ * @brief
  *  Mapping Array for ICSSM UART
  *
  * @details
@@ -1023,11 +1048,25 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gMmcClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_ICSSM0_CORE:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->ICSSM0_CORE_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->ICSSM0_CORE_CLK_DIV_VAL);
+            *clkSrcVal = gIcssmCoreClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_ICSSM0_UART0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->ICSSM0_UART0_CLK_SRC_SEL);
             *clkdDivReg = &(ptrMSSRCMRegs->ICSSM0_UART_CLK_DIV_VAL);
             *clkSrcVal = gIcssmUartClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_ICSSM1_CORE:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->ICSSM1_CORE_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->ICSSM1_CORE_CLK_DIV_VAL);
+            *clkSrcVal = gIcssmCoreClkSrcValMap[clkSource];
             break;
         }
         case SOC_RcmPeripheralId_ICSSM1_UART0:
@@ -2585,6 +2624,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
+        case SOC_RcmPeripheralId_ICSSM0_CORE:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->ICSSM0_CORE_CLK_GATE = CSL_MSS_RCM_ICSSM0_CORE_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->ICSSM0_CORE_CLK_GATE = CSL_MSS_RCM_ICSSM0_CORE_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_ICSSM0_UART0:
         {
             if(enable==1)
@@ -2595,6 +2647,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             if(enable==0)
             {
                 ptrMSSRCMRegs->ICSSM0_UART_CLK_GATE = CSL_MSS_RCM_ICSSM0_UART_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_ICSSM1_CORE:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->ICSSM1_CORE_CLK_GATE = CSL_MSS_RCM_ICSSM1_CORE_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->ICSSM1_CORE_CLK_GATE = CSL_MSS_RCM_ICSSM1_CORE_CLK_GATE_GATED_MASK;
             }
             break;
         }
