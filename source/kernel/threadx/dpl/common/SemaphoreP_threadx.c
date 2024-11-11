@@ -150,7 +150,7 @@ void SemaphoreP_destruct(SemaphoreP_Object *obj)
     {
         pSemaphore = (SemaphoreP_Struct *)obj;
 
-        if(pSemaphore->isMutex == 1) {
+        if(pSemaphore->isMutex == 1U) {
             (void)_tx_mutex_delete(&pSemaphore->mutexObj);
         }
         else
@@ -238,6 +238,6 @@ int32_t SemaphoreP_getCount(SemaphoreP_Object *obj)
 
     count = current_value;
 
-    return count;
+    return (int32_t)count;
 }
 

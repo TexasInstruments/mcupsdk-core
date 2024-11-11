@@ -157,7 +157,7 @@ uint32_t ClockP_isActive(ClockP_Object *handle)
         active = TX_FALSE;
     }
 
-    return active;
+    return (uint32_t)active;
 }
 
 void ClockP_Params_init(ClockP_Params *params)
@@ -209,7 +209,7 @@ void ClockP_usleep(uint32_t usec)
     endTime = curTime + usec;
 
     if (usec >= gClockCtrl.usecPerTick) {
-        ticksToSleep = usec / gClockCtrl.usecPerTick;
+        ticksToSleep = (uint32_t)(usec / gClockCtrl.usecPerTick);
         ClockP_sleepTicks(ticksToSleep);
     }
     else
