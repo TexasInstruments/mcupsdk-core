@@ -64,7 +64,7 @@
 /* Event BitMap for ECC ESM callback for MAIN */
 uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_WORDS] =
 {
-     0xffffffffu, 0xffffffffu, 0x001ffbffu, 0x00000000u,
+     0xffffffffu, 0xffffffffu, 0x0007e01fu, 0x00000000u,
      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
