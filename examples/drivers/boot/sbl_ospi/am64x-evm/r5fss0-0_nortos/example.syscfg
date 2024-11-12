@@ -15,6 +15,8 @@ const bootloader      = scripting.addModule("/drivers/bootloader/bootloader", {}
 const bootloader1     = bootloader.addInstance();
 const ddr             = scripting.addModule("/drivers/ddr/ddr", {}, false);
 const ddr1            = ddr.addInstance();
+const qos             = scripting.addModule("/drivers/qos/qos", {}, false);
+const qos1            = qos.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -52,6 +54,8 @@ flash1.peripheralDriver.inputClkFreq = 166666666;
 flash1.peripheralDriver.dmaEnable    = true;
 
 ddr1.$name = "CONFIG_DDR0";
+
+qos1.$name = "CONFIG_QOS0";
 
 const udma                         = scripting.addModule("/drivers/udma/udma", {}, false);
 const udma1                        = udma.addInstance({}, false);
