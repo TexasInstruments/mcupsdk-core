@@ -1,5 +1,7 @@
 let path = require('path');
 
+const device_project = require("../../../../.project/device/project_am243x.js");
+
 let device = "am243x";
 
 const files = {
@@ -19,6 +21,15 @@ const filedirs = {
     ],
 };
 
+const libdirs_threadx = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
+    ],
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -32,6 +43,14 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
+    ],
+};
+
+const includes_threadx_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
     ],
 };
 
@@ -87,6 +106,15 @@ const libs_m4f = {
         "nortos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
         "unity.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_threadx_r5f = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
 };
 
@@ -161,6 +189,17 @@ const templates_nortos_m4f =
     }
 ];
 
+const templates_threadx_r5f =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
@@ -186,7 +225,7 @@ const systemProjects = [
     {
         name: "test_ipc_notify",
         tag: "freertos_nortos",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-evm",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
@@ -199,7 +238,7 @@ const systemProjects = [
     {
         name: "test_ipc_notify",
         tag: "freertos_nortos",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
@@ -212,7 +251,7 @@ const systemProjects = [
     {
         name: "test_ipc_notify",
         tag: "freertos_nortos_gcc-armv7",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-evm",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
@@ -225,13 +264,56 @@ const systemProjects = [
     {
         name: "test_ipc_notify",
         tag: "freertos_nortos_gcc-armv7",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "freertos"},
             { device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
             { device: device, cpu: "r5fss1-0", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
             { device: device, cpu: "r5fss1-1", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
+            { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+        ],
+    },
+];
+
+
+const buildOptionCombos_threadx = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+];
+
+const systemProjects_threadx = [
+    {
+        name: "test_ipc_notify",
+        tag: "threadx_nortos",
+        skipProjectSpec: false,
+        board: "am243x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+            { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+        ],
+    },
+    {
+        name: "test_ipc_notify",
+        tag: "threadx_nortos",
+        skipProjectSpec: false,
+        board: "am243x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
             { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
         ],
     },
@@ -244,8 +326,16 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "test_ipc_notify";
     property.isInternal = true;
-    property.skipProjectSpec = true;
-    property.buildOptionCombos = buildOptionCombos;
+    property.skipProjectSpec = false;
+
+    if (device_project.getThreadXEnabled() == true)
+    {
+        property.buildOptionCombos = buildOptionCombos.concat(buildOptionCombos_threadx);
+    }
+    else
+    {
+        property.buildOptionCombos = buildOptionCombos;
+    }
 
     return property;
 }
@@ -276,6 +366,12 @@ function getComponentBuildProperty(buildOption) {
                 build_property.templates = templates_freertos_r5f;
             }
         }
+        else if (buildOption.os.match(/threadx*/)) {
+            build_property.includes = includes_threadx_r5f;
+            build_property.libdirs = libdirs_threadx;
+            build_property.libs = libs_threadx_r5f;
+            build_property.templates = templates_threadx_r5f;
+        }
         else
         {
             if(buildOption.cgt.match(/gcc*/) )
@@ -300,7 +396,12 @@ function getComponentBuildProperty(buildOption) {
 
 function getSystemProjects(device)
 {
-    return systemProjects;
+    let sp = systemProjects
+    if (device_project.getThreadXEnabled() == true)
+    {
+        sp = sp.concat(systemProjects_threadx);
+    }
+    return (sp);
 }
 
 module.exports = {

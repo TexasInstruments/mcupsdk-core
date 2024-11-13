@@ -1,8 +1,17 @@
 let path = require('path');
 
+const device_project = require("../../../../../.project/device/project_am243x.js");
+
 let device = "am243x";
 
 const files_freertos_rf5 = {
+    common: [
+        "test_mcspi_peripheral.c",
+        "main.c",
+    ],
+};
+
+const files_threadx_rf5 = {
     common: [
         "test_mcspi_peripheral.c",
         "main.c",
@@ -30,6 +39,14 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+    ],
+};
+
+const libdirs_threadx = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
 };
 
@@ -89,6 +106,14 @@ const libs_m4f = {
     ],
 };
 
+const libs_threadx_r5f = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -115,6 +140,14 @@ const includes_freertos_m4f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CM4F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/m4f",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+    ],
+};
+
+const includes_threadx_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
         "${MCU_PLUS_SDK_PATH}/test/unity/",
     ],
 };
@@ -185,6 +218,17 @@ const templates_freertos_m4f =
     }
 ];
 
+const templates_threadx_r5f =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_mcspi_peripheral_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: "am243x", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
     { device: "am243x", cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
@@ -199,7 +243,7 @@ const systemProjects = [
     {
         name: "test_mcspi_controller_peripheral",
         tag: "freertos",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-evm",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
@@ -209,7 +253,7 @@ const systemProjects = [
     {
         name: "test_mcspi_controller_peripheral",
         tag: "freertos_gcc-armv7",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-evm",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
@@ -219,7 +263,7 @@ const systemProjects = [
     {
         name: "test_mcspi_controller_peripheral",
         tag: "freertos_nortos",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos", isPartOfSystemProject: true},
@@ -229,7 +273,7 @@ const systemProjects = [
     {
         name: "test_mcspi_controller_peripheral",
         tag: "freertos_nortos_gcc-armv7",
-        skipProjectSpec: true,
+        skipProjectSpec: false,
         board: "am243x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "freertos", isPartOfSystemProject: true},
@@ -238,6 +282,35 @@ const systemProjects = [
     },
 ];
 
+const buildOptionCombos_threadx = [
+    { device: "am243x", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx", isPartOfSystemProject: true},
+    { device: "am243x", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx", isPartOfSystemProject: true},
+];
+
+const systemProjects_threadx = [
+    {
+        name: "test_mcspi_controller_peripheral",
+        tag: "threadx",
+        skipProjectSpec: false,
+        board: "am243x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx", isPartOfSystemProject: true},
+            { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
+        ],
+    },
+    {
+        name: "test_mcspi_controller_peripheral",
+        tag: "threadx_nortos",
+        skipProjectSpec: false,
+        board: "am243x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx", isPartOfSystemProject: true},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+        ],
+    },
+];
+
+
 function getComponentProperty() {
     let property = {};
 
@@ -245,8 +318,16 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "test_mcspi_controller_peripheral";
     property.isInternal = true;
-    property.skipProjectSpec = true;
-    property.buildOptionCombos = buildOptionCombos;
+    property.skipProjectSpec = false;
+
+    if (device_project.getThreadXEnabled() == true)
+    {
+        property.buildOptionCombos = buildOptionCombos.concat(buildOptionCombos_threadx);
+    }
+    else
+    {
+        property.buildOptionCombos = buildOptionCombos;
+    }
 
     return property;
 }
@@ -274,6 +355,14 @@ function getComponentBuildProperty(buildOption) {
                 build_property.libs = libs_freertos_r5f;
                 build_property.templates = templates_freertos_r5f;
             }
+        }
+        else if (buildOption.os.match(/threadx*/))
+        {
+            build_property.files = files_threadx_rf5;
+            build_property.includes = includes_threadx_r5f;
+            build_property.libdirs = libdirs_threadx;
+            build_property.libs = libs_threadx_r5f;
+            build_property.templates = templates_threadx_r5f;
         }
         else
         {
@@ -305,7 +394,12 @@ function getComponentBuildProperty(buildOption) {
 
 function getSystemProjects(device)
 {
-    return systemProjects;
+    let sp = systemProjects
+    if (device_project.getThreadXEnabled() == true)
+    {
+        sp = sp.concat(systemProjects_threadx);
+    }
+    return (sp);
 }
 
 module.exports = {
