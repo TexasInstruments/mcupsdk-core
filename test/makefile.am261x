@@ -131,18 +131,31 @@ help:
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ctr_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ctr_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ecb/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ecb/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ecb_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_ecb_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_stream_state_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_stream_state_test/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_hmac_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_hmac_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_dthe_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -323,18 +336,31 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am261x-som_system_freertos_nortos
@@ -633,41 +659,80 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_dthe_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_ipc_notify_am261x-som_system_freertos_nortos:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile all
@@ -782,18 +847,31 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_clean
@@ -1087,41 +1165,80 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_dthe_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_ipc_notify_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile clean
@@ -1236,18 +1353,31 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_scrub
@@ -1541,41 +1671,80 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_dthe_aes_cbc_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_cbc_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_aes_cbc_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_aes_cbc_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cbc_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_cfb_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_cfb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_aes_cmac_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_aes_cmac_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_cmac_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_cmac_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_aes_cmac_stream_unaligned_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_aes_cmac_stream_unaligned_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_cmac_stream_unaligned/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_ctr_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_ctr_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_aes_ctr_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_aes_ctr_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_ctr_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_ecb_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_ecb_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_aes_ecb_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_aes_ecb_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_ecb_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_stream_state_test_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_aes_stream_state_test_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_aes_stream_state_test/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_hmac_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_sha/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_dthe_sha/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_ipc_notify_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile scrub

@@ -14960,11 +14960,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cbc_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cbc_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cbc_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -15028,11 +15096,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Aes Cfb Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cfb",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cfb",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cmac_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cmac_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -15096,11 +15232,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cmac_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Ctr Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ctr",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ctr",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Ctr Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ctr",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -15164,11 +15368,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ecb_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ecb_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ecb_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -15232,11 +15504,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Stream Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_stream",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_stream",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Dthe Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_hmac_sha256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_hmac_sha256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha256",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -15300,6 +15640,40 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Dthe Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha512",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_hmac_sha512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -15334,11 +15708,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_256",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_sha_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_sha_512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_512",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
