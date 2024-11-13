@@ -582,7 +582,7 @@ void ICSS_EMAC_testPinmuxConfig(void)
 {
     Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
 
-#if defined AM263X_LP || defined AM263PX_LP || AM263PX_CC
+#if defined AM263X_LP || defined AM263PX_LP || defined AM263PX_CC || defined AM263X_CC
     // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
      HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
      HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
@@ -607,7 +607,7 @@ void ICSS_EMAC_testPinmuxConfig(void)
     /* MDIOALIVE register gets the value at this point. Required PHY Configuration can be done now. */
 }
 
-#if defined AM263X_CC || AM263PX_CC
+#if defined AM263X_CC || defined AM263PX_CC
 void ICSS_EMAC_testPHYInitConfig(void)
 {
     ETHPHY_DP83869_LedSourceConfig ledConfig0;
