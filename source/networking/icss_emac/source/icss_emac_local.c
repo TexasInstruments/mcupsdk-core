@@ -200,7 +200,7 @@ void ICSS_EMAC_calcPort1BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
         bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     }
 
-    bdOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * 48U ;
+    bdOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE) ;
 }
 
 void ICSS_EMAC_calcPort2BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
@@ -293,7 +293,7 @@ void ICSS_EMAC_calcPort2BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
     uint32_t p1Q15BdOffset = p1Q14BdOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE14] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     uint32_t p1Q16BdOffset = p1Q15BdOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE15] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
 
-    uint32_t p1ColBDOffset = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * 48U;
+    uint32_t p1ColBDOffset = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE);
 
     bdOffsets[ICSS_EMAC_QUEUE1] = p1Q16BdOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     for (qCount = (ICSS_EMAC_QUEUE1+1U); qCount < pDynamicMMap->numQueues; qCount++)
@@ -301,7 +301,7 @@ void ICSS_EMAC_calcPort2BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
         bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     }
 
-    bdOffsets[ICSS_EMAC_COLQUEUE] = p1ColBDOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * 48U;
+    bdOffsets[ICSS_EMAC_COLQUEUE] = p1ColBDOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE);
 }
 
 void ICSS_EMAC_clearStatistics(ICSS_EMAC_Handle icssEmacHandle)
@@ -340,8 +340,8 @@ int32_t ICSS_EMAC_portInit(ICSS_EMAC_Handle icssEmacHandle)
     {
         sPort->queue[qCount].buffer_offset      = bufferOffsets[qCount];
         sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (qCount *8U);
-        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->rxHostQueueSize[qCount]) << 2U) + (uint16_t)bdOffsets[qCount];        /* really the end of Queue */
+        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->rxHostQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[qCount];        /* really the end of Queue */
     }
 
     /* Initialize port 1*/
@@ -351,15 +351,15 @@ int32_t ICSS_EMAC_portInit(ICSS_EMAC_Handle icssEmacHandle)
     {
         sPort->queue[qCount].buffer_offset      = bufferOffsets[qCount];
         sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (32U + qCount * 8U);
-        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount]) << 2U) +  (uint16_t)bdOffsets[qCount];
+        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + ((pDynamicMMap->numQueues * ICSS_EMAC_DEFAULT_FW_QD_SIZE * ICSS_EMAC_PORT_1) + qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) +  (uint16_t)bdOffsets[qCount];
     }
 
     /*Collision Queue */
     sPort->queue[ICSS_EMAC_COLQUEUE].buffer_offset      = bufferOffsets[ICSS_EMAC_COLQUEUE];
     sPort->queue[ICSS_EMAC_COLQUEUE].buffer_desc_offset = bdOffsets[ICSS_EMAC_COLQUEUE];
-    sPort->queue[ICSS_EMAC_COLQUEUE].queue_desc_offset  = pStaticMMap->p0ColQueueDescOffset + 8U;
-    sPort->queue[ICSS_EMAC_COLQUEUE].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->collisionQueueSize) << 2U) + (uint16_t)bdOffsets[ICSS_EMAC_COLQUEUE];
+    sPort->queue[ICSS_EMAC_COLQUEUE].queue_desc_offset  = pStaticMMap->p0ColQueueDescOffset + (ICSS_EMAC_DEFAULT_FW_QD_SIZE * ICSS_EMAC_PORT_1);
+    sPort->queue[ICSS_EMAC_COLQUEUE].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->collisionQueueSize)*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[ICSS_EMAC_COLQUEUE];
 
     /* Initialize port 2*/
     sPort = &(((ICSS_EMAC_Object *)icssEmacHandle->object)->switchPort[ICSS_EMAC_PORT_2]);
@@ -368,15 +368,15 @@ int32_t ICSS_EMAC_portInit(ICSS_EMAC_Handle icssEmacHandle)
     {
         sPort->queue[qCount].buffer_offset      = bufferOffsets[qCount];
         sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (64U + qCount * 8U);
-        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount]) << 2U) +  (uint16_t)bdOffsets[qCount];
+        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + ((pDynamicMMap->numQueues * ICSS_EMAC_DEFAULT_FW_QD_SIZE * ICSS_EMAC_PORT_2) + qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) +  (uint16_t)bdOffsets[qCount];
     }
 
     /*Collision Queue */
     sPort->queue[ICSS_EMAC_COLQUEUE].buffer_offset      = bufferOffsets[ICSS_EMAC_COLQUEUE];
     sPort->queue[ICSS_EMAC_COLQUEUE].buffer_desc_offset = bdOffsets[ICSS_EMAC_COLQUEUE];
-    sPort->queue[ICSS_EMAC_COLQUEUE].queue_desc_offset  = pStaticMMap->p0ColQueueDescOffset + 16U;
-    sPort->queue[ICSS_EMAC_COLQUEUE].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->collisionQueueSize) << 2U) +  (uint16_t)bdOffsets[ICSS_EMAC_COLQUEUE];
+    sPort->queue[ICSS_EMAC_COLQUEUE].queue_desc_offset  = pStaticMMap->p0ColQueueDescOffset + (ICSS_EMAC_DEFAULT_FW_QD_SIZE * ICSS_EMAC_PORT_2);
+    sPort->queue[ICSS_EMAC_COLQUEUE].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->collisionQueueSize)*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) +  (uint16_t)bdOffsets[ICSS_EMAC_COLQUEUE];
 
     return 0;
 }
@@ -448,11 +448,11 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort1[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 32U) + bufferOffsetsPort1[qCount] - 32U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
         pTemp16++;
         *pTemp16 =  (uint16_t)(bdOffsetsPort1[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) + bdOffsetsPort1[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
 
@@ -467,11 +467,11 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort2[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 32U) + bufferOffsetsPort2[qCount] - 32U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort2[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) + bdOffsetsPort2[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
 
@@ -485,7 +485,7 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     pTemp16++;
     *pTemp16 = (uint16_t)(bufferOffsetsPort1[ICSS_EMAC_COLQUEUE]);
     pTemp16++;
-    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * 32U) + bufferOffsetsPort1[ICSS_EMAC_COLQUEUE] - 32U);
+    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort1[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
     pTemp16++;
 
     /********************** */
@@ -498,7 +498,7 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     pTemp16++;
     *pTemp16 = (uint16_t)(bufferOffsetsPort2[ICSS_EMAC_COLQUEUE]);
     pTemp16++;
-    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * 32U) + bufferOffsetsPort2[ICSS_EMAC_COLQUEUE] - 32U);
+    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort2[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
     pTemp16++;
 
     /********************** */
@@ -511,11 +511,11 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort0[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (qCount * 8U));
+        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort0[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->rxHostQueueSize[qCount] * 4U) + bdOffsetsPort0[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->rxHostQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort0[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
     /********************** */
@@ -528,11 +528,11 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort1[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (32U + (qCount * 8U)));
+        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE)));
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort1[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) +  bdOffsetsPort1[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) +  bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
 
@@ -546,11 +546,11 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort2[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (64U + (qCount * 8U)));
+        *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (64U + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE)));
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort2[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) + bdOffsetsPort2[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
 
@@ -568,7 +568,7 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     pTemp16++;
     *pTemp16 = (uint16_t)(bdOffsetsPort0[ICSS_EMAC_COLQUEUE]);
     pTemp16++;
-    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * 4U) + bdOffsetsPort0[ICSS_EMAC_COLQUEUE] - 4U);
+    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort0[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
     pTemp16++;
 
     /********************** */
@@ -585,7 +585,7 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     pTemp16++;
     *pTemp16 = (uint16_t)(bdOffsetsPort1[ICSS_EMAC_COLQUEUE]);
     pTemp16++;
-    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * 4U) + bdOffsetsPort1[ICSS_EMAC_COLQUEUE] - 4U);
+    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort1[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
     pTemp16++;
 
     /********************** */
@@ -602,7 +602,7 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     pTemp16++;
     *pTemp16 = (uint16_t)(bdOffsetsPort2[ICSS_EMAC_COLQUEUE]);
     pTemp16++;
-    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * 4U) + bdOffsetsPort2[ICSS_EMAC_COLQUEUE] - 4U);
+    *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
     pTemp16++;
 
     /********************** */
@@ -940,12 +940,6 @@ static void ICSS_EMAC_pruicssMiiRtCfgInit(ICSS_EMAC_Handle icssEmacHandle)
         HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
             CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_FULLDUPLEX_IN, 0x1);
 
-        /* Enable RGMII Inband */
-        HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
-            CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND, 0x1);
-        HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
-            CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND, 0x1);
-
         /* Setting min and max frame size */
         HW_WR_FIELD32((pruicssHwAttrs->miiRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_CFG_RX_FRMS0,
                 CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_CFG_RX_FRMS0_RX_MIN_FRM0, ICSS_EMAC_RGMII_MIN_FRAME_SIZE);
@@ -1098,11 +1092,11 @@ uint8_t ICSS_EMAC_hostConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsets[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)(hostQDescOffset + (qCount * 8U));
+        *pTemp16 = (uint16_t)(hostQDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsets[qCount]);
         pTemp16++;
-        *pTemp16 = (uint16_t)((pDynamicMMap->rxHostQueueSize[qCount] * 4U) + bdOffsets[qCount] - 4U);
+        *pTemp16 = (uint16_t)((pDynamicMMap->rxHostQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsets[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
         pTemp16++;
     }
 
@@ -1156,8 +1150,8 @@ uint8_t ICSS_EMAC_hostConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         sPort->queue[qCount].buffer_offset      = bufferOffsets[qCount];
         sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-        sPort->queue[qCount].queue_desc_offset  = hostQDescOffset + (qCount * 8U);
-        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->rxHostQueueSize[qCount]) << 2) + (uint16_t)bdOffsets[qCount];        /* really the end of Queue */
+        sPort->queue[qCount].queue_desc_offset  = hostQDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->rxHostQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[qCount];        /* really the end of Queue */
     }
 
     return 0U;
@@ -1265,11 +1259,11 @@ uint8_t ICSS_EMAC_macConfig(uint8_t portNum, ICSS_EMAC_Handle icssEmacHandle)
         {
             *pTemp16 = (uint16_t)(bufferOffsets[qCount]);
             pTemp16++;
-            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 32U) + bufferOffsets[qCount]- 32U);
+            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsets[qCount]- ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
             pTemp16++;
             *pTemp16 = (uint16_t)(bdOffsets[qCount]);
             pTemp16++;
-            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) + bdOffsets[qCount] - 4U);
+            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsets[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
             pTemp16++;
         }
 
@@ -1306,11 +1300,11 @@ uint8_t ICSS_EMAC_macConfig(uint8_t portNum, ICSS_EMAC_Handle icssEmacHandle)
         {
             *pTemp16 = (uint16_t)(bufferOffsets[qCount]);
             pTemp16++;
-            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 32U) + bufferOffsets[qCount] - 32U);
+            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsets[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
             pTemp16++;
             *pTemp16 = (uint16_t)(bdOffsets[qCount]);
             pTemp16++;
-            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * 4U) + bdOffsets[qCount] - 4U);
+            *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsets[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
             pTemp16++;
         }
 
@@ -1345,8 +1339,8 @@ uint8_t ICSS_EMAC_macConfig(uint8_t portNum, ICSS_EMAC_Handle icssEmacHandle)
         {
             sPort->queue[qCount].buffer_offset       = bufferOffsets[qCount];
             sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-            sPort->queue[qCount].queue_desc_offset  = pDynamicMMap->portQueueDescOffset + (qCount * 8U);
-            sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount]) << 2U) + (uint16_t)bdOffsets[qCount];
+            sPort->queue[qCount].queue_desc_offset  = pDynamicMMap->portQueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+            sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[qCount];
         }
     }
 
@@ -1359,8 +1353,8 @@ uint8_t ICSS_EMAC_macConfig(uint8_t portNum, ICSS_EMAC_Handle icssEmacHandle)
         {
             sPort->queue[qCount].buffer_offset       = bufferOffsets[qCount];
             sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-            sPort->queue[qCount].queue_desc_offset  = pDynamicMMap->portQueueDescOffset + (qCount * 8U);
-            sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount]) << 2U) + (uint16_t)bdOffsets[qCount];
+            sPort->queue[qCount].queue_desc_offset  = pDynamicMMap->portQueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+            sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->txQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[qCount];
         }
     }
 
@@ -2045,3 +2039,80 @@ int32_t ICSS_EMAC_vlanFilterConfig(ICSS_EMAC_FwVlanFilterParams   *pVlanFilterPa
     }
     return retVal;
 }
+
+#if defined(SOC_AM64X) || defined (SOC_AM243X) 
+int32_t ICSS_EMAC_rgmiiInbandConfig(ICSS_EMAC_Handle icssEmacHandle, 
+                                    uint8_t portNum,
+                                    uint8_t inbandEnable)
+{
+    int32_t                 retVal = SystemP_SUCCESS;
+    uint32_t                tempVal;
+    PRUICSS_Handle          pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
+    PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+
+    if(inbandEnable == ICSS_RGMII_INBAND_ENABLE)
+    {
+        if((uint8_t)ICSS_EMAC_PORT_1 == portNum)
+        {    
+            /* Enable RGMII Inband */
+            HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
+                CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND, 0x1);
+
+            /* Read back the register value to ensure the configuration has taken effect */
+            tempVal = HW_RD_REG32(pruicssHwAttrs->miiGRtCfgRegBase + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG);
+            tempVal = (tempVal & CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND_MASK);
+            if(tempVal != CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND_MASK)
+            {
+                retVal = SystemP_FAILURE; 
+            }
+        }
+        else
+        {
+            /* Enable RGMII Inband */
+            HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
+                CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND, 0x1);
+
+            /* Read back the register value to ensure the configuration has taken effect */
+            tempVal = HW_RD_REG32(pruicssHwAttrs->miiGRtCfgRegBase + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG);
+            tempVal = (tempVal & CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND_MASK);
+            if(tempVal != CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND_MASK)
+            {
+                retVal = SystemP_FAILURE; 
+            }
+        }
+    }
+    else
+    {
+        if((uint8_t)ICSS_EMAC_PORT_1 == portNum)
+        {    
+            /* Disable RGMII Inband */
+            HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
+                CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND, 0x0);
+
+            /* Read back the register value to ensure the configuration has taken effect */
+            tempVal = HW_RD_REG32(pruicssHwAttrs->miiGRtCfgRegBase + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG);
+            tempVal = (tempVal & CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII0_INBAND_MASK);
+            if(tempVal != 0)
+            {
+                retVal = SystemP_FAILURE; 
+            }
+        }
+        else
+        {
+            /* Disable RGMII Inband */
+            HW_WR_FIELD32((pruicssHwAttrs->miiGRtCfgRegBase) + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG,
+                CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND, 0x0);
+
+            /* Read back the register value to ensure the configuration has taken effect */
+            tempVal = HW_RD_REG32(pruicssHwAttrs->miiGRtCfgRegBase + CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG);
+            tempVal = (tempVal & CSL_ICSS_G_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_RGMII_CFG_RGMII1_INBAND_MASK);
+            if(tempVal != 0)
+            {
+                retVal = SystemP_FAILURE; 
+            }
+        }
+    }
+    
+    return retVal;
+}
+#endif

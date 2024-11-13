@@ -83,6 +83,8 @@ extern "C" {
 
 #define ICSS_EMAC_DEFAULT_FW_BD_SIZE                         (4U)            /* one buffer descriptor is 4 bytes */
 #define ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE                      (32U)           /* bytes derived from ICSS architecture */
+#define ICSS_EMAC_DEFAULT_FW_QD_SIZE                         (8U)
+#define ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE            (48U)           /* collision queue size*/
 
 /* Firmware feature set defines*/
 #define ICSS_EMAC_FW_TTS_FEATURE_SHIFT                  ((uint32_t)0U)
@@ -121,6 +123,9 @@ extern "C" {
 #define TX_COMPLETION1_PRU_EVT_MASK        (((uint32_t)1U) << 23)
 #define TTS_CYC0_PRU_EVT_MASK            (((uint32_t)1U) << 24)
 #define TTS_CYC1_PRU_EVT_MASK            (((uint32_t)1U) << 25)
+
+#define ICSS_RGMII_INBAND_ENABLE           (0x1U)
+#define ICSS_RGMII_INBAND_DISABLE          (0x0U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -480,6 +485,12 @@ int32_t ICSS_EMAC_vlanFilterConfig(ICSS_EMAC_FwVlanFilterParams   *pVlanFilterPa
                                    uint8_t                      ioctlCmd,
                                    void                         *ioctlVal);
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)                  
+/* Implements the port-specific confguration for ICSS RGMII InBAND */
+int32_t ICSS_EMAC_rgmiiInbandConfig(ICSS_EMAC_Handle icssEmacHandle, 
+                                    uint8_t portNum,
+                                    uint8_t inbandEnable);
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
