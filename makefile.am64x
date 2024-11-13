@@ -69,11 +69,11 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-freertos_r5f.ti-arm-clang lwip-contrib-freertos_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang mbedtls_a53.gcc-aarch64
-	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang tsn_gptp-freertos_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x tsn_icssg_combase-freertos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am64x tsn_uniconf-freertos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am64x tsn_unibase-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang tsn_combase-freertos_a53.gcc-aarch64
+	@echo  $(MAKE) -s -f makefile.am64x tsn_uniconf-freertos_r5f.ti-arm-clang tsn_uniconf-freertos_a53.gcc-aarch64
+	@echo  $(MAKE) -s -f makefile.am64x tsn_unibase-freertos_r5f.ti-arm-clang tsn_unibase-freertos_a53.gcc-aarch64
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
@@ -115,11 +115,11 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-freertos_r5f.ti-arm-clang_clean lwip-contrib-freertos_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwip-contrib-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x mbedtls_r5f.ti-arm-clang_clean mbedtls_a53.gcc-aarch64_clean
-	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x tsn_gptp-freertos_r5f.ti-arm-clang_clean tsn_gptp-freertos_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x tsn_icssg_combase-freertos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am64x tsn_uniconf-freertos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am64x tsn_unibase-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x tsn_combase-freertos_r5f.ti-arm-clang_clean tsn_combase-freertos_a53.gcc-aarch64_clean
+	@echo  $(MAKE) -s -f makefile.am64x tsn_uniconf-freertos_r5f.ti-arm-clang_clean tsn_uniconf-freertos_a53.gcc-aarch64_clean
+	@echo  $(MAKE) -s -f makefile.am64x tsn_unibase-freertos_r5f.ti-arm-clang_clean tsn_unibase-freertos_a53.gcc-aarch64_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -702,11 +702,11 @@ BUILD_COMBO_lwip-nortos = lwip-nortos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang lwip-contrib-freertos_a53.gcc-aarch64
 BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
 BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang mbedtls_a53.gcc-aarch64
-BUILD_COMBO_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang
+BUILD_COMBO_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang tsn_gptp-freertos_a53.gcc-aarch64
 BUILD_COMBO_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang
-BUILD_COMBO_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang
-BUILD_COMBO_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang
-BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang
+BUILD_COMBO_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang tsn_combase-freertos_a53.gcc-aarch64
+BUILD_COMBO_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang tsn_uniconf-freertos_a53.gcc-aarch64
+BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang tsn_unibase-freertos_a53.gcc-aarch64
 
 
 # Combine all Components
@@ -897,11 +897,11 @@ BUILD_COMBO_CLEAN_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_clean lwip-contrib-freertos_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean mbedtls_a53.gcc-aarch64_clean
-BUILD_COMBO_CLEAN_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_clean tsn_gptp-freertos_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_clean tsn_combase-freertos_a53.gcc-aarch64_clean
+BUILD_COMBO_CLEAN_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_clean tsn_uniconf-freertos_a53.gcc-aarch64_clean
+BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_clean tsn_unibase-freertos_a53.gcc-aarch64_clean
 
 
 # Combine all Components Clean
@@ -1086,11 +1086,11 @@ BUILD_COMBO_SCRUB_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_scrub lwip-contrib-freertos_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub mbedtls_a53.gcc-aarch64_scrub_scrub
-BUILD_COMBO_SCRUB_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_scrub tsn_gptp-freertos_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_tsn_icssg_combase-freertos = tsn_icssg_combase-freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_scrub tsn_combase-freertos_a53.gcc-aarch64_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_scrub tsn_uniconf-freertos_a53.gcc-aarch64_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_scrub tsn_unibase-freertos_a53.gcc-aarch64_scrub_scrub
 
 
 # Combine all Components Scrub Targets
