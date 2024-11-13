@@ -43,7 +43,9 @@ Note: In this example, Different Priority Packets are received using a single ch
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
+  ^             | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
+  ^              | gcc-aarch64
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 

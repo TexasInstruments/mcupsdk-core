@@ -365,15 +365,26 @@ are shown in the following sequence diagram:
   
 
 # Supported Combinations
-
+\cond !SOC_AM64X
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_cpsw_est/V1
+ \endcond
 
+ \cond SOC_AM64X
 
+  Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | a53ss0-0 freertos
+ ^              | r5fss0-0_freertos
+ Toolchain      | gcc-aarch64
+ ^              | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | source/networking/enet/core/examples/enet_cpsw_est/V1
+\endcond
 
 # Steps to Run the Example
 

@@ -56,7 +56,9 @@ This example do below:
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+  ^             | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
+ ^              | gcc-aarch64
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V0
 

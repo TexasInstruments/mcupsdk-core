@@ -30,7 +30,9 @@ NOTE: DSCP priority mapping is configured in the example but for the host port t
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+ ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
+ ^              | gcc-aarch64
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_udpclient
 
