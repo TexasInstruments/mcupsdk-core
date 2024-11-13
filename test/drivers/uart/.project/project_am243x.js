@@ -1,5 +1,7 @@
 let path = require('path');
 
+const device_project = require("../../../../.project/device/project_am243x.js");
+
 let device = "am243x";
 
 const files = {
@@ -19,11 +21,29 @@ const filedirs = {
     ],
 };
 
+const libdirs_threadx = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
+    ],
+};
+
 const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
+    ],
+};
+
+
+const includes_threadx_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
     ],
 };
 
@@ -49,6 +69,15 @@ const libs_freertos_r5f_gcc = {
         "freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "unity.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
+const libs_threadx_r5f = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -86,11 +115,27 @@ const templates_freertos_r5f_gcc =
     }
 ];
 
+const templates_threadx_r5f =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+        entryFunction: "test_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",  os: "freertos"},
+];
+
+const buildOptionCombos_threadx = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "threadx"},
 ];
 
 function getComponentProperty() {
@@ -101,7 +146,15 @@ function getComponentProperty() {
     property.name = "test_uart";
     property.isInternal = true;
     property.skipProjectSpec = true;
-    property.buildOptionCombos = buildOptionCombos;
+
+    if (device_project.getThreadXEnabled() == true)
+    {
+        property.buildOptionCombos = buildOptionCombos.concat(buildOptionCombos_threadx);
+    }
+    else
+    {
+        property.buildOptionCombos = buildOptionCombos;
+    }
 
     return property;
 }
@@ -115,19 +168,27 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.includes = includes_freertos_r5f;
-        build_property.libdirs = libdirs_freertos;
-        build_property.libs = libs_freertos_r5f;
-        build_property.templates = templates_freertos_r5f;
-        if(buildOption.cgt.match(/gcc*/) )
-        {
-            build_property.libs = libs_freertos_r5f_gcc;
-            build_property.templates = templates_freertos_r5f_gcc;
-        }
-        else
-        {
+        if (buildOption.os.match(/freertos*/)) {
+            build_property.includes = includes_freertos_r5f;
+            build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
             build_property.templates = templates_freertos_r5f;
+            if(buildOption.cgt.match(/gcc*/) )
+            {
+                build_property.libs = libs_freertos_r5f_gcc;
+                build_property.templates = templates_freertos_r5f_gcc;
+            }
+            else
+            {
+                build_property.libs = libs_freertos_r5f;
+                build_property.templates = templates_freertos_r5f;
+            }
+        } 
+        else if (buildOption.os.match(/threadx*/)) {
+            build_property.includes = includes_threadx_r5f;
+            build_property.libdirs = libdirs_threadx;
+            build_property.libs = libs_threadx_r5f;
+            build_property.templates = templates_threadx_r5f;
         }
     }
     return build_property;

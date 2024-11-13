@@ -1,5 +1,7 @@
 let path = require('path');
 
+const device_project = require("../../../../../.project/device/project_am243x.js");
+
 let device = "am243x";
 
 const files = {
@@ -20,6 +22,14 @@ const filedirs = {
     ],
 };
 
+const libdirs_threadx = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+    ],
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -33,6 +43,13 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+    ],
+};
+
+const includes_threadx_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
     ],
 };
 
@@ -97,6 +114,14 @@ const libs_freertos_m4f = {
         "freertos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_threadx_r5f = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -177,6 +202,17 @@ const templates_freertos_m4f =
     }
 ];
 
+const templates_threadx_r5f =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "ipc_safeipc_echo_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
@@ -235,6 +271,38 @@ const systemProjects = [
     },
 ];
 
+const buildOptionCombos_threadx = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos", isPartOfSystemProject: true},
+];
+
+const systemProjects_threadx = [
+    {
+        name: "ipc_safeipc_echo",
+        tag: "threadx_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am243x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+        ],
+    },
+    {
+        name: "ipc_safeipc_echo",
+        tag: "threadx_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am243x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+        ],
+    },
+];
+
 function getComponentProperty() {
     let property = {};
 
@@ -242,7 +310,15 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "ipc_safeipc_echo";
     property.isInternal = false;
-    property.buildOptionCombos = buildOptionCombos;
+
+    if (device_project.getThreadXEnabled() == true)
+    {
+        property.buildOptionCombos = buildOptionCombos.concat(buildOptionCombos_threadx);
+    }
+    else
+    {
+        property.buildOptionCombos = buildOptionCombos;
+    }
 
     return property;
 }
@@ -272,6 +348,12 @@ function getComponentBuildProperty(buildOption) {
                 build_property.libs = libs_freertos_r5f;
                 build_property.templates = templates_freertos_r5f;
             }
+        }
+        else if (buildOption.os.match(/threadx*/)) {
+            build_property.includes = includes_threadx_r5f;
+            build_property.libdirs = libdirs_threadx;
+            build_property.libs = libs_threadx_r5f;
+            build_property.templates = templates_threadx_r5f;
         }
         else
         {
@@ -307,7 +389,12 @@ function getComponentBuildProperty(buildOption) {
 
 function getSystemProjects(device)
 {
-    return systemProjects;
+    let sp = systemProjects
+    if (device_project.getThreadXEnabled() == true)
+    {
+        sp = sp.concat(systemProjects_threadx);
+    }
+    return (sp);
 }
 
 module.exports = {
