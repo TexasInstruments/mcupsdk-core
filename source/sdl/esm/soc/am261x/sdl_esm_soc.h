@@ -35,8 +35,8 @@
  *
  */
 
-#ifndef INCLUDE_SDL_ESM_SOC_AM263X_H_
-#define INCLUDE_SDL_ESM_SOC_AM263X_H_
+#ifndef INCLUDE_SDL_ESM_SOC_AM261X_H_
+#define INCLUDE_SDL_ESM_SOC_AM261X_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,10 +59,10 @@ typedef enum {
 /* Defines for ESM base addresses */
 #define SOC_MAIN_ESM_BASE (SDL_TOP_ESM_U_BASE)
 
-#define SOC_MAIN_ESM_MAX_NUM_EVENTS (SDL_ESM0_MCAN7_MCAN7_ECC_UNCORR_LVL_INT+1U)
+#define SOC_MAIN_ESM_MAX_NUM_EVENTS (SDL_ESM_INTR_PULSE_R5SS0_CPU1_RL2_ECC_CORR+1U)
 
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */
 
-#endif /* INCLUDE_SDL_ESM_SOC_AM263X_H_ */
+#endif /* INCLUDE_SDL_ESM_SOC_AM261X_H_ */

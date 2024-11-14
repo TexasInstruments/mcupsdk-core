@@ -48,7 +48,6 @@
 #define STATUS_NUM (1u)
 
 /* Below macros are used to read the warm reset resaon. */
-#define SDL_TOP_RCM_U_BASE                        (0x53200000U)
 #define SDL_TOP_RCM_LOCK0_KICK0                   (0x00001008U)
 #define SDL_TOP_RCM_LOCK0_KICK1                   (0x0000100CU)
 #define KICK_LOCK_VAL                             (0x00000000U)
