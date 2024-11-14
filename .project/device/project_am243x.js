@@ -1,5 +1,12 @@
 const common = require("../common.js");
 
+const ThreadXEnabled = true;
+
+function getThreadXEnabled()
+{
+    return ThreadXEnabled;
+}
+
 const component_file_list = [
     "source/board/.project/project.js",
     "source/cmsis/.project/project.js",
@@ -173,6 +180,7 @@ const example_file_list = [
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
+    "examples/empty/.project/project_threadx.js",
     "examples/fs/filex/hello_world/.project/project.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
@@ -516,6 +524,7 @@ function getEnableGccBuild() {
 }
 
 module.exports = {
+    getThreadXEnabled,
     getComponentList,
     getExampleList,
     getSysCfgDevice,
