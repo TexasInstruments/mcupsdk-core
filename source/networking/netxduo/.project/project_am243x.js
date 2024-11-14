@@ -521,17 +521,17 @@ const files = {
         "nx_auto_ip.c",
 
         // azure-iot
-        // "nx_azure_iot.c",
-        // "nx_azure_iot_adu_agent.c",
-        // "nx_azure_iotu_adu_root_key.c",
-        // "nx_azure_iotu_hub_client.c",
-        // "nx_azure_iotu_hub_client_properties.c",
-        // "nx_azure_iotu_json_reader.c", 
-        // "nx_azure_iotu_json_writer.c",
-        // "nx_azure_iotu_provisionning_client.c",
+        "nx_azure_iot.c",
+        "nx_azure_iot_adu_agent.c",
+        "nx_azure_iot_adu_root_key.c",
+        "nx_azure_iot_hub_client.c",
+        "nx_azure_iot_hub_client_properties.c",
+        "nx_azure_iot_json_reader.c", 
+        "nx_azure_iot_json_writer.c",
+        "nx_azure_iot_provisioning_client.c",
 
         // BSD
-        // "nxd_bsd.c",
+        "nxd_bsd.c",
 
         // Cloud
         "nx_cloud.c",
@@ -573,7 +573,7 @@ const files = {
         "nx_pppoe_server.c",
 
         // PTP
-        // "nxd_ptp_client.c",
+        "nxd_ptp_client.c",
 
         // RTP
         "nx_rtp_sender.c",
@@ -616,8 +616,8 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/src",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dns",
@@ -629,7 +629,7 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pop3",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ppp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pppoe",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtsp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/smtp",
@@ -647,6 +647,9 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/inc",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/ports",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/crypto_libraries/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet",
@@ -658,8 +661,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dns",
@@ -671,7 +674,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pop3",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ppp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pppoe",
-        // "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtsp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/smtp",
@@ -681,6 +684,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/tftp",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/web",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/websocket",
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot/azure-sdk-for-c/sdk/inc",
     ],
 };
 
