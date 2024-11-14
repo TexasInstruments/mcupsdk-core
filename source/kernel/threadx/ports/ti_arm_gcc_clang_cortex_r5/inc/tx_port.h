@@ -108,6 +108,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 
 /* Define ThreadX basic types for this port.  */ 
@@ -121,6 +122,7 @@ typedef long                                    LONG;
 typedef unsigned long                           ULONG;
 typedef short                                   SHORT;
 typedef unsigned short                          USHORT;
+typedef uint64_t                                ULONG64;
 
 
 /* Define the priority levels for ThreadX.  Legal values range
@@ -221,7 +223,7 @@ typedef unsigned short                          USHORT;
    for the multiple macros is so that backward compatibility can be maintained with 
    existing ThreadX kernel awareness modules.  */
 
-#define TX_THREAD_EXTENSION_0          
+#define TX_THREAD_EXTENSION_0          int bsd_errno;
 #define TX_THREAD_EXTENSION_1                  
 #define TX_THREAD_EXTENSION_2          
 #define TX_THREAD_EXTENSION_3          
