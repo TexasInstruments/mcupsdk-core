@@ -16800,6 +16800,84 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -16862,6 +16940,84 @@
             "enet_cpsw_loopback",
             "loopback_phy_end",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
@@ -17370,6 +17526,80 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet L2 Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_l2_cpsw",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_layer2_cpsw",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet L2 Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_l2_cpsw",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_layer2_cpsw",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_multi_channel",
         "location": "../../source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17518,6 +17748,80 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet L2 Cpsw Switch Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_l2_cpsw_switch",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_layer2_cpsw_switch",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet L2 Cpsw Switch Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_l2_cpsw_switch",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_layer2_cpsw_switch",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Est Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_est",
         "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17539,6 +17843,43 @@
             "examples",
             "enet_cpsw_est",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Est Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_est",
+        "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_cpsw_est",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
