@@ -274,6 +274,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/.project/project.js",
     // "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
+    "source/networking/enet/core/examples/ether_ring/.project/project.js",
     "examples/real_time_debug/.project/project.js",
     "examples/sdl/dcc/dcc_modes1/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
