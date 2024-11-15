@@ -221,6 +221,9 @@ typedef uint32_t CSL_CPSW_CPDMA_RX_HOST_ERR;
 /**  SOP buffer length not greater than offset  */
 #define CPSW_CPDMA_RX_HOST_ERR_SOP_BLEN     ((uint32_t) 6U)
 
+/** RX Host Timestamp size*/
+#define CPSW_CPDMA_RX_HOST_TIMESTAMP_SIZE  (8U)
+
 /** Interrupt Events per core */
 #define CPSW_CPDMA_NUM_INT_EVENTS_PER_CORE (4U)
 /** Get EOI ack value based on coreId and interrupt */
