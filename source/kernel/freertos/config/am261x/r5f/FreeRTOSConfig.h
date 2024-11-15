@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -110,11 +110,11 @@ extern "C"
                                                      *
                                                      * void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
                                                      *      StackType_t **ppxTimerTaskStackBuffer,
-                                                     *      uint32_t *pulTimerTaskStackSize );
+                                                     *      configSTACK_DEPTH_TYPE *pulTimerTaskStackSize );
                                                      *
                                                      * void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer,
                                                      *      StackType_t **ppxIdleTaskStackBuffer,
-                                                     *      uint32_t *pulIdleTaskStackSize );
+                                                     *      configSTACK_DEPTH_TYPE *pulIdleTaskStackSize );
                                                      */
 #define configSUPPORT_DYNAMIC_ALLOCATION        (1)
 #define configTOTAL_HEAP_SIZE                   (4*1024) /* not used when heap_3.c is the selected heap */
@@ -164,13 +164,14 @@ uint32_t uiPortGetRunTimeCounterValue();
 #define configUSE_APPLICATION_TASK_TAG  (1)
 
 /* include specific functions */
-#define INCLUDE_vTaskDelete             (1)
-#define INCLUDE_vTaskDelay              (1)
-#define INCLUDE_vTaskSuspend            (1)
-#define INCLUDE_xTimerDelete            (1)
-#define INCLUDE_vSemaphoreDelete        (1)
-#define INCLUDE_xTimerPendFunctionCall  (1)
-#define INCLUDE_xTaskGetIdleTaskHandle  (1)
+#define INCLUDE_vTaskDelete              (1)
+#define INCLUDE_vTaskDelay               (1)
+#define INCLUDE_vTaskSuspend             (1)
+#define INCLUDE_xTimerDelete             (1)
+#define INCLUDE_vSemaphoreDelete         (1)
+#define INCLUDE_xTimerPendFunctionCall   (1)
+#define INCLUDE_xTaskGetIdleTaskHandle   (1)
+#define INCLUDE_xSemaphoreGetMutexHolder (1)
 
 #ifdef __cplusplus
 }
