@@ -119,6 +119,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpdma \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am263x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc \
     -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc \
 

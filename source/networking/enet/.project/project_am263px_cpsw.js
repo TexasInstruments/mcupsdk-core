@@ -129,9 +129,9 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am263px",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc",
 
         "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc",
 
     ],
 
