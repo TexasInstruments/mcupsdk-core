@@ -207,6 +207,7 @@ EnetDma_Pkt *EnetMem_allocEthPkt(void *appPriv,
                 for (i = 0; i < numScatterSegments; i++)
                 {
                     pPktInfo->sgList.list[i].bufPtr = (uint8_t*) segmentBufAddr ;
+                    pPktInfo->sgList.list[i].origBufPtr = pPktInfo->sgList.list[i].bufPtr;
                     pPktInfo->sgList.list[i].segmentAllocLen = scatterSegmentSize[i];
                     segmentBufAddr = (uint8_t*) (pPktInfo->sgList.list[i].bufPtr) + scatterSegmentSize[i];
                     EnetAppUtils_assert(segmentBufAddr <= (pAppPktInfoMem->orgBufAddr + pAppPktInfoMem->orgBufSize));
