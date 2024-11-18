@@ -285,6 +285,12 @@ const defines_a53_smp = {
     ],
 };
 
+const defines_a53_amp = {
+    common: [
+        "AMP_FREERTOS_A53",
+    ],
+};
+
 const asmfiles_r5f = {
     common: [
         // picked from nortos DPL
@@ -316,6 +322,7 @@ const asmfiles_a53 = {
         // none
         // picked from freertos "portable"
         "portASM.S",
+        "SpinlockP_armv8.S"
     ],
 };
 
@@ -332,6 +339,7 @@ const asmfiles_a53_smp = {
         // none
         // picked from freertos "portable"
         "portASM.S",
+        "SpinlockP_armv8.S"
     ],
 };
 
@@ -489,6 +497,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_a53;
         build_property.cflags = cflags_a53;
         build_property.templates = templates_freertos_a53;
+        build_property.defines = defines_a53_amp;
     }
     if(buildOption.cpu == "a53-smp")
     {

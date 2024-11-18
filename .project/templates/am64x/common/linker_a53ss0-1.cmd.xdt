@@ -6,7 +6,7 @@
 
     let isSingleCore = true;
     let useDdr = true;
-    let addrBaseDdr = 0x80000000;
+    let addrBaseDdr = 0x82000000;
     let codeDataSizeDdr = 0x1000000;
 
     /* if no options given use defaults */
@@ -84,7 +84,6 @@ SECTIONS {
     % if(args.project.isAmpSHM === true){
     .bss.amp_shared_mem  (NOLOAD) : { KEEP(*(.bss.amp_shared_mem))} > AMP_SHM
     %}
-
     .bss : {
         __bss_start__ = .;
         *(.bss)

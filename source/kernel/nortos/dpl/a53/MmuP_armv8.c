@@ -437,6 +437,19 @@ void MmuP_init()
      *  If not running in SMP mode, Core_getId() always returns 0,
      *  and the below init code will be run.
      */
+#if defined(AMP_FREERTOS_A53)
+        /* Initialize table array */
+        for (i = 0; i < MMUP_TABLE_ARRAY_LEN; i++)
+        {
+            gMmuTableArray[tableLen * i] = i + 1;
+        }
+
+        gMmuTableArray[tableLen * (i - 1)] = (~0);
+        gMmuTableArraySlot = 0;
+
+        /* Allocate level1 Table */
+        gMmuLevel1Table = (uintptr_t *)MmuP_allocTable();
+#else
     if (Armv8_getCoreId() == 0)
     {
         /* Initialize table array */
@@ -451,7 +464,7 @@ void MmuP_init()
         /* Allocate level1 Table */
         gMmuLevel1Table = (uintptr_t *)MmuP_allocTable();
     }
-
+#endif
     /* Install MMU translation tables */
     MmuP_setTableBase(gMmuLevel1Table);
 
@@ -459,10 +472,14 @@ void MmuP_init()
      * Call init function. This function is part of the application and will
      * add MMU mappings. If in SMP mode, core 0 has already done this.
      */
+#if defined(AMP_FREERTOS_A53)
+        MmuP_setConfig();
+#else 
     if (Armv8_getCoreId() == 0)
     {
         MmuP_setConfig();
     }
+#endif
 
     /* Invalidate entire TLB */
     MmuP_tlbInvAll();

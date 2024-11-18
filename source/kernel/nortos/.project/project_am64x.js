@@ -155,6 +155,7 @@ const asmfiles_a53 = {
         "HwiP_armv8_vectors_nortos_asm.S",
         "MmuP_armv8_asm.S",
         "PmuP_armv8_asm.S",
+        "SpinlockP_armv8.S",
     ],
 };
 

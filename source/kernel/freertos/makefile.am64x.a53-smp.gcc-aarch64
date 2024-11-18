@@ -66,6 +66,7 @@ ASMFILES_common := \
     PmuP_armv8_asm.S \
     common_armv8_asm.S \
     portASM.S \
+    SpinlockP_armv8.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/a53 \

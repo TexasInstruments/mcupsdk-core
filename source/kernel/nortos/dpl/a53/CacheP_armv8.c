@@ -62,11 +62,6 @@ void CacheP_enable(uint32_t type)
 {
     uint32_t disabled;
 
-#if defined (SMP_FREERTOS)
-    /* Set SMPEN flag when running SMP FreeRTOS */
-    CacheP_enableSMP();
-#endif
-
     /* only enable caches that are currently disabled */
     disabled = ~(CacheP_getEnabled());
 

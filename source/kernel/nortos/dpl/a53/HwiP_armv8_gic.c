@@ -32,8 +32,9 @@
 
 
 #include "HwiP_armv8_gic.h"
-
-
+#if defined(AMP_FREERTOS_A53)
+#include "SpinlockP_armv8.h"
+#endif
 typedef struct HwiP_Struct_s {
 
     uint32_t intNum;
@@ -86,7 +87,12 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
 
     /* Set interrupt priority */
     HwiP_intrPrioritySet(params->intNum, (uint32_t)params->priority, coreId);
-
+#if defined(AMP_FREERTOS_A53)
+    if(params->intNum >= HWIP_GICD_SGI_PPI_INTR_ID_MAX)
+    {
+        HwIP_routeGICSharedPeripheralInterrupt(params->intNum, coreId);
+    }
+#endif 
     if (params->isPulse == 0)
     {
         (void)HwiP_setLevelSpiIntrType((uint16_t)params->intNum);
@@ -319,9 +325,10 @@ void HwiP_init()
     coreId = Armv8_getCoreId();
 
     uint32_t i = 0, j = 0, intrActiveReg = 0;
+#if !defined(AMP_FREERTOS_A53)
     uint32_t routingMode = 0;
     uint8_t  aff0 = 0, aff1 = 0;
-
+#endif
     /* Initialize the GIC V3 */
     CSL_gic500_gicdRegs *gicdRegs = (CSL_gic500_gicdRegs *)(HWIP_GIC_BASE_ADDR);
     CSL_gic500_gicrRegs_core_control *gicrRegs;
@@ -353,6 +360,7 @@ void HwiP_init()
          */
         gicsRegs->ICENABLER0 = 0xFFFFFFFF;
 
+    #if !defined(AMP_FREERTOS_A53)
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
@@ -360,7 +368,22 @@ void HwiP_init()
                 gicdRegs->ICENABLER_SPI[i] = 0xFFFFFFFF;
             }
         }
+    #endif
+    #if defined(AMP_FREERTOS_A53)
+        /*
+            * Enable forwarding of interrupts in GIC Distributor and CPU interface
+            * Controller.
+        */
+        /* Spin till lock is acquired */
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        if(!(gicdRegs->CTLR & 0x02))
+        {
+            gicdRegs->CTLR = 0x2;
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+        HwiP_writeSystemReg(s3_0_c12_c12_7, 0x1);   /* icc_igrpen1_el1 */
 
+    #else 
         if(0 == coreId)
         {
             /*
@@ -370,6 +393,7 @@ void HwiP_init()
             gicdRegs->CTLR = 0x2;
             HwiP_writeSystemReg(s3_0_c12_c12_7, 0x1);   /* icc_igrpen1_el1 */
         }
+    #endif
 
         /* Search for any previously active interrupts and acknowledge them */
         intrActiveReg = gicsRegs->ICACTIVER0;
@@ -384,7 +408,26 @@ void HwiP_init()
                 intrActiveReg = intrActiveReg >> 1;
             }
         }
-
+    #if defined(AMP_FREERTOS_A53)
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
+        {
+            intrActiveReg = gicdRegs->ISACTIVER_SPI[i];
+            if (intrActiveReg)
+            {
+                for (j = 0; j < 32; j++)
+                {
+                    if (intrActiveReg & 0x1)
+                    {
+                        HwiP_writeSystemReg(s3_0_c12_c12_1, (i * 32) + j);
+                                                    /* icc_eoir1_el1 */
+                    }
+                    intrActiveReg = intrActiveReg >> 1;
+                }
+            }
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+    #else
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
@@ -404,11 +447,22 @@ void HwiP_init()
                 }
             }
         }
-
+    #endif
         /*
          * Clear any currently pending enabled interrupts
          */
         gicsRegs->ICPENDR0  = 0xFFFFFFFF;
+    #if defined(AMP_FREERTOS_A53)
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
+        {
+            if(gicdRegs->ICPENDR_SPI[i] != CSL_GIC500_GICD_ICPENDR_SPI_PEND_MASK)
+            {
+                gicdRegs->ICPENDR_SPI[i] = CSL_GIC500_GICD_ICPENDR_SPI_PEND_MASK;
+            }
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+    #else
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
@@ -416,11 +470,22 @@ void HwiP_init()
                 gicdRegs->ICPENDR_SPI[i] = 0xFFFFFFFF;
             }
         }
-
+    #endif
         /*
          * Clear all interrupt active status registers
          */
         gicsRegs->ICACTIVER0 = 0xFFFFFFFF;
+    #if defined(AMP_FREERTOS_A53)
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
+        {
+            if(gicdRegs->ICACTIVER_SPI[i] != CSL_GIC500_GICD_ICACTIVER_SPI_SET_MASK)
+            {
+                gicdRegs->ICACTIVER_SPI[i] = CSL_GIC500_GICD_ICACTIVER_SPI_SET_MASK;
+            }
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+    #else
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/32; i++)
@@ -428,7 +493,8 @@ void HwiP_init()
                 gicdRegs->ICACTIVER_SPI[i] = 0xFFFFFFFF;
             }
         }
-
+    #endif
+    #if !defined(AMP_FREERTOS_A53)
         if(0 == coreId)
         {
             /*
@@ -443,7 +509,7 @@ void HwiP_init()
                 gicdRegs->IROUTER[i].UPPER = routingMode;
             }
         }
-
+    #endif 
         /*
          * Initialize Binary Point Register
          */
@@ -457,6 +523,18 @@ void HwiP_init()
         {
            gicsRegs->IPRIORITYR[i]=0x20202020;
         }
+    #if defined(AMP_FREERTOS_A53)
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/4; i++)
+        {
+            if(gicdRegs->IPRIORITYR_SPI[i] != 0x20202020)
+            {
+                gicdRegs->IPRIORITYR_SPI[i] = 0x20202020;
+            }
+
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+    #else
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/4; i++)
@@ -464,7 +542,7 @@ void HwiP_init()
             gicdRegs->IPRIORITYR_SPI[i]= 0x20202020;
             }
         }
-
+    #endif
         Armv8_dsbSy();
 
         /*
@@ -488,6 +566,17 @@ void HwiP_init()
          *          b10    Interrupt is rising edge-sensitive
          */
         gicsRegs->ICFGR1 = 0;
+    #if defined(AMP_FREERTOS_A53)
+        while(SpinlockP_swLock( &gSwSpinLockBuff[SW_SPIN_LOCK_2] ) == SW_SPINLOCK_IN_USE);
+        for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/16; i++)
+        {
+            if(gicdRegs->ICFGR_SPI[i] != 0)
+            {
+                gicdRegs->ICFGR_SPI[i] = 0;
+            }
+        }
+        SpinlockP_swUnlock(&gSwSpinLockBuff[SW_SPIN_LOCK_2]);
+    #else
         if(0 == coreId)
         {
             for (i = 0; i < HWIP_GICD_SPI_INTR_COUNT_MAX/16; i++)
@@ -495,9 +584,19 @@ void HwiP_init()
             gicdRegs->ICFGR_SPI[i] = 0;
             }
         }
-
+    #endif
     }
 
+    /* Register the default handlers */
+    #if defined(AMP_FREERTOS_A53)
+        for(i = 0; i < HwiP_MAX_INTERRUPTS; i++)
+        {
+            /* Assign default ISR */
+            gHwiCtrl.isr[i] = NULL;
+            gHwiCtrl.isrArgs[i] = NULL;
+
+        }
+    #else
     if(coreId == 0)
     {
         /* Register the default handlers */
@@ -509,6 +608,7 @@ void HwiP_init()
 
         }
     }
+    #endif
 
     #if SMP_FREERTOS
     HwiP_Params hwiParams;
@@ -712,3 +812,20 @@ static int32_t HwiP_setEdgeSpiIntrType(uint16_t intrNum)
 	return SystemP_SUCCESS;
 }
 
+void HwIP_routeGICSharedPeripheralInterrupt(uint32_t intrNum, uint8_t coreId)
+{
+    CSL_gic500_gicdRegs *gicdRegs = (CSL_gic500_gicdRegs *)(HWIP_GIC_BASE_ADDR);
+    uint8_t aff1 = 0;
+    uint32_t routingMode = 0;
+    if(intrNum >= HWIP_GICD_SGI_PPI_INTR_ID_MAX && intrNum < HWIP_GICD_SPI_INTR_ID_MAX)
+    {
+        intrNum -= HWIP_GICD_SGI_PPI_INTR_ID_MAX;
+
+        gicdRegs->IROUTER[intrNum].LOWER =  (aff1 << 8 | coreId);
+        gicdRegs->IROUTER[intrNum].UPPER = routingMode;
+    }
+    else
+    {
+      /* No action */
+    }
+}

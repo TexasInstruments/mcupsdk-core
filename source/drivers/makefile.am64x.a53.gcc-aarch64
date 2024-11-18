@@ -149,6 +149,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DAMP_FREERTOS_A53 \
 
 # Remove later with combined boot
 ifeq ($(DEVICE_TYPE),$(filter $(DEVICE_TYPE), HS))
@@ -170,6 +171,12 @@ CFLAGS_common := \
     -Wno-unused-but-set-variable \
     -fdata-sections \
     -ffunction-sections \
+    -mstrict-align \
+    -Wno-extra \
+    -Wno-address-of-packed-member \
+    -Wno-unused-variable \
+    -Wno-unused-function \
+    -Wno-maybe-uninitialized \
 
 CFLAGS_debug := \
     -D_DEBUG_=1 \

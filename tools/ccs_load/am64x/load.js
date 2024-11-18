@@ -94,6 +94,7 @@ elf_file["r5fss1-0"] = makeElfFileName("r5fss1-0", os, "ti-arm-clang", exampleNa
 elf_file["r5fss1-1"] = makeElfFileName("r5fss1-1", os, "ti-arm-clang", exampleName, profile);
 elf_file["m4fss0-0"] = makeElfFileName("m4fss0-0", os, "ti-arm-clang", exampleName, profile);
 elf_file["a53ss0-0"] = makeElfFileName("a53ss0-0", os, "gcc-aarch64", exampleName, profile);
+elf_file["a53ss0-1"] = makeElfFileName("a53ss0-1", os, "gcc-aarch64", exampleName, profile);
 
 function makeElfFileName(cpu, os, compiler, exampleName, profile)
 {
@@ -143,8 +144,11 @@ function doEverything()
     dsCPU["r5fss1-0"] = debugServer.openSession( ".*MAIN_Cortex_R5_1_0" );
     dsCPU["r5fss1-1"] = debugServer.openSession( ".*MAIN_Cortex_R5_1_1" );
     dsCPU["m4fss0-0"] = debugServer.openSession( ".*Cortex_M4F_0" );
-    if(isAvailableA53)
+    if(isAvailableA53){
         dsCPU["a53ss0-0"] = debugServer.openSession( ".*CortexA53_0" );
+        dsCPU["a53ss0-1"] = debugServer.openSession( ".*CortexA53_1" );
+    }
+        
 
     print("Connecting, halting, reseting ...");
     connectHaltResetCpu("r5fss0-0");
@@ -153,7 +157,11 @@ function doEverything()
     connectHaltResetCpu("r5fss1-1");
     connectHaltResetCpu("m4fss0-0");
     if(isAvailableA53)
+    {
         connectHaltResetCpu("a53ss0-0");
+        connectHaltResetCpu("a53ss0-1");
+    }
+        
 
     loadCpu("r5fss0-0");
     loadCpu("r5fss0-1");
@@ -161,14 +169,22 @@ function doEverything()
     loadCpu("r5fss1-1");
     loadCpu("m4fss0-0");
     if(isAvailableA53)
+    {
         loadCpu("a53ss0-0");
+        loadCpu("a53ss0-1");
+    }
+        
 
     runCpu("r5fss0-1");
     runCpu("r5fss1-0");
     runCpu("r5fss1-1");
     runCpu("m4fss0-0");
     if(isAvailableA53)
+    {
         runCpu("a53ss0-0");
+        runCpu("a53ss0-1");
+    }
+        
     /* run this CPU last, this is not MANDATORY
      * but in most cases, this runs the main HOST and usually is the last to start
      */

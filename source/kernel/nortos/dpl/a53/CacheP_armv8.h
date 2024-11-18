@@ -65,10 +65,8 @@ void CacheP_invL1p(uintptr_t blockPtr, uint32_t byteCnt);
 /* Invalidate range of L1 data cache */
 void CacheP_invL1d(uintptr_t blockPtr, uint32_t byteCnt);
 
-#if defined (SMP_FREERTOS)
 /* Enable cache coherency between cores */
 void CacheP_enableSMP(void);
-#endif
 
 #ifdef __cplusplus
 }

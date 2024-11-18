@@ -351,6 +351,7 @@ function getProjectSpecCpu(cpu) {
         "r5fss1-1": "MAIN_PULSAR_Cortex_R5_1_1",
         "m4fss0-0": "Cortex_M4F_0",
         "a53ss0-0": "CortexA53_0",
+        "a53ss0-1": "CortexA53_1",
         "icss_g0_pru0": "ICSS_G0_PRU_0",
         "icss_g0_pru1": "ICSS_G0_PRU_1",
         "icss_g0_rtu_pru0": "ICSS_G0_RTU_PRU_0",

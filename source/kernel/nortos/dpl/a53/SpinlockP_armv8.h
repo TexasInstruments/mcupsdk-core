@@ -30,35 +30,28 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef COMMON_ARMV8_H
-#define COMMON_ARMV8_H
+#ifndef SPINLOCKP_ARMV8_H
+#define SPINLOCKP_ARMV8_H
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include <stdint.h>
+#define SW_SPINLOCK_FREE        (0)
+#define SW_SPINLOCK_IN_USE      (1)
 
-/* Full system DSB operation */
-void Armv8_dsbSy();
+#define SW_SPIN_LOCK_1          (0)
+#define SW_SPIN_LOCK_2          (1)
+#define NO_OF_SW_SPIN_LOCKS     (2)
 
-/* Get CPU core id */
-uint64_t Armv8_getCoreId();
 
-/* Exit execution */
-void Armv8_exit(void);
-/**
- * \brief This API route the interrupt to the specific coreid
- *
- * \param intNum [in] Interrupt number
- * \param coreId [in] CoreID to which the Interrupt is routed, returned from Armv8_getCoreId()
- *                    It can be 0/1/
- *
- */
-void HwIP_routeGICSharedPeripheralInterrupt(uint32_t intrNum, uint8_t coreId);
+extern uint32_t gSwSpinLockBuff[NO_OF_SW_SPIN_LOCKS] ;
+
+int32_t SpinlockP_swLock(uint32_t* gSwLockBuff);
+void    SpinlockP_swUnlock(uint32_t* gSwLockBuff);
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* COMMON_ARMV8_H */
+#endif /* SPINLOCKP_ARMV8_H */

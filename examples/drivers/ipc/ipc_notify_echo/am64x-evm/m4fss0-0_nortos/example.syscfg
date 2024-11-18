@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM64x" --part "Default" --package "ALV" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM6442" --package "FCBGA (ALV)" --variant "AM6442-D" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -16,7 +17,7 @@ const addr_translate3           = addr_translate.addInstance();
 const addr_translate4           = addr_translate.addInstance();
 const clock                     = scripting.addModule("/kernel/dpl/clock");
 const debug_log                 = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg                   = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7                 = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71                = mpu_armv7.addInstance();
 const mpu_armv72                = mpu_armv7.addInstance();

@@ -385,7 +385,7 @@ CacheP_disableEL3:
         ret
         .endfunc
 
-#if defined (SMP_FREERTOS)
+
 /* FUNCTION DEF: void CacheP_enableSMP(void) */
         .global CacheP_enableSMP
         .section .text.CacheP_enableSMP
@@ -397,4 +397,4 @@ CacheP_enableSMP:
         msr     s3_1_c15_c2_1, x0           /* Enable data coherency with other cores */
         ret
         .endfunc
-#endif
+
