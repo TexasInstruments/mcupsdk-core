@@ -138,6 +138,58 @@ extern "C" {
                               MCAN_IR_ARA_MASK)
 
 /**
+ * \brief  Macro defines mask for the TX interrupts status for MCAN.
+ */
+#define MCAN_INTR_MASK_TX    (MCAN_IR_TSW_MASK |  \
+                              MCAN_IR_MRAF_MASK | \
+                              MCAN_IR_TOO_MASK |  \
+                              MCAN_IR_DRX_MASK |  \
+                              MCAN_IR_BEC_MASK |  \
+                              MCAN_IR_BEU_MASK |  \
+                              MCAN_IR_ELO_MASK |  \
+                              MCAN_IR_EP_MASK |   \
+                              MCAN_IR_EW_MASK |   \
+                              MCAN_IR_BO_MASK |   \
+                              MCAN_IR_WDI_MASK |  \
+                              MCAN_IR_PEA_MASK |  \
+                              MCAN_IR_PED_MASK |  \
+                              MCAN_IR_ARA_MASK |  \
+                              MCAN_IR_TC_MASK |   \
+                              MCAN_IR_TCF_MASK |  \
+                              MCAN_IR_TFE_MASK |  \
+                              MCAN_IR_TEFN_MASK | \
+                              MCAN_IR_TEFW_MASK | \
+                              MCAN_IR_TEFF_MASK | \
+                              MCAN_IR_HPM_MASK |  \
+                              MCAN_IR_TEFL_MASK)                           
+/**
+ * \brief  Macro defines mask for the RX interrupts status for MCAN.
+ */
+#define MCAN_INTR_MASK_RX   (MCAN_IR_RF0N_MASK | \
+                             MCAN_IR_TSW_MASK |  \
+                             MCAN_IR_MRAF_MASK | \
+                             MCAN_IR_TOO_MASK |  \
+                             MCAN_IR_DRX_MASK |  \
+                             MCAN_IR_BEC_MASK |  \
+                             MCAN_IR_BEU_MASK |  \
+                             MCAN_IR_ELO_MASK |  \
+                             MCAN_IR_EP_MASK |   \
+                             MCAN_IR_EW_MASK |   \
+                             MCAN_IR_BO_MASK |   \
+                             MCAN_IR_WDI_MASK |  \
+                             MCAN_IR_PEA_MASK |  \
+                             MCAN_IR_PED_MASK |  \
+                             MCAN_IR_ARA_MASK |  \
+                             MCAN_IR_HPM_MASK |  \
+                             MCAN_IR_RF0W_MASK | \
+                             MCAN_IR_RF0F_MASK | \
+                             MCAN_IR_RF0L_MASK | \
+                             MCAN_IR_RF1N_MASK | \
+                             MCAN_IR_RF1W_MASK | \
+                             MCAN_IR_RF1F_MASK | \
+                             MCAN_IR_RF1L_MASK)
+
+/**
  * \brief  Size of MCAN Header in bytes.
  */
 #define MCAN_HEADER_SIZE_BYTES              (8U)

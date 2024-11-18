@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM273x" --part "Default" --package "ZCE" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2732-Q1" --package "NFBGA (ZCE)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -44,6 +45,9 @@ const section12       = section.addInstance();
  */
 mcan1.$name               = "CONFIG_MCAN0";
 mcan1.sdkInfra            = "HLD";
+mcan1.transferMode        = "CALLBACK";
+mcan1.transferCallbackFxn = "App_CANFDTransferCallback";
+mcan1.errorCallbackFxn    = "App_CANFDErrorCallback";
 mcan1.MSS_MCAN.$assign    = "MSS_MCANA";
 mcan1.MSS_MCAN.RX.$assign = "PAD_AF";
 mcan1.MSS_MCAN.TX.$assign = "PAD_AG";

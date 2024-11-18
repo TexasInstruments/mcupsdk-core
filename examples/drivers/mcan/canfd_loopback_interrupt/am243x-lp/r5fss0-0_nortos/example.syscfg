@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM243x_ALX_beta" --part "ALX" --package "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCCSP (ALX)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -40,9 +41,12 @@ const section11       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-mcan1.$name        = "CONFIG_MCAN0";
-mcan1.sdkInfra     = "HLD";
-mcan1.MCAN.$assign = "MCAN0";
+mcan1.$name               = "CONFIG_MCAN0";
+mcan1.sdkInfra            = "HLD";
+mcan1.transferMode        = "CALLBACK";
+mcan1.errorCallbackFxn    = "App_CANFDErrorCallback";
+mcan1.transferCallbackFxn = "App_CANFDTransferCallback";
+mcan1.MCAN.$assign        = "MCAN0";
 
 const mcan_v0_template_hld  = scripting.addModule("/drivers/mcan/v0/mcan_v0_template_hld", {}, false);
 const mcan_v0_template_hld1 = mcan_v0_template_hld.addInstance({}, false);

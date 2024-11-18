@@ -62,6 +62,7 @@
 CANFD_MessageObject         txMsgObject;
 CANFD_MessageObject         rxMsgObject;
 volatile uint32_t           iterationCount = 0U;
+static SemaphoreP_Object    gMcanTxDoneSem, gMcanRxDoneSem;
 uint8_t                     rxData[MCAN_APP_TEST_DATA_SIZE] = {0};
 uint8_t                     txData[128U] =
                                {0xA1, 0x1A, 0xFF, 0xFF, 0xC1, 0x1C, 0xB1, 0x1B,
@@ -86,11 +87,16 @@ void canfd_loopback_interrupt_main(void *args)
 {
     CANFD_MsgObjHandle          txMsgObjHandle;
     CANFD_MsgObjHandle          rxMsgObjHandle;
-    int32_t                     retVal = SystemP_SUCCESS;
+    int32_t                     status = SystemP_SUCCESS;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+    status = SemaphoreP_constructBinary(&gMcanTxDoneSem, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
+    status = SemaphoreP_constructBinary(&gMcanRxDoneSem, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
 
     DebugP_log("[MCAN] Loopback Interrupt mode, application started ...\r\n");
 
@@ -102,8 +108,8 @@ void canfd_loopback_interrupt_main(void *args)
     txMsgObject.txMemType  = MCAN_MEM_TYPE_BUF;
     txMsgObject.dataLength = MCAN_APP_TEST_DATA_SIZE;
     txMsgObject.args       = NULL;
-    retVal = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &txMsgObject);
-    if (retVal != SystemP_SUCCESS)
+    status = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &txMsgObject);
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD create Tx message object failed\r\n");
         return;
@@ -118,8 +124,8 @@ void canfd_loopback_interrupt_main(void *args)
     rxMsgObject.args       = (uint8_t*) rxData;
     rxMsgObject.rxMemType  = MCAN_MEM_TYPE_BUF;
     rxMsgObject.dataLength = MCAN_APP_TEST_DATA_SIZE;
-    retVal = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &rxMsgObject);
-    if (retVal != SystemP_SUCCESS)
+    status = CANFD_createMsgObject (gCanfdHandle[CONFIG_MCAN0], &rxMsgObject);
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD create Rx message object failed\r\n");
         return;
@@ -128,25 +134,42 @@ void canfd_loopback_interrupt_main(void *args)
 
     while (iterationCount != MCAN_APP_TEST_MESSAGE_COUNT)
     {
+        status += CANFD_read(rxMsgObjHandle, MCAN_APP_TEST_MESSAGE_COUNT, &rxData[0]);
+        if (status != SystemP_SUCCESS)
+        {
+            DebugP_log ("Error: CANFD read in interrupt mode failed\r\n");
+            return;
+        }
+
         /* Send data over Tx message object */
-        retVal += CANFD_write (txMsgObjHandle,
-                               txMsgObject.startMsgId,
-                               CANFD_MCANFrameType_FD,
-                               0,
-                               &txData[0]);
+        status += CANFD_write (txMsgObjHandle,
+                              txMsgObject.startMsgId,
+                              CANFD_MCANFrameType_FD,
+                              0,
+                              &txData[0]);
+        if (status != SystemP_SUCCESS)
+        {
+            DebugP_log ("Error: CANFD write in interrupt mode failed\r\n");
+            return;
+        }
+
+        /* Wait for Tx completion */
+        SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);
+        /* Wait for Rx completion */
+        SemaphoreP_pend(&gMcanRxDoneSem, SystemP_WAIT_FOREVER);
 
         /* Compare data */
         for(int32_t i = 0U; i < MCAN_APP_TEST_DATA_SIZE; i++)
         {
             if(txData[i] != rxData[i])
             {
-                retVal = SystemP_FAILURE;   /* Data mismatch */
+                status += SystemP_FAILURE;   /* Data mismatch */
                 DebugP_log("Data Mismatch at offset %d\r\n", i);
                 break;
             }
         }
 
-        if (retVal != SystemP_SUCCESS)
+        if (status != SystemP_SUCCESS)
         {
             DebugP_log ("Error: CANFD transmit data for iteration %d failed\r\n", iterationCount);
             return;
@@ -155,21 +178,24 @@ void canfd_loopback_interrupt_main(void *args)
         iterationCount++;
     }
 
-    retVal = CANFD_deleteMsgObject(txMsgObjHandle);
-    if (retVal != SystemP_SUCCESS)
+    status += CANFD_deleteMsgObject(txMsgObjHandle);
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD delete Tx message object failed\r\n");
         return;
     }
 
-    retVal = CANFD_deleteMsgObject(rxMsgObjHandle);
-    if (retVal != SystemP_SUCCESS)
+    status += CANFD_deleteMsgObject(rxMsgObjHandle);
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD delete Rx message object failed\r\n");
         return;
     }
 
-    if (retVal == SystemP_SUCCESS)
+    SemaphoreP_destruct(&gMcanTxDoneSem);
+    SemaphoreP_destruct(&gMcanRxDoneSem);
+
+    if (status == SystemP_SUCCESS)
     {
         DebugP_log("[MCAN] Internal loopback testing for %d iterations Passed\r\n", iterationCount);
         DebugP_log("All tests have passed\r\n");
@@ -184,4 +210,21 @@ void canfd_loopback_interrupt_main(void *args)
     Drivers_close();
 
     return;
+}
+
+void App_CANFDTransferCallback(void *args, CANFD_Reason reason)
+{
+    if (reason == CANFD_Reason_TX_COMPLETION)
+    {
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanTxDoneSem);
+    }
+    if (reason == CANFD_Reason_RX)
+    {
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanRxDoneSem);
+    }
+}
+
+void App_CANFDErrorCallback(void *args, CANFD_Reason reason)
+{
+    /* Do nothing. */
 }

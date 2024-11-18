@@ -40,11 +40,14 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-mcan1.$name           = "CONFIG_MCAN0";
-mcan1.sdkInfra        = "HLD";
-mcan1.MCAN.$assign    = "MCAN1";
-mcan1.MCAN.RX.$assign = "MCAN1_RX";
-mcan1.MCAN.TX.$assign = "MCAN1_TX";
+mcan1.$name               = "CONFIG_MCAN0";
+mcan1.sdkInfra            = "HLD";
+mcan1.transferMode        = "CALLBACK";
+mcan1.transferCallbackFxn = "App_CANFDTransferCallback";
+mcan1.errorCallbackFxn    = "App_CANFDErrorCallback";
+mcan1.MCAN.$assign        = "MCAN1";
+mcan1.MCAN.RX.$assign     = "MCAN1_RX";
+mcan1.MCAN.TX.$assign     = "MCAN1_TX";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);

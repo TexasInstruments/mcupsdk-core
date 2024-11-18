@@ -1078,15 +1078,15 @@ int32_t CANFD_configBitTime(CANFD_Handle handle, const CANFD_MCANBitTimingParams
         retVal = CANFD_updateOpMode(baseAddr, MCAN_OPERATION_MODE_SW_INIT);
 
         /* Calculate the MCAN bit timing parameters */
-        mcanBitTimingParams.nomRatePrescalar   = bitTimeParams->nomBrp - (uint32_t)1U;
-        mcanBitTimingParams.nomTimeSeg1        = bitTimeParams->nomPropSeg + bitTimeParams->nomPseg1 - (uint32_t)1U;
-        mcanBitTimingParams.nomTimeSeg2        = bitTimeParams->nomPseg2 - (uint32_t)1U;
-        mcanBitTimingParams.nomSynchJumpWidth  = bitTimeParams->nomSjw - (uint32_t)1U;
+        mcanBitTimingParams.nomRatePrescalar   = bitTimeParams->nomBrp;
+        mcanBitTimingParams.nomTimeSeg1        = bitTimeParams->nomPropSeg + bitTimeParams->nomPseg1;
+        mcanBitTimingParams.nomTimeSeg2        = bitTimeParams->nomPseg2;
+        mcanBitTimingParams.nomSynchJumpWidth  = bitTimeParams->nomSjw;
 
-        mcanBitTimingParams.dataRatePrescalar  = bitTimeParams->dataBrp - (uint32_t)1U;
-        mcanBitTimingParams.dataTimeSeg1       = bitTimeParams->dataPropSeg + bitTimeParams->dataPseg1 - (uint32_t)1U;
-        mcanBitTimingParams.dataTimeSeg2       = bitTimeParams->dataPseg2 - (uint32_t)1U;
-        mcanBitTimingParams.dataSynchJumpWidth = bitTimeParams->dataSjw - (uint32_t)1U;
+        mcanBitTimingParams.dataRatePrescalar  = bitTimeParams->dataBrp;
+        mcanBitTimingParams.dataTimeSeg1       = bitTimeParams->dataPropSeg + bitTimeParams->dataPseg1;
+        mcanBitTimingParams.dataTimeSeg2       = bitTimeParams->dataPseg2;
+        mcanBitTimingParams.dataSynchJumpWidth = bitTimeParams->dataSjw;
 
         /* Set the bit timing values */
         retVal += MCAN_setBitTime(baseAddr, &mcanBitTimingParams);
@@ -1727,45 +1727,58 @@ static int32_t CANFD_readIntr(CANFD_MsgObjHandle handle, uint8_t* data)
     CANFD_MessageObject*    ptrCanMsgObj;
     CANFD_Object*           ptrCanFdObj;
     int32_t                 retVal = SystemP_SUCCESS;
-    uint32_t                dataLength;
+    uint32_t                dataLength, baseAddr;
+    CANFD_Attrs            *attrs = NULL;
+    CANFD_Config           *config = NULL;
+    uint32_t                index;
 
     if(handle != NULL)
     {
         ptrCanMsgObj = (CANFD_MessageObject*)handle;
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
+        baseAddr = ptrCanFdObj->regBaseAddress;
+        config = ptrCanMsgObj->canfdHandle;
+        attrs  = config->attrs;
+        DebugP_assert(NULL_PTR != attrs);
 
-        retVal = CANFD_isDataSizeValid(ptrCanFdObj->rxBuffElem.dlc);
-        /* Get the data length from DLC */
-        if(retVal == SystemP_SUCCESS)
+        MCAN_enableIntr(baseAddr, MCAN_INTR_MASK_RX, (uint32_t)TRUE);
+        MCAN_enableIntr(baseAddr, MCAN_INTR_SRC_RES_ADDR_ACCESS, (uint32_t)FALSE);
+        /* Select Interrupt Line 0 */
+        MCAN_selectIntrLine(baseAddr, MCAN_INTR_MASK_RX, MCAN_INTR_LINE_NUM_0);
+        /* Enable Interrupt Line */
+        MCAN_enableIntrLine(baseAddr, MCAN_INTR_LINE_NUM_0, (uint32_t)TRUE);
+
+        if(attrs->CANFDMcanloopbackParams.mode == CANFD_MCANLoopBackMode_EXTERNAL)
         {
+            /* Compute the DLC value */
+            for(index = (uint32_t)0U; index < (uint32_t)16U; index++)
+            {
+                if((uint8_t)ptrCanMsgObj->dataLength <= ptrCanFdObj->mcanDataSize[index])
+                {
+                    ptrCanFdObj->rxBuffElem.dlc = index;
+                    break;
+                }
+            }
+            
+            /* Get the data length from DLC */
             dataLength = (uint32_t)ptrCanFdObj->mcanDataSize[ptrCanFdObj->rxBuffElem.dlc];
+            retVal = CANFD_isDataSizeValid(ptrCanMsgObj->dataLength);
             /*
-             * Check if the size of buffer is large enough to hold the received data.
-             * If yes, store the data in buffer and update ptrDataLength to the actual
-             * size of received data or else, return error. This is to prevent buffer
-             * overflow if the buffer size is not sufficient.
-             */
-            if(ptrCanMsgObj->dataLength >= dataLength)
+            * Check if the size of buffer is large enough to hold the received data.
+            * If yes, store the data in buffer and update ptrDataLength to the actual
+            * size of received data or else, return error. This is to prevent buffer
+            * overflow if the buffer size is not sufficient.
+            */
+            if((ptrCanMsgObj->dataLength >= dataLength) && (retVal != SystemP_FAILURE))
             {
                 ptrCanMsgObj->dataLength = dataLength;
-            }
-            else
-            {
-                retVal = SystemP_FAILURE;
-            }
-        }
-        if(retVal == SystemP_SUCCESS)
-        {
-            /* Copy the data */
-            (void)memcpy ((void *)data, ptrCanFdObj->rxBuffElem.data, ptrCanMsgObj->dataLength);
+                /* Copy the data */
+                (void)memcpy ((void *)data, ptrCanFdObj->rxBuffElem.data, ptrCanMsgObj->dataLength);
 
-            /* Increment the stats */
-            ptrCanMsgObj->messageProcessed++;
-        }
-        else
-        {
-            retVal = SystemP_FAILURE;
+                /* Increment the stats */
+                ptrCanMsgObj->messageProcessed++;
+            }
         }
     }
     else
@@ -2665,10 +2678,10 @@ static int32_t CANFD_writeIntr(CANFD_MsgObjHandle handle,
             MCAN_eccEnableIntr(baseAddr, CANFD_MCAN_ECC_ERR_TYPE_DED, 1U);
         }
 
-        MCAN_enableIntr(baseAddr, MCAN_INTR_MASK_ALL, (uint32_t)TRUE);
+        MCAN_enableIntr(baseAddr, MCAN_INTR_MASK_TX, (uint32_t)TRUE);
         MCAN_enableIntr(baseAddr, MCAN_INTR_SRC_RES_ADDR_ACCESS, (uint32_t)FALSE);
         /* Select Interrupt Line 0 */
-        MCAN_selectIntrLine(baseAddr, MCAN_INTR_MASK_ALL, MCAN_INTR_LINE_NUM_0);
+        MCAN_selectIntrLine(baseAddr, MCAN_INTR_MASK_TX, MCAN_INTR_LINE_NUM_0);
         /* Enable Interrupt Line */
         MCAN_enableIntrLine(baseAddr, MCAN_INTR_LINE_NUM_0, (uint32_t)TRUE);
         /* Select Interrupt Line 1 */
