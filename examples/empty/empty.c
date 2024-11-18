@@ -50,9 +50,11 @@ void empty_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-
+#if defined(AMP_FREERTOS_A53)
+    DebugP_log("All tests have passed on a53_core%d!!\r\n", Armv8_getCoreId());
+#else
     DebugP_log("All tests have passed!!\r\n");
-
+#endif 
     Board_driversClose();
     Drivers_close();
 }

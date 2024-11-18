@@ -48,6 +48,7 @@
             -fdata-sections
             -ffunction-sections
             -DSOC_AM64X
+            -DAMP_FREERTOS_A53
         "
         linkerBuildOptions="
             -L${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib

@@ -48,7 +48,6 @@ MULTI_CORE_APP_PARAMS = \
 	../empty_am64x-sk_r5fss1-0_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_r5fss1-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
 	../empty_am64x-sk_r5fss1-1_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_r5fss1-1_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 	../empty_am64x-sk_m4fss0-0_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_m4fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
-	../empty_am64x-_a53ss0-0_freertos_gcc-aarch64/$(PROFILE)/empty_am64x-_a53ss0-0_freertos_gcc-aarch64.rprc@$(BOOTIMAGE_CORE_ID_a53ss0-0) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
 	../empty_am64x-sk_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
@@ -56,7 +55,6 @@ MULTI_CORE_APP_PARAMS_XIP = \
 	../empty_am64x-sk_r5fss1-0_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_r5fss1-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
 	../empty_am64x-sk_r5fss1-1_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_r5fss1-1_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 	../empty_am64x-sk_m4fss0-0_freertos_ti-arm-clang/$(PROFILE)/empty_am64x-sk_m4fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
-	../empty_am64x-_a53ss0-0_freertos_gcc-aarch64/$(PROFILE)/empty_am64x-_a53ss0-0_freertos_gcc-aarch64.rprc_xip@$(BOOTIMAGE_CORE_ID_a53ss0-0) \
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)

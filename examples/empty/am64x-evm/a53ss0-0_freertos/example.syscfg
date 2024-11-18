@@ -15,11 +15,20 @@ const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
 const mmu_armv81 = mmu_armv8.addInstance();
 const mmu_armv82 = mmu_armv8.addInstance();
 const mmu_armv83 = mmu_armv8.addInstance();
+const mmu_armv84 = mmu_armv8.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-debug_log.enableCssLog = false;
+debug_log.enableCssLog         = false;
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mmu_armv81.$name = "CONFIG_MMU_REGION0";
 mmu_armv81.size  = 0x80000000;
@@ -30,8 +39,22 @@ mmu_armv82.pAddr     = 0x70000000;
 mmu_armv82.size      = 0x200000;
 mmu_armv82.attribute = "MAIR7";
 
-mmu_armv83.$name     = "CONFIG_MMU_REGION2";
 mmu_armv83.vAddr     = 0x80000000;
 mmu_armv83.pAddr     = 0x80000000;
-mmu_armv83.size      = 0x80000000;
 mmu_armv83.attribute = "MAIR7";
+mmu_armv83.size      = 0x2000000;
+mmu_armv83.$name     = "DDR_REGION";
+
+mmu_armv84.$name     = "AMP_SHM";
+mmu_armv84.vAddr     = 0x99000000;
+mmu_armv84.pAddr     = 0x99000000;
+mmu_armv84.size      = 0x4000;
+mmu_armv84.attribute = "MAIR7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";

@@ -44,6 +44,7 @@ This example just does driver and board initialization and prints the string, He
  ^              | a53ss0-0 nortos
  ^              | a53ss0-0 freertos
  ^              | a53ss0-0 freertos-smp
+ ^              | a53ss0-1 freertos
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
@@ -77,3 +78,13 @@ Shown below is a sample output when the application is run,
 \code
 Hello World!
 \endcode
+\cond SOC_AM64X
+**a53 core0:** on UART0(/dev/ttyUSB0)
+\code
+Hello World from a53_core0!
+\endcode
+**a53 core1:** on UART1(/dev/ttyUSB2)
+\code
+Hello World from a53_core1!
+\endcode
+\endcond

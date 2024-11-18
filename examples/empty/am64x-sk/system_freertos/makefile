@@ -24,10 +24,8 @@ CORE_1=--script ../r5fss0-1_freertos/example.syscfg --context r5fss0-1 --output 
 CORE_2=--script ../r5fss1-0_freertos/example.syscfg --context r5fss1-0 --output ../r5fss1-0_freertos/ti-arm-clang/generated
 CORE_3=--script ../r5fss1-1_freertos/example.syscfg --context r5fss1-1 --output ../r5fss1-1_freertos/ti-arm-clang/generated
 CORE_4=--script ../m4fss0-0_freertos/example.syscfg --context m4fss0-0 --output ../m4fss0-0_freertos/ti-arm-clang/generated
-CORE_5=--script ../a53ss0-0_freertos/example.syscfg --context a53ss0-0 --output ../a53ss0-0_freertos/gcc-aarch64/generated
 
 CORES = \
-    $(CORE_5) \
     $(CORE_4) \
     $(CORE_3) \
     $(CORE_2) \
@@ -40,7 +38,6 @@ COREXMLS = \
 	../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
 	../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
 	../m4fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
-	../a53ss0-0_freertos/gcc-aarch64/empty.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -52,7 +49,6 @@ corebuild: syscfg
 	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
-	$(MAKE) -C ../a53ss0-0_freertos/gcc-aarch64/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 
 
 postBuild: corebuild
@@ -68,7 +64,6 @@ clean:
 	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ clean
-	$(MAKE) -C ../a53ss0-0_freertos/gcc-aarch64/ clean
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
@@ -79,7 +74,6 @@ scrub:
 	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ scrub
 	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ scrub
 	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ scrub
-	$(MAKE) -C ../a53ss0-0_freertos/gcc-aarch64/ scrub
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
@@ -135,7 +129,6 @@ MULTI_CORE_APP_PARAMS = \
     ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
     ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
     ../m4fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
-    ../a53ss0-0_freertos/gcc-aarch64/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_a53ss0-0) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
     ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
@@ -143,7 +136,6 @@ MULTI_CORE_APP_PARAMS_XIP = \
     ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
     ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
     ../m4fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
-    ../a53ss0-0_freertos/gcc-aarch64/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_a53ss0-0) \
 
 MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
     ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
@@ -151,7 +143,6 @@ MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
     ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
     ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
     ../m4fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
-    ../a53ss0-0_freertos/gcc-aarch64/empty.$(PROFILE).rprc \
 
 $(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
 

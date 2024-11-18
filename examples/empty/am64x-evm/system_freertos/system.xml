@@ -15,9 +15,6 @@
     <project configuration="@match" id="project_4" name="empty_am64x-evm_m4fss0-0_freertos_ti-arm-clang">
     </project>
     <core id="Cortex_M4F_0" project="project_4"/>
-    <project configuration="@match" id="project_5" name="empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64">
-    </project>
-    <core id="CortexA53_0" project="project_5"/>
 	<preBuildSteps>
 	</preBuildSteps>
     <postBuildSteps>

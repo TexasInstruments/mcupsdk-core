@@ -58,6 +58,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DAMP_FREERTOS_A53 \
 
 CFLAGS_common := \
 	-mcpu=cortex-a53+fp+simd \

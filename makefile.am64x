@@ -480,6 +480,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am64x-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am64x-evm/a53ss0-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am64x-sk/a53ss0-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -494,6 +498,8 @@ help:
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/a53ss0-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/a53ss0-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1574,6 +1580,10 @@ BUILD_COMBO_EXAMPLE_ALL += watchdog_interrupt_am64x-sk_a53ss0-0_nortos_gcc-aarch
 BUILD_COMBO_EXAMPLE_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -1588,6 +1598,8 @@ BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-sk_a53ss0-0_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am64x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -2836,6 +2848,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
 
+ empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile all
+
+ empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile all
+
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2877,6 +2901,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64:
 	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile all
+
+ hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/hello_world/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile all
+
+ hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile all
 
  hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/hello_world_cpp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3711,6 +3741,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += watchdog_interrupt_am64x-sk_a53ss0-0_nortos_gcc
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -3725,6 +3759,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -4968,6 +5004,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
 
+ empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile clean
+
+ empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile clean
+
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -5009,6 +5057,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_clean:
 	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile clean
+
+ hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/hello_world/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile clean
+
+ hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile clean
 
  hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world_cpp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5843,6 +5897,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += watchdog_interrupt_am64x-sk_a53ss0-0_nortos_gcc
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -5857,6 +5915,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -7100,6 +7160,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mcspi_loopback_turbo_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
 
+ empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ empty_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ empty_am64x-evm_a53ss0-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/empty/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile scrub
+
+ empty_am64x-sk_a53ss0-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/empty/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile scrub
+
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -7141,6 +7213,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  hello_world_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_scrub:
 	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile scrub
+
+ hello_world_am64x-evm_a53ss0-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/hello_world/am64x-evm/a53ss0-1_freertos/gcc-aarch64 -f makefile scrub
+
+ hello_world_am64x-sk_a53ss0-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/hello_world/am64x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile scrub
 
  hello_world_cpp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world_cpp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
