@@ -32,7 +32,9 @@ See also :\ref ENET_CPSW_TSN_GPTP
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+  ^             | a53ss0-0_freertos
  Toolchain      | ti-arm-clang
+ ^              | gcc-arch64
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
