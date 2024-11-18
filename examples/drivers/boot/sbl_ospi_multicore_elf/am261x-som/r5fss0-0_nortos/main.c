@@ -45,7 +45,17 @@ extern HsmClient_t gHSMClient ;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
+/**
+ * @brief Reset that flash to start from known default state.
+ * 
+ * @param oHandle OSPI handle
+ */
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
+
+/**
+ * @brief Does the actual reset of the flash on board
+ * 
+ */
 void gpio_flash_reset(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
@@ -68,22 +78,18 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-
 int main(void)
 {
     int32_t status;
-
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
     Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
-
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
-
-    DebugP_log("\r\n");
+    
     // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
@@ -91,16 +97,15 @@ int main(void)
     // status = Keyring_init(&gHSMClient);
     // DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("Starting OSPI Bootloader ... \r\n");
-
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
-    DebugP_assert(status == SystemP_SUCCESS);
-
+    DebugP_assert(status == SystemP_SUCCESS); 
     Bootloader_profileAddProfilePoint("Board_driversOpen");
+
+    DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
 
     if (SystemP_SUCCESS == status)
     {
@@ -115,12 +120,8 @@ int main(void)
 
         if (bootHandle != NULL)
         {
-
-
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
-
             Bootloader_profileAddProfilePoint("CPU load");
-
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
 
             if (status == SystemP_SUCCESS)
