@@ -39,6 +39,7 @@
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
 
+
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
@@ -129,7 +130,7 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
                 status = Bootloader_initCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
 
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID) {
+				if ((status == SystemP_SUCCESS) && (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].rprcOffset != BOOTLOADER_INVALID_ID)) {
 					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
 				}
             }

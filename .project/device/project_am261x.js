@@ -85,6 +85,7 @@ const example_file_list = [
 	"examples/drivers/boot/sbl_ospi/.project/project.js",
     // "examples/drivers/boot/sbl_ospi_fastboot/.project/project.js",
 	"examples/drivers/boot/sbl_ospi_multicore_elf/.project/project.js",
+    // "examples/drivers/boot/sbl_ospi_swap/.project/project.js",
 	"examples/drivers/boot/sbl_uart/.project/project.js",
 	"examples/drivers/boot/sbl_uart_multicore_elf/.project/project.js",
 	"examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
