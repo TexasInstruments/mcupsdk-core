@@ -376,7 +376,7 @@ const example_file_list = [
 	// "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
 	// "test/sdl/stog/stog_func_test/.project/project.js",
 	// "test/sdl/stog/stog_unit_test/.project/project.js",
-	// "test/sdl/utils/.project/project.js",
+	"test/sdl/utils/.project/project.js",
 	"test/security/crypto/test_dthe_aes_cbc/.project/project.js",
 	"test/security/crypto/test_dthe_aes_cbc_stream/.project/project.js",
 	"test/security/crypto/test_dthe_aes_cfb/.project/project.js",
