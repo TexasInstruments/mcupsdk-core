@@ -38,6 +38,8 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <drivers/bootloader/bootloader_elf.h>
+
 
 #define MAX_HSMRT_SIZE_IN_BYTES (248 * 1024U)
 
@@ -131,7 +133,7 @@ int main(void)
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+    // Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
 
     /* 
         Keyring init
