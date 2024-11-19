@@ -411,21 +411,53 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   }
   else {
     unsigned int count = prec;
+    unsigned int omit_trailing_zeros = 1U;
+    unsigned int print_digit = 1U;
+    char temp_buf;
+
     // now do fractional part, as an unsigned number
     while (len < PRINTF_FTOA_BUFFER_SIZE) {
       --count;
-      buf[len++] = (char)(48U + (frac % 10U));
+      temp_buf = (char)(48U + (frac % 10U));
+
+      if ((flags & FLAGS_ADAPT_EXP) && !(flags & FLAGS_HASH)) {
+        if(omit_trailing_zeros) {
+          if(temp_buf == '0') {
+              // Do nothing, omitting the trailing zero
+              print_digit = 0;
+          }
+          else {
+            omit_trailing_zeros = 0U;
+            print_digit = 1;
+          }
+        }
+      }
+
+      if(print_digit) {
+        buf[len++] = temp_buf;
+      }
       if (!(frac /= 10U)) {
         break;
       }
     }
-    // add extra 0s
-    while ((len < PRINTF_FTOA_BUFFER_SIZE) && (count-- > 0U)) {
-      buf[len++] = '0';
+
+    if ((flags & FLAGS_ADAPT_EXP) && !(flags & FLAGS_HASH) && (omit_trailing_zeros)) {
+      // Do not add extra zeros
+    }
+    else {
+      // add extra 0s
+      while ((len < PRINTF_FTOA_BUFFER_SIZE) && (count-- > 0U)) {
+        buf[len++] = '0';
+      }
     }
     if (len < PRINTF_FTOA_BUFFER_SIZE) {
-      // add decimal
-      buf[len++] = '.';
+      if ((flags & FLAGS_ADAPT_EXP) && !(flags & FLAGS_HASH) && (omit_trailing_zeros)) {
+      // Do not add extra zeros
+      }
+      else {
+        // add decimal
+        buf[len++] = '.';
+      }
     }
   }
 
@@ -468,7 +500,7 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
   // check for NaN and special values
-  if ((value != value) || (value > DBL_MAX) || (value < -DBL_MAX)) {
+  if ((value != value) || (value > DBL_MAX) || (value < -DBL_MAX) || (!(value) && (flags & FLAGS_ADAPT_EXP))) {
     return _ftoa(out, buffer, idx, maxlen, value, prec, width, flags);
   }
 
@@ -508,6 +540,10 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
     conv.F /= 10;
   }
 
+  /* if value is zero exponent value should be zero */
+  if(!(value)){
+    expval = 0;
+  }
   // the exponent format is "%+03d" and largest value is "307", so set aside 4-5 characters
   unsigned int minwidth = ((expval < 100) && (expval > -100)) ? 4U : 5U;
 
@@ -555,7 +591,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 
   // output the floating part
   const size_t start_idx = idx;
-  idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags & ~FLAGS_ADAPT_EXP);
+  idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags);
 
   // output the exponent part
   if (minwidth) {
