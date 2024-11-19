@@ -114,8 +114,6 @@
     #define portYIELD_FROM_ISR( x )    vPortYeildFromISR( x )
     #define portEND_SWITCHING_ISR( x ) vPortYeildFromISR( x )
     #define portYIELD()                __asm__ volatile ( "SWI 0" ::: "memory" )
-    extern uint32_t ulPortInterruptNesting;
-    #define portASSERT_IF_IN_ISR() configASSERT( ulPortInterruptNesting == 0 )
 
 /* Critical section control */
     #define portCRITICAL_NESTING_IN_TCB					(1)
