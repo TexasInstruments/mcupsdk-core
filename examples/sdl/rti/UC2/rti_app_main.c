@@ -136,16 +136,16 @@ static int32_t Sdl_Module_clockSetFrequency()
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000005u, 0x00000000u,
                 0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
         *   and PCIE events */
         /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000005u, 0x00000000u,
                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000005u, 0x00000000u,
                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */

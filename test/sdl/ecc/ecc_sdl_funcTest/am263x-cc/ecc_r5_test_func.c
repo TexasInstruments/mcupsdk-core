@@ -55,7 +55,11 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined (R5F0_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#endif
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -70,7 +74,7 @@
 static int32_t ECC_funcAPITest(void)
 {
     int32_t testStatus = SDL_APP_TEST_PASS;
-	
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_configECCRam(SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID) != SDL_PASS)
@@ -132,7 +136,7 @@ static int32_t ECC_funcAPITest(void)
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {							
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -152,7 +156,7 @@ static int32_t ECC_funcAPITest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -162,7 +166,7 @@ static int32_t ECC_funcAPITest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -172,7 +176,7 @@ static int32_t ECC_funcAPITest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;

@@ -316,9 +316,18 @@ int32_t SDL_RTI_funcTest(void)
 static void IntrDisable(uint32_t intsrc)
 {
     uint32_t intrStatus;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
+#elif defined (SOC_AM263X)
+#if defined (R5F0_INPUTS)
+    SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
+#endif
+#if defined (R5F1_INPUTS)
+    SDL_RTI_getStatus(SDL_INSTANCE_WDT2, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_WDT2, intrStatus);
+#endif
 #elif defined (R5F_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_MSS_WDT, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_MSS_WDT, intrStatus);

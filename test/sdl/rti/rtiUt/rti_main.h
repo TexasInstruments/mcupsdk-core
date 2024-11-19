@@ -55,8 +55,15 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
+#endif
+#if defined(SOC_AM263X)
+#if defined (R5F0_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
+#elif defined(R5F1_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT2
+#endif
 #endif
 #if defined(R5F_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MSS_WDT

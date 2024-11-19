@@ -14,9 +14,32 @@ LIBNAME:=sdl.am263x.r5fss1.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     sdl_dpl.c \
+    sdl_ip_esm.c \
+    sdl_esm.c \
+    sdl_esm_core.c \
+    sdl_esm_priv.c \
+    sdl_dcc.c \
+    sdl_mcrc.c \
+    sdl_ip_mcrc.c \
+    sdl_mcrc_soc.c \
+    sdl_rti.c \
+    sdl_ip_rti.c \
+    sdl_soc_rti.c \
+    sdl_ecc.c \
+    sdl_ip_ecc.c \
+    sdl_ecc_r5.c \
+    sdl_interrupt.c \
+    sdl_interrupt_handlers.c \
+    sdl_interrupt_register.c \
+    sdl_exception.c \
     sdl_ip_pbist.c \
     sdl_pbist_soc.c \
     sdl_pbist.c \
+    sdl_ecc_bus_safety.c \
+    sdl_ccm.c \
+    sdl_mcu_armss_ccmr5.c \
+    sdl_stc_soc.c \
+    sdl_r5f_utils.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -60,6 +83,7 @@ INCLUDES_common := \
 DEFINES_common := \
     -DSOC_AM263X \
     -DSUBSYS_R5SS1 \
+    -DSUBSYS_MSS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

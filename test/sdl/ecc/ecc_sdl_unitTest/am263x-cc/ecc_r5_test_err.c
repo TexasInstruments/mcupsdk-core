@@ -54,7 +54,11 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined (R5F0_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -92,7 +96,7 @@ static int32_t ECC_errNegativeTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     { 
             /*  SDL_ECC_EVENT_FOUND = 1U*/
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, 100U, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, 100U, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) == 1U)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -101,7 +105,7 @@ static int32_t ECC_errNegativeTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
             /*  SDL_ECC_EVENT_FOUND = 1U*/
-        if (SDL_ECC_pollErrorEvent(SDL_R5FSS0_CORE0_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID, \
+        if (SDL_ECC_pollErrorEvent(SDL_EXAMPLE_ECC_AGGR, SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID, \
                                    	SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT) == 1U)
         {
             testStatus = SDL_APP_TEST_FAILED;

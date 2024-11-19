@@ -96,8 +96,16 @@
 
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00000510u) /* R5F ATCM0 RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID
+#if defined (SOC_AM263PX) || defined (SOC_AM261X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#elif defined (SOC_AM263X)
+#if defined (R5F0_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#endif
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -196,16 +204,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x01818000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x01010000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x01818000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */

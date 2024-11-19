@@ -56,9 +56,19 @@
 #define SDL_RTI_BASE SDL_RTI8_CFG_BASE
 #endif
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
+#endif
+#if defined (SOC_AM263X)
+#if defined (R5F0_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
+#define SDL_RTI_BASE SDL_WDT0_U_BASE
+#endif
+#if defined (R5F1_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT2
+#define SDL_RTI_BASE SDL_WDT2_U_BASE
+#endif
 #endif
 /* MSS Instance for AM273x and AWR294X*/
 #if defined (R5F_INPUTS)

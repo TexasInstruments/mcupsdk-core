@@ -59,11 +59,25 @@
 #define MCRC_DMCH_VALUE1 EDMA_DSS_TPCC_A_EVT_MCRC_DMA_REQ1
 #endif
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
 #define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1
 #define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_2
 #define MCRC_DMCH_VALUE3 DMA_TRIG_XBAR_EDMA_MODULE_3
+#endif
+#if defined(SOC_AM263X) 
+#if defined(R5F0_INPUTS)
+#define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
+#define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1
+#define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_2
+#define MCRC_DMCH_VALUE3 DMA_TRIG_XBAR_EDMA_MODULE_3
+#endif
+#if defined(R5F1_INPUTS)
+#define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_48
+#define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_49
+#define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_50
+#define MCRC_DMCH_VALUE3 DMA_TRIG_XBAR_EDMA_MODULE_51
+#endif
 #endif
 
 /* Value for A count*/
@@ -174,6 +188,39 @@ static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
     },
 #endif
 };
+ static SDL_MCRC_Config_t SDL_MCRC_Config[MCRC_USECASES] =
+ {
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+      {
+          SDL_MCRC_CTRL0_CH1_CRC_SEL_64BIT,
+          SDL_MCRC_DATALENGTH_32BIT,
+          SDL_MCRC_DATA_32_BIT,
+          SDL_MCRC_BITSWAP_MSB,
+          SDL_MCRC_BYTESWAP_ENABLE
+      },
+#endif
+ };
 /*===========================================================================*/
 /*                   Function definitions                              */
 /*===========================================================================*/
@@ -242,7 +289,7 @@ int32_t mcrcAutoCPU_main(void)
 			SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 
 			/* Configure CRC channel */
-			SDL_MCRC_configCRCType(instance, mcrcChannel);
+			SDL_MCRC_addConfig(testparams[testCase].instance,testparams[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 			SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, SDL_MCRC_OPERATION_MODE_FULLCPU);
 
 			/* Get CRC PSA signature register address */
@@ -284,7 +331,7 @@ int32_t mcrcAutoCPU_main(void)
 		    /* Reset the CRC channel*/
 		    SDL_MCRC_channelReset(instance, mcrcChannel);
 		    SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, testparams[testCase].mcrcMode);
-		    SDL_MCRC_configCRCType(instance, mcrcChannel);
+		    SDL_MCRC_addConfig(testparams[testCase].instance,testparams[testCase].mcrcChannelNumber,&SDL_MCRC_Config[testCase]);
 
 		    SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
 		    SDL_MCRC_getCRCRegAddr(instance, mcrcChannel, &crcRegAddr);

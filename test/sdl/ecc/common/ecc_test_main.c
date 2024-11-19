@@ -85,6 +85,11 @@
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
 
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D180D4u)
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D180D8u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D180C4u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D180C8u)
+
 #define SDL_CLEAR_STATUS									(0xffu)
 
 #define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS    				(0x02F7B840u)
@@ -155,7 +160,7 @@ void tearDown(void)
 }
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -216,6 +221,129 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 			eccmemtype = 1U;
 			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 		}
+        /* Any additional customer specific actions can be added here */
+        retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+        printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+                   "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+                   eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+                   (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+        if (eccErrorInfo.injectBitErrCnt != 0)
+        {
+            SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+        }
+        else
+        {
+            SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+        }
+
+        retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+    }
+
+    gMsmcMemParityInterrupt = true;
+
+    return retVal;
+}
+
+#endif
+
+#if defined (SOC_AM263X)
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+	uint32_t rd_data =0U;
+
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf("\r\nTake action \r\n");
+    if(esmIntrType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    }
+    retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
+#if defined (R5F0_INPUTS)
+	if(((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
+       (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR)) && ((intSrc != 0x33) && (intSrc != 0x35)))
+    {
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+#elif defined (R5F1_INPUTS)
+	if(((eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) ||
+       (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS1_CORE0_ECC_AGGR)) && ((intSrc != 0x3B) && (intSrc != 0x3D)))
+    {
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+#endif
+    else
+    {
+    #if defined (R5F0_INPUTS)
+		if(intSrc == 0x33U)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
+		}
+		if(intSrc == 0x35U)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
+		}
+    #elif defined (R5F1_INPUTS)
+		if(intSrc == 0x3BU)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
+		}
+		if(intSrc == 0x3DU)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
+		}
+    #endif
         /* Any additional customer specific actions can be added here */
         retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 

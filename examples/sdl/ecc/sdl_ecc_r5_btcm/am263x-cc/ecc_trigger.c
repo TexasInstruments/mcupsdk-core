@@ -73,26 +73,46 @@
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #if SDL_B0TCM0_BANK0
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080000u) /* R5F B0TCM Bank 0 RAM address */
+#if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID
+#endif
 #endif
 
 #if SDL_B0TCM0_BANK1
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080004u) /* R5F B0TCM Bank 1 RAM address */
+#if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID
+#endif
 #endif
 
 #if SDL_B1TCM0_BANK0
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080008u) /* R5F B1TCM Bank 0 RAM address */
+#if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID
+#endif
 #endif
 
 #if SDL_B1TCM0_BANK1
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x0008000cu) /* R5F B1TCM Bank 1 RAM address */
+#if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
+#endif
 #endif
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -169,16 +189,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
      .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+     .enableBitmap = {0x00000000u, 0x01818000u, 0x00000000u, 0x00000000u,
                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
       /**< All events enable: except clkstop events for unused clocks
        *   and PCIE events */
        /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+     .priorityBitmap = {0x00000000u, 0x01010000u, 0x00000000u, 0x00000000u,
                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
      /**< All events high priority: except clkstop events for unused clocks
       *   and PCIE events */
-     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+     .errorpinBitmap = {0x00000000u, 0x01818000u, 0x00000000u, 0x00000000u,
                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
      /**< All events high priority: except clkstop for unused clocks
       *   and PCIE events */

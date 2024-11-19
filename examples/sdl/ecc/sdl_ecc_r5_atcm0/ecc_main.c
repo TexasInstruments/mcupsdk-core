@@ -100,7 +100,7 @@ volatile bool esmError = false;
 /* ========================================================================== */
 /*                 Internal Function Definitions                              */
 /* ========================================================================== */
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -139,6 +139,75 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         SDL_REG32_WR(0x50D18084u, 0x01);
         rd_data = SDL_REG32_RD(0x50D18084u);
         printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+
+    esmError = true;
+
+    return retVal;
+}
+#endif
+
+#if defined(SOC_AM263X)
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+
+    int32_t retVal = 0;
+    uint32_t rd_data = 0;
+
+
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf("\r\nTake action \r\n");
+    if(esmIntrType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    #if defined (R5F0_INPUTS)
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18094u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D18094u);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18098u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D18098u);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #elif defined (R5F1_INPUTS)
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(0x50D180D4u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D180D4u);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D180D8u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D180D8u);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #endif
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    #if defined (R5F0_INPUTS)
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18088u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D18088u);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18084u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D18084u);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #elif defined (R5F1_INPUTS)
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(0x50D180C8u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D180C8u);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D180C4u, 0x01);
+        rd_data = SDL_REG32_RD(0x50D180C4u);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #endif
     }
 
     esmError = true;
