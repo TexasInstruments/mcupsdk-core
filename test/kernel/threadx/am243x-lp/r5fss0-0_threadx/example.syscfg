@@ -8,7 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const threadx         = scripting.addModule("/eclipse_threadx/threadx/threadx");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
