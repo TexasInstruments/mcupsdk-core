@@ -17072,6 +17072,44 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Cpsw Lwip Https Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "cpsw_lwip_https",
+        "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "cpsw_lwip_https",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Cpsw Lwip Mqtt Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_mqtt",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17224,6 +17262,82 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Lwip Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_lwip_cpsw",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_lwip_cpsw",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17246,6 +17360,44 @@
             "lwip",
             "enet_cpsw_tcpserver",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tcpserver Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpserver",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_cpsw_tcpserver",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
@@ -17338,6 +17490,44 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Udpclient Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udpclient",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_cpsw_udpclient",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17360,6 +17550,44 @@
             "lwip",
             "enet_cpsw_udp_igmp",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Udp Igmp Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udp_igmp",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_cpsw_udp_igmp",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
@@ -17414,6 +17642,44 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Tcpclient Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpclient",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_cpsw_tcpclient",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Socket Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_socket",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -17436,6 +17702,44 @@
             "lwip",
             "enet_cpsw_socket",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Socket Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_socket",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_cpsw_socket",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
