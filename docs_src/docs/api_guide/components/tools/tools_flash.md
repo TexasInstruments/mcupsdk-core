@@ -949,7 +949,7 @@ Refer the example \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
 - \ref EXAMPLES_USB_DFU
 \endcond
 
-\cond SOC_AWR294X
+\cond SOC_AWR294X || SOC_AM263X
 
 ## ENET Uniflash {#TOOLS_FLASH_ENET_UNIFLASH}
 
