@@ -158,8 +158,9 @@ void FOTA_GetFlashStatusSTIG();
  * @brief  Polling flash flag_reg to deteremine if it is busy.
  * 
  * @param delay amount of delay to wait
+ * @param loop_count number of times to poll 
  */
-void FOTA_WaitFlashBusy(uint16_t delay);
+void FOTA_WaitFlashBusy(uint16_t delay, uint16_t loop_count)
 
 /**
  * @brief This function will erase the flash sector

@@ -47,8 +47,8 @@
 #define FOTA_STIG_GET_RXBUFF_LOW (0x0902U)
 #define FOTA_STIG_GET_RXBUFF_HIGH (0x0A02U)
 
-#define FOTA_IS25LX064_READ_OPCODE (0x7CU)
-#define FOTA_IS25LX064_READ_EXOPCODE (0x7CU)
+#define FOTA_IS25LX064_READ_OPCODE (0xCCU)
+#define FOTA_IS25LX064_READ_EXOPCODE (0xCCU)
 #define FOTA_IS25LX064_READ_DUMMYCYCLE (16U)
 #define FOTA_IS25LX064_ADDRESS_SIZE (4U)
 
@@ -173,7 +173,7 @@ int32_t FLSOPSKD_Write(FLSOPSKD_handle *pHandle, uint32_t destAddr, uint8_t *pSr
                     ;
             }
             bytesWritten += flash_page_size;
-        } while (bytesWritten <= wrSize);
+        } while (bytesWritten < wrSize);
         status = SystemP_SUCCESS;
     }
 
@@ -306,32 +306,6 @@ int32_t FLSOPSKD_STIG(
         }
 
         status = SystemP_SUCCESS;
-    }
-
-    return (status);
-}
-
-int32_t FLSOPSKD_STIGRead(FLSOPSKD_handle *pHandle, uint32_t srcAddress, uint8_t *destArry, size_t bytesToRead)
-{
-    const uint8_t readChunkSize = 8;
-    int status = SystemP_FAILURE;
-
-    if ((NULL != pHandle) && (NULL != destArry))
-    {
-        size_t bytesRead = 0;
-        do
-        {
-            FLSOPSKD_STIG(
-                pHandle,
-                FOTA_IS25LX064_READ_OPCODE,
-                FOTA_IS25LX064_READ_EXOPCODE,
-                FOTA_IS25LX064_READ_DUMMYCYCLE,
-                FOTA_IS25LX064_ADDRESS_SIZE,
-                srcAddress + bytesRead,
-                readChunkSize,
-                destArry + bytesRead, 0, NULL);
-            bytesRead += readChunkSize;
-        } while (bytesRead < bytesToRead);
     }
 
     return (status);
