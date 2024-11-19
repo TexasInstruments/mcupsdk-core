@@ -125,6 +125,11 @@ FILES_`prop` := \
 	ti_enet_lwipif.c \
 			 % }
 		% }
+        % for(val of args.project.libs["common"]){
+            % if (val.startsWith("netx")) {
+    ti_enet_netxduo.c \
+             % }
+        % }
 
 	% }
 % }
@@ -418,6 +423,11 @@ SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
 		 % }
 	% }
+% for(val of args.project.libs["common"]){
+    % if (val.startsWith("netx")) {
+SYSCFG_GEN_FILES+=generated/ti_enet_netxduo.c generated/ti_enet_netxduo.h
+         % }
+    % }
 % }
 % if (args.project.device == "am243x" && ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) && (args.project.lnkpreprocessor_gcc != undefined)) {
 $(LNK_FILES_common): $(LNK_FILES_PREPROCESSOR_common)
