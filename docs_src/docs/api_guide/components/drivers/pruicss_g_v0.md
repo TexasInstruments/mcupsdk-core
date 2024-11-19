@@ -124,6 +124,107 @@ Instance Open Example
 Sequence for loading a firmware on PRU and running the PRU core
 \snippet Pruicss_sample_g_v0.c pruicss_run_firmware
 
+## PRUICSS ENET Driver
+
+The ICSSG can be used as a generic Layer 2 Ethernet Switch or Dual Mac. The Ethernet Low Level Driver (Enet-LLD) APIs can be used to realize this networking capability using the ICSSG sub-system.
+
+\ref enetlld_top
+
+### ENET ICSSG Examples
+\ref EXAMPLES_ENET_LAYER2_ICSSG  
+\ref EXAMPLES_ENET_ICSSG_LOOPBACK  
+\ref EXAMPLES_ENET_LWIP_ICSSG | \ref EXAMPLES_ENET_LWIP_ICSSG_TCPSERVER  
+\ref EXAMPLES_ENET_VLAN_ICSSG  
+\ref EXAMPLES_ENET_ICSSG_TAS  
+\ref EXAMPLES_ENET_ICSSG_TSN_GPTP_TR | \ref EXAMPLES_ENET_ICSSG_TSN_GPTP_TT | \ref EXAMPLES_ENET_ICSSG_TSN_GPTP_BRIDGE | \ref EXAMPLES_ENET_ICSSG_TSN_LWIP_GPTP  
+
+### Queue Usage
+The ICSSG Queues used for packet content buffering are elaborated here:  
+File : {Any of above ENET ICSSG examples} CCS Project > Generated Source > SysConfig > ti_enet_soc.c 
+
+ICSSG_SWITCH_PORT_POOL_SIZE :
+- Buffer for the purpose of Forwarding of Frames from Port A to Port B.
+- Size: Configurable ( By default 6KB)
+- Totally 8 such pools are allocated for each of the QoS levels.
+
+ICSSG_SWITCH_HOST_POOL_SIZE:
+- Buffer for the purpose of transmitting frames from the host to Port A or/and Port B.
+- Size: Configurable ( By default 6KB for 1Gbps Support and 3KB for 100Mbps Support)
+- Totally 'n' such pools are allocated for each of the "QoS  Level" configured via SysConfig for each of the ports.
+
+ICSSG_SWITCH_HOST_QUEUE_SIZE:
+- Buffer for the purpose of reception of frames from the Port A or/and Port B to the host.
+- Size: Configurable ( By default 8KB for 1Gbps Support and 5KB for 100Mbps sSupport)
+- Totally 2 such pools are allocated for each of the ports.
+
+#### To reduce number of Pools
+
+ICSSG_SWITCH_PORT_BUFFER_POOL_NUM:  The number of ICSSG Port buffer pools is by default defined as 8 (max) to provide a unique Pool for upto 8 QoS levels.
+
+This number can be reduced as per the requirement of the user application, for example 'n' (n = 1 to 8). However, care must be taken to ensure all priorities (PCPs), in case of VLAN-tagging, are mapped to only those 0 to n-1 Queues.
+
+This can be done by using the IOCTL: ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP 
+
+For Example if setting ICSSG_SWITCH_PORT_BUFFER_POOL_NUM = 3, Then the available pools will only be 0 ,1, 2.
+Hence, all the traffic must be directed to only these queues 0 to 2 by using the above IOCTL. Type of mapping is left to the user.
+
+This PCP to Queue mapping can be done via the input argument of the IOCTL ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP.  
+`uint32_t EnetPort_PriorityMap::priorityMap[ENET_PRI_NUM]` , where the array index corresponds to the PCP and the value holds the mapped Queue value 
+
+<table>
+<tr>
+  <th>PCP(Index)
+  <th>Queue Number = priorityMap[pcp]
+<tr>
+  <td>0
+  <td>0
+<tr>
+  <td>1
+  <td>0
+<tr>
+  <td>2
+  <td>0
+<tr>
+  <td>3
+  <td>1
+<tr>
+  <td>4
+  <td>1
+<tr>
+  <td>5
+  <td>2
+<tr>
+  <td>6
+  <td>2
+<tr>
+  <td>7
+  <td>2
+</table>
+
+Sample IOCTL usage: ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP
+
+```c
+/* Mapping the PCP to Queue*/   
+EnetMacPort_SetEgressPriorityMapInArgs SetEgressPriorityMapInArgs;
+EnetPort_PriorityMap PriorityMap;          
+PriorityMap.priorityMap[0] = 0;
+PriorityMap.priorityMap[1] = 0;
+PriorityMap.priorityMap[2] = 0;
+PriorityMap.priorityMap[3] = 1;
+PriorityMap.priorityMap[4] = 1;
+PriorityMap.priorityMap[5] = 2;
+PriorityMap.priorityMap[6] = 2;
+PriorityMap.priorityMap[7] = 2;
+
+SetEgressPriorityMapInArgs.macPort = macPortList[i];
+SetEgressPriorityMapInArgs.priorityMap = PriorityMap;
+ENET_IOCTL_SET_IN_ARGS(&prms, &SetEgressPriorityMapInArgs);
+ENET_IOCTL(hEnet, coreId, ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP, &prms, status);
+if (status != ENET_SOK)
+{
+    EnetAppUtils_print("EnetApp_enablePorts() failed to set PCP to Q map: %d\r\n", status);
+}
+```
 ## API
 
 \ref DRV_PRUICSS_MODULE
