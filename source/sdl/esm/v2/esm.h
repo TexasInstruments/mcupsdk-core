@@ -213,7 +213,6 @@ typedef struct esmGroupIntrStatus
  * \brief  ESM Error Group static registers list.
  */
 typedef struct {
-    volatile uint32_t RAW;                       /* Config Error Raw Status/Set Register */
     volatile uint32_t INTR_EN_SET;               /* Level Error Interrutp Enable Set Register */
     volatile uint32_t INTR_EN_CLR;               /* Level Error Interrupt Enabled Clear Register */
     volatile uint32_t INT_PRIO;                  /* Level Error Interrupt Enabled Clear Register */
@@ -229,12 +228,8 @@ typedef struct {
     volatile uint32_t PID;                       /* Revision Register */
     volatile uint32_t INFO;                      /* Info Register */
     volatile uint32_t EN;                        /* Global Enable Register */
-    volatile uint32_t ERR_EN_SET;                /* Config Error Interrutp Enable Set Register */
-    volatile uint32_t ERR_EN_CLR;                /* Config Error Interrupt Enabled Clear Register */
-    volatile uint32_t LOW_PRI;                   /* Low Priority Prioritized Register */
-    volatile uint32_t HI_PRI;                    /* High Priority Prioritized Register */
-    volatile uint32_t LOW;                       /* Low Priority Interrupt Status Register */
-    volatile uint32_t HI;                        /* High Priority Interrupt Status Register */
+    volatile uint32_t ERR_EN_SET;                /* Config Error Interrupt Enable Set Register */
+    volatile uint32_t ERR_EN_CLR;                /* Config Error Interrupt Enable Clear Register */
     volatile uint32_t PIN_CTRL;                  /* Error Pin Control Register */
     volatile uint32_t PIN_CNTR_PRE;              /* Error Counter Value Pre-Load Register */
     volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */

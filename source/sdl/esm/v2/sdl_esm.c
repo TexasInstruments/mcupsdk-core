@@ -122,10 +122,6 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
                 pStaticRegs->EN            = esmRegs->EN;
                 pStaticRegs->ERR_EN_SET    = esmRegs->ERR_EN_SET;
                 pStaticRegs->ERR_EN_CLR    = esmRegs->ERR_EN_CLR;
-                pStaticRegs->LOW_PRI       = esmRegs->LOW_PRI;
-                pStaticRegs->HI_PRI        = esmRegs->HI_PRI;
-                pStaticRegs->LOW           = esmRegs->LOW;
-                pStaticRegs->HI            = esmRegs->HI;
                 pStaticRegs->PIN_CTRL      = esmRegs->PIN_CTRL;
                 pStaticRegs->PIN_CNTR_PRE  = esmRegs->PIN_CNTR_PRE;
                 pStaticRegs->PWMH_PIN_CNTR_PRE          = esmRegs->PWMH_PIN_CNTR_PRE;
@@ -135,7 +131,6 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
 
                 for (i = ((uint32_t) (0u)); i < ESM_NUMBER_OF_GROUP_REGS; i++)
                 {
-                    pStaticRegs->ERR_GRP[i].RAW  = esmRegs->ERR_GRP[i].RAW;
                     pStaticRegs->ERR_GRP[i].INTR_EN_SET  = esmRegs->ERR_GRP[i].INTR_EN_SET;
                     pStaticRegs->ERR_GRP[i].INTR_EN_CLR  = esmRegs->ERR_GRP[i].INTR_EN_CLR;
                     pStaticRegs->ERR_GRP[i].INT_PRIO    = esmRegs->ERR_GRP[i].INT_PRIO;
@@ -200,17 +195,19 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pConfi
 
                 if (intStatus == enableWr)
                 {
-                    intrPriorityLvlWr = ((pConfig->priorityBitmap[i]
-                                                                  & (((uint32_t)1u)<<j)) != 0u)?1u:0u;
-                    (void)SDL_ESM_getIntrPriorityLvl(esmInstBaseAddr,
-                                                        intNum,
-                                                        &intrPriorityLvlRd);
-
-                    if (intrPriorityLvlWr != intrPriorityLvlRd)
+                    if (enableWr == 1U)
                     {
-                        SDLRet = SDL_EFAIL;
-                    }
+                        intrPriorityLvlWr = ((pConfig->priorityBitmap[i]
+                                                  & (((uint32_t)1u)<<j)) != 0u)?1u:0u;
+                        (void)SDL_ESM_getIntrPriorityLvl(esmInstBaseAddr,
+                                                         intNum,
+                                                         &intrPriorityLvlRd);
 
+                        if (intrPriorityLvlWr != intrPriorityLvlRd)
+                        {
+                            SDLRet = SDL_EFAIL;
+                        }
+                    }
                 }
                 else
                 {
