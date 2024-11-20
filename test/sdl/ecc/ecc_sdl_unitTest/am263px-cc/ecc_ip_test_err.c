@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,7 +54,11 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined (R5F0_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS0_CORE0_U_BASE
+#elif defined (R5F1_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS1_CORE0_U_BASE
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -69,7 +73,7 @@
 
 static int32_t ECC_errNegativeTest(void)
 {
-    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_R5SS0_CORE0_U_BASE));// R5 core
+    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_U_BASE));// R5 core
     SDL_Ecc_AggrEccRamErrorStatusInfo eccRamErrorStatus;
     SDL_Ecc_AggrErrorInfo eccErrorInfo;
     SDL_ECC_staticRegs eccStaticRegs;

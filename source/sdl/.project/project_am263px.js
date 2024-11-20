@@ -44,14 +44,52 @@ const files_r5f = {
 
 const files_r5fss1 = {
     common: [
-      "sdl_dpl.c",
-      "sdl_ip_pbist.c",
-      "sdl_pbist_soc.c",
-      "sdl_pbist.c",
+        "sdl_dpl.c",
+		"sdl_ip_esm.c",
+        "sdl_esm.c",
+        "sdl_esm_core.c",
+        "sdl_esm_priv.c",
+	    "sdl_dcc.c",
+	    "sdl_mcrc.c",
+	    "sdl_ip_mcrc.c",
+	    "sdl_mcrc_soc.c",
+	    "sdl_rti.c",
+	    "sdl_ip_rti.c",
+	    "sdl_soc_rti.c",
+		"sdl_ecc.c",
+		"sdl_ip_ecc.c",
+		"sdl_ecc_r5.c",
+		"sdl_interrupt.c",
+		"sdl_interrupt_handlers.c",
+		"sdl_interrupt_register.c",
+		"sdl_exception.c",
+        "sdl_ip_pbist.c",
+        "sdl_pbist_soc.c",
+        "sdl_pbist.c",
+        "sdl_ecc_bus_safety.c",
+        "sdl_ccm.c",
+        "sdl_mcu_armss_ccmr5.c",
+        "sdl_stc_soc.c",
+        "sdl_tmu_rom_checksum.c",
+        "sdl_r5f_utils.c",
+        "sdl_ip_tog.c",
+        "sdl_tog.c",
+        "sdl_soc_tog.c",
+        "sdl_ip_vtm.c",
+        "sdl_vtm_pvt_sensor.c",
+        "sdl_vtm.c",
+        "sdl_soc_vtm.c",
     ],
   };
 
 const asmfiles_r5f = {
+    common: [
+		"sdl_ecc_utils.S",
+		"sdl_r5_utils.S",
+	],
+};
+
+const asmfiles_r5fss1 = {
     common: [
 		"sdl_ecc_utils.S",
 		"sdl_r5_utils.S",
@@ -109,10 +147,17 @@ const defines_r5f = {
 const defines_r5fss1 = {
     common: [
         "SUBSYS_R5SS1",
+        "SUBSYS_MSS",
     ],
 };
 
 const cflags_r5f = {
+    common: [
+        "-Wno-extra",
+    ],
+};
+
+const cflags_r5fss1 = {
     common: [
         "-Wno-extra",
     ],
@@ -148,6 +193,8 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5fss1*/)){
         build_property.files = files_r5fss1;
+        build_property.defines = asmfiles_r5fss1;
+        build_property.cflags = cflags_r5fss1;
         build_property.defines = defines_r5fss1;
     }
 

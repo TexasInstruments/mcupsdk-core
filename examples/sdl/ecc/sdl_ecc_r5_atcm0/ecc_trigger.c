@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -97,14 +97,14 @@
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00000510u) /* R5F ATCM0 RAM address */
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID
-#if defined (SOC_AM263PX) || defined (SOC_AM261X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
-#elif defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #elif defined (R5F1_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
 #endif
+#elif defined (SOC_AM261X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #endif
 /* ========================================================================== */
 /*                            Global Variables                                */

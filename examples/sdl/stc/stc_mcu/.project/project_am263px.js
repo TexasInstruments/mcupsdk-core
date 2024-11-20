@@ -41,7 +41,14 @@ const libs_nortos_r5f = {
     ],
 };
 
-
+const libs_nortos_r5fss1 = {
+    common: [
+        "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am263px.r5fss1.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
 
 const includes_nortos = {
     common: [
@@ -73,10 +80,20 @@ const templates_nortos_r5f =
     }
 ];
 
-
+const templates_nortos_r5fss1 =
+[
+    {
+        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "STC_main",
+        },
+    }
+];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos",isPartOfSystemProject: true},
 
 ];
 
@@ -119,10 +136,17 @@ function getComponentBuildProperty(buildOption) {
     build_property.includes = includes_nortos;
 
 
-    if(buildOption.cpu.match(/r5f*/)) {
+    if(buildOption.cpu.match(/r5fss0-0*/)) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+
+        }
+    }
+    if(buildOption.cpu.match(/r5fss1-0*/)) {
+        {
+            build_property.libs = libs_nortos_r5fss1;
+            build_property.templates = templates_nortos_r5fss1;
 
         }
     }

@@ -70,11 +70,11 @@ static uint32_t arg;
 SDL_ESM_config Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x01000000u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x09000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-    .priorityBitmap = {0x00000000u, 0x000000000u, 0x01000000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x000000000u, 0x09000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x01000000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x09000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
 };
 

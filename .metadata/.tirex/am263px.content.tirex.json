@@ -17764,6 +17764,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies DCC in various modes of operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "dcc",
+        "location": "../../examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "dcc",
+            "dcc_modes1",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations in single and double bits for ICSSM CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_icssm",
         "location": "../../examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -17781,6 +17814,39 @@
             "ecc",
             "sdl_ecc_icssm",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for ICSSM CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_icssm",
+        "location": "../../examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_icssm",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -17830,6 +17896,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits forMCAN CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_mcan",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mcan",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations in single and double bits for MSS L2 CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_mss_l2",
         "location": "../../examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -17847,6 +17946,39 @@
             "ecc",
             "sdl_ecc_mss_l2",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for MSS L2 CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_mss_l2",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mss_l2",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -17896,6 +18028,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits for TPTC CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_mss_tptc",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_tptc/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mss_tptc",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations in single and double bits for R5FA ATCM0 CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_r5_atcm0",
         "location": "../../examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -17913,6 +18078,39 @@
             "ecc",
             "sdl_ecc_r5_atcm0",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5FA ATCM0 CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5_atcm0",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5_atcm0",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -17962,6 +18160,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5F BTCM CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5_btcm",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_btcm/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5_btcm",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_pbist_example",
         "location": "../../examples/sdl/pbist/pbist_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -17979,6 +18210,39 @@
             "pbist",
             "pbist_mcu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "pbist_mcu",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18028,6 +18292,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies RTI operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_rti_example_uc1",
+        "location": "../../examples/sdl/rti/UC1/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC1",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc2",
         "location": "../../examples/sdl/rti/UC2/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18045,6 +18342,39 @@
             "rti",
             "UC2",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_rti_example_uc2",
+        "location": "../../examples/sdl/rti/UC2/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC2",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18094,6 +18424,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies RTI operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_rti_example_uc3",
+        "location": "../../examples/sdl/rti/UC3/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC3",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc4",
         "location": "../../examples/sdl/rti/UC4/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18111,6 +18474,39 @@
             "rti",
             "UC4",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_rti_example_uc4",
+        "location": "../../examples/sdl/rti/UC4/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC4",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18160,6 +18556,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "ECC BUS SAFETY Example This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_bus_safety_example",
+        "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc_bus_safety",
+            "ecc_bus_safety_main",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies the operation of CCM module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ccm_example",
         "location": "../../examples/sdl/ccm/sdl_ccm_example/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18177,6 +18606,39 @@
             "ccm",
             "sdl_ccm_example",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM module CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ccm_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_example/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_example",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18226,6 +18688,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies the operation of VIM module CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_vim_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_vim/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_vim",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies the operation of CCM TMU module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ccm_tmu_example",
         "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18243,6 +18738,39 @@
             "ccm",
             "sdl_ccm_tmu_example",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM TMU module CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ccm_tmu_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_tmu_example",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18292,6 +18820,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies the operation of CCM RL2 module CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ccm_rl2_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_rl2_example/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_rl2_example",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies STC is Done for R5F0 core followed by R5F1. CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stc",
         "location": "../../examples/sdl/stc/stc_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18309,6 +18870,39 @@
             "stc",
             "stc_mcu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies STC is Done for R5F0 core followed by R5F1. CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_stc",
+        "location": "../../examples/sdl/stc/stc_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stc",
+            "stc_mcu",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18358,6 +18952,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies MCRC Auto CPU operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_mcrc_auto_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_auto_cpu",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies MCRC Full CPU operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_mcrc_full_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18375,6 +19002,39 @@
             "mcrc",
             "mcrc_full_cpu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MCRC Full CPU operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_mcrc_full_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18424,6 +19084,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies MCRC Semi CPU operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_mcrc_semi_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_semi_cpu",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_dma_parity",
         "location": "../../examples/sdl/parity/sdl_dma_parity/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18441,6 +19134,39 @@
             "parity",
             "sdl_dma_parity",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18490,6 +19216,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for TCM Parity CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_tcm_parity",
+        "location": "../../examples/sdl/parity/sdl_tcm_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_tcm_parity",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies CRC for TMU ROM CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_rom_checksum_example",
         "location": "../../examples/sdl/tmu_rom_checksum/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18522,6 +19281,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies CRC for TMU ROM CPU is R5FSS1-0 running NORTOS.",
+        "name": "tmu_rom_checksum_example",
+        "location": "../../examples/sdl/tmu_rom_checksum/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "tmu_rom_checksum",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example read all r5f cpu static register CPU is R5FSS0-0 running NORTOS.",
         "name": "r5f_cpu_utils",
         "location": "../../examples/sdl/r5f_cpu_utils/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18538,6 +19329,38 @@
             "sdl",
             "r5f_cpu_utils",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example read all r5f cpu static register CPU is R5FSS1-0 running NORTOS.",
+        "name": "r5f_cpu_utils",
+        "location": "../../examples/sdl/r5f_cpu_utils/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "r5f_cpu_utils",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18587,6 +19410,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for tmu Parity CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_tmu_parity",
+        "location": "../../examples/sdl/parity/sdl_tmu_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_tmu_parity",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stog_r5f",
         "location": "../../examples/sdl/stog/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18603,6 +19459,38 @@
             "sdl",
             "stog",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -18636,6 +19524,39 @@
             "vtm",
             "vtm_mcu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies VTM operation CPU is R5FSS1-0 running NORTOS.",
+        "name": "vtm_example",
+        "location": "../../examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "vtm",
+            "vtm_mcu",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [

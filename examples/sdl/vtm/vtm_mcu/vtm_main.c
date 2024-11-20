@@ -54,6 +54,13 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#if defined (R5F0_INPUTS)
+#define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS0_CORE0_INTR_TSENSE_H
+#define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS0_CORE0_INTR_TSENSE_L
+#elif defined (R5F1_INPUTS)
+#define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS1_CORE0_INTR_TSENSE_H
+#define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS1_CORE0_INTR_TSENSE_L
+#endif
 SDL_VTM_configTs SDL_VTM_configTempSense =
 {
     0U,     /* TS0 Shut*/
@@ -138,7 +145,7 @@ void SDL_TS_hiInterruptHandler()
        {
            SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, 0, 0, 0);
            SDL_tempBelowCold = 1U;
-           SDL_DPL_disableInterrupt(SDL_R5FSS0_CORE0_INTR_TSENSE_H);
+           SDL_DPL_disableInterrupt(SDL_R5FSS_INTR_TSENSE_H);
        }
 
        if(SDL_VTM_Stat_value.s1HotEvent == 1U)
@@ -161,7 +168,7 @@ void SDL_TS_loInterruptHandler()
         SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
         SDL_tempLowThresholdIntr = 1U;
     }
-    SDL_DPL_disableInterrupt(SDL_R5FSS0_CORE0_INTR_TSENSE_L);
+    SDL_DPL_disableInterrupt(SDL_R5FSS_INTR_TSENSE_L);
 }
 /*****************************************************************************
  * This is the main function for the Voltage and Thermal Monitor (VTM) example
@@ -184,17 +191,17 @@ void vtm_example_app(void)
     pTSenseHInterruptHandler = &SDL_TS_hiInterruptHandler;
     pTSenseLInterruptHandler = &SDL_TS_loInterruptHandler;
 
-    intrParams.intNum      = SDL_R5FSS0_CORE0_INTR_TSENSE_H;
+    intrParams.intNum      = SDL_R5FSS_INTR_TSENSE_H;
     intrParams.callback    = (*pTSenseHInterruptHandler);
     SDL_DPL_registerInterrupt(&intrParams, &SDL_TS_HiHwiPHandle);
 
-    intrParams.intNum      = SDL_R5FSS0_CORE0_INTR_TSENSE_L;
+    intrParams.intNum      = SDL_R5FSS_INTR_TSENSE_L;
     intrParams.callback    = (*pTSenseLInterruptHandler);
     SDL_DPL_registerInterrupt(&intrParams, &SDL_TS_LoHwiPHandle);
 
     /* Enable Interrupts */
-    SDL_DPL_enableInterrupt(SDL_R5FSS0_CORE0_INTR_TSENSE_H);
-    SDL_DPL_enableInterrupt(SDL_R5FSS0_CORE0_INTR_TSENSE_L);
+    SDL_DPL_enableInterrupt(SDL_R5FSS_INTR_TSENSE_H);
+    SDL_DPL_enableInterrupt(SDL_R5FSS_INTR_TSENSE_L);
 
     /* UC1 - Receive Hot and Cold Interrupt. */
     DebugP_log("\r\n UC1 : ");
@@ -225,14 +232,14 @@ void vtm_example_app(void)
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
     DebugP_log("\r\n Device Temperature: %dmc", temp0);
     DebugP_log("\r\n Configured hot alert Temperature: %dmc", alert_th_hot);
-    DebugP_log("\r\n Hot Alert Temperature breached and received Interrupt : %d", SDL_R5FSS0_CORE0_INTR_TSENSE_H);
+    DebugP_log("\r\n Hot Alert Temperature breached and received Interrupt : %d", SDL_R5FSS_INTR_TSENSE_H);
 
     while(SDL_tempBelowCold != 1U);
     DebugP_log("\r\n");
     DebugP_log("\r\n Device Temperature: %dmc", temp0);
     DebugP_log("\r\n Configured cold alert Temperature: %dmc", alert_th_cold);
     DebugP_log("\r\n Cold Alert Temperature breached and received Interrupt ");
-    DebugP_log("\r\n Temperature is below Configured Low Temperature and received Interrupt : %d", SDL_R5FSS0_CORE0_INTR_TSENSE_H);
+    DebugP_log("\r\n Temperature is below Configured Low Temperature and received Interrupt : %d", SDL_R5FSS_INTR_TSENSE_H);
 
 
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
@@ -253,7 +260,7 @@ void vtm_example_app(void)
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
     DebugP_log("\r\n Device Temperature: %dmc", temp0);
     DebugP_log("\r\n Configured Low threshold Temperature: %dmc", alert_th_cold);
-    DebugP_log("\r\n Low Threshold Temperature breached and received Interrupt: %d ", SDL_R5FSS0_CORE0_INTR_TSENSE_L);
+    DebugP_log("\r\n Low Threshold Temperature breached and received Interrupt: %d ", SDL_R5FSS_INTR_TSENSE_L);
 
     SDL_VTM_disableTc();
     alert_th_hot = temp0 - 3000; // temperatube in mc
@@ -267,7 +274,7 @@ void vtm_example_app(void)
     DebugP_log("\r\n");
     DebugP_log("\r\n Device Temperature: %dmc", temp0);
     DebugP_log("\r\n Configured hot threshold Temperature: %dmc", alert_th_hot);
-    DebugP_log("\r\n Exceeded Configured Temperature and received Interrupt : %d", SDL_R5FSS0_CORE0_INTR_TSENSE_H);
+    DebugP_log("\r\n Exceeded Configured Temperature and received Interrupt : %d", SDL_R5FSS_INTR_TSENSE_H);
 
 
     /* UC3 - ESM Interrupt and Warm Reset Generation. */

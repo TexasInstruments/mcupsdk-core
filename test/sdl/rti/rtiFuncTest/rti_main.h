@@ -84,13 +84,13 @@
 #endif
 #define SOC_MODULES_END     (0xFFFFFFFFu)
 
-#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM261X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
 #define SDL_ESM_U_BASE SDL_TOP_ESM_U_BASE
 #define SDL_INSTANCE_ESM0 SDL_ESM_INST_MAIN_ESM0
 #endif
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE

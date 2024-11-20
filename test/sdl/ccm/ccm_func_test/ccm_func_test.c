@@ -604,6 +604,9 @@ int32_t CCM_funcTest(void)
 	}
 	Board_driversClose();
     Drivers_close();
+    while(1){
+
+    };
 
 	return (testResult);
 }

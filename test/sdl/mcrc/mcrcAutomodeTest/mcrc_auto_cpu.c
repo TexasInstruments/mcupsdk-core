@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) Texas Instruments Incorporated 2022-2023
+ *  Copyright (C) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,13 +59,13 @@
 #define MCRC_DMCH_VALUE1 EDMA_DSS_TPCC_A_EVT_MCRC_DMA_REQ1
 #endif
 #endif
-#if defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM261X)
 #define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
 #define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1
 #define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_2
 #define MCRC_DMCH_VALUE3 DMA_TRIG_XBAR_EDMA_MODULE_3
 #endif
-#if defined(SOC_AM263X) 
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #if defined(R5F0_INPUTS)
 #define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
 #define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1

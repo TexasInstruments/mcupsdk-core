@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,9 +89,16 @@
 
 #define SDL_MSS_L2_MEM_INIT_ADDR                    (0x50D00240u)
 #define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00244u)
-#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0xcu) /*Bank 3*/
-
+#if defined (R5F0_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR0                       SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_AGGR1                       SDL_R5FSS0_CORE1_ECC_AGGR
+#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
+#elif defined (R5F1_INPUTS)
+#define SDL_EXAMPLE_ECC_AGGR0                       SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_AGGR1                       SDL_R5FSS1_CORE1_ECC_AGGR
+#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53004020u)
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -284,16 +291,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x001803fcu, 0x007f8000u, 0x00006000u, 0x00000000u,
+     .enableBitmap = {0x001803fcu, 0x7fff8000u, 0x00006000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x001002a8u, 0x001d0000u, 0x00002000u, 0x00000000u,
+     .priorityBitmap = {0x001002a8u, 0x1ddd0000u, 0x00002000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x001803fcu, 0x007f8000u, 0x00006000u, 0x00000000u,
+     .errorpinBitmap = {0x001803fcu, 0x7fff8000u, 0x00006000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -510,7 +517,7 @@ int32_t ECC_Test_R5F_CACHE_init (void)
 
     if (retValue == 0U) {
         /* Initialize ECC */
-        result = SDL_ECC_init(SDL_R5FSS0_CORE0_ECC_AGGR, &ECC_Test_R5FSS0_CORE0_CACHE_ECCInitConfig);
+        result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR0, &ECC_Test_R5FSS0_CORE0_CACHE_ECCInitConfig);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("ECC_Test_init: Error initializing R5FSS0 CORE0 CACHE ECC: result = %d\r\n", result);
@@ -558,7 +565,7 @@ int32_t ECC_Test_R5F_init (void)
 
     if (retValue == 0) {
         /* Initialize ECC */
-        result = SDL_ECC_init(SDL_R5FSS0_CORE0_ECC_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
+        result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR0, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error initializing R5FSS0 CORE0 ECC: result = %d\r\n", result);
@@ -570,7 +577,7 @@ int32_t ECC_Test_R5F_init (void)
     }
 	if (retValue == 0U) {
         /* Initialize ECC */
-        result = SDL_ECC_init(SDL_R5FSS0_CORE1_ECC_AGGR, &ECC_Test_R5FSS0_CORE1_ECCInitConfig);
+        result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR1, &ECC_Test_R5FSS0_CORE1_ECCInitConfig);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("ECC_Test_init: Error initializing R5FSS0 CORE1 ECC: result = %d\r\n", result);
@@ -583,7 +590,7 @@ int32_t ECC_Test_R5F_init (void)
 
     if (retValue == 0) {
         /* Read back the static registers */
-        result = SDL_ECC_getStaticRegisters(SDL_R5FSS0_CORE0_ECC_AGGR, &staticRegs);
+        result = SDL_ECC_getStaticRegisters(SDL_EXAMPLE_ECC_AGGR0, &staticRegs);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error reading the R5FSS0 CORE0 static registers: result = %d\r\n");
@@ -596,7 +603,7 @@ int32_t ECC_Test_R5F_init (void)
 
 	if (retValue == 0U) {
         /* Read back the static registers */
-        result = SDL_ECC_getStaticRegisters(SDL_R5FSS0_CORE1_ECC_AGGR, &staticRegs);
+        result = SDL_ECC_getStaticRegisters(SDL_EXAMPLE_ECC_AGGR1, &staticRegs);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error reading the R5FSS0 CORE1 static registers: result = %d\r\n");
@@ -1307,7 +1314,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1348,7 +1355,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM0_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1390,7 +1397,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1431,7 +1438,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM1_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000010u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1473,7 +1480,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM2_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM2 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1514,7 +1521,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM2_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000020u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1556,7 +1563,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM3_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM3 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1597,7 +1604,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM3_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000030u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1639,7 +1646,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1680,7 +1687,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM0_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1722,7 +1729,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1763,7 +1770,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM1_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1805,7 +1812,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM2_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM2 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1846,7 +1853,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM2_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1888,7 +1895,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM3_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM3 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                 SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -1929,7 +1936,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM3_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -1970,7 +1977,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_selfTest(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_selfTest(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig,
@@ -2011,7 +2018,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x00000510u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2052,7 +2059,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_selfTest(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_selfTest(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig,
@@ -2093,7 +2100,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x00000514u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2134,7 +2141,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B0TCM0 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_selfTest(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_selfTest(SDL_EXAMPLE_ECC_AGGR0,
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig,
@@ -2174,7 +2181,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B0TCM0 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
@@ -2215,7 +2222,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B0TCM0 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
@@ -2256,7 +2263,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B0TCM0 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
@@ -2297,7 +2304,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B1TCM0 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
@@ -2338,7 +2345,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B1TCM0 BANK0 2 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2379,7 +2386,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B1TCM0 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
@@ -2420,7 +2427,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 B1TCM0 BANK1 2 bit error */
     injectErrorConfig.flipBitMask = 0x30002;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2461,7 +2468,7 @@ int32_t ECC_Test_run_VIM_1BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x50F02000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
@@ -2502,7 +2509,7 @@ int32_t ECC_Test_run_VIM_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x50F02000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2543,7 +2550,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ITAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2584,7 +2591,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM0_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2626,7 +2633,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ITAG RAM1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2667,7 +2674,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM1_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2709,7 +2716,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM2_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ITAG RAM2 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2750,7 +2757,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM2_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2792,7 +2799,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM3_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ITAG RAM3 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2833,7 +2840,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ITAG_RAM3_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2875,7 +2882,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 DTAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2916,7 +2923,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM0_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -2958,7 +2965,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 DTAG RAM0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -2999,7 +3006,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM1_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000004u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -3041,7 +3048,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM2_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 DTAG RAM2 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3082,7 +3089,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM2_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x70000008u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -3124,7 +3131,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM3_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 DTAG RAM3 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3165,7 +3172,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_DTAG_RAM3_2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x7000000cu);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -3208,7 +3215,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ATCM1 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3249,7 +3256,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK0_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ATCM1 BANK0 2 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3290,7 +3297,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ATCM1 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3331,7 +3338,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 ATCM1 BANK1 2 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                 &injectErrorConfig);
@@ -3372,7 +3379,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B0TCM1 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
@@ -3413,7 +3420,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B0TCM1 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
@@ -3454,7 +3461,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B0TCM1 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
@@ -3495,7 +3502,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B0TCM1 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
@@ -3536,7 +3543,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK0_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B1TCM1 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3577,7 +3584,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK0_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B1TCM1 BANK0 2 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                 &injectErrorConfig);
@@ -3618,7 +3625,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B1TCM1 BANK1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                 &injectErrorConfig);
@@ -3659,7 +3666,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE1 B1TCM1 BANK1 2 bit error */
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                 SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID,
                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                 &injectErrorConfig);
@@ -4683,7 +4690,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_1BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 1 bit error */
     injectErrorConfig.flipBitMask = 0x0u;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR1,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
@@ -4722,7 +4729,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case1_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 Negative case 1 single bit error */
     injectErrorConfig.flipBitMask = 0x0u;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -4760,7 +4767,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case2_2BitInjectTest(void)
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 Negative1 bit error */
     injectErrorConfig.flipBitMask = 0x80000000u;
-    result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR0,
                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
@@ -4826,7 +4833,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest has failed... \r\n");
 		}
 	}
-
+#if defined (R5F0_INPUTS)
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -4836,7 +4843,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest();
@@ -4847,7 +4854,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest has failed... \r\n");
 		}
 	}
-
+#if defined (R5F0_INPUTS)
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -4857,7 +4864,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -4867,7 +4874,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest has failed... \r\n");
 		}
 	}
-
+#if defined (R5F0_INPUTS)
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest();
@@ -4878,7 +4885,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_2BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5091,24 +5098,24 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case2_2BitInjectTest has failed... \r\n");
 		}
 	}
-
+#if defined (R5F0_INPUTS)
     if (retVal == 0) {
         result = ECC_Test_run_VIM_1BitInjectTest();
         /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
         gMsmcMemParityInterrupt = false;
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\ECC_Test_run_VIM_1BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_VIM_1BitInjectTest has failed... \r\n");
         }
     }
-
+#endif
     if (retVal == 0) {
         result = ECC_Test_run_VIM_2BitInjectTest();
         /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
         gMsmcMemParityInterrupt = false;
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\ECC_Test_run_VIM_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_VIM_2BitInjectTest has failed... \r\n");
         }
     }
 

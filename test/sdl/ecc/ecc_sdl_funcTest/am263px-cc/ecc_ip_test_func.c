@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,7 +56,11 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined (R5F0_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS0_CORE0_U_BASE
+#elif defined (R5F1_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS1_CORE0_U_BASE
+#endif
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -71,7 +75,7 @@
 
 static int32_t ECC_funcAPITest(void)
 {
-    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_R5SS0_CORE0_U_BASE));
+    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_U_BASE));
     SDL_Ecc_AggrEccRamErrorStatusInfo eccRamErrorStatus;
     SDL_Ecc_AggrErrorInfo eccErrorInfo;
     SDL_ECC_staticRegs eccStaticRegs;
@@ -881,7 +885,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -895,7 +903,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -914,7 +926,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -934,7 +950,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -954,7 +974,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -968,7 +992,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -987,7 +1015,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1007,7 +1039,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1027,7 +1063,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1041,7 +1081,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1060,7 +1104,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1080,7 +1128,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1100,7 +1152,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1114,7 +1170,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1133,7 +1193,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1153,7 +1217,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1173,7 +1241,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1187,7 +1259,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1206,7 +1282,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1226,7 +1306,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1247,7 +1331,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1261,7 +1349,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1280,7 +1372,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1300,7 +1396,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1321,7 +1421,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1335,7 +1439,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1354,7 +1462,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1374,7 +1486,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1394,7 +1510,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1408,7 +1528,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1427,7 +1551,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1447,7 +1575,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1468,7 +1600,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1482,7 +1618,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1501,7 +1641,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1521,7 +1665,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1542,7 +1690,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1556,7 +1708,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1575,7 +1731,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1595,7 +1755,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1616,7 +1780,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1630,7 +1798,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1649,7 +1821,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1669,7 +1845,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1690,7 +1870,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1704,7 +1888,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1723,7 +1911,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1743,7 +1935,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1764,7 +1960,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1778,7 +1978,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1797,7 +2001,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1817,7 +2025,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1838,7 +2050,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1852,7 +2068,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1871,7 +2091,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1891,7 +2115,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1912,7 +2140,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1926,7 +2158,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1945,7 +2181,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1965,7 +2205,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -1985,7 +2229,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -1999,7 +2247,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -2018,7 +2270,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -2038,7 +2294,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -2059,7 +2319,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -2073,7 +2337,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         SDL_ECC_injectError(mainMem, subMemType, intsrc,&injectErrorConfig);
@@ -2092,7 +2360,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 
@@ -2112,7 +2384,11 @@ static int32_t ECC_funcAPITest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;
+    #if defined (R5F0_INPUTS)
         subMemType = SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #elif defined (R5F1_INPUTS)
+        subMemType = SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID;
+    #endif
         intsrc     = SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE;
         errSrc     = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,17 +56,15 @@
 #define SDL_RTI_BASE SDL_RTI8_CFG_BASE
 #endif
 #endif
-#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM261X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
 #endif
-
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
-#endif
-#if defined (R5F1_INPUTS)
+#elif defined (R5F1_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT2
 #define SDL_RTI_BASE SDL_WDT2_U_BASE
 #endif
@@ -415,17 +413,16 @@ static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
 static void IntrDisable(uint32_t intsrc)
 {
     uint32_t intrStatus;
-#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM261X)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
     RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
-#elif defined (SOC_AM263X)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined(R5F0_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
     RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
-#endif
-#if defined(R5F1_INPUTS)
+#elif defined(R5F1_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT2, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT2, intrStatus);
     RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);

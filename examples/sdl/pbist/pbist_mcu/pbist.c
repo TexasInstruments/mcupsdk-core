@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-2023 Texas Instruments Incorporated
+/* Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -514,7 +514,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS CR5B R5FSS1 ATCM0\r\n");
             DebugP_log(" PBIST complete for MSS CR5B R5FSS0 BTCM0\r\n");
             DebugP_log(" PBIST complete for MSS CR5B R5FSS1 BTCM0\r\n");
+        #if defined (R5F0_INPUTS)
             DebugP_log(" PBIST complete for MSS R5FSS1 VIM0\r\n");
+        #endif
             DebugP_log(" PBIST complete for MSS R5FSS1 VIM1\r\n");
         }
         if (testResult == SDL_PASS)

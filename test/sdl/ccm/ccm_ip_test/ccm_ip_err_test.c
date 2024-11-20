@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -100,7 +100,7 @@ static int32_t CCM_errTest(void)
 
 	if(testResult == 0)
 	{
-		sdlResult = SDL_armR5ReadCCMRegister(SDL_CCM_baseAddress[0], (SDL_McuArmssCcmR5RegId)7U, &valToBeRead, &metaInfo);
+        sdlResult = SDL_armR5ReadCCMRegister(SDL_CCM_baseAddress[0], (SDL_McuArmssCcmR5RegId)11U, &valToBeRead, &metaInfo);
 		if (sdlResult == SDL_PASS)
 		{
 			DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);

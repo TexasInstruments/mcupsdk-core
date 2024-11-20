@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,6 +63,11 @@
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
+
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D180D4u)
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D180D8u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D180C4u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D180C8u)
 
 #define SDL_CLEAR_STATUS									(0xffu)
 
@@ -131,7 +136,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         printf("\r\nLow Priority Interrupt Executed\r\n");
     }
     retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
-
+#if defined (R5F0_INPUTS)
     if(((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
        (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR)) && ((intSrc != 0x33) && (intSrc != 0x35)))
     {
@@ -153,9 +158,32 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
     }
+#elif defined (R5F1_INPUTS)
+    if(((eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) ||
+       (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS1_CORE0_ECC_AGGR)) && ((intSrc != 0x3B) && (intSrc != 0x3D)))
+    {
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+#endif
     else
     {
-
+    #if defined (R5F0_INPUTS)
 		if(intSrc == 0x33U)
 		{
 			eccmemtype = 1U;
@@ -166,6 +194,18 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 			eccmemtype = 1U;
 			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 		}
+    #elif defined (R5F1_INPUTS)
+		if(intSrc == 0x3BU)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
+		}
+		if(intSrc == 0x3DU)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
+		}
+    #endif
         /* Any additional customer specific actions can be added here */
         retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
