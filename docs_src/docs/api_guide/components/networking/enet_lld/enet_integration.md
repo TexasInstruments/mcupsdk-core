@@ -302,7 +302,7 @@ shown below.
        loopback, etc.
     -# Use PHY specific init config functions to initialize model specific parameters.
        This init config function is provided by the Ethernet PHYs supported in Enet LLD.
-       For example, \ref Dp83867_initCfg() is used to initialize config params for
+       For example, Dp83867_initCfg() is used to initialize config params for
        DP83867 PHYs.
     -# Application can also use the Enet helper function EnetBoard_getPhyCfg() to get
        PHY configuration information for PHYs in TI EVMs.

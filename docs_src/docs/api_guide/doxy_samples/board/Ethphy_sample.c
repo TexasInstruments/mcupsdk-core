@@ -1,7 +1,7 @@
 #include <stddef.h>
 //! [include]
 #include <board/ethphy.h>
-#include <board/ethphy/ethphy_dp83869.h>
+#include <board/ethphy/icss_emac/ethphy_dp83869.h>
 //! [include]
 
 #define CONFIG_ETHPHY0 (0U)
