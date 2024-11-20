@@ -32,7 +32,7 @@ const libdirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
     ],
 };
@@ -40,9 +40,14 @@ const libdirs = {
 const libs_r5f = {
     common: [
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const defines = {
+    common: [
     ],
 };
 
@@ -93,6 +98,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+    build_property.defines = defines;
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;

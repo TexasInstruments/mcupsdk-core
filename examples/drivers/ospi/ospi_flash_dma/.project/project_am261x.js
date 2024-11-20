@@ -6,7 +6,22 @@ const files = {
     common: [
         "ospi_flash_dma.c",
         "main.c",
+        "board.c"
     ],
+};
+
+const projectSpecFiles = {
+    "am261x-som":
+    {
+        common:
+        [
+            "board.h"
+        ]
+    },
+    "am261x-lp":
+    {
+        common: []
+    }
 };
 
 /* Relative to where the makefile will be generated
@@ -77,6 +92,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+    build_property.projectspecfiles = projectSpecFiles;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;
@@ -85,7 +101,6 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
     }
 
     return build_property;

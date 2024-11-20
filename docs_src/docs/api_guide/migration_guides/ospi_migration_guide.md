@@ -313,3 +313,4 @@ There are changes in API names, structure names and macro names. The changes in 
 - \ref EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
 - \ref EXAMPLES_DRIVERS_OSPI_FLASH_DMA
 - \ref EXAMPLES_DRIVERS_OSPI_FLASH_IO
+- \ref EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT

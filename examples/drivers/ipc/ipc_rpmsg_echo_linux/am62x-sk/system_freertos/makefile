@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -8,15 +5,20 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=ipc_rpmsg_echo_linux_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=ipc_rpmsg_echo_linux_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=ipc_rpmsg_echo_linux_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
 
 CORE_0=--script ../m4fss0-0_freertos/example.syscfg --context m4fss0-0 --output ../m4fss0-0_freertos/ti-arm-clang/generated
 
 CORES = \
     $(CORE_0) \
+
+COREXMLS = \
+	../m4fss0-0_freertos/ti-arm-clang/ipc_rpmsg_echo_linux.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -29,6 +31,7 @@ corebuild: syscfg
 postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 
+
 clean:
 	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ clean
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
@@ -40,8 +43,16 @@ scrub:
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) *.appimage_xip

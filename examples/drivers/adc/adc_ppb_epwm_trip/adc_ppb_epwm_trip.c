@@ -108,6 +108,9 @@ void adc_ppb_epwm_trip_main(void *args)
     status = HwiP_construct(&gAdcHwiObject1, &hwiPrms1);
     DebugP_assert(SystemP_SUCCESS == status);
 
+    /* Enabling the EPWM Trip Out which may be routed to GPIO via Output xbar */
+    EPWM_enableTripZoneOutput(CONFIG_EPWM2_BASE_ADDR,EPWM_TZ_SELECT_TRIPOUT_DCAEVT1);
+
     /* Clear any spurious flags */
     EPWM_clearTripZoneFlag(CONFIG_EPWM0_BASE_ADDR, EPWM_TZ_FLAG_DCAEVT1);
     EPWM_clearOneShotTripZoneFlag(CONFIG_EPWM0_BASE_ADDR, EPWM_TZ_OST_FLAG_DCAEVT1);

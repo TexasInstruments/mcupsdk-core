@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -59,11 +56,14 @@ FILES_common := \
     mmcsd_v1.c \
     mpu_firewall.c \
     mpu_firewall_v0_cfg.c \
-    ospi_dma.c \
-    ospi_dma_edma.c \
     ospi_nor_flash.c \
     ospi_phy.c \
     ospi_v0.c \
+    ospi_v0_lld.c \
+    ospi_phy_lld.c \
+    ospi_nor_flash_lld.c \
+    ospi_lld_dma.c \
+    ospi_edma_lld.c \
     pinmux.c \
     pmu.c \
     pruicss_m_v0.c \
@@ -123,9 +123,9 @@ FILES_PATH_common = \
     mpu_firewall/v0/soc/am261x \
     ospi \
     ospi/v0 \
-    ospi/v0/dma \
-    ospi/v0/dma/edma \
-    ospi/v0/soc/am261x \
+    ospi/v0/lld \
+    ospi/v0/lld/dma \
+    ospi/v0/lld/dma/edma \
     pmu \
     pmu/r5f \
     rti/v0 \

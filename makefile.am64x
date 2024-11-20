@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 all:
 	$(MAKE) -f makefile.am64x libs
@@ -64,6 +61,8 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-icssg-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-ic-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-icssg-nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x icss_emac_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x icss_emac_lwip_if_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x icss_timesync_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwip-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x lwip-nortos_r5f.ti-arm-clang
@@ -108,6 +107,8 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-icssg-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-ic-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwipif-icssg-nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x icss_emac_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x icss_emac_lwip_if_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x icss_timesync_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwip-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x lwip-nortos_r5f.ti-arm-clang_clean
@@ -327,6 +328,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
@@ -343,6 +346,12 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -527,6 +536,7 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/smp_task_switch/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -545,45 +555,45 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/ncm/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
@@ -646,7 +656,7 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads127/am64x-evm/system_freertos_prufw [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads131/am64x-evm/system_freertos_prufw [all clean syscfg-gui syscfg]
@@ -684,6 +694,8 @@ BUILD_COMBO_enet-icssg = enet-icssg_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-icssg-freertos = lwipif-icssg-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-ic-freertos = lwipif-ic-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-icssg-nortos = lwipif-icssg-nortos_r5f.ti-arm-clang
+BUILD_COMBO_icss_emac = icss_emac_r5f.ti-arm-clang
+BUILD_COMBO_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang
 BUILD_COMBO_icss_timesync = icss_timesync_r5f.ti-arm-clang
 BUILD_COMBO_lwip-freertos = lwip-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-nortos = lwip-nortos_r5f.ti-arm-clang
@@ -698,7 +710,7 @@ BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_dhrystone_benchmark) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-ic-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_icssg_combase-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_dhrystone_benchmark) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-ic-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_icssg_combase-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
 
 
 # Combine all Pre-built Components
@@ -805,6 +817,12 @@ $(BUILD_COMBO_lwipif-ic-freertos):
 $(BUILD_COMBO_lwipif-icssg-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-icssg-nortos.am64x.$(subst lwipif-icssg-nortos_,,$@) all
 
+$(BUILD_COMBO_icss_emac):
+	$(MAKE) -C source/networking/icss_emac -f makefile.am64x.$(subst icss_emac_,,$@) all
+
+$(BUILD_COMBO_icss_emac_lwip_if):
+	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am64x.$(subst icss_emac_lwip_if_,,$@) all
+
 $(BUILD_COMBO_icss_timesync):
 	$(MAKE) -C source/networking/icss_timesync -f makefile.am64x.$(subst icss_timesync_,,$@) all
 
@@ -871,6 +889,8 @@ BUILD_COMBO_CLEAN_enet-icssg = enet-icssg_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-icssg-freertos = lwipif-icssg-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-ic-freertos = lwipif-ic-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-icssg-nortos = lwipif-icssg-nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_icss_emac = icss_emac_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_icss_timesync = icss_timesync_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_clean
@@ -885,7 +905,7 @@ BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_c
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_dhrystone_benchmark) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-ic-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_icssg_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_dhrystone_benchmark) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-ic-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_icssg_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
 
 
 # Combine all Pre-built Components Clean
@@ -986,6 +1006,12 @@ $(BUILD_COMBO_CLEAN_lwipif-ic-freertos):
 $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-icssg-nortos.am64x.$(subst lwipif-icssg-nortos_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_icss_emac):
+	$(MAKE) -C source/networking/icss_emac -f makefile.am64x.$(subst icss_emac_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_icss_emac_lwip_if):
+	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am64x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_icss_timesync):
 	$(MAKE) -C source/networking/icss_timesync -f makefile.am64x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
 
@@ -1052,6 +1078,8 @@ BUILD_COMBO_SCRUB_enet-icssg = enet-icssg_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-icssg-freertos = lwipif-icssg-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-ic-freertos = lwipif-ic-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-icssg-nortos = lwipif-icssg-nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_icss_emac = icss_emac_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_icss_timesync = icss_timesync_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_scrub_scrub
@@ -1066,7 +1094,7 @@ BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_s
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_dhrystone_benchmark) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-ic-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_icssg_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_dhrystone_benchmark) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-ic-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_icssg_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL = $(BUILD_COMBO_SCRUB_cmsis)
@@ -1165,6 +1193,12 @@ $(BUILD_COMBO_SCRUB_lwipif-ic-freertos):
 
 $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-icssg-nortos.am64x.$(subst lwipif-icssg-nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_icss_emac):
+	$(MAKE) -C source/networking/icss_emac -f makefile.am64x.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_icss_emac_lwip_if):
+	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am64x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_timesync):
 	$(MAKE) -C source/networking/icss_timesync -f makefile.am64x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
@@ -1388,6 +1422,8 @@ BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-evm_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am64x-evm_a53ss0-0_freertos_gcc-aarch64
@@ -1404,6 +1440,12 @@ BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -2338,6 +2380,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2385,6 +2433,24 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2938,6 +3004,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ runtime_keyrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2993,121 +3062,121 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  enet_cpsw_loopback_mac_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_loopback_mac_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_loopback_phy_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_loopback_phy_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  cpsw_lwip_mqtt_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
 
  enet_lwip_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_rawhttpserver_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  enet_cpsw_udpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
 
  enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_l2_cpsw_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_cpsw_est_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  est_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  est_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_icssg_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_icssg_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  lldp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  lldp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_lwip_icssg_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_icssg_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -3287,7 +3356,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile all
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg:
-	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile all
 
  ads85x8_am64x-evm_system_freertos_prufw:
 	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile all
@@ -3490,6 +3559,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-evm_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
@@ -3506,6 +3577,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4435,6 +4512,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4482,6 +4565,24 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5035,6 +5136,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ runtime_keyrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -5090,121 +5194,121 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  enet_cpsw_loopback_mac_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_loopback_mac_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_loopback_phy_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_loopback_phy_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  cpsw_lwip_mqtt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
 
  enet_lwip_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_rawhttpserver_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  enet_cpsw_udpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_l2_cpsw_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_cpsw_est_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  est_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  est_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_icssg_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_icssg_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  lldp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  lldp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_lwip_icssg_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_icssg_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -5384,7 +5488,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile clean
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean:
-	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile clean
 
  ads85x8_am64x-evm_system_freertos_prufw_clean:
 	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile clean
@@ -5587,6 +5691,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-evm_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_emmc_intr_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
@@ -5603,6 +5709,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6532,6 +6644,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ ospi_flash_diag_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_diag_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -6579,6 +6697,24 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ospi_flash_xip_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ ospi_flash_interrupt_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_interrupt_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_interrupt_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_interrupt_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_dma_lld_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_dma_lld_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7132,6 +7268,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ runtime_keyrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -7187,121 +7326,121 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_loopback_mac_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_loopback_mac_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_loopback_phy_end_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_loopback_phy_end_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  cpsw_lwip_mqtt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
 
  enet_lwip_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_rawhttpserver_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_udpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_l2_cpsw_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_cpsw_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_cpsw_est_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_est/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  est_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  est_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/est_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_icssg_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_icssg_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  lldp_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  lldp_app_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_lwip_icssg_app_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_icssg_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
@@ -7481,7 +7620,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile scrub
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub:
-	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile scrub
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile scrub
 
  ads85x8_am64x-evm_system_freertos_prufw_scrub:
 	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile scrub
@@ -7517,6 +7656,7 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
@@ -7540,6 +7680,7 @@ sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
@@ -7563,6 +7704,7 @@ sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/otp/runtime_keyrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 

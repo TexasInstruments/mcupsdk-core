@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -48,6 +45,7 @@ FILES_common := \
     mcspi_v0_lld.c \
     mcspi_dma_dummy.c \
     ospi_v0.c \
+    ospi_v0_lld.c \
     pinmux.c \
     spinlock.c \
     sciclient.c \
@@ -119,10 +117,13 @@ FILES_PATH_common = \
     mmcsd/v0/lld/internal \
     ospi \
     ospi/v0 \
-    ospi/v0/dma \
-    ospi/v0/dma/soc/am64x_am243x \
-    ospi/v0/dma/udma \
+    ospi/v0/lld/dma/soc/am64x_am243x \
     ospi/v0/soc/am64x_am243x \
+    ospi/v0/lld \
+    ospi/v0/lld/dma \
+    ospi/v0/lld/dma/udma \
+    qos \
+    qos/v0 \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \

@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -14,10 +11,12 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=ads85x8_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=ads85x8_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=ads85x8_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../icss_g0_pru0_fw/example.syscfg --context icss_g0_pru0 --output ../icss_g0_pru0_fw/ti-pru-cgt/generated
@@ -26,6 +25,10 @@ CORE_1=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output 
 CORES = \
     $(CORE_1) \
     $(CORE_0) \
+
+COREXMLS = \
+	../icss_g0_pru0_fw/ti-pru-cgt/ads85x8.$(PROFILE).lnkxml\
+	../r5fss0-0_freertos/ti-arm-clang/ads85x8.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -42,6 +45,7 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
 clean:
 	$(MAKE) -C ../icss_g0_pru0_fw/ti-pru-cgt/ clean
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
@@ -56,8 +60,16 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

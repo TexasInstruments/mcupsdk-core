@@ -146,10 +146,24 @@ This page lists all the examples related to Ethernet Communication.
 
 \cond SOC_AM261X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_CPSW_LOOPBACK (DP83826-EVM-AM2)
-
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
+-# \subpage EXAMPLES_ENET_CPSW_EST
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
--# \subpage EXAMPLES_ENET_LWIP_CPSW (DP83TG720-EVM-AM2)
+-# \subpage EXAMPLES_ENET_LWIP_CPSW
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
+### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+### Time-Sensitive Networking (TSN) Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 \endcond 
 
 \cond SOC_AM273X

@@ -3875,7 +3875,7 @@
         ],
         "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_mac_end",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -3886,7 +3886,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
             "loopback_mac_end",
@@ -3909,7 +3914,7 @@
         ],
         "description": "A Enet Cpsw Loopback Phy End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_phy_end",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -3920,7 +3925,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
             "loopback_phy_end",
@@ -3943,7 +3953,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -3954,7 +3964,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_lwip_cpsw",
             "r5fss0-0_freertos"
@@ -3976,7 +3991,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -3987,7 +4002,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_lwip_cpsw",
             "r5fss0-1_freertos"
@@ -4009,7 +4029,7 @@
         ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4020,7 +4040,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpserver",
             "r5fss0-0_freertos"
@@ -4042,7 +4067,7 @@
         ],
         "description": "A Enet Cpsw Rawhttpserver Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "enet_cpsw_rawhttpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4053,7 +4078,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_rawhttpserver",
             "r5fss0-0_nortos"
@@ -4075,7 +4105,7 @@
         ],
         "description": "A Enet Cpsw Udpclient Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4086,7 +4116,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udpclient",
             "r5fss0-0_freertos"
@@ -4108,7 +4143,7 @@
         ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
-        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4119,7 +4154,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udp_igmp",
             "r5fss0-0_freertos"
@@ -4141,7 +4181,7 @@
         ],
         "description": "A Enet Cpsw Tcpclient Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4152,7 +4192,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpclient",
             "r5fss0-0_freertos"
@@ -4174,7 +4219,7 @@
         ],
         "description": "A Enet Cpsw Socket Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_socket",
-        "location": "../../examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4185,7 +4230,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_socket",
             "r5fss0-0_freertos"
@@ -4207,7 +4257,7 @@
         ],
         "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_txsg",
-        "location": "../../examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4218,7 +4268,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_tx_scatter_gather",
             "r5fss0-0_freertos"
         ],
@@ -4239,7 +4294,7 @@
         ],
         "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_multi_channel",
-        "location": "../../examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4250,7 +4305,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_multi_channel",
             "r5fss0-0_freertos"
         ],
@@ -4271,7 +4331,7 @@
         ],
         "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_l2_multi_channel",
-        "location": "../../examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
         ],
@@ -4282,7 +4342,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_multi_channel",
             "r5fss0-1_freertos"
         ],

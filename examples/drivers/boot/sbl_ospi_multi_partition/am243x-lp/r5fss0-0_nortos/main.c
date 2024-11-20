@@ -58,6 +58,14 @@
     M4FSS0-0 flash at offset 0x280000
  */
 
+/* This buffer needs to be defined for OSPI boot in case of HS device for
+ * image decryption and authentication
+ * The size of the buffer should be large enough to accomodate the appimage
+ */
+uint8_t gAppimage[0x40000] __attribute__ ((section (".app"), aligned (4096)));
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -76,11 +84,15 @@ int32_t App_bootCpu(uint32_t bootDrvInstanceId, uint32_t cpuId)
     Bootloader_BootImageInfo bootImageInfo;
     Bootloader_Params bootParams;
     Bootloader_Handle bootHandle;
+    Bootloader_Config *bootConfig;
 
     Bootloader_Params_init(&bootParams);
     Bootloader_BootImageInfo_init(&bootImageInfo);
 
     bootHandle = Bootloader_open(bootDrvInstanceId, &bootParams);
+    bootConfig = (Bootloader_Config *)bootHandle;
+    bootConfig->scratchMemPtr = gAppimage;
+
     if(bootHandle != NULL)
     {
         status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
@@ -101,11 +113,14 @@ int32_t App_bootLoadSelfCpu(uint32_t bootDrvInstanceId, uint32_t cpuId)
     Bootloader_BootImageInfo bootImageInfo;
     Bootloader_Handle bootHandle;
     Bootloader_Params bootParams;
+    Bootloader_Config *bootConfig;
 
     Bootloader_Params_init(&bootParams);
     Bootloader_BootImageInfo_init(&bootImageInfo);
 
     bootHandle = Bootloader_open(bootDrvInstanceId, &bootParams);
+    bootConfig = (Bootloader_Config *)bootHandle;
+    bootConfig->scratchMemPtr = gAppimage;
     if(bootHandle != NULL)
     {
         status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);

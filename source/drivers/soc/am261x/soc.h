@@ -120,6 +120,12 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
                                              (baseAddr == CSL_I2C1_U_BASE) || \
                                              (baseAddr == CSL_I2C2_U_BASE))
 
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_FLASH_CONFIG_REG8_U_BASE)
+
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_DATA_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_FLASH_DATA_REG0_U_BASE)
+
 /**
  * \brief Enable clock to specified module
  *
@@ -662,7 +668,9 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
     if(((baseAddr == CSL_UART0_U_BASE) ||
         (baseAddr == CSL_UART1_U_BASE) ||
         (baseAddr == CSL_UART2_U_BASE) ||
-        (baseAddr == CSL_UART3_U_BASE) ))
+        (baseAddr == CSL_UART3_U_BASE) ||
+        (baseAddr == CSL_UART4_U_BASE) ||
+        (baseAddr == CSL_UART5_U_BASE) ))
     {
         status = 0;
     }

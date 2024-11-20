@@ -19,6 +19,7 @@
     "documentationPath": "../docs",
     "includePaths": [
         "../source/sysconfig",
+        "../source/networking/enet/core/sysconfig",
     ],
     "components": [
 % if((args.device == "am64x") || (args.device == "am243x")) {

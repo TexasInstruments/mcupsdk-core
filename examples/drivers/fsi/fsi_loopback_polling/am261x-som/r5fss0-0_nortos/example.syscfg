@@ -44,19 +44,14 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-fsi_rx1.$name             = "CONFIG_FSI_RX0";
-fsi_rx1.intrEnable        = false;
-fsi_rx1.FSIRX.$assign     = "FSIRX0";
-fsi_rx1.FSIRX.CLK.$assign = "GPIO16";
-fsi_rx1.FSIRX.D0.$assign  = "GPIO17";
-fsi_rx1.FSIRX.D1.$assign  = "GPIO18";
+fsi_rx1.$name         = "CONFIG_FSI_RX0";
+fsi_rx1.intrEnable    = false;
+fsi_rx1.FSIRX.$assign = "FSIRX0";
 
 fsi_tx1.$name             = "CONFIG_FSI_TX0";
 fsi_tx1.intrEnable        = false;
 fsi_tx1.FSITX.$assign     = "FSITX0";
 fsi_tx1.FSITX.CLK.$assign = "GPIO29";
-fsi_tx1.FSITX.D0.$assign  = "GPIO13";
-fsi_tx1.FSITX.D1.$assign  = "GPIO14";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
@@ -281,3 +276,14 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsi_rx1.FSIRX.CLK.$suggestSolution = "GPIO16";
+fsi_rx1.FSIRX.D0.$suggestSolution  = "GPIO33";
+fsi_rx1.FSIRX.D1.$suggestSolution  = "GPIO34";
+fsi_tx1.FSITX.D0.$suggestSolution  = "GPIO30";
+fsi_tx1.FSITX.D1.$suggestSolution  = "GPIO31";

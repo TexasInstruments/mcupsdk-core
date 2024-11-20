@@ -19,6 +19,17 @@ The examples do below
 
 # Supported Combinations
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/lwip/icss_emac_lwip
+
+\endcond
+
 \cond SOC_AM263X
 
  Parameter      | Value
@@ -138,7 +149,7 @@ to a network which is in the same sub-network..
 
 ## Sample output for ICSS-EMAC LWIP example
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 \code
 
@@ -234,6 +245,6 @@ TCP window size:  208 KByte (default)
 - Refer to \ref ICSS_EMAC_DEBUG_GUIDE for troubleshooting issues.
 
 # See Also
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \ref NETWORKING
 \endcond

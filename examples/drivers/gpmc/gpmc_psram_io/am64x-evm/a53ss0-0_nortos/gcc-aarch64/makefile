@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -22,6 +19,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=gpmc_psram_io.$(PROFILE).out
+COREOUTNAME:=gpmc_psram_io.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=gpmc_psram_io.$(PROFILE).appimage
@@ -171,6 +169,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am64x:a53ss0-0:nortos:gcc-aarch64 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am64x:a53ss0-0:nortos:gcc-aarch64 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -194,6 +193,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -201,6 +202,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

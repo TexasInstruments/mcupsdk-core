@@ -48,7 +48,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define TEST_OSPI_FLASH_OFFSET_BASE        (0x200000U)
+#define TEST_OSPI_FLASH_OFFSET_BASE        (0x40000U)
 #define TEST_OSPI_FLASH_PHY_TUNING_OFFSET  (0x300000U)
 #define TEST_OSPI_DATA_SIZE                (256U) /* has to be 256 B aligned */
 #define TEST_OSPI_DATA_REPEAT_COUNT        (8U)
@@ -88,6 +88,30 @@ typedef struct TestData_SizesAttr_t
 }TestData_SizesAttr;
 #endif
 
+/* Some common NOR XSPI flash commands */
+#define OSPI_NOR_CMD_RDID           (0x9FU)
+#define OSPI_NOR_CMD_SINGLE_READ    (0x03U)
+#define OSPI_NOR_CMD_QUAD_READ      (0x6BU)
+#define OSPI_NOR_PAGE_PROG          (0x02U)
+#define OSPI_NOR_CMD_RSTEN          (0x66U)
+#define OSPI_NOR_CMD_RST            (0x99U)
+#define OSPI_NOR_CMD_WREN           (0x06U)
+#define OSPI_NOR_CMD_WRSR           (0x01U)
+#define OSPI_NOR_CMD_RDSR1          (0x05U)
+#define OSPI_NOR_CMD_RDSR2          (0x35U)
+#define OSPI_NOR_CMD_SECTOR_ERASE   (0x20U)
+#define OSPI_NOR_CMD_BLOCK_ERASE    (0xD8U)
+#define OSPI_NOR_CMD_RDSFDP         (0x5AU)
+
+#define OSPI_NOR_SR_WIP             (1U << 0U)
+#define OSPI_NOR_SR_WEL             (1U << 1U)
+
+#define OSPI_NOR_WRR_WRITE_TIMEOUT  (1200U * 1000U)
+#define OSPI_NOR_PAGE_PROG_TIMEOUT  (400U)
+#define OSPI_Timeout_10ms           (100000)
+#define OSPI_Timeout_20ms           (200000)
+
+
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -96,6 +120,7 @@ typedef struct TestData_SizesAttr_t
 static void test_ospi_read_write_1s1s1s_config(void *args);
 static void test_ospi_read_write_max_config(void *args);
 static void test_ospi_phy_tuning(void *args);
+static void test_ospi_read_write_interrupt(void *args);
 
 #if defined(SOC_AM65X)
 static void test_ospi_read_perf(void *args);
@@ -139,6 +164,183 @@ static Test_FlashModeSettings modeParams;
 uint8_t gOspiTestRxBuf[TEST_OSPI_RX_BUF_SIZE] __attribute__((aligned(128U)));
 #endif
 
+static OSPI_AddrRegion gOspiIntrDmaRestrictRegions[] =
+{
+#if defined(SOC_AM64X)
+    {
+        .regionStartAddr = CSL_R5FSS0_ATCM_BASE,
+        .regionSize      = CSL_R5FSS0_ATCM_SIZE,
+    },  
+    {
+        .regionStartAddr = CSL_MCU_M4FSS0_IRAM_BASE,
+        .regionSize      = CSL_MCU_M4FSS0_IRAM_SIZE,
+    },  
+    {
+        .regionStartAddr = CSL_MCU_M4FSS0_DRAM_BASE,
+        .regionSize      = CSL_MCU_M4FSS0_DRAM_SIZE,
+    },  
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+#endif
+
+#if defined(SOC_AM243X)
+    {
+        .regionStartAddr = CSL_R5FSS0_ATCM_BASE,
+        .regionSize      = CSL_R5FSS0_ATCM_SIZE,
+    },  
+    {
+        .regionStartAddr = CSL_MCU_M4FSS0_IRAM_BASE,
+        .regionSize      = CSL_MCU_M4FSS0_IRAM_SIZE,
+    },  
+    {
+        .regionStartAddr = CSL_MCU_M4FSS0_DRAM_BASE,
+        .regionSize      = CSL_MCU_M4FSS0_DRAM_SIZE,
+    },  
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+#endif
+
+#if defined(SOC_AM263PX)
+    {
+        .regionStartAddr = CSL_MSS_TCMA_RAM_BASE,
+        .regionSize      = CSL_MSS_TCMA_RAM_SIZE,
+    },
+    {
+        .regionStartAddr = CSL_HSM_RAM_U_BASE,
+        .regionSize      = 0x2fffc,
+    },
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+#endif
+};
+
+static OSPI_Attrs gOspiIntrAttrs[CONFIG_OSPI_NUM_INSTANCES] =
+{
+    {
+#if defined(SOC_AM64X)
+        .baseAddr             = CSL_FSS0_OSPI0_CTRL_BASE,
+        .dataBaseAddr         = CSL_FSS0_DAT_REG1_BASE,
+        .intrNum              = 171U,
+#endif
+
+#if defined(SOC_AM243X)
+        .baseAddr             = CSL_FSS0_OSPI0_CTRL_BASE,
+        .dataBaseAddr         = CSL_FSS0_DAT_REG1_BASE,
+        .intrNum              = 171U,
+        .protocol             = OSPI_PROTO_4S_4D_4D,
+        .inputClkFreq         = 100000000U,
+        .baudRateDiv          = 6,
+#endif
+#if defined(SOC_AM263PX)
+        .baseAddr             = CSL_FLASH_CONFIG_REG8_U_BASE,
+        .dataBaseAddr         = CSL_FLASH_DATA_REG0_U_BASE,
+        .intrNum              = 54U,
+        .protocol             = OSPI_PROTO_8D_8D_8D,
+        .inputClkFreq         = 133333333U,
+        .baudRateDiv          = 4,
+#endif
+        .intrEnable           = TRUE,
+        .intrPriority         = 4U,
+        .dmaEnable            = FALSE,
+        .phyEnable            = TRUE,
+        .dacEnable            = FALSE,
+        .chipSelect           = OSPI_CS0,
+        .frmFmt               = OSPI_FF_POL0_PHA0,
+        .decChipSelect        = OSPI_DECODER_SELECT4,
+        .dmaRestrictedRegions = gOspiIntrDmaRestrictRegions,
+        .phyConfiguration     = {
+            .phaseDelayElement    = 1,
+            .phyControlMode = OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE,
+            .dllLockMode    = OSPI_PHY_DLL_HALF_CYCLE_LOCK,
+            .tuningWindowParams = {
+                .txDllLowWindowStart    = 0,
+                .txDllLowWindowEnd      = 48,
+                .txDllHighWindowStart   = 20,
+                .txDllHighWindowEnd     = 96,
+                .rxLowSearchStart       = 0,
+                .rxLowSearchEnd         = 40,
+                .rxHighSearchStart      = 10,
+                .rxHighSearchEnd        = 127,
+                .txLowSearchStart       = 0,
+                .txLowSearchEnd         = 64,
+                .txHighSearchStart      = 20,
+                .txHighSearchEnd        = 127,
+                .txDLLSearchOffset      = 8,
+                .rxTxDLLSearchStep      = 4,
+                .rdDelayMin             = 1,
+                .rdDelayMax             = 3,
+            }
+        }
+    },
+};
+
+static OSPI_Attrs gOspiNmrlAttrs[CONFIG_OSPI_NUM_INSTANCES] =
+{
+    {
+#if defined(SOC_AM64X)
+        .baseAddr             = CSL_FSS0_OSPI0_CTRL_BASE,
+        .dataBaseAddr         = CSL_FSS0_DAT_REG1_BASE,
+        .intrNum              = 171U,
+#endif
+
+#if defined(SOC_AM243X)
+        .baseAddr             = CSL_FSS0_OSPI0_CTRL_BASE,
+        .dataBaseAddr         = CSL_FSS0_DAT_REG1_BASE,
+        .intrNum              = 171U,
+        .protocol             = OSPI_PROTO_4S_4S_4S,
+        .inputClkFreq         = 133333333,
+#endif
+
+#if defined(SOC_AM263PX)
+        .baseAddr             = CSL_FLASH_CONFIG_REG8_U_BASE,
+        .dataBaseAddr         = CSL_FLASH_DATA_REG0_U_BASE,
+        .intrNum              = 54U,
+        .protocol             = OSPI_PROTO_8D_8D_8D,
+        .inputClkFreq         = 133333333U,
+#endif
+
+        .intrEnable           = FALSE,
+        .intrPriority         = 4U,
+        .dmaEnable            = TRUE,
+        .phyEnable            = TRUE,
+        .dacEnable            = FALSE,
+        .chipSelect           = OSPI_CS0,
+        .frmFmt               = OSPI_FF_POL0_PHA0,
+        .decChipSelect        = OSPI_DECODER_SELECT4,
+        .baudRateDiv          = 4,
+        .dmaRestrictedRegions = gOspiIntrDmaRestrictRegions,
+        .phyConfiguration     = {
+            .phaseDelayElement    = 1,
+            .phyControlMode = OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE,
+            .dllLockMode    = OSPI_PHY_DLL_HALF_CYCLE_LOCK,
+            .tuningWindowParams = {
+                .txDllLowWindowStart    = 0,
+                .txDllLowWindowEnd      = 48,
+                .txDllHighWindowStart   = 20,
+                .txDllHighWindowEnd     = 96,
+                .rxLowSearchStart       = 0,
+                .rxLowSearchEnd         = 40,
+                .rxHighSearchStart      = 10,
+                .rxHighSearchEnd        = 127,
+                .txLowSearchStart       = 0,
+                .txLowSearchEnd         = 64,
+                .txHighSearchStart      = 20,
+                .txHighSearchEnd        = 127,
+                .txDLLSearchOffset      = 8,
+                .rxTxDLLSearchStep      = 4,
+                .rdDelayMin             = 1,
+                .rdDelayMax             = 3,
+            }
+        }
+    },
+};
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -158,6 +360,9 @@ void test_main(void *args)
     RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
     Drivers_ospiClose();
     Drivers_ospiOpen();
+    RUN_TEST(test_ospi_read_write_interrupt, 13443, NULL);
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
     RUN_TEST(test_ospi_phy_tuning, 13387, NULL);
 #if defined(SOC_AM65X)
     Drivers_ospiClose();
@@ -168,6 +373,7 @@ void test_main(void *args)
     RUN_TEST(test_ospi_read_perf, 0, NULL);
 #endif
 
+    
     UNITY_END();
     Drivers_close();
 
@@ -228,6 +434,13 @@ static void test_ospi_phy_tuning(void *args)
     uint32_t blk, page;
     uint32_t cycles;
     OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+
+    Drivers_ospiClose();
+    /* Get OSPI Handle */
+    
+    gOspiConfig[0].attrs = &gOspiNmrlAttrs[0];
+      
+    Drivers_ospiOpen();
 
     /* Open Flash drivers with OSPI instance as input */
     retVal = Board_driversOpen();
@@ -500,3 +713,45 @@ static int32_t test_ospi_read_write_test_in_mb(TestData_SizesAttr* testDataCurOb
 }
 #endif
 
+static void test_ospi_read_write_interrupt(void *args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t i;
+    
+    OSPI_Handle ospiHandle;
+    OSPI_Transaction trans;
+
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
+
+    Drivers_ospiClose();
+    /* Get OSPI Handle */
+    
+    gOspiConfig[0].attrs = &gOspiIntrAttrs[0];
+      
+    Drivers_ospiOpen();
+    ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+
+    /* Block erase at the test offset */
+    OSPI_norFlashErase(ospiHandle, offset);
+
+    for(i = 0; i < TEST_OSPI_DATA_REPEAT_COUNT; i++)
+    {
+        OSPI_norFlashWrite(ospiHandle, offset + i*TEST_OSPI_DATA_SIZE, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+    }
+
+    OSPI_Transaction_init(&trans);
+    trans.count = TEST_OSPI_DATA_SIZE;
+    trans.buf = gOspiTestRxBuf;
+    trans.addrOffset = offset;
+    OSPI_readIndirect(ospiHandle, &trans);
+
+    for(i = 0; i < TEST_OSPI_RX_BUF_SIZE; i++)
+    {
+        if(gOspiTestRxBuf[i] != gOspiTestTxBuf[(i%256)])
+        {
+            retVal = SystemP_FAILURE;
+            break;
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+}

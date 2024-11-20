@@ -41,6 +41,12 @@
 
 #define FLASH_RESET_USEC (100U)
 
+/* This buffer needs to be defined for OSPI boot in case of HS device for
+ * image decryption and authentication
+ * The size of the buffer should be large enough to accomodate the appimage
+ */
+uint8_t gAppimage[0x800000] __attribute__ ((section (".app"), aligned (4096)));
+
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 
 /* call this API to stop the booting process and spin, do that you can connect
@@ -132,6 +138,7 @@ int main(void)
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
         Bootloader_Handle bootHandle;
+        Bootloader_Config *bootConfig;
 
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
@@ -141,6 +148,8 @@ int main(void)
         {
             /* Initialize PRU Cores if applicable */
             Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+            bootConfig = (Bootloader_Config *)bootHandle;
+            bootConfig->scratchMemPtr = gAppimage;
             if(TRUE == cfg->initICSSCores)
             {
                 status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);

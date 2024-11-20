@@ -18,7 +18,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW
 
 \endcond
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
@@ -45,7 +45,20 @@ The example does below
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/cpsw_lwip_https
+ Example folder | source/networking/enet/core/examples/lwip/cpsw_lwip_https
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/lwip/cpsw_lwip_https
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 

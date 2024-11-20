@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export `args.sdkPath`?=$(abspath `args.relPath`)
 include $(`args.sdkPath`)/imports.mak

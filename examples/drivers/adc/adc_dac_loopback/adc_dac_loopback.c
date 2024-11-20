@@ -42,7 +42,8 @@
 
 /*
  * Example Describption
- * This example demostrates the ADC-DAC loopback feature. In AM263Px the DAC can be connected internally to the ADC CAL1 Channels. each ADC has two CAL channels viz. CAL Channel 1 and CAL Channel 2. these CAL channels are common to all the ADCs. While using the ADC-DAC loopback, the following needs to be taken care of,
+ * In AM263Px DAC can be loopedback to ADC CAL1, and in AM261x the DAC can be loopedback to ADC CAL0
+ * This example demostrates the ADC-DAC loopback feature. Each ADC has two CAL channels viz. CAL Channel 0 and CAL Channel 1. these CAL channels are common to all the ADCs. While using the ADC-DAC loopback, the following needs to be taken care of,
  * 1. ADC cal channel should be of high impedence, i.e., no source driving it.
  * 2. DAC output should be driven only by DAC and there should not be any other source driving it.
  * 3. ADC sampling times must be increased in this mode. the example uses the 256 Sample and Hold window configuration.  
@@ -50,7 +51,7 @@
  * 
  * Configurations
  * - DAC is configured using syscfg
- * - ADC SOC0 is configured CAL1 Channel, with sample and hold window of 256 and generate interrupt at EOC0
+ * - ADC SOC0 is configured CAL0 Channel, with sample and hold window of 256 and generate interrupt at EOC0
  * 
  * External Connections
  * - No external connections required
@@ -91,9 +92,6 @@ void adc_dac_loopback_main(void *args)
     {
         gDac_shadowValues[iter] = iter*100; 
     }
-
-    /* Setting up ADC SOC for the CAL Channel 1*/
-    ADC_setupSOC(gAdcBaseAddr, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY, ADC_CH_CAL1, 256);
     
     /* Interrupts are enabled for the EOC-0, clearing the Interrupt flags if any */
     ADC_clearInterruptStatus(gAdcBaseAddr, ADC_INT_NUMBER1);

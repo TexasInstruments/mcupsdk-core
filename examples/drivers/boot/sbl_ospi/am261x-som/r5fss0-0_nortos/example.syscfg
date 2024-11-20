@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.21.999+161"}
  */
 
@@ -46,30 +46,38 @@ bootloader1.appImageOffset = "0x00080000";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
+flash1.proto_isAddrReg                    = true;
+flash1.proto_cmdRegRd                     = "0x85";
+flash1.proto_cmdRegWr                     = "0x81";
+flash1.proto_mask                         = "0xff";
+flash1.dummy_isAddrReg                    = true;
+flash1.dummy_cfgReg                       = "1";
+flash1.dummy_cmdRegRd                     = "0x85";
+flash1.dummy_cmdRegWr                     = "0x81";
 flash1.strDtr_isAddrReg                   = true;
 flash1.strDtr_cmdRegRd                    = "0x85";
 flash1.strDtr_cmdRegWr                    = "0x81";
 flash1.strDtr_mask                        = "255";
-flash1.xspiWipRdCmd                       = "0x05";
 flash1.strDtr_shift                       = 255;
+flash1.proto_cfgReg                       = "0";
+flash1.dummy_mask                         = "0xFF";
 flash1.protocol                           = "8d_8d_8d";
-flash1.fourByteEnableSeq                  = "0";
-flash1.cmdRd                              = "0x7c";
-flash1.dummy_mask                         = "0xff";
-flash1.flashDeviceId                      = "0x5B17";
+flash1.fname                              = "IS25LX064";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO10";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO62";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO9";
-flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO68";
-flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO8";
-flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO67";
-flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO76";
-flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
-flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
-flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
-flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.inputClkFreq      = 166666666;
+flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -83,7 +91,7 @@ edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 gpio1.pinDir         = "OUTPUT";
 gpio1.$name          = "GPIO_OSPI_RST";
 gpio1.defaultValue   = "1";
-gpio1.GPIO_n.$assign = "GPIO61";
+gpio1.GPIO_n.$assign = "GPIO66";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 

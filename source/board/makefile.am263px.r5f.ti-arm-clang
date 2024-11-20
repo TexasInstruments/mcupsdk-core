@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -30,14 +27,6 @@ FILES_common := \
     nor_spi_sfdp.c \
     ioexp_tca6424.c \
     ioexp_tca6416.c \
-    pmic_tps653860xx.c \
-    pmic.c \
-    pmic_common.c \
-    pmic_core.c \
-    pmic_io.c \
-    pmic_power.c \
-    pmic_wdg.c \
-    pmic_lld.c \
 
 FILES_PATH_common = \
     eeprom \
@@ -47,17 +36,10 @@ FILES_PATH_common = \
     flash/ospi \
     led \
     ioexp \
-    pmic \
-    pmic/pmic_lld/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -Ipmic \
-    -Ipmic/pmic_lld/src \
-    -Ipmic/pmic_lld/include \
-    -Ipmic/pmic_lld/include/cfg/tps65386x \
-    -Ipmic/pmic_lld/src/cfg/tps65386x \
 
 DEFINES_common := \
     -DSOC_AM263PX \

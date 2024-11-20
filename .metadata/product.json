@@ -5,6 +5,7 @@
     "documentationPath": "../docs",
     "includePaths": [
         "../source/sysconfig",
+        "../source/networking/enet/core/sysconfig",
     ],
     "components": [
         "/kernel/dpl",
@@ -12,11 +13,8 @@
         "/board/board",
         "/fs/fs",
         "/networking/networking",
-        "/security/security",
-        "/usb/usb",
-        "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash"
+        "/security/security",
     ],
     "devices": [
         "AM64x",
@@ -300,5 +298,5 @@
         "showSignals": true,
         "showUsed": true
     },
-    "minToolVersion" : "1.21.0"
+    "minToolVersion" : "1.21.2"
 }

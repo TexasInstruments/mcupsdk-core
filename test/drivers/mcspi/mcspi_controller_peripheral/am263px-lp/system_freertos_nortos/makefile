@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -14,12 +11,14 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=test_mcspi_controller_peripheral_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=test_mcspi_controller_peripheral_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=test_mcspi_controller_peripheral_system.$(PROFILE).appimage_xip
-MULTI_CORE_BOOTIMAGE_NAME_MCELF:=test_mcspi_controller_peripheral_system.$(PROFILE).mcelf
-MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=test_mcspi_controller_peripheral_system.$(PROFILE).mcelf.hs
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
@@ -31,6 +30,24 @@ CORES = \
 
 CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).out
 CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).out
+
+CORE_IMG_ARGS :=
+CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
+
+CORE_0_OPTISHARE_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).optishare.out
+CORE_1_OPTISHARE_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).optishare.out
+
+
+CORE_IMG_OPTISHARE_ARGS :=
+CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
+CORE_IMG_OPTISHARE_ARGS +=--core-img=1:$(CORE_1_OPTISHARE_IMG)
+
+
+COREXMLS = \
+	../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml\
+	../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -48,6 +65,47 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+CC=$(CG_TOOL_ROOT)/bin/tiarmclang
+LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
+
+sso: optisave
+
+coreout: sso.out
+	@echo .
+	@echo generating files with sso
+	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos_nortos/sso.out
+	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos_nortos/sso.out
+	@echo generating files with sso done!
+	@echo .
+
+sso.out: sso.cmd
+	@echo .
+	@echo generating sso.out
+	$(CC) -Wl,sso.cmd.tmp -o sso.out -Wl,--xml_link_info=sso.lnkxml -Wl,--gen_xml_func_hash
+	@echo done
+	@echo .
+
+sso.cmd: all $(COREXMLS)
+	@echo .
+	@echo generating sso.cmd.tmp
+	$(OPTISHARE) -o sso.cmd.tmp $(COREXMLS) -s sso.info.tmp --mem_spec 
+	@echo generating sso.cmd done
+	@echo .
+
+optisave: buildmcelfsso
+	$(OPTISAVE) ../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml ../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).optishare.lnkxml > ../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).ossr
+	$(OPTISAVE) ../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml ../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).optishare.lnkxml > ../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).ossr
+
+buildmcelfsso: coreout
+	@echo .
+	@echo generating mcelf with sso 
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_OPTISHARE_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --sso=sso.out
+	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
+
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ clean
@@ -63,12 +121,20 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs
@@ -127,10 +193,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
-CORE_IMG_ARGS :=
-CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
-CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...

@@ -43,6 +43,13 @@
 
 void flashFixUpQspiBoot(void);
 
+/* This buffer needs to be defined for OSPI boot in case of HS device for
+ * image decryption and authentication
+ * Incase of am243x-lp only 256kb is available in RAM, so the encrypted image should be
+ * less than 256kb.
+ */
+uint8_t gAppimage[0x40000] __attribute__ ((section (".app"), aligned (4096)));
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -131,6 +138,7 @@ int main(void)
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
         Bootloader_Handle bootHandle;
+        Bootloader_Config *bootConfig;
 
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
@@ -140,6 +148,8 @@ int main(void)
         {
             /* Initialize PRU Cores if applicable */
             Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+            bootConfig = (Bootloader_Config *)bootHandle;
+            bootConfig->scratchMemPtr = gAppimage;
             if(TRUE == cfg->initICSSCores)
             {
                 status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);

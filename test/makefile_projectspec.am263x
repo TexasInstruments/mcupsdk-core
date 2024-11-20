@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
@@ -66,13 +63,41 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
 
  memory_access_latency_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C benchmarks/memory_access_latency/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -119,65 +144,53 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  test_qspi_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
- dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
- switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  cpsw_intervlan_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_aes_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_aes_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_pka_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_pka_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_sha_entropy_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_sha_entropy_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  mbedtls_benchmark_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_test_cpsw_layer2_performance_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_test_cpsw_layer2_performance_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -320,13 +333,41 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
 
  memory_access_latency_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C benchmarks/memory_access_latency/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -373,65 +414,53 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  test_qspi_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
- dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
- switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  cpsw_intervlan_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_aes_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_aes_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_pka_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_pka_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_sha_entropy_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_sha_entropy_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  mbedtls_benchmark_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_test_cpsw_layer2_performance_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_test_cpsw_layer2_performance_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -574,13 +603,41 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ dual_emac_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
 
  memory_access_latency_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C benchmarks/memory_access_latency/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -627,65 +684,53 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  test_qspi_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- dual_emac_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
- dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
- switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  cpsw_intervlan_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_aes_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_aes_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_pka_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_pka_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_sha_entropy_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_sha_entropy_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  mbedtls_benchmark_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_test_cpsw_layer2_performance_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_test_cpsw_layer2_performance_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -782,6 +827,14 @@ help:
 	@echo  .
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C benchmarks/memory_access_latency/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C benchmarks/memory_access_latency/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dccap/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -797,26 +850,22 @@ help:
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/cpsw_intervlan/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_aes/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_pka/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_sha_entropy/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/mbedtls_benchmark/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .

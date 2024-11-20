@@ -40,7 +40,7 @@ This example is more or less like a flashing server, and will terminate until us
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
@@ -85,8 +85,9 @@ This example is more or less like a flashing server, and will terminate until us
 \attention Do not perform DDR Initialization \ref DDR_INIT as it is done in the example itself.
 - Reset the CPU and Load program on the CPU
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - Launch a CCS debug session and run the executable sbl_jtag using gels, please refer \ref EVM_SOC_INIT_NOBOOT_MODE
+- The example can also be run via CCS with the board in OSPI bootmode. Make sure gel files are disabled while connecting to target. This method can be used when changing bootmode pins is not preferred.
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
 - Launch a CCS debug session and run the executable sbl_jtag using gels, please refer \ref CCS_LAUNCH_PAGE

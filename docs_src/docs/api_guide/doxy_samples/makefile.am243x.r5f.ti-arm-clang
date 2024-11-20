@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -49,6 +46,7 @@ FILES_common := \
     Mdio_sample.c \
     MpuP_arm_v7_sample.c \
     Ospi_sample.c \
+    Ospi_lld_sample.c \
     Pinmux_sample.c \
     Pruicss_sample_g_v0.c \
     Pmu_sample.c \

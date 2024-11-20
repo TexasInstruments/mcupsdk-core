@@ -504,6 +504,22 @@ int32_t I2C_transfer(I2C_Handle handle, I2C_Transaction *transaction)
                 }
                 object->state = I2C_STATE_IDLE;
             }
+            else
+            {
+                retVal = transaction->status;
+                if(retVal == I2C_STS_SUCCESS)
+                {
+                    retVal = SystemP_SUCCESS;
+                }
+                else if(retVal == I2C_STS_ERR_TIMEOUT)
+                {
+                    retVal = SystemP_TIMEOUT;
+                }
+                else
+                {
+                    retVal = SystemP_FAILURE;
+                }
+            }
             /* Release the lock for this particular I2C handle */
             (void)SemaphoreP_post(&object->mutex);
         }

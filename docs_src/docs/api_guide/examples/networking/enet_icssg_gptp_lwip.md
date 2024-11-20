@@ -25,7 +25,7 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_lwip_icssg
+ Example folder | source/networking/enet/core/examples/tsn/gptp_lwip_icssg
 
 \endcond
 
@@ -36,7 +36,7 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_lwip_icssg
+ Example folder | source/networking/enet/core/examples/tsn/gptp_lwip_icssg
 
 \endcond
 

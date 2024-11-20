@@ -61,6 +61,7 @@ flash1.protocol                           = "8d_8d_8d";
 flash1.fourByteEnableSeq                  = "0";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
 flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
@@ -72,6 +73,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);

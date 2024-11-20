@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.999+169"}
  */
 
 /**
@@ -13,7 +14,7 @@ const mcspi1          = mcspi.addInstance();
 const mcspi2          = mcspi.addInstance();
 const mcspi3          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -44,16 +45,17 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-mcspi1.$name                 = "CONFIG_MCSPI0";
-mcspi1.inputSelect           = "0";
-mcspi1.intrEnable            = "POLLED";
-mcspi1.sdkInfra              = "LLD";
-mcspi1.mode                  = "MULTI_CONTROLLER";
-mcspi1.SPI.$assign           = "SPI0";
-mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template_lld0";
+mcspi1.$name                       = "CONFIG_MCSPI0";
+mcspi1.inputSelect                 = "0";
+mcspi1.intrEnable                  = "POLLED";
+mcspi1.sdkInfra                    = "LLD";
+mcspi1.mode                        = "MULTI_CONTROLLER";
+mcspi1.SPI.$assign                 = "SPI0";
+mcspi1.child.$name                 = "drivers_mcspi_v1_mcspi_v1_template_lld0";
 mcspi1.mcspiChannel.create(2);
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-mcspi1.mcspiChannel[1].$name = "CONFIG_MCSPI_CH3";
+mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[1].$name       = "CONFIG_MCSPI_CH3";
+mcspi1.mcspiChannel[1].CSn.$assign = "GPIO136";
 
 mcspi2.$name                                      = "CONFIG_MCSPI1";
 mcspi2.inputSelect                                = "0";
@@ -63,7 +65,7 @@ mcspi2.sdkInfra                                   = "LLD";
 mcspi2.transferCallbackFxn                        = "MCSPI_lld_transferCallback";
 mcspi2.errorCallbackFxn                           = "MCSPI_lld_errorCallback";
 mcspi2.mode                                       = "MULTI_CONTROLLER";
-mcspi2.SPI.$assign                                = "SPI2";
+mcspi2.SPI.$assign                                = "SPI1";
 mcspi2.child.$name                                = "drivers_mcspi_v1_mcspi_v1_template_lld2";
 mcspi2.mcspiChannel[0].$name                      = "CONFIG_MCSPI_CH2";
 mcspi2.mcspiChannel[0].mcspiRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
@@ -85,6 +87,7 @@ mcspi3.inputSelect           = "0";
 mcspi3.transferCallbackFxn   = "MCSPI_lld_intrTransferCallback";
 mcspi3.errorCallbackFxn      = "MCSPI_lld_intrErrorCallback";
 mcspi3.mode                  = "MULTI_CONTROLLER";
+mcspi3.SPI.$assign           = "SPI3";
 mcspi3.child.$name           = "drivers_mcspi_v1_mcspi_v1_template_lld1";
 mcspi3.mcspiChannel.create(2);
 mcspi3.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
@@ -156,13 +159,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -319,18 +322,16 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution             = "GPIO12";
+mcspi1.SPI.CLK.$suggestSolution             = "GPIO1";
 mcspi1.SPI.D0.$suggestSolution              = "GPIO13";
 mcspi1.SPI.D1.$suggestSolution              = "GPIO14";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO26";
-mcspi1.mcspiChannel[1].CSn.$suggestSolution = "GPIO11";
-mcspi2.SPI.CLK.$suggestSolution             = "GPIO20";
-mcspi2.SPI.D0.$suggestSolution              = "GPIO21";
-mcspi2.SPI.D1.$suggestSolution              = "GPIO22";
-mcspi2.mcspiChannel[0].CSn.$suggestSolution = "GPIO19";
-mcspi3.SPI.$suggestSolution                 = "SPI4";
-mcspi3.SPI.CLK.$suggestSolution             = "EQEP0_A";
-mcspi3.SPI.D0.$suggestSolution              = "EQEP0_STROBE";
-mcspi3.SPI.D1.$suggestSolution              = "EQEP0_INDEX";
-mcspi3.mcspiChannel[0].CSn.$suggestSolution = "EPWM12_A";
-mcspi3.mcspiChannel[1].CSn.$suggestSolution = "EQEP0_B";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "GPIO0";
+mcspi2.SPI.CLK.$suggestSolution             = "GPIO16";
+mcspi2.SPI.D0.$suggestSolution              = "GPIO17";
+mcspi2.SPI.D1.$suggestSolution              = "GPIO18";
+mcspi2.mcspiChannel[0].CSn.$suggestSolution = "GPIO15";
+mcspi3.SPI.CLK.$suggestSolution             = "GPIO24";
+mcspi3.SPI.D0.$suggestSolution              = "GPIO25";
+mcspi3.SPI.D1.$suggestSolution              = "GPIO26";
+mcspi3.mcspiChannel[0].CSn.$suggestSolution = "GPIO127";
+mcspi3.mcspiChannel[1].CSn.$suggestSolution = "GPIO23";

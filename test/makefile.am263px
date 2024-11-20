@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 all:
 	$(MAKE) -f makefile.am263px libs
@@ -45,6 +42,14 @@ help:
 	@echo  Example build targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -172,9 +177,9 @@ help:
 	@echo  $(MAKE) -s -C kernel/freertos/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cbc_stream/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cfb/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -467,6 +472,14 @@ BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am263px-lp_system_freertos_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 
@@ -478,6 +491,30 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
+ dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
+ switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
+ switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
 
  ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -861,13 +898,13 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile all
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1146,6 +1183,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am263px-lp_system_freertos_
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
@@ -1154,6 +1199,30 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
+ dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
+ switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
+ switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
 
  ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1537,13 +1606,13 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile clean
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1822,6 +1891,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am263px-lp_system_freertos_
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
@@ -1830,6 +1907,30 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dual_emac_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ dual_emac_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ dual_emac_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am263px-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263px-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
 
  ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -2213,13 +2314,13 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C middleware/tielfup32/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
 
  enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_dthe_aes_cbc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_aes_cbc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

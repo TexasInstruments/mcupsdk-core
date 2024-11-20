@@ -32,7 +32,7 @@ NOTE: DSCP priority mapping is configured in the example but for the host port t
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_tcpclient
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient
 
 Note: To run the example on any core other than r5fss0-0, user needs to change the DMA channel resource ownership accordingly using the resource partioning tool in \ref RESOURCE_ALLOCATION_GUIDE and build the new SBL.
 \endcond
@@ -44,7 +44,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_tcpclient
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient
 
 Note: To run the example on any core other than r5fss0-0, user needs to change the DMA channel resource ownership accordingly using the resource partioning tool in \ref RESOURCE_ALLOCATION_GUIDE and build the new SBL.
 \endcond
@@ -56,7 +56,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_tcpclient
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient
 
 \endcond
 
@@ -67,7 +67,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_tcpclient
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient
 
 \endcond
 
@@ -78,7 +78,20 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_cpsw_tcpclient
+ Example folder | source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/lwip/enet_cpsw_tcpclient
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 
@@ -103,7 +116,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)

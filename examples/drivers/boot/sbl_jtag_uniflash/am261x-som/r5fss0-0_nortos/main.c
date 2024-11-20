@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,6 +48,9 @@ static char inputStr[INPUT_STR_MAX_LEN];
 
 #define FILE_NAME_MAX_LEN   (384u)
 static char filename[FILE_NAME_MAX_LEN];
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle);
+void gpio_flash_reset(void);
 
 char gMainMenu[] = {
     " \r\n"
@@ -255,6 +258,11 @@ int main(void)
     /* Open OSPI Driver, among others */
     Drivers_open();
 
+	/* ROM doesn't reset the OSPI flash. This can make the flash initialization
+    troublesome because sequences are very different in Octal DDR mode. So for a
+    moment switch OSPI controller to 8D mode and do a flash reset. */
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
+
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     if(status!=SystemP_SUCCESS)
@@ -310,7 +318,17 @@ int main(void)
         DebugP_log(" [FLASH WRITER] Application exited !!!\r\n");
         DebugP_log("All tests have passed!!\r\n");
     }
+    
+    gpio_flash_reset();
 
     Board_driversClose();
     Drivers_close();
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle)
+{
+    gpio_flash_reset();
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }

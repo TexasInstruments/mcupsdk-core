@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -22,6 +19,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=epwm_duty_cycle_sync.$(PROFILE).out
+COREOUTNAME:=epwm_duty_cycle_sync.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=epwm_duty_cycle_sync.$(PROFILE).appimage
@@ -173,6 +171,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am64x:a53ss0-0:freertos:gcc-aarch64 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am64x:a53ss0-0:freertos:gcc-aarch64 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -196,6 +195,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -203,6 +204,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 

@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM243x_ALV_beta" --part "ALV" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCBGA (ALV)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.0+3721"}
  */
 
 /**
@@ -17,7 +18,7 @@ const bootloader3     = bootloader.addInstance();
 const bootloader4     = bootloader.addInstance();
 const bootloader5     = bootloader.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -34,6 +35,7 @@ const section1        = section.addInstance();
 const section2        = section.addInstance();
 const section3        = section.addInstance();
 const section4        = section.addInstance();
+const section5        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -116,7 +118,7 @@ general1.entry_point    = "-e_vectors_sbl";
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(6);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA_R5F";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].size               = 0x40;
@@ -138,6 +140,11 @@ region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70050000;
 region1.memory_region[5].size               = 0x30000;
+region1.memory_region[6].type               = "CUSTOM_ALL";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x82000000;
+region1.memory_region[6].$name              = "APPIMAGE";
+region1.memory_region[6].size               = 0x800000;
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;
@@ -205,6 +212,14 @@ section4.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
 section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+
+section5.group                       = false;
+section5.type                        = "NOLOAD";
+section5.load_memory                 = "APPIMAGE";
+section5.$name                       = "BSSAPP_SECTION";
+section5.output_section.create(1);
+section5.output_section[0].$name     = ".bss.app";
+section5.output_section[0].alignment = 0;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,15 +37,14 @@
 #include "board.h"
 
 void ospi_flash_io_main(void *args);
+void board_flash_reset(void);
 
 int main(void)
 {
     System_init();
     Board_init();
-    Drivers_i2cOpen();
-    i2c_flash_reset();
-    Drivers_i2cClose();
 
+    board_flash_reset();
     ospi_flash_io_main(NULL);
 
     Board_deinit();

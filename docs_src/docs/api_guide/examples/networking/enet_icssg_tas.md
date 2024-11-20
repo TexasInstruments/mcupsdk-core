@@ -57,7 +57,7 @@ Below shows the configuration used for the Time Aware Shaper which is used to co
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Icssg Instance | ICSSG1
- Example folder | examples/networking/enet_icssg_tas
+ Example folder | source/networking/enet/core/examples/enet_icssg_tas
 
 \endcond
 
@@ -69,7 +69,7 @@ Below shows the configuration used for the Time Aware Shaper which is used to co
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Icssg Instance | ICSSG1
- Example folder | examples/networking/enet_icssg_tas
+ Example folder | source/networking/enet/core/examples/enet_icssg_tas
 
 \endcond
 

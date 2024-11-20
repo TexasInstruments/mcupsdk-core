@@ -89,6 +89,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_XIP
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_EP
@@ -268,6 +272,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_DAC_SQUARE_WAVE
 -# ECAP
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
+   -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_PHASE_SHIFT
    -# \subpage EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM
    -# \subpage EXAMPLES_DRIVERS_ECAP_EDMA
 \cond SOC_AM263PX || SOC_AM261X
@@ -392,11 +397,20 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_OSPI_NAND_FLASH_IO
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT
    -# \subpage EXAMPLES_DRIVERS_SWAP_TO_B
+\endcond
+\cond SOC_AM261X
+-# PMIC
+   -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_RESET
+   -# \subpage EXAMPLES_PMIC_TRIGGER_WATCHDOG_RESET
 \endcond
 -# PMU
    -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT

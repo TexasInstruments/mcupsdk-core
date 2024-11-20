@@ -26,6 +26,8 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
     ],
 };
 
@@ -34,6 +36,8 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
     ],
 };
 
@@ -51,6 +55,8 @@ const libs_nortos_r5f = {
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -59,6 +65,8 @@ const libs_freertos_r5f = {
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

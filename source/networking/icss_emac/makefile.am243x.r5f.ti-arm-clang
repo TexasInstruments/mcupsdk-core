@@ -1,9 +1,6 @@
-#
-# Auto generated makefile
-#
 
-export INDUSTRIAL_COMMUNICATIONS_SDK_PATH?=$(abspath ../../..)
-include $(INDUSTRIAL_COMMUNICATIONS_SDK_PATH)/imports.mak
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
 
@@ -23,12 +20,11 @@ FILES_common := \
     icss_emac.c \
 
 FILES_PATH_common = \
-    ${INDUSTRIAL_COMMUNICATIONS_SDK_PATH}/source/networking/icss_emac/source \
+    ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
-    -I${INDUSTRIAL_COMMUNICATIONS_SDK_PATH}/mcu_plus_sdk/source \
-    -I${INDUSTRIAL_COMMUNICATIONS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source \
 
 DEFINES_common := \
     -DSOC_AM243X \
@@ -50,11 +46,12 @@ CFLAGS_cpp_common := \
     -Wno-extern-c-compat \
     -Wno-c++11-narrowing \
     -Wno-reorder-init-list \
-    -Wno-deprecated-register \
+    -Wno-register \
     -Wno-writable-strings \
     -Wno-enum-compare \
     -Wno-reserved-user-defined-literal \
     -Wno-unused-const-variable \
+    -Wno-vla-cxx-extension \
     -x c++ \
 
 CFLAGS_debug := \

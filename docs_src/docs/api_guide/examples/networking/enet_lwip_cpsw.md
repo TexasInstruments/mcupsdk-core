@@ -12,7 +12,7 @@ ethernet driver (ENET)
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
   - It uses ethernet driver underneath with LwIP TCP/IP networking stack
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X || SOC_AWR294X || SOC_AM261X
   - CPSW can be configured in two modes: Switch or MAC. For more details, \ref ENET_LWIP_CPSW_OPERATING_MODES
 \endcond
 \cond SOC_AM263PX
@@ -33,7 +33,7 @@ The examples do below
 - Example is configured to run in MAC mode only.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 Note: In this example, Different Priority Packets are received using a single channel by enabling the default thread Id (for this enChOverrideFlag is set in dmacfg), which allows packets with no classifer match to be received by the host.
 \endcond
 # Supported Combinations
@@ -45,7 +45,7 @@ Note: In this example, Different Priority Packets are received using a single ch
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 Note: To run the example on any core other than r5fss0-0, user needs to change the DMA channel resource ownership accordingly using the resource partioning tool in \ref RESOURCE_ALLOCATION_GUIDE and build the new SBL.
 \endcond
@@ -57,7 +57,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 Note: To run the example on any core other than r5fss0-0, user needs to change the DMA channel resource ownership accordingly using the resource partioning tool in \ref RESOURCE_ALLOCATION_GUIDE and build the new SBL.
 \endcond
@@ -69,7 +69,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 \endcond
 
@@ -80,7 +80,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 \endcond
 
@@ -91,7 +91,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 \endcond
 
@@ -102,11 +102,25 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_ADDON_AUTO
- Example folder | examples/networking/lwip/enet_lwip_cpsw
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
  For support on @VAR_BOARD_NAME_ADDON_AUTO, please refer \ref ETHERNET_ADDON_BOARDS_TOP
  
 \endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/lwip/enet_lwip_cpsw
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+
+\endcond
+
 # Configuring Syscfg
 
 - Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Number of DMA descriptors and buffering.
@@ -188,7 +202,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 - Iperf version to be used is version 2.0.9-win64(on windows) and version 2.+ on linux(Ubuntu 18.04 64bit).
 
-- The lwip app has iperf enabled by default. To disable the iperf functionality, disable the macro (LWIP_LWIPERF_APP) in the application file lwipcfg.h under path (examples/networking/lwip/enet_lwip_cpsw).
+- The lwip app has iperf enabled by default. To disable the iperf functionality, disable the macro (LWIP_LWIPERF_APP) in the application file lwipcfg.h under path (source/networking/enet/core/examples/lwip/enet_lwip_cpsw).
 
 - The data streams can be either Transmission Control Protocol (TCP) or User Datagram Protocol (UDP).
 

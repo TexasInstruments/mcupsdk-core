@@ -35,6 +35,7 @@ const files = {
         "Mdio_sample.c",
         "MpuP_arm_v7_sample.c",
         "Ospi_sample.c",
+        "Ospi_lld_sample.c",
         "Pinmux_sample.c",
         "Pruicss_sample_g_v0.c",
 	    "Pmu_sample.c",

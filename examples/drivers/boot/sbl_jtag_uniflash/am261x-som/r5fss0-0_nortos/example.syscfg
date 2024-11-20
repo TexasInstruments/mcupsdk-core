@@ -34,27 +34,39 @@ const section5   = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                      = "CONFIG_FLASH0";
-flash1.proto_isAddrReg            = true;
-flash1.proto_cmdRegRd             = "0x85";
-flash1.proto_cmdRegWr             = "0x81";
-flash1.proto_mask                 = "0xff";
-flash1.dummy_isAddrReg            = true;
-flash1.dummy_cfgReg               = "1";
-flash1.dummy_cmdRegRd             = "0x85";
-flash1.dummy_cmdRegWr             = "0x81";
-flash1.strDtr_isAddrReg           = true;
-flash1.strDtr_cmdRegRd            = "0x85";
-flash1.strDtr_cmdRegWr            = "0x81";
-flash1.strDtr_mask                = "255";
-flash1.xspiWipRdCmd               = "0x05";
-flash1.strDtr_shift               = 255;
-flash1.proto_cfgReg               = "0";
-flash1.dummy_mask                 = "0xFF";
-flash1.protocol                   = "8d_8d_8d";
-flash1.fourByteEnableSeq          = "0";
-flash1.peripheralDriver.$name     = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable = true;
+flash1.$name                              = "CONFIG_FLASH0";
+flash1.proto_isAddrReg                    = true;
+flash1.proto_cmdRegRd                     = "0x85";
+flash1.proto_cmdRegWr                     = "0x81";
+flash1.proto_mask                         = "0xff";
+flash1.dummy_isAddrReg                    = true;
+flash1.dummy_cfgReg                       = "1";
+flash1.dummy_cmdRegRd                     = "0x85";
+flash1.dummy_cmdRegWr                     = "0x81";
+flash1.strDtr_isAddrReg                   = true;
+flash1.strDtr_cmdRegRd                    = "0x85";
+flash1.strDtr_cmdRegWr                    = "0x81";
+flash1.strDtr_mask                        = "255";
+flash1.strDtr_shift                       = 255;
+flash1.proto_cfgReg                       = "0";
+flash1.dummy_mask                         = "0xFF";
+flash1.protocol                           = "8d_8d_8d";
+flash1.fname                              = "IS25LX064";
+flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.inputClkFreq      = 166666666;
+flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -203,21 +215,3 @@ section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI1";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO10";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "GPIO38";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO39";
-flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO37";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO36";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO35";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO34";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO33";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO32";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO31";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO2";

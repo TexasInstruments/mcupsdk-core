@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
@@ -477,43 +474,43 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
 
  enet_cpsw_loopback_mac_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_loopback_phy_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_udpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
 
  crypto_dthe_aes_cbc_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1163,43 +1160,43 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
 
  enet_cpsw_loopback_mac_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_loopback_phy_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_udpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_dthe_aes_cbc_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -1849,43 +1846,43 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
 
  enet_cpsw_loopback_mac_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_loopback_phy_end_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_udpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
 
  crypto_dthe_aes_cbc_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -2176,19 +2173,19 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/interrupt_profiling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

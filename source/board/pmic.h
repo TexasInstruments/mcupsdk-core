@@ -53,7 +53,13 @@
 #include <kernel/dpl/SystemP.h>
 #include <drivers/mcspi.h>
 #include <drivers/edma.h>
-#include <board/pmic/pmic_lld/include/pmic.h>
+#ifdef BLACKBIRD
+#include <board/pmic/pmic_lld/blackbird/include/pmic.h>
+#endif
+
+#ifdef DERBY
+#include <board/pmic/pmic_lld/derby/include/pmic.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,6 +138,9 @@ struct PMIC_Params_s
     uint32_t        instType;
     /**< PMIC Instance type.
      *  For Valid Values: \ref Pmic_InstType */
+    uint32_t        i2cAddr;
+    /**< Underlying I2C peripheral device address that is
+     *  used by the PMIC driver */
     uint32_t        instance;
     /**< Underlying I2C/MCSPI peripheral driver instance that is
      *  used by the PMIC driver */
@@ -202,14 +211,14 @@ PMIC_Handle PMIC_open(uint32_t instanceId, const PMIC_Params *params);
 int32_t PMIC_configure(PMIC_Handle handle);
 
 /**
- * \brief Get handle to PMIC driver
+ * \brief Get handle to PMIC Pmic_CoreHandle_t driver
  *
  * \param index    [in] Index within `PMIC_Config gPmicConfig[]`
  *
- * \return Handle to pmic driver
+ * \return Handle to Pmic_CoreHandle_t
  * \return NULL in case of failure
  */
-PMIC_Handle PMIC_getHandle(uint32_t index);
+Pmic_CoreHandle_t* PMIC_getCoreHandle(uint32_t index);
 
 /**
  *  \brief Close PMIC driver

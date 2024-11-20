@@ -80,7 +80,7 @@
 extern Bootloader_Config gBootloaderConfig[];
 extern uint32_t gBootloaderConfigNum;
 
-#ifdef DRV_VERSION_MMCSD_V0
+#ifdef BOOTLOADER_SCRATCH_MEM_SUPPORT
 extern Bootloader_MemArgs gMemBootloaderArgs;
 #endif
 
@@ -717,6 +717,18 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
                     Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
                     flashArgs->appImageOffset += certLen;
                     flashArgs->curOffset = flashArgs->appImageOffset;
+
+#ifdef  BOOTLOADER_SCRATCH_MEM_SUPPORT
+                    if(config->enableScratchMem == BOOTLOADER_SCRATCH_MEM_ENABLE){
+                        /* At this point the image is in RAM, change bootmedia from OSPI to memory */
+                        gMemBootloaderArgs.appImageBaseAddr = (uint32_t)(config->scratchMemPtr) + certLen;
+                        gMemBootloaderArgs.curOffset = 0U;
+
+                        config->fxns = &gBootloaderMemFxns;
+                        config->args = &gMemBootloaderArgs;
+                        config->bootMedia = BOOTLOADER_MEDIA_MEM;
+                    }
+#endif
                 }
                 else if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
                 {

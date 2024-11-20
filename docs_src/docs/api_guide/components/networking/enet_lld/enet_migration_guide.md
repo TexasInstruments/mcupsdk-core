@@ -125,7 +125,7 @@ All application configurable DMA channels open params that were configurable via
 APIs EnetAppUtils_openTxCh/ EnetAppUtils_openRxCh are now configurable via syscfg GUI
 - One Tx and Rx channel are created by default
   + If application needs additional Tx and Rx channels it should instantiate additional channels via syscfg
-    + Refer mcu_plus_sdk/examples/networking/enet_layer2_multi_channel/<soc-platform>/r5fss0-0_freertos/example.syscfg
+    + Refer mcu_plus_sdk/source/networking/enet/core/examples/enet_layer2_multi_channel/<soc-platform>/r5fss0-0_freertos/example.syscfg
 
 The syscfg generated EnetApp_driverOpen function internally opens all configured DMA channels.
 - Application can no longer opens DMA channels. 
@@ -200,7 +200,7 @@ EnetDma_Pkt is the packet structure passed to EnetDma_submitTxPktQ (packet trans
   - If application does not use tx scatter gather feature for packet transmission it should set
     + EnetDma_Pkt.bufPtrFilledLen = EnetDma_Pkt.txTotalPktLen = length of tx packet
   - If application uses the tx scatter gather feature please refer API documentation of EnetDma_Pkt and 
-    refer mcu_plus_sdk/examples/networking/enet_tx_scatter_gather/txsg_test.c for example usage
+    refer mcu_plus_sdk/source/networking/enet/core/examples/enet_tx_scatter_gather/txsg_test.c for example usage
   
 ###DisableCacheOps related change ###### 
 Impact: The disableCacheOps change impacts CPSW peripherals on AM263x/AM273x/AWR294x
@@ -221,7 +221,7 @@ rest of the fields in EnetDma_initPktInfo to required values.
 If application is lwip based based and UDP packets are transmitted, application should perform cache coherency 
 operation on payload before submitting the packet for transmission. This is because zero copy is enabled for UDP 
 packet transmission and cache operation in driver are disabled for UDP payload portions. 
-- Refer mcu_plus_sdk/examples/networking/lwip/enet_lwip_cpsw/udp_iperf.c: CacheP_wbInv function call for illustrative usage
+- Refer mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw/udp_iperf.c: CacheP_wbInv function call for illustrative usage
   
 ###Checksum offload related change ###### 
 Impact: The checksum offload change impacts CPSW peripheral based applications on AM263x
@@ -273,7 +273,7 @@ The board specific file should contain the following
 - **EnetBoard_getId()**: This function should return the board id. This is not used anywhere outside this file so the board id returned 
   will depend on the implementation of EnetBoard_setupPorts()/EnetBoard_getPhyCfg()  for the custom board if it refers the boardId to 
   determine PHY config/setup ports.
-- Refer mcu_plus_sdk/examples/networking/enet_layer2_multi_channel
+- Refer mcu_plus_sdk/source/networking/enet/core/examples/enet_layer2_multi_channel
     + enet_custom_board_config.c for example illustrating custom board integration
 
 ### Ethernet MAC address Management
@@ -342,7 +342,7 @@ On your custom board EEPROM may not be available or it is not used to keep MAC a
 External PHY management allows application plugging in its own PHY state machine and manage PHY drivers outside of Enet LLD
 - PHY control and PHY statemachine handling is disabled in Ethernet driver
 - MDIO is still owned by Ethernet Driver and MDIO IOCTLs should be used to access the PHYs
-  + mcu_plus_sdk/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt/enetextphy_phymdio_dflt.c
+  + mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw/extPhyMgmt/enetextphy_phymdio_dflt.c
 - External PHY management is enabled via syscfg option ![ExternalPhyManagementSyscfg](ExternalPHYManagementSyscfg.png "External PHY management syscfg") {html: width=50%}
 - Application should register for MDIO link event interrupt if MDIO manual mode is not enabled
   + Application should create a periodic polling task to check link state if MDIO manual mode is enabled
@@ -351,7 +351,7 @@ External PHY management allows application plugging in its own PHY state machine
   + ENET_PER_IOCTL_HANDLE_EXTPHY_LINKUP_EVENT
   + ENET_PER_IOCTL_HANDLE_EXTPHY_LINKDOWN_EVENT
 - Refer example application for extphy demonstration
-  + mcu_plus_sdk/examples/networking/lwip/enet_lwip_cpsw
+  + mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
 Note: The external PHY sample example does not implement a real state m/c. Intention is to show Enet driver 
 interaction with externally managed PHY and not implement a full featured external PHY

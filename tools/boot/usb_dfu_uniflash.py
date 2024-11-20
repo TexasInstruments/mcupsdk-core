@@ -20,14 +20,17 @@ BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
 BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER         = 0x46554C42 # BLUF
 BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER         = 0x52554C42 # BLUR
 
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH                     = 0xF0
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY              = 0xF1
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_XIP                 = 0xF2
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_XIP          = 0xF3
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_TUNING_DATA         = 0xF4
-BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE               = 0xFE
-BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH                = 0xF5
-BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY               = 0xF6
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH                      = 0xF0
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY               = 0xF1
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_XIP                  = 0xF2
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_XIP           = 0xF3
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_TUNING_DATA          = 0xF4
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE                = 0xFE
+BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH                 = 0xF5
+BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY                = 0xF6
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR               = 0xF7
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP            = 0xF8
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP     = 0xF9
 
 optypewords = {
     "flash" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH,
@@ -38,6 +41,9 @@ optypewords = {
     "erase" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE,
     "flash-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH,
     "flashverify-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY,
+    "flash-sector-write":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR,
+    "flash-mcelf-xip":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP,
+    "flashverify-mcelf-xip" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP
 }
 
 TMP_SUFFIX = ".tmp"
@@ -112,7 +118,7 @@ def create_temp_file(linecfg):
 
     # Determine the offset if applicable
     offset_val = rsv_word
-    if(linecfg.optype not in ("flash-xip", "flashverify-xip", "flash-phy-tuning-data")):
+    if(linecfg.optype not in ("flash-xip", "flashverify-xip", "flash-mcelf-xip", "flashverify-mcelf-xip", "flash-phy-tuning-data")):
         offset_val = get_numword(linecfg.offset)
 
     # Determine the erase size if applicable
@@ -318,7 +324,7 @@ def main(argv):
     my_parser.add_argument('-f', '--file', required=False, help="Filename to send for an operation. Not required if using config mode (--cfg)")
     my_parser.add_argument('--use-sdk-utility', action="store_true", required=False, help="Selects the custom build SDK-DFU util instead of standard one")
     my_parser.add_argument('-o', '--flash-offset', required=False, help="Offset (in hexadecimal format starting with a 0x) at which the flash/verify flash is to be done. Not required if using config mode (--cfg)")
-    my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc". Not required if using config mode (--cfg)')
+    my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-mcelf-xip" or "flashverify-mcelf-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc". Not required if using config mode (--cfg)')
     my_parser.add_argument('--flash-writer', required=False, help="Special option. This will load the sbl_dfu_uniflash binary which will be booted by ROM. Other arguments are irrelevant and hence ignored when --flash-writer argument is present. Not required if using config mode (--cfg)")
     my_parser.add_argument('--erase-size', required=False, help='Size of flash to erase. Only valid when operation is "erase"')
     my_parser.add_argument('--cfg', required=False, help=g_cfg_file_description)
@@ -558,6 +564,7 @@ class LineCfg():
                             self.offset = config_dict["--flash-offset"]
 
                     if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or\
+                        self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or \
                         self.optype == "flash-emmc" or self.optype == "flashverify-emmc"):
                         if "--file" not in config_dict.keys():
                             status = "[ERROR] Operation selected was {}, but no filename provided !!!".format(self.optype)
@@ -629,7 +636,8 @@ class LineCfg():
                     else:
                         pass
 
-                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or self.optype == "flashverify-emmc") and (self.filename == None)):
+                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
+                    self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or self.optype == "flashverify-emmc") and (self.filename == None)):
                     self.ops_invalid = True
                     self.exit_now = not self.found_flashwriter_cmd
                     # flash/verify flash/erase, but no filename given. exit with help if no flashwriter

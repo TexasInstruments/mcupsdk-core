@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -23,7 +20,7 @@ FILES_common := \
     icss_timeSyncApi.c \
 
 FILES_PATH_common = \
-    ${INDUSTRIAL_COMMUNICATIONS_SDK_PATH}/source/networking/icss_timesync \
+    ${MCU_PLUS_SDK_PATH}/source/networking/icss_timesync \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

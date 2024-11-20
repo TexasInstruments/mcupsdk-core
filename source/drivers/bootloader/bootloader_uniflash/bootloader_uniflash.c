@@ -143,29 +143,14 @@ int32_t Bootloader_uniflashProcessFlashCommands(Bootloader_UniflashConfig *confi
 
 	        case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_XIP:
 	            /* flash the XIP file, flash offsets are within the file itself */
-				if(config->imageFormatType == BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_MCELF)
-				{
-					status = Bootloader_Uniflash_MCELF_flashXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize);
-				}
-				else
-				{
-					status = Bootloader_Uniflash_RPRC_flashXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize);
-				}
+				status =Bootloader_Uniflash_RPRC_flashXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize);
 	            if(status != SystemP_SUCCESS)
 	            {
 	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
 	            }
 	            else
 	            {
-	                /* verify the file at the given offset */
-					if(config->imageFormatType == BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_MCELF)
-					{
-						status = Bootloader_Uniflash_MCELF_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
-					}
-					else
-					{
-						status = Bootloader_Uniflash_RPRC_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
-					}
+					status = Bootloader_Uniflash_RPRC_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
 	                if(status != SystemP_SUCCESS)
 	                {
 	                    respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR;
@@ -175,14 +160,33 @@ int32_t Bootloader_uniflashProcessFlashCommands(Bootloader_UniflashConfig *confi
 
 	        case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_XIP:
 	            /* verify the file. Flash offsets are within the file itself */
-				if(config->imageFormatType == BOOTLOADER_UNIFLASH_IMAGE_FORMAT_TYPE_MCELF)
-				{
+				status = Bootloader_Uniflash_RPRC_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
+	            if(status != SystemP_SUCCESS)
+	            {
+	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR;
+	            }
+	            break;
+
+			case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP:
+	            /* flash the MCELF-XIP file, flash offsets are within the file itself */
+				status =Bootloader_Uniflash_MCELF_flashXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize);
+	            if(status != SystemP_SUCCESS)
+	            {
+	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
+	            }
+	            else
+	            {
 					status = Bootloader_Uniflash_MCELF_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
-				}
-				else
-				{
-					status = Bootloader_Uniflash_RPRC_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
-				}
+	                if(status != SystemP_SUCCESS)
+	                {
+	                    respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR;
+	                }
+	            }
+	            break;
+
+			case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP:
+	            /* verify the file. Flash offsets are within the file itself */
+				status = Bootloader_Uniflash_MCELF_flashVerifyXIPFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize);
 	            if(status != SystemP_SUCCESS)
 	            {
 	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR;

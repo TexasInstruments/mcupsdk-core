@@ -89,7 +89,7 @@ int32_t PMIC_configure(PMIC_Handle handle)
 
     if(config && config->fxns && config->fxns->configureFxn)
     {
-        config->fxns->configureFxn(config);
+        status = config->fxns->configureFxn(config);
     }
 
     return status;

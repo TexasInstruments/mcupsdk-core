@@ -15,7 +15,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 This example also demonstrates Rx Scatter-Gather. Due to the Limitation with LC-DMA, We need to prelink the buffers before submitting to the DMA to exercise scatter-gather.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
@@ -58,7 +58,7 @@ This example do below:
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_cpsw/V0
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V0
 
 \endcond
 
@@ -69,7 +69,7 @@ This example do below:
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_cpsw/V0
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V0
 
 \endcond
 
@@ -80,7 +80,7 @@ This example do below:
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_layer2_cpsw/V1
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
 
 \endcond
 
@@ -91,9 +91,22 @@ This example do below:
  CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_ADDON_AUTO
- Example folder | examples/networking/enet_layer2_cpsw/V1
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
 
 For support on @VAR_BOARD_NAME_ADDON_AUTO, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
+ 
+ For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 

@@ -1,35 +1,32 @@
-/******************************************************************************
- * Copyright (c) 2021 Texas Instruments Incorporated - http://www.ti.com
+/* Copyright (c) 2023-2024, Texas Instruments Incorporated
  *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- *    Redistributions of source code must retain the above copyright
+ * *  Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
  *
- *    Redistributions in binary form must reproduce the above copyright
+ * *  Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the
- *    distribution.
+ *    documentation and/or other materials provided with the distribution.
  *
- *    Neither the name of Texas Instruments Incorporated nor the names of
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
  *    its contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- *****************************************************************************/
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+#define DDR_TYPE DDR4
 
 #ifndef BOARD_DDRREGINIT_H_
 #define BOARD_DDRREGINIT_H_
@@ -40,16 +37,19 @@ extern "C" {
 
 /*
  * This file was generated with the
- * AM64x SysConfig DDR Subsystem Register Configuration Tool v0.08.40 
- * Wed Feb 02 2022 16:24:50 GMT-0600 (Central Standard Time)
+ * AM64x SysConfig DDR Configuration Tool for AM64x, AM625, AM623, AM62Ax, AM62Px v0.10.02 
+ * Thu Sep 19 2024 10:48:33 GMT+0530 (India Standard Time)
  * DDR Type: DDR4
  * Frequency = 800MHz (1600MTs)
  * Density: 16Gb
  * Number of Ranks: 1
 */
+
 #define DDRSS_PLL_FHS_CNT 6
 #define DDRSS_PLL_FREQUENCY_1 400000000
 #define DDRSS_PLL_FREQUENCY_2 400000000
+#define DDRSS_SDRAM_IDX 15
+#define DDRSS_REGION_IDX 15
 
 #define DDRSS_CTL_REG_INIT_COUNT (423U)
 #define DDRSS_PHY_INDEP_REG_INIT_COUNT (345U)
@@ -221,7 +221,7 @@ uint32_t DDRSS_ctlReg[] = {
     0x0E0A0907U, // DDRSS_CTL_162_VAL
     0x0A090000U, // DDRSS_CTL_163_VAL
     0x0A090701U, // DDRSS_CTL_164_VAL
-    0x0000000EU, // DDRSS_CTL_165_VAL
+    0x0000080EU, // DDRSS_CTL_165_VAL
     0x00040003U, // DDRSS_CTL_166_VAL
     0x00000007U, // DDRSS_CTL_167_VAL
     0x00000000U, // DDRSS_CTL_168_VAL
@@ -377,7 +377,7 @@ uint32_t DDRSS_ctlReg[] = {
     0x3FFF0000U, // DDRSS_CTL_318_VAL
     0x000FFF00U, // DDRSS_CTL_319_VAL
     0xFFFFFFFFU, // DDRSS_CTL_320_VAL
-    0x000FFF00U, // DDRSS_CTL_321_VAL
+    0x00FFFF00U, // DDRSS_CTL_321_VAL
     0x0A000000U, // DDRSS_CTL_322_VAL
     0x0001FFFFU, // DDRSS_CTL_323_VAL
     0x01010101U, // DDRSS_CTL_324_VAL
@@ -950,7 +950,7 @@ uint32_t DDRSS_phyReg[] = {
     0x00800080U, // DDRSS_PHY_117_VAL
     0x00800080U, // DDRSS_PHY_118_VAL
     0x01000080U, // DDRSS_PHY_119_VAL
-    0x01A00000U, // DDRSS_PHY_120_VAL
+    0x01000000U, // DDRSS_PHY_120_VAL
     0x00000000U, // DDRSS_PHY_121_VAL
     0x00000000U, // DDRSS_PHY_122_VAL
     0x00080200U, // DDRSS_PHY_123_VAL
@@ -1076,7 +1076,7 @@ uint32_t DDRSS_phyReg[] = {
     0x00800080U, // DDRSS_PHY_373_VAL
     0x00800080U, // DDRSS_PHY_374_VAL
     0x01000080U, // DDRSS_PHY_375_VAL
-    0x01A00000U, // DDRSS_PHY_376_VAL
+    0x01000000U, // DDRSS_PHY_376_VAL
     0x00000000U, // DDRSS_PHY_377_VAL
     0x00000000U, // DDRSS_PHY_378_VAL
     0x00080200U, // DDRSS_PHY_379_VAL
@@ -1302,7 +1302,7 @@ uint32_t DDRSS_phyReg[] = {
     0x00000002U, // DDRSS_PHY_1368_VAL
     0x00000100U, // DDRSS_PHY_1369_VAL
     0x00000000U, // DDRSS_PHY_1370_VAL
-    0x0001F7C0U, // DDRSS_PHY_1371_VAL
+    0x0001F7C2U, // DDRSS_PHY_1371_VAL
     0x00020002U, // DDRSS_PHY_1372_VAL
     0x00000000U, // DDRSS_PHY_1373_VAL
     0x00001142U, // DDRSS_PHY_1374_VAL

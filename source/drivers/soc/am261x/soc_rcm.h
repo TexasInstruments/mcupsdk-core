@@ -54,6 +54,9 @@ extern "C"
 #define SOC_RCM_FREQ_MHZ2HZ(x)          ((x) * 1000 * 1000)
 #define SOC_RCM_FREQ_HZ2MHZ(x)          ((x) / (1000 * 1000))
 
+#define SOC_RCM_R5_FREQ_400MHZ          (0x0U)
+#define SOC_RCM_R5_FREQ_500MHZ          (0x1U)
+
 /**
  *  \anchor SOC_WarmResetCause_t
  *  \name SOC Warm Reset Causes
@@ -457,6 +460,10 @@ typedef enum SOC_RcmPllFoutFreqId_e
      * \brief   Value specifying PLL output frequency 960MHz
      */
     RCM_PLL_FOUT_FREQID_CLK_960MHZ,
+    /**
+     * \brief   Value specifying PLL output frequency 2000MHz
+     */
+    RCM_PLL_FOUT_FREQID_CLK_2000MHZ,
 } SOC_RcmPllFoutFreqId;
 /** @} */
 
@@ -536,6 +543,7 @@ typedef struct SOC_RcmADPLLJConfig_s
     uint32_t FracM; /* Multiplier fractional (M) */
     uint32_t Fout; /* Output frequency of PLL */
     uint32_t Finp; /* Output frequency of PLL */
+    uint32_t SD;   /* Sigma delta divider */
 } SOC_RcmADPLLJConfig_t;
 
 #define RCM_PLL_HSDIV_OUTPUT_ENABLE_0                                 (1U << 0U)

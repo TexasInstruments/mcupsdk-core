@@ -246,6 +246,8 @@ extern "C"
 #define CSL_UART1_U_BASE	            							(0x52301000ul)
 #define CSL_UART2_U_BASE	            							(0x52302000ul)
 #define CSL_UART3_U_BASE	            							(0x52303000ul)
+#define CSL_UART4_U_BASE	            							(0x52304000ul)
+#define CSL_UART5_U_BASE	            							(0x52305000ul)
 #define CSL_LIN0_U_BASE	            								(0x52400000ul)
 #define CSL_LIN1_U_BASE	            								(0x52401000ul)
 #define CSL_LIN_LIN_2_U_BASE	            						(0x52402000ul)

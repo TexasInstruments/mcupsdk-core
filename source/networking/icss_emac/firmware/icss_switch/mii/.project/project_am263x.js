@@ -96,22 +96,37 @@ const lnkfiles = {
 
 
 //Need to change the location PRU header files
-const postBuildSteps_pru0 = [
-    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out;",
-    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4;",
+const cc_postBuildSteps_pru0 = [
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.out;",
+    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4;",
     "cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii;",
 
 ];
 
-const postBuildSteps_pru1 = [
-    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out;",
-    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4;",
+const cc_postBuildSteps_pru1 = [
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt.out;",
+    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icss_m0_pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4;",
+    "cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii;",
+];
+
+const lp_postBuildSteps_pru0 = [
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt.out;",
+    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263x-lp_icss_m0_pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4;",
+    "cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii;",
+
+];
+
+const lp_postBuildSteps_pru1 = [
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt.out;",
+    "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-lp_icss_m0_pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4;",
     "cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii;",
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
     { device: device, cpu: "icss_m0_pru1", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-lp", os: "fw"},
+    { device: device, cpu: "icss_m0_pru1", cgt: "ti-pru-cgt", board: "am263x-lp", os: "fw"},
 ];
 
 function getComponentProperty() {
@@ -137,12 +152,19 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_freertos_r5f;
-    if(buildOption.cpu.match(/icssm-pru0/)) {
-        build_property.postBuildSteps = postBuildSteps_pru0;
+    if(buildOption.cpu.match(/pru0/) && buildOption.board.match(/cc/)) {
+        build_property.postBuildSteps = cc_postBuildSteps_pru0;
     }
-    else {
-        build_property.postBuildSteps = postBuildSteps_pru1;
+    if(buildOption.cpu.match(/pru1/) && buildOption.board.match(/cc/)) {
+        build_property.postBuildSteps = cc_postBuildSteps_pru1;
     }
+    if(buildOption.cpu.match(/pru0/) && buildOption.board.match(/lp/)) {
+        build_property.postBuildSteps = lp_postBuildSteps_pru0;
+    }
+    if(buildOption.cpu.match(/pru1/) && buildOption.board.match(/lp/)) {
+        build_property.postBuildSteps = lp_postBuildSteps_pru1;
+    }
+    
     build_property.lnkfiles = lnkfiles;
     build_property.cflags = cflags;
     build_property.lflags = lflags;

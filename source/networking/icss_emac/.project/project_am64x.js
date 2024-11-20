@@ -14,7 +14,7 @@ const files = {
 
 const filedirs = {
     common: [
-        "${INDUSTRIAL_COMMUNICATIONS_SDK_PATH}/source/networking/icss_emac/source",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source",
     ],
 };
 

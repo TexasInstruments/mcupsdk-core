@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -19,6 +19,8 @@ const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1       = gpio.addInstance();
 const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1  = hsmclient.addInstance();
+const i2c         = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1        = i2c.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -44,6 +46,7 @@ const section7    = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 pmic1.$name = "CONFIG_PMIC0";
+pmic1.name  = "TPS65036xx";
 
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
@@ -74,6 +77,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -91,10 +95,9 @@ gpio1.GPIO_n.$assign = "GPIO61";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
-const i2c              = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1             = i2c.addInstance({}, false);
 i2c1.$name             = "CONFIG_I2C0";
 pmic1.peripheralDriver = i2c1;
+i2c1.I2C.$assign       = "I2C0";
 i2c1.I2C_child.$name   = "drivers_i2c_v1_i2c_v1_template0";
 
 debug_log.enableUartLog            = true;
@@ -270,7 +273,6 @@ section7.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution = "OSPI0";
-i2c1.I2C.$suggestSolution                     = "I2C0";
 i2c1.I2C.SCL.$suggestSolution                 = "GPIO135";
 i2c1.I2C.SDA.$suggestSolution                 = "GPIO134";
 debug_log.uartLog.UART.$suggestSolution       = "UART0";

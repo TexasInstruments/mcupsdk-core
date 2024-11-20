@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -14,10 +11,12 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=ecap_epwm_loopback_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=ecap_epwm_loopback_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=ecap_epwm_loopback_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
@@ -26,6 +25,10 @@ CORE_1=--script ../c66ss0_nortos/example.syscfg --context c66ss0 --output ../c66
 CORES = \
     $(CORE_1) \
     $(CORE_0) \
+
+COREXMLS = \
+	../r5fss0-0_nortos/ti-arm-clang/ecap_epwm_loopback.$(PROFILE).lnkxml\
+	../c66ss0_nortos/ti-c6000/ecap_epwm_loopback.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -42,6 +45,7 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
 clean:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ clean
 	$(MAKE) -C ../c66ss0_nortos/ti-c6000/ clean
@@ -56,8 +60,16 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

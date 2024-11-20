@@ -41,6 +41,9 @@ extern "C"
 
 #include <drivers/hw_include/cslr_soc.h>
 
+/* Macro to enable scratch memory support */
+#define BOOTLOADER_SCRATCH_MEM_SUPPORT
+
 #define BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE    (0x00000000U)
 #define BOOTLOADER_DEVICE_VARIANT_DUAL_CORE      (0x00040000U)
 #define BOOTLOADER_DEVICE_VARIANT_QUAD_CORE      (0x000C0000U)

@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -14,12 +11,14 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=test_mcspi_controller_peripheral_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=test_mcspi_controller_peripheral_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=test_mcspi_controller_peripheral_system.$(PROFILE).appimage_xip
-MULTI_CORE_BOOTIMAGE_NAME_MCELF:=test_mcspi_controller_peripheral_system.$(PROFILE).mcelf
-MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=test_mcspi_controller_peripheral_system.$(PROFILE).mcelf.hs
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
@@ -31,6 +30,14 @@ CORES = \
 
 CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).out
 CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).out
+
+CORE_IMG_ARGS :=
+CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+
+COREXMLS = \
+	../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml\
+	../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -48,6 +55,7 @@ ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
 
+
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ clean
@@ -63,12 +71,20 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs
@@ -127,10 +143,6 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
-CORE_IMG_ARGS :=
-CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
-CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
 
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $@ ...

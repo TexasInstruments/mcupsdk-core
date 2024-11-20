@@ -56,7 +56,7 @@ remote clients.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Enet Peripherals {#enetlld_enetpers}
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 
 Enet LLD supports two families of Ethernet devices: CPSW and ICSSG.
 

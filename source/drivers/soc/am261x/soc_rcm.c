@@ -69,6 +69,7 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .M2 = 1U,
         .M = 200U,
         .FracM = 0U,
+        .SD = 2U,
     },
     /* ETH_900_25MHz */
     {
@@ -78,6 +79,7 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .M2 = 1U,
         .M = 360U,
         .FracM = 0U,
+        .SD = 4U,
     },
     /* PER_960_25MHz */
     {
@@ -87,6 +89,17 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .M2 = 1U,
         .M = 384U,
         .FracM = 0U,
+        .SD = 4U,
+    },
+    /* PER_2000_25MHz */
+    {
+        .Finp = 25U,
+        .N = 9U,
+        .Fout = 2000U,
+        .M2 = 1U,
+        .M = 800U,
+        .FracM = 0U,
+        .SD = 8U,
     },
 };
 
@@ -100,6 +113,7 @@ const uint32_t gPLLFreqId2FOutMap[] =
     [RCM_PLL_FOUT_FREQID_CLK_500MHZ]       = 500U,
     [RCM_PLL_FOUT_FREQID_CLK_900MHZ]       = 900U,
     [RCM_PLL_FOUT_FREQID_CLK_960MHZ]       = 960U,
+    [RCM_PLL_FOUT_FREQID_CLK_2000MHZ]      = 2000U,
 };
 
 const SOC_RcmClkSrcInfo gPeripheralClkSrcInfoMap[] =
@@ -1106,12 +1120,14 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
  *      Post Divider Value
  *  @param[in]  fracMultiplier
  *      Fractional Multiplier programmable value
+ *  @param[in]  sdDivider
+ *      Sigma-Delta Divider programmable value
  *
  *  @retval     None
  */
 static void SOC_rcmProgPllCoreDivider (uint8_t inputClockDiv , uint8_t divider,
                                 uint16_t multiplier, uint8_t postDivider,
-                                uint32_t fracMultiplier)
+                                uint32_t fracMultiplier, uint32_t sdDivider)
 {
     volatile uint32_t *ptrM2NReg, *ptrMN2Reg, *ptrFracMReg;
     CSL_top_rcmRegs *ptrTopRCMRegs;
@@ -1140,7 +1156,7 @@ static void SOC_rcmProgPllCoreDivider (uint8_t inputClockDiv , uint8_t divider,
     *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 17U, 0U, fracMultiplier); //CSL_TOP_RCM_PLL_CORE_FRACDIV_FRACTIONALM_SHIFT, CSL_TOP_RCM_PLL_CORE_FRACDIV_FRACTIONALM_MASK
 
     /* Sigma delta divider for optimum jitter bit needs to be updated since ROM code programmed to its need */
-    *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, 8U); //CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_SHIFT, CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_MASK
+    *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, sdDivider); //CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_SHIFT, CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_MASK
 }
 
 /**
@@ -1158,12 +1174,14 @@ static void SOC_rcmProgPllCoreDivider (uint8_t inputClockDiv , uint8_t divider,
  *      Post Divider Value
  *  @param[in]  fracMultiplier
  *      Fractional Multiplier programmable value
+ *  @param[in]  sdDivider
+ *      Sigma-Delta Divider programmable value
  *
  *  @retval     None
  */
 static void SOC_rcmProgPllEthDivider (uint8_t inputClockDiv , uint8_t divider,
                                uint16_t multiplier, uint8_t postDivider,
-                               uint32_t fracMultiplier)
+                               uint32_t fracMultiplier, uint32_t sdDivider)
 {
     volatile uint32_t *ptrM2NReg, *ptrMN2Reg, *ptrFracMReg;
     CSL_top_rcmRegs *ptrTopRCMRegs;
@@ -1190,6 +1208,9 @@ static void SOC_rcmProgPllEthDivider (uint8_t inputClockDiv , uint8_t divider,
 
     /* program Fractional Multiplier */
     *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 17U, 0U, fracMultiplier); //CSL_TOP_RCM_ETH_FRACDIV_FRACTIONALM_SHIFT, CSL_TOP_RCM_PLL_ETH_FRACDIV_FRACTIONALM_MASK
+
+    /* Sigma delta divider for optimum jitter bit needs to be updated since ROM code programmed to its need */
+    *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, sdDivider); //CSL_TOP_RCM_PLL_ETH_FRACDIV_REGSD_SHIFT, CSL_TOP_RCM_PLL_ETH_FRACDIV_REGSD_MASK
 }
 
 /**
@@ -1207,12 +1228,14 @@ static void SOC_rcmProgPllEthDivider (uint8_t inputClockDiv , uint8_t divider,
  *      Post Divider Value
  *  @param[in]  fracMultiplier
  *      Fractional Multiplier programmable value
+ *  @param[in]  sdDivider
+ *      Sigma-Delta Divider programmable value
  *
  *  @retval     None
  */
 static void SOC_rcmProgPllPerDivider (uint8_t inputClockDiv , uint8_t divider,
                                uint16_t multiplier, uint8_t postDivider,
-                               uint32_t fracMultiplier)
+                               uint32_t fracMultiplier, uint32_t sdDivider)
 {
     volatile uint32_t *ptrM2NReg, *ptrMN2Reg, *ptrFracMReg;
     CSL_top_rcmRegs *ptrTopRCMRegs;
@@ -1239,6 +1262,9 @@ static void SOC_rcmProgPllPerDivider (uint8_t inputClockDiv , uint8_t divider,
 
     /* program Fractional Multiplier */
     *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 17U, 0U, fracMultiplier); //CSL_TOP_RCM_PLL_PER_FRACDIV_FRACTIONALM_SHIFT, CSL_TOP_RCM_PLL_PER_FRACDIV_FRACTIONALM_MASK
+
+    /* Sigma delta divider for optimum jitter bit needs to be updated since ROM code programmed to its need */
+    *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, sdDivider); //CSL_TOP_RCM_PLL_PER_FRACDIV_REGSD_SHIFT, CSL_TOP_RCM_PLL_PER_FRACDIV_REGSD_MASK
 }
 
 
@@ -1938,7 +1964,8 @@ void SOC_rcmCoreApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutCon
                                 0U /* N2 divider for bypass */,
                                 adplljCfg->M,
                                 adplljCfg->M2,
-                                adplljCfg->FracM);
+                                adplljCfg->FracM,
+                                adplljCfg->SD);
         }
         else
         {
@@ -1951,7 +1978,8 @@ void SOC_rcmCoreApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutCon
                                 0U /* N2 divider for bypass */,
                                 adplljCfg->M,
                                 adplljCfg->M2,
-                                adplljCfg->FracM);
+                                adplljCfg->FracM,
+                                adplljCfg->SD);
         }
         /* Configure and Lock Core PLL */
         SOC_rcmConfigurePllCore ();
@@ -2051,7 +2079,7 @@ void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
     {
         if (gXTALInfo[XTALFreq].div2flag == false)
         {
-            SOC_rcmProgPllEthDivider (adplljCfg->N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+            SOC_rcmProgPllEthDivider (adplljCfg->N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM, adplljCfg->SD);
         }
         else
         {
@@ -2061,7 +2089,7 @@ void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
             /* Input XTAL freq is half. Divide input divider by 2 to get same output freq */
             N = ((adplljCfg->N + 1) / 2) - 1;
 
-            SOC_rcmProgPllEthDivider (N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+            SOC_rcmProgPllEthDivider (N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM, adplljCfg->SD);
 
         }
         /* Configure and Lock Core PLL */
@@ -2119,7 +2147,7 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
     {
         if (gXTALInfo[XTALFreq].div2flag == false)
         {
-            SOC_rcmProgPllPerDivider (adplljCfg->N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+            SOC_rcmProgPllPerDivider (adplljCfg->N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM, adplljCfg->SD);
         }
         else
         {
@@ -2129,7 +2157,7 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
             /* Input XTAL freq is half. Divide input divider by 2 to get same output freq */
             N = ((adplljCfg->N + 1) / 2) - 1;
 
-            SOC_rcmProgPllPerDivider (N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+            SOC_rcmProgPllPerDivider (N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM, adplljCfg->SD);
 
         }
         /* Configure and Lock Core PLL */

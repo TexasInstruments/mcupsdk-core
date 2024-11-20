@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -91,10 +88,13 @@ FILES_common := \
     mmcsd_v0_lld.c \
     mmcsd_parse.c \
     ospi_v0.c \
-    ospi_dma.c \
-    ospi_dma_udma.c \
     ospi_nor_flash.c \
     ospi_phy_dqs.c \
+    ospi_v0_lld.c \
+    ospi_phy_dqs_lld.c \
+    ospi_nor_flash_lld.c \
+    ospi_lld_dma.c \
+    ospi_udma_lld.c \
     pcie.c \
     pcie_v0.c \
     pcie_serdes.c \
@@ -113,6 +113,7 @@ FILES_common := \
     sciclient_fmwSecureProxyMap.c \
     sciclient_boardcfg.c \
     sciclient_soc_priv.c \
+    qos.c \
     soc.c \
     spinlock.c \
     csl_timer_mgr.c \
@@ -192,10 +193,13 @@ FILES_PATH_common = \
     mmcsd/v0/lld/internal \
     ospi \
     ospi/v0 \
-    ospi/v0/dma \
-    ospi/v0/dma/soc/am64x_am243x \
-    ospi/v0/dma/udma \
+    ospi/v0/lld/dma/soc/am64x_am243x \
     ospi/v0/soc/am64x_am243x \
+    ospi/v0/lld \
+    ospi/v0/lld/dma \
+    ospi/v0/lld/dma/udma \
+    qos \
+    qos/v0 \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \

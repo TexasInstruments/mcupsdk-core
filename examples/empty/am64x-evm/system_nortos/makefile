@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -14,10 +11,12 @@ endif
 
 PROFILE?=release
 
+SYSTEM_PROJECT_NAME:=empty_system
+
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=empty_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=empty_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
@@ -34,6 +33,14 @@ CORES = \
     $(CORE_2) \
     $(CORE_1) \
     $(CORE_0) \
+
+COREXMLS = \
+	../r5fss0-0_nortos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../r5fss0-1_nortos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../r5fss1-0_nortos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../r5fss1-1_nortos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../m4fss0-0_nortos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../a53ss0-0_nortos/gcc-aarch64/empty.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -53,6 +60,7 @@ postBuild: corebuild
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
+
 
 clean:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ clean
@@ -76,8 +84,16 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
 	$(RM) \*.appimage.hs
+	$(RM) \*.tmp
+	$(RM) \*.out
+	$(RM) \*.map
+	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
 else
+	$(RM) *.tmp
+	$(RM) *.out
+	$(RM) *.map
+	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs

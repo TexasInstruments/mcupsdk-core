@@ -62,6 +62,12 @@
  *  MCU_SPI0_D0(Pin 15) (B12)   ------------>  MCU_SPI2_D1(Pin 54)  B18
  *  MCU_SPI0_D1(Pin 14) (C12)   ------------>  MCU_SPI2_D0(Pin 55)  A16
  * 
+ *  Please connect pins as described below on AM261x SOM on HSEC Board.
+ *  MCU_SPI0_CS0 (C11) -> HSEC_SPI1_CS0(J20-16)  ------------>  MCU_SPI3_CS0 (D7) -> HSEC_SPI1_CS0(J20-12)
+ *  MCU_SPI0_CLK (A11) -> HSEC_SPI1_CLK(J20-15)  ------------>  MCU_SPI3_CLK (C8) -> HSEC_SPI1_CLK(J20-11)
+ *  MCU_SPI0_D0  (C10) -> HSEC_SPI1_CS0(J20-14)  ------------>  MCU_SPI3_D0 (C7) -> HSEC_SPI1_CS0(J20-10)
+ *  MCU_SPI0_D1  (B11) -> HSEC_SPI1_CS0(J20-13)  ------------>  MCU_SPI3_D1 (B7) -> HSEC_SPI1_CS0(J20-9)
+ * 
  */
 
 #include "string.h"

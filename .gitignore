@@ -31,6 +31,8 @@ docs/datasheet*
 *-fw
 *.vscode/
 *.vscode-ctags
+*.lnkxml
+*.ossr
 temp_stdout_*.txt
 ccs_projects/
 generated/

@@ -67,6 +67,8 @@
 #include <am263px-cc/pruicss_pinmux.h>
 #elif AM263PX_LP
 #include <am263px-lp/pruicss_pinmux.h>
+#elif AM261X_LP
+#include <am261x-lp/pruicss_pinmux.h>
 #endif
 
 
@@ -97,6 +99,7 @@
 /* ========================================================================== */
 
 #define MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE  (0x0001077FU)
+#define MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL_VALUE  (0x0001037F)
 
 #define LWIPINIT_TASK_PRIORITY                  (8U)
 #define LWIPINIT_TASK_STACK_SIZE                (0x4000U)
@@ -112,8 +115,10 @@
 #define ICSS_EMAC_MAXMTU                        (1518U)
 #define ICSS_EMAC_TEST_PKT_TX_COUNT             (100U)
 
-#if defined SOC_AM263X || defined SOC_AM263PX || defined (SOC_AM261X)
+#if defined SOC_AM263X || defined SOC_AM263PX
 #define I2C_EEPROM_MAC0_DATA_OFFSET             (0x43U)
+#elif defined (AM261X_LP)
+#define I2C_EEPROM_MAC0_DATA_OFFSET             (0x200U)
 #else
 #define I2C_EEPROM_MAC0_DATA_OFFSET             (0x3DU)
 #endif
@@ -577,9 +582,15 @@ void ICSS_EMAC_testPinmuxConfig(void)
 {
     Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
 
+#if defined AM263X_LP || defined AM263PX_LP || AM263PX_CC
     // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+     HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+     HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+#elif AM261X_LP
+    // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM0_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL_VALUE);
+#endif
 
     DebugP_log("MII mode\r\n");
 
@@ -639,6 +650,47 @@ void ICSS_EMAC_testPHYInitConfig(void)
     /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+
+    /*Wait for PHY to come out of reset*/
+    ClockP_usleep(PHY_RESET_WAIT_TIME);
+}
+#elif defined AM261X_LP
+void ICSS_EMAC_testPHYInitConfig(void)
+{
+    ETHPHY_DP83826E_LedSourceConfig ledConfig0;
+    ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig0;
+
+    /* PHY pin LED_0 as link */
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED0;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_MII_LINK_100BT_FD;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+
+    /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED1;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_SPEED_10BT;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+
+    /* PHY pin LED_2 as Rx/Tx Activity */
+    ledConfig0.ledNum = ETHPHY_DP83826E_LED2;
+    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+
+    ledBlinkConfig0.rate = ETHPHY_DP83826E_LED_BLINK_RATE_200_MS;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+
+    /* Enable MII mode for DP83869 PHY */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+
+    /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
 
     /*Wait for PHY to come out of reset*/
     ClockP_usleep(PHY_RESET_WAIT_TIME);

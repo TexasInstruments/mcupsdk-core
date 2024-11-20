@@ -40,7 +40,7 @@
 
 static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, uint32_t fileSize, uint8_t *verifyBuf, uint32_t verifyBufSize)
 {
-	int32_t retval = SystemP_FAILURE;
+	int32_t status = SystemP_SUCCESS;
 	Flash_Attrs *flashAttrs;
 	Flash_Handle flashHandle;
 	uint32_t eraseBlockSize;
@@ -49,7 +49,6 @@ static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, u
 	{
 		ELFUP_ELFPH pht[20];
 		ELFUP_Handle elfuph;
-		int32_t status = SystemP_FAILURE;
 
 		memset(pht, 0xff, sizeof(pht));
 
@@ -108,9 +107,8 @@ static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, u
 				}
 			}
 		}
-		retval = status;
 	}
-	return(retval);
+	return status;
 }
 
 int32_t Bootloader_Uniflash_MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, uint32_t fileSize, uint8_t *verifyBuf, uint32_t verifyBufSize)
