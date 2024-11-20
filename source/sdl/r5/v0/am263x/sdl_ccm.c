@@ -59,15 +59,17 @@ volatile SDL_CCM_Inst CCMInstance = 0u;
                                             | SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR1_STC1_MASK \
                                             | SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR1_CMPE1_MASK)
 
-#define        SDL_ESM_CCM_0_SELF_TEST_ERR_INT   83U
+#define        SDL_ESM_CCM_0_SELF_TEST_ERR_INT   SDL_ESM0_CCM_0_SELFTEST_ERR
    /**< R5F0 CCM Interrupt source Self test error */
-#define        SDL_ESM_CCM_0_LOCKSTEP_COMPARE   84U
+#define        SDL_ESM_CCM_0_LOCKSTEP_COMPARE   SDL_ESM0_CCM_0_LOCKSTEP_COMPARE_ERR
    /**< R5F0 CCM Interrupt lockstep error */
-#define        SDL_ESM_CCM_1_SELF_TEST_ERR_INT   85U
+#define        SDL_ESM_CCM_1_SELF_TEST_ERR_INT   SDL_ESM0_CCM_1_SELFTEST_ERR
    /**< R5F1 CCM Interrupt source Self test error */
-#define        SDL_ESM_R5F0_VIM_COMPARE_ERR_INT   71U
+#define        SDL_ESM_CCM_1_LOCKSTEP_COMPARE   SDL_ESM0_CCM_1_LOCKSTEP_COMPARE_ERR
+   /**< R5F1 CCM Interrupt lockstep error */
+#define        SDL_ESM_R5F0_VIM_COMPARE_ERR_INT   SDL_ESM0_R5FSS0_R5FSS0_VIM_COMPARE_ERR_PULSE_0
    /**< R5F0 VIM Interrupt source Self test error */
-#define        SDL_ESM_R5F1_VIM_COMPARE_ERR_INT   75U
+#define        SDL_ESM_R5F1_VIM_COMPARE_ERR_INT   SDL_ESM0_R5FSS1_R5FSS1_VIM_COMPARE_ERR_PULSE_0
    /**< R5F1 VIM Interrupt lockstep error */
 
 #define SDL_INTR_PRIORITY_LVL             1U
@@ -253,7 +255,7 @@ static int32_t SDL_CCM_getMonitorTypeFromIntSrc (uint32_t intSrc,
             *pMonitorType = SDL_CCM_MONITOR_TYPE_VIM;
             break;
 
-        case SDL_ESM0_R5FSS0_R5FSS0_CPU_MISCOMPARE_PULSE_0:
+        case SDL_ESM0_R5FSS0_R5FSS0_BUS_MONITOR_ERR_PULSE_0:
             *pMonitorType = SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR;
             break;
         default:
@@ -281,6 +283,7 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
         case SDL_ESM_CCM_0_SELF_TEST_ERR_INT:
         case SDL_ESM_CCM_0_LOCKSTEP_COMPARE:
 		case SDL_ESM_CCM_1_SELF_TEST_ERR_INT:
+        case SDL_ESM_CCM_1_LOCKSTEP_COMPARE:
 		case SDL_ESM_R5F0_VIM_COMPARE_ERR_INT:
 		case SDL_ESM_R5F1_VIM_COMPARE_ERR_INT:
             /* These events can come for any of the CCM block. Read status register to see which self test */
@@ -418,7 +421,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index)
                 retVal = SDL_ESM_registerCCMCallback(ESM_INSTANCE, SDL_CCM_eventBitMap_param,
                                               &SDL_CCM_ESM_callBackFunction,
                                               NULL);
-			}
+            }
         }
         /* Clear self test flag */
         SDL_CCM_instance.selfTestErrorFlag = SDL_CCM_ERROR_FLAG_NONE;
@@ -695,15 +698,15 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
 
         }
     }
-	if(testType == SDL_CCM_SELFTEST_POLARITY_INVERSION)
-	{
-		if(SDL_CCM_instance.selfTestErrorFlag != SDL_CCM_ERROR_FLAG_TRIGGERED)
-		{
-			sdlResult = SDL_EFAIL;
-		}
-	}
+    if(testType == SDL_CCM_SELFTEST_POLARITY_INVERSION)
+    {
+        if(SDL_CCM_instance.selfTestErrorFlag != SDL_CCM_ERROR_FLAG_TRIGGERED)
+        {
+            sdlResult = SDL_EFAIL;
+        }
+    }
     if (sdlResult == SDL_PASS) {
-		/* Switch it back to active mode */
+        /* Switch it back to active mode */
         retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
                                                   monitorTypeKeyRegister,
                                                   (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE,
@@ -724,10 +727,10 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
                                                       statusValue,
                                                       NULL);
             }
-			if(timeoutCnt != (uint32_t)0U)
-			{
+            if(timeoutCnt != (uint32_t)0U)
+            {
                 sdlResult = SDL_EFAIL;
-			}
+            }
         }
     }
 
@@ -863,38 +866,38 @@ int32_t SDL_VIM_cfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL
     if (pChkRegs != SDL_MCU_ARMSS_VIM_NULL_ADDR)
     {
         maxIntrs   = pRegs->INFO;
-		groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
-		/* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
-		if( (intrNum  < maxIntrs)                             &&
-			(pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
-			(intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
-			(intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
-			(((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
-				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))) )
-		{
-			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
+        groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
+        /* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
+        if( (intrNum  < maxIntrs)                             &&
+            (pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
+            (intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
+            (intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
+            (((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
+                (((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))) )
+        {
+            bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
 
-			/* Configure INTMAP */
-			regMask = (uint32_t)(1U) << bitNum;
-			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
-			regVal &= ~regMask;
-			regVal |= intrMap;
-			SDL_REG32_WR( &pRegs->GRP[groupNum].INTMAP, regVal );
+            /* Configure INTMAP */
+            regMask = (uint32_t)(1U) << bitNum;
+            regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
+            regVal &= ~regMask;
+            regVal |= intrMap;
+            SDL_REG32_WR( &pRegs->GRP[groupNum].INTMAP, regVal );
 
-			/* Configure INTTYPE */
-			regMask = (uint32_t)(1U) << bitNum;
-			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
-			regVal &= ~regMask;
-			regVal |= intrType << bitNum;
-			SDL_REG32_WR( &pRegs->GRP[groupNum].INTTYPE, regVal );
+            /* Configure INTTYPE */
+            regMask = (uint32_t)(1U) << bitNum;
+            regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
+            regVal &= ~regMask;
+            regVal |= intrType << bitNum;
+            SDL_REG32_WR( &pRegs->GRP[groupNum].INTTYPE, regVal );
 
-			/* Configure PRI */
-			SDL_REG32_WR( &pRegs->PRI[intrNum].INT, SDL_FMK( VIM_PRI_INT_VAL, pri ) );
+            /* Configure PRI */
+            SDL_REG32_WR( &pRegs->PRI[intrNum].INT, SDL_FMK( VIM_PRI_INT_VAL, pri ) );
 
-			/* Configure VEC */
-			SDL_REG32_WR( &pRegs->VEC[intrNum].INT, vecAddr );
-				retVal = SDL_PASS;
-		}
+            /* Configure VEC */
+            SDL_REG32_WR( &pRegs->VEC[intrNum].INT, vecAddr );
+                retVal = SDL_PASS;
+        }
     }
 
     return retVal;
@@ -915,44 +918,44 @@ int32_t SDL_VIM_verifyCfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pr
         maxIntrs   = pRegs->INFO;
         groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
 
-		/* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
-		if( (intrNum < maxIntrs)                              &&
-			(pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
-			(intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
-			(intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
-			(((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
-				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))))
-		{
-			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
+        /* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
+        if( (intrNum < maxIntrs)                              &&
+            (pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
+            (intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
+            (intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
+            (((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
+                (((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))))
+        {
+            bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
 
-			/* Read INTMAP */
-			intrMapVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
-			/* Get the interrupt map value */
-			intrMapVal  = intrMapVal >> bitNum;
-			intrMapVal &= (uint32_t)(0x1U);
+            /* Read INTMAP */
+            intrMapVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
+            /* Get the interrupt map value */
+            intrMapVal  = intrMapVal >> bitNum;
+            intrMapVal &= (uint32_t)(0x1U);
 
-			/* Read INTTYPE */
-			intrTypeVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
-			/* Get the interrupt type value */
-			intrTypeVal  = intrTypeVal >> bitNum;
-			intrTypeVal &= (uint32_t)(0x1U);
+            /* Read INTTYPE */
+            intrTypeVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
+            /* Get the interrupt type value */
+            intrTypeVal  = intrTypeVal >> bitNum;
+            intrTypeVal &= (uint32_t)(0x1U);
 
-			/* Read PRI */
-			priVal = SDL_REG32_RD( &pRegs->PRI[intrNum].INT);
+            /* Read PRI */
+            priVal = SDL_REG32_RD( &pRegs->PRI[intrNum].INT);
 
-			/* Read VEC */
-			vecVal = SDL_REG32_RD( &pRegs->VEC[intrNum].INT);
-				retVal = SDL_PASS;
-		}
+            /* Read VEC */
+            vecVal = SDL_REG32_RD( &pRegs->VEC[intrNum].INT);
+                retVal = SDL_PASS;
+        }
     }
 
     if (retVal != SDL_EFAIL)
     {
         /* verify if parameter matches */
         if ((intrMapVal != intrMap) ||
-			(intrTypeVal != (uint32_t)intrType) ||
-			(priVal != pri) ||
-			(vecVal != vecAddr))
+            (intrTypeVal != (uint32_t)intrType) ||
+            (priVal != pri) ||
+            (vecVal != vecAddr))
         {
             retVal = SDL_EFAIL;
         }
