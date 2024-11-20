@@ -137,9 +137,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_nortos_r5f;
         }
     }
-
-    build_property.templates = templates_nortos_r5f;
-
+    
     return build_property;
 }
 
