@@ -34,7 +34,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <board/ethphy/ethphy_dp83869.h>
+#include <board/ethphy/icss_emac/ethphy_dp83869.h>
 #include <drivers/mdio.h>
 
 /* ========================================================================== */
