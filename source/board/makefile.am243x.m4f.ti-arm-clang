@@ -25,7 +25,9 @@ FILES_common := \
 
 FILES_PATH_common = \
     eeprom \
-    ethphy \
+    ethphy/icss_emac \
+    ethphy/enet/rtos_drivers/src \
+    ethphy/enet/rtos_drivers/include \
     flash \
     flash/gpmc \
     flash/sfdp \
@@ -38,6 +40,8 @@ FILES_PATH_common = \
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
 
 DEFINES_common := \
     -DSOC_AM243X \

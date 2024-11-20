@@ -19,6 +19,7 @@ const files = {
 
 const includes = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_netconf/src/common",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_netconf/src/daemon",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_netconf/src/platform/ti-frtos",

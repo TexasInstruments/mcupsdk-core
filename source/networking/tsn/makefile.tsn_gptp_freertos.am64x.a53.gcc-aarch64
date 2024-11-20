@@ -64,6 +64,7 @@ FILES_PATH_common = \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/a53 \

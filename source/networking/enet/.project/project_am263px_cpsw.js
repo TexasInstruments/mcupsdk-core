@@ -67,11 +67,6 @@ const files = {
         /* Enet utils */
         "enetphy.c",
         "generic_phy.c",
-        "dp83867.c",
-        "dp83869.c",
-        "dp83tg720.c", 
-        "dp83822.c",
-        "vsc8514.c",
 
         /* Enet utils */
         "enet_apputils.c",
@@ -131,6 +126,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am263px",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
+
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
     ],
 };
 

@@ -62,8 +62,6 @@ const files = {
         /* Enet utils */
         "enetphy.c",
         "generic_phy.c",
-        "dp83867.c",
-
 
         /* Enet utils */
         "enet_apputils.c",
@@ -79,7 +77,7 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/mod",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per",
-	"${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per/V2",
+	    "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per/V2",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/common",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/dma/cpdma",
 
@@ -122,6 +120,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/awr294x",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/awr294x",
+
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
     ],
 };
 

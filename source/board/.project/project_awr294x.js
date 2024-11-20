@@ -6,6 +6,13 @@ const files_r5f = {
     common: [
         "eeprom.c",
         "eeprom_cav24c.c",
+        "phy_common_priv.c",
+        "dp83tc812.c",
+        "dp83tg720.c",
+        "dp83869.c",
+        "dp83867.c",
+        "dp83822.c",
+        "dp83826.c",
         "led.c",
         "led_gpio.c",
         "flash.c",
@@ -26,10 +33,26 @@ const files_c66 = {
 const filedirs = {
     common: [
         "eeprom",
+        "ethphy/enet/rtos_drivers/src",
+        "ethphy/enet/rtos_drivers/include",
         "flash",
         "flash/qspi",
         "flash/sfdp",
         "led",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
+        ],
+}
+
+const defines_r5f = {
+    common: [
+        "MCU_SDK_BUILD",
+        "PHY_CFG_TRACE_LEVEL=3",
     ],
 };
 
@@ -54,8 +77,10 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
+    build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
+        build_property.defines = defines_r5f;
     }
     else
     {

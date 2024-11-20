@@ -18,6 +18,13 @@ FILES_common := \
     ethphy.c \
     ethphy_dp83869.c \
     ethphy_dp83826e.c \
+    phy_common_priv.c \
+    dp83tc812.c \
+    dp83tg720.c \
+    dp83869.c \
+    dp83867.c \
+    dp83822.c \
+    dp83826.c \
     flash.c \
     flash_nand_gpmc.c \
     flash_nor_ospi.c \
@@ -32,7 +39,9 @@ FILES_common := \
 
 FILES_PATH_common = \
     eeprom \
-    ethphy \
+    ethphy/icss_emac \
+    ethphy/enet/rtos_drivers/src \
+    ethphy/enet/rtos_drivers/include \
     flash \
     flash/gpmc \
     flash/sfdp \
@@ -46,9 +55,13 @@ FILES_PATH_common = \
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DMCU_SDK_BUILD \
+    -DPHY_CFG_TRACE_LEVEL=3 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

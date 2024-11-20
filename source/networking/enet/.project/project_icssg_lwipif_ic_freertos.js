@@ -21,6 +21,7 @@ const filedirs = {
 
 const includes = {
     common: [
+       "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic/lwipific/inc",
        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic/intercore/include",
 

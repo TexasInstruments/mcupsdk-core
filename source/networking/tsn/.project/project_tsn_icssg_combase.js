@@ -27,6 +27,7 @@ const filedirs = {
 
 const includes = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",

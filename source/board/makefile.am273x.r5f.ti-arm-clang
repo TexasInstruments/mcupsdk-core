@@ -15,6 +15,13 @@ LIBNAME:=board.am273x.r5f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     eeprom.c \
     eeprom_cav24c.c \
+    phy_common_priv.c \
+    dp83tc812.c \
+    dp83tg720.c \
+    dp83869.c \
+    dp83867.c \
+    dp83822.c \
+    dp83826.c \
     led.c \
     led_gpio.c \
     flash.c \
@@ -23,6 +30,8 @@ FILES_common := \
 
 FILES_PATH_common = \
     eeprom \
+    ethphy/enet/rtos_drivers/src \
+    ethphy/enet/rtos_drivers/include \
     flash \
     flash/sfdp \
     flash/qspi \
@@ -31,9 +40,13 @@ FILES_PATH_common = \
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
 
 DEFINES_common := \
     -DSOC_AM273X \
+    -DMCU_SDK_BUILD \
+    -DPHY_CFG_TRACE_LEVEL=3 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
