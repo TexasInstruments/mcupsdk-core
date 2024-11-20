@@ -112,7 +112,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mailbox/mailbox_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mailbox/mailbox_ut/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_peripheral/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -647,7 +647,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C drivers/mailbox/mailbox_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
  test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1241,7 +1241,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C drivers/mailbox/mailbox_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
  test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1835,7 +1835,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C drivers/mailbox/mailbox_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

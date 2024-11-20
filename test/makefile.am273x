@@ -101,7 +101,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/hwa/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/CycleCounterP_c66/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -697,7 +697,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
@@ -1458,7 +1458,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
@@ -2219,7 +2219,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub

@@ -110,8 +110,10 @@ help:
 	@echo  $(MAKE) -s -C drivers/i2c/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/lin/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/lin/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/canfd_hld/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/canfd_hld/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/optiflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -369,6 +371,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_lin_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_lin_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_optiflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -707,10 +711,16 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C drivers/lin/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcspi/mcspi/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1102,6 +1112,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_lin_am263px-cc_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_lin_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_optiflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1435,10 +1447,16 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C drivers/lin/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcspi/mcspi/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1830,6 +1848,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_lin_am263px-cc_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_lin_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_optiflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2163,10 +2183,16 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C drivers/lin/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_mcan_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcan_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcan_canfd_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcan_canfd_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcan/canfd_hld/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcspi/mcspi/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

@@ -298,7 +298,7 @@ const example_file_list = [
     "test/drivers/ipc_notify/.project/project.js",
     "test/drivers/ipc_rpmsg/.project/project.js",
     "test/drivers/ipc_rpmsg/ipc_safeipc_test/.project/project.js",
-    "test/drivers/mcan/.project/project.js",
+    "test/drivers/mcan/mcan_lld/.project/project.js",
     "test/drivers/mcspi/mcspi/.project/project.js",
     "test/drivers/mcspi/mcspi_eeprom/.project/project.js",
     "test/drivers/mcspi/mcspi_eeprom_dma/.project/project.js",

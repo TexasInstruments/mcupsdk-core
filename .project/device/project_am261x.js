@@ -315,7 +315,7 @@ const example_file_list = [
 	"test/drivers/ipc_rpmsg/.project/project.js",
 	// "test/drivers/ipc_rpmsg/ipc_rpmsg_test_am261x/.project/project.js",
 	"test/drivers/lin/.project/project.js",
-	"test/drivers/mcan/.project/project.js",
+	"test/drivers/mcan/mcan_lld/.project/project_am261x.js",
 	"test/drivers/mcspi/mcspi/.project/project.js",
 	"test/drivers/mcspi/mcspi_controller_peripheral/.project/project.js",
 	"test/drivers/mcspi/mcspi_controller_peripheral_dma/.project/project.js",

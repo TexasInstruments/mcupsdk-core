@@ -185,7 +185,7 @@ const example_file_list = [
     "test/drivers/ipc_rpmsg/.project/project.js",
     "test/drivers/mailbox/.project/project.js",
     "test/drivers/mailbox/mailbox_ut/.project/project.js",
-    "test/drivers/mcan/.project/project.js",
+    "test/drivers/mcan/mcan_lld/.project/project.js",
     "test/drivers/mibspi/mibspi_performance_16bit/.project/project.js",
     "test/drivers/mibspi/mibspi_peripheral/.project/project.js",
     "test/drivers/soc/soc_r5f/.project/project.js",

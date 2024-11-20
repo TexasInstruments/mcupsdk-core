@@ -209,7 +209,7 @@ const example_file_list = [
     "test/drivers/ipc_rpmsg/.project/project.js",
     "test/drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/.project/project.js",
     "test/drivers/ipc_rpmsg/ipc_safeipc_test/.project/project.js",
-    "test/drivers/mcan/.project/project.js",
+    "test/drivers/mcan/mcan_lld/.project/project.js",
     "test/drivers/mcasp/mcasp_multiinst_loopback/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/c66/CycleCounterP_c66/.project/project.js",

@@ -236,6 +236,25 @@ extern uint32_t             gCANFDConfigNum;
 #define CANFD_MAX_DLC_MAPPING                        (16U)
 /** @} */
 
+/*!
+ * @{
+ *  \anchor   CANFD_DriverState
+ *  \name     CANFD Driver State
+ *  
+ *  \brief    This macros defines the values used to represent the CANFD driver state
+ *  
+ */
+
+/*! CANFD controller not initialized */
+#define CANFD_DRIVER_STATE_UNINIT        (0U)
+/*! CANFD controller started */
+#define CANFD_DRIVER_STATE_STARTED       (1U)
+/*! CANFD controller stopped */
+#define CANFD_DRIVER_STATE_STOPPED       (2U)
+/*! CANFD controller in sleep mode */
+#define CCANFD_DRIVER_STATE_SLEEP        (3U)
+/** @} */
+
 /**
  *  \anchor   CANFD_MCANElemSize
  *  \name     CANFD Element Size
@@ -268,27 +287,6 @@ typedef enum CANFD_MCANElemSize_t
     /*! 64 byte data field */
     CANFD_MCANElemSize_64BYTES = 7U
 }CANFD_MCANElemSize;
-
-/*!
- *  \anchor   CANFD_DriverState
- *  \name     CANFD Driver State
- *  
- *  \brief    This enumeration defines the values used to represent the CANFD driver state
- */
-typedef enum CANFD_DriverState_t
-{
-    /*! CANFD controller not initialized */
-    CANFD_DriverState_UNINIT,
-
-    /*! CANFD controller started */
-    CANFD_DriverState_STARTED,
-
-    /*! CANFD controller stopped */
-    CANFD_DriverState_STOPPED,
-
-    /*! CANFD controller in sleep mode */
-    CANFD_DriverState_SLEEP
-}CANFD_DriverState;
 
 /*! 
  *
@@ -1051,6 +1049,19 @@ typedef struct CANFD_Attrs_s
 
     /* parameters for bit timing calculation. */
     CANFD_MCANBitTimingParams      CANFDMcanBitTimingParams;
+
+    /**<  Tx message storage type. Refer enum #MCAN_MemType. */
+    uint32_t         txMemType;
+
+    /**<  Rx message storage type. Refer enum #MCAN_MemType. */
+    uint32_t         rxMemType;
+
+    /**
+     * \brief    void pointer to #MCAN_ExtMsgIDFilterElement or 
+     *           #MCAN_StdMsgIDFilterElement structure. It will point 
+     *            to any of the two structure based on fdMode. 
+     */
+    void                *filterConfig;
 } CANFD_Attrs;
 
 /**
@@ -1299,7 +1310,7 @@ typedef struct CANFD_Object_t
     /**
      * \brief   CANFD driver internal state
      */
-    CANFD_DriverState               state;
+    uint32_t                state;
 
     /**
      * \brief   CANFD driver init parameters
@@ -1581,6 +1592,12 @@ typedef struct CANFD_MessageObject_t
      */
     void                   *args;
 
+    /**
+     * \brief    void pointer to #MCAN_ExtMsgIDFilterElement or 
+     *           #MCAN_StdMsgIDFilterElement structure. It will point  
+     *           to any of the two structure based on fdMode. 
+     */
+    void                *filterConfig;
 }CANFD_MessageObject;
 
 /*!

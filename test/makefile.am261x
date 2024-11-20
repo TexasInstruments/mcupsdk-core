@@ -64,8 +64,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/i2c/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/lin/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/lin/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/rti/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/rti/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -431,10 +431,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C drivers/lin/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -881,10 +881,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C drivers/lin/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1331,10 +1331,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C drivers/lin/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mcan/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C drivers/mcan/mcan_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

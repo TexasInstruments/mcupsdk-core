@@ -195,22 +195,16 @@ static void CANFD_processFIFOElements(CANFD_Handle handle, MCAN_RxFIFONum fifoNu
             /* Copy the data */
             (void)memcpy (ptrCanMsgObj->args, (void*)&ptrCanFdObj->rxBuffElem.data, ptrCanMsgObj->dataLength);
 
-            if(ptrCanFdObj->rxBuffElem.fidx < MCAN_MAX_RX_MSG_OBJECTS)
-            {
-                /* Get the message object pointer */
-                ptrCanMsgObj = ptrCanFdObj->rxMapping[ptrCanFdObj->rxBuffElem.fidx];
+            /* Increment the number of interrupts received */
+            ptrCanMsgObj->interruptsRxed++;
 
-                /* Increment the number of interrupts received */
-                ptrCanMsgObj->interruptsRxed++;
+            /* Call the registered callback. */
+            CANFD_transferCallBack((CANFD_MsgObjHandle)ptrCanMsgObj, CANFD_Reason_RX);
 
-                /* Call the registered callback. */
-                CANFD_transferCallBack((CANFD_MsgObjHandle)ptrCanMsgObj, CANFD_Reason_RX);
+            /* Acknowledge the data read */
+            (void)MCAN_writeRxFIFOAck(baseAddr, (uint32_t)fifoNum, fifoStatus.getIdx);
 
-                /* Acknowledge the data read */
-                (void)MCAN_writeRxFIFOAck(baseAddr, (uint32_t)fifoNum, fifoStatus.getIdx);
-
-                MCAN_getRxFIFOStatus(baseAddr, &fifoStatus);
-            }
+            MCAN_getRxFIFOStatus(baseAddr, &fifoStatus);
         }
     }
 }
@@ -257,7 +251,7 @@ void CANFD_int0Isr (void * args)
             /* Increment the number of interrupts received */
             ptrCanFdObj->busOffInterrupts++;
 
-            ptrCanFdObj->state = CANFD_DriverState_STOPPED;
+            ptrCanFdObj->state = CANFD_DRIVER_STATE_STOPPED;
 
             /* Call the registered callback. */
             CANFD_errStatusCallBack(canFdHandle, CANFD_Reason_BUSOFF, NULL);
@@ -872,10 +866,11 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
         ptrCanFdObj = (CANFD_Object *) config->object;
         bitTimingParams = (&config->attrs->CANFDMcanBitTimingParams);
         optionTLV.type  = (CANFD_Option)config->attrs->OptionTLVtype;
-        if(ptrCanFdObj->state != CANFD_DriverState_UNINIT)
-        {
-            status = SystemP_FAILURE;
-        }
+        // if((ptrCanFdObj->state != CANFD_DRIVER_STATE_UNINIT) || 
+        //    (ptrCanFdObj->state != CANFD_DRIVER_STATE_STOPPED))
+        // {
+        //     status = SystemP_FAILURE;
+        // }
 
         if (status == SystemP_SUCCESS)
         {
@@ -961,7 +956,7 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
                 ptrCanFdObj->mcanDataSize[MCAN_DATA_SIZE_64BYTES] = (uint8_t)64U;
 
                 /* Initialize the CAN driver state */
-                ptrCanFdObj->state = CANFD_DriverState_STARTED;
+                ptrCanFdObj->state = CANFD_DRIVER_STATE_STARTED;
 
                 /* Configure the Bit timing */
                 if (status == SystemP_SUCCESS)
@@ -1020,7 +1015,7 @@ static int32_t CANFD_deConfigInstance(CANFD_Handle handle)
         MCAN_enableIntrLine(baseAddr, MCAN_INTR_LINE_NUM_0, 0U);
 
         /* Update the driver state */
-        ptrCanFdObj->state = CANFD_DriverState_STOPPED;
+        ptrCanFdObj->state = CANFD_DRIVER_STATE_STOPPED;
 
         /* Delete the message objects */
         for (index = (uint32_t)0; index < MCAN_MAX_MSG_OBJECTS; index++)
@@ -1127,17 +1122,26 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
     int32_t                     retVal = SystemP_SUCCESS;
     CANFD_Config               *config;
     CANFD_Object               *ptrCanFdObj = NULL;
+    CANFD_OpenParams           *openParams = NULL;
 
     if ((handle != NULL) && (ptrCanMsgObj != NULL))
     {
         config = (CANFD_Config*) handle;
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object *) config->object;
-
-        baseAddr = ptrCanFdObj->regBaseAddress;
+        openParams  = ptrCanFdObj->openParams;
+        baseAddr    = ptrCanFdObj->regBaseAddress;
 
         /* Save the specified parameters */
         ptrCanMsgObj->canfdHandle = (CANFD_Config*) handle;
+        if(openParams->fdMode == true)
+        {
+            ptrCanMsgObj->filterConfig = (MCAN_ExtMsgIDFilterElement*)config->attrs->filterConfig;
+        }
+        else
+        {
+            ptrCanMsgObj->filterConfig = (MCAN_StdMsgIDFilterElement*)config->attrs->filterConfig;
+        }
 
         /* Loop to find a free message object handle */
         for (i = (uint32_t)0U; i < MCAN_MAX_MSG_OBJECTS; i++)
@@ -1274,8 +1278,8 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
                     }
 
                     /* Store the message in rx buffer */
-                    stdMsgIdFilter.sfec = (uint32_t)0x7U;
-                    stdMsgIdFilter.sft = (uint32_t)0U;
+                    stdMsgIdFilter.sfec = ((MCAN_StdMsgIDFilterElement*)(ptrCanMsgObj->filterConfig))->sfec;
+                    stdMsgIdFilter.sft  = ((MCAN_StdMsgIDFilterElement*)(ptrCanMsgObj->filterConfig))->sft;
                     MCAN_addStdMsgIDFilter(baseAddr, i, &stdMsgIdFilter);
                 }
                 else
@@ -1290,8 +1294,8 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
                     }
 
                     /* Store the message in rx buffer */
-                    extMsgIdFilter.efec = (uint32_t)0x7U;
-                    extMsgIdFilter.eft = (uint32_t)0U;
+                    extMsgIdFilter.efec = ((MCAN_ExtMsgIDFilterElement*)(ptrCanMsgObj->filterConfig))->efec;
+                    extMsgIdFilter.eft  = ((MCAN_ExtMsgIDFilterElement*)(ptrCanMsgObj->filterConfig))->eft;
                     MCAN_addExtMsgIDFilter(baseAddr, i, &extMsgIdFilter);
                 }
             }
@@ -2188,7 +2192,7 @@ int32_t CANFD_setOptions(CANFD_Handle handle, const CANFD_OptionTLV* ptrOptInfo)
                             else
                             {
                                 /* Update the state information */
-                                ptrCanFdObj->state = CANFD_DriverState_SLEEP;
+                                ptrCanFdObj->state = CCANFD_DRIVER_STATE_SLEEP;
                             }
                         }
                         else if (*(uint8_t*)ptrOptInfo->value == (uint8_t)0U)
@@ -2213,7 +2217,7 @@ int32_t CANFD_setOptions(CANFD_Handle handle, const CANFD_OptionTLV* ptrOptInfo)
                                 retVal = CANFD_updateOpMode(baseAddr, MCAN_OPERATION_MODE_NORMAL);
 
                                 /* Update the state information */
-                                ptrCanFdObj->state = CANFD_DriverState_STARTED;
+                                ptrCanFdObj->state = CANFD_DRIVER_STATE_STARTED;
                             }
                         }
                         else
