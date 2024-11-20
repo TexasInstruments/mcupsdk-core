@@ -42,8 +42,8 @@
 
 #include <board/ethphy.h>
 #include <board/eeprom.h>
-#include <board/ethphy/ethphy_dp83826e.h>
-#include <board/ethphy/ethphy_dp83869.h>
+#include <board/ethphy/icss_emac/ethphy_dp83826e.h>
+#include <board/ethphy/icss_emac/ethphy_dp83869.h>
 #ifdef SOC_AM263PX
 #include <board/ioexp/ioexp_tca6424.h>
 #endif
