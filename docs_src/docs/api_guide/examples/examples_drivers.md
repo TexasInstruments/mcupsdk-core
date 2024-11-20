@@ -312,6 +312,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# EQEP
    -# \subpage EXAMPLES_DRIVERS_EQEP_FREQUENCY_MEASUREMENT
    -# \subpage EXAMPLES_DRIVERS_EQEP_POSITION_SPEED
+   -# \subpage EXAMPLES_DRIVERS_EQEP_SPEED_DIRECTION
+   -# \subpage EXAMPLES_DRIVERS_EQEP_FREQ_CAL_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_EQEP_CW_CCW
 \cond SOC_AM263PX
 -# FOTA
