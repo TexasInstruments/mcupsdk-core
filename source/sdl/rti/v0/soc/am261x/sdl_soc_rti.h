@@ -44,7 +44,7 @@ extern "C" {
 *   Required Macros for Instances config
 */
 
-#define SDL_RTI_MAX_INSTANCE    (0x04U)
+#define SDL_RTI_MAX_INSTANCE    (0x02U)
 #define INSTANCE_INVALID        (0x0U)
 
 /**
@@ -65,8 +65,6 @@ typedef enum {
 
    SDL_INSTANCE_WDT0,
    SDL_INSTANCE_WDT1,
-   SDL_INSTANCE_WDT2,
-   SDL_INSTANCE_WDT3,
    SDL_INSTANCE_INVALID,
 
 }SDL_RTI_InstanceType;
@@ -79,7 +77,6 @@ typedef enum {
 ======================================================================================================*/
 
 static uint32_t SDL_RTI_baseAddress[SDL_RTI_MAX_INSTANCE+1U] = {SDL_WDT0_U_BASE,SDL_WDT1_U_BASE,
-                                                                SDL_WDT2_U_BASE,SDL_WDT3_U_BASE,
                                                                 INSTANCE_INVALID};
 
 int32_t SDL_RTI_getBaseaddr(SDL_RTI_InstanceType instance,

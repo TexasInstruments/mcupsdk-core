@@ -102,7 +102,7 @@ void SDL_TOG_irqHandler(void);
 
 static uint32_t SDL_TOG_baseAddress[SDL_TOG_MAX_INSTANCE] =
 {
-	SDL_MCU_TIMEOUT0_CFG_BASE
+	SDL_FSS_VBUSM_TO_CFG_U_BASE
 };
 
 /* Properties of TOG instances in: TOG */

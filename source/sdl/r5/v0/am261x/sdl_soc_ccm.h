@@ -68,10 +68,8 @@ extern "C"
 typedef uint32_t SDL_CCM_Inst;
 	/** CCM INSTANCE R5F0 */
 #define SDL_R5SS0_CCM           0U
-    /** CCM INSTANCE R5F1 */
-#define SDL_R5SS1_CCM           1U
 	/** Maximum */
-#define SDL_CCM_MAX_INSTANCE  (SDL_R5SS1_CCM + 1U)
+#define SDL_CCM_MAX_INSTANCE  (SDL_R5SS0_CCM + 1U)
 
 /**
  *
@@ -82,7 +80,6 @@ typedef uint32_t SDL_CCM_Inst;
 static uint32_t SDL_CCM_baseAddress[SDL_CCM_MAX_INSTANCE] =
 {
 	SDL_R5SS0_CCMR_U_BASE,
-    SDL_R5SS1_CCMR_U_BASE,
 };
 
 #ifdef __cplusplus

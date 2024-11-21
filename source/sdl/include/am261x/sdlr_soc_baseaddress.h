@@ -277,6 +277,7 @@ extern "C"
 #define SDL_ECC_AGG_R5SS0_CORE0_U_BASE	            				(0x53000000U)
 #define SDL_ECC_AGG_R5SS0_CORE1_U_BASE	            				(0x53003000U)
 #define SDL_ECC_AGG_TOP_U_BASE	            						(0x53010000U)
+#define SDL_ECC_AGG_TOP_U_SIZE                                      (0x528U)
 #define SDL_TMU_ROM_R5SS0_CORE0_U_BASE	            				(0x53020000U)
 #define SDL_TMU_ROM_R5SS0_CORE1_U_BASE	            				(0x53024000U)
 #define SDL_IOMUX_U_BASE	            							(0x53100000U)
