@@ -35,6 +35,8 @@ const libdirs_nortos = {
 
 const includes_nortos_r5f = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",

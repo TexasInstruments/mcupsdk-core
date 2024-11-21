@@ -35,7 +35,7 @@
 #include <stdbool.h>
 
 #include "ti_board_config.h"
-#include <networking/enet/core/include/phy/dp83867.h>
+#include <dp83867.h>
 
 /*
  * Board info
