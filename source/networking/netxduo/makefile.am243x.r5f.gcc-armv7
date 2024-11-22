@@ -526,6 +526,7 @@ FILES_common := \
     nx_udp_source_extract.c \
     nx_utility.c \
     nx_auto_ip.c \
+    nxd_bsd.c \
     nx_cloud.c \
     nxd_dhcp_client.c \
     nxd_dhcp_server.c \
@@ -543,6 +544,7 @@ FILES_common := \
     nx_ppp.c \
     nx_pppoe_client.c \
     nx_pppoe_server.c \
+    nxd_ptp_client.c \
     nx_rtp_sender.c \
     nx_rtsp_server.c \
     nxd_smtp_client.c \
@@ -564,6 +566,8 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/src \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip \
+    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot \
+    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dns \
@@ -575,6 +579,7 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pop3 \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ppp \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pppoe \
+    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtp \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtsp \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/smtp \
@@ -591,6 +596,9 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/ports \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/crypto_libraries/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet \
@@ -602,6 +610,8 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dns \
@@ -613,6 +623,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pop3 \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ppp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/pppoe \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/ptp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/rtsp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/smtp \
@@ -622,6 +633,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/tftp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/web \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/websocket \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot/azure-sdk-for-c/sdk/inc \
 
 DEFINES_common := \
     -DSOC_AM243X \

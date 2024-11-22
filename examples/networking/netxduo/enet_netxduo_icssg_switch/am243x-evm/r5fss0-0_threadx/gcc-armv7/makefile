@@ -48,6 +48,7 @@ FILES_common := \
 	ti_enet_open_close.c \
 	ti_enet_soc.c \
 	ti_enet_lwipif.c \
+    ti_enet_netxduo.c \
 
 FILES_PATH_common = \
 	.. \
@@ -218,6 +219,7 @@ SYSCFG_GEN_FILES+=generated/ti_enet_config.c generated/ti_enet_config.h
 SYSCFG_GEN_FILES+=generated/ti_enet_open_close.c generated/ti_enet_open_close.h
 SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
+SYSCFG_GEN_FILES+=generated/ti_enet_netxduo.c generated/ti_enet_netxduo.h
 
 SYSTEM_FLAG ?= false
 
