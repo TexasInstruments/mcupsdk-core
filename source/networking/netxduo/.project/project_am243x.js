@@ -521,14 +521,14 @@ const files = {
         "nx_auto_ip.c",
 
         // azure-iot
-        "nx_azure_iot.c",
-        "nx_azure_iot_adu_agent.c",
-        "nx_azure_iot_adu_root_key.c",
-        "nx_azure_iot_hub_client.c",
-        "nx_azure_iot_hub_client_properties.c",
-        "nx_azure_iot_json_reader.c", 
-        "nx_azure_iot_json_writer.c",
-        "nx_azure_iot_provisioning_client.c",
+        // "nx_azure_iot.c",
+        // "nx_azure_iot_adu_agent.c",
+        // "nx_azure_iot_adu_root_key.c",
+        // "nx_azure_iot_hub_client.c",
+        // "nx_azure_iot_hub_client_properties.c",
+        // "nx_azure_iot_json_reader.c", 
+        // "nx_azure_iot_json_writer.c",
+        // "nx_azure_iot_provisioning_client.c",
 
         // BSD
         "nxd_bsd.c",
