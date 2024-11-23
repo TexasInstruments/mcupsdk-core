@@ -27,6 +27,14 @@ const includes_freertos_smp_a53 = {
     ],
 };
 
+const includes_freertos_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53",
+    ],
+};
+
 const libdirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -40,6 +48,13 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+    ],
+};
+
+const libdirs_freertos_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
     ],
 };
 
@@ -66,6 +81,13 @@ const libs_a53 = {
     ],
 };
 
+const libs_freertos_a53 = {
+    common: [
+        "freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+        "drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+    ],
+};
+
 const libs_freertos_smp_a53 = {
     common: [
         "freertos.am64x.a53-smp.gcc-aarch64.${ConfigName}.lib",
@@ -78,6 +100,12 @@ const lnkfiles = {
         "linker.cmd",
     ]
 };
+
+const defines_a53_amp = {
+    common: [
+        "AMP_FREERTOS_A53"
+    ]
+}
 
 const syscfgfile = "../example.syscfg"
 
@@ -135,6 +163,36 @@ const templates_freertos_smp_a53 =
     },
 ];
 
+const templates_freertos_a53ss00 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "sciclient_get_version_main",
+        },
+    },
+];
+
+const templates_freertos_a53ss01 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53ss0-1.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "sciclient_get_version_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
@@ -150,6 +208,10 @@ const buildOptionCombos = [
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-sk", os: "nortos"},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "nortos"},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos-smp"},
+    { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -183,15 +245,35 @@ function getComponentBuildProperty(buildOption) {
         build_property.templates = templates_nortos_m4f;
     }
     if(buildOption.cpu.match(/a53*/)) {
-        build_property.libs = libs_a53;
-        build_property.templates = templates_nortos_a53;
-
-        if(buildOption.os.match("freertos-smp") )
+        if(buildOption.os.match(/freertos*/) )
         {
-            build_property.includes = includes_freertos_smp_a53;
+            build_property.includes = includes_freertos_a53;
             build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_smp_a53;
-            build_property.templates = templates_freertos_smp_a53;
+            build_property.libs = libs_freertos_a53;
+            build_property.isAmpSHM = true;
+            if(buildOption.os.match("freertos-smp"))
+            {
+                build_property.includes = includes_freertos_smp_a53;
+                build_property.libs = libs_freertos_smp_a53;
+                build_property.templates = templates_freertos_smp_a53;
+            }
+            else
+            {
+                if(buildOption.cpu.match(/a53ss0-1/))
+                {
+                    build_property.templates = templates_freertos_a53ss01;
+                    build_property.defines = defines_a53_amp;
+                }
+                else
+                {
+                    build_property.templates = templates_freertos_a53ss00;
+                    build_property.defines = defines_a53_amp;
+                }
+            }
+        }
+        else{
+            build_property.libs = libs_a53;
+            build_property.templates = templates_nortos_a53;
         }
     }
 

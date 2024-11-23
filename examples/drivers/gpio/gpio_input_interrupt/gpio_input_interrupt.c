@@ -69,7 +69,11 @@ void gpio_input_interrupt_main(void *args)
     Board_driversOpen();
     Board_gpioInit();
 
+#if defined(AMP_FREERTOS_A53)
+    DebugP_log("GPIO Input Interrupt Test Started on a53_core%d...\r\n", Armv8_getCoreId());
+#else
     DebugP_log("GPIO Input Interrupt Test Started ...\r\n");
+#endif
     DebugP_log("GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...\r\n");
 
     pinNum          = GPIO_PUSH_BUTTON_PIN;
@@ -98,8 +102,13 @@ void gpio_input_interrupt_main(void *args)
     }
     DebugP_log("Key is pressed %d times\r\n", gGpioIntrDone);
 
+#if defined(AMP_FREERTOS_A53) 
+    DebugP_log("GPIO Input Interrupt Test Passed on a53_core%d...\r\n", Armv8_getCoreId());
+    DebugP_log("All tests have passed on a53_core%d...\r\n", Armv8_getCoreId());
+#else
     DebugP_log("GPIO Input Interrupt Test Passed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
+#endif 
 
     Board_gpioDeinit();
     Board_driversClose();

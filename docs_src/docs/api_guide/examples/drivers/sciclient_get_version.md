@@ -33,6 +33,8 @@ We also fetch the clock frequency of the current CPU using Sciclient and print t
  ^              | m4fss0-0 nortos
  ^              | a53ss0-0 nortos
  ^              | a53ss0-0 freertos-smp
+ ^              | a53ss0-0 freertos
+ ^              | a53ss0-1 freertos
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
@@ -121,5 +123,23 @@ Firmware revision 0x15
 ABI revision 3.1
 [SCICLIENT] CPU clock frequency = 400000000 Hz
 All tests have passed!!
+\endcode
+\endcond
+\cond SOC_AM64X
+**a53 core0:** on UART0(/dev/ttyUSB0)
+\code
+DMSC Firmware Version 10.0.8--v10.00.08 (Fiery Fox)
+Firmware revision 0xa
+ABI revision 4.0
+[SCICLIENT] CPU clock frequency = 800000000 Hz 
+All tests have passed on a53_core0!!
+\endcode
+**a53 core1:** on UART1(/dev/ttyUSB2)
+\code
+DMSC Firmware Version 10.0.8--v10.00.08 (Fiery Fox)
+Firmware revision 0xa
+ABI revision 4.0
+[SCICLIENT] CPU clock frequency = 800000000 Hz 
+All tests have passed on a53_core1!!
 \endcode
 \endcond

@@ -65,6 +65,8 @@ The RM board config need to have an entry for the interrupt router for the core 
  CPU + OS       | r5fss0-0 nortos
  ^              | m4fss0-0 nortos
  ^              | a53ss0-0 nortos
+ ^              | a53ss0-0 freertos
+ ^              | a53ss0-1 freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/gpio/gpio_input_interrupt/
@@ -209,3 +211,33 @@ Key is pressed 5 times
 GPIO Input Interrupt Test Passed!!
 All tests have passed!!
 \endcode
+\cond SOC_AM64X
+**a53 core0:** on UART0(/dev/ttyUSB0)
+\code
+GPIO Input Interrupt Test Started on a53_core0...
+GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...
+Press and release SW5 button on EVM to trigger GPIO interrupt ...
+Key is pressed 0 times
+Key is pressed 1 times
+Key is pressed 2 times
+Key is pressed 3 times
+Key is pressed 4 times
+Key is pressed 5 times
+GPIO Input Interrupt Test Passed on a53_core0...
+All tests have passed on a53_core0...
+\endcode
+**a53 core1:** on UART1(/dev/ttyUSB2)
+\code
+GPIO Input Interrupt Test Started on a53_core1...
+GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...
+Press and release SW5 button on EVM to trigger GPIO interrupt ...
+Key is pressed 0 times
+Key is pressed 1 times
+Key is pressed 2 times
+Key is pressed 3 times
+Key is pressed 4 times
+Key is pressed 5 times
+GPIO Input Interrupt Test Passed on a53_core1...
+All tests have passed on a53_core1...
+\endcode
+\endcond
