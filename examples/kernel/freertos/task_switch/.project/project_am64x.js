@@ -89,6 +89,12 @@ const lnkfiles = {
     ]
 };
 
+const defines_a53_amp = {
+    common: [
+        "AMP_FREERTOS_A53"
+    ]
+}
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH";
@@ -119,7 +125,7 @@ const templates_r5f_gcc =
     },
 ];
 
-const templates_a53 =
+const templates_freertos_a53ss00 =
 [
     {
         input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
@@ -132,6 +138,21 @@ const templates_a53 =
             entryFunction: "task_switch_main",
         },
     },
+];
+
+const templates_freertos_a53ss01 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53ss0-1.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "task_switch_main",
+        },
+    }
 ];
 
 const templates_m4f =
@@ -154,6 +175,8 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am64x-sk", os: "freertos"},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-sk", os: "freertos"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -194,8 +217,13 @@ function getComponentBuildProperty(buildOption) {
     }
     if(buildOption.cpu.includes("a53")) {
         build_property.includes = includes_a53;
-        build_property.templates = templates_a53;
         build_property.libs = libs_a53;
+        build_property.defines = defines_a53_amp;
+        build_property.isAmpSHM = true;
+        if(buildOption.cpu.match(/a53ss0-1/))
+            build_property.templates = templates_freertos_a53ss01;
+        else
+            build_property.templates = templates_freertos_a53ss00;
     }
     if(buildOption.cpu.includes("m4f")) {
         build_property.templates = templates_m4f;

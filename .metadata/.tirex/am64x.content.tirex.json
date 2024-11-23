@@ -14763,6 +14763,72 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is A53SS0-1 running FREERTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is A53SS0-1 running FREERTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Xip Benchmark Example. CPU is R5FSS0-0 running FREERTOS.",
@@ -15475,6 +15541,72 @@
             "freertos",
             "task_switch",
             "m4fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "task_switch",
+        "location": "../../examples/kernel/freertos/task_switch/am64x-evm/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "task_switch",
+        "location": "../../examples/kernel/freertos/task_switch/am64x-sk/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM64B"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch",
+            "a53ss0-1_freertos"
         ],
         "mainCategories": [
             [

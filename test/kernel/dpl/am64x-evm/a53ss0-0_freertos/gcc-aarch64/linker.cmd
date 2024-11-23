@@ -15,6 +15,7 @@ MEMORY
     USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x80
     LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x80, LENGTH = 0x00004000 - 0x80
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D4000, LENGTH = 0x0000C000
+    AMP_SHM : ORIGIN = 0x99000000, LENGTH = 0x4000
 }
 
 SECTIONS {
@@ -38,6 +39,7 @@ SECTIONS {
     .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
     /* this is used only when IPC RPMessage is enabled, else this is not used */
     .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
+    .bss.amp_shared_mem  (NOLOAD) : { KEEP(*(.bss.amp_shared_mem))} > AMP_SHM
 
     .bss : {
         __bss_start__ = .;

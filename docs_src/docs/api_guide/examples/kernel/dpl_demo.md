@@ -31,6 +31,7 @@ The example does the below
  ^              | m4fss0-0 freertos
  ^              | a53ss0-0 nortos
  ^              | a53ss0-0 freertos
+ ^              | a53ss0-1 freertos
  ^              | a53ss0-0 freertos-smp
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
@@ -116,3 +117,35 @@ Shown below is a sample output when the application is run,
 [DPL] Free'ed 1023 bytes @ 0x80010440, heap free size = 1984 bytes
 All tests have passed!
 \endcode
+\cond SOC_AM64X
+**a53 core0:** on UART0(/dev/ttyUSB0)
+\code
+DPL Demo Example started on a53_core0  
+[DPL] Hwi post ...
+[DPL] Hwi post ... DONE !!!
+[DPL] Sleep for 100 msecs ... 
+[DPL] Sleep ... DONE (Measured time = 99612 usecs, CPU cycles = 104208 ) !!!
+Note: In case of FREERTOS CPU Cycles will not match with the measured time
+        As the "WFI" instruction is called from idle task, which suspends the PMU counter used to mea.
+[DPL] Running cache operations ... DONE !!!
+[DPL] Heap free size = 1984 bytes
+[DPL] Allocated 1023 bytes @ 0x82020440, heap free size = 896 bytes
+[DPL] Free'ed 1023 bytes @ 0x82020440, heap free size = 1984 bytes
+All tests have passed on a53_core0!!
+\endcode
+**a53 core1:** on UART1(/dev/ttyUSB2)
+\code
+DPL Demo Example started on a53_core1  
+[DPL] Hwi post ...
+[DPL] Hwi post ... DONE !!!
+[DPL] Sleep for 100 msecs ... 
+[DPL] Sleep ... DONE (Measured time = 99612 usecs, CPU cycles = 104208 ) !!!
+Note: In case of FREERTOS CPU Cycles will not match with the measured time
+        As the "WFI" instruction is called from idle task, which suspends the PMU counter used to mea.
+[DPL] Running cache operations ... DONE !!!
+[DPL] Heap free size = 1984 bytes
+[DPL] Allocated 1023 bytes @ 0x82020440, heap free size = 896 bytes
+[DPL] Free'ed 1023 bytes @ 0x82020440, heap free size = 1984 bytes
+All tests have passed on a53_core1!!
+\endcode
+\endcond

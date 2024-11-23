@@ -24,6 +24,7 @@ The example does the below
  CPU + OS       | r5fss0-0 freertos
  ^              | m4fss0-0 freertos
  ^              | a53ss0-0 freertos
+ ^              | a53ss0-1 freertos
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
@@ -100,3 +101,45 @@ time per task - ISR - task switch (semaphore give/take) = 1070 ns
 
 All tests have passed!!
 \endcode
+\cond SOC_AM64X
+**a53 core0:** on UART0(/dev/ttyUSB0)
+\code
+[FreeRTOS] ping task ... start on a53_core0 !!!
+
+execution time for task switches = 3083718 us
+number of task switches = 2000000 
+time per task switch (semaphore give/take) = 1541 ns
+
+execution time for task switches = 2512564 us
+number of task switches = 2000000 
+time per task switch (direct-to-task notification give/take) = 1256 ns
+
+execution time for task - ISR - task - task switches = 4625202 us
+number of ISRs = 2000000 
+time per task - ISR - task switch (semaphore give/take) = 2312 ns
+
+[FreeRTOS] ping task ... done on a53_core0!!!
+
+All tests have passed on a53_core0!!!
+\endcode
+**a53 core1:** on UART1(/dev/ttyUSB2)
+\code
+[FreeRTOS] ping task ... start on a53_core1 !!!
+
+execution time for task switches = 3083718 us
+number of task switches = 2000000 
+time per task switch (semaphore give/take) = 1541 ns
+
+execution time for task switches = 2512564 us
+number of task switches = 2000000 
+time per task switch (direct-to-task notification give/take) = 1256 ns
+
+execution time for task - ISR - task - task switches = 4625202 us
+number of ISRs = 2000000 
+time per task - ISR - task switch (semaphore give/take) = 2312 ns
+
+[FreeRTOS] ping task ... done on a53_core1!!!
+
+All tests have passed on a53_core1!!!
+\endcode
+\endcond

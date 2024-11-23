@@ -42,7 +42,14 @@ const filedirs = {
 
 const defines_freertos = {
     common: [
-        "OS_FREERTOS"
+        "OS_FREERTOS",
+    ],
+}
+
+const defines_freertos_amp = {
+    common: [
+        "OS_FREERTOS",
+        "AMP_FREERTOS_A53"
     ],
 }
 
@@ -244,10 +251,25 @@ const templates_nortos_a53 =
     },
 ];
 
-const templates_freertos_a53 =
+const templates_freertos_a53ss00 =
 [
     {
         input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
+const templates_freertos_a53ss01 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53ss0-1.cmd.xdt",
         output: "linker.cmd",
     },
     {
@@ -289,6 +311,8 @@ const buildOptionCombos = [
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "nortos"},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos-smp"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64", board: "am64x-sk", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -359,8 +383,12 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_a53;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_a53;
-            build_property.templates = templates_freertos_a53;
-            build_property.defines = defines_freertos;
+            build_property.defines = defines_freertos_amp;
+            build_property.isAmpSHM = true;
+            if(buildOption.cpu.match(/a53ss0-1/))
+                build_property.templates = templates_freertos_a53ss01;
+            else
+                build_property.templates = templates_freertos_a53ss00;
             if(buildOption.os.match("freertos-smp"))
             {
                 build_property.templates = templates_a53_smp;
