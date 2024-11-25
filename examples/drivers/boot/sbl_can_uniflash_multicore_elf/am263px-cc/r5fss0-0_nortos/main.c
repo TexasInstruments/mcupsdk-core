@@ -174,6 +174,9 @@ int main(void)
 
                     status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
                     DebugP_assert(status == SystemP_SUCCESS);
+
+                    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
                 }
             }
 
@@ -199,6 +202,9 @@ int main(void)
                     DebugP_assert(status == SystemP_SUCCESS);
 
                     status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+
+                    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
                     DebugP_assert(status == SystemP_SUCCESS);
                 }
                 if(status == SystemP_SUCCESS)
