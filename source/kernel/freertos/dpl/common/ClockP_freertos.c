@@ -134,7 +134,16 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks)
 
 uint32_t ClockP_getTicks(void)
 {
-    return ((uint32_t)xTaskGetTickCount());
+    uint32_t ticks;
+    if (HwiP_inISR() != 0U)
+    {
+        ticks = (uint32_t)xTaskGetTickCountFromISR();
+    }
+    else
+    {
+        ticks = (uint32_t)xTaskGetTickCount();
+    }
+    return (ticks);
 }
 
 uint32_t ClockP_getTimeout(ClockP_Object *handle)

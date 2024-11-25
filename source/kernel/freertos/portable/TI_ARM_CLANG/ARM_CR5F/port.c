@@ -249,8 +249,8 @@ void vPortYeildFromISR( uint32_t xSwitchRequired )
 
 void vPortTimerTickHandler()
 {
-    /* Disable IRQ to prevent preemption */
-    portENTER_CRITICAL();
+    /* Disable Interrupts to prevent preeumption */
+    portDISABLE_INTERRUPTS();
 
     if( ulPortSchedularRunning == pdTRUE )
     {
@@ -260,9 +260,8 @@ void vPortTimerTickHandler()
             ulPortYieldRequired = pdTRUE;
         }
     }
-
-    /* Enable IRQ */
-    portEXIT_CRITICAL();
+    /* Enable Interrupts */
+    portENABLE_INTERRUPTS();
 }
 
 void vPortTaskUsesFPU( void )
