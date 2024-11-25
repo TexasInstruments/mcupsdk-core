@@ -236,6 +236,7 @@ ASMFILES_common := \
     CacheP_armv7r_asm.S \
     CpuId_armv7r_asm.S \
     PmuP_armv7r_asm.S \
+    Mutex_armv7r_asm.S \
     HwiP_armv7r_handlers_threadx_asm.S \
     HwiP_armv7r_vectors_threadx_asm.S \
     tx_thread_context_restore.S \
