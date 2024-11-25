@@ -234,6 +234,7 @@ const asmfiles = {
         "CpuId_armv7r_asm.S",
         "PmuP_armv7r_asm.S",
         // DPL R5
+        "Mutex_armv7r_asm.S",
         "HwiP_armv7r_handlers_threadx_asm.S",
         "HwiP_armv7r_vectors_threadx_asm.S",
         // R5 port
