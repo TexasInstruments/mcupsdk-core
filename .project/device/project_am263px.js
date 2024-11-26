@@ -44,6 +44,7 @@ const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
     "examples/benchmarks/ocmc_benchmarking/.project/project.js",
+    "examples/benchmarks/sram_overlay_benchmark/.project/project.js",
     "examples/drivers/adc/adc_safety_checker/.project/project.js",
     "examples/drivers/adc/adc_trigger_repeater_oversampling/.project/project.js",
     "examples/drivers/adc/adc_trigger_repeater_undersampling/.project/project.js",

@@ -15,3 +15,6 @@ This page lists all the examples related to benchmarks of SOC and board peripher
    -# \subpage EXAMPLES_DHRYSTONE
 \endcond
 
+\cond SOC_AM263PX
+   -# \subpage EXAMPLES_SRAM_OVERLAY
+\endcond
