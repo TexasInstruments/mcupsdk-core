@@ -61,6 +61,13 @@ const files_a53 = {
         "led_ioexp.c",
         "nor_spi_sfdp.c",
         "ioexp_tca6424.c",
+        "phy_common_priv.c",
+        "dp83tc812.c",
+		"dp83tg720.c",
+		"dp83869.c",
+		"dp83867.c",
+		"dp83822.c",
+		"dp83826.c",
     ]
 }
 
@@ -90,6 +97,13 @@ const includes = {
 }
 
 const defines_r5f = {
+    common: [
+        "MCU_SDK_BUILD",
+        "PHY_CFG_TRACE_LEVEL=3",
+    ],
+};
+
+const defines_a53 = {
     common: [
         "MCU_SDK_BUILD",
         "PHY_CFG_TRACE_LEVEL=3",
@@ -137,6 +151,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/a53*/)) {
         build_property.files = files_a53;
         build_property.cflags = cflags_a53;
+        build_property.defines = defines_a53;
     }
 
     return build_property;
