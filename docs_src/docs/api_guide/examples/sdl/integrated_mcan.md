@@ -4,7 +4,7 @@
 
 # Introduction {#EXAMPLES_SDL_MCAN_INTRO}
 
-This is a simple example showing the Software Development Kit (SDK) example MCAN driver in Polled Mode running with some of the example Software Diagnostic Library (SDL) diagnostics in FreeRTOS.  This example currently only supports the am263x-cc.
+This is a simple example showing the Software Development Kit (SDK) example MCAN driver in Polled Mode running with some of the example Software Diagnostic Library (SDL) diagnostics in FreeRTOS.  This example currently supports the am263x-cc and am263px-cc.
 
 It will:
 * Run startup diagnostics using SDL.
@@ -22,7 +22,7 @@ The SDK Users Guide talks about how to configure and use the UART.
 
 # SDL Diagnostics
 The table below describes the diagnostics used from SDL in this example. In general, they will not be used to perform negative or destructive tests.
-
+\cond SOC_AM263X
 | Diagnostic            |    Use         |  Comments                                                                       |
 | ----------------------|----------------|---------------------------------------------------------------------------------|
 | Self-Test Check (STC) | Startup        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
@@ -42,7 +42,32 @@ The table below describes the diagnostics used from SDL in this example. In gene
 | DMA Parity            | Runtime        | Parity DMA diagnostic.                                                          |
 | ECC Bus Safety        | Runtime        | SEC, DED and RED tests.                                                         |
 | CCM        (Lockstep) | Runtime        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
-
+\endcond
+\cond SOC_AM263PX
+| Diagnostic            |    Use         |  Comments                                                                       |
+| ----------------------|----------------|---------------------------------------------------------------------------------|
+| Self-Test Check (STC) | Startup        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
+| PBIST                 | Startup        | Checks R5F0.                                                                    |
+| CCM ((R5F, TMU, RL2)) | Startup        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
+| MCRC                  | Runtime        | Autocpu mode.                                                                   |
+| MCAN0 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MCAN0.                             |
+| ICSSM ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for ICSSM.                             |
+| MSSL2 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MSSL2.                             |
+| ATCM ECC              | Runtime        | Performs 1 bit and 2 bit injection tests for ATCM.                              |
+| BTCM ECC              | Runtime        | Performs 1 bit and 2 bit injection tests for BTCM.                              |
+| TPTC ECC              | Runtime        | Performs 1 bit injection tests for TPTC.                                        |
+| RTI                   | Runtime        | R5F0-0 UC1 RTI diagnostic.                                                      |
+| RTI                   | Runtime        | R5F0-0 UC2 RTI diagnostic.                                                      |
+| DCC                   | Runtime        | DCC diagnostic UC1.                                                             |
+| TCM Parity            | Runtime        | Parity TCM diagnostic.                                                          |
+| DMA Parity            | Runtime        | Parity DMA diagnostic.                                                          |
+| ECC Bus Safety        | Runtime        | SEC, DED and RED tests.                                                         |
+| CCM ((R5F, TMU, RL2)) | Runtime        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
+| TMU Parity            | Runtime        | Parity TMU diagnostic.                                                          |
+| TMU ROM CHECKSUM      | Runtime        | ROM CHECKSUM diagnostic.                                                        |
+| TOG                   | Runtime        | STOG      tests.                                                                |
+| VTM Example           | Runtime        | VTM example diagnostic                                                          |
+\endcond
 ## Common ESM {#EXAMPLES_SDL_MCAN_COMMONESM}
 This example uses a common ESM and callback. In configuring the ESM we do not make any assertions on the error pin. Instead, if a diagnostic fails, or there is an unexpected ESM event, we will assert the error PIN (LD16).
 
@@ -107,12 +132,16 @@ Polled: 2000 TxBytes: 800000  RxBytes:800000  TxErr: 0  RxErr: 0  BadID: 0  Mism
 
 # Supported Combinations {#EXAMPLES_SDL_MCAN_COMBOS}
 
+ \cond SOC_AM263X || SOC_AM263PX
+
  Parameter      | Value
  ---------------|-------------------------------------------------
  CPU + OS       | r5fss0-0 FreeRTOS
  Toolchain      | ti-arm-clang
- Board          | am263x-cc
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/integrated_examples
+
+\endcond
 
 # Steps to Run the Example {#EXAMPLES_SDL_MCAN_STEPSTORUN}
 
@@ -148,13 +177,19 @@ Polled: 2000 TxBytes: 800000  RxBytes:800000  TxErr: 0  RxErr: 0  BadID: 0  Mism
   8. Flash the application by follow the steps mentioned in the page, \ref GETTING_STARTED_FLASH
 
 # See Also {#EXAMPLES_SDL_MCAN_SEEALSO}
+\cond SOC_AM263X
 * AM263x Sitara™ Microcontrollers Texas Instruments Families of Products Technical Reference Manual.
+\endcond
+\cond SOC_AM263PX
+* AM263Px Sitara™ Microcontrollers Texas Instruments Families of Products Technical Reference Manual.
+\endcond
 * Individual Examples for the diagnostics in this Users Guide.
 
 # Sample Output {#EXAMPLES_SDL_MCAN_SAMPLEOUT}
 
 Shown below is a sample output when the application is run:
 On a failure
+\cond SOC_AM263X
 \code
 On startup:
 
@@ -212,3 +247,69 @@ Normal example completion will look like this:
 [MAIN] Example is done.
 All tests have passed
 \endcode
+\endcond
+
+\cond SOC_AM263PX
+\code
+[MAIN] Start up diagnostics (STC,PBIST,CCM) passed. 
+[MAIN] MCAN set to Loopback Mode.
+[MAIN] Diagnostic check timer set to 30000 ticks.
+[MAIN] System set to FREERUN.
+[MAIN] MCAN task priority = 29 
+[MAIN] MAIN task priority = 30 
+[MAIN] Polled: 0 TxBytes: 0  RxBytes:  0  TxErr: 0  RxErr: 0  BadID: 0 MismatchData: 0
+[MCAN] Polled: 1000 TxBytes: 400000  RxBytes:400000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+[MCAN] Polled: 2000 TxBytes: 800000  RxBytes:800000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+
+When runtime diagnostics are performed:
+
+[MCAN] Polled: 11000 TxBytes: 4400000  RxBytes:4400000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+[MAIN] Running diagnostics... 
+    RTI UC1...... PASSED.
+    RTI UC2...... PASSED. 
+    MCRC AUTO mode test... PASSED. 
+    ECC MCAN0.... PASSED.
+    ECC ICSSM.... PASSED.
+    ECC MSSL2.... PASSED. 
+    ECC ATCM0.... PASSED. 
+    ECC BTCM.... PASSED.
+    DCC UC1...... PASSED. 
+    TCM Parity... PASSED. 
+    DMA Parity... PASSED. 
+    Bus Safety... PASSED. 
+    Lockstep mode test... PASSED. 
+    TMU ROM Checksum test... PASSED. 
+    TMU Parity test... PASSED. 
+    TOG test... PASSED.
+    VTM test... PASSED. 
+[MAIN] Diagnostics Complete. 
+[MCAN] Polled: 12000 TxBytes: 4800000  RxBytes:4800000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+On a diagnostic failure you will see something like this:
+
+[MCAN] Polled: 19000 TxBytes: 7600000  RxBytes:7600000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+[MCAN] Polled: 20000 TxBytes: 8000000  RxBytes:8000000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+[MAIN] Running diagnostics... 
+    RTI UC1...... PASSED.
+    RTI UC2...... PASSED. 
+    MCRC AUTO mode test... PASSED. 
+    ECC MCAN0.... PASSED.
+    ECC ICSSM.... PASSED.
+    ECC MSSL2.... PASSED. 
+    ECC ATCM0.... PASSED. 
+    ECC BTCM.... PASSED.
+    DCC UC1...... PASSED. 
+    TCM Parity... PASSED. 
+    DMA Parity... FAILED. 
+[MAIN] Example entered BLOCKED state based on a safety check.
+[MAIN] Shutting down.
+[MAIN] Example is done.
+Some tests have failed
+
+Normal example completion will look like this:
+
+[MCAN] Polled: 50000 TxBytes: 20000000  RxBytes:20000000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
+[MAIN] Shutting down. 
+[MAIN] Example is done.  
+All tests have passed 
+\endcode
+\endcond
