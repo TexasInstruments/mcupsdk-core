@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-23 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -319,12 +319,12 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test,                    "MSS_MCRC_SEC_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test,                    "MSS_MCRC_DED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test,                    "MSS_MCRC_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
-
+#if !defined (SOC_AM263PX)
     /* MSS_QSPI */
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test,                    "MSS_QSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test,                    "MSS_QSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test,                    "MSS_QSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
-
+#endif
     /* MSS_STM_STIM */
     {SDL_ECC_BUS_SAFETY_MSS_STM_STIM_SEC_Test,                "MSS_STM_STIM_SEC_Test in Interrupt  Method",      SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_STM_STIM_DED_Test,                "MSS_STM_STIM_DED_Test in Interrupt  Method",      SDL_APP_NOT_RUN },

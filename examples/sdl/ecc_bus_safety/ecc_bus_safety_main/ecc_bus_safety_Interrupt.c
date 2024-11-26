@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2022-23 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -3478,13 +3478,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CPSW,0u));
+                                        SDL_ECC_BUS_SAFETY_MSS_CPSW, SDL_MSS_CPSW_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CPSW,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CPSW,SDL_MSS_CPSW_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void)
@@ -3493,7 +3493,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void)
             SDL_ECC_BUS_SAFETY_MSS_CPSW, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
 
-#if !defined(SOC_AM263PX) || defined (SOC_AM261X) 
+#if !defined(SOC_AM263PX) || defined (SOC_AM261X)
 /********************************************************************************************************
 *   For Node MSS_GPMC
 *********************************************************************************************************/
@@ -3572,13 +3572,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AHB_RED_Test()
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_TPTC_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,SDL_MSS_CTRL_TPCC_A0_RD_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_TPTC_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,SDL_MSS_CTRL_TPCC_A0_RD_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD_RED_Test(void)
@@ -3593,12 +3593,12 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_TPTC_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,SDL_MSS_CTRL_TPCC_A1_RD_BASE));
 }
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_TPTC_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,SDL_MSS_CTRL_TPCC_A1_RD_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_RED_Test(void)
@@ -3671,13 +3671,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD,SDL_MSS_CR5A_AXI_RD_START));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD,SDL_MSS_CR5A_AXI_RD_END+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_RED_Test(void)
@@ -3692,13 +3692,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD,SDL_MSS_CR5B_AXI_RD_START));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD,SDL_MSS_CR5B_AXI_RD_START+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_RED_Test(void)
@@ -3713,13 +3713,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD,SDL_MSS_CR5C_AXI_RD_START));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD,SDL_MSS_CR5C_AXI_RD_START+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_RED_Test(void)
@@ -3734,13 +3734,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD,SDL_MSS_CR5D_AXI_RD_START));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD,SDL_MSS_CR5D_AXI_RD_START+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_RED_Test(void)
@@ -3755,13 +3755,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_RED_Test(void)
@@ -3776,13 +3776,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_RED_Test(void)
@@ -3797,13 +3797,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_RED_Test(void)
@@ -3818,13 +3818,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S,0x1FFBFU));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_RED_Test(void)
@@ -3839,13 +3839,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_MCRC,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_MCRC,0U));
+                                        SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void)
@@ -3853,20 +3853,20 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN, \
             SDL_ECC_BUS_SAFETY_MSS_MCRC, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined (SOC_AM263X)
 /********************************************************************************************************
 *   For Node MSS_QSPI
 *********************************************************************************************************/
 int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_QSPI,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_QSPI_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_QSPI,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_QSPI_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void)
@@ -3874,7 +3874,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN, \
           SDL_ECC_BUS_SAFETY_MSS_QSPI, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_MBOX
 *********************************************************************************************************/
@@ -3902,13 +3902,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_STM_STIM,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_STM_STIM,SDL_STIM_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_STM_STIM,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_STM_STIM,SDL_STIM_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_RED_Test(void)
@@ -3923,13 +3923,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_SCRP0,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_SCRP0,SDL_SCRP0_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_SCRP0,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_SCRP0,SDL_SCRP0_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_RED_Test(void)
@@ -3944,13 +3944,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_SCRP1,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_SCRP1,SDL_SCRP1_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_SCRP1,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_SCRP1,SDL_SCRP1_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_RED_Test(void)
@@ -3965,13 +3965,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP0,0U));
+                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP0,SDL_ICSSM_PDSP0_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP0,0U));
+                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP0,SDL_ICSSM_PDSP0_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_RED_Test(void)
@@ -3986,13 +3986,13 @@ int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP1,0U));
+                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP1,SDL_ICSSM_PDSP1_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP1,0U));
+                                      SDL_ECC_BUS_SAFETY_ICSSM_PDSP1,SDL_ICSSM_PDSP1_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_RED_Test(void)
@@ -4007,13 +4007,13 @@ int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                    SDL_ECC_BUS_SAFETY_ICSSM_S,0U));
+                                    SDL_ECC_BUS_SAFETY_ICSSM_S,SDL_ICSSM_S_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_ICSSM_S,0U));
+                                      SDL_ECC_BUS_SAFETY_ICSSM_S,SDL_ICSSM_S_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_RED_Test(void)
@@ -4028,13 +4028,13 @@ int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_DAP_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                    SDL_ECC_BUS_SAFETY_DAP,0U));
+                                    SDL_ECC_BUS_SAFETY_DAP,SDL_DAP_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_DAP_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_DAP,0U));
+                                      SDL_ECC_BUS_SAFETY_DAP,SDL_DAP_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_DAP_RED_Test(void)

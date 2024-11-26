@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2022-23 Texas Instruments Incorporated
+ *   Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -84,15 +84,85 @@ extern "C" {
 #define SDL_MPU_L2OCRAM_BANK2_END              (0x40060FFFU-DWORD)
 #define SDL_MPU_L2OCRAM_BANK3                  (0x40080000U)
 #define SDL_MPU_L2OCRAM_BANK3_END              (0x40080FFFU-DWORD)
-#define SDL_MSS_QSPI_U_BASE                    (SDL_QSPI0_U_BASE)
-#define SDL_MSS_QSPI_U_SIZE                    (0x000001D8U)
-#define SDL_MSS_QSPI_U_END                     (SDL_MSS_QSPI_U_BASE + SDL_MSS_QSPI_U_SIZE)
 #define SDL_MSS_MCRC_U_BASE                    (SDL_MCRC0_U_BASE)
 #define SDL_MSS_MCRC_U_SIZE                    (0x000001E4U)
 #define SDL_MSS_MCRC_U_END                     (SDL_MSS_MCRC_U_BASE + SDL_MSS_MCRC_U_SIZE)
 #define SDL_MSS_STM_STIM_U_BASE                (SDL_STM_STIM_U_BASE)
 #define SDL_MSS_STM_STIM_U_SIZE                (0x00FFFFFFU)
 #define SDL_MSS_STM_STIM_U_END                 (SDL_MSS_STM_STIM_U_BASE + SDL_MSS_STM_STIM_U_SIZE)
+
+#define SDL_MSS_CR5A_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5A_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5A_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5A_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5A_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5A_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5B_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5B_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5B_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5B_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5B_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5B_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5C_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5C_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5C_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5C_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5C_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5C_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5D_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5D_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5D_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5D_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5D_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5D_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CTRL_TPCC_A0_WR_BASE                (0x52A40000U)
+#define SDL_MSS_CTRL_TPCC_A0_WR_END                 (0x52A40400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A1_WR_BASE                (0x52A60000U)
+#define SDL_MSS_CTRL_TPCC_A1_WR_END                 (0x52A60400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A0_RD_BASE                (0x52A40000U)
+#define SDL_MSS_CTRL_TPCC_A0_RD_END                 (0x52A40400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A1_RD_BASE                (0x52A60000U)
+#define SDL_MSS_CTRL_TPCC_A1_RD_END                 (0x52A60400U-8U)
+
+#define SDL_MSS_VBUSP_BASE                          (0x35000000U)
+#define SDL_MSS_VBUSP_BASE_END                      (0x350003FFU-8U)
+
+#define SDL_MSS_VBUSP_PERI_BASE                     (0x35000000U)
+#define SDL_MSS_VBUSP_PERI_BASE_END                 (0x350003FFU-8U)
+
+#define SDL_MSS_CPSW_BASE                           (0x52800000U)
+#define SDL_MSS_CPSW_BASE_END                       (0x52800400U-8U)
+
+#define SDL_MCRC_U_BASE                             (0x35000000U)
+#define SDL_MCRC_U_BASE_END                         (0x350003FFU-8U)
+
+#define SDL_STIM_U_BASE                             (0x53500000U)
+#define SDL_STIM_U_BASE_END                         (0x535001FFU-8U)
+
+#define SDL_SCRP0_U_BASE                            (0x48000000U)
+#define SDL_SCRP0_U_BASE_END                        (0x4803FFFFU-8U)
+
+#define SDL_SCRP1_U_BASE                            (0x48000000U)
+#define SDL_SCRP1_U_BASE_END                        (0x4803FFFFU-8U)
+
+#define SDL_ICSSM_PDSP0_U_BASE                      (0x48000000U)
+#define SDL_ICSSM_PDSP0_U_BASE_END                  (0x4803FFFFU-8U)
+
+#define SDL_ICSSM_PDSP1_U_BASE                      (0x48000000U)
+#define SDL_ICSSM_PDSP1_U_BASE_END                  (0x4803FFFFU-8U)
+
+#define SDL_ICSSM_S_BASE                            (0x48000000U)
+#define SDL_ICSSM_S_BASE_END                        (0x4803FFFFU-8U)
+
+#define SDL_DAP_U_BASE                              (0x48000000U)
+#define SDL_DAP_U_BASE_END                          (0x4803FFFFU-8U)
 
 /* Macro defines Ecc Bus Safety Nodes in the MSS Subsystem */
 #define SDL_ECC_BUS_SAFETY_MSS_MBOX            0U

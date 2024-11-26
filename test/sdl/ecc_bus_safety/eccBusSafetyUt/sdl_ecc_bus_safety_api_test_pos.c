@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-23 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -196,6 +196,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
@@ -208,7 +209,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-
+#endif
 #if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -421,6 +422,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
@@ -433,6 +435,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_STM_STIM) != SDL_PASS)
@@ -534,7 +537,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,0U, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -546,7 +549,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,0U, 0) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE, 0) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -585,7 +588,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,0U, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -597,7 +600,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,0U, 0) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MCRC_U_BASE, 0) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1557,7 +1560,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,0U, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,SDL_MSS_CTRL_TPCC_A0_RD_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -2063,6 +2066,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_QSPI,&status) != SDL_PASS)
@@ -2075,7 +2079,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_MCRC,&status) != SDL_PASS)

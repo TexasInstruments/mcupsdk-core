@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-23 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -328,12 +328,13 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
-    if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0U, writeData) != SDL_EBADARGS)
-    {
-        testStatus = SDL_APP_TEST_FAILED;
-    }
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0U, writeData) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
@@ -352,6 +353,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U, 0) != SDL_PASS)
@@ -576,6 +578,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0XCA000000U, writeData) != SDL_EBADARGS)
@@ -590,7 +593,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0U, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_QSPI_U_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -600,6 +603,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U, 0) != SDL_PASS)
@@ -686,6 +690,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if !defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0XCA000000U, writeData) != SDL_EBADARGS)
@@ -701,7 +706,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0U, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_QSPI_U_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -711,9 +716,10 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U, 0) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,SDL_MSS_CTRL_TPCC_A1_RD_BASE, 0) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

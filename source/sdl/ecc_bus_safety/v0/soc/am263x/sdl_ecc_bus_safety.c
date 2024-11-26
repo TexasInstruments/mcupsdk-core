@@ -586,8 +586,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_TPTC00_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_TPTC00_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CTRL_TPCC_A0_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CTRL_TPCC_A0_WR_BASE;
             break;
         }
         /* MSS_TPTC_A1_WR */
@@ -600,8 +600,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_TPTC01_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_TPTC01_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CTRL_TPCC_A1_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CTRL_TPCC_A1_WR_BASE;
             break;
         }
         /* MSS_TPTC_A0_RD */
@@ -614,8 +614,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_TPTC00_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CTRL_TPCC_A0_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CTRL_TPCC_A0_RD_BASE;
             break;
         }
         /* MSS_TPTC_A1_RD */
@@ -628,8 +628,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_TPTC01_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CTRL_TPCC_A1_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CTRL_TPCC_A1_RD_BASE;
             break;
         }
         /* MSS_CR5A_AHB */
@@ -698,8 +698,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS0_CORE0_AXI_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5A_AXI_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5A_AXI_RD_START;
             break;
         }
         /* MSS_CR5B_AXI_RD*/
@@ -712,8 +712,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS1_CORE0_AXI_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5B_AXI_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5B_AXI_RD_START;
             break;
         }
         /* MSS_CR5C_AXI_RD*/
@@ -726,8 +726,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS0_CORE1_AXI_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5C_AXI_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5C_AXI_RD_START;
             break;
         }
         /* MSS_CR5D_AXI_RD*/
@@ -740,8 +740,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS1_CORE1_AXI_RD_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = 0U;
             baseAddrOffst->busSftyErrStatWrResp = 0U;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5D_AXI_RD_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5D_AXI_RD_START;
             break;
         }
         /* MSS_CR5A_AXI_WR*/
@@ -754,8 +754,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS0_CORE0_AXI_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS0_CORE0_AXI_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5A_AXI_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5A_AXI_WR_START;
             break;
         }
         /* MSS_CR5B_AXI_WR*/
@@ -768,8 +768,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS1_CORE0_AXI_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS1_CORE0_AXI_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5B_AXI_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5B_AXI_WR_START;
             break;
         }
         /* MSS_CR5C_AXI_WR*/
@@ -782,8 +782,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS0_CORE1_AXI_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS0_CORE1_AXI_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5C_AXI_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5C_AXI_WR_START;
             break;
         }
         /* MSS_CR5D_AXI_WR*/
@@ -796,8 +796,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = 0U;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS1_CORE1_AXI_WR_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS1_CORE1_AXI_WR_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5D_AXI_WR_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5D_AXI_WR_START;
             break;
         }
         /* MSS_CR5A_AXI_S*/
@@ -810,8 +810,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS0_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS0_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS0_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5A_AXI_S_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5A_AXI_S_START;
             break;
         }
         /* MSS_CR5B_AXI_S*/
@@ -824,8 +824,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS1_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS1_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS1_CORE0_AXI_S_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5B_AXI_S_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5B_AXI_S_START;
             break;
         }
         /* MSS_CR5C_AXI_S*/
@@ -838,8 +838,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS0_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS0_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS0_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5C_AXI_S_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5C_AXI_S_START;
             break;
         }
         /* MSS_CR5D_AXI_S*/
@@ -852,8 +852,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_R5SS1_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_R5SS1_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_R5SS1_CORE1_AXI_S_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CR5D_AXI_S_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CR5D_AXI_S_START;
             break;
         }
         /* MSS_L2_A*/
@@ -950,8 +950,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MAIN_VBUSP_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MAIN_VBUSP_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MAIN_VBUSP_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_VBUSP_BASE_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_VBUSP_BASE;
             break;
         }
         /* PERI_VBUSP*/
@@ -964,8 +964,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_PERI_VBUSP_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_PERI_VBUSP_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_PERI_VBUSP_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_VBUSP_PERI_BASE_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_VBUSP_PERI_BASE;
             break;
         }
         /* MSS_CPSW*/
@@ -978,8 +978,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MSS_CPSW_BUS_SAFETY_ERR_STAT_READ;
             baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MSS_CPSW_BUS_SAFETY_ERR_STAT_WRITE;
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MSS_CPSW_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = 0U;
-            baseAddrOffst->nodeStartAddr        = 0U;
+            baseAddrOffst->nodeEndAddr          = SDL_MSS_CPSW_BASE_END;
+            baseAddrOffst->nodeStartAddr        = SDL_MSS_CPSW_BASE;
             break;
         }
         /* MSS_MBOX*/
@@ -1007,8 +1007,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_QSPI_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_QSPI_U_BASE;
            break;
        }
        /* MSS_MCRC */
@@ -1021,8 +1021,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_MCRC_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_MCRC_U_BASE;
            break;
        }
 
@@ -1036,8 +1036,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_STIM_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_STIM_U_BASE;
            break;
        }
 
@@ -1051,8 +1051,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_SCRP0_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_SCRP0_U_BASE;
            break;
        }
        /* MSS_SCRP1 */
@@ -1065,8 +1065,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_SCRP1_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_SCRP1_U_BASE;
            break;
        }
 
@@ -1080,8 +1080,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_READ;
            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_WRITE;
            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_WRITERESP;
-           baseAddrOffst->nodeEndAddr          = 0U;
-           baseAddrOffst->nodeStartAddr        = 0U;
+           baseAddrOffst->nodeEndAddr          = SDL_ICSSM_PDSP0_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_ICSSM_PDSP0_U_BASE;
            break;
        }
 
@@ -1095,8 +1095,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_READ;
           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_WRITE;
           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_WRITERESP;
-          baseAddrOffst->nodeEndAddr          = 0U;
-          baseAddrOffst->nodeStartAddr        = 0U;
+          baseAddrOffst->nodeEndAddr          = SDL_ICSSM_PDSP1_U_BASE_END;
+          baseAddrOffst->nodeStartAddr        = SDL_ICSSM_PDSP1_U_BASE;
           break;
       }
 
@@ -1110,8 +1110,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_READ;
           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_WRITE;
           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_WRITERESP;
-          baseAddrOffst->nodeEndAddr          = 0U;
-          baseAddrOffst->nodeStartAddr        = 0U;
+          baseAddrOffst->nodeEndAddr          = SDL_ICSSM_S_BASE_END;
+          baseAddrOffst->nodeStartAddr        = SDL_ICSSM_S_BASE;
           break;
       }
 
@@ -1125,8 +1125,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_READ;
           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_WRITE;
           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_WRITERESP;
-          baseAddrOffst->nodeEndAddr          = 0U;
-          baseAddrOffst->nodeStartAddr        = 0U;
+          baseAddrOffst->nodeEndAddr          = SDL_DAP_U_BASE_END;
+          baseAddrOffst->nodeStartAddr        = SDL_DAP_U_BASE;
           break;
       }
 

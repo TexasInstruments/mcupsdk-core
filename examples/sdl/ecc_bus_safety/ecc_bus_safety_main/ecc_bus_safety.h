@@ -603,11 +603,12 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void);
 
+#if defined (SOC_AM263X)
 /* Node MSS_MSS_QSPI */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void);
-
+#endif
 /* Node MSS_MSS_MBOX */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_DED_Test(void);
