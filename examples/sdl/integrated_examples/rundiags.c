@@ -35,7 +35,6 @@
 #include <kernel/dpl/ClockP.h>
 #include "sdlexample.h"
 
-
 /*
 ** bool runningDiags(void)
 **
@@ -68,7 +67,9 @@ int32_t performDiags(void *args)
 {
   int32_t   sdlResult;
   uint32_t  delay;
-
+#if defined (SOC_AM263PX)
+  uint32_t indexId;
+#endif
   /* check RTI_UC1 */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    RTI UC1...... ");
@@ -164,7 +165,7 @@ int32_t performDiags(void *args)
     return sdlResult;
   }
   DebugP_log("PASSED. \r\n");
-
+#if defined (SOC_AM263X)
   /* check ECC for TPTC  */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    ECC TPTC.... ");
@@ -176,7 +177,7 @@ int32_t performDiags(void *args)
     return sdlResult;
   }
   DebugP_log("PASSED. \r\n");
-
+#endif
   /* check DCC */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    DCC UC1...... ");
@@ -236,6 +237,57 @@ int32_t performDiags(void *args)
     return sdlResult;
   }
   DebugP_log("PASSED. \r\n");
+#if defined (SOC_AM263PX)
+  /* check TMU ROM Checksum test */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    TMU ROM Checksum test... ");
+  sdlstats.diagRunning = DIAGRUNNING_ROM_CHECKSUM;
+  sdlResult =  test_main();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
+  /* check TMU Parity test */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    TMU Parity test... ");
+  sdlstats.diagRunning = DIAGRUNNING_TMUPARITY;
+  sdlResult =  Parity_funcTest();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
+  /* check TOG test */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    TOG test... ");
+  sdlstats.diagRunning = DIAGRUNNING_TOG;
+  indexId = (uint32_t)SDL_TOG_INSTANCE_TIMEOUT0_CFG;
+  sdlResult =  tog_minTimeout(indexId);
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+
+  /* check VTM test */
+  for (delay=0; delay < 20000; delay++);
+  DebugP_log("    VTM test... ");
+  sdlstats.diagRunning = DIAGRUNNING_VTM;
+  sdlResult =  VTM_test();
+  if (sdlResult != SDL_PASS)
+  {
+    DebugP_log("FAILED. \r\n");
+    return sdlResult;
+  }
+  DebugP_log("PASSED. \r\n");
+#endif
+
   for (delay=0; delay < 20000; delay++);
   sdlstats.diagRunning = DIAGRUNNING_NONE;
 

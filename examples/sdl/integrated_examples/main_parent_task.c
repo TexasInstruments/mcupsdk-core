@@ -88,14 +88,14 @@ int main_parent(void)
   {
     sdlstats.startupErrCode |= STARTUPDIAGS_ESMERR;
   }
-
+  #if !defined(SOC_AM263PX)
   /* Run self Test Check */
   STC_run(NULL);
   if ( (sdlstats.stcResult[0] != SDL_STC_COMPLETED_SUCCESS) || (sdlstats.stcResult[1] != SDL_STC_COMPLETED_SUCCESS) )
   {
     sdlstats.startupErrCode |= STARTUPDIAGS_STCERR;
   }
-
+  #endif
   /* Run PBIST on Core 0 */
   if (pbist_run(NULL) != SDL_PASS)
   {
@@ -126,7 +126,6 @@ int main_parent(void)
   /* -------------------------------------------------------------------------------------*/
   /*  Create our FreeRTOS tasks                                                           */
   /* -------------------------------------------------------------------------------------*/
-
   /* Our MCAN polling task */
   gMcanTask = xTaskCreateStatic( mcan_task,      /* Pointer to the function that implements the task. */
                                 "mcan_task",     /* Text name for the task.  This is to facilitate debugging only. */
@@ -142,7 +141,7 @@ int main_parent(void)
     SDL_ESM_setNError(SDL_ESM_INST_MAIN_ESM0);
     while (FOREVER);
   }
-
+  #if !defined(SOC_AM263PX)
   /* Main task */
   gMainTask = xTaskCreateStatic( main_task,        /* Pointer to the function that implements the task. */
                                 "main_task",      /* Text name for the task.  This is to facilitate debugging only. */
@@ -158,7 +157,11 @@ int main_parent(void)
     SDL_ESM_setNError(SDL_ESM_INST_MAIN_ESM0);
     while (FOREVER);
   }
-
+  #endif
+  #if !defined(SOC_AM263X)
+  exampleState = EXAMPLE_STATE_STARTUP_DONE;
+  main_task(NULL);
+  #endif
   /* -------------------------------------------------------------------------------------*/
   /*  Start the example running                                                           */
   /* -------------------------------------------------------------------------------------*/

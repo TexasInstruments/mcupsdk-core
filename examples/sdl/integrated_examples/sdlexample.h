@@ -45,15 +45,22 @@ extern "C"
 
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
+#if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
-#include <sdl/esm/sdlr_esm.h>
-#include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/sdlr_tog.h>
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#include <sdl/esm/v2/sdl_esm.h>
+#include <sdl/esm/v2/v2_0/sdl_ip_esm.h>
+#endif
+#include <sdl/esm/sdlr_esm.h>
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
-
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -85,8 +92,10 @@ extern "C"
 #define ESMCB_PARITYDMA       7u
 #define ESMCB_ECCBUS          8u
 #define ESMCB_ATCM_ECC        9u
-#define ESMCB_BTCM_ECC        10u
+#define ESMCB_BTCM_ECC        10u 
 #define ESMCB_TPTC_ECC        11u
+#define ESMCB_VTM             12u
+#define ESMCB_TMUPARITY       13u
 
 /* used to denote Interrupt Source in the ESM */
 #define ESM_INT_MCAN0_ECC_CORRECTABLE       2u
@@ -103,6 +112,7 @@ extern "C"
 #define ESM_INT_DCC3                        24u
 #define ESM_INT_BUSSAFETY1                  31u
 #define ESM_INT_BUSSAFETY2                  33u
+#define ESM_INT_VTM                         44u
 #define ESM_INT_R5F0_ECC_CORRECTABLE        47u
 #define ESM_INT_R5F0_ECC_UNCORRECTABLE      48u
 #define ESM_INT_EDMA0_TPCC_ERRINTAGG        63u
@@ -114,8 +124,7 @@ extern "C"
 #define ESM_INT_CCM0_LOCKSTEP               84u
 #define ESM_INT_CCM1_SELFTEST               85u
 #define ESM_INT_CCM1_LOCKSTEP               86u
-
-
+#define ESM_INT_TMU_PARITY                  88u
 
 
 /* denotes which diag is running */
@@ -132,7 +141,11 @@ extern "C"
 #define DIAGRUNNING_ECCMSSL2  10u
 #define DIAGRUNNING_ECCATCM   11u
 #define DIAGRUNNING_ECCBTCM   12u
-#define DIAGRUNNING_ECCTPTC   13u
+#define DIAGRUNNING_ROM_CHECKSUM 13u
+#define DIAGRUNNING_VTM       14u
+#define DIAGRUNNING_TMUPARITY 15u
+#define DIAGRUNNING_TOG       16u
+#define DIAGRUNNING_ECCTPTC   17u
 
 /* SDL related stats and counters we use  */
 struct s_sdlstats
@@ -288,6 +301,28 @@ extern int32_t RTI_uc2(void);
 /*              BUS Defines                                                */
 /***************************************************************************/
 extern int32_t BUSsafety_run(void);
+
+/***************************************************************************/
+/*              TMU ROM Checksum Defines                                   */
+/***************************************************************************/
+extern int32_t test_main(void);
+
+/***************************************************************************/
+/*              VTM Defines                                                */
+/***************************************************************************/
+extern int32_t VTM_test(void);
+extern int32_t VTM_clear(void);
+
+/***************************************************************************/
+/*              TMU Parity Defines                                         */
+/***************************************************************************/
+extern int32_t Parity_funcTest(void);
+extern void tmu_parity_clearESM(void);
+
+/***************************************************************************/
+/*              TOG Defines                                                */
+/***************************************************************************/
+extern int32_t tog_minTimeout(uint32_t instanceIndex);
 
 #ifdef __cplusplus
 }

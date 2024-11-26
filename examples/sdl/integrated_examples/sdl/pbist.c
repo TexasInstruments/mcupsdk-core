@@ -46,7 +46,8 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <sdl/sdl_pbist.h>
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -128,9 +129,6 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     bool PBISTResult;
     SDL_PBIST_testType testType;
 
-#if defined (SOC_AM273X) || (SOC_AWR294X)
-  if (instanceId == SDL_PBIST_INST_TOP)
-  {
     if (runNegTest == true)
     {
         testType = SDL_PBIST_NEG_TEST;
@@ -139,31 +137,6 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         testType = SDL_PBIST_TEST;
     }
-  }
-   if (instanceId == SDL_PBIST_INST_DSS)
-  {
-          if (runNegTest == true)
-         {
-           testType = SDL_PBIST_NEG_TEST;
-         }
-         else
-         {
-             testType = SDL_PBIST_TEST;
-         }
-      }
-#endif
-
-#if defined (SOC_AM263X)
-if (runNegTest == true)
-{
-    testType = SDL_PBIST_NEG_TEST;
-}
-else
-{
-    testType = SDL_PBIST_TEST;
-}
-
-#endif
 
     status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
     if ((status != SDL_PASS) || (PBISTResult == false))
@@ -189,8 +162,10 @@ int32_t pbist_run(void *args)
 
     if (testResult == 0)
     {
-      /* Run test on selected instance */
-      testResult = PBIST_runTest(SDL_PBIST_INST_TOP, false);
+        CacheP_disable(CacheP_TYPE_L1P);
+        CacheP_disable(CacheP_TYPE_L1D);
+        /* Run test on selected instance */
+        testResult = PBIST_runTest(SDL_PBIST_INST_TOP, false);
     }
 
     return testResult;

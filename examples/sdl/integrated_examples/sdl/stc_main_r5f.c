@@ -46,7 +46,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include "sdlexample.h"
-
+#include <kernel/dpl/DebugP.h>
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */

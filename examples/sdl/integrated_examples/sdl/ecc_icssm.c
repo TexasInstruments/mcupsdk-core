@@ -50,8 +50,6 @@
 #include <kernel/dpl/DebugP.h>
 #include "sdlexample.h"
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
-
 
 /* ========================================================================== */
 /*                                Macros                                      */

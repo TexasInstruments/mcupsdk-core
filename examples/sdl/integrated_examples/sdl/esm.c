@@ -243,10 +243,17 @@ volatile static uint32_t esmcbarg = 0;
 #define ESM_PRIORITY_CCM_G2            0x00780000u
 #define ESM_ERRORP_CCM_G2              0x00780000u
 
-#define ESM_ENABLE_BITMAP_TPTC_G0      0x00180000u     /* CCM */
+#define ESM_ENABLE_BITMAP_TPTC_G0      0x00180000u     /* ECC MSS TPTC */
 #define ESM_PRIORITY_TPTC_G0           0x00180000u
 #define ESM_ERRORP_TPTC_G2             0x00180000u
 
+#define ESM_ENABLE_BITMAP_VTM_G1       0x00001000u     /* VTM */
+#define ESM_PRIORITY_VTM_G1            0x00001000u
+#define ESM_ERRORP_VTM_G1              0x00001000u
+
+#define ESM_ENABLE_BITMAP_PARITYTMU_G2 0x01000000u     /* TMU PARITY */
+#define ESM_PRIORITY_PARITYTMU_G2      0x01000000u
+#define ESM_ERRORP_PARITYTMU_G2        0x01000000u
 
 /* we will configure this  in the initlaization function for the ESM */
 #define ESM_NOT_CONFIGURED            0x00000000u    /* used when not configuring any values for the ESM */
@@ -360,9 +367,21 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     {
         sdlstats.esmcb = ESMCB_CCM;
         ccm_clearESM(intSrc);
+    }
+    #if defined (SOC_AM263PX)
+    else if (intSrc == ESM_INT_VTM)
+    {
+        sdlstats.esmcb = ESMCB_VTM;
+        VTM_clear();
 
     }
+    else if (intSrc == ESM_INT_TMU_PARITY)
+    {
+        sdlstats.esmcb = ESMCB_TMUPARITY;
+        tmu_parity_clearESM();
 
+    }
+    #endif
     /* if we are running diagnostics clear this */
     if (runningDiags())
     {
@@ -389,14 +408,19 @@ int32_t ESM_init (void)
     */
 
 
-    Example_esmInitConfig.enableBitmap[0]   = (ESM_ENABLE_BITMAP_BUSSAFETY_G0 | ESM_ENABLE_BITMAP_MCAN0ECC_G0 | ESM_ENABLE_BITMAP_DCC_G0 | ESM_ENABLE_BITMAP_PARITYTCM_G0 | ESM_ENABLE_BITMAP_MSSL2ECC_G0);
-    Example_esmInitConfig.enableBitmap[1]   = (ESM_ENABLE_BITMAP_ECCBUSC_G1 | ESM_ENABLE_BITMAP_PARITYDMA_G1 | ESM_ENABLE_BITMAP_R5F0ECC_G1);
-    Example_esmInitConfig.enableBitmap[2]   = (ESM_ENABLE_BITMAP_RTI_G2 | ESM_ENABLE_BITMAP_PARITYTCM_G2 | ESM_ENABLE_BITMAP_CCM_G2 | ESM_ENABLE_BITMAP_PARITYDMA_G2 | ESM_ENABLE_BITMAP_ICSSMECC_G2);
+    Example_esmInitConfig.enableBitmap[0]   = (ESM_ENABLE_BITMAP_BUSSAFETY_G0 | ESM_ENABLE_BITMAP_MCAN0ECC_G0 | ESM_ENABLE_BITMAP_DCC_G0 | ESM_ENABLE_BITMAP_PARITYTCM_G0 | ESM_ENABLE_BITMAP_MSSL2ECC_G0 | ESM_ENABLE_BITMAP_TPTC_G0);
+    Example_esmInitConfig.enableBitmap[1]   = (ESM_ENABLE_BITMAP_ECCBUSC_G1 | ESM_ENABLE_BITMAP_PARITYDMA_G1 | ESM_ENABLE_BITMAP_R5F0ECC_G1 | ESM_ENABLE_BITMAP_VTM_G1);
+    Example_esmInitConfig.enableBitmap[2]   = (ESM_ENABLE_BITMAP_RTI_G2 | ESM_ENABLE_BITMAP_PARITYTCM_G2 | ESM_ENABLE_BITMAP_CCM_G2 | ESM_ENABLE_BITMAP_PARITYDMA_G2 | ESM_ENABLE_BITMAP_ICSSMECC_G2 | ESM_ENABLE_BITMAP_PARITYTMU_G2);
 
-    Example_esmInitConfig.priorityBitmap[0] = (ESM_PRIORITY_RTI_G0 | ESM_PRIORITY_MCAN0ECC_G0  | ESM_PRIORITY_DCC_G0 | ESM_PRIORITY_PARITYTCM_G0 |  ESM_ERRORP_ECCBUS_G0 | ESM_PRIORITY_MSSL2ECC_G0);
-    Example_esmInitConfig.priorityBitmap[1] = (ESM_ERRORP_ECCBUS_G1 | ESM_PRIORITY_PARITYDMA_G1 | ESM_PRIORITY_R5F0ECC_G1);
-    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_PARITYTCM_G2 | ESM_PRIORITY_CCM_G2 | ESM_PRIORITY_PARITYDMA_G2 | ESM_PRIORITY_ICSSMECC_G2);
-
+    Example_esmInitConfig.priorityBitmap[0] = (ESM_PRIORITY_RTI_G0 | ESM_PRIORITY_MCAN0ECC_G0  | ESM_PRIORITY_DCC_G0 | ESM_PRIORITY_PARITYTCM_G0 |  ESM_ERRORP_ECCBUS_G0 | ESM_PRIORITY_MSSL2ECC_G0 | ESM_PRIORITY_TPTC_G0);
+    Example_esmInitConfig.priorityBitmap[1] = (ESM_ERRORP_ECCBUS_G1 | ESM_PRIORITY_PARITYDMA_G1 | ESM_PRIORITY_R5F0ECC_G1 | ESM_PRIORITY_VTM_G1);
+    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_PARITYTCM_G2 | ESM_PRIORITY_CCM_G2 | ESM_PRIORITY_PARITYDMA_G2 | ESM_PRIORITY_ICSSMECC_G2 | ESM_PRIORITY_PARITYTMU_G2);
+    #if defined(SOC_AM263PX)
+    Example_esmInitConfig.enableBitmap[1]   = (ESM_ENABLE_BITMAP_VTM_G1);
+    Example_esmInitConfig.enableBitmap[2]   = (ESM_ENABLE_BITMAP_PARITYTMU_G2);
+    Example_esmInitConfig.priorityBitmap[1] = (ESM_PRIORITY_VTM_G1);
+    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_PARITYTMU_G2);
+    #endif
 /***
     We will leave the Safety LED Off on the EVM (LD016).  If we detect an ESM event that is not ecpected we will
     light it up. The SDL diagnostics tend to trigger ESM events and we dont want the LED to light up unless there
