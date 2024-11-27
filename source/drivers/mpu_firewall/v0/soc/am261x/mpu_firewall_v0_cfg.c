@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -40,6 +40,10 @@
 MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 {
     {
+        /********************************************************************** 
+                             FW R5SS0_CORE0_AXIS_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_CFG_ADDR,
         .numRegions = CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_REGION,
         .targetCount = CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_PROTECTED,
@@ -60,11 +64,19 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
         {
             .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR3,
             .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE3,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR4,
+            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE4,
         }
         }
 
     },
     {
+        /********************************************************************** 
+                             FW R5SS0_CORE1_AXIS_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_CFG_ADDR,
         .numRegions = CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_REGION,
         .targetCount = CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_PROTECTED,
@@ -85,11 +97,19 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
         {
             .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR3,
             .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE3,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR4,
+            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE4,
         }
         }
 
     },
     {
+        /********************************************************************** 
+                             FW L2OCRAM_BANK0_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_L2OCRAM_BANK0_SLV_CFG_ADDR,
         .numRegions = CSL_FW_L2OCRAM_BANK0_SLV_NUM_REGION,
         .targetCount = CSL_FW_L2OCRAM_BANK0_SLV_NUM_PROTECTED,
@@ -103,6 +123,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /********************************************************************** 
+                             FW L2OCRAM_BANK1_SLV
+        ***********************************************************************/
+        
         .baseAddr = CSL_FW_L2OCRAM_BANK1_SLV_CFG_ADDR,
         .numRegions = CSL_FW_L2OCRAM_BANK1_SLV_NUM_REGION,
         .targetCount = CSL_FW_L2OCRAM_BANK1_SLV_NUM_PROTECTED,
@@ -116,6 +140,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /********************************************************************** 
+                             FW L2OCRAM_BANK2_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_L2OCRAM_BANK2_SLV_CFG_ADDR,
         .numRegions = CSL_FW_L2OCRAM_BANK2_SLV_NUM_REGION,
         .targetCount = CSL_FW_L2OCRAM_BANK2_SLV_NUM_PROTECTED,
@@ -129,6 +157,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                FW MBOX_RAM_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_MBOX_RAM_SLV_CFG_ADDR,
         .numRegions = CSL_FW_MBOX_RAM_SLV_NUM_REGION,
         .targetCount = CSL_FW_MBOX_RAM_SLV_NUM_PROTECTED,
@@ -142,6 +174,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                FW HSM_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_HSM_SLV_CFG_ADDR,
         .numRegions = CSL_FW_HSM_SLV_NUM_REGION,
         .targetCount = CSL_FW_HSM_SLV_NUM_PROTECTED,
@@ -158,6 +194,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
         }
     },
     {
+        /***********************************************************************
+                                FW DTHE_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_DTHE_SLV_CFG_ADDR,
         .numRegions = CSL_FW_DTHE_SLV_NUM_REGION,
         .targetCount = CSL_FW_DTHE_SLV_NUM_PROTECTED,
@@ -172,6 +212,135 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                FW OSPI0_CONFIG_SLV
+        ***********************************************************************/
+
+        .baseAddr = CSL_FW_OSPI0_CFG_SLV_CFG_ADDR,
+        .numRegions = CSL_FW_OSPI0_CFG_SLV_NUM_REGION,
+        .targetCount = CSL_FW_OSPI0_CFG_SLV_NUM_PROTECTED,
+        .target = (Firewall_Target[])
+        {
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR0,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE0,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR1,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE1,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR2,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE2,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR3,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE3,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR4,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE4,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR5,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE5,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR6,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE6,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR7,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE7,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR8,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE8,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR9,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE9,
+        },
+        {
+            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR10,
+            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE10,
+        }
+        }
+
+    },
+    {
+        /***********************************************************************
+                                FW OSPI1_CONFIG_SLV
+        ***********************************************************************/
+
+        .baseAddr = CSL_FW_OSPI1_CFG_SLV_CFG_ADDR,
+        .numRegions = CSL_FW_OSPI1_CFG_SLV_NUM_REGION,
+        .targetCount = CSL_FW_OSPI1_CFG_SLV_NUM_PROTECTED,
+        .target = (Firewall_Target[])
+        {
+        {
+            .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR0,
+            .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE0,
+        },
+        {
+            .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR1,
+            .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE1,
+        },
+        {
+            .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR2,
+            .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE2,
+        }
+        }
+    },
+    {
+        /***********************************************************************
+                                FW R5SS0_CONFIG_SLV
+        ***********************************************************************/
+
+        .baseAddr = CSL_FW_R5SS0_CONFIG_SLV_CFG_ADDR,
+        .numRegions = CSL_FW_R5SS0_CONFIG_SLV_NUM_REGION,
+        .targetCount = CSL_FW_R5SS0_CONFIG_SLV_NUM_PROTECTED,
+        .target = (Firewall_Target[])
+        {
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR0,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE0,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR1,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE1,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR2,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE2,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR3,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE3,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR4,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE4,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR5,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE5,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR6,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE6,
+        },
+        {
+            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR7,
+            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE7,
+        }
+        }
+    },
+    {
+        /***********************************************************************
+                                    FW OSPI0_SLV
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_OSPI0_SLV_CFG_ADDR,
         .numRegions = CSL_FW_OSPI0_SLV_NUM_REGION,
         .targetCount = CSL_FW_OSPI0_SLV_NUM_PROTECTED,
@@ -188,11 +357,33 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
         {
             .startAddr = CSL_FW_OSPI0_SLV_START_ADDR2,
             .regionSize = CSL_FW_OSPI0_SLV_REGION_SIZE2,
-        },
         }
-
+        }
     },
     {
+        /***********************************************************************
+                                    FW OSPI1_SLV
+        ***********************************************************************/
+
+        .baseAddr = CSL_FW_OSPI1_SLV_CFG_ADDR,
+        .numRegions = CSL_FW_OSPI1_SLV_NUM_REGION,
+        .targetCount = CSL_FW_OSPI1_SLV_NUM_PROTECTED,
+        .target = (Firewall_Target[])
+        {
+        {
+            .startAddr = CSL_FW_OSPI1_SLV_START_ADDR0,
+            .regionSize = CSL_FW_OSPI1_SLV_REGION_SIZE0,
+        },
+        }
+    },
+
+                                /* MASTER FIREWALLS */
+
+    {
+        /***********************************************************************
+                                     FW SCRM2SCRP0
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_SCRM2SCRP0_SLV_CFG_ADDR,
         .numRegions = CSL_FW_SCRM2SCRP0_SLV_NUM_REGION,
         .targetCount = CSL_FW_SCRM2SCRP0_SLV_NUM_PROTECTED,
@@ -207,6 +398,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                     FW SCRM2SCRP1
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_SCRM2SCRP1_SLV_CFG_ADDR,
         .numRegions = CSL_FW_SCRM2SCRP1_SLV_NUM_REGION,
         .targetCount = CSL_FW_SCRM2SCRP1_SLV_NUM_PROTECTED,
@@ -220,6 +415,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                    FW  R5SS0_CORE0_AHB_MST
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_R5SS0_CORE0_AHB_MST_CFG_ADDR,
         .numRegions = CSL_FW_R5SS0_CORE0_AHB_MST_NUM_REGION,
         .targetCount = CSL_FW_R5SS0_CORE0_AHB_MST_NUM_PROTECTED,
@@ -233,6 +432,10 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
 
     },
     {
+        /***********************************************************************
+                                   FW  R5SS0_CORE1_AHB_MST
+        ***********************************************************************/
+
         .baseAddr = CSL_FW_R5SS0_CORE1_AHB_MST_CFG_ADDR,
         .numRegions = CSL_FW_R5SS0_CORE1_AHB_MST_NUM_REGION,
         .targetCount = CSL_FW_R5SS0_CORE1_AHB_MST_NUM_PROTECTED,
