@@ -17,6 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_R5F_ECC_DDATA_COMBOS}
 
+\cond (SOC_AM263X || SOC_AM263PX)
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
@@ -24,7 +25,7 @@ Use Cases
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ecc/sdl_ecc_r5_d-data/
-
+\endcond
 
 # Steps to Run the Example
 

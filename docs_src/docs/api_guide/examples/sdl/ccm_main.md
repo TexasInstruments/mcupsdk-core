@@ -31,11 +31,23 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_CCM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM273X || SOC_AWR294X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ccm/sdl_ccm_example/
+
+\endcond
+
+\cond SOC_AM263X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ccm/sdl_ccm_example/
@@ -47,6 +59,7 @@ Use Cases
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ccm/sdl_ccm_example/

@@ -17,11 +17,23 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_PBIST_COMBOS}
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM273X || SOC_AWR294X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/pbist/pbist_mcu/
+
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/pbist/pbist_mcu/
@@ -171,6 +183,63 @@ PBIST complete for R5 STC
  All tests have passed.
  PBIST test complete for TOP BIST
  PBIST test completed in 8715 micro secs
+
+[Cortex_R5_2]
+ PBIST Application
+
+ Starting PBIST failure insertion test on TOP PBIST
+PBIST failure Insertion test complete for TOP BIST
+PBIST Failure Insertion Test completed in 20 micro secs 
+
+ Starting PBIST test on TOP PBIST
+ PBIST complete for R5 STC
+ PBIST complete for R51 STC
+ PBIST complete for R50 TMU1
+ PBIST complete for R50 TMU2
+ PBIST complete for R50 TMU3
+ PBIST complete for R50 TMU4
+ PBIST complete for R50 TMU5
+ PBIST complete for R50 TMU6
+ PBIST complete for R51 TMU1
+ PBIST complete for R51 TMU2
+ PBIST complete for R51 TMU3
+ PBIST complete for R51 TMU4
+ PBIST complete for R51 TMU5
+ PBIST complete for R51 TMU6
+ PBIST complete for PBISTROM
+ PBIST complete for ROM0
+ PBIST complete for ROM1
+ PBIST complete for CPSW
+ PBIST complete for ECU_PERIPH
+ PBIST complete for FOTA
+ PBIST complete for ICSSM
+ PBIST complete for MBOX
+ PBIST complete for MSS_L2_1
+ PBIST complete for MSS_L2_2
+ PBIST complete for MSS_L2_3
+ PBIST complete for MSS_L2_4
+ PBIST complete for MSS_L2_5
+ PBIST complete for TPCC
+ PBIST complete for OSPI
+ PBIST complete for R5SS0 CPU0 RL2 
+ PBIST complete for R5SS0 CPU1 RL2 
+ PBIST complete for R5SS1 CPU0 RL2 
+ PBIST complete for R5SS1 CPU1 RL2 
+ PBIST complete for MSS R5SS0 C0
+ PBIST complete for MSS R5SS0 C1
+ PBIST complete for MSS R5SS1 C0
+ PBIST complete for MSS R5SS1 C1
+ PBIST complete for MSS MMCH0
+ PBIST complete for MSS MMCH1
+ PBIST complete for MSS CR5B R5FSS0 ATCM0
+ PBIST complete for MSS CR5B R5FSS1 ATCM0
+ PBIST complete for MSS CR5B R5FSS0 BTCM0
+ PBIST complete for MSS CR5B R5FSS1 BTCM0
+ PBIST complete for MSS R5FSS1 VIM1
+
+All tests have passed. 
+PBIST test complete for TOP BIST
+PBIST test completed in 8846 micro secs
 
 \endcode
 \endcond

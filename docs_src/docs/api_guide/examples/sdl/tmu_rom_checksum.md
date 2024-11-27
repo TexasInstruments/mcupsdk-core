@@ -22,6 +22,7 @@ Use Cases
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/tmu_rom_checksum/
@@ -44,9 +45,19 @@ Use Cases
 
 
 \code
-[MAIN_Cortex_R5_0_0]
-ROM Checksum Example Application
-Compute ROM-Checksum Data integrity passed
+
+TMU ROM Checksum Example Application
+
+Calculating TMU ROM Checksum
+
+TMU ROM-Checksum Data integrity passed
+
+Calcuated TMU CRC High : 0xccdab254
+
+Calcuated TMU CRC Low : 0x36cfb524
+
+All tests Passed
+
 \endcode
 
 

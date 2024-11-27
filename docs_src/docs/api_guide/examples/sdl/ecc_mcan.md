@@ -17,12 +17,24 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_ECC_MCAN_COMBOS}
 
+\cond (SOC_AM273X) || (SOC_AWR294X)
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ecc/sdl_ecc_mcan/
+\endcond
+
+\cond (SOC_AM263X || SOC_AM263PX)
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ecc/sdl_ecc_mcan/
+\endcond
 
 # Steps to Run the Example
 

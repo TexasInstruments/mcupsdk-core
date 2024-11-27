@@ -59,6 +59,7 @@ Use Cases
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/stc/stc_mcu/

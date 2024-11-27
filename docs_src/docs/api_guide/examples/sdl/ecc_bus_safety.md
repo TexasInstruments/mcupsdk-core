@@ -10,7 +10,7 @@ Shows the generation of SEC, DED and RED error on all MSS DSS and DSS nodes
 # Note
 Note :
 1. SEC - Single Error Correction, DED - Double Error Correction, RED - Redundancy Error Correction.
-2. MSS Nodes are applicable to AWR294X, AM263X and AM273X.
+2. MSS Nodes are applicable to AWR294X, AM263X, AM263PX and AM273X.
 3. DSS Nodes are applicable to AWR294X and AM273X.
 
 AM263x  : Supports MSS Nodes.\
@@ -60,6 +60,48 @@ MSS Nodes Supported for am263x:
 29. MSS_GPMC
 30. MAIN_VBUSP
 31. PERI_VBUSP
+
+MSS Nodes Supported for am263px:
+1. MSS_TPTC_A0_RD
+2. MSS_TPTC_A1_RD
+3. MSS_TPTC_B0_RD
+4. MSS_TPTC_A0_WR
+5. MSS_TPTC_A1_WR
+6. MSS_TPTC_B0_WR
+7. MSS_CR5A_AHB
+8. MSS_CR5B_AHB
+9. MSS_CR5C_AHB
+10. MSS_CR5D_AHB
+11. MSS_MBOX
+12. MSS_CR5A_AXI_WR
+13. MSS_CR5B_AXI_WR
+14. MSS_CR5C_AXI_WR
+15. MSS_CR5D_AXI_WR
+16. MSS_CR5A_AXI_RD
+17. MSS_CR5B_AXI_RD
+18. MSS_CR5C_AXI_RD
+19. MSS_CR5D_AXI_RD
+20. MSS_CR5A_AXI_S
+21. MSS_CR5B_AXI_S
+22. MSS_CR5C_AXI_S
+23. MSS_CR5D_AXI_S
+24. MSS_MCRC
+25. MSS_SWBUF
+26. MSS_TO_MDO
+27. DAP_R232
+28. MSS_SCRP0
+29. MSS_SCRP1
+30. ICSSM_PDSP0
+31. ICSSM_PDSP1
+32. ICSSM_S
+33. DAP
+34. MSS_L2_A
+35. MSS_L2_B
+36. MSS_L2_C
+37. MSS_L2_D
+38. MSS_MMC_S
+39. MAIN_VBUSP
+40. PERI_VBUSP
 
 MSS Nodes Supported for am273x:
 1. MSS_TPTC_A0_RD
@@ -262,6 +304,79 @@ UC-69    | MSS_L2_C_RED_Test in Interrupt Method.
 UC-70    | MSS_L2_D_RED_Test in Interrupt Method.
 UC-71    | MAIN_VBUSP_RED_Test in Interrupt Method.
 UC-72    | PERI_VBUSP_RED_Test in Interrupt Method.
+
+Use Cases On AM263PX in R5 Core
+---------
+Use Case | Description
+---------|------------
+UC-1     | CR5A_AHB_RED_Test in Interrupt  Method.
+UC-2     | CR5B_AHB_RED_Test in Interrupt  Method.
+UC-3     | CR5C_AHB_RED_Test in Interrupt  Method.
+UC-4     | CR5D_AHB_RED_Test in Interrupt  Method.
+UC-5     | TPTC_A0_WR_RED_Test in Interrupt Method.
+UC-6     | TPTC_A1_WR_RED_Test in Interrupt Method.
+UC-7     | TPTC_A0_RD_SEC_Test in Interrupt Method.
+UC-8     | TPTC_A0_RD_DED_Test in Interrupt Method.
+UC-9     | TPTC_A0_RD_RED_Test in Interrupt Method.
+UC-10    | TPTC_A1_RD_SEC_Test in Interrupt Method.
+UC-11    | TPTC_A1_RD_DED_Test in Interrupt Method.
+UC-12    | TPTC_A1_RD_RED_Test in Interrupt Method.
+UC-13    | MSS_CR5A_AXI_WR_RED_Test in Interrupt Method.
+UC-14    | MSS_CR5B_AXI_WR_RED_Test in Interrupt Method.
+UC-15    | MSS_CR5C_AXI_WR_RED_Test in Interrupt Method.
+UC-16    | MSS_CR5D_AXI_WR_RED_Test in Interrupt Method.
+UC-17    | MSS_CR5A_AXI_RD_SEC_Test in Interrupt Method.
+UC-18    | MSS_CR5A_AXI_RD_RED_Test in Interrupt Method.
+UC-19    | MSS_CR5B_AXI_RD_SEC_Test in Interrupt Method.
+UC-20    | MSS_CR5B_AXI_RD_RED_Test in Interrupt Method.
+UC-21    | MSS_CR5C_AXI_RD_SEC_Test in Interrupt Method.
+UC-22    | MSS_CR5C_AXI_RD_RED_Test in Interrupt Method.
+UC-23    | MSS_CR5D_AXI_RD_SEC_Test in Interrupt Method.
+UC-24    | MSS_CR5D_AXI_RD_RED_Test in Interrupt Method.
+UC-25    | MSS_CR5A_AXI_S_SEC_Test in Interrupt Method.
+UC-26    | MSS_CR5A_AXI_S_RED_Test in Interrupt Method.
+UC-27    | MSS_CR5B_AXI_S_SEC_Test in Interrupt Method.
+UC-28    | MSS_CR5B_AXI_S_RED_Test in Interrupt Method.
+UC-29    | MSS_CR5C_AXI_S_SEC_Test in Interrupt Method.
+UC-30    | MSS_CR5C_AXI_S_RED_Test in Interrupt Method.
+UC-31    | MSS_CR5D_AXI_S_SEC_Test in Interrupt Method.
+UC-32    | MSS_CR5D_AXI_S_RED_Test in Interrupt Method.
+UC-33    | MSS_MBOX_SEC_Test in Interrupt Method.
+UC-34    | MSS_MBOX_DED_Test in Interrupt Method.
+UC-35    | MSS_MBOX_RED_Test in Interrupt Method.
+UC-36    | MSS_MCRC_SEC_Test in Interrupt  Method.
+UC-37    | MSS_MCRC_DED_Test in Interrupt  Method.
+UC-38    | MSS_MCRC_RED_Test in Interrupt  Method.
+UC-39    | MSS_STM_STIM_SEC_Test in Interrupt  Method.
+UC-40    | MSS_STM_STIM_DED_Test in Interrupt  Method.
+UC-41    | MSS_STM_STIM_RED_Test in Interrupt  Method.
+UC-42    | MSS_SCRP0_SEC_Test in Interrupt  Method.
+UC-43    | MSS_SCRP0_DED_Test in Interrupt  Method.
+UC-44    | MSS_SCRP0_RED_Test in Interrupt  Method.
+UC-45    | MSS_SCRP1_SEC_Test in Interrupt  Method.
+UC-46    | MSS_SCRP1_DED_Test in Interrupt  Method.
+UC-47    | MSS_SCRP1_RED_Test in Interrupt  Method.
+UC-48    | ICSSM_PDSP0_SEC_Test in Interrupt  Method.
+UC-49    | ICSSM_PDSP0_DED_Test in Interrupt  Method.
+UC-50    | ICSSM_PDSP0_RED_Test in Interrupt  Method.
+UC-51    | ICSSM_PDSP1_SEC_Test in Interrupt  Method.
+UC-52    | ICSSM_PDSP1_DED_Test in Interrupt  Method.
+UC-53    | ICSSM_PDSP1_RED_Test in Interrupt  Method.
+UC-54    | ICSSM_S_SEC_Test in Interrupt  Method.
+UC-55    | ICSSM_S_DED_Test in Interrupt  Method.
+UC-56    | ICSSM_S_RED_Test in Interrupt  Method.
+UC-57    | DAP_SEC_Test in Interrupt  Method.
+UC-58    | DAP_DED_Test in Interrupt  Method.
+UC-59    | DAP_RED_Test in Interrupt  Method.
+UC-60    | MSS_MMC_S_SEC_Test in Interrupt Method.
+UC-61    | MSS_MMC_S_DED_Test in Interrupt Method.
+UC-62    | MSS_MMC_S_RED_Test in Interrupt Method.
+UC-63    | MSS_L2_A_DED_Test in Interrupt Method.
+UC-64    | MSS_L2_B_RED_Test in Interrupt Method.
+UC-65    | MSS_L2_C_RED_Test in Interrupt Method.
+UC-66    | MSS_L2_D_RED_Test in Interrupt Method.
+UC-67    | MAIN_VBUSP_RED_Test in Interrupt Method.
+UC-68    | PERI_VBUSP_RED_Test in Interrupt Method.
 
 Use Cases On AM273X in R5 Core
 ---------
@@ -561,6 +676,18 @@ Use Cases On AM273X in C66 Core
 
 \endcond
 
+\cond (SOC_AM263X ||SOC_AM263PX)
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss1-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ecc_bus_safety/ecc_bus_safety_main/
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -673,6 +800,154 @@ Applications Name: PERI_VBUSP_RED_Test in Interrupt  Method  PASSED  and Time ta
 
  All tests have passed
 
+
+\endcode
+
+hown below is a sample output when the application is run on AM263PX  in R5 Core,
+
+\code
+
+ECC BUS SAFETY  Application
+
+ ECC BUS SAFETY TEST START : starting
+
+Applications Name: CR5A_AHB_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 192  micro secs 
+
+Applications Name: CR5B_AHB_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 186  micro secs 
+
+Applications Name: CR5C_AHB_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 183  micro secs 
+
+Applications Name: CR5D_AHB_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 183  micro secs 
+
+Applications Name: TPTC_A0_WR_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 184  micro secs 
+
+Applications Name: TPTC_A1_WR_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 143  micro secs 
+
+Applications Name: TPTC_A0_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 177  micro secs 
+
+Applications Name: TPTC_A0_RD_DED_Test in Interrupt Method  PASSED  and Time taken for the Test is 167  micro secs 
+
+Applications Name: TPTC_A0_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 149  micro secs 
+
+Applications Name: TPTC_A1_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 172  micro secs 
+
+Applications Name: TPTC_A1_RD_DED_Test in Interrupt Method  PASSED  and Time taken for the Test is 166  micro secs 
+
+Applications Name: TPTC_A1_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 149  micro secs 
+
+Applications Name: MSS_MBOX_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 178  micro secs 
+
+Applications Name: MSS_MBOX_DED_Test in Interrupt Method  PASSED  and Time taken for the Test is 160  micro secs 
+
+Applications Name: MSS_MBOX_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 159  micro secs 
+
+Applications Name: MSS_MCRC_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 176  micro secs 
+
+Applications Name: MSS_MCRC_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 162  micro secs 
+
+Applications Name: MSS_MCRC_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 160  micro secs 
+
+Applications Name: MSS_STM_STIM_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 178  micro secs 
+
+Applications Name: MSS_STM_STIM_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 162  micro secs 
+
+Applications Name: MSS_STM_STIM_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 162  micro secs 
+
+Applications Name: MSS_SCRP0_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 178  micro secs 
+
+Applications Name: MSS_SCRP0_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 163  micro secs 
+
+Applications Name: MSS_SCRP0_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 163  micro secs 
+
+Applications Name: MSS_SCRP1_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 181  micro secs 
+
+Applications Name: MSS_SCRP1_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 165  micro secs 
+
+Applications Name: MSS_SCRP1_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 165  micro secs 
+
+Applications Name: ICSSM_PDSP0_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 181  micro secs 
+
+Applications Name: ICSSM_PDSP0_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 167  micro secs 
+
+Applications Name: ICSSM_PDSP0_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 166  micro secs 
+
+Applications Name: ICSSM_PDSP1_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 184  micro secs 
+
+Applications Name: ICSSM_PDSP1_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 167  micro secs 
+
+Applications Name: ICSSM_PDSP1_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 167  micro secs 
+
+Applications Name: ICSSM_S_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 184  micro secs 
+
+Applications Name: ICSSM_S_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 170  micro secs 
+
+Applications Name: ICSSM_S_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 169  micro secs 
+
+Applications Name: DAP_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 187  micro secs 
+
+Applications Name: DAP_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 170  micro secs 
+
+Applications Name: DAP_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 171  micro secs 
+
+Applications Name: MSS_CR5A_AXI_WR_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 169  micro secs 
+
+Applications Name: MSS_CR5B_AXI_WR_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 168  micro secs 
+
+Applications Name: MSS_CR5C_AXI_WR_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 171  micro secs 
+
+Applications Name: MSS_CR5D_AXI_WR_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 169  micro secs 
+
+Applications Name: MSS_CR5A_AXI_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 188  micro secs 
+
+Applications Name: MSS_CR5A_AXI_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 172  micro secs 
+
+Applications Name: MSS_CR5B_AXI_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 189  micro secs 
+
+Applications Name: MSS_CR5B_AXI_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 173  micro secs 
+
+Applications Name: MSS_CR5C_AXI_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 191  micro secs 
+
+Applications Name: MSS_CR5C_AXI_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 172  micro secs 
+
+Applications Name: MSS_CR5D_AXI_RD_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 190  micro secs 
+
+Applications Name: MSS_CR5D_AXI_RD_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 174  micro secs 
+
+Applications Name: MSS_CR5A_AXI_S_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 191  micro secs 
+
+Applications Name: MSS_CR5A_AXI_S_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 177  micro secs 
+
+Applications Name: MSS_CR5B_AXI_S_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 192  micro secs 
+
+Applications Name: MSS_CR5B_AXI_S_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 175  micro secs 
+
+Applications Name: MSS_CR5C_AXI_S_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 193  micro secs 
+
+Applications Name: MSS_CR5C_AXI_S_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 177  micro secs 
+
+Applications Name: MSS_CR5D_AXI_S_SEC_Test in Interrupt Method  PASSED  and Time taken for the Test is 194  micro secs 
+
+Applications Name: MSS_CR5D_AXI_S_RED_Test in Interrupt Method  PASSED  and Time taken for the Test is 179  micro secs 
+
+Applications Name: MSS_MMC_S_SEC_Test in Interrupt  Method  PASSED  and Time taken for the Test is 179  micro secs 
+
+Applications Name: MSS_MMC_S_DED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 171  micro secs 
+
+Applications Name: MSS_MMC_S_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 169  micro secs 
+
+Applications Name: MSS_L2_A_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 171  micro secs 
+
+Applications Name: MSS_L2_B_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 172  micro secs 
+
+Applications Name: MSS_L2_C_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 171  micro secs 
+
+Applications Name: MSS_L2_D_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 170  micro secs 
+
+Applications Name: MAIN_VBUSP_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 181  micro secs 
+
+Applications Name: PERI_VBUSP_RED_Test in Interrupt  Method  PASSED  and Time taken for the Test is 181  micro secs 
+
+ All tests have passed 
 
 \endcode
 
