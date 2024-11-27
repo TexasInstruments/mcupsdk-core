@@ -36,18 +36,23 @@
 #define RAT_BASE(baseAddr, i)       (volatile uint32_t*)(baseAddr + (0x24U + (0x10U * (uint32_t)(i))))
 #define RAT_TRANS(baseAddr, i)      (volatile uint32_t*)(baseAddr + (0x28U + (0x10U * (uint32_t)(i))))
 
-AddrTranslateP_Params gAddrTranslateConfig = {
+__attribute__((do_not_share)) AddrTranslateP_Params gAddrTranslateConfig = {
     .numRegions = 0,
     .ratBaseAddr = 0,
     .regionConfig = NULL,
 };
 
-static void AddrTranslateP_setRegion(uint32_t ratBaseAddr, uint16_t regionNum,
+__attribute__((do_not_share)) static void AddrTranslateP_setRegion (uint32_t ratBaseAddr, uint16_t regionNum,
         uint64_t systemAddr, uint32_t localAddr,
         uint32_t size, uint32_t enable)
 {
     uint32_t value = size;
     uint32_t localAddress = localAddr;
+
+    if(size <= 0)
+    {
+        return;
+    }
 
     if(value > (uint32_t)AddrTranslateP_RegionSize_4G)
     {
