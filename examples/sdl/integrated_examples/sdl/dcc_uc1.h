@@ -48,7 +48,6 @@
 #include <sdl/sdl_dcc.h>
 #include <sdl/esm/sdlr_esm.h>
 #include <sdl/include/sdl_types.h>
-#include <sdl/esm/v0/sdl_esm.h>
 
 #if !defined(SDL_DCC_TEST_H)
 #define SDL_DCC_TEST_H
