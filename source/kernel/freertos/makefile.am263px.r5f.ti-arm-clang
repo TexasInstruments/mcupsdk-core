@@ -13,7 +13,6 @@ ConfigName:=$(PROFILE)
 LIBNAME:=freertos.am263px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    AddrTranslateP_null.c \
     boot_armv7r.c \
     DebugP_shmLogWriter.c \
     DebugP_shmLogReader.c \
@@ -28,7 +27,7 @@ FILES_common := \
     CpuId_armv7r.c \
     HeapP_internal.c \
     printf.c \
-    AddrTranslateP.c \
+    AddrTranslateP_32bit.c \
     PmuP_armv7r.c \
     QueueP_nortos.c \
     ClockP_freertos.c \

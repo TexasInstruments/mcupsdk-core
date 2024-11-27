@@ -3,7 +3,6 @@ let path = require('path');
 const files_r5f = {
     common: [
         // picked from nortos DPL
-        "AddrTranslateP_null.c",
         "boot_armv7r.c",
         "DebugP_shmLogWriter.c",
         "DebugP_shmLogReader.c",
@@ -18,7 +17,7 @@ const files_r5f = {
         "CpuId_armv7r.c",
         "HeapP_internal.c",
         "printf.c",
-        "AddrTranslateP.c",
+        "AddrTranslateP_32bit.c",
         "PmuP_armv7r.c",
         "QueueP_nortos.c",
         // picked from freertos DPL
