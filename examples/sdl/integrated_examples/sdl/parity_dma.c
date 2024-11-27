@@ -48,8 +48,14 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
+#if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include <sdl/ecc/soc/am263x/sdl_ecc_soc.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#include <sdl/ecc/soc/am263px/sdl_ecc_soc.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */

@@ -55,7 +55,7 @@
 #include <sdl/r5/v0/sdl_interrupt.h>
 #include "ecc_main.h"
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */

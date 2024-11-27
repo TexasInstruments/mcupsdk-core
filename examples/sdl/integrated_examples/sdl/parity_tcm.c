@@ -50,12 +50,18 @@
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include <kernel/dpl/TimerP.h>
 #include <sdl/sdl_ecc.h>
-#include <sdl/ecc/soc/am263x/sdl_ecc_soc.h>
-
 #include "sdlexample.h"
+
+#if defined(SOC_AM263X)
+#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
+#include <sdl/ecc/soc/am263x/sdl_ecc_soc.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#include <sdl/ecc/soc/am263px/sdl_ecc_soc.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */

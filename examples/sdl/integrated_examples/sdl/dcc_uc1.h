@@ -48,6 +48,12 @@
 #include <sdl/sdl_dcc.h>
 #include <sdl/esm/sdlr_esm.h>
 #include <sdl/include/sdl_types.h>
+#if defined (SOC_AM263X)
+#include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
+#endif
 
 #if !defined(SDL_DCC_TEST_H)
 #define SDL_DCC_TEST_H

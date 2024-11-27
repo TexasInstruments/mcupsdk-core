@@ -55,10 +55,15 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc_bus_safety.h>
 #include <sdl/esm/sdlr_esm.h>
-#include <sdl/esm/v0/sdl_esm.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_soc.h>
 #include <drivers/hw_include/cslr.h>
+#if defined (SOC_AM263X)
+#include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
+#endif
 
 
 #if !defined(ECC_BUS_SAFETY_H)

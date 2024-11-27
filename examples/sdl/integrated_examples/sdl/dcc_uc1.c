@@ -46,8 +46,13 @@
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
-#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #include "sdlexample.h"
+#if defined (SOC_AM263X)
+#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#endif
 
 /*===========================================================================*/
 /*                         Declarations                                      */

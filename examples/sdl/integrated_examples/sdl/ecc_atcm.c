@@ -49,9 +49,14 @@
 #include <kernel/dpl/DebugP.h>
 #include "sdlexample.h"
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include <sdl/r5/v0/sdl_r5_utils.h>
 #include <sdl/ecc/sdl_ecc_utils.h>
+#if defined (SOC_AM263X)
+#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -88,7 +93,7 @@ void ecc_atcm_clearESM(void)
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
     /* Clear SEC RAW MSS_CTRL register*/
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
-    
+
     esmEccError = true;
 }
 

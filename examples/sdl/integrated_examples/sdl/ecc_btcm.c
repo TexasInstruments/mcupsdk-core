@@ -51,8 +51,13 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include "sdlexample.h"
+#if defined (SOC_AM263X)
+#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -95,7 +100,7 @@
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18094u)
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
-#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u) 
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
 
 #define SDL_CLEAR_STATUS									(0x6u)
 
@@ -114,7 +119,7 @@ void ecc_btcm_clearESM(void)
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
     /* Clear DED RAW MSS_CTRL register*/
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
-    
+
     /* Clear SEC MSS_CTRL register*/
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
     /* Clear SEC RAW MSS_CTRL register*/
@@ -139,7 +144,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_BTCM_RAM_ADDR);
 
@@ -194,7 +199,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest(void)
         testLocationValue = injectErrorConfig.pErrMem[0];
         testLocationValue++; /* this is purely to avoid misra unused error */
     }
-                   
+
     return retVal;
 }/* End of ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest() */
 
