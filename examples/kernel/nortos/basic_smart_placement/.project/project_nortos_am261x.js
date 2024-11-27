@@ -47,7 +47,7 @@ const readmeDoxygenPageTag = "EXAMPLES_BASIC_SMART_PLACEMENT";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am263x/nortos/main_nortos.c.xdt",
+        input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "basic_smart_placement_main",
