@@ -110,12 +110,12 @@ int main(void)
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
     
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    // status = Keyring_init(&gHSMClient);
-    // DebugP_assert(status == SystemP_SUCCESS);
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a

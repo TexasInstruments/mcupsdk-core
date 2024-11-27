@@ -44,10 +44,9 @@
 #define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x80000) /* Size of section MSRAM_2 specified in linker.cmd */
 uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
-// const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-//     = HSMRT_IMG;
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-// extern HsmClient_t gHSMClient ;
+extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
 
@@ -89,12 +88,12 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     Bootloader_socInitL2MailBoxMemory();
 
-    // status = Keyring_init(&gHSMClient);
-    // DebugP_assert(status == SystemP_SUCCESS);
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
