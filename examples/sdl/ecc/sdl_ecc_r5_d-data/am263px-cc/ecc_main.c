@@ -66,6 +66,14 @@
 #define SDL_ECC_AGG_R5SS0_CORE0_VECTOR                      (0x53000008u)
 #define SDL_ECC_AGG_R5SS0_CORE0_CTRL                        (0x53000014u)
 
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D180D4u)
+#define SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D180D8u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D180C8u)
+#define SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D180C4u)
+
+#define SDL_ECC_AGG_R5SS1_CORE0_VECTOR                      (0x53004008u)
+#define SDL_ECC_AGG_R5SS1_CORE0_CTRL                        (0x53004014u)
+
 #define SDL_CLEAR_STATUS									(0x10u)
 #define SDL_CLEAR_ALL_STATUS                                (0xffu)
 #define SDL_ECC_SPECIFIC_VECTOR_VALUE                       (0x148000u)
@@ -99,12 +107,19 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 
     /* Stop the error injection from ECC aggr for dedicated ram_Id */
+#if defined (R5F0_INPUTS)
     SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_VECTOR, ram_Id); /* Write ram_Id on ecc_vector register */
     SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_CTRL, clearErr); /* Write 0 value on ecc control register */
     SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_VECTOR, SDL_ECC_SPECIFIC_VECTOR_VALUE);
     /* Wait for ECC Aggrs. register update properly */
     while( ((*((uint32_t *)SDL_ECC_AGG_R5SS0_CORE0_VECTOR)>>24)&0X1) != 1u);
-
+#elif defined (R5F1_INPUTS)
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_VECTOR, ram_Id); /* Write ram_Id on ecc_vector register */
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_CTRL, clearErr); /* Write 0 value on ecc control register */
+    SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_VECTOR, SDL_ECC_SPECIFIC_VECTOR_VALUE);
+    /* Wait for ECC Aggrs. register update properly */
+    while( ((*((uint32_t *)SDL_ECC_AGG_R5SS1_CORE0_VECTOR)>>24)&0X1) != 1u);
+#endif
     DebugP_log("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
@@ -120,6 +135,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 	}
     if(esmIntrType == SDL_ESM_INT_TYPE_HI){
         DebugP_log("\r\nLow Priority Interrupt Executed\r\n");
+    #if defined (R5F0_INPUTS)
         /* Clear SEC MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, clearErr);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
@@ -128,10 +144,20 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, clearErr);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
-
+    #elif defined (R5F1_INPUTS)
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, clearErr);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+        DebugP_log("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS, clearErr);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS);
+        DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #endif
     }
     else{
         DebugP_log("\r\nLow Priority Interrupt Executed\r\n");
+    #if defined (R5F0_INPUTS)
         /* Clear SEC MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, clearErr);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
@@ -140,6 +166,16 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, clearErr);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #elif defined (R5F1_INPUTS)
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, clearErr);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+        DebugP_log("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS, clearErr);
+        rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS);
+        DebugP_log("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    #endif
     }
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 

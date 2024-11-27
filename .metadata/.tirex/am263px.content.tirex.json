@@ -19776,6 +19776,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5F d-data CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5_d-data",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_d-data/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5_d-data",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations in single and double bits for R5F i-data CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_r5f_i-data",
         "location": "../../examples/sdl/ecc/sdl_ecc_r5f_i-data/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -19793,6 +19826,39 @@
             "ecc",
             "sdl_ecc_r5f_i-data",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5F i-data CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5f_i-data",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5f_i-data/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5f_i-data",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -19842,6 +19908,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5F i-tag CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5f_i-tag",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5f_i-tag/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5f_i-tag",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations in single and double bits for R5F d-tag CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_r5_d-tag",
         "location": "../../examples/sdl/ecc/sdl_ecc_r5_d-tag/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -19859,6 +19958,39 @@
             "ecc",
             "sdl_ecc_r5_d-tag",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5F d-tag CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_ecc_r5_d-tag",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_d-tag/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5_d-tag",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
