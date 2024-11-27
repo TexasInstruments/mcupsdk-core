@@ -174,12 +174,12 @@ int main(void)
 %if(enableFastBoot === false){
     Bootloader_profileAddProfilePoint("Drivers_open");
     
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    // status = Keyring_init(&gHSMClient);
-    // DebugP_assert(status == SystemP_SUCCESS);
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 %}
 
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
@@ -209,7 +209,7 @@ int main(void)
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    // Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
 
     /* 
         Keyring init
