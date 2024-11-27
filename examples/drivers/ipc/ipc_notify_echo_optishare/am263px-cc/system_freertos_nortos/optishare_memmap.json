@@ -36,27 +36,37 @@
         ],
         "shared_mem_regions" : [
             {
-                "name" : "SSO_SHM",
+                "name" : "SSO_SHM_RX",
                 "origin" : "0x702A0000",
-                "length" : "0x8000"
+                "length" : "0x3000"
+            },
+            {
+                "name" : "SSO_SHM_RO",
+                "origin" : "0x702A3000",
+                "length" : "0x1000"
+            },
+            {
+                "name" : "SSO_SHM_RW",
+                "origin" : "0x702A4000",
+                "length" : "0x4000"
             }
         ],
         "shared_os_placement_instrs" : [
             {
                 "name" : ".shared.text",
-                "placement" : "> SSO_SHM, palign(4096)"
+                "placement" : "> SSO_SHM_RX, palign(4096)"
             },
             {
                 "name" : ".shared.rodata",
-                "placement" : "> SSO_SHM, palign(4096)"
+                "placement" : "> SSO_SHM_RO, palign(4096)"
             },
             {
                 "name" : ".shared.bss",
-                "placement" : "> SSO_SHM, palign(4096)"
+                "placement" : "> SSO_SHM_RW, palign(4096)"
             },
             {
                 "name" : ".shared.data",
-                "placement" : "> SSO_SHM, palign(4096)"
+                "placement" : "> SSO_SHM_RW, palign(4096)"
             }
         ]
     }
