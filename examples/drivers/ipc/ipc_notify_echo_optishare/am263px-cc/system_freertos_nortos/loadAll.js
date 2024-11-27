@@ -4,23 +4,16 @@ importPackage(Packages.java.lang);
 importPackage(java.io);
 importPackage(java.lang);
 
-
+var sdkPath = "";
 var ccxmlPath = "AM263px.ccxml";
-var rfss00_core = "/home/sanmveg/ti/workarea/mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss0-0_freertos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
-var rfss01_core = "/home/sanmveg/ti/workarea/mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss0-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
-var rfss10_core = "/home/sanmveg/ti/workarea/mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss1-0_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
-var rfss11_core = "/home/sanmveg/ti/workarea/mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss1-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
-var sso = "/home/sanmveg/ti/workarea/mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos/sso.out";
+var rfss00_core = sdkPath + "mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss0-0_freertos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
+var rfss01_core = sdkPath + "mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss0-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
+var rfss10_core = sdkPath + "mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss1-0_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
+var rfss11_core = sdkPath + "mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/r5fss1-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.debug.optishare.out";
+var sso = sdkPath + "mcu_plus_sdk/examples/drivers/ipc/ipc_notify_echo_optishare/am263px-cc/system_freertos_nortos/sso.out";
 
 function loadRunAll()
 {
-    // list all CPU
-    // var CPU_List = ds.getListOfCPUs();
-    // for(var cpui = 0; cpui < CPU_List.length; cpui++)
-    // {
-    //     print(CPU_List[cpui]);
-    // }
-
     // Open a debug session
     var debugSession_r5fss00 = ds.openSession(".*Cortex_R5_0");
     var debugSession_r5fss01 = ds.openSession(".*Cortex_R5_1");
@@ -84,17 +77,7 @@ function loadRunAll()
     debugSession_r5fss11.breakpoint.add("0x4");
     debugSession_r5fss11.breakpoint.add("0xc");
     debugSession_r5fss11.breakpoint.add("0x10");
-
-    // debugSession_r5fss00.target.runAsynch();
-    // debugSession_r5fss01.target.runAsynch();
-    // debugSession_r5fss10.target.runAsynch();
-    // debugSession_r5fss11.target.runAsynch();
-
-    // debugSession_r5fss00.target.disconnect();
-    // debugSession_r5fss01.target.disconnect();
-    // debugSession_r5fss10.target.disconnect();
-    // debugSession_r5fss11.target.disconnect();
-
+    
 }
 
 loadRunAll();
