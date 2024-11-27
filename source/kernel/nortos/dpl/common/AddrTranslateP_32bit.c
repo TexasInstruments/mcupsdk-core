@@ -81,13 +81,8 @@ void AddrTranslateP_init(AddrTranslateP_Params *params)
         gAddrTranslateConfig = *params;
     }
 
-    DebugP_assertNoLog(gAddrTranslateConfig.numRegions<AddrTranslateP_MAX_REGIONS);
-
     for(i=0; i<gAddrTranslateConfig.numRegions; i++)
     {
-        DebugP_assertNoLog(gAddrTranslateConfig.ratBaseAddr!=0U);
-        DebugP_assertNoLog(gAddrTranslateConfig.regionConfig!=NULL);
-
         /* enable regions setup by user */
         AddrTranslateP_setRegion(
             gAddrTranslateConfig.ratBaseAddr,
@@ -104,8 +99,6 @@ void *AddrTranslateP_getLocalAddr(uint64_t systemAddr)
 {
     uint32_t found, regionId;
     void *localAddr;
-
-    DebugP_assertNoLog(gAddrTranslateConfig.numRegions<AddrTranslateP_MAX_REGIONS);
 
     found = 0;
     for(regionId=0; regionId<gAddrTranslateConfig.numRegions; regionId++)
