@@ -271,7 +271,7 @@ const example_file_list = [
 	// "examples/sdl/parity/sdl_tcm_parity/.project/project.js",
 	// "examples/sdl/parity/sdl_tmu_parity/.project/project.js",
 	// "examples/sdl/pbist/pbist_mcu/.project/project.js",
-	"examples/sdl/r5f_cpu_utils/.project/project.js",
+	// "examples/sdl/r5f_cpu_utils/.project/project.js",
 	// "examples/sdl/rti/UC1/.project/project.js",
 	// "examples/sdl/rti/UC2/.project/project.js",
 	// "examples/sdl/rti/UC3/.project/project.js",
