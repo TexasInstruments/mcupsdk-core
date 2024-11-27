@@ -102,7 +102,7 @@ __attribute__((do_not_share)) int main(void)
         for(uint32_t sz = 1; sz < (uint32_t)(&__TI_ATRegion2_region_sz); sz <<= 1, region[2].size++);
     }
 
-    params.ratBaseAddr = CSL_RL2_REGS_R5SS0_CORE0_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20;
+    params.ratBaseAddr = CSL_RL2_REGS_R5SS0_CORE1_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20;
     params.regionConfig = region;
     AddrTranslateP_init(&params);
 
