@@ -154,6 +154,7 @@ const example_file_list = [
     "examples/drivers/mcan/canfd_loopback_polling/.project/project.js",
     "examples/drivers/mcan/canfd_loopback_interrupt/.project/project.js",
     "examples/drivers/mcan/canfd_loopback_dma/.project/project.js",
+    "examples/drivers/mcan/canfd_external_read_write/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback_dma/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback_polling_lld/.project/project.js",

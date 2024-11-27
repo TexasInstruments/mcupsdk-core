@@ -369,6 +369,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_POLLING
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT
+\cond SOC_AM263PX || SOC_AM263X
+   -# \subpage EXAMPLES_DRIVERS_MCAN_CANFD_EXTERNAL_READ_WRITE
+\endcond
 -# MCSPI
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA

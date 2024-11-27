@@ -866,16 +866,7 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
         ptrCanFdObj = (CANFD_Object *) config->object;
         bitTimingParams = (&config->attrs->CANFDMcanBitTimingParams);
         optionTLV.type  = (CANFD_Option)config->attrs->OptionTLVtype;
-        // if((ptrCanFdObj->state != CANFD_DRIVER_STATE_UNINIT) || 
-        //    (ptrCanFdObj->state != CANFD_DRIVER_STATE_STOPPED))
-        // {
-        //     status = SystemP_FAILURE;
-        // }
-
-        if (status == SystemP_SUCCESS)
-        {
-            status = MCAN_CheckRegBaseAddr(ptrCanFdObj->regBaseAddress);
-        }
+        status = MCAN_CheckRegBaseAddr(ptrCanFdObj->regBaseAddress);
         if (status == SystemP_SUCCESS)
         {
             baseAddr = ptrCanFdObj->regBaseAddress;
