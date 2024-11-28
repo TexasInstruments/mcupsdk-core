@@ -57,9 +57,10 @@ int32_t enableLevelTranslator()
     TCA6408_Params      TCA6408Params;
     TCA6408_Params_init(&TCA6408Params);
     TCA6408Params.i2cAddress  = 0x20U;
-    
+    TCA6408Params.i2cInstance = CONFIG_I2C0;
+
     status = TCA6408_open(&gTCA6408_Config, &TCA6408Params);
-    
+
     /* Configure as output  */
     status += TCA6408_config(
                     &gTCA6408_Config,
@@ -73,7 +74,7 @@ int32_t enableLevelTranslator()
                     TCA6408_OUT_STATE_HIGH);
 
 
-    
+
     if(status != SystemP_SUCCESS)
     {
         DebugP_log("Failed to enable OSPI Reset Signal\r\n");
