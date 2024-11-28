@@ -58,11 +58,6 @@ The main software components in the block diagram are described below
     <td>Device Drivers library and APIs for peripherals on the board or EVM. Example, Flash, EEPROM.
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Protocol Stacks and Middleware</b></td></tr>
-<tr>
-    <td>SDL
-    <td>\ref SDL_PAGE
-    <td>Software Diagnostics Libaray
-</tr>
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Examples and Demos</b></td></tr>
 <tr>
