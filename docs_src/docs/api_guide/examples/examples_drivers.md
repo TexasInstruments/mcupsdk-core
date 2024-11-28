@@ -262,6 +262,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# CMPSS
    -# \subpage EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP
    -# \subpage EXAMPLES_DRIVERS_CMPSS_DIGITAL_FILTER_TRIP
+   -# \subpage EXAMPLES_DRIVERS_CMPSS_CALIBRATION
 -# DAC
    -# \subpage EXAMPLES_DRIVERS_DAC_CONSTANT_VOLTAGE
    -# \subpage EXAMPLES_DRIVERS_DAC_EPWM_SYNC

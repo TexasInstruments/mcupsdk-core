@@ -84,6 +84,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_asynchronous_trip_am261x-som_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_asynchronous_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_digital_filter_trip_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_constant_voltage_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_epwm_sync_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
@@ -721,6 +723,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1946,6 +1954,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_asynchronous_trip_am261x-som_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_asynchronous_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_digital_filter_trip_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_constant_voltage_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_epwm_sync_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2583,6 +2593,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3808,6 +3824,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_asynchronous_trip_am261x-som
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_asynchronous_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_digital_filter_trip_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_constant_voltage_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_epwm_sync_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
@@ -4445,6 +4463,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  cmpss_digital_filter_trip_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ cmpss_calibration_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ cmpss_calibration_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_calibration/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  dac_constant_voltage_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5686,6 +5710,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_asynchronous_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_calibration/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_calibration/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_epwm_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
