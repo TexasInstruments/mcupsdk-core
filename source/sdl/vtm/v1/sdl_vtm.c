@@ -576,7 +576,7 @@ int32_t SDL_VTM_getSensorStatus(SDL_VTM_Stat_val *pStat_val)
 }
 
  /**
- * Design: PROC_SDL-1175,PROC_SDL-1309
+ * Design: PROC_SDL-1310
  */
 int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_staticRegsTs *pStaticRegs)
 {
