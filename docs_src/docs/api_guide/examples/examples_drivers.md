@@ -401,6 +401,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \cond SOC_AM263PX || SOC_AM261X
 -# OSPI
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
+\cond SOC_AM261X
+   -# \subpage EXAMPLES_DRIVERS_OSPI_DUAL_FLASH_IO
+\endcond
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
