@@ -39,6 +39,7 @@ const files = {
         "port_sync_sync_send_sm.c" ,
         "site_sync_sync_sm.c" ,
         "sync_interval_setting_sm.c" ,
+		"gptp_capable_interval_setting_sm.c" ,
         "gptpgcfg.c" ,
         "lld_gptpnet.c" ,
         "lld_gptpclock.c" ,
@@ -151,7 +152,7 @@ const deviceSpecificIncludes = {
 const deviceSpecificIncludes_a53 = {
     am64x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53",
-        
+
     ],
 };
 
@@ -257,7 +258,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags_a53;
 
         return build_property;
-        
+
     }
 
     includes.common = _.union(includes.common, deviceSpecificIncludes[device]);
