@@ -113,6 +113,41 @@ typedef enum SOC_WarmResetCause_e
 /** @} */
 
 /**
+ *  \anchor SOC_WarmResetSource_t
+ *  \name SOC Warm Reset Sources
+ *  @{
+ */
+typedef enum SOC_WarmResetSource_e
+{
+    /**
+     * \brief Value specifying Pad Warm Reset pin
+     */
+    SOC_WarmResetSource_PAD_BYPASS = CSL_TOP_RCM_WARM_RESET_CONFIG_PAD_BYPASS_MASK,
+    /**
+     * \brief Value specifying DebugSS
+     */
+    SOC_WarmResetSource_DEBUGSS = CSL_TOP_RCM_WARM_RESET_CONFIG_DEBUGSS_RST_EN_MASK,
+    /**
+     * \brief Value specifying Temperature Sensor 0
+     */
+    SOC_WarmResetSource_TSENSE0 = CSL_TOP_RCM_WARM_RESET_CONFIG_TSENSE0_RST_EN_MASK,
+    /**
+     * \brief Value specifying Temperature Sensor 1
+     */
+    SOC_WarmResetSource_TSENSE1 = CSL_TOP_RCM_WARM_RESET_CONFIG_TSENSE1_RST_EN_MASK,
+    /**
+     * \brief Value specifying Watchdog 0
+     */
+    SOC_WarmResetSource_WDOG0 = CSL_TOP_RCM_WARM_RESET_CONFIG_WDOG0_RST_EN_MASK,
+    /**
+     * \brief Value specifying Watchdog 1
+     */
+    SOC_WarmResetSource_WDOG1 = CSL_TOP_RCM_WARM_RESET_CONFIG_WDOG1_RST_EN_MASK,
+
+}SOC_WarmResetSource;
+/** @} */
+
+/**
  *  \anchor SOC_RcmWarm_ResetTime123_t
  *  \name SOC programmable values for WARM_RSTTIME1/2/3 registers and
  *        the corresponding delays in ns/us/ms.
