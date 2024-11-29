@@ -86,6 +86,8 @@ SDK features and tools.
 - \subpage bootseg_ip_working
 - \subpage FLSOPSKD_IP
 - \subpage OPTIFLASH_ECCM
+- \subpage OPTIFLASH_OPTISHARE
+- \subpage OPTIFLASH_OPTISHARE_CCS
 \endcond
 
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X

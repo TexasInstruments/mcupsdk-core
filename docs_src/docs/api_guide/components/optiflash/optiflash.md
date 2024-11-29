@@ -118,47 +118,11 @@ This allows XIP with full safety and security using hardware accelerators. Using
 
 \note for more information on how to enable safety, please refer to \ref OPTIFLASH_ECCM
 
-### Improving startup time
-
-\note Not released.
-
-There are many situations, where startup time of any application should be less to achieve system level performance goal. OptiFlash technology brings in some hardware and software features that helps to reduce boot/startup time of an application.
-
-Startup code is usually a code that is badly cached code and even effectiveness of pre-fetch hardware is less. The reason behind this is, startup code always executes once. Other than this, because, startup code would also be calling different function that would be placed all over the memory by the linker in jumbled order. For same reason, performing XIP with L1 and L2 cache enabled (pre-fetch is enabled by default), would not be sufficient.
-
-On software side, order the code layout in memory based on call graph function preorder using metainfo.
-
-\imageStyle{function_memory_ordering.png,width:50%}
-\image html function_memory_ordering.png "Reordering layout of code in memory to maximize prefetch hardware logic."
-
-In the above image, before, memory ordering is applied, linker would place different functions in different places based on different parameters. However, with correct ordering, in memory, `ClockInit` function is placed before `TimerInit`, because, `ClockInit` in called before `TimerInit`.
-
-The above is a very simple example, but, in a real-world, this is more complex. However, this complexity can be handled by compiler/linker.
-
-But by attaining this sort of memory placement which compliments the instruction fetching pattern of CPU of a given type of code, this maximizes usage of pre-fetch hardware.
-
-On the Hardware side, FLC is to be used as it allows simultaneous copy and execution. Before understanding how FLC optimizes boot time, it is important to understand how boot process and bootloader works in MCU+ devices.
-
-\imageStyle{existing_boot_process.png,width:70%}
-\image html existing_boot_process.png "Existing boot flow in AM2x devices"
-
-Bootloader itself takes some time before it actually starts copying the application. That time it spends by initializing some peripherals, PLLs, etc. or in some complex bootloader, which would integrate entire TCP/IP stack to wait for some message over wire would then be spending some time there as well.
-
-The main idea is that why not to download the application while bootloader is busy somewhere else! However, it is not as straight forward. Let’s say, same idea is rather implemented by DMA, then the problem with this implementation would be that CPU has to wait for DMA to complete copying before CPU can start executing. And this implementation would not work in case where time to download code is more than the time bootloader wait.
-
-This is where FLC comes into picture. FLC allows copying and execution simultaneously. Take the previous case, where, time to copy is more than bootloader wait time.
-
-\imageStyle{flc_lookup_function.png,width:50%}
-\image html flc_lookup_function.png  "FLC HWA or FLC hardware Accelerator, would fetch an instruction from faster internal memory, if available, else would get it from external Flash."
-
-In context to the above diagram, the way FLC would solve this problem is that for the amount of time bootloader would wait or is busy in performing some other functions, in the background FLC would be copying application startup code. Now when bootloader is finished and switches over the application, CPU would start executing application code. Now for the amount of code that is copied by the FLC, would be returned from faster internal SRAM, rather than being fetched from slower external flash and for rest of the code would be normal XIP. In this manner, boot time of the application can be reduced.
-
-\imageStyle{xip_flc_boot_process.png,width:50%}
-\image html xip_flc_boot_process.png "Boot flow with OptiFlash technology"
-
 ### OptiShare: Removing Redundant Code
 
-\note Not released.
+For example implementing optishare see: \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO_OPTISHARE
+
+For indepth knowledge of OptiShare see: \ref OPTIFLASH_OPTISHARE
 
 When it comes to high performance MCU which has many cores, using traditional method of compilation is not efficient. Normally, for a microcontroller, compilation goes like the follows:
 1. Compilation/assembling of source code written in different programming languages.
@@ -216,33 +180,6 @@ To read more on this please refer to
 
 ## XIP Performance Benchmarks
 
-### Benchmark 1 (Internal)
-
-\note not released
-
-An application has been developed on which XIP performance benchmarks has been done to see how much performance degradation is seen with OptiFlash technology.
-
-The application that is to benchmark performance is an application that would simulate AutoSAR cache miss rate. .text section is in different memories and data in On-Chip RAM. Each test calls 16 separate functions 500 total times in random order. The most instruction intensive example achieves a instruction cache miss rate (ICM/sec) of ~3-4 million per second when run entirely from OCMRAM. This is a rate that we have similarly seen in real-world customer examples.
-
-With Safety and Security Enabled.
-RL2 Cache Size (KB) | Performance Degradation
---------------------|---------------------------
- 0KB                | 2.36x
- 8KB                | 2.23x
- 32KB               | 1.93x
- 128KB              | 1.10x
-
-In above table, when Layer 2 cache was disabled, i.e. RL2 is disabled, the above application performed 2.36 times worse than when ran from internal memory. This is when both safety and security is enabled. Now, when L2 cache has been enabled with size of 128KB, the same application performed with just 10% degradation in performance as compared to internal flash.
-
-Below table is without Safety and Security Enabled.
-
-RL2 Cache Size (KB) | Performance Degradation
---------------------|---------------------------
- 0KB                | 2.20x
- 8KB                | 1.90x
- 32KB               | 1.73x
- 128KB              | 1.10x
-
-### Benchmark 2
+### Benchmark 1
 
 When on same application (Benchmark #1), Smart Placement is applied, then 10% boost in performance is seen. More on this can be read at \ref BENCHMARK_SMART_PLACEMENT.
