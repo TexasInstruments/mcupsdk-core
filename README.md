@@ -240,12 +240,15 @@ and so on. For a complete list of arguments you can pass to the script, please r
 2. Download and install SysConfig 1.21.2 from [here](https://www.ti.com/tool/download/SYSCONFIG "SYSCONFIG 1.21.2")
    - Install at default folder, C:/ti
 
-3. Download and install GCC for Cortex A53 and ARM R5 from below link (only needed for AM64x developers)
+3. Download and install TI ARM Clang 4.0.1 LTS from [here](https://www.ti.com/tool/download/ARM-CGT-CLANG "TI ARM CLANG")
+   - Install at default folder, C:/ti
+
+4. Download and install GCC for Cortex A53 and ARM R5 from below link (only needed for AM64x developers)
    - [GNU-A](https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-mingw-w64-i686-aarch64-none-elf.tar.xz)
    - [GNU-RM](https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-win32.zip)
    - Install at default folder, C:/ti
 
-4. Download and install Node.js v12.18.4 LTS
+5. Download and install Node.js v12.18.4 LTS
   - Go to the [NodeJS Website](https://nodejs.org/en/) and use the installer to
     download and install v12.18.4 of node. Install in the default directory.
   - After successful installation, run an `npm ci` inside the `mcu_plus_sdk` folder like so:
