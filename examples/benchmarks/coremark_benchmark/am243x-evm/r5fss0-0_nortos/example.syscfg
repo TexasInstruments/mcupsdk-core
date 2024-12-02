@@ -254,6 +254,5 @@ section11.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution     = "USART1";
-debug_log.uartLog.UART.RXD.$suggestSolution = "UART1_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution = "UART1_TXD";
+debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";
