@@ -1272,7 +1272,8 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
 
             if(remainingBytes > 0)
             {
-                if(*tempSrc != *pSrc)
+                /* Move dest and src pointers back in case of dangling bytes */
+                if(unalignedBytes > 0)
                 {
                     tempDst -= (remainingBytes - unalignedBytes);
                     tempSrc -= (remainingBytes - unalignedBytes);
