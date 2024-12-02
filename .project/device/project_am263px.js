@@ -244,6 +244,8 @@ const example_file_list = [
     "examples/kernel/nortos/basic_smart_placement/.project/project_nortos.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cbc_128/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cbc_256/.project/project.js",
+	"examples/security/crypto/dthe_aes/crypto_aes_ccm_128/.project/project.js",
+	"examples/security/crypto/dthe_aes/crypto_aes_ccm_256/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cmac_128/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cmac_256/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_ecb_128/.project/project.js",

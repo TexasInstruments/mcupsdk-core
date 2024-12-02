@@ -287,6 +287,8 @@ const example_file_list = [
 	// "examples/sdl/vtm/vtm_mcu/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cbc_128/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cbc_256/.project/project.js",
+	"examples/security/crypto/dthe_aes/crypto_aes_ccm_128/.project/project.js",
+	"examples/security/crypto/dthe_aes/crypto_aes_ccm_256/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cfb/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cmac_128/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cmac_256/.project/project.js",

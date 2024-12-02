@@ -17140,6 +17140,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Ccm 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ccm_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_128/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ccm_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Ccm 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ccm_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_256/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ccm_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ecb_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
