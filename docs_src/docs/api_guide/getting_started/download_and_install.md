@@ -131,10 +131,10 @@ To build applications using this SDK, one needs below host PC machine
         C:\> python -m pip --version
         pip 21.0.1 from C:\Users\{your username}\AppData\Local\Programs\Python\Python39\lib\site-packages\pip (python 3.9)
 
-  - Install below additional packages via "pip" that are needed for the flashing tools. If you are behind a corporate firewall
+  - Install additional packages via "pip" that are required. If you are behind a corporate firewall
     make sure to pass the server name and port for the proxy as shown below. If proxy is not needed keep `--proxy=` as blank.
 
-        C:\> python -m pip install pyserial xmodem tqdm pyelftools construct --proxy={your proxy server web-link and port}
+        C:\> python -m pip install -r requirements.txt --proxy={your proxy server web-link and port}
 
 - In Linux,
   - Do below in Linux bash shell to install python3
