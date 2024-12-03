@@ -202,7 +202,7 @@ extern "C"
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. Setting this to zero as Rx Custom Pbufs are used. */
-#define PBUF_POOL_SIZE          64
+#define PBUF_POOL_SIZE          256
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       1536
@@ -381,10 +381,10 @@ extern "C"
 #define LWIP_ARP			  1
 
 /* Checksum on copy from app buffers to pbufs, boosts performance. It is set to zero as checksum offload is not enabled on both Rx and Tx side.*/
-#define LWIP_CHECKSUM_ON_COPY			1
+#define LWIP_CHECKSUM_ON_COPY			0
 
 /* Enable Checksum ctrl per netif */
-#define LWIP_CHECKSUM_CTRL_PER_NETIF    1
+#define LWIP_CHECKSUM_CTRL_PER_NETIF    0
 
 /* Enables a routine to be called when netif is deleted. Used to close CPSW*/
 #define LWIP_NETIF_REMOVE_CALLBACK      1
@@ -396,7 +396,7 @@ extern "C"
 #define DEFAULT_THREAD_PRIO				1
 
 /* Prevents pbuf chain from getting created thus disabling scatter-gather*/
-#define LWIP_NETIF_TX_SINGLE_PBUF       0
+#define LWIP_NETIF_TX_SINGLE_PBUF       1
 
 #define DEFAULT_ACCEPTMBOX_SIZE			(TCPIP_MBOX_SIZE)
 
@@ -439,4 +439,3 @@ extern "C"
 #endif
 
 #endif /* LWIP_LWIPOPTS_H */
-

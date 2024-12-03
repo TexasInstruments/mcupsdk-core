@@ -170,6 +170,10 @@ static err_t LWIPIF_LWIP_EMAC_send(struct netif *netif,
 void LWIPIF_LWIP_EMAC_input(struct netif *netif,
                        struct pbuf *hPbufPacket)
 {
+    Lwip2Emac_Handle hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+    struct pbuf* hPbufPacketNew;
+    uint32_t bufSize;
+
     /* Pass the packet to the LwIP stack */
     if (netif->input(hPbufPacket, netif) != ERR_OK)
     {
@@ -178,25 +182,19 @@ void LWIPIF_LWIP_EMAC_input(struct netif *netif,
         pbuf_free(hPbufPacket);
         hPbufPacket = NULL;
     }
+    
+    /*Allocates a PBuf for next incoming packet*/
+    bufSize = PBUF_POOL_BUFSIZE;
+    /*Allocating Pbuf for Rx*/
+    hPbufPacketNew = pbuf_alloc(PBUF_RAW, bufSize, PBUF_POOL);
+    if (hPbufPacketNew != NULL)
+    {
+        hPbufPacketNew->tot_len = hPbufPacketNew->len;
+        hLwip2Emac->rxPbufPkt = hPbufPacketNew;
+    }
     else
     {
-        /*Once packet is successfully passed to LwIP Stack this section is executed, Allocates a PBuf for next incoming packet*/
-        Lwip2Emac_Handle hLwip2Emac = (Lwip2Emac_Handle)netif->state;
-        struct pbuf* hPbufPacket;
-        uint32_t bufSize;
-
-        bufSize = PBUF_POOL_BUFSIZE;
-        /*Allocating Pbuf for Rx*/
-        hPbufPacket = pbuf_alloc(PBUF_RAW, bufSize, PBUF_POOL);
-        if (hPbufPacket != NULL)
-        {
-            hPbufPacket->tot_len = hPbufPacket->len;
-            hLwip2Emac->rxPbufPkt = hPbufPacket;
-        }
-        else
-        {
-            DebugP_log("[LWIPIF_LWIP_EMAC]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_EMAC_INPUT failure.!\n");
-        }
+        DebugP_log("[LWIPIF_LWIP]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_INPUT failure.!\n");
     }
 
 }
