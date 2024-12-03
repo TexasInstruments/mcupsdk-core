@@ -96,11 +96,17 @@ extern "C"
  * @brief Macro used to specify resolver core 1*/
 #define RDC_RESOLVER_CORE1 (1U)
 
-
+/**
+ * @brief Macros used to sepcify Resovler Channel for the Calibration in the 
+ * RDC_selectCalibrationChannel() as \e calChannel parameter */
 #define RDC_ADC_CAL_CHANNEL0 (0U)
 #define RDC_ADC_CAL_CHANNEL1 (1U)
 #define RDC_ADC_CAL_CHANNEL2 (2U)
 #define RDC_ADC_CAL_CHANNEL3 (3U)
+#define RDC_ADC_CAL_CHANNEL_CAL2 (4U)
+#define RDC_ADC_CAL_CHANNEL_CAL3 (5U)
+#define RDC_ADC_CAL_CHANNEL_CAL0 (6U)
+#define RDC_ADC_CAL_CHANNEL_CAL1 (7U)
 
 
 #define RDC_DC_OFFSET_SIN_ESTIMATION (0U)
@@ -1455,7 +1461,15 @@ typedef struct
      * @brief Selects Calibration Channel for Cal sequence
      *
      * @param base RDC Base Address
-     * @param calChannel
+     * @param calChannel channel to read from. valid values are the following
+     *      -   \e RDC_ADC_CAL_CHANNEL0         - ADC_RxAIN0
+     *      -   \e RDC_ADC_CAL_CHANNEL1         - ADC_RxAIN1
+     *      -   \e RDC_ADC_CAL_CHANNEL2         - ADC_RxAIN2
+     *      -   \e RDC_ADC_CAL_CHANNEL3         - ADC_RxAIN3
+     *      -   \e RDC_ADC_CAL_CHANNEL_CAL0     - ADC_CAL0
+     *      -   \e RDC_ADC_CAL_CHANNEL_CAL1     - ADC_CAL1
+     *      -   \e RDC_ADC_CAL_CHANNEL_CAL2     - ADC_CAL2
+     *      -   \e RDC_ADC_CAL_CHANNEL_CAL3     - ADC_CAL3
      */
     static inline void
     RDC_selectCalibrationChannel(uint32_t base, uint8_t calChannel)
@@ -1491,7 +1505,7 @@ typedef struct
      * @param CalAdc valid values are \e RDC_CAL_ADC0, \e RDC_CAL_ADC1
      * @return uint32_t CAL ADC DATA
      */
-    static inline uint32_t
+    static inline uint16_t
     RDC_getCalibrationData(uint32_t base, uint8_t CalAdc)
     {
         uint32_t regData = HW_RD_REG32(
@@ -1500,11 +1514,11 @@ typedef struct
                             CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC1_DATA_MASK);
         if (CalAdc == RDC_CAL_ADC0)
         {
-            return ((regData & CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC0_DATA_MASK) >>
-                    CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC0_DATA_SHIFT);
+            return ((uint16_t)((regData & CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC0_DATA_MASK) >>
+                    CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC0_DATA_SHIFT));
         }
-        return ((regData & CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC1_DATA_MASK) >>
-                CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC1_DATA_SHIFT);
+        return ((uint16_t)((regData & CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC1_DATA_MASK) >>
+                CSL_RESOLVER_REGS_CAL_OBS_CAL_ADC1_DATA_SHIFT));
     }
 
     //*****************************************************************************
@@ -1910,6 +1924,7 @@ typedef struct
               CSL_RESOLVER_REGS_SAMPLE_CFG2_0_PEAK_AVG_LIMIT_DONE_MASK) &
              ((uint32_t)((1U) << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_PEAK_AVG_LIMIT_DONE_SHIFT))) != 0U);
     }
+    //note add clearIdealSamplePeakAvgLimitStatus API.
 
     /**
      * @brief Ideal Sample Time Computation Mode selection.
@@ -2477,7 +2492,8 @@ typedef struct
              CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_MASK) &
                 ~((uint32_t)((1U) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_SHIFT)));
     }
-
+    // Add is boost enabled API.
+    
     /**
      * @brief Returns signed 16bit angle data from ArcTan. the data corresponds to
      * -180 to +180 degrees
@@ -3337,7 +3353,7 @@ typedef struct
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_DIAG5_0 + (resolverCore * RDC_CORE_OFFSET);
         uint32_t value = ((uint32_t)(monitorData->lowAmplitude_glitchcount << CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_SHIFT)) |
-                            ((uint32_t) (monitorData->lowAmplitude_threshold << CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_GLITCHCOUNT_SHIFT));
+                            ((uint32_t) (monitorData->lowAmplitude_threshold << CSL_RESOLVER_REGS_DIAG5_0_LOWAMPLITUDE_THRESHOLD_SHIFT));
         uint32_t enabledInterruptSources = RDC_getCoreEnabledInterruptSources(base, resolverCore);
 
         HW_WR_REG32(

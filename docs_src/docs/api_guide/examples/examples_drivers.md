@@ -436,6 +436,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \cond SOC_AM263PX
 -# RESOLVER
    -# \subpage EXAMPLES_DRIVERS_RESOLVER_ANGLE_SPEED
+   -# \subpage EXAMPLES_DRIVERS_RESOLVER_DIAGNOSITCS
 \endcond
 -# SDFM
    -# \subpage EXAMPLES_DRIVERS_SDFM_EPWM_SYNC_CPUREAD

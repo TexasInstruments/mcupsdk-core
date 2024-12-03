@@ -203,6 +203,7 @@ const example_file_list = [
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
     "examples/drivers/rat/.project/project_nortos.js",
 	"examples/drivers/resolver/resolver_angle_speed/.project/project.js",
+	"examples/drivers/resolver/resolver_diagnostics/.project/project.js",
     "examples/drivers/rl2/.project/project_nortos.js",
 	"examples/drivers/rti/rti_led_blink/.project/project.js",
 	"examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",

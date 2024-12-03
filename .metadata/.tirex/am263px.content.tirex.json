@@ -12965,6 +12965,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "Example to show case the HW Resolver Diagnostics CPU is R5FSS0-0 running NORTOS.",
+        "name": "resolver_diagnostics",
+        "location": "../../examples/drivers/resolver/resolver_diagnostics/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "resolver",
+            "resolver_diagnostics",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rl2",
         "location": "../../examples/drivers/rl2/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
