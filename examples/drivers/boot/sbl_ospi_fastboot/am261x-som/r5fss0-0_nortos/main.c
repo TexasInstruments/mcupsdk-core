@@ -133,7 +133,7 @@ int main(void)
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+    // Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
 
     /* 
         Keyring init

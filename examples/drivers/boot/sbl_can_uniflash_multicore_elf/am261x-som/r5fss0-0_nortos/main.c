@@ -95,12 +95,12 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     Bootloader_socInitL2MailBoxMemory();
 
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+    // status = Keyring_init(&gHSMClient);
+    // DebugP_assert(status == SystemP_SUCCESS);
 
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
 

@@ -102,12 +102,24 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
+    % if (options.board == "am261x-lp") {
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    % }
+    % else {
+    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    % }
     Bootloader_socInitL2MailBoxMemory();
 
+    % if (options.board == "am261x-lp") {
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
+    % }
+    % else {
+    // status = Keyring_init(&gHSMClient);
+    // DebugP_assert(status == SystemP_SUCCESS);
+    % }
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
