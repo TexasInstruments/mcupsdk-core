@@ -77,7 +77,7 @@ void ospi_flash_diag_main(void *args)
     OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
 
     
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 /* The OSPI Controller will be configured in 8s-8s-8s mode */
     OSPI_setProtocol(ospiHandle,525320);
 #endif

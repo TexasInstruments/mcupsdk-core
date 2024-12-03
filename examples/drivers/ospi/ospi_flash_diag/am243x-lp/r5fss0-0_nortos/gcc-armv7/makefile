@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -22,6 +19,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=ospi_flash_diag.$(PROFILE).out
+COREOUTNAME:=ospi_flash_diag.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=ospi_flash_diag.$(PROFILE).appimage
@@ -33,6 +31,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=ospi_flash_diag.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ospi_flash_diag.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=ospi_flash_diag.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+
 
 FILES_common := \
 	ospi_flash_diag.c \
@@ -178,6 +177,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss0-0:nortos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss0-0:nortos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -201,6 +201,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -208,6 +210,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 
@@ -238,9 +242,9 @@ ifeq ($(OS),Windows_NT)
 EXE_EXT=.exe
 endif
 ifeq ($(OS),Windows_NT)
-  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.ps1
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.ps1
 else
-  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.sh
 endif
 BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
 
@@ -256,12 +260,17 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
 else
-  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+  UNAME_S = $(shell uname -s)
+  ifeq ($(UNAME_S), Darwin)
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out.mac
+  else
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
@@ -283,7 +292,6 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -304,4 +312,7 @@ else
 	@echo  Boot image: am243x:r5fss0-0:nortos:gcc-armv7 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+
+
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))
