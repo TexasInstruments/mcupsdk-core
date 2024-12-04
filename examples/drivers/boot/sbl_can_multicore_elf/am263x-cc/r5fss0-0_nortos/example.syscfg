@@ -121,13 +121,13 @@ region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x43F00;
 region1.memory_region[5].$name              = "MSRAM_1";
-region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70074400;
 region1.memory_region[5].size               = 0x170000;
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x70090000;
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
+region1.memory_region[6].manualStartAddress = 0x70047000;
 region1.memory_region[6].size               = 0x2E400;
 region1.memory_region[6].auto               = false;
-region1.memory_region[6].manualStartAddress = 0x70046000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
