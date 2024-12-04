@@ -58,6 +58,7 @@ flash1.cmdRd                              = "0x7c";
 flash1.dummy_mask                         = "0xff";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
 flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
