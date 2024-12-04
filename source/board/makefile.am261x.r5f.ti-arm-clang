@@ -41,8 +41,8 @@ FILES_common := \
 FILES_PATH_common = \
     eeprom \
     ethphy/icss_emac \
-    ethphy/enet/rtos_drivers/src \
-    ethphy/enet/rtos_drivers/include \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
     flash \
     flash/sfdp \
     flash/ospi \
@@ -59,7 +59,7 @@ INCLUDES_common := \
     -Ipmic \
     -Ipmic/pmic_lld/src \
     -Ipmic/pmic_lld/include \
-    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
     -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
 
 DEFINES_common := \

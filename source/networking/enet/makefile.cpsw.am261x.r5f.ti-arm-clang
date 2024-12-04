@@ -117,7 +117,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpdma \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am261x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am261x \
-    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/networking/enet/core/include/phy/include \
 
 DEFINES_common := \
     -DSOC_AM261X \

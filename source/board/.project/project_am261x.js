@@ -41,8 +41,8 @@ const filedirs = {
     common: [
         "eeprom",
         "ethphy/icss_emac",
-        "ethphy/enet/rtos_drivers/src",
-        "ethphy/enet/rtos_drivers/include",
+	"${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy",
+	"${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
         "flash",
         "flash/sfdp",
         "flash/ospi",
@@ -60,7 +60,7 @@ const includes = {
         "pmic",
         "pmic/pmic_lld/src",
         "pmic/pmic_lld/include",
-        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
         "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
     ],
 };
