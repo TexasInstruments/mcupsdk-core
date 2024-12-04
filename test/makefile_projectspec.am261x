@@ -1,6 +1,8 @@
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
@@ -27,10 +29,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_build:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
 
+ flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
@@ -57,10 +67,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
 
+ flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
@@ -87,6 +105,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  switch_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_export:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
 
+ flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
 
 
 help:
@@ -111,6 +135,8 @@ help:
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
