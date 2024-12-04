@@ -317,9 +317,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     MCAN_StdMsgIDFilterElement  stdMsgIdFilterEle; 
 
     /* Default Attribute Parameters */
+#if defined (SOC_AM243X) || (SOC_AM64X)
+    attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
+    attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0,
+    attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1,
+#else
     attrs->baseAddr                       = CONFIG_MCAN0_BASE_ADDR,
     attrs->intrNum0                       = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_0,
     attrs->intrNum1                       = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_1,
+#endif
+
     attrs->intrPriority                   = 4U,
     attrs->operMode                       = CANFD_OPER_MODE_INTERRUPT,
     attrs->OptionTLVtype                  = CANFD_Option_MCAN_LOOPBACK,
@@ -433,6 +440,10 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_1,
+#elif defined (SOC_AM243X) || (SOC_AM64X)
+            attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
+            attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0,
+            attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1,
 #else
             attrs->baseAddr = CONFIG_MCAN2_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN2_MCAN_LVL_INT_0,
@@ -457,10 +468,14 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             canExtIdFilter[0U].eft  = canTxMsg[7U].rxfilterType;
             break;
         case 13922:
-#if defined (SOC_AM261X)
+#if defined (SOC_AM261X) 
             attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_1,
+#elif defined (SOC_AM243X) || (SOC_AM64X)
+            attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
+            attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0,
+            attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1,
 #else
             attrs->baseAddr = CONFIG_MCAN3_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN3_MCAN_LVL_INT_0,
@@ -824,10 +839,15 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13954:
+#if defined (SOC_AM243X) || (SOC_AM64X)
+            attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
+            attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0,
+            attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1,
+#else
             attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_1,
-    
+#endif  
             /* mcan module configuration parameters */ //1 done
             openParams->tsSelect = 1U;
             testParams->txMsgParams = &canTxMsg[2U];

@@ -122,6 +122,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/i2c/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/am64x-sk/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/canfd_hld/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
@@ -385,6 +386,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am64x-evm_a53ss0-0_freertos_gcc-aarch64
@@ -739,6 +741,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcan/mcan_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcan/canfd_hld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1112,6 +1117,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
@@ -1461,6 +1467,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcan/mcan_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcan/canfd_hld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1834,6 +1843,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
@@ -2183,6 +2193,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcan/mcan_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcan_canfd_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcan/canfd_hld/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
