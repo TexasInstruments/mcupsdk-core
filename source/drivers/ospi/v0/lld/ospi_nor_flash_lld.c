@@ -205,13 +205,14 @@ int32_t OSPI_norFlashWaitReady(OSPILLD_Handle hOspi, uint32_t timeOut)
     uint8_t readStatus = 0U;
     uint8_t cmd;
     uint32_t startTicks = 0U,elapsedTicks = 0U;
-    uint32_t itrTimeout = hOspi->Clock_usecToTicks(timeOut);
+    uint32_t itrTimeout = 0U;
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
     uint32_t numAddrBytes = 3;
 
     /* Check if the handle is NULL */
     if(NULL != hOspi)
     {
+        itrTimeout = hOspi->Clock_usecToTicks(timeOut);
         cmd = OSPI_NOR_CMD_RDSR;
         startTicks = hOspi->Clock_getTicks();
 

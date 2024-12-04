@@ -219,7 +219,7 @@ static int32_t Flash_nandOspiPageLoad(Flash_Config *config, uint32_t offset)
 
     uint32_t pageNum;
     uint8_t cmd;
-    uint8_t addrLen;
+    uint8_t addrLen = 0U;
 
     if(config != NULL)
     {
@@ -273,7 +273,7 @@ static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t
     uint32_t pageNum;
     uint32_t readAddr;
     uint8_t cmd;
-    uint8_t addrLen;
+    uint8_t addrLen = 0U;
 
     if(config == NULL)
     {
