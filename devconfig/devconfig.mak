@@ -16,6 +16,9 @@ ifeq ($(DEVICE),am263x)
 else ifeq ($(DEVICE),am273x)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
+else ifeq ($(DEVICE),am261x)
+	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
+	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),awr294x)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
