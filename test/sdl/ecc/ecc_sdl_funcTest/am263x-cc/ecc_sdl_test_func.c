@@ -5024,7 +5024,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest has failed... \r\n");
 		}
 	}
-#if defined (R5F0_INPUTS)
+
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5034,7 +5034,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest has failed... \r\n");
 		}
 	}
-#endif
+
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest();
@@ -5045,7 +5045,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest has failed... \r\n");
 		}
 	}
-#if defined (R5F0_INPUTS)
+
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5055,7 +5055,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest has failed... \r\n");
 		}
 	}
-#endif
+
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5065,7 +5065,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest has failed... \r\n");
 		}
 	}
-#if defined (R5F0_INPUTS)
+
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest();
@@ -5076,7 +5076,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest has failed... \r\n");
 		}
 	}
-#endif
+
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_2BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5103,7 +5103,7 @@ static int32_t ECC_sdlFuncTest(void)
 		gMsmcMemParityInterrupt = false;
 		if (result != SDL_PASS) {
 			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_2BitInjectTest has failed... \r\n");
+		DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_2BitInjectTest has failed... \r\n");
 		}
 	}
 
@@ -5298,7 +5298,6 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_VIM_1BitInjectTest has failed... \r\n");
         }
     }
-
     if (retVal == 0) {
         result = ECC_Test_run_VIM_2BitInjectTest();
         /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5423,7 +5422,7 @@ static int32_t ECC_sdlFuncTest(void)
 		}
 
 	}
-#if defined (R5F0_INPUTS)
+
 	if (retVal == 0) {
 		/*Init of MSS*/
 		retVal = ECC_Test_ICSSM_init();
@@ -5533,7 +5532,7 @@ static int32_t ECC_sdlFuncTest(void)
             /*Low priority MCAN1 interrupt */
         }
     }
-#endif
+
 	if (retVal == 0) {
 		/*Init of MSS*/
 		retVal = ECC_Test_MSS_init();

@@ -970,7 +970,9 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
             }
 #if defined (SUBSYS_MSS)
             if ((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR) ||
-               (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR))
+               (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)|| 
+               (eccMemType == SDL_R5FSS1_CORE0_ECC_AGGR) ||
+               (eccMemType == SDL_R5FSS1_CORE1_ECC_AGGR))
             {
 
                 /* Wait for error to take effect */

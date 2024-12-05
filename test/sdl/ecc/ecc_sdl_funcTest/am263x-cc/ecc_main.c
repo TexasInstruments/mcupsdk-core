@@ -197,12 +197,12 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     #elif defined (R5F1_INPUTS)
 		if(intSrc == 0x3BU)
 		{
-			eccmemtype = 1U;
+			eccmemtype = 3U;
 			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
 		}
 		if(intSrc == 0x3DU)
 		{
-			eccmemtype = 1U;
+			eccmemtype = 3U;
 			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
 		}
     #endif

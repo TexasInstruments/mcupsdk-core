@@ -129,7 +129,12 @@ uint32_t SDL_ECC_pollErrorEvent(SDL_ECC_MemType eccMemType,
     /* Polling only for R5F core self test */
 #if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
     if ((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR)
-        || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)) {
+        || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)
+    #if defined(SOC_AM263X) || defined(SOC_AM263PX)
+        || (eccMemType == SDL_R5FSS1_CORE0_ECC_AGGR)
+        || (eccMemType == SDL_R5FSS1_CORE1_ECC_AGGR)
+    #endif
+     ){
         switch(errorType) {
             case SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE:
                 /* Only for single bit error do polling */
@@ -168,7 +173,6 @@ uint32_t SDL_ECC_pollErrorEvent(SDL_ECC_MemType eccMemType,
         }
     }
 #endif
-
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
     if ((eccMemType == SDL_R5FSS1_PULSAR_LITE_CPU0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR)) {
         switch(errorType) {
