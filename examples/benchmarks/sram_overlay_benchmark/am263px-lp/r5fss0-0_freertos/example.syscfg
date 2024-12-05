@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -14,6 +15,7 @@ const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
 const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -33,6 +35,7 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
+const section13       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -42,6 +45,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -63,13 +67,17 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 
+mpu_armv75.$name    = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr = 0x60000000;
+mpu_armv75.size     = 27;
+
 default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                                = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(11);
+region1.memory_region.create(12);
 region1.memory_region[0].type                = "TCMA";
 region1.memory_region[0].$name               = "R5F_VECS";
 region1.memory_region[0].size                = 0x40;
@@ -86,7 +94,7 @@ region1.memory_region[3].size                = 0x40000;
 region1.memory_region[4].$name               = "OCRAM";
 region1.memory_region[4].auto                = false;
 region1.memory_region[4].manualStartAddress  = 0x70040000;
-region1.memory_region[4].size                = 0x40000;
+region1.memory_region[4].size                = 0x80000;
 region1.memory_region[5].type                = "FLASH";
 region1.memory_region[5].auto                = false;
 region1.memory_region[5].manualStartAddress  = 0x60100000;
@@ -125,6 +133,10 @@ region1.memory_region[10].manualStartAddress = 0x44000400;
 region1.memory_region[10].size               = 0x3CE;
 region1.memory_region[10].isShared           = true;
 region1.memory_region[10].shared_cores       = ["r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[11].auto               = false;
+region1.memory_region[11].manualStartAddress = 0x701D8000;
+region1.memory_region[11].size               = 0x8000;
+region1.memory_region[11].$name              = "OVL";
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;
@@ -251,3 +263,17 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
+
+section13.$name                                    = "overlay";
+section13.type                                     = "NOLOAD";
+section13.load_memory                              = "OVL";
+section13.output_section.create(1);
+section13.output_section[0].output_sections_start  = "FLC_OVL_RGN_START";
+section13.output_section[0].output_sections_end    = "FLC_OVL_RGN_END";
+section13.output_section[0].alignment              = 4096;
+section13.output_section[0].palignment             = true;
+section13.output_section[0].$name                  = ".flc_ovl_dest";
+section13.output_section[0].include_defines        = true;
+section13.output_section[0].macro_name             = "FLC_OVL_RGN";
+section13.output_section[0].input_section.create(1);
+section13.output_section[0].input_section[0].$name = ".=.+32768;";
