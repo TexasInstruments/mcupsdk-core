@@ -70,7 +70,7 @@ function getComponentProperty(device) {
     property.type = "executable";
     property.name = "ecap_apwm_phase_shift";
     property.isInternal = false;
-    property.description = "An ECAP CAPTURE PWM example. This example captures pwm."
+    property.description = "An ECAP APWM example showcasing Phase Shift."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

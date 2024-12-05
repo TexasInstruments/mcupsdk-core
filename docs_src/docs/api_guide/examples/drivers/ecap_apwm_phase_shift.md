@@ -34,7 +34,7 @@ Observe ECAP outputs on the Outputxbar instances
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/ecap/ecap_APWM_PHASE_SHIFT/
+ Example folder | examples/drivers/ecap/ecap_apwm_phase_shift/
 
 \endcond
 
@@ -56,8 +56,8 @@ Observe ECAP outputs on the Outputxbar instances
 Shown below is a sample output when the application is run,
 
 \code
-ECAP APWM Mode Test Started ...
-ECAP APWM Test Passed!!
+ECAP APWM Phase Shift Test Started ...
+ECAP APWM Phase Shift Test Passed!!
 All tests have passed!!
 \endcode
 

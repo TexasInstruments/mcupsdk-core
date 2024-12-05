@@ -3274,7 +3274,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
+        "description": "An ECAP APWM example showcasing Phase Shift. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_apwm_phase_shift",
         "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -3307,7 +3307,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
+        "description": "An ECAP APWM example showcasing Phase Shift. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_apwm_phase_shift",
         "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [

@@ -75,13 +75,13 @@ void ecap_apwm_phase_shift_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    DebugP_log("ECAP Capture Pwm Test Started ...\r\n");
+    DebugP_log("ECAP APWM Phase Shift Test Started ...\r\n");
     ECAP_startCounter(CONFIG_ECAP0_BASE_ADDR);
     ECAP_startCounter(CONFIG_ECAP1_BASE_ADDR);
 
     ClockP_sleep(3);
 
-    DebugP_log("ECAP Capture Pwm Passed!!\r\n");
+    DebugP_log("ECAP APWM Phase Shift Test Passed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
