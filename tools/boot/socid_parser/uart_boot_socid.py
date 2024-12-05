@@ -21,7 +21,7 @@ MCU+SDK utility script to parse SOC ID
 '''
 
 k3_devices = ['am243x', 'am64x']
-mcu_devices = ['am263x', 'am273x', 'am263px']
+mcu_devices = ['am263x', 'am273x', 'am263px', 'am261x']
 
 r5InfoStr = 'I'
 
