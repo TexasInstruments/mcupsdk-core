@@ -50,11 +50,12 @@
  *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
  *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
  *  
- *  Please connect pins as described below on AM263x LP.
- *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
- *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
- *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
- *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
+ *  Please connect pins as described below on AM263px LP.
+ *  MCU_SPI0_CS0(Pin 8) (C11)   ------------->   MCU_SPI1_CS0(Pin 58) (C9)
+ *  MCU_SPI0_CLK(Pin 7) (A11)   ------------->   MCU_SPI1_CLK(Pin 47) (A10)
+ *  MCU_SPI0_D0(Pin 15) (C10)   ------------->   MCU_SPI1_D1(Pin 54)  (D9)
+ *  MCU_SPI0_D1(Pin 14) (B11)   ------------->   MCU_SPI1_D0(Pin 55)  (B10)
+ * 
  *
  *  Please connect pins as described below on AM261x LP.
  *  MCU_SPI0_CS0(Pin 19) (B13)  ------------>  MCU_SPI2_CS1(Pin 59) A18  
@@ -228,6 +229,7 @@ void test_mcspi_controller_main(void *args)
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampUp[clkList] + 1));
+        ClockP_usleep(500000);
         RUN_TEST(test_mcspi_controller_transfer,  968, (void*)&testParams);
     }
     test_mcspi_set_controller_params(&testParams, 969);
@@ -237,8 +239,11 @@ void test_mcspi_controller_main(void *args)
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampDown[clkList] + 1));
+        DebugP_log("\n %d %d\n\r",clkList,chConfigParams->bitRate);
+        ClockP_usleep(500000);
         RUN_TEST(test_mcspi_controller_transfer,  969, (void*)&testParams);
     }
+    ClockP_sleep(1);
     test_mcspi_set_controller_params(&testParams, 976);
     RUN_TEST(test_mcspi_controller_transfer_performance,  976, (void*)&testParams);
     test_mcspi_set_controller_params(&testParams, 1013);

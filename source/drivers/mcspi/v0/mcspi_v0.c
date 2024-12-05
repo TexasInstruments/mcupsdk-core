@@ -666,10 +666,7 @@ void MCSPI_errorCallback (void *args, uint32_t transferStatus)
                 SemaphoreP_post((SemaphoreP_Object *)hMcspi->transferMutex);
             }
 
-            (void)memcpy(obj->transaction,
-                         &hMcspi->transaction,
-                         sizeof(hMcspi->transaction));
-
+            obj->transaction = &hMcspi->transaction;
             obj->transaction->status = MCSPI_TRANSFER_FAILED;
             obj->transaction = NULL;
         }
