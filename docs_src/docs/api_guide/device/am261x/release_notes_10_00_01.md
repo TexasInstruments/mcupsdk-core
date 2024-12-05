@@ -265,6 +265,27 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> -
 </tr>
 <tr>
+    <td> PINDSW-7715
+    <td> Dual EMAC instance not working with both ports together for icss_emac_lwip example
+    <td> ICSS-EMAC
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7746
+    <td> Low iperf values in TCP and UDP
+    <td> ICSS-EMAC
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8118
+    <td> Enabling DHCP mode in icss_emac_lwip example causes assert
+    <td> ICSS-EMAC
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
     <td> -
     <td> -
     <td> -
