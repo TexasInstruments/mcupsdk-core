@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM243x_ALV_beta" --part "ALV" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCBGA (ALV)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -45,7 +46,7 @@ const mcspi3          = mcspi.addInstance();
 const pruicss         = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1        = pruicss.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -87,8 +88,9 @@ eeprom1.$name = "CONFIG_EEPROM0";
 
 ethphy1.$name = "CONFIG_ETHPHY0";
 
-flash1.$name                  = "CONFIG_FLASH0";
-flash1.peripheralDriver.$name = "CONFIG_OSPI0";
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name       = "CONFIG_OSPI0";
+flash1.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_template0";
 
 led1.$name = "CONFIG_LED0";
 
@@ -100,11 +102,14 @@ epwm2.$name = "CONFIG_EPWM1";
 
 epwm3.$name = "CONFIG_EPWM2";
 
-fsi_rx1.$name = "CONFIG_FSI_RX0";
+fsi_rx1.$name       = "CONFIG_FSI_RX0";
+fsi_rx1.child.$name = "drivers_fsi_rx_v0_fsi_rx_v0_template0";
 
-fsi_rx2.$name = "CONFIG_FSI_RX1";
+fsi_rx2.$name       = "CONFIG_FSI_RX1";
+fsi_rx2.child.$name = "drivers_fsi_rx_v0_fsi_rx_v0_template1";
 
-fsi_tx1.$name = "CONFIG_FSI_TX0";
+fsi_tx1.$name       = "CONFIG_FSI_TX0";
+fsi_tx1.child.$name = "drivers_fsi_tx_v0_fsi_tx_v0_template0";
 
 gpio1.$name           = "CONFIG_GPIO0";
 led1.peripheralDriver = gpio1;
@@ -133,6 +138,11 @@ ipc.r5fss1_1 = "NONE";
 ipc.r5fss0_1 = "notify";
 
 mcan1.$name = "CONFIG_MCAN0";
+
+const mcan_v0_template  = scripting.addModule("/drivers/mcan/v0/mcan_v0_template", {}, false);
+const mcan_v0_template1 = mcan_v0_template.addInstance({}, false);
+mcan_v0_template1.$name = "drivers_mcan_v0_mcan_v0_template0";
+mcan1.child             = mcan_v0_template1;
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
@@ -234,7 +244,7 @@ region1.memory_region[3].size               = 0x8000;
 region1.memory_region[4].$name              = "MSRAM";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70080000;
-region1.memory_region[4].size               = 0x41000;
+region1.memory_region[4].size               = 0x45000;
 region1.memory_region[5].type               = "FLASH";
 region1.memory_region[5].$name              = "FLASH";
 region1.memory_region[5].auto               = false;
@@ -289,7 +299,7 @@ section3.output_section[1].$name      = ".rodata";
 section3.output_section[1].palignment = true;
 
 section4.$name                        = "Data Segment";
-section4.load_memory                  = "NON_CACHE_MEM";
+section4.load_memory                  = "MSRAM";
 section4.output_section.create(1);
 section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;
