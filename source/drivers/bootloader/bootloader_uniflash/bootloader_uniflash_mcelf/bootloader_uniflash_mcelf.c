@@ -43,7 +43,7 @@ static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, u
 	int32_t status = SystemP_SUCCESS;
 	Flash_Attrs *flashAttrs;
 	Flash_Handle flashHandle;
-	uint32_t eraseBlockSize;
+	uint32_t eraseBlockSize = 0U;
 
 	if(fileBuf != NULL)
 	{

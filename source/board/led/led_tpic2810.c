@@ -135,7 +135,7 @@ int32_t LED_tpic2810On(LED_Config *config, uint32_t index)
     int32_t         status = SystemP_SUCCESS;
     LED_Object     *object;
     LED_Attrs      *attrs;
-    uint8_t         rdData, wrData[2U];
+    uint8_t         rdData = 0U, wrData[2U];
     I2C_Transaction i2cTransaction;
 
     if(NULL == config)
@@ -194,7 +194,7 @@ int32_t LED_tpic2810Off(LED_Config *config, uint32_t index)
     int32_t         status = SystemP_SUCCESS;
     LED_Object     *object;
     LED_Attrs      *attrs;
-    uint8_t         rdData, wrData[2U];
+    uint8_t         rdData = 0U, wrData[2U];
     I2C_Transaction i2cTransaction;
 
     if(NULL == config)
