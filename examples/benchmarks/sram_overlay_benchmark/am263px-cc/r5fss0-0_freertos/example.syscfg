@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -37,6 +37,7 @@ const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
 const section13       = section.addInstance();
+const section14       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -142,6 +143,7 @@ region1.memory_region[11].$name              = "OVL";
 region1.memory_region[11].size               = 0x8000;
 region1.memory_region[11].auto               = false;
 region1.memory_region[11].manualStartAddress = 0x701D8000;
+region1.memory_region[11].last_sym           = "OVL_END ";
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;
@@ -274,3 +276,17 @@ section13.load_memory                  = "FLASH";
 section13.output_section.create(1);
 section13.output_section[0].$name      = ".xip";
 section13.output_section[0].palignment = true;
+
+section14.$name                                    = "CONFIG_SECTION0";
+section14.type                                     = "NOLOAD";
+section14.load_memory                              = "OVL";
+section14.output_section.create(1);
+section14.output_section[0].include_defines        = true;
+section14.output_section[0].$name                  = ".flc_ovl_dest";
+section14.output_section[0].macro_name             = "FLC_OVL_RGN";
+section14.output_section[0].output_sections_start  = "FLC_OVL_RGN_START";
+section14.output_section[0].output_sections_end    = "FLC_OVL_RGN_END";
+section14.output_section[0].alignment              = 4096;
+section14.output_section[0].palignment             = true;
+section14.output_section[0].input_section.create(1);
+section14.output_section[0].input_section[0].$name = ".=.+32768;";
