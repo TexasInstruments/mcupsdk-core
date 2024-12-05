@@ -65,8 +65,8 @@ in comparison to using TI ARM Trig Library
  # External Connections
 - ADC2_AIN0, ADC2_AIN1, ADC2_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins should be connected to signals to be converted.
 
-## AM263X-CC E2
-When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC E2
+When using AM263PX-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to the following.
     - ADC2_AIN0 - HSEC 31
     - ADC2_AIN1 - HSEC 33
@@ -75,8 +75,8 @@ When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
     - ADC1_AIN1 - HSEC 14
     - ADC1_AIN2 - HSEC 18
 
-## AM263X-CC E1
-When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC E1
+When using AM263PX-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to the following.
     - ADC2_AIN0 - HSEC 24
     - ADC2_AIN1 - HSEC 26
@@ -85,7 +85,7 @@ When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
     - ADC1_AIN1 - HSEC 20
     - ADC1_AIN2 - HSEC 21
 
-## AM263X-LP
+## AM263PX-LP
 When using LP
 - Feed the analog inputs
 - Feed analog inputs to the following.
