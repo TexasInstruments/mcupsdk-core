@@ -170,7 +170,7 @@ static void sdfmISR(void *handle)
             /* read the FIFO Data */
             for(int iter = 0; iter < FIFO_DEPTH; iter++)
             {
-                filter2Result[gIsrCount/FIFO_DEPTH][iter] = (int16_t) HW_RD_REG16(0x50268052U);
+                filter2Result[gIsrCount/FIFO_DEPTH][iter] = (int16_t) (SDFM_getFIFOData(gSdfmBase, SDFM_FILTER_2) >> 16U);
             }
 
             SDFM_clearInterruptFlag(gSdfmBase, SDFM_MAIN_INTERRUPT_FLAG  | SDFM_FILTER_2_FIFO_INTERRUPT_FLAG  | 0xFFF);
