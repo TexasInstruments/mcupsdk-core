@@ -21,11 +21,20 @@ We can then boot this application without being connected to CCS via JTAG.
   - Make sure you have the EVM power cable and UART cable connected as shown in \ref EVM_CABLES
 
 - Build the hello world application as mentioned in \ref GETTING_STARTED_BUILD
+\if (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+
+- As part of the build process in the final step, files with extension `.mcelf` and `.mcelf_xip` are generated. These are the files
+  we need to flash.
+
+\else 
 
 - As part of the build process in the final step a file with extension `.appimage` is generated. This is the file
   we need to flash.
 
+\endif
+
   - When building with makefiles and single-core projects, this file can be found here (shown for hello world example),
+  
 \if (SOC_AM64X || SOC_AM243X)
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage.hs_fs
 
@@ -40,8 +49,25 @@ We can then boot this application without being connected to CCS via JTAG.
   - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
         ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage.hs_fs
-\else
+\elseif (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf
+        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf_xip
 
+  - When building with CCS and single-core projects, this file can be found here (shown for hello world example),
+
+        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf
+        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf_xip
+
+  - When building with makefiles and multi-core system projects, this file can be found here (shown for IPC Notify example),
+
+        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf
+        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf_xip
+
+  - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
+
+        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.mcelf
+        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.mcelf_xip
+\else
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage
 
   - When building with CCS and single-core projects, this file can be found here (shown for hello world example),
@@ -67,7 +93,21 @@ We can then boot this application without being connected to CCS via JTAG.
 \if (SOC_AM64X || SOC_AM243X)
 - Edit below line in the config file to point to your application `.appimage.hs_fs` file.
   Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
-        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs --operation=flash --flash-offset=0x80000
+      --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs --operation=flash --flash-offset=0x80000
+\elseif (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+
+Configuration file is `mcelf_sbl_ospi.cfg`
+
+- Edit below line in the config file to point to your application `.mcelf` file.
+  Give the absolute path to the `.mcelf` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
+        
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf --operation=flash --flash-offset=0x81000
+
+- Edit below line in the config file to point to your application `.mcelf_xip` file.
+  Give the absolute path to the `.mcelf_xip` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
+        
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf_xip --operation=flash-mcelf-xip
+
 \else
 - Edit below line in the config file to point to your application `.appimage` file.
   Give the absolute path to the `.appimage` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
@@ -598,11 +638,11 @@ number of lines used in the protocol is indeed 8.
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## Flashing the application
 
-- **POWER-OFF** the EVM
+- **POWER-OFF** the Evaluation board
 
 - The boot mode should be \ref BOOTMODE_UART
 
-- **POWER-ON** the EVM
+- **POWER-ON** the Evaluation board
 
 - You should see character "C" getting printed on the UART terminal every 1-2 seconds as shown below
 
@@ -625,18 +665,25 @@ number of lines used in the protocol is indeed 8.
 \endcond
   - Here COM<x> is the port name of the identified UART port in Windows.
   - On Linux,
-    - The name for UART port is typically something like `/dev/ttyUSB0`
+    - The name for UART port is typically something like `/dev/ttyACM0`
     - On some Linux systems, one needs to use `python3` to invoke python3.x, just `python` command may invoke python 2.x which will not work with the flashing script.
 
 - When the flashing is in progress you will see something like below
-
+\if SOC_AM263X
   \imageStyle{flash_qspi_boot_in_progress.png,width:80%}
   \image html flash_qspi_boot_in_progress.png "Flash in progress"
-
+\else
+  \imageStyle{flash_ospi_boot_in_progress.png,width:80%}
+  \image html flash_ospi_boot_in_progress.png "Flash in progress"
+\endif
 - After all the flashing is done, you will see something like below
-
+\if SOC_AM263X
   \imageStyle{flash_qspi_boot_success.png,width:80%}
   \image html flash_qspi_boot_success.png "Flashing successful"
+\else
+  \imageStyle{flash_ospi_boot_success.png,width:80%}
+  \image html flash_ospi_boot_success.png "Flashing successful"
+\endif
 
 - If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
 
