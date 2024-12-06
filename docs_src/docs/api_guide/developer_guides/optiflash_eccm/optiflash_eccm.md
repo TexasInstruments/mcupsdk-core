@@ -8,7 +8,46 @@ Unlike NAND flash, which has `spare area` for storing ECC of `main area`, NOR fl
 
 This Page goes over how safety can be enabled on external NOR flash in AM26x devices which also use NOR flash for XIP.
 
-# ECCM Module 
+# How to enable ECCM module 
+
+## Write a config file
+The following is an example of a config file (conf.json)
+
+\code 
+
+{
+    "regions": [
+        {
+            "start": 1611661312,
+            "size": 4194304,
+            "eccEnable": true
+        }
+    ]
+}
+
+\endcode 
+
+There can be at most 4 different ECC regions that can be configured. The above shows 1 region. For example, in am263px, there are 4 different core and each core can have its own region configured. Make sure that each region is not overlaping each other.
+
+In the above, region start address is 0x60100000 and size 4MB.
+
+## Using the config file 
+
+The example \ref BENCHMARK_SMART_PLACEMENT uses XIP and for the sake of demostration, it is being used. 
+
+While compiling the application, pass in the argument `oeconfig=conf.json`. 
+
+For example, if current working directory is `$(MCU_PLUS_SDK_PATH)`, the following command will process the flash contents for ECC.
+
+\code
+gmake -C .\examples\benchmarks\ocmc_benchmarking\am263px-cc\system_tri_core\ oeconfig=conf.json
+\endcode 
+
+for Linux machine, `gmake` will be replaced by `make`. 
+
+# Additional details
+
+## ECCM Module 
 
 The following diagram shows 
 
@@ -37,38 +76,11 @@ If computed ECC and saved ECC matches, ECCM forwards the data to the requestor, 
 
 3. Writing to flash with ECCM enabled should be avoided at all cost. Harware does not supports it. The right way to do this is to pre-compute ECC for the data that is to be written to flash and write the computed data via the flsopskd controller (\ref FLSOPSKD_IP). (or write to external flash via `bypass region`). 
 
-# How to enable ECCM module 
-
-## Write a config file
-The following is an example of a config file (conf.json)
-
-\code 
-
-{
-    "regions": [
-        {
-            "start": 1611661312,
-            "size": 4194304,
-            "eccEnable": true
-        }
-    ]
-}
-
-\endcode 
-
-There can be at most 4 different ECC regions that can be configured. The above shows 1 region. For example, in am263px, there are 4 different core and each core can have its own region configured. Make sure that each region is not overlaping each other.
-
-In the above, region start address is 0x60100000 and size 4MB.
-
-## Using the config file 
-
-While compiling the application, pass in the argument `make oeconfig=conf.json`. 
-
 ## Seeing the change
 
 To see if the processing has been done correctly, use the command 
 
-`tiarmreadelf --headres app_name.mcelf_xip`
+`tiarmreadelf --headers app_name.mcelf_xip`
 
 For the processed code, output will be the following:
 

@@ -40,7 +40,7 @@ On successful completion of below steps, you would have achieved the following
 - One SDK example has been flashed to the EVM flash and the application booted from the flash without CCS.
 \endif
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
-- Use \htmllink{https://www.ti.com/lit/an/spradf0a/spradf0a.pdf, TI OptiFlah memory technology} along with [Smart Placement](\ref SMART_PLACEMENT_GETTING_STARTED) tool to improve system level performance with external flash.
+- Use \htmllink{https://www.ti.com/lit/an/spradf0a/spradf0a.pdf, TI OptiFlash memory technology} along with [Smart Placement](\ref SMART_PLACEMENT_GETTING_STARTED) tool to improve system level performance with external flash.
 \endcond
 
 ### Terms and Abbreviations
