@@ -34,3 +34,7 @@ This page lists all the examples related to Security.
 -# \subpage EXAMPLES_DRIVERS_DTHE_HMAC_SHA_256
 -# \subpage EXAMPLES_DRIVERS_DTHE_HMAC_SHA_512
 \endcond
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+-# \subpage EXAMPLES_DRIVERS_DTHE_AES_CCM_128
+-# \subpage EXAMPLES_DRIVERS_DTHE_AES_CCM_256
+\endcond
