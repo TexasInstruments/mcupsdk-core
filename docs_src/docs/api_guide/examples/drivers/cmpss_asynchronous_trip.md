@@ -8,9 +8,8 @@
 A CMPSS example that enables the CMPSS High comparator and feeds the
 asynchronous output to GPIO and EPWM
 
-# @VAR_BOARD_NAME
-This example enables the CMPSSA0 COMPH comparator and feeds the asynchronous
-CTRIPOUTH signal to the XBAROUT0 pin and CTRIPH to EPWM0B.
+This example enables the CMPSSA1 COMPH comparator and feeds the asynchronous
+CTRIPOUTH signal to the XBAROUT0 (XBAROUT8 in case of AM263PX) pin and CTRIPH to EPWM0B.
 
 \imageStyle{am263_cmpss_asynchronous_trip.png,width:50%}
 \image html am263_cmpss_asynchronous_trip.png "Block diagram"
@@ -22,35 +21,16 @@ signal at VDD/2. An EPWM signal is generated at EPWM0B and is configured
 to be tripped by CTRIPOUTH.
 
 When a low input(VSS) is provided to CMPIN1P,
-    - Trip signal(XBAROUT0) output is low
+    - Trip signal(XBAROUTx) output is low
     - EPWM0B gives a PWM signal
 
 When a high input(higher than VDD/2) is provided to CMPIN1P,
-    - Trip signal(XBAROUT0) output turns high
-    - EPWM0B gets tripped and outputs as high
-
-
-# @VAR_LP_BOARD_NAME
-This example enables the CMPSSA1 COMPH comparator and feeds the asynchronous
-CTRIPOUTH signal to the XBAROUT10 pin and CTRIPH to EPWM0B.
-
-CMPSS is configured to generate trip signals to trip the EPWM signals.
-CMPIN1P is used to give positive input and internal DAC is configured
-to provide the negative input. Internal DAC is configured to provide a
-signal at VDD/2. An EPWM signal is generated at EPWM0B and is configured
-to be tripped by CTRIPOUTH.
-
-When a low input(VSS) is provided to CMPIN1P,
-    - Trip signal(XBAROUT10) output is low
-    - EPWM0B gives a PWM signal
-
-When a high input(higher than VDD/2) is provided to CMPIN1P,
-    - Trip signal(XBAROUT10) output turns high
+    - Trip signal(XBAROUTx) output turns high
     - EPWM0B gets tripped and outputs as high
 
 # External Connections
  - Give input on CMPIN1P
- - Outputs can be observed on XBAROUT0 and EPWM0B using an oscilloscope
+ - Outputs can be observed on XBAROUT0(XBAROUT8 in case of AM263PX) and EPWM0B using an oscilloscope
 
 ## AM263PX-CC E2 or AM263X-CC E2
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
@@ -72,7 +52,7 @@ When using AM261x-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

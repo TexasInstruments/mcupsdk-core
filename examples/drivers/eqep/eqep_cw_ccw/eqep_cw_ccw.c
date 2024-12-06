@@ -80,7 +80,7 @@
  * 
  */ 
 
-#define APP_LOOP_CNT    1000U
+#define APP_LOOP_CNT    100U
 
 /* Number of encoder slots per revolution */
 #define ENCODER_SLOTS   1000U
@@ -140,7 +140,7 @@ void eqep_cw_ccw_main(void *args)
 	
     TimerP_start(gTimerBaseAddr[CONFIG_TIMER0]);
 
-	for(i = 0; i < APP_LOOP_CNT; ++i)
+	for(i = 0; i < APP_LOOP_CNT;)
     {
         currentEncoderPos = EQEP_getPosition(gEqepBaseAddr);
         direction         = EQEP_getDirection(gEqepBaseAddr);
@@ -176,6 +176,7 @@ void eqep_cw_ccw_main(void *args)
             speed = (freq * 60) / ((float)(ENCODER_SLOTS));
             
             EQEP_clearInterruptStatus(gEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT);
+            ++i;
         }
 
     }

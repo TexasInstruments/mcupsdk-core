@@ -56,7 +56,7 @@ When using AM263X-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Basebo
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/epwm/epwm_xcmp_multiple_edges
+ Example folder | examples/drivers/epwm/epwm_up_aq
 
 \endcond
 

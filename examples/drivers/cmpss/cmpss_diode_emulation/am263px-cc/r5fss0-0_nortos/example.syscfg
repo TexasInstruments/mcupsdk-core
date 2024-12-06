@@ -1,19 +1,24 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.999+172"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const adc             = scripting.addModule("/drivers/adc/adc", {}, false);
-const adc1            = adc.addInstance();
+const cmpss           = scripting.addModule("/drivers/cmpss/cmpss", {}, false);
+const cmpss1          = cmpss.addInstance();
+const dac             = scripting.addModule("/drivers/dac/dac", {}, false);
+const dac1            = dac.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
+const epwm2           = epwm.addInstance();
+const epwm3           = epwm.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -38,67 +43,124 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
-const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
-const int_xbar1       = int_xbar.addInstance();
+const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1    = output_xbar.addInstance();
+const output_xbar2    = output_xbar.addInstance();
+const output_xbar3    = output_xbar.addInstance();
+const output_xbar4    = output_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-adc1.adcClockPrescaler   = "ADC_CLK_DIV_3_0";
-adc1.socHighPriorityMode = "ADC_PRI_THRU_SOC6_HIPRI";
-adc1.enableConverter     = true;
-adc1.burstTrigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc1.burstSize           = 3;
-adc1.enableBurstMode     = true;
-adc1.soc7SampleWindow    = 20;
-adc1.soc8SampleWindow    = 20;
-adc1.soc9SampleWindow    = 20;
-adc1.soc10SampleWindow   = 20;
-adc1.soc11SampleWindow   = 20;
-adc1.soc12SampleWindow   = 20;
-adc1.soc13SampleWindow   = 20;
-adc1.soc14SampleWindow   = 20;
-adc1.soc15SampleWindow   = 20;
-adc1.soc8Channel         = "ADC_CH_ADCIN1";
-adc1.soc9Channel         = "ADC_CH_ADCIN2";
-adc1.soc11Channel        = "ADC_CH_ADCIN1";
-adc1.soc12Channel        = "ADC_CH_ADCIN2";
-adc1.interrupt1SOCSource = "ADC_SOC_NUMBER9";
-adc1.enableInterrupt1    = true;
-adc1.interrupt2SOCSource = "ADC_SOC_NUMBER12";
-adc1.enableInterrupt2    = true;
-adc1.interrupt3SOCSource = "ADC_SOC_NUMBER15";
-adc1.enableInterrupt3    = true;
-adc1.soc15Channel        = "ADC_CH_ADCIN3";
-adc1.$name               = "CONFIG_ADC1";
-adc1.ADC.$assign         = "ADC1";
-scripting.suppress("SOC7 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc7Trigger");
-scripting.suppress("SOC8 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc8Trigger");
-scripting.suppress("SOC9 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc9Trigger");
-scripting.suppress("SOC10 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc10Trigger");
-scripting.suppress("SOC11 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc11Trigger");
-scripting.suppress("SOC12 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc12Trigger");
-scripting.suppress("SOC13 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc13Trigger");
-scripting.suppress("SOC14 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc14Trigger");
-scripting.suppress("SOC15 is configured for Round Robin\\. With burst mode enabled, the  burst mode trigger will override the selected trigger for this SOC", adc1, "soc15Trigger");
+cmpss1.$name                = "CONFIG_CMPSS0";
+cmpss1.enableModule         = true;
+cmpss1.cmpssBase            = "CSL_CONTROLSS_CMPSSA1_U_BASE";
+cmpss1.initFilterHigh       = true;
+cmpss1.latchResetHigh       = true;
+cmpss1.sampleWindowHigh     = 16;
+cmpss1.thresholdHigh        = 9;
+cmpss1.samplePrescaleHigh   = 1;
+cmpss1.configLatchHigh      = true;
+cmpss1.highCTRIP            = "CMPSS_TRIP_FILTER";
+cmpss1.dacValHigh           = 2048;
+cmpss1.enableDiodeEmulation = true;
+cmpss1.dacValLow            = 4095;
+cmpss1.dacVal2Low           = 4095;
+cmpss1.dacVal2High          = 2048;
 
-epwm1.$name                                                      = "CONFIG_EPWM0";
-epwm1.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
-epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
-epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable                  = true;
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource                  = "EPWM_SOC_TBCTR_U_CMPA";
-epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar          = "1";
-epwm1.epwmCounterCompare_cmpA                                    = 1000;
-epwm1.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
-epwm1.epwmEventTrigger_enableInterrupt                           = true;
-epwm1.epwmEventTrigger_interruptSource                           = "EPWM_INT_TBCTR_U_CMPA";
-epwm1.epwmTimebase_period                                        = 1999;
+dac1.$name        = "CONFIG_DAC0";
+dac1.enableOutput = true;
+
+epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_ALL"];
+epwm1.epwmCounterCompare_cmpA                                  = 1000;
+epwm1.epwmCounterCompare_cmpB                                  = 1000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmDE_enableMode                                        = true;
+epwm1.epwmDE_TripH                                             = "EPWM_DE_TRIP_SRC_CMPSSA1";
+epwm1.epwmDE_TripL                                             = "EPWM_DE_TRIP_SRC_CMPSSA1";
+epwm1.epwmDE_TripSelA                                          = "EPWM_DE_TRIPH";
+epwm1.epwmDE_PWMB                                              = "EPWM_DE_LOW";
+epwm1.epwmDE_TripEnable                                        = true;
+epwm1.epwmTimebase_period                                      = 1999;
+epwm1.$name                                                    = "Non_Reentry_delay";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmTimebase_clockDiv                                    = "EPWM_CLOCK_DIVIDER_2";
+epwm1.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_2";
+epwm1.EPWM.$assign                                             = "EPWM0";
+epwm1.EPWM.A.$assign                                           = "EPWM0_A";
+epwm1.EPWM.B.$assign                                           = "EPWM0_B";
+
+epwm2.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmDE_enableMode                                        = true;
+epwm2.epwmDE_TripH                                             = "EPWM_DE_TRIP_SRC_CMPSSA1";
+epwm2.epwmDE_TripL                                             = "EPWM_DE_TRIP_SRC_CMPSSA1";
+epwm2.epwmDE_TripSelA                                          = "EPWM_DE_TRIPH";
+epwm2.epwmDE_PWMB                                              = "EPWM_DE_LOW";
+epwm2.epwmTimebase_period                                      = 1999;
+epwm2.$name                                                    = "Reentry_delay";
+epwm2.epwmDE_reEntryDelay                                      = 10;
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT2                = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT1                = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT2                = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT1                = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION_DISABLE";
+epwm2.epwmCounterCompare_cmpB                                  = 1000;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmCounterCompare_cmpA                                  = 1000;
+epwm2.hrpwm_syncSource                                         = "HRPWM_PWMSYNC_SOURCE_ZERO";
+epwm2.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_2";
+epwm2.epwmTimebase_clockDiv                                    = "EPWM_CLOCK_DIVIDER_2";
+epwm2.EPWM.$assign                                             = "EPWM1";
+epwm2.EPWM.A.$assign                                           = "EPWM1_A";
+epwm2.EPWM.B.$assign                                           = "EPWM1_B";
+
+epwm3.$name                                                    = "CONFIG_EPWM2";
+epwm3.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_2";
+epwm3.epwmTimebase_period                                      = 1999;
+epwm3.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm3.epwmCounterCompare_cmpA                                  = 1000;
+epwm3.epwmCounterCompare_cmpB                                  = 1000;
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmTimebase_clockDiv                                    = "EPWM_CLOCK_DIVIDER_2";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+cmpss.cmpssSettings     = soc_ctrl_cmpss1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -308,21 +370,32 @@ section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
-int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["ADC1_INT1","ADC1_INT2","ADC1_INT3"];
+output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput                 = ["CMPSSA1_CTRIPH"];
+output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR13";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "PR0_PRU1_GPIO19";
+
+output_xbar2.$name                      = "CONFIG_OUTPUT_XBAR1";
+output_xbar2.xbarOutput                 = ["CMPSSA1_CTRIPL"];
+output_xbar2.OUTPUTXBAR.$assign         = "OUTPUTXBAR14";
+output_xbar2.OUTPUTXBAR.XBAROUT.$assign = "PR0_PRU1_GPIO18";
+
+output_xbar3.$name              = "CONFIG_OUTPUT_XBAR2";
+output_xbar3.xbarOutput         = ["DEL0_ACTIVE"];
+output_xbar3.OUTPUTXBAR.$assign = "OUTPUTXBAR7";
+
+output_xbar4.$name              = "CONFIG_OUTPUT_XBAR3";
+output_xbar4.xbarOutput         = ["DEL1_ACTIVE"];
+output_xbar4.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution          = "ADC1_AIN0";
-adc1.ADC.AIN1.$suggestSolution          = "ADC1_AIN1";
-adc1.ADC.AIN2.$suggestSolution          = "ADC1_AIN2";
-adc1.ADC.AIN3.$suggestSolution          = "ADC1_AIN3";
-adc1.ADC.AIN4.$suggestSolution          = "ADC1_AIN4";
-adc1.ADC.AIN5.$suggestSolution          = "ADC1_AIN5";
-epwm1.EPWM.$suggestSolution             = "EPWM0";
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+epwm3.EPWM.$suggestSolution                      = "EPWM2";
+epwm3.EPWM.A.$suggestSolution                    = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution                    = "EPWM2_B";
+debug_log.uartLog.UART.$suggestSolution          = "UART0";
+output_xbar3.OUTPUTXBAR.XBAROUT.$suggestSolution = "I2C1_SCL";
+output_xbar4.OUTPUTXBAR.XBAROUT.$suggestSolution = "I2C1_SDA";

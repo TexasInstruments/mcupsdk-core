@@ -16,10 +16,10 @@ Configurations,
 # External Connections
 Observe ECAP outputs on the Outputxbar instances
 ## AM263x
-- CC E2, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on HSEC pins 87 and 89
+- CC E2, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on HSEC pins 85 and 87
 - LP, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on J5.49, J5.50
 ## AM263Px
-- CC E2, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on HSEC pins 87 and 89
+- CC E2, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on HSEC pins 85 and 87
 - LP, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on J5.49, J5.50
 ## AM261x
 - LP, outputxbar 1,4, showcase ecap 0,1 apwm outs respectively on J4.17, J4.12

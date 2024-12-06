@@ -92,6 +92,7 @@ const example_file_list = [
 	"examples/drivers/cmpss/cmpss_asynchronous_trip/.project/project.js",
 	"examples/drivers/cmpss/cmpss_digital_filter_trip/.project/project.js",
 	"examples/drivers/cmpss/cmpss_calibration/.project/project.js",
+    //"examples/drivers/cmpss/cmpss_diode_emulation/.project/project.js",
 	"examples/drivers/dac/dac_constant_voltage/.project/project.js",
 	"examples/drivers/dac/dac_epwm_sync/.project/project.js",
 	"examples/drivers/dac/dac_ramp_wave/.project/project.js",

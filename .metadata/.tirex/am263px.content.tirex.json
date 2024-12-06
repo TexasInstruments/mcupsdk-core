@@ -3199,6 +3199,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are source from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "cmpss_diode_emulation",
+        "location": "../../examples/drivers/cmpss/cmpss_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "cmpss",
+            "cmpss_diode_emulation",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are source from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "cmpss_diode_emulation",
+        "location": "../../examples/drivers/cmpss/cmpss_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "cmpss",
+            "cmpss_diode_emulation",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An DAC example that generates a constant voltage on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_constant_voltage",
         "location": "../../examples/drivers/dac/dac_constant_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
