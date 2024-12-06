@@ -192,6 +192,8 @@ void test_main(void *args)
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     test_fsi_set_params(&testParams, 4081);
     RUN_TEST(test_fsi_txrx, 4081, (void*)&testParams);
+    test_fsi_set_params(&testParams, 4233);
+    RUN_TEST(test_fsi_txrx, 4233, (void*)&testParams);
 #endif
 
     UNITY_END();
