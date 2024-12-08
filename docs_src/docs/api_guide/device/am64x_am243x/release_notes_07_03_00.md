@@ -27,10 +27,10 @@ AM243x | R5F, M4F        | AM243x GP EVM (referred to as am243x-evm in code) | W
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, M4F       | @VAR_CCS_VERSION
-SysConfig               | R5F, M4F       | @VAR_SYSCFG_VERSION, build @VAR_SYSCFG_BUILD
-TI ARM CLANG            | R5F, M4F       | @VAR_TI_ARM_CLANG_VERSION
-FreeRTOS Kernel         | R5F, M4F       | @VAR_FREERTOS_KERNEL_VERSION
+Code Composer Studio    | R5F, M4F       | 10.3.0
+SysConfig               | R5F, M4F       | 1.8.0, build 1863
+TI ARM CLANG            | R5F, M4F       | 1.2.1.STS
+FreeRTOS Kernel         | R5F, M4F       | 10.4.3
 
 ## Key Features
 

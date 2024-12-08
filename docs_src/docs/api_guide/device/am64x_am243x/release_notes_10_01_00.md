@@ -1,4 +1,4 @@
-# Release Notes 10.00.00 {#RELEASE_NOTES_10_00_00_PAGE}
+# Release Notes 10.01.00 {#RELEASE_NOTES_10_01_00_PAGE}
 
 [TOC]
 
@@ -22,25 +22,18 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-A53 Drivers: ADC, MMCSD, McSPI, MCAN, OSPI, EPWM< EQEP, ECAP                                    | Drivers
-Little FS file system support for OSPI NOR                                                      | File System
-FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
-Sysconfig support for PRU Projects                                                              | PRUICSS
-System project for PRU ADC examples                                                             | PRU-IO
-Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
-PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.14.03       | Ethernet
-Early PLL driver in TIFS init updated to follow recommended sequence to avoid PLL instability   | SYSFW (DMSC)
-PM PLL and HSDIV programing in PLL init updated to remove steps violating the recommendation    | SYSFW (DMSC)
+LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
+SBL shows an example usage of DDR QoS support                                                   | Drivers
+Example to demonstrate root of trust switching                                                  | Examples
+FreeRTOS AMP support is adde for A53 cores                                                      | Kernel
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Little FS file system support for OSPI NOR                                                      | File System
-FreeRTOS FAT supported with FreeRTOS kernel now                                                 | File System
-Option to configure link parameters and loopback mode in Sysconfig GUI tool for CPSW and ICSSG  | Ethernet
-Early PLL driver in TIFS init updated to follow recommended sequence to avoid PLL instability   | SYSFW (DMSC)
-PM PLL and HSDIV programing in PLL init updated to remove steps violating the recommendation    | SYSFW (DMSC)
+LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
+SBL shows an example usage of DDR QoS support                                                   | Drivers
+Example to demonstrate root of trust switching                                                  | Examples
 \endcond
 
 ## Device and Validation Information
@@ -76,7 +69,7 @@ DMSC Firmware           | DMSC           | v10.00.08
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES_10_00_00}
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
@@ -91,6 +84,7 @@ A53 FreeRTOS (single core) support and A53 FreeRTOS examples        | DPL, FreeR
 SBL booting A53 NORTOS                                              | Bootloader
 GCC support for R5F for limited examples                            | R5F
 A53 FreeRTOS dual core in SMP mode and A53 SMP FreeRTOS examples    | DPL, FreeRTOS
+A53 FreeRTOS AMP mode and A53 AMP FreeRTOS examples                 | DPL, FreeRTOS
 GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 
 
@@ -282,228 +276,132 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> MCUSDK-10005 
-    <td> UART LLD Write incompatible with data length 5 and 6
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-6, EXT_SITMPUSW-6}
+    <td> Incorrect naming of the macro MAILBOX_MAX_MSGS_IN_FIFO in IPC Notify
+    <td> IPC
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> Update the macro name
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-7, EXT_SITMPUSW-7}
+    <td> OSPI_phyReadAttackVector API leaves the DAC enabled
+    <td> OSPI
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> Disable DAC mode at the end of function
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-1, EXT_SITMPUSW-1} 
+    <td> CPU cache line size is wrongly documented
+    <td> DPL
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> Updated the documenation
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-8, EXT_SITMPUSW-8} 
+    <td> Remove "Auto generated makefile" comments in the makefiles
+    <td> Build
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> Remove the autogenerated comments
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-9, EXT_SITMPUSW-9}
+    <td> Calling the vTaskGetRunTimeStats，after some time, it will exceed 100% CPU usage
+    <td> Kernel
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> This issue is fixed on 11.1.0 FreeRTOS kernel
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-10, EXT_SITMPUSW-10}
+    <td> SBL_OSPI_LINUX changes the DEVSTAT register to SD card bootmode
+    <td> SBL
+    <td> 09.02.01
+    <td> AM64x, AM243x
+    <td> Remove updating DEVSTAT
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-11, EXT_SITMPUSW-11}
+    <td> MCAN loopback DMA example is broken
+    <td> MCAN
+    <td> 09.00.00
+    <td> AM64x, AM243x
+    <td> Resolve the issue along with LLD implementation
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-12, EXT_SITMPUSW-12}
+    <td> A wrong counter is used for Event 2 in PMU configuration
+    <td> PMU
+    <td> 08.06.00
+    <td> AM64x, AM243x
+    <td> Remove the wrong configuration
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-13, EXT_SITMPUSW-13}
+    <td> UART: Inconsistent data flush for Polling, Interrupt and DMA mode
     <td> UART
     <td> 09.01.00
     <td> AM64x, AM243x
-    <td> Tested with 6 bit character, But not with 5 bit. No valid data with 5 bit ASCII character
+    <td> Fix the driver
 </tr>
 <tr>
-    <td> MCUSDK-11424 
-    <td> Wrong position of HwiP_enable in MCU+SDK, which creates hanging in the application
-    <td> FreeRTOS
-    <td> 08.06.00 onwards
-    <td> AM64x, AM243x
-    <td> Dpl_init was enabling the interrupts. Fixed
-</tr>
-<tr>
-    <td> MCUSDK-12593 
-    <td> Issue with "MpuP_disable" API in M4 core
-    <td> DPL
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-14, EXT_SITMPUSW-14}
+    <td> JTAG Flasher does not enable DAC mode after flashing the image
+    <td> McSPI
     <td> 09.01.00
     <td> AM64x, AM243x
-    <td> Fixed. Updated the code
+    <td> Enable DAC mode
 </tr>
 <tr>
-    <td> MCUSDK-12637 
-    <td> Setting the ICSSG1 clock frequency affects the ICSSG0 clock frequency
-    <td> SOC
-    <td> 09.00.00 onwards
-    <td> AM64x, AM243x
-    <td> Add a new API which takes the parent as an input as well
-</tr>
-<tr>
-    <td> MCUSDK-12728
-    <td> MCU-PLUS-SDK-AM243X: Smart Placement Script Issue
-    <td> OptiFlash
-    <td> 09.01.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-15, EXT_SITMPUSW-15}
+    <td> Wrong validation checks for Sysfw_boardcfg
+    <td> BoardConfig
+    <td> 09.02.00
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
 <tr>
-    <td> MCUSDK-13286
-    <td> Docs: No TOC for TI Uniflash Tool page
-    <td> docs
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> TOC missing. Added
-</tr>
-<tr>
-    <td> MCUSDK-13344 
-    <td> MCU+ SDK Extended OTP doc section may need updating 
-    <td> Security
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> Documentation updated 
-</tr>
-<tr>
-    <td> MCUSDK-13351
-    <td> MCSPI: on changing mode to Multi-controller/ peripheral, examples are not building.
-    <td> McSPI
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-16, EXT_SITMPUSW-16}
+    <td> Not able to select 3pin/4pin mode when mcspi is configured as Single Peripheral
+    <td> MCSPI
     <td> 10.00.00
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
 <tr>
-    <td> MCUSDK-13459 
-    <td> Bug in SOC_moduleSetClockFrequencyWithParent API call
-    <td> SOC
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-17, EXT_SITMPUSW-17}
+    <td> Not able to open example.syscfg file for M4f project
+    <td> Sysconfig
     <td> 10.00.00
     <td> AM64x, AM243x
-    <td> Clock ID check was wrong
+    <td> Fixed
 </tr>
 <tr>
-    <td> MCUSDK-13366
-    <td> Boot Image size is not reported for R5F application
-    <td> SBL
-    <td> 09.02.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-18, EXT_SITMPUSW-18}
+    <td> sciclient_ccs_init default binary failing to run on SOC
+    <td> Examples
+    <td> 10.00.00
     <td> AM64x, AM243x
-    <td> Log was printed before loading
+    <td> Rebuild the binary
 </tr>
 <tr>
-    <td> MCUSDK-13194
-    <td> AM64x : Not enabled DMA and Phy in SBL OSPI Multipartion project
-    <td> SBL
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> DMA was disabled in sysconfig
-</tr>
-<tr>
-    <td> MCUSDK-13067
-    <td> MCSPI Transfer Callback API sets Transfer Object->args to NULL
-    <td> McSPI
-    <td> 09.01.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-19, EXT_SITMPUSW-19}
+    <td> Not able to open drivers for MCU_I2C
+    <td> I2C
+    <td> 10.00.00
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
 <tr>
-    <td> MCUSDK-13278 
-    <td> Sysconfig generating wrong files for MCSPI config
-    <td> McSPI
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-3710 
-    <td> OSPI DMA memory read fails in some cases
-    <td> OSPI, UDMA
-    <td> 08.02.00 onwards
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-13470 
-    <td> OSPI controller does not prefetch 32 bytes for DMA reads
-    <td> OSPI
-    <td> 09.02.01
-    <td> AM64x, AM243x
-    <td> Added the prefetch copy
-</tr>
-<tr>
-    <td> MCUSDK-12960 
-    <td> DAC is not enabled before Bootloader_getMsgLen leading to data abort
-    <td> Security
-    <td> 09.01.00
-    <td> AM64x, AM243x
-    <td> Added APIs for disable/enable DAC
-</tr>
-<tr>
-    <td> MCUSDK-13091 
-    <td> SBL EMMC fails to boot encrypted appimage on HSSE device 
-    <td> Security
-    <td> 09.01.00
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-13124
-    <td> Docs Build is failing on Windows due to syntax error
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-20, EXT_SITMPUSW-20}
+    <td> No implementation for portASSERT_IF_IN_ISR
     <td> docs
-    <td> 09.02.00
+    <td> 07.03.00
     <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> SYSFW-7463
-    <td> TISCI_MSG_GET_CLOCK always return Enabled for input clock
-    <td> DMSC
-    <td> All
-    <td> AM64x, AM243x
-    <td> API fixed to return correct state
-</tr>
-<tr>
-    <td> SYSFW-7485
-    <td> Update the PLL driver in TIFS boot flow to follow correct sequence
-    <td> DMSC
-    <td> All
-    <td> AM64x, AM243x
-    <td> Early PLL driver in security init of DMSC firmware updated
-</tr>
-<tr>
-    <td> SYSFW-7486
-    <td> PM: Cleanup additional steps in pll init startup routine
-    <td> DMSC
-    <td> All
-    <td> AM64x, AM243x
-    <td> Regular PLL driver init sequence in DMSC firmware updated
-</tr>
-<tr>
-    <td> MCUSDK-12756
-    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
-    <td> Mbed-TLS
-    <td> 08.06.00 onwards
-    <td> None
-</tr>
-<tr>
-    <td> SITSW-4937
-    <td> ENET - MII padconfig pins are not getting configured from the SYSCONFIG generated code
-    <td> Ethernet
-    <td> 09.01.00 onwards
-    <td> None
-</tr>
-<tr>
-    <td> SITSW-4932
-    <td> ENET - 10M link speed is not working 
-    <td> Ethernet
-    <td> 09.01.00 onwards
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7981
-    <td> Ethernet: FDB: Clearing issue during initialization
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7982
-    <td> Ethernet: 10M: Race condition during IEP CMP config
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7990
-    <td> Ethernet: HD: Need to handle CRS, COL connections combination in firmware.
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7980
-    <td> Ethernet: FDB: Learning and Flushing Issues
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7851
-    <td> [ENET_ICSSG] Ping does not work on the other port in Cut-through mode
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
-    <td> None
+    <td> Added the implementation
 </tr>
 </table>
 
@@ -519,15 +417,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Workaround
 </tr>
 <tr>
-    <td> MCUSDK-13641
-    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
-    <td> Build
-    <td> 10.00.00 onwards
-    <td> All SoCs
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13350
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-22, EXT_SITMPUSW-22}
     <td> Pcie_benchmark, Pcie_buf_transfer, Pcie_legacy_irq, Pcie_msi_irq, Pcie_msix_irq and sbl_pcie are broken on 9.2.1 release
     <td> PCIE
     <td> 9.2.1 onwards
@@ -535,7 +425,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> None.
 </tr>
 <tr>
-    <td> MCUSDK-626
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-21, EXT_SITMPUSW-21}
     <td> DMA not working with ADC FIFO 1
     <td> ADC
     <td> 7.3.0 onwards
@@ -544,7 +434,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 
 <tr>
-    <td> MCUSDK-2113
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-23, EXT_SITMPUSW-23}
     <td> [Docs] Sysfw RM/PM documentation doesn't specify AM243x
     <td> Docs
     <td> 8.0.0 onwards
@@ -552,7 +442,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-2715
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-24, EXT_SITMPUSW-24}
     <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
     <td> SECURITY
     <td> 8.2.0 onwards
@@ -560,23 +450,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-6262
-    <td> [AM243X] : MMCSD read io example is not functional on eMMC if the APP_MMCSD_START_BLK is changed for MMCSD_write and MMCSD_read
-    <td> MMCSD
-    <td> 8.3.0 owards
-    <td> AM243x, AM64x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8842
-    <td> OSPI Writes fail with multi threaded applications
-    <td> OSPI
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8938
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-25, EXT_SITMPUSW-25}
     <td> Last 512KB of memory is not accessible in dev boot mode flow
     <td> SBL
     <td> 8.4.0
@@ -584,160 +458,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Use other boot modes
 </tr>
 <tr>
-    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
-    <td> 8.6.0
-    <td> AM64x, AM243x, AM263X, AM273X
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10691
-    <td> flash sequence does not work for MX25U51245G (4-4-4 mode)
-    <td> Flash
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10939
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-26, EXT_SITMPUSW-26}
     <td> PCIe MSI error when connected to Linux Root Complex
     <td> PCIe
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
 </tr>
-<tr>
-    <td> MCUSDK-11028
-    <td> PCIe as End Point throwing error when changing BAR aperture
-    <td> PCIe
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-11507
-    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
-    <td> CPSW
-    <td> 8.2.0 onwards
-    <td> AM64x, AM243x
-    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
-</tr>
-<tr>
-    <td> MCUSDK-11652
-    <td> PCIE benchmarking is not working for (variable) BUF_SIZE = 0x40
-    <td> PCIe
-    <td> 8.6.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-11730
-    <td> A wrong counter is used for Event 2 in PMU configuration
-    <td> PMU
-    <td> 9.0.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-12984
-    <td> McSPI LLD Read and write APIs not working
-    <td> McSPI
-    <td> 9.1.0 onwards
-    <td> AM64x, AM243x
-    <td> Use MCSPI_transfer() APIs
-</tr>
-<tr>
-    <td> MCUSDK-13120
-    <td> Pcie_legacy_irq example is broken
-    <td> PCIE
-    <td> 9.0.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-3626
-    <td> Enet: Phy tuning is not done correctly on AM64x/AM243x and AM263x platforms
-    <td> Enet
-    <td> 8.1.0 onwards
-    <td> AM64x, AM243x
-    <td> PHY delay is not tuned but set to value based on limited testing on a small set of boards.If packet drops are still seen, we can force the phy to set to 100mbps.Make below change in application code:
-	  linkCfg->speed     = ENET_SPEED_100MBIT;
-      linkCfg->duplexity = ENET_DUPLEX_FULL;
-</tr>
-<tr>
-    <td> MCUSDK-8376
-    <td> LWIP web server application crashes in server stress test
-    <td> Enet, LWIP
-    <td> 8.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-9739
-    <td> AM64B SK loss of packet on using CPSW switch
-    <td> Networking
-    <td> 8.5.0
-    <td> AM64x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10679
-    <td> CPSW UDP Iperf test instability on AM243x
-    <td> Networking
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> PINDSW-6452
-    <td> ICSSG based standard Ethernet drops packets, limits TCP throughput to 600M
-    <td> Ethernet
-    <td> AM64x, AM243x
-    <td> 08.06.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8376
-    <td> LWIP web server application crashes in server stress test
-    <td> Ethernet
-    <td> AM64x, AM243x
-    <td> 09.00.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13138
-    <td> AM243x/ AM64x: ENET: gPTP in ICSSG Mac mode (dual mac) doesn't work on Mac Port 2
-    <td> Ethernet
-    <td> AM64x, AM243x
-    <td> 09.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> SYSFW-6432
-    <td> Set device API doesn't return Error when PD is in transition state
-    <td> SYSFW
-    <td> AM64x, AM243x
-    <td> 07.03.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> SYSFW-6426
-    <td> Ownership of a firewall region can be transferred to an invalid host
-    <td> SYSFW
-    <td> AM64x, AM243x
-    <td> 07.03.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-12756
-    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
-    <td> Mbed-TLS
-    <td> 08.06.00 onwards
-    <td> None
-</tr>
-
-
 </table>
 
 ## Errata
@@ -833,7 +560,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Workaround
 </tr>
 <tr>
-    <td> MCUSDK-208
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-27, EXT_SITMPUSW-27}
     <td> gmake with -j can sometimes lock up Windows command prompt
     <td> Build
     <td> 7.3.0

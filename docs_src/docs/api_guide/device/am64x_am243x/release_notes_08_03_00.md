@@ -71,15 +71,15 @@ AM243x | R5F, M4F        | AM243x GP EVM (referred to as am243x-evm in code), \n
 
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, M4F, A53  | @VAR_CCS_VERSION
-SysConfig               | R5F, M4F, A53  | @VAR_SYSCFG_VERSION, build @VAR_SYSCFG_BUILD
-TI ARM CLANG            | R5F, M4F       | @VAR_TI_ARM_CLANG_VERSION
-GCC AARCH64             | A53            | @VAR_GCC_AARCH64_VERSION
-GCC ARM                 | R5F            | @VAR_GCC_ARM_VERSION (AM64x only)
-FreeRTOS Kernel         | R5F, M4F, A53  | @VAR_FREERTOS_KERNEL_VERSION
-FreeRTOS SMP Kernel     | A53            | @VAR_FREERTOS_SMP_KERNEL_VERSION
-Tiny USB                | R5F            | @VAR_TINYUSB_VERSION
-LwIP                    | R5F            | @VAR_LWIP_VERSION
+Code Composer Studio    | R5F, M4F, A53  | 11.2.0
+SysConfig               | R5F, M4F, A53  | 1.12.1, build 2406
+TI ARM CLANG            | R5F, M4F       | 1.3.1.LTS
+GCC AARCH64             | A53            | 9.2-2019.12
+GCC ARM                 | R5F            | 7-2017-q4-major (AM64x only)
+FreeRTOS Kernel         | R5F, M4F, A53  | 10.4.3
+FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
+Tiny USB                | R5F            | 0.10.0
+LwIP                    | R5F            | 2.12.2
 
 ## Key Features
 
