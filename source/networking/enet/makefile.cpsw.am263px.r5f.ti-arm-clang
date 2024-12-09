@@ -76,6 +76,7 @@ FILES_common := \
     enet_appethpatterns.c \
     enet_cpdmautils.c \
     enet_ioctlutils.c \
+    ether_ring.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/core \
@@ -96,6 +97,7 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V2 \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -108,7 +110,6 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/emac/V5 \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5 \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5/V5_2 \
@@ -118,6 +119,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am263px \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px \
     -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc \
 
 DEFINES_common := \
     -DSOC_AM263PX \

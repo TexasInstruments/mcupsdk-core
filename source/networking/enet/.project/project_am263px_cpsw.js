@@ -74,6 +74,9 @@ const files = {
         "enet_appethpatterns.c",
         "enet_cpdmautils.c",
         "enet_ioctlutils.c",
+
+        /* Ether Ring */
+        "ether_ring.c",
     ],
 };
 
@@ -101,6 +104,7 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V2",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/src",
 
     ],
 };
@@ -114,7 +118,6 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/emac/V5",
@@ -128,7 +131,10 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
 
         "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/inc",
+
     ],
+
 };
 
 
