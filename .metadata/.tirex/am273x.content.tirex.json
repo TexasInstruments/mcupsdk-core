@@ -4844,44 +4844,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "lldp_app",
-        "location": "../../source/networking/enet/core/examples/tsn/lldp_cpsw_app/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM273x_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "tsn",
-            "lldp_cpsw_app",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Cpsw Lwip Https Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_https",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

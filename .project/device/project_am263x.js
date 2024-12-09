@@ -234,7 +234,7 @@ const example_file_list = [
     "source/networking/icss_emac/firmware/icss_switch/mii/.project/project.js",
     "source/networking/enet/core/examples/enet_tx_scatter_gather/.project/project.js",
     "source/networking/enet/core/examples/tsn/est_cpsw_app/.project/project.js",
-    "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
+    // "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/.project/project.js",
     "examples/pru_io/sent/encoder/firmware/.project/project.js",

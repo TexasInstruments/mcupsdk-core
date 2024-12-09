@@ -224,7 +224,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_lwip_icssg/.project/project.js",
-    "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
+    // "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/.project/project.js",
     "source/networking/enet/core/examples/enet_icssg_tas/.project/project.js",
     "source/networking/enet/core/examples/enet_layer2_icssg/icssg_layer2_dualmac/.project/project.js",
