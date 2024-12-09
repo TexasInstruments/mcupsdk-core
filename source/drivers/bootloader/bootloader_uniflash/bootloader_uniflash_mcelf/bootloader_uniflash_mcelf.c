@@ -81,20 +81,28 @@ static int32_t MCELF_flashVerifyXIPFile(uint32_t flashIndex, uint8_t *fileBuf, u
 						uint32_t src_addr = (uint32_t)fileBuf + entry->offset;
 						uint32_t size = entry->memsz;
 
-						if ((dest_addr % eraseBlockSize) == 0)
+						if(0 != eraseBlockSize) 
 						{
-							/* Only flash to offsets which are a multiple of blockSize */
-
-							if (NULL != verifyBuf && verifyBufSize > 0)
+							if ((dest_addr % eraseBlockSize) == 0)
 							{
-								status = Bootloader_uniflashFlashVerifyFile(flashIndex, (uint8_t *)src_addr, size, verifyBuf, verifyBufSize, dest_addr);
+								/* Only flash to offsets which are a multiple of blockSize */
+
+								if (NULL != verifyBuf && verifyBufSize > 0)
+								{
+									status = Bootloader_uniflashFlashVerifyFile(flashIndex, (uint8_t *)src_addr, size, verifyBuf, verifyBufSize, dest_addr);
+								}
+								else
+								{
+									status = Bootloader_uniflashFlashFile(flashIndex, (uint8_t *)src_addr, size, dest_addr);
+								}
+								if (status == SystemP_FAILURE)
+								{
+									break;
+								}
 							}
 							else
 							{
-								status = Bootloader_uniflashFlashFile(flashIndex, (uint8_t *)src_addr, size, dest_addr);
-							}
-							if (status == SystemP_FAILURE)
-							{
+								status = SystemP_FAILURE;
 								break;
 							}
 						}
