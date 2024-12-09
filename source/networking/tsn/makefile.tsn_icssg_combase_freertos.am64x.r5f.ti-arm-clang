@@ -57,6 +57,7 @@ DEFINES_common := \
     -DTSNPKGVERSION=\"1.1.3\" \
     -DPRINT_FORMAT_NO_WARNING \
     -DENET_ENABLE_PER_ICSSG=1 \
+    -DUSE_LINK_CHANGE_EVENT=0 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

@@ -50,6 +50,7 @@ const defines = {
         'TSNPKGVERSION=\\"1.1.3\\"',
         'PRINT_FORMAT_NO_WARNING',
         "ENET_ENABLE_PER_ICSSG=1",
+        "USE_LINK_CHANGE_EVENT=0",
     ],
 };
 
