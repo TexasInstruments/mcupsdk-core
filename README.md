@@ -97,6 +97,9 @@ TI has an amazing collection of tutorials on MCU+ Academy to help you get starte
 
 - Windows 10 64bit
 - Ubuntu 18.04 64bit
+- Mac OS 14.6 64bit
+
+Note that these are the versions on which SDK has been validated. Higher versions may also work.
 
 ### Clone and build from GIT
 

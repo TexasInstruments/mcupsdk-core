@@ -41,12 +41,12 @@ AM263Px| R5F             | AM263Px LaunchPad              (referred to as am263P
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.8.0
-SysConfig               | R5F            | 1.21.0 build, build 3721
-TI ARM CLANG            | R5F            | 4.0.0.LTS
-FreeRTOS Kernel         | R5F            | 10.4.3
+Code Composer Studio    | R5F            | 12.8.1
+SysConfig               | R5F            | 1.21.2 build, build 3837
+TI ARM CLANG            | R5F            | 4.0.1.LTS
+FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
-Mbed-TLS                | R5F            | mbedtls-3.0.0
+Mbed-TLS                | R5F            | 2.13.1
 
 
 ## Key Features

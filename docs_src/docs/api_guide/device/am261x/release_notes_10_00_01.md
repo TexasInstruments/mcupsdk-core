@@ -2,51 +2,54 @@
 
 [TOC]
 
-\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled. See **Known Issues** below.
+\attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
-
-\attention 3. This is an early access release with limited testing to enable early development for customers.
-
-\attention 4. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog
+\attention 2. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog
               using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel
               flow is mandatory.
-\attention 5. Networking examples support has been tested only on AM261x-LP board.
+\attention 3. Networking examples support has been tested only on AM261x-LP board.
+\attention 4. SDK Datasheet is not generated for AM261x. This will be available in the next SDK release.
+\attention 5. This is an early access release for AM261x SOM Board with limited testing to enable early development for customers. Basic validation of every IP has been done
+              except Networking components and USB.
+\attention 6. There is a known issue of OSPI Phy Tuning not working on AM261x LP and SOM Board. So, Phy tuning is disabled by default in Examples and SBL OSPI. 
+\attention 7. DFU Utils tool is not supported on Mac systems due to a build issue.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
 
-\note Current PMIC support in SDK is bare minimum meant to disable PMIC watchdog and should not be used beyond this including safety use-case etc
-
 ## New in this Release
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|----------------------------------- 
--                                                                         | -
-
+SOM Board Basic Support                                                                         | SDK Infra
+Derby PMIC Driver and Example support                                                           | SDK Infra
+Basic Ethernet MAC and Switch Support                                                           | Networking
+LwIP TCP/IP stack and gPTP TimeSync stack                                                       | Networking
+Auto PHY (DP83TG720-EVM-AM2) and Industrial PHY (DP83826-EVM-AM2) Support                       | Networking
 
 # Modules Not tested/supported in this release
 
-- -
+- USB and Networking support on AM261x SOM Board.
+- OSPI Phy Tuning on AM261x LP and SOM Board.
 
 ## Device and Validation Information
 
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
 AM261x | R5F             | AM261x Launchpad     (referred to as am261x-lp in code). \n                  | Windows 10 64b or Ubuntu 18.04 64b or MacOS
-
+AM261x | R5F             | AM261x SOM           (referred to as am261x-som in code). \n                 | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.8.0
-SysConfig               | R5F            | 1.21.0 build, build 3721
-TI ARM CLANG            | R5F            | 4.0.0.LTS
-FreeRTOS Kernel         | R5F            | 10.4.3
+Code Composer Studio    | R5F            | 12.8.1
+SysConfig               | R5F            | 1.21.2 build, build 3837
+TI ARM CLANG            | R5F            | 4.0.1.LTS
+FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
-Mbed-TLS                | R5F            | mbedtls-3.0.0
+Mbed-TLS                | R5F            | 2.13.1
 
 
 ## Key Features
@@ -105,11 +108,12 @@ ECAP         | R5F            | YES               | yes. Example : ecap_edma    
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features, global load and link feature           | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement                                                                                                           | -
-FSI          | R5F            | YES               | No                                    | RX, TX, polling, interrupt mode, single lane loopback.                                                                                                     | - FSI Spi Mode
+FSI          | R5F            | YES               | YES                                   | RX, TX, polling, interrupt, DMA mode, single lane loopback.                                                                                                     | - FSI Spi Mode
 GPIO         | R5F            | YES               | NA                                    | Output, Input and Interrupt functionality                                                                                                                       | -
 I2C          | R5F            | YES               | No                                    | Controller mode, basic read/write                                                                                                                               | -
 IPC Notify   | R5F            | YES               | NA                                    | Mailbox functionality, IPC between RTOS/NORTOS CPUs                                                                                                             | M4F core
 IPC Rpmsg    | R5F            | YES               | NA                                    | RPMessage protocol based IPC                                                                                                                                    | M4F core
+LIN          | R5F            | YES               | YES                                   | RX, TX, polling, interrupt, DMA mode.                                                                                                                           | -
 MCAN         | R5F            | YES               | No                                    | RX, TX, interrupt and polling mode, Corrupt Message Transmission Prevention, Error Passive state, Bus Off State, Bus Monitoring Mode                            | -
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                   | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
@@ -139,6 +143,7 @@ FLASH      | R5F            | YES               | OSPI Flash                    
 LED        | R5F            | YES               | GPIO                                                        | -
 ETHPHY     | R5F            | YES               | Tested with ethercat_slave_beckhoff_ssc_demo example        | -
 IOEXPANDER | R5F            | YES               | IO configurability                                          | -
+PMIC       | R5F            | YES               | Watchdog Reset and disable                                  | -
 
 ### Networking
 
@@ -168,13 +173,47 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> Networking
     <td> 10.00.00 onwards
     <td> -
+    <td> -
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-13641
+    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
+    <td> Build
+    <td> 10.00.00 onwards
+    <td> AM261x
+    <td> Issue fixed in 4.0.1 LTS CLANG compiler
+</tr>
+<tr>
+    <td> MCUSDK-13856
+    <td> PRU Clock not configured in SBL.
+    <td> PRU
+    <td> 10.00.00
+    <td> AM261x
+    <td> ICSS Core clock configuration support added in SOC RCM module.
+</tr>
+<tr>
+    <td> MCUSDK-13772
+    <td> SysCfg showing smaller TCM size in memory configurator
+    <td> Memory Configurator
+    <td> 10.00.00
+    <td> AM261x
+    <td> Memory Configurator metadata updated with correct TCM Size.
+</tr>
+<tr>
+    <td> MCUSDK-13851
+    <td> AM261x does not have support for UART4 and UART5.
+    <td> UART
+    <td> 10.00.00
+    <td> AM261x
+    <td> Added UART4 and UART5 instance support in SysCfg.
+</tr>
+<tr>
+    <td> MCUSDK-13773
+    <td> EEPROM Read-Write not working properly.
+    <td> I2C
+    <td> 10.00.00
+    <td> AM261x
+    <td> EEPROM Address was incorrect.
 </tr>
 </table>
 
@@ -186,13 +225,6 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <th> Module
     <th> Reported in release
     <th> Workaround
-</tr>
-<tr>
-    <td> MCUSDK-13641
-    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
-    <td> Build
-    <td> 10.00.00 onwards
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-13748
@@ -261,6 +293,34 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> MCUSDK-13513
     <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
     <td> Networking
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14052
+    <td> AM261x: OSPI Phy tuning fails on am261x LP
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14054
+    <td> MMCSD: SysCfg sanity failure on AM26x devices
+    <td> MMCSD
+    <td> 10.00.01 onwards
+    <td> Use default configuration as in SDK examples.
+</tr>
+<tr>
+    <td> MCUSDK-14055
+    <td> SBL DFU and SBL DFU Uniflash Example failure
+    <td> USB
+    <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14056
+    <td> Klocwork issues on USB Driver
+    <td> USB
     <td> 10.00.01 onwards
     <td> -
 </tr>

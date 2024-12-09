@@ -480,6 +480,9 @@ and waits for 5 seconds before running the application binary
 
 - This script is used in DFU boot mode for sending the SBL and appimage binaries to the EVM via USB DFU.
 - Make sure that \ref INSTALL_DFU_UTIL tool is installed properly and the DFU enumeration is verified.
+\cond SOC_AM261X 
+- The source code for DFU Utils tool is available in GitHub (https://github.com/TexasInstruments/dfu-util) and Prebuilt binary is packaged in SDK.
+\endcond
 - Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
 - Change the boot mode to DFU boot mode \ref EVM_SETUP_PAGE
 - **POWER cycle the EVM**
