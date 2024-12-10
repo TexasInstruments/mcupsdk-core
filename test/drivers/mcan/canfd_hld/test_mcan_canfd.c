@@ -332,16 +332,21 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     attrs->OptionTLVtype                  = CANFD_Option_MCAN_LOOPBACK,
     attrs->CANFDMcanloopbackParams.enable = true,
     attrs->CANFDMcanloopbackParams.mode   = CANFD_MCANLoopBackMode_INTERNAL,
-    bitTimingParams->nomBrp          = 0x1U,
-    bitTimingParams->nomPropSeg      = 0x1EU,
-    bitTimingParams->nomPseg1        = 0x25U,
-    bitTimingParams->nomPseg2        = 0xCU,
-    bitTimingParams->nomSjw          = 0x1U,
-    bitTimingParams->dataBrp         = 0x2U,
-    bitTimingParams->dataPropSeg     = 0x3U,
-    bitTimingParams->dataPseg1       = 0x3U,
-    bitTimingParams->dataPseg2       = 0x1U,
-    bitTimingParams->dataSjw         = 0x1U,
+    /* 
+     *  Provide actual Bit-timing parameters as these values will be directly written
+     *  to MCANn_CFG_NBTP and MCANn_CFG_DBTP registers. These values can't be zero.
+     */
+    /* Default Bit-Rate 1000kbps and 5000 kbps*/
+    bitTimingParams->nomBrp          = 2U,
+    bitTimingParams->nomPropSeg      = 11U,
+    bitTimingParams->nomPseg1        = 22U,
+    bitTimingParams->nomPseg2        = 6U,
+    bitTimingParams->nomSjw          = 1U,
+    bitTimingParams->dataBrp         = 1U,
+    bitTimingParams->dataPropSeg     = 2U,
+    bitTimingParams->dataPseg1       = 4U,
+    bitTimingParams->dataPseg2       = 1U,
+    bitTimingParams->dataSjw         = 1U,
 
     /* Default Open Parameters */
     openParams->transferMode              = CANFD_TRANSFER_MODE_CALLBACK,
@@ -417,17 +422,6 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     switch (tcId)
     {
         case 13920:
-            /* 1000kbps and 5000 kbps*/
-            bitTimingParams->nomBrp          = 0x1U,
-            bitTimingParams->nomPropSeg      = 0x1EU,
-            bitTimingParams->nomPseg1        = 0x25U,
-            bitTimingParams->nomPseg2        = 0xCU,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x3U,
-            bitTimingParams->dataPseg1       = 0x3U,
-            bitTimingParams->dataPseg2       = 0x1U,
-            bitTimingParams->dataSjw         = 0x1U,
             /* mcan module configuration parameters */ //1 done
             openParams->tsSelect = 1U;
             testParams->txMsgParams = &canTxMsg[2U];
@@ -451,16 +445,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
 #endif
 
             /* mcan module bit timing parameters. 1000kbps and 2500 kbps */ //1
-            bitTimingParams->nomBrp          = 0x1U,
-            bitTimingParams->nomPropSeg      = 0x1EU,
-            bitTimingParams->nomPseg1        = 0x25U,
-            bitTimingParams->nomPseg2        = 0xCU,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x7U,
-            bitTimingParams->dataPseg1       = 0x6U,
-            bitTimingParams->dataPseg2       = 0x2U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 2U,
+            bitTimingParams->nomPropSeg      = 11U,
+            bitTimingParams->nomPseg1        = 22U,
+            bitTimingParams->nomPseg2        = 6U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 13U,
+            bitTimingParams->dataPseg1       = 14U,
+            bitTimingParams->dataPseg2       = 4U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module configuration parameters */ //2 done //same as default
             testParams->txMsgParams = &canTxMsg[7U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];  /* extended message ID filters */
@@ -482,16 +476,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN3_MCAN_LVL_INT_1,
 #endif        
             /* mcan module bit timing parameters. 250kbps and 5000 kbps */ //2
-            bitTimingParams->nomBrp          = 0x8U,
-            bitTimingParams->nomPropSeg      = 0x11U,
-            bitTimingParams->nomPseg1        = 0x11U,
-            bitTimingParams->nomPseg2        = 0x5U,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x3U,
-            bitTimingParams->dataPseg1       = 0x3U,
-            bitTimingParams->dataPseg2       = 0x1U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 10U,
+            bitTimingParams->nomPropSeg      = 13U,
+            bitTimingParams->nomPseg1        = 14U,
+            bitTimingParams->nomPseg2        = 4U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 2U,
+            bitTimingParams->dataPseg1       = 4U,
+            bitTimingParams->dataPseg2       = 1U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module configuration parameters */ //2 done //same as default
             testParams->txMsgParams = &canTxMsg[7U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];  /* extended message ID filters */
@@ -500,16 +494,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             break;
         case 13923:
             /* mcan module bit timing parameters. 125kbps and 5000 kbps */ //3
-            bitTimingParams->nomBrp          = 0x8U,
-            bitTimingParams->nomPropSeg      = 0x1EU,
-            bitTimingParams->nomPseg1        = 0x27U,
-            bitTimingParams->nomPseg2        = 0xAU,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x3U,
-            bitTimingParams->dataPseg1       = 0x3U,
-            bitTimingParams->dataPseg2       = 0x1U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 20U,
+            bitTimingParams->nomPropSeg      = 13U,
+            bitTimingParams->nomPseg1        = 14U,
+            bitTimingParams->nomPseg2        = 4U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 2U,
+            bitTimingParams->dataPseg1       = 4U,
+            bitTimingParams->dataPseg2       = 1U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module configuration parameters */ //2 done //same as default
             testParams->txMsgParams = &canTxMsg[7U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];  /* extended message ID filters */
@@ -772,16 +766,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             break;
         case 13950:
             /* mcan module bit timing parameters. 1000kbps and 2500 kbps */ //1
-            bitTimingParams->nomBrp          = 0x1U,
-            bitTimingParams->nomPropSeg      = 0x1EU,
-            bitTimingParams->nomPseg1        = 0x25U,
-            bitTimingParams->nomPseg2        = 0xCU,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x7U,
-            bitTimingParams->dataPseg1       = 0x6U,
-            bitTimingParams->dataPseg2       = 0x2U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 2U,
+            bitTimingParams->nomPropSeg      = 11U,
+            bitTimingParams->nomPseg1        = 22U,
+            bitTimingParams->nomPseg2        = 6U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 13U,
+            bitTimingParams->dataPseg1       = 14U,
+            bitTimingParams->dataPseg2       = 4U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module configuration parameters */ //2 done //same as default
             testParams->txMsgParams = &canTxMsg[7U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];  /* extended message ID filters */
@@ -807,16 +801,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
         case 13953:
             /* mcan module bit timing parameters. */ //4
             /* mcan module bit timing parameters. 250 kbps and 5000 kbps */
-            bitTimingParams->nomBrp          = 0x4U,
-            bitTimingParams->nomPropSeg      = 0x22U,
-            bitTimingParams->nomPseg1        = 0x22U,
-            bitTimingParams->nomPseg2        = 0xBU,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x3U,
-            bitTimingParams->dataPseg1       = 0x3U,
-            bitTimingParams->dataPseg2       = 0x1U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 10U,
+            bitTimingParams->nomPropSeg      = 13U,
+            bitTimingParams->nomPseg1        = 14U,
+            bitTimingParams->nomPseg2        = 4U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 2U,
+            bitTimingParams->dataPseg1       = 4U,
+            bitTimingParams->dataPseg2       = 1U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module initialization parameters */ //1 done
             /* Transmitter Delay Compensation parameters. */
             openParams->tdcConfig.tdcf = MCAN_TDCR_TDCF_MAX + 1;
@@ -865,16 +859,16 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
         case 13956:
             /* mcan module bit timing parameters. */ //5
             /* mcan module bit timing parameters. 250kbps and 5000 kbps */ //5
-            bitTimingParams->nomBrp          = 0x2U,
-            bitTimingParams->nomPropSeg      = 0x46U,
-            bitTimingParams->nomPseg1        = 0x49U,
-            bitTimingParams->nomPseg2        = 0x10U,
-            bitTimingParams->nomSjw          = 0x1U,
-            bitTimingParams->dataBrp         = 0x2U,
-            bitTimingParams->dataPropSeg     = 0x3U,
-            bitTimingParams->dataPseg1       = 0x3U,
-            bitTimingParams->dataPseg2       = 0x1U,
-            bitTimingParams->dataSjw         = 0x1U,
+            bitTimingParams->nomBrp          = 10U,
+            bitTimingParams->nomPropSeg      = 13U,
+            bitTimingParams->nomPseg1        = 14U,
+            bitTimingParams->nomPseg2        = 4U,
+            bitTimingParams->nomSjw          = 1U,
+            bitTimingParams->dataBrp         = 1U,
+            bitTimingParams->dataPropSeg     = 2U,
+            bitTimingParams->dataPseg1       = 4U,
+            bitTimingParams->dataPseg2       = 1U,
+            bitTimingParams->dataSjw         = 1U,
             /* mcan module initialization parameters */ //1 done
             /* Transmitter Delay Compensation parameters. */
             openParams->tdcConfig.tdcf  = MCAN_TDCR_TDCF_MAX + 1;
