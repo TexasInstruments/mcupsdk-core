@@ -163,6 +163,7 @@ ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
+Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.                | -
 
 ## Fixed Issues
 
@@ -176,20 +177,52 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Resolution/Comments
 </tr>
 <tr>
-    <th> MCUSDK-13821
-    <th> ADC reference monitor instance doesn't match the reference buffer instance
-    <th> ADC
-    <th> 10.00.00
-    <th> AM263x, AM263Px
-    <th> Update the monitor instances.
+    <td>PROC_SDL-7615
+    <td> ECC example fails for SEC and DED for TPTC memories.
+    <td> SDL
+    <td> 09.00.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the example.
 </tr>
 <tr>
-    <th> MCUSDK-12262
-    <th> EPWM deadband example failure
-    <th> EPWM
-    <th> 09.02.00
-    <th> AM263x, AM263Px
-    <th> removed sync between the epwms and used the global tbclksync to synchronize the EPWMs
+    <td>PROC_SDL-8393
+    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> SDL
+    <td> 09.01.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the source code and example.
+</tr>
+<tr>
+    <td> PROC_SDL-8518
+    <td> Integrated example should have checked ECC for TPTC, ATCM, BTCM memories.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> AM263x
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-8393
+    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> SDL
+    <td> 08.06.00 onwards
+    <td> AM263x, AM263Px
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-13821
+    <td> ADC reference monitor instance doesn't match the reference buffer instance
+    <td> ADC
+    <td> 10.00.00
+    <td> AM263x, AM263Px
+    <td> Update the monitor instances.
+</tr>
+<tr>
+    <td> MCUSDK-12262
+    <td> EPWM deadband example failure
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td> removed sync between the epwms and used the global tbclksync to synchronize the EPWMs
 </tr>
 <tr>
     <td> MCUSDK-13164
@@ -350,13 +383,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-5979
-    <td> R5F Cache ECC diagnostics are not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
     <td> MCUSDK-12756
     <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
     <td> Mbed-TLS
@@ -369,13 +395,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> EPWM
     <td> 09.01.00 onwards
     <td> The Waveform of the EPWM is correct and is as expected.
-</tr>
-<tr>
-    <td> PROC_SDL-7615
-    <td> ECC example fails for SEC and DED for TPTC memories.
-    <td> SDL
-    <td> 09.02.00 onwards
-    <td> None
 </tr>
 <tr>
     <td> MCUSDK-13202
@@ -392,25 +411,11 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-8393
-    <td> In ECC bus safety, error injection test writes to address 0x0.
-    <td> SDL
-    <td> 08.06.00 onwards
-    <td> None
-</tr>
-<tr>
     <td> PROC_SDL-8519
     <td> In ECC for R5F data cache only, double bit test is not supported.
     <td> SDL
     <td> 10.00.00 onwards
     <td> ECC test for single bit injection on R5F data cache, release profile binary is showing some inconsistency on result.
-</tr>
-<tr>
-    <td> PROC_SDL-8518
-    <td> Integrated example should have checked ECC for TPTC, ATCM, BTCM memories.
-    <td> SDL
-    <td> 10.00.00 onwards
-    <td> None.
 </tr>
 <tr>
     <td> MCUSDK-13466

@@ -162,15 +162,16 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F Cache
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F Cache - DED
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode. TMU and RL2 are also validated                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
 TMU ROM Checksum  | R5F             | NA                |  NORTOS | ROM checksum for TMU                                                                         | -
 Time out Gasket(STOG)  | R5F             | NA                |  NORTOS | Timeout gasket feature                    | -
 Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, under and thershold temperature interrupts                   | -
+Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.|  ECC for TPTC and STC. 
 
-**Note**: SDL is validate only on ControlCard.
+**Note**: SDL is validated only on ControlCard.
 
 ### PRU IO
 
@@ -191,20 +192,36 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Resolution/Comments
 </tr>
 <tr>
-    <th> MCUSDK-13821
-    <th> ADC reference monitor instance doesn't match the reference buffer instance
-    <th> ADC
-    <th> 10.00.00
-    <th> AM263x, AM263Px
-    <th> Update the monitor instances.
+    <td>PROC_SDL-7615
+    <td> ECC example fails for SEC and DED for TPTC memories.
+    <td> SDL
+    <td> 09.00.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the example.
 </tr>
 <tr>
-    <th> MCUSDK-12262
-    <th> EPWM deadband example failure
-    <th> EPWM
-    <th> 09.02.00
-    <th> AM263x, AM263Px
-    <th> removed sync between the epwms and used the global tbclksync to synchronize the EPWMs
+    <td>PROC_SDL-8393
+    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> SDL
+    <td> 09.01.00 Onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the source code and example.
+</tr>
+<tr>
+    <td> MCUSDK-13821
+    <td> ADC reference monitor instance doesn't match the reference buffer instance
+    <td> ADC
+    <td> 10.00.00
+    <td> AM263x, AM263Px
+    <td> Update the monitor instances.
+</tr>
+<tr>
+    <td> MCUSDK-12262
+    <td> EPWM deadband example failure
+    <td> EPWM
+    <td> 09.02.00
+    <td> AM263x, AM263Px
+    <td> removed sync between the epwms and used the global tbclksync to synchronize the EPWMs
 </tr>
 <tr>
     <td> MCUSDK-13164
@@ -394,13 +411,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-7615
-    <td> ECC example fails for SEC and DED for TPTC memories.
-    <td> SDL
-    <td> 09.02.00 onwards
-    <td> None
-</tr>
-<tr>
     <td> PROC_SDL-8392
     <td> In ECC bus safety example, ECC error is not properly cleared at the source.
     <td> SDL
@@ -408,11 +418,18 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-8393
-    <td> In ECC bus safety, error injection test writes to address 0x0.
+    <td> PROC_SDL-8787
+    <td> ECC TPTC and STC examples are not supported in SDL integrated example.
     <td> SDL
-    <td> 09.00.00 onwards
-    <td> None
+    <td> 10.01.00 onwards
+    <td> Use standalone examples.
+</tr>
+<tr>
+    <td> PROC_SDL-8519
+    <td> In ECC for R5F data cache only, double bit test is not supported.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> None.
 </tr>
 <tr>
     <td> MCUSDK-13473
