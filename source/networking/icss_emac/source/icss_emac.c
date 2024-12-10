@@ -1711,7 +1711,7 @@ void ICSS_EMAC_rxInterruptHandler(void *args)
 void ICSS_EMAC_txInterruptHandler(void *args)
 {
     ICSS_EMAC_Handle        icssEmacHandle = (ICSS_EMAC_Handle)args;
-    uint32_t                intStatus;
+    volatile uint32_t       intStatus = 0;
     PRUICSS_Handle          pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
     PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
 
@@ -2169,6 +2169,7 @@ static inline void ICSS_EMAC_clearRxIrq(ICSS_EMAC_Handle icssEmacHandle)
 {
     PRUICSS_Handle          pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
     PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+    volatile uint32_t intStatus = 0;
 
     if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask == ICSS_EMAC_MODE_MAC2)
     {
@@ -2178,7 +2179,7 @@ static inline void ICSS_EMAC_clearRxIrq(ICSS_EMAC_Handle icssEmacHandle)
     {
         if(((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->splitQueue)
         {
-            uint32_t intStatus = HW_RD_REG32((pruicssHwAttrs->intcRegBase + CSL_ICSS_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG0));
+            intStatus = HW_RD_REG32((pruicssHwAttrs->intcRegBase + CSL_ICSS_PR1_ICSS_INTC_INTC_SLV_ENA_STATUS_REG0));
 
             if (intStatus & (((uint32_t)1U) << 20))
                 ICSS_EMAC_clearIrq(icssEmacHandle, 20);
