@@ -654,6 +654,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_r5/gnu/inc/",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",

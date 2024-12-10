@@ -603,6 +603,8 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_r5/gnu/inc/ \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
