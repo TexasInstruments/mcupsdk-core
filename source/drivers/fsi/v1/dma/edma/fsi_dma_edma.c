@@ -216,10 +216,18 @@ int32_t FSI_Tx_configureDma(const FSI_Tx_Object *fsiTxObj, uint32_t *dmaCh,
         baseAddr   = edmaChCfg->edmaBaseAddr;
         regionId   = edmaChCfg->edmaRegionId;
 
-        /* Request channel */
-        EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         *dmaCh, *tcc, *param, EDMA_TEST_EVT_QUEUE_NO);
-
+        if(tcc != NULL)
+        {
+            /* Request channel */
+            EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+            *dmaCh, *tcc, *param, EDMA_TEST_EVT_QUEUE_NO);
+        }
+        else
+        {
+            /* Request channel */
+            EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+            *dmaCh, 0, *param, EDMA_TEST_EVT_QUEUE_NO);
+        }
         /* EDMA Params Description
         * tcc  - The tcc number on which the completion interrupt is generated
         * aCnt - Number of bytes in each word
@@ -412,9 +420,18 @@ int32_t FSI_Rx_configureDma(const FSI_Rx_Object *fsiRxObj, uint32_t *dmaCh,
         baseAddr   = edmaChCfg->edmaBaseAddr;
         regionId   = edmaChCfg->edmaRegionId;
 
-        /* Request channel */
-        EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         *dmaCh, *tcc, *param, EDMA_TEST_EVT_QUEUE_NO);
+        if(tcc != NULL)
+        {
+            /* Request channel */
+            EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+            *dmaCh, *tcc, *param, EDMA_TEST_EVT_QUEUE_NO);
+        }
+        else
+        {
+            /* Request channel */
+            EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+            *dmaCh, 0, *param, EDMA_TEST_EVT_QUEUE_NO);
+        }
 
         /* EDMA Params Description
         * tcc  - The tcc number on which the completion interrupt is generated
