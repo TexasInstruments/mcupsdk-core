@@ -98,13 +98,13 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 -------------|----------------|-------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------
 ADC, ADC_R   | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
-CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter                                                                                                                                           | CMPSS Dac LoopBack feature
+CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter, Calibration, Diode Emulation example                                                                                                                             | CMPSS Dac LoopBack feature
 CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes, ecap signal monitoring example                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features           | -
-EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement                                                                                                           | -
+EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement, Speed and Direction Measurement, cw-ccw modes                                                                                                                              | -
 FSI          | R5F            | YES               | Yes. Example: fsi_loopback_dma        | RX, TX, polling, interrupt mode, Dma, single lane loopback.                                                                                                     | - FSI Spi Mode
 GPIO         | R5F            | YES               | NA                                    | Output, Input and Interrupt functionality                                                                                                                       | -
 I2C          | R5F            | YES               | No                                    | Controller mode, basic read/write                                                                                                                               | -
@@ -119,7 +119,7 @@ PMU          | R5F            | NO                | NA                          
 OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled                                                                                                               | OptiShare
 OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selection, comparator setup for Interrupt, DMA requests                                                                                  | Capture feature, fast enabling/disabling of events not tested
-RESOLVER     | R5F            | YES               | No                                    | Angle and Speed Calcution. input Band Pass Filter, Manual Phase Gain Correction and Manual Ideal Sample Selection Mode calculation                              | Tuning, Safety Diagnostic features
+RESOLVER     | R5F            | YES               | No                                    | Angle and Speed Calcution. input Band Pass Filter, Manual Phase Gain Correction and Manual Ideal Sample Selection Mode calculation, Non-Rotational Safety Diagnostic features, Dual motor/Single motor redundant sensing                                                                                                | Tuning, Rotational Safety Diagnostic features
 SDFM         | R5F            | YES               | yes. Example : sdfm_filter_sync_dmaread | Filter data read from CPU, Filter data read with PWM sync, triggered DMA read from the Filter FIFO, ECAP Clock LoopBack                                                                                                       | -
 SOC          | R5F            | YES               | NA                                    | Lock/unlock MMRs, clock enable, set Hz, Xbar configuration, SW Warm Reset, Address Translation                                                                  | -
 SPINLOCK     | R5F            | NA                | NA                                    | Lock, unlock HW spinlock                                                                                                                                        | -
@@ -191,12 +191,49 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <th> MCUSDK-13821
+    <th> ADC reference monitor instance doesn't match the reference buffer instance
+    <th> ADC
+    <th> 10.00.00
+    <th> AM263x, AM263Px
+    <th> Update the monitor instances.
+</tr>
+<tr>
+    <th> MCUSDK-12262
+    <th> EPWM deadband example failure
+    <th> EPWM
+    <th> 09.02.00
+    <th> AM263x, AM263Px
+    <th> removed sync between the epwms and used the global tbclksync to synchronize the EPWMs
+</tr>
+<tr>
+    <td> MCUSDK-13164
+    <td> AM26x: EPWM DeadBand example failure
+    <td> EPWM
+    <td> 10.00.00 onwards
+    <td> phase shift adds a tbclk delay. added another EPWM instance to sync.
+</tr>
+<tr>
+    <td> MCUSDK-12265
+    <td> SDFM example failure on am263px-lp
+    <td> SDFM
+    <td> 09.01.00
+    <td> AM263Px
+    <td> GEL updates on new CCS version, Previously working only with SBL
+</tr>
+<tr>
+    <td> MCUSDK-13634
+    <td> EPWM: Remove eventsUsed from Action Qualifier Syscfg.
+    <td> EPWM 
+    <td> 10.00.00 onwards
+    <td> removed unused eventUsed element from the examples syscfg 
+</tr>
+<tr>
+    <td> MCUSDK-13670
+    <td> SDFM ECAP loopback example used explicit HW_REG_RD
+    <td> SDFM 
+    <td> 10.00.00 onwards
+    <td> updated the register read with corresponding API.
 </tr>
 </table>
 
@@ -217,11 +254,39 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-12262
-    <td> AM263Px: EPWM deadband example failure
+    <td> MCUSDK-13865
+    <td> HRPWM Deadband sfo example has 1ns jitter
     <td> EPWM
-    <td> 09.02.00
-    <td> remove sync between the epwms and use the global tbclksync to synchronize the EPWMs
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13201
+    <td> HRPWM waveform not generating (in updwon count) when prescaler is non-zero and HRPE is enabled
+    <td> EPWM
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-13834
+    <td> EQEP: EQEP frequency measurement example is not working as expected
+    <td> EQEP
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-14059
+    <td> CMPSS DE example has Glitch in PWM output
+    <td> CMPSS
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-14051
+    <td> EQEP : CW CCW example doesn't use polling or interrupt
+    <td> EQEP
+    <td> 10.00.01
+    <td> None
 </tr>
 <tr>
     <td> MCUSDK-11507
@@ -576,6 +641,36 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <th> Resolver
+    <th> RDC_getDiagnosticsSinCosGainDriftData, RDC_setDiagnosticsSinCosGainDriftData
+    <th> structure udpate Diag_Mon_SinCos_Gain_drift_data
+    <th> threshold elements to type uint16_t from int16_t, gain_drift_en element name is updated to match.
+</tr>
+<tr>
+    <th> Resolver
+    <th> RDC_init
+    <th> structure udpate Core_config_t
+    <th> gainByass elements to type uint16_t from int16_t 
+</tr>
+<tr>
+    <th> Resolver
+    <th> RDC_getCalibrationData
+    <th> return type changed form uint32_t to uint16_t
+    <th> returns the 16 bit ADC sample data, hence the change
+</tr>
+<tr>
+    <th> Resolver
+    <th> RDC_enableDcOffsetAutoCorrection
+    <th> Active low bit action update
+    <th> - 
+</tr>
+<tr>
+    <th> Resolver
+    <th> RDC_getGainEstimation
+    <th> return type changed form int16_t* to float*
+    <th> Gain value is returned as gain squared. Please refer the API description for more details
 </tr>
 </table>
 
