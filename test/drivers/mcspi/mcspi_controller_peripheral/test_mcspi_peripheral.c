@@ -168,7 +168,7 @@ void test_mcspi_peripheral_main(void *args)
     RUN_TEST(test_mcspi_peripheral_transfer,  949, (void*)&testParams);
     test_mcspi_set_peripheral_params(&testParams, 950);
     RUN_TEST(test_mcspi_peripheral_transfer,  950, (void*)&testParams);
-#if !defined (SOC_AM261X)
+#if !defined (SOC_AM261X) && !defined (SOC_AM263PX)
     test_mcspi_set_peripheral_params(&testParams, 951);
     RUN_TEST(test_mcspi_peripheral_transfer,  951, (void*)&testParams);
 #endif
@@ -237,7 +237,6 @@ void test_mcspi_peripheral_main(void *args)
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampDown[clkList] + 1));
-        DebugP_log("\n %d %d\n\r",clkList,chConfigParams->bitRate);
         ClockP_usleep(500000);
         RUN_TEST(test_mcspi_peripheral_transfer,  969, (void*)&testParams);
     }
