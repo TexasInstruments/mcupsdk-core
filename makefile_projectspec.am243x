@@ -394,7 +394,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_icssg_dualmac_am243x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_icssg_switch_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_icssg_switch_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tas_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
@@ -1657,9 +1656,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
  enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -2300,7 +2296,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_icssg_dualmac_am243x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_icssg_switch_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_icssg_switch_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tas_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -3563,9 +3558,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
  enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -4206,7 +4198,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_icssg_dualmac_am243x-lp_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_icssg_switch_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_icssg_switch_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tas_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
@@ -5469,9 +5460,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  gptp_lwip_icssg_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- gptp_lwip_icssg_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
  enet_icssg_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -6137,7 +6125,6 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_switch/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_loopback/enet_icssg_loopback/loopback_phy_end/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_icssg_tas/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
