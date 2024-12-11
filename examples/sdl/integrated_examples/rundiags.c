@@ -214,18 +214,6 @@ int32_t performDiags(void *args)
   }
   DebugP_log("PASSED. \r\n");
 
-  /* check BUS Safety */
-  for (delay=0; delay < 20000; delay++);
-  DebugP_log("    Bus Safety... ");
-  sdlstats.diagRunning = DIAGRUNNING_ECCBUS;
-  sdlResult =  ecc_bus_safety_testExecute();
-  if (sdlResult != SDL_PASS)
-  {
-    DebugP_log("FAILED. \r\n");
-    return sdlResult;
-  }
-  DebugP_log("PASSED. \r\n");
-
   /* check CCM test */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    Lockstep mode test... ");

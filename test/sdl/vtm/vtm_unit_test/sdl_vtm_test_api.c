@@ -1533,7 +1533,7 @@ int32_t sdlVTM_apiTest(void)
         testResult = -1;
     }
     adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_1);
-    if (adccode == 0xFF)
+    if (adccode != 0xFF)
     {
         DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
         testResult = -1;

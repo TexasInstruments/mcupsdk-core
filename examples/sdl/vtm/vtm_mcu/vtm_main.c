@@ -241,16 +241,21 @@ void vtm_example_app(void)
     DebugP_log("\r\n Cold Alert Temperature breached and received Interrupt ");
     DebugP_log("\r\n Temperature is below Configured Low Temperature and received Interrupt : %d", SDL_R5FSS_INTR_TSENSE_H);
 
-
+    ClockP_usleep(9000);
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
     DebugP_log("\r\n");
     DebugP_log("\r\n UC2 : ");
-    
+    ClockP_usleep(9000);
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);  
+    ClockP_usleep(9000);
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
+    ClockP_usleep(9000);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
+    ClockP_usleep(9000);
     SDL_VTM_enableTc();
+    ClockP_usleep(9000);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+    ClockP_usleep(9000);
     alert_th_hot = 0; // temperatube in mc
     alert_th_cold = temp0 - 3000; // temperatube in mc
     /* Configure cold alert temperature so that low threshold interrupt is generated. */
@@ -277,6 +282,7 @@ void vtm_example_app(void)
     DebugP_log("\r\n Exceeded Configured Temperature and received Interrupt : %d", SDL_R5FSS_INTR_TSENSE_H);
 
 
+    ClockP_usleep(9000);
     /* UC3 - ESM Interrupt and Warm Reset Generation. */
     DebugP_log("\r\n");
     DebugP_log("\r\n UC3 : ");

@@ -107,7 +107,7 @@ Waiting in loop in STC_func_test_Main().
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 Shown below is a sample output when the application is run for R5F1 followed by R5F0,
 code is running on  R5F0 core.
 \code
@@ -120,6 +120,18 @@ Core1 is Reset.
 STC is done Successfully & Passed for R5F1.
 Core0 is Reset.
 STC is done Successfully & Passed for R5F0.
+Waiting in loop in STC_Main().
+
+\endcode
+\endcond
+
+\cond SOC_AM263PX
+\code
+
+STC Test Application started.
+If STC test is successfull, Core1 will go in to Reset.
+Core1 is Reset.
+STC is done Successfully & Passed for R5F1.
 Waiting in loop in STC_Main().
 
 \endcode
