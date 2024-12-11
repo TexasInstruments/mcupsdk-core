@@ -10,6 +10,7 @@ const files = {
         "emac_statistics.asm",
         "emac_tts.asm",
         "micro_scheduler.asm",
+        "pru.cmd",
     ],
 };
 

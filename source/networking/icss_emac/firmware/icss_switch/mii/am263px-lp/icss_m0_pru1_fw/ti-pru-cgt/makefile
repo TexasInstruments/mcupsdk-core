@@ -11,6 +11,7 @@ CG_TOOL_ROOT := $(CGT_TI_PRU_PATH)
 
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
+	pru.cmd \
 
 ASM_SRCS += \
 	emac_MII_Rcv.asm \
@@ -94,7 +95,7 @@ clean:
 
 post-build:
 		-$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt.out
-		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4
+		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263px-lp_icss_m0_pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4
 		-cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii
 	-@echo ' '
 

@@ -11,6 +11,7 @@ CG_TOOL_ROOT := $(CGT_TI_PRU_PATH)
 
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
+	pru.cmd \
 
 ASM_SRCS += \
 	emac_MII_Rcv.asm \

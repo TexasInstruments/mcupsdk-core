@@ -115,5 +115,7 @@
         </file>
         <file path="../../../../../source/switch_collision_task.asm" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
+        <file path="../../../../../source/pru.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
     </project>
 </projectSpec>
