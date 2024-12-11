@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -316,6 +316,10 @@ int main(void)
             {
                 status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
             }
+
+            /* Power off the eMMC to leave it in clean state for Linux */
+            SOC_moduleClockEnable(TISCI_DEV_MMCSD0, 0);
+
             status = Bootloader_runSelfCpuWithLinux();
         }
 
