@@ -252,7 +252,7 @@ The board specific portion of the enet code is auto generated in the file ti_boa
 
 For porting enet based applications to custom board the following need to be done:
 Enable "Custom Board" syscfg option
-  \imageStyle{CustomBoardSyscfg.png,width:30%}
+  \imageStyle{CustomBoardSyscfg.png,width:30%} //change this
   \image html CustomBoardSyscfg.png
 
 - Enabling “Custom Board” will prevent auto generation of board specific code.
@@ -285,7 +285,7 @@ There are two ways by which you can set the custom MAC address.
 An option is provided in Syscfg GUI tool to force custom MAC address instead of taking from EEPROM/EFUSE.
 
 To use this option:
-+Oopen syscfg GUI tool.
++ Open syscfg GUI tool.
 + Go to "TI"->"ENET(CPSW)" (or "ENET(ICSS)")->"System integration config".
 + Change "MAC Address Assignment Method" to "Manual Entry" and fill the mac address in "MAC Address List" option.
 
@@ -343,7 +343,8 @@ External PHY management allows application plugging in its own PHY state machine
 - PHY control and PHY statemachine handling is disabled in Ethernet driver
 - MDIO is still owned by Ethernet Driver and MDIO IOCTLs should be used to access the PHYs
   + mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw/extPhyMgmt/enetextphy_phymdio_dflt.c
-- External PHY management is enabled via syscfg option ![ExternalPhyManagementSyscfg](ExternalPHYManagementSyscfg.png "External PHY management syscfg") {html: width=50%}
+- External PHY management is enabled via syscfg option 
+![ExternalPhyManagementSyscfg](ExternalPHYManagementSyscfg.png "External PHY management syscfg") {html: width=50%}
 - Application should register for MDIO link event interrupt if MDIO manual mode is not enabled
   + Application should create a periodic polling task to check link state if MDIO manual mode is enabled
     + This is because MDIO link event interrupt is not supported in MDIO manual mode (bitbanging mode)
@@ -371,7 +372,7 @@ Key params that are useful for tuning the rw data memory are
 - For non-lwip application , the enet library  packet pool allocation can be enabled
   + On enabling Packet Pool allocation ,the application can configure the size of 
     large,medium and small pools and the number of packets in each pool
-  + ![PacketPoolConfigSyscfg](PacketPoolConfigSyscfg.png "Packet Pool configuration") {html: width=50%}
+  + 
 
 
 [Back To Top](@ref enet_migration_guide_top)

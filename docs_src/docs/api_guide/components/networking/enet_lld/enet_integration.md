@@ -28,12 +28,6 @@ relies on the Chip Support Library (CSL).
 
 [Back To Top](@ref enet_integration_guide_top)
 
-
-
-
-[Back To Top](@ref enet_integration_guide_top)
-
-
 # Getting Familiar with Enet LLD APIs {#GettingFamiliarWithAPIs}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
