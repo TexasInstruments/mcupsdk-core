@@ -163,7 +163,7 @@ static uint8_t FSS_generateECCSyndrom(int *lbit)
     int binword1 = (ecc3 << 3) | (ecc2 << 2) | (ecc1 << 1) | ecc0;
     int binword2 = (ecc7 << 3) | (ecc6 << 2) | (ecc5 << 1) | ecc4;
 
-    char* ecc=(char *)malloc(3* sizeof(char));
+    char ecc[3];
     sprintf(ecc, "%01X%01X", binword2, binword1);
 
     return (uint8_t)strtol(ecc,NULL,16);
