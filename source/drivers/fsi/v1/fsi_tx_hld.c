@@ -338,7 +338,24 @@ static int32_t FSI_Tx_configInstance(FSI_Tx_Handle handle)
 
 static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
 {
-    return 0;
+    int32_t                 status = SystemP_FAILURE;
+    const FSI_Tx_Attrs      *attrs;
+    FSI_Tx_Config           *config = NULL;
+    FSI_Tx_Object           *fsiTxObj = NULL;
+
+    if(NULL_PTR != handle)
+    {
+        /* Get the pointer to the FSI-TX Driver Block */
+        config = (FSI_Tx_Config*)handle;
+        attrs = config->attrs;
+        fsiTxObj = config->object;
+        if(FSI_TX_OPER_MODE_DMA == attrs->operMode)
+        {
+           status = FSI_Tx_dmaClose(handle, fsiTxObj->fsiTxDmaChCfg);
+        }
+    }
+
+    return status;
 }
 
 int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
@@ -459,7 +476,7 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
     FSI_Tx_EdmaChConfig *edmaChCfg = NULL;
     uint32_t    dmaCh0, dmaCh1;
     uint32_t    param0, param1;
-    uint32_t    tccAlloc0;
+    uint32_t    tccTx;
 
     if(handle != NULL)
     {
@@ -474,7 +491,7 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
         regionId = edmaChCfg->edmaRegionId;
         dmaCh0   = edmaChCfg->edmaTxChId[0];
         param0 = EDMA_RESOURCE_ALLOC_ANY;
-        tccAlloc0 = EDMA_RESOURCE_ALLOC_ANY;
+        tccTx = EDMA_RESOURCE_ALLOC_ANY;
 
         dmaCh1  = edmaChCfg->edmaTxChId[1];
         param1 = EDMA_RESOURCE_ALLOC_ANY;
@@ -491,7 +508,7 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                             NULL, &param0, regionId, sizeof(uint16_t), FSI_APP_FRAME_DATA_WORD_COUNT, 1U,
                             sizeof(uint16_t), sizeof(uint16_t), 0U, 0U, EDMA_TRIG_MODE_MANUAL);
 
-            status += FSI_Tx_edmaChInit(object, 1, &param1, &tccAlloc0);
+            status += FSI_Tx_edmaChInit(object, 1, &param1, &tccTx);
             status += FSI_Tx_configureDma(object, &dmaCh1, (void *)txBufTagAndUserData,
                             (void *)txFrameTagData,
                             NULL, &param1, regionId, sizeof(uint16_t), 1U, 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_MANUAL);
@@ -503,13 +520,20 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                             sizeof(uint16_t), sizeof(uint16_t), sizeof(uint16_t) * FSI_APP_FRAME_DATA_WORD_COUNT, 0U, EDMA_TRIG_MODE_EVENT);
             status += FSI_Tx_configureDma(object, &dmaCh1, (void *)&txBufTagAndUserData[1U],
                             (void *)txFrameTagData,
-                            &tccAlloc0, &param1, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT - 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_EVENT);
+                            &tccTx, &param1, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT - 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_EVENT);
         }
 
-        status = FSI_Tx_edmaIntrInit(object, tccAlloc0);
+        status = FSI_Tx_edmaIntrInit(object, tccTx);
 
         if(status == SystemP_SUCCESS)
         {
+            /* Restore the structure parameters */
+            edmaChCfg->edmaTxChId[0] = dmaCh0;
+            edmaChCfg->edmaTxChId[1] = dmaCh1;
+            edmaChCfg->edmaTxParam[0] = param0;
+            edmaChCfg->edmaTxParam[1] = param1;
+            edmaChCfg->edmaTccTx = tccTx;
+
             /* Transmit data */
             /* Send Flush Sequence to sync, after every rx soft reset */
             status = FSI_executeTxFlushSequence(baseAddr, FSI_APP_TX_PRESCALER_VAL);

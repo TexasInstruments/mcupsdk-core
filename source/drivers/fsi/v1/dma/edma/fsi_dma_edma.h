@@ -50,7 +50,7 @@ typedef struct FSI_Tx_EdmaChConfig_s
     /**< EDMA TCC used for FSI Dummy transfer */
     uint32_t        edmaTxChId[FSI_MAX_TX_DMA_BUFFERS];
     /**< EDMA Channel used for FSI TX transfer */
-    uint32_t        edmaTxParam;
+    uint32_t        edmaTxParam[FSI_MAX_TX_DMA_BUFFERS];
     /**< EDMA Param ID used for FSI TX transfer */
     uint32_t        edmaDummyParam;
     /**< EDMA Param ID used for FSI Dummy transfer */
@@ -76,7 +76,7 @@ typedef struct FSI_Rx_EdmaChConfig_s
     /**< EDMA TCC used for FSI Dummy transfer */
     uint32_t        edmaRxChId[FSI_MAX_RX_DMA_BUFFERS];
     /**< EDMA Channel used for FSI RX transfer */
-    uint32_t        edmaRxParam;
+    uint32_t        edmaRxParam[FSI_MAX_RX_DMA_BUFFERS];
     /**< EDMA Param ID used for FSI RX transfer */
     uint32_t        edmaDummyParam;
     /**< EDMA Param ID used for FSI Dummy transfer */

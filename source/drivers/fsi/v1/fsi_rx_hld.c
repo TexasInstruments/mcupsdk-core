@@ -329,7 +329,24 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
 
 static int32_t FSI_Rx_deConfigInstance(FSI_Rx_Handle handle)
 {
-    return 0;
+    int32_t                 status = SystemP_FAILURE;
+    const FSI_Rx_Attrs      *attrs;
+    FSI_Rx_Config           *config = NULL;
+    FSI_Rx_Object           *fsiRxObj = NULL;
+
+    if(NULL_PTR != handle)
+    {
+        /* Get the pointer to the FSI-RX Driver Block */
+        config = (FSI_Rx_Config*)handle;
+        attrs = config->attrs;
+        fsiRxObj = config->object;
+        if(FSI_RX_OPER_MODE_DMA == attrs->operMode)
+        {
+           status = FSI_Rx_dmaClose(handle, fsiRxObj->fsiRxDmaChCfg);
+        }
+    }
+
+    return status;
 }
 
 int32_t FSI_Rx_hld(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTagAndUserData,
@@ -449,7 +466,7 @@ int32_t FSI_Rx_Dma(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
     FSI_Rx_EdmaChConfig *edmaChCfg = NULL;
     uint32_t    dmaCh0, dmaCh1;
     uint32_t    param0, param1;
-    uint32_t    tccAlloc0;
+    uint32_t    tccRx;
 
     if(handle != NULL)
     {
@@ -464,7 +481,7 @@ int32_t FSI_Rx_Dma(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
         regionId = edmaChCfg->edmaRegionId;
         dmaCh0   = edmaChCfg->edmaRxChId[0];
         param0 = EDMA_RESOURCE_ALLOC_ANY;
-        tccAlloc0 = EDMA_RESOURCE_ALLOC_ANY;
+        tccRx = EDMA_RESOURCE_ALLOC_ANY;
 
         dmaCh1  = edmaChCfg->edmaRxChId[1];
         param1 = EDMA_RESOURCE_ALLOC_ANY;
@@ -478,14 +495,20 @@ int32_t FSI_Rx_Dma(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
                             (void *)rxBufData, NULL, &param0, regionId, sizeof(uint16_t), FSI_APP_FRAME_DATA_WORD_COUNT, FSI_APP_LOOP_COUNT,
                          sizeof(uint16_t), sizeof(uint16_t), 0U, sizeof(uint16_t) * FSI_APP_FRAME_DATA_WORD_COUNT, EDMA_TRIG_MODE_EVENT);
 
-        FSI_Rx_edmaChInit(object, 1, &param1, &tccAlloc0);
+        FSI_Rx_edmaChInit(object, 1, &param1, &tccRx);
         FSI_Rx_configureDma(object, &dmaCh1, (void *)rxFrameTagData,
                         (void *)rxBufTagAndUserData,
-                        &tccAlloc0, &param1, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT, 0U, 0U, 0U, sizeof(uint16_t), EDMA_TRIG_MODE_EVENT);
+                        &tccRx, &param1, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT, 0U, 0U, 0U, sizeof(uint16_t), EDMA_TRIG_MODE_EVENT);
 
-        status = FSI_Rx_edmaIntrInit(object, tccAlloc0);
+        status = FSI_Rx_edmaIntrInit(object, tccRx);
         FSI_enableRxDMAEvent(baseAddr);
 
+        /* Restore the structure parameters */
+        edmaChCfg->edmaRxChId[0] = dmaCh0;
+        edmaChCfg->edmaRxChId[1] = dmaCh1;
+        edmaChCfg->edmaRxParam[0] = param0;
+        edmaChCfg->edmaRxParam[1] = param1;
+        edmaChCfg->edmaTccRx = tccRx;
     }
 
     /* Wait for RX completion */

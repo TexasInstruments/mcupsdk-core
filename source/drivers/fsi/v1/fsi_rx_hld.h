@@ -329,6 +329,7 @@ int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *fsiRxObj, uint32_t edmaEventNo,
                           uint32_t *edmaParam, uint32_t *edmaTccAlloc);
 
 int32_t FSI_Rx_dmaOpen(FSI_Rx_Handle fsiRxHandle, FSI_Rx_DmaChConfig dmaChCfg);
+int32_t FSI_Rx_dmaClose(FSI_Rx_Handle fsiRxHandle, FSI_Rx_DmaChConfig dmaChCfg);
 
 int32_t FSI_Rx_configureDma(const FSI_Rx_Object *fsiRxObj, uint32_t *dmaCh,
                 void *src, void *dst, uint32_t *tcc, uint32_t *param, uint32_t regionId,

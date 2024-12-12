@@ -146,7 +146,7 @@ int32_t FSI_Tx_edmaIntrInit(FSI_Tx_Object *FsiTxObj, uint32_t tccAlloc)
 }
 
 int32_t FSI_Tx_edmaChInit(const FSI_Tx_Object *FsiTxObj, uint32_t edmaEventNo,
-                         uint32_t *edmaTxParam, uint32_t *edmaTccAlloc)
+                         uint32_t *edmaTxParam, uint32_t *edmaTccTx)
 {
     int32_t status = SystemP_SUCCESS, chAllocStatus;
     EDMA_Handle fsiTxEdmaHandle = NULL;
@@ -166,10 +166,10 @@ int32_t FSI_Tx_edmaChInit(const FSI_Tx_Object *FsiTxObj, uint32_t edmaEventNo,
             /* Allocate a Param ID for FSI TX transfer */
             status += EDMA_allocParam(fsiTxEdmaHandle, edmaTxParam);
 
-            if(edmaTccAlloc != NULL)
+            if(edmaTccTx != NULL)
             {
                 /* Allocate EDMA TCC for FSI TX transfer */
-                status += EDMA_allocTcc(fsiTxEdmaHandle, edmaTccAlloc);
+                status += EDMA_allocTcc(fsiTxEdmaHandle, edmaTccTx);
             }
 
             if (status != SystemP_SUCCESS)
@@ -179,13 +179,13 @@ int32_t FSI_Tx_edmaChInit(const FSI_Tx_Object *FsiTxObj, uint32_t edmaEventNo,
                 {
                     status += EDMA_freeDmaChannel(fsiTxEdmaHandle, &(edmaChCfg->edmaTxChId[edmaEventNo]));
                 }
-                if (edmaChCfg->edmaTccTx != EDMA_RESOURCE_ALLOC_ANY)
+                if (*edmaTccTx != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    status += EDMA_freeTcc(fsiTxEdmaHandle, &(edmaChCfg->edmaTccTx));
+                    status += EDMA_freeTcc(fsiTxEdmaHandle, edmaTccTx);
                 }
-                if (edmaChCfg->edmaTxParam!= EDMA_RESOURCE_ALLOC_ANY)
+                if (*edmaTxParam != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    status += EDMA_freeParam(fsiTxEdmaHandle, &(edmaChCfg->edmaTxParam));
+                    status += EDMA_freeParam(fsiTxEdmaHandle, edmaTxParam);
                 }
             }
         }
@@ -294,6 +294,66 @@ static void fsi_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
     FSI_Tx_DmaCompletionCallback(args);
 }
 
+int32_t FSI_Tx_dmaClose(FSI_Tx_Handle fsiTxHandle, FSI_Tx_DmaChConfig dmaChCfg)
+{
+    int32_t             status = SystemP_FAILURE;
+    FSI_Tx_EdmaChConfig *edmaChCfg = NULL;
+    uint32_t            edmaBaseAddr, regionId, txBaseAddr;
+    uint32_t            dmaCh0, dmaCh1, param0, param1, tccTx;
+    EDMA_Handle         fsiTxEdmaHandle;
+    FSI_Tx_Object       *object;
+    FSI_Tx_Config *config = NULL;
+    const FSI_Tx_Attrs *attrs;
+
+    if((NULL != fsiTxHandle) && (NULL != dmaChCfg))
+    {
+        edmaChCfg = (FSI_Tx_EdmaChConfig *)dmaChCfg;
+        config = (FSI_Tx_Config*)fsiTxHandle;
+        object = config->object;
+        attrs = config->attrs;
+        txBaseAddr = attrs->baseAddr;
+
+        fsiTxEdmaHandle = (EDMA_Handle) object->fsiTxDmaHandle;
+
+        if(fsiTxEdmaHandle != NULL)
+        {
+            edmaBaseAddr = EDMA_getBaseAddr(fsiTxEdmaHandle);
+            regionId = edmaChCfg->edmaRegionId;
+            dmaCh0 = edmaChCfg->edmaTxChId[0];
+            dmaCh1 = edmaChCfg->edmaTxChId[1];
+            param0 = edmaChCfg->edmaTxParam[0];
+            param1 = edmaChCfg->edmaTxParam[1];
+            tccTx = edmaChCfg->edmaTccTx;
+
+            FSI_disableTxDMAEvent(txBaseAddr);
+            /* Free channel */
+            EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                dmaCh0, EDMA_TRIG_MODE_EVENT, 0, EDMA_TEST_EVT_QUEUE_NO);
+
+            EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                dmaCh1, EDMA_TRIG_MODE_EVENT, tccTx, EDMA_TEST_EVT_QUEUE_NO);
+
+            status = EDMA_freeTcc(fsiTxEdmaHandle, &tccTx);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            /* Free the EDMA resources managed by driver. */
+            status = EDMA_freeDmaChannel(fsiTxEdmaHandle, &dmaCh0);
+            DebugP_assert(status == SystemP_SUCCESS);
+            status = EDMA_freeParam(fsiTxEdmaHandle, &param0);
+            DebugP_assert(status == SystemP_SUCCESS);
+            status = EDMA_freeDmaChannel(fsiTxEdmaHandle, &dmaCh1);
+            DebugP_assert(status == SystemP_SUCCESS);
+            status = EDMA_freeParam(fsiTxEdmaHandle, &param1);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            EDMA_unregisterIntr(fsiTxEdmaHandle, &edmaChCfg->edmaIntrObjTx);
+        }
+    }
+
+    return status;
+
+}
+
 /* for FSI-Rx configuration */
 
 int32_t FSI_Rx_dmaOpen(FSI_Rx_Handle fsiRxHandle, FSI_Rx_DmaChConfig dmaChCfg)
@@ -350,7 +410,7 @@ int32_t FSI_Rx_dmaOpen(FSI_Rx_Handle fsiRxHandle, FSI_Rx_DmaChConfig dmaChCfg)
 }
 
 int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *FsiRxObj, uint32_t edmaEventNo,
-                         uint32_t *edmaRxParam, uint32_t *edmaTccAlloc)
+                         uint32_t *edmaRxParam, uint32_t *edmaTccRx)
 {
     int32_t status = SystemP_SUCCESS, chAllocStatus;
     EDMA_Handle fsiRxEdmaHandle = NULL;
@@ -370,10 +430,10 @@ int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *FsiRxObj, uint32_t edmaEventNo,
             /* Allocate a Param ID for FSI TX transfer */
             status += EDMA_allocParam(fsiRxEdmaHandle, edmaRxParam);
 
-            if(edmaTccAlloc != NULL)
+            if(edmaTccRx != NULL)
             {
                 /* Allocate EDMA TCC for FSI TX transfer */
-                status += EDMA_allocTcc(fsiRxEdmaHandle, edmaTccAlloc);
+                status += EDMA_allocTcc(fsiRxEdmaHandle, edmaTccRx);
             }
 
             if (status != SystemP_SUCCESS)
@@ -383,13 +443,13 @@ int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *FsiRxObj, uint32_t edmaEventNo,
                 {
                     status += EDMA_freeDmaChannel(fsiRxEdmaHandle, &(edmaChCfg->edmaRxChId[edmaEventNo]));
                 }
-                if (edmaChCfg->edmaTccRx != EDMA_RESOURCE_ALLOC_ANY)
+                if (*edmaTccRx != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    status += EDMA_freeTcc(fsiRxEdmaHandle, &(edmaChCfg->edmaTccRx));
+                    status += EDMA_freeTcc(fsiRxEdmaHandle, edmaTccRx);
                 }
-                if (edmaChCfg->edmaRxParam!= EDMA_RESOURCE_ALLOC_ANY)
+                if (*edmaRxParam != EDMA_RESOURCE_ALLOC_ANY)
                 {
-                    status += EDMA_freeParam(fsiRxEdmaHandle, &(edmaChCfg->edmaRxParam));
+                    status += EDMA_freeParam(fsiRxEdmaHandle, edmaRxParam);
                 }
             }
         }
@@ -514,4 +574,67 @@ int32_t FSI_Rx_edmaIntrInit(FSI_Rx_Object *FsiRxObj, uint32_t tccAlloc)
 static void fsi_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
 {
     FSI_Rx_DmaCompletionCallback(args);
+}
+
+int32_t FSI_Rx_dmaClose(FSI_Rx_Handle fsiRxHandle, FSI_Rx_DmaChConfig dmaChCfg)
+{
+    int32_t             status = SystemP_FAILURE;
+    FSI_Rx_EdmaChConfig *edmaChCfg = NULL;
+    uint32_t            edmaBaseAddr, regionId, rxBaseAddr;
+    uint32_t            dmaCh0, dmaCh1, param0, param1, tccRx;
+    EDMA_Handle         fsiRxEdmaHandle;
+    FSI_Rx_Object       *object;
+    FSI_Rx_Config *config = NULL;
+    const FSI_Rx_Attrs *attrs;
+
+    if((NULL != fsiRxHandle) && (NULL != dmaChCfg))
+    {
+        edmaChCfg = (FSI_Rx_EdmaChConfig *)dmaChCfg;
+        config = (FSI_Rx_Config*)fsiRxHandle;
+        object = config->object;
+        attrs = config->attrs;
+        rxBaseAddr = attrs->baseAddr;
+
+        fsiRxEdmaHandle = (EDMA_Handle) object->fsiRxDmaHandle;
+
+        if(fsiRxEdmaHandle != NULL)
+        {
+            edmaBaseAddr = EDMA_getBaseAddr(fsiRxEdmaHandle);
+            regionId = edmaChCfg->edmaRegionId;
+            dmaCh0 = edmaChCfg->edmaRxChId[0];
+            dmaCh1 = edmaChCfg->edmaRxChId[1];
+            param0 = edmaChCfg->edmaRxParam[0];
+            param1 = edmaChCfg->edmaRxParam[1];
+            tccRx = edmaChCfg->edmaTccRx;
+
+            /* Free channel */
+            FSI_disableRxDMAEvent(rxBaseAddr);
+
+            EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                dmaCh0, EDMA_TRIG_MODE_EVENT, 0, EDMA_TEST_EVT_QUEUE_NO);
+
+            EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                dmaCh1, EDMA_TRIG_MODE_EVENT, tccRx, EDMA_TEST_EVT_QUEUE_NO);
+
+            status = EDMA_freeTcc(fsiRxEdmaHandle, &tccRx);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            status = EDMA_freeDmaChannel(fsiRxEdmaHandle, &dmaCh0);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            status = EDMA_freeParam(fsiRxEdmaHandle, &param0);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            status = EDMA_freeDmaChannel(fsiRxEdmaHandle, &dmaCh1);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            status = EDMA_freeParam(fsiRxEdmaHandle, &param1);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            EDMA_unregisterIntr(fsiRxEdmaHandle, &edmaChCfg->edmaIntrObjRx);
+        }
+    }
+
+    return status;
+
 }

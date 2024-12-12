@@ -154,9 +154,6 @@ void *fsi_hld_loopback_dma_main(void *args)
     CacheP_inv((void *)gRxBufData, ((FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
     CacheP_inv((void *)&gRxBufTagAndUserData, (FSI_APP_LOOP_COUNT * sizeof(uint16_t)), CacheP_TYPE_ALL);
 
-    FSI_disableRxDMAEvent(rxBaseAddr);
-    FSI_disableTxDMAEvent(txBaseAddr);
-
     status = Fsi_appCompareData(gTxBufData, gRxBufData);
     DebugP_assert(status == SystemP_SUCCESS);
 

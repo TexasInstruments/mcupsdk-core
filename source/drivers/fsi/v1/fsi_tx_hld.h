@@ -333,6 +333,7 @@ int32_t FSI_Tx_Poll(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
                     uint16_t dataSize, uint16_t bufIdx);
 
 int32_t FSI_Tx_dmaOpen(FSI_Tx_Handle handle, FSI_Tx_DmaChConfig dmaChCfg);
+int32_t FSI_Tx_dmaClose(FSI_Tx_Handle handle, FSI_Tx_DmaChConfig dmaChCfg);
 
 int32_t FSI_Tx_edmaChInit(const FSI_Tx_Object *FsiTxObj, uint32_t edmaEventNo,
                           uint32_t *edmaParam, uint32_t *edmaTccAlloc);
