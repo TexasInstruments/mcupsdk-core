@@ -135,8 +135,15 @@ void STC_main(void *args)
     HwiP_disable();
     static int32_t countInst=1,i;
 
+#ifdef SOC_AM263PX
+    for (i=countInst; i>=1 ; i--)
+#else
     for (i=countInst; i>=0 ; i--)
+#endif
     {
+#ifdef SOC_AM263PX
+        START:
+#endif
         test_Result=  SDL_STC_getStatus(test_case[i]);
 
         switch (test_Result)
@@ -161,6 +168,11 @@ void STC_main(void *args)
             case SDL_STC_NOT_RUN:
             {
                 STC_test_main(i);
+#ifdef SOC_AM263PX
+                volatile uint32_t cnt=0xFFFFU;
+                while(cnt-- != 0);
+                goto START;
+#endif
                 break;
             }
             case  INVALID_RESULT:

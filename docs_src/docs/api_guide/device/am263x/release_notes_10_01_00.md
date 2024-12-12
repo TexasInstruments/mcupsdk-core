@@ -163,7 +163,7 @@ ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
-Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.                | -
+Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.                | ECC Bu Safety and STC.
 
 ## Fixed Issues
 
@@ -416,6 +416,20 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.00.00 onwards
     <td> ECC test for single bit injection on R5F data cache, release profile binary is showing some inconsistency on result.
+</tr>
+<tr>
+    <td> PROC_SDL-8857
+    <td> SDL integrated example does not support ECC Bus Safety.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> Use standalone example.
+</tr>
+<tr>
+    <td> PROC_SDL-8864
+    <td> D-tag and D-data ECC examples fail in release profile.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> None.
 </tr>
 <tr>
     <td> MCUSDK-13466

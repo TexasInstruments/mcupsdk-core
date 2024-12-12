@@ -169,7 +169,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
 TMU ROM Checksum  | R5F             | NA                |  NORTOS | ROM checksum for TMU                                                                         | -
 Time out Gasket(STOG)  | R5F             | NA                |  NORTOS | Timeout gasket feature                    | -
 Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, under and thershold temperature interrupts                   | -
-Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.|  ECC for TPTC and STC. 
+Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.|  ECC for TPTC, ECC Bus Safety and STC.
 
 **Note**: SDL is validated only on ControlCard.
 
@@ -430,6 +430,34 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.01.00 onwards
     <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-8857
+    <td> SDL integrated example does not support ECC Bus Safety.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> Use standalone example.
+</tr>
+<tr>
+    <td> PROC_SDL-8859
+    <td> STC example does not support R5FSS0.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> Update the example to run the test for R5FSS0 from R5FSS1.
+</tr>
+<tr>
+    <td> PROC_SDL-8864
+    <td> D-tag and D-data ECC examples fail in release profile.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-8866
+    <td> BTCM ECC example fails in release profile..
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> Use debug profile.
 </tr>
 <tr>
     <td> MCUSDK-13473
