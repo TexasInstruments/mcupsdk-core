@@ -115,6 +115,9 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 -# \subpage EXAMPLES_ENET_CPSW_TSN_LWIP_GPTP
 -# \subpage EXAMPLES_ENET_CPSW_TSN_EST
+
+### Ether-Ring Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_ETHERRING
 ### LLDP Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
@@ -140,6 +143,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 -# \subpage EXAMPLES_ENET_CPSW_TSN_LWIP_GPTP
+### Ether-Ring Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_ETHERRING
 ### LLDP Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
