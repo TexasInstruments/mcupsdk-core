@@ -28,6 +28,8 @@ Example to demonstrate root of trust switching                                  
 FreeRTOS AMP support is adde for A53 cores                                                      | Kernel
 Enabling FreeRTOS based Ethernet MAC and switch driver                                          | Ethernet
 Support for LwIP stack and TSN stack to run on A53 core                                         | ^
+PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | ^
+PRU-ICSS Ethernet firmware - Local injection handle port block state (MRP requirement)          | ^
 A53 FreeRTOS AMP examples demonstrating usage of Ethernet                                       | ^
 \endcond
 
@@ -37,6 +39,8 @@ Feature                                                                         
 LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
 SBL shows an example usage of DDR QoS support                                                   | Drivers
 Example to demonstrate root of trust switching                                                  | Examples
+PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | Ethernet
+Ethernet firmware - Local injection handle port block state (MRP requirement)                   | Ethernet
 \endcond
 
 ## Device and Validation Information
@@ -414,6 +418,62 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 07.03.00
     <td> AM64x, AM243x
     <td> Added the implementation
+</tr>
+<tr>
+    <td> PINDSW-7087
+    <td> Ethernet: IET: Frame preemption MAC verify fails
+    <td> Ethernet (ICSSG)
+    <td> 09.00.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8229
+    <td> Ethernet: FDB: FDB entries missing with link up/down activity
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8187
+    <td> Ethernet: FDB: MC frame is not received when only specific port bit is set in FID_C2 (Applicable only for DUAL MAC mode)
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8086
+    <td> Ethernet: FDB: Port blocked/disabled usecase for special frame
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8022
+    <td> Ethernet: TAPRIO: Moved base time usage into the firmware
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-7988
+    <td> Ethernet: CT: Cut-thru can not be verified (Missing PA statistics)
+    <td> Ethernet (ICSSG)
+    <td> 09.02.00
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> PINDSW-8273
+    <td> Ethernet: 10M: Link Status Valid flag is not set in case of 100M/1G
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00
+    <td> AM64x, AM243x
+    <td> None
 </tr>
 <tr>
     <td> SYSFW-6426
