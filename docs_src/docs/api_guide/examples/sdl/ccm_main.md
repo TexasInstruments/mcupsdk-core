@@ -97,9 +97,11 @@ Use Cases
 
   6. Edit below line in the config file to point to your application .appimage file. Give the absolute path to the .appimage file
     or path relative to ${SDK_INSTALL_PATH}/tools/boot. **Make sure to use forward slash / in the filename path**.
-
+\if SOC_AM263PX
+			--file=../../examples/sdl/ccm/sdl_ccm_example/{board}/r5fss0-0_nortos/ti-arm-clang/sdl_ccm_example.release.appimage --operation=flash --flash-offset=0x81000
+\else 
 			--file=../../examples/sdl/ccm/sdl_ccm_example/{board}/r5fss0-0_nortos/ti-arm-clang/sdl_ccm_example.release.appimage --operation=flash --flash-offset=0x80000
-
+\endif 
 	- **NOTE** : edit sdl_ccm_example to sdl_ccm_vim for ccm vim example testing.
   7. Save and close the config file.
   8. Flash the application by follow the steps mentioned in the page, \ref GETTING_STARTED_FLASH

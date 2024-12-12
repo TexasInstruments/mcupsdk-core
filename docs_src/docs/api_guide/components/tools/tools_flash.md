@@ -38,7 +38,7 @@ Flashing tools allow to flash binaries to the flash on a EVM.
     - Click the "Browse" button to select the program you want to flash.
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
     \imageStyle{load_jtag.png,width:70%}
-    \image html load_jtag.png "Load Binary Image"
+    \image html load_jtag.png "Load Binary Image (Address may change from device to device)"
     - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
@@ -66,7 +66,7 @@ Flashing tools allow to flash binaries to the flash on a EVM.
         | Program     | Start Address |
         |-------------|---------------|
         | SBL         | 0x60000000    |
-        | Application | 0x60080000    |
+        | Application | 0x60081000    |
     - Edit the application offset field only, if your sbl is configured with custom application offset
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
@@ -688,9 +688,12 @@ At the top there is a drop down to select the UART COM port which will be used f
   - **Flash writer binary** : This is the sbl_uart_uniflash binary. This needs to be send first for the ROM to receive and boot. Once this boots up you can send any number of files arbitrarily for flashing.
 
   - **Bootloader binary** : It is assumed that the eventual goal of the flashing process is to boot your application from the flash device. For this a bootloader capable of reading an image from flash device needs to be flashed at offset 0 (generally) of the flash. This would be the `sbl_ospi` or `sbl_qspi`. Although this is no different than flashing any other file to a particular offset, we have decided to keep it a separate option for better clarity. Although the offset is almost always 0, we have provided an offset edit box as well if there is any change whatsoever.
-
+\if SOC_AM263PX || SOC_AM261X
+  - **Appimage binary** : You can select the application image to be flashed from this slot. SDK convention is to flash at a 512 KB offset (0x81000). This can be changed, but keep in mind that the bootloader booting this application should be aware of this offset as well. It is a configurable option in the Sysconfig of the bootloader.
+\else 
   - **Appimage binary** : You can select the application image to be flashed from this slot. SDK convention is to flash at a 512 KB offset (0x80000). This can be changed, but keep in mind that the bootloader booting this application should be aware of this offset as well. It is a configurable option in the Sysconfig of the bootloader.
-\cond SOC_AM243X || SOC_AM64X
+\endif 
+\cond SOC_AM243X || SOC_AM64X || SOC_AM263PX || SOC_AM261X
   - **Appimage XIP binary** : You can select the XIP component to your application from this slot. These files will be of the format (`*.appimage_xip`). These files already contain details as to where these need to be flashed, so no need to provide any offset in this case.
 \endcond
   - **Custom data** : This slot can be used to flash any custom data file at an arbitrary offset. Don't forget to provide the offset

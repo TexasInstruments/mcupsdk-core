@@ -55,7 +55,7 @@ We can then boot this application without being connected to CCS via JTAG.
 - Edit below line in the config file to point to your application `.appimage.hs_fs` file.
   Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
 
-        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage --operation=flash --flash-offset=0x80000
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage --operation=flash --flash-offset=0x81000
 
 - This file will additionally also list the flashing application that is run on the EVM and a OSPI flash bootloader that also
   needs to be flashed. You can keep this unchanged if you have not modified these applications.
