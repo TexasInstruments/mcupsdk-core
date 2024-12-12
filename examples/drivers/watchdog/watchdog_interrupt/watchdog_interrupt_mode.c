@@ -39,7 +39,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/sdlr_esm.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/esm/v0/sdl_esm.h>
@@ -62,7 +62,7 @@ void   watchdogCallback(void *arg);
  * The callback function in the application handles the watchdog interrupt
  */
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 
 static int32_t sdlApp_dplInit(void)
 {
@@ -122,7 +122,7 @@ void watchdog_interrupt_main(void *args)
     status              = HwiP_construct(&gRtiHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 #endif
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     sdlApp_dplInit();
 
     SDL_ESM_config WDT_esmInitConfig =

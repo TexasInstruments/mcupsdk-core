@@ -43,7 +43,7 @@ const section12       = section.addInstance();
 watchdog1.$name          = "CONFIG_WDT0";
 watchdog1.resetMode      = "Watchdog_RESET_OFF";
 watchdog1.expirationTime = 1000;
-watchdog1.wdt_func_clk   = 20000000;
+watchdog1.wdt_func_clk   = 25000000;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
