@@ -212,7 +212,7 @@ section4.output_section[17].$name      = ".buf_cpy";
 section4.output_section[17].palignment = true;
 
 section5.$name                        = "Memory Segments";
-section5.load_memory                  = "MSRAM_STACK";
+section5.load_memory                  = "MSRAM";
 section5.output_section.create(2);
 section5.output_section[0].$name      = ".sysmem";
 section5.output_section[0].palignment = true;
@@ -220,7 +220,7 @@ section5.output_section[1].$name      = ".stack";
 section5.output_section[1].palignment = true;
 
 section6.$name                                    = "Stack Segments";
-section6.load_memory                              = "MSRAM_STACK";
+section6.load_memory                              = "MSRAM";
 section6.output_section.create(5);
 section6.output_section[0].$name                  = ".irqstack";
 section6.output_section[0].output_sections_start  = "__IRQ_STACK_START";
@@ -249,7 +249,7 @@ section6.output_section[4].input_section.create(1);
 section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
 section7.$name                        = "Initialization and Exception Handling";
-section7.load_memory                  = "MSRAM_STACK";
+section7.load_memory                  = "MSRAM";
 section7.output_section.create(3);
 section7.output_section[0].$name      = ".ARM.exidx";
 section7.output_section[0].palignment = true;
