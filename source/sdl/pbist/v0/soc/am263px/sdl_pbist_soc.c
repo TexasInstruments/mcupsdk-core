@@ -800,6 +800,12 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 .memoryGroupsBitMap = 35u,  /* Choose MSS R5SS1 VIM1*/
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
+            {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 38u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
         },
         #endif
         .PBISTNegConfigRun =
