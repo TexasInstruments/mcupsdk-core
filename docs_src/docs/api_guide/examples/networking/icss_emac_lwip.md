@@ -154,15 +154,16 @@ to a network which is in the same sub-network..
 \code
 
 MII mode
-load to PRU0 passed
-load to PRU1 passed
+Firmware load to PRU0 passed
+Firmware load to PRU1 passed
 Starting lwIP, local interface IP is 192.168.0.200
-[LWIPIF_LWIP]Link is down[LWIPIF_LWIP] Interface layer handle is Initialised
-[LWIPIF_LWIP] NETIF INIT SUCCESS
+[LWIPIF_LWIP_EMAC]Link is down[LWIPIF_LWIP_EMAC] Interface layer handle is Initialised 
+[LWIPIF_LWIP_EMAC] NETIF INIT SUCCESS
 status_callback==UP, local interface IP is 192.168.0.200
 UDP server listening on port 5001
 link_callback==UP
-      6. 39s : CPU load =   0.82 %
+      5.653s : CPU load =   1.39 %
+     10.653s : CPU load =   0.56 %
 
 \endcode
 
@@ -192,37 +193,38 @@ link_callback==UP
 
 ## Sample output for iperf command
 
-\code
-
 DUT side:
-load to PRU0 passed
-load to PRU1 passed
+
+\code
 MII mode
+Firmware load to PRU0 passed
+Firmware load to PRU1 passed
 Starting lwIP, local interface IP is 192.168.0.200
-[LWIPIF_LWIP]Link is down[LWIPIF_LWIP] Interface layer handle is Initialised
-[LWIPIF_LWIP] NETIF INIT SUCCESS
+[LWIPIF_LWIP_EMAC]Link is down[LWIPIF_LWIP_EMAC] Interface layer handle is Initialised 
+[LWIPIF_LWIP_EMAC] NETIF INIT SUCCESS
 status_callback==UP, local interface IP is 192.168.0.200
 UDP server listening on port 5001
 link_callback==UP
-      6. 33s : CPU load =   0.68 %
-     11. 33s : CPU load =   0.58 %
-     16. 33s : CPU load =   0.55 %
-     21. 33s : CPU load =   0.54 %
-     26. 33s : CPU load =   0.53 %
-     31. 33s : CPU load =   0.54 %
-     36. 33s : CPU load =  44.89 %
-     41. 33s : CPU load =  82.92 %
-IPERF report: type=0, remote: 192.168.0.50:51717, total bytes: 67502104, duration in ms: 10059, kbits/s: 53680
-                                                                                                                   46. 33s : CPU load =  36.46 %
-     51. 33s : CPU load =   0.54 %
-IPERF report: type=2, remote: 192.168.0.50:5001, total bytes: 3096, duration in ms: 9679, kbits/s: 0
-                                                                                                         56. 33s : CPU load =   0.55 %
-     61. 33s : CPU load =   0.54 %
+      5.653s : CPU load =   1.39 %
+     10.653s : CPU load =   0.56 %
+     15.653s : CPU load =   0.56 %
+     20.653s : CPU load =   0.53 %
+     25.653s : CPU load =   0.53 %
+     30.653s : CPU load =   4.77 %
+     35.653s : CPU load =  90.97 %
+IPERF report: type=0, remote: 192.168.0.33:53365, total bytes: 86114328, duration in ms: 10056, kbits/s: 68504
+                             40.653s : CPU load =  90.87 %
+     45.653s : CPU load =  44.60 %
+IPERF report: type=1, remote: 192.168.0.33:5001, total bytes: 55255064, duration in ms: 10000, kbits/s: 44200
+                            50.653s : CPU load =  43.35 %
+     55.653s : CPU load =   0.54 % 
 
+\endcode
 
 PC Side:
 
-..\iperf-2.0.9-win64\iperf-2.0.9-win64>iperf.exe -c 192.168.0.200 -r
+\code 
+C:\ti\iperf-2.0.9-win64>iperf -c 192.168.0.200 -r
 ------------------------------------------------------------
 Server listening on TCP port 5001
 TCP window size:  208 KByte (default)
@@ -231,12 +233,11 @@ TCP window size:  208 KByte (default)
 Client connecting to 192.168.0.200, TCP port 5001
 TCP window size:  208 KByte (default)
 ------------------------------------------------------------
-[  4] local 192.168.0.50 port 51717 connected with 192.168.0.200 port 5001
+[  4] local 192.168.0.33 port 53365 connected with 192.168.0.200 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-10.0 sec  64.4 MBytes  53.8 Mbits/sec
-[  4] local 192.168.0.50 port 5001 connected with 192.168.0.200 port 54911
-[  4]  0.0-20.2 sec  1.02 KBytes   416 bits/sec
-
+[  4]  0.0-10.0 sec  82.1 MBytes  68.8 Mbits/sec
+[  4] local 192.168.0.33 port 5001 connected with 192.168.0.200 port 54911
+[  4]  0.0-10.0 sec  52.7 MBytes  44.2 Mbits/sec 
 
 \endcode
 
