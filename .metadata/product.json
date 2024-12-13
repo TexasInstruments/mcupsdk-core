@@ -12,12 +12,6 @@
         "/drivers/drivers",
         "/board/board",
         "/fs/fs",
-        "/networking/networking",
-        "/security/security",
-        "/usb/usb",
-        "/xbar/xbar",
-        "/memory_configurator/components",
-        "/optiflash/optiflash"
     ],
     "devices": [
         "AM64x",

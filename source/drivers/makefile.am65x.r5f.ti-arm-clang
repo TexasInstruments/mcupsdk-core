@@ -50,10 +50,10 @@ FILES_common := \
     mmcsd_priv.c \
     mmcsd_v2.c \
     ospi_v0.c \
-    ospi_dma.c \
-    ospi_dma_udma.c \
     ospi_nor_flash.c \
     ospi_phy.c \
+    ospi_lld_dma.c \
+    ospi_udma_lld.c \
     pinmux.c \
     pcie.c \
     pcie_v1.c \
@@ -116,10 +116,11 @@ FILES_PATH_common = \
     mmcsd/v2 \
     ospi \
     ospi/v0 \
-    ospi/v0/dma \
-    ospi/v0/dma/soc/am65x \
-    ospi/v0/dma/udma \
+    ospi/v0/lld/dma/soc/am65x \
     ospi/v0/soc/am65x \
+    ospi/v0/lld \
+    ospi/v0/lld/dma \
+    ospi/v0/lld/dma/udma \
     pcie \
     pcie/v1 \
     pcie/v1/soc/am65x \
