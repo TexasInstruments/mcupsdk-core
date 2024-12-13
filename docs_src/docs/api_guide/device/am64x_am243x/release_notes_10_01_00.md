@@ -65,7 +65,7 @@ FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
 Tiny USB                | R5F            | 0.14.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
 Mbed-TLS                | R5F            | mbedtls-2.13.1
-DMSC Firmware           | DMSC           | v10.00.08
+DMSC Firmware           | DMSC           | v10.01.08
 
 ## Key Features
 
@@ -403,6 +403,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Added the implementation
 </tr>
+<tr>
+    <td> SYSFW-6426
+    <td> Ownership of a firewall region can be transferred to an invalid host
+    <td> DMSC
+    <td> 07.03.00
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> SYSFW-6432
+    <td> Set device API doesn't return Error when PD is in transition state
+    <td> DMSC
+    <td> 07.03.00
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues
@@ -462,6 +478,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> PCIe MSI error when connected to Linux Root Complex
     <td> PCIe
     <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> SYSFW-6621
+    <td> No available region to configure for Firewall ID 24
+    <td> DMSC
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> SYSFW-7781
+    <td> Get device API does not return error when the LPSC is in transition state
+    <td> DMSC
+    <td> 7.3.0 onwards
     <td> AM64x, AM243x
     <td> -
 </tr>
