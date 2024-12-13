@@ -48,17 +48,16 @@ The example does below
  Example folder | source/networking/enet/core/examples/lwip/cpsw_lwip_https
 
 \endcond
-
 \cond SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_LP_BOARD_NAME_DP83TG720_LOWER, @VAR_LP_BOARD_NAME_DP83826_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/lwip/cpsw_lwip_https
  
- For support on @VAR_LP_BOARD_NAME_DP83TG720_LOWER and @VAR_LP_BOARD_NAME_DP83826_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+ For support on @VAR_LP_BOARD_NAME_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
 
