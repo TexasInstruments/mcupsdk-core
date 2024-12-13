@@ -8,10 +8,10 @@ This document is intended for the users who want to achieve the least secure boo
 
 ### Steps to build, flash, load and run secure applications
 
-* Make sure **pyelftools** and **construct** is installed from pip. This package is required for encrypting MCELF application images.
+* Make sure **pyelftools**, **construct** and **cryptography** is installed from pip. This package is required for encrypting MCELF application images.
 
 \code
-    pip install pyelftools construct
+    pip install pyelftools construct cryptography
 \endcode
 
 * Set **MCELF_MERGE_SEGMENTS_FLAG = false** and **MCELF_MAX_SEGMENT_SIZE = 65536(64KB)** in devconfig.mak file present in MCU+ SDK.
@@ -43,7 +43,7 @@ This document is intended for the users who want to achieve the least secure boo
 * Build the fastboot SBL project which has various optimizations.
 \cond SOC_AM263PX  
 \code
-    make -sj -c examples/drivers/boot/sbl_qspi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=am263px DEVICE_TYPE=HS
+    make -sj -c examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=am263px DEVICE_TYPE=HS
 \endcode
 \endcond
 \cond SOC_AM263X
@@ -77,10 +77,10 @@ This document is intended for the users who want to achieve the least secure boo
 
 * Set the board to UART bootmode and update the flash contents. Checkout the steps mentioned in \ref GETTING_STARTED_FLASH . 
 \cond SOC_AM263X  
-    * Please use fast_sbl_qspi.cfg present in $(MCU_PLUS_SDK_PATH)/tools/boot/sbl_prebuilt/am263x-cc/fast_sbl_qspi.cfg . 
+    * Please use fast_sbl_qspi.cfg present in ${MCU_PLUS_SDK_PATH}/tools/boot/sbl_prebuilt/am263x-cc/fast_sbl_qspi.cfg . 
 \endcond
 \cond SOC_AM263PX  
-    * Please use fast_sbl_ospi.cfg present in $(MCU_PLUS_SDK_PATH)/tools/boot/sbl_prebuilt/am263px-cc/fast_sbl_ospi.cfg . 
+    * Please use fast_sbl_ospi.cfg present in ${MCU_PLUS_SDK_PATH}/tools/boot/sbl_prebuilt/am263px-cc/fast_sbl_ospi.cfg . 
 \endcond
 
 \note
@@ -88,12 +88,14 @@ This document is intended for the users who want to achieve the least secure boo
 
 \cond SOC_AM263X
 * Set the board to QSPI bootmode and reset the device.
+
+No logs are expected in sbl_qspi_fastboot since UART logging is disabled.
 \endcond
 \cond SOC_AM263PX
 * Set the board to OSPI bootmode and reset the device.
-\endcond
 
-No logs are expected in sbl_qspi_fastboot since UART logging is disabled.
+No logs are expected in sbl_ospi_fastboot since UART logging is disabled.
+\endcond
 
 ## Component wise secure boot time measurement
 
@@ -109,6 +111,6 @@ The points of interest for Secure Boot are:
 
 ## Boot time calculator
 
-The boot time calculator can be used get an idea of the secure boot time values which can be achieved with fast boot sbls and tifs mcu.
+The boot time calculator can be used get an idea of the secure boot time values which can be achieved with fast boot sbls and tifs mcu. The numbers are as per SDK 10.00 version.
 
 Checkout the secure boot time calculator tool <a href="../boottime_calculator/index.html">here</a> .
