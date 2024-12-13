@@ -353,8 +353,10 @@ External PHY management allows application plugging in its own PHY state machine
 - Refer example application for extphy demonstration
   + mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw
 
-Note: The external PHY sample example does not implement a real state m/c. Intention is to show Enet driver 
-interaction with externally managed PHY and not implement a full featured external PHY
+Note: 
+ + The external PHY sample example does not implement a real state m/c. Intention is to show Enet driver interaction with externally managed PHY and not implement a full featured external PHY
+ + While using with lwip stack, the application should provide a callback to check port link status. ref: EnetApp_isPortLinked in above mentioned example
+ + All the PHY ports that are expected should be connected during the initial time out as the driver doesn't support PHY enablement during runtime.
 
 
 [Back To Top](@ref enet_migration_guide_top)

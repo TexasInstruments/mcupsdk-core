@@ -221,7 +221,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 #### UDP RX Performance(am64x/243x emvs):
 - For Packet Size: 256 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 52.26                          | 0.08                  | -
  50 Mbps                 | 60.34                          | 41                    | -
@@ -229,7 +229,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 - For Packet Size: 512 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 30.83                          | 0                     | -
  50 Mbps                 | 56.74                          | 0.09                  | -
@@ -237,7 +237,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 - For Packet Size: 1500 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 16.84                          | 0                     | -
  50 Mbps                 | 28.93                          | 0                     | -
@@ -247,7 +247,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 #### UDP RX Performance(am243x-lp):
 - For Packet Size: 256 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 42                             | 0                     | -
  50 Mbps                 | 49                             | 41                    | -
@@ -255,7 +255,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 - For Packet Size: 512 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 24                             | 0                     | -
  50 Mbps                 | 45                             | 0.05                  | -
@@ -263,11 +263,113 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 - For Packet Size: 1500 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 12                             | 0                     | -
  50 Mbps                 | 21                             | 0                     | -
  100 Mbps                | 38                             | 0.03                  | -
+
+### ICSSG Performance
+
+#### TCP Test
+- Software/Application used : enet_lwip_icssg
+- iperf test type           : TCP iperf
+- iperf command used        : iperf -c 192.168.0.158 -i 10 -t 100 -r
+- Packet allocation         : 32 buffers per each Rx flow, 16 buffers for Tx channel
+
+#### TCP Performance(am64x/243x emvs):
+
+ TCP direction           | B/W (Mb/s)                     | CPU load(%)
+-------------------------|--------------------------------|--------------
+ TCP RX                  | 93.2                           | 52.1
+ TCP TX                  | 92.9                           | 87.57
+ TCP Biderectional       | TX = 66.4 + RX = 66.5          | 99.24
+
+#### TCP Performance(am243x-lp):
+
+ TCP direction           | B/W (Mb/s)                     | CPU load(%)
+-------------------------|--------------------------------|--------------
+ TCP RX                  | 93.20                          | 36.82
+ TCP TX                  | 93.30                          | 52.54
+ TCP Biderectional       | TX = 88.8 +  RX = 88.9         | 85.58
+
+#### UDP Test
+- Software/Application used : enet_lwip_icssg
+- iperf test type           : UDP iperf
+- iperf command used        : iperf -c 192.168.0.158 -u -b 60M -l 256 -i 10 -t 100 -r
+- Packet allocation         : 32 buffers per each Rx flow, 16 buffers for Tx channel
+
+#### UDP TX Performance(am64x/243x emvs):
+
+  - For Packet Size: 1500 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 100                            | 0                     | -
+ 50 Mbps                 | 100                            | 0.03                  | -
+ 100 Mbps                | 100                            | 0.07                  | -
+ Max(220 Mbps)           | 100                            | 0.07                  | -
+
+#### UDP TX Performance(am243x-lp):
+
+  - For Packet Size: 1500 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 100                            | 0                     | -
+ 50 Mbps                 | 100                            | 0                     | -
+ 100 Mbps                | 100                            | 0                     | -
+
+#### UDP RX Performance(am64x/243x emvs):
+- For Packet Size: 256 B
+
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 44.35                          | 0.11                  | -
+ 50 Mbps                 | 60.34                          | 41                    | -
+ 100 Mbps                | -                              | -                     | -
+
+- For Packet Size: 512 B
+
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 21.83                          | 0                     | -
+ 50 Mbps                 | 56.74                          | 0.09                  | -
+ 100 Mbps                | 65.61                          | 41                    | -
+
+- For Packet Size: 1500 B
+
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 16.84                          | 0                     | -
+ 50 Mbps                 | 28.93                          | 0                     | -
+ 100 Mbps                | 53.16                          | 0.06                  | -
+ Max(180 Mbps)           | 73.83                          | 0.29                  | -
+
+#### UDP RX Performance(am243x-lp):
+- For Packet Size: 256 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 37.35                          | 0.12                  | -
+ 50 Mbps                 | 48                             | 36                    | -
+ 100 Mbps                | -                              | -                     | -
+
+- For Packet Size: 512 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 21.83                          | 0                     | -
+ 50 Mbps                 | 40                             | 0.12                  | -
+ 100 Mbps                | 50                             | 36                    | -
+
+- For Packet Size: 1500 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+-------------------------|--------------------------------|-----------------------|-----------
+ 25 Mbps                 | 15                             | 0                     | -
+ 50 Mbps                 | 26.5                           | 0.08                  | -
+ 100 Mbps                | 38                             | 0.1                   | -
 
 ### IPC performance
 
