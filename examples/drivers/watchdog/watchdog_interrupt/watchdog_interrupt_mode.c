@@ -42,10 +42,17 @@
 #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/sdlr_esm.h>
 #include <sdl/include/sdl_types.h>
-#include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
 #define WATCHDOG_CLEAR_DWWD_ST 0x20U
+# endif
+
+#if defined(SOC_AM263X)
+#include <sdl/esm/v0/sdl_esm.h>
+# endif
+
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
+#include <sdl/esm/v2/sdl_esm.h>
 # endif
 
 #define NUM_OF_ITERATIONS (10U)
