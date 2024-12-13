@@ -1,5 +1,7 @@
 let path = require('path');
 
+const device_project = require("../../../../../.project/device/project_am243x.js");
+
 let device = "am243x";
 
 const files = {
