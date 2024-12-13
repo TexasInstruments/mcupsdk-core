@@ -5,6 +5,8 @@
 The ETHPHY driver provides APIs to control the Ethernet PHY devices present on
 the board. It accesses the PHY registers using the MDIO module.
 
+\attention This page is only applicable to ETHPHY driver used by ICSS-EMAC. For more information on Enet CPSW/ICSS ETHPHY driver, refer to \ref enetphy_guide_top
+
 ## Features Supported
 
 \note Only the commands needed for Industial Protocol examples are supported

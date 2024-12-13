@@ -6,6 +6,8 @@
 - \subpage enet_ioctl_interface
 - \subpage enetphy_link_config_top
 - \subpage enetphy_guide_top
+- \subpage custom_enetphy_guide
+- \subpage enet_mac2mac_top
 - \subpage enet_integration_guide_top
 - \subpage enetmdio_manualmode
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X

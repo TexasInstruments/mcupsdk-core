@@ -221,86 +221,11 @@ PHY full functionality can't be guaranteed.
 
 # Implementing a New PHY Driver {#enetphy_guide_implementing}
 
-The following list of steps is provided as guideline when adding a new PHY
-driver for a device which is not supported by Enet LLD.
+You can find the guide for implementing a new PHY Driver **[here](\ref custom_enetphy_guide)**.
 
-- Select "CUSTOM" (ETHPHY (ENET CPSW/ICSSG) -> ETHPHY Device) option in Sys-Cfg gui. This will modify the auto-generated ti_board_config.c file based on the "Custom Device Name" specified in the GUI.
-- Create the new source file, public PHY specific header file and private header file (if needed) along with the main.c file in the example folder.
-   + This header file should have the device extended configuration
-     structure definition (if applicable) as well as auxiliary structures or
-     enumerations.
+# MAC2MAC feature (NO-PHY mode) {#mac_to_mac_mode}
 
-  \imageStyle{MyEthphy.png,width:30%}
-  \image html MyEthphy.png
-
-- In the source file, declare a global structure of type `Phy_DrvObj_t`, but don't make it static.
-  This variable will be later accessed as an extern symbol by the Ethernet PHY
-  driver.
-- Initialize `Phy_DrvObj_t` structure with the function pointers of the device
-  specific implementation.
-   + Look for reuse of PHY generic functions if a device specific implementation
-     is not needed.
-
-\code{.c}
-Phy_DrvObj_t gEnetPhyDrvMyethphy =
-{
-    .fxn =
-    {
-        .name               = "Myethphy", /*PHY driver name*/
-        .bind               = MyEthphy_bind,
-        .isPhyDevSupported  = MyEthphy_isPhyDevSupported,
-        .isMacModeSupported = MyEthphy_isMacModeSupported,
-        .config             = MyEthphy_config,
-        .reset              = MyEthphy_reset,
-        .isResetComplete    = MyEthphy_isResetComplete,
-        .readExtReg         = GenericPhy_readExtReg,
-        .writeExtReg        = GenericPhy_writeExtReg,
-        .printRegs          = MyEthphy_printRegs,
-        /*Below functions can only be supported when the PHY has a built-in PTP clock.*/
-        .adjPtpFreq              = NULL,    /*adjust PTP clock frequency*/
-        .adjPtpPhase             = NULL,    /*adjust PTP clock phase*/
-        .getPtpTime              = NULL,    /*get current PHY PTP clock time*/
-        .setPtpTime              = NULL,    /*set PHY PTP clock time*/
-        .getPtpTxTime            = NULL,    /*get PHY PTP TX packet timestamp*/
-        .getPtpRxTime            = NULL,    /*get PHY PTP RX packet timestamp*/
-        .waitPtpTxTime           = NULL,    /*add PHY PTP TX packet info to a waiting TX timestamp list*/
-        .procStatusFrame         = NULL,    /*process PHY status frame*/
-        .getStatusFrameEthHeader = NULL,    /*get the Ethernet header of the PHY status frame*/
-        .enablePtp               = NULL,    /*enable/disable the PHY PTP module*/
-        .tickDriver              = NULL,    /*provide timer tick to the driver*/
-        .enableEventCapture      = NULL,    /*enable/disable an event capture on a PHY GPIO pin*/
-        .enableTriggerOutput     = NULL,    /*enable/disable trigger output on a GPIO pin*/
-        .getEventTs              = NULL,    /*get event timestamp*/
-    }
-};
-\endcode
-
-- **When using CCS to build**, add the source file and header files to the CCS example.
-    + Select the file operation as "Link to files" and select yes for Adjust Compiler Include-Paths
-
-  \imageStyle{CustomEthphy.png,width:50%}
-  \image html CustomEthphy.png
-
-- **When using makefiles to build**, add the PHY source file to "FILES_common" and header file path to "INCLUDES_common" in the example makefile.
-
-\code
-FILES_common := \
-  l2_cpsw_main.c \
-  main.c \
-  myethphy.c \    /*New PHY source file*/
-
-...
-
-INCLUDES_common := \
-  -I../ \         /*Path to PHY header files*/
-  -I${CG_TOOL_ROOT}/include/c \
-  -I${MCU_PLUS_SDK_PATH}/source \
-
-...
-\endcode 
-
-# MAC-to-MAC (NO-PHY mode) {#mac_to_mac_mode}
-
+You can find the guide to enable MAC2MAC support **[here](\ref enet_mac2mac_top)**.
 
 # Appendix {#enetphy_guide_appendix}
 

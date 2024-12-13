@@ -58,10 +58,10 @@ sysconfig integration with enet driver is listed:
     + Example of using  syscfg GUI to scalably present config options:
       + If Enable Packet Pool Allocation option is not selected none of the other packet pool configuration 
         options which are irrelevant are presented to the user
-        ![Enable Packet Pool Allocation Disabled](PacketPoolConfig_EnablePacketPoolDisabled.png "Enable Packet Pool Allocation Disabled") {html: width=50%}
+        ![Enable Packet Pool Allocation Disabled](PacketPoolConfig_EnablePacketPoolDisabled.png "Enable Packet Pool Allocation Disabled")
       + If Enable Packet Pool Allocation option is enabled the other packet pool configuration 
         options are presented to the user
-        ![Enable Packet Pool Allocation Enabled](PacketPoolConfig_EnablePacketPoolEnabled.png "Enable Packet Pool Allocation Enabled") {html: width=50%}
+        ![Enable Packet Pool Allocation Enabled](PacketPoolConfig_EnablePacketPoolEnabled.png "Enable Packet Pool Allocation Enabled")
 
 
 [Back To Top](@ref enet_migration_guide_top)
@@ -74,7 +74,7 @@ Impact: The init sequence change impacts both ICSSG and CPSW peripherals on all 
 
 Old Init Sequence                                                                             | New Init Sequence                                                                     |
 :-------------------------------------------------------------------------------------------  | :-------------                                                                        |
-![OldInitSequence](OldInitSequence_lanes.png "Old Init Sequence") {html: width=50%}           | ![NewInitSequence](NewInitSequence_lanes.png "New Init Sequence") {html: width=50%}   |
+![OldInitSequence](OldInitSequence_lanes.png "Old Init Sequence")                               | ![NewInitSequence](NewInitSequence_lanes.png "New Init Sequence")                    |
 1.Set default enet osal configuration: Enet_initOsalCfg()                                       | 1.Implement function EnetApp_updateCpswOpenParams() or EnetApp_updateIcssgOpenParams() depending on peripheral type<br>This function allows application to set any Enet openParams as per application requirement |
 2.Set default enet utils configuration: Enet_initUtilsCfg()                                     | 2.Implement function EnetApp_initLinkArgs which allows application to set mac and phy params for each macPort enabled                                                                                             |
 3.Init Enet: Enet_init(osalCfg, utilsCfg)                                                       | 3.Invoke EnetApp_driverOpen(enetType,instId)<br>return value of EnetApp_driverOpen is status indicating success/failure                                                                                           |
@@ -119,7 +119,7 @@ DMA channel configuration is now supported via syscfg
 
 Sysconfig DMA channel config for AM263x/AWR294x/AM273x                                        | Sysconfig DMA channel config for AM243x_AM64x                                         |
 :-------------------------------------------------------------------------------------------  | :-----------------------------------------------------------------------------------  |
-![CPDMASyscfg](DMA_syscfg_cpdma_socs.png "CPDMA Ch syscfg") {html: width=50%}                 | ![UDMASyscfg](DMA_syscfg_udma_socs.png "UDMA Ch syscfg") {html: width=50%}            |
+![CPDMASyscfg](DMA_syscfg_cpdma_socs.png "CPDMA Ch syscfg")                                   | ![UDMASyscfg](DMA_syscfg_udma_socs.png "UDMA Ch syscfg")                               |
 
 All application configurable DMA channels open params that were configurable via 
 APIs EnetAppUtils_openTxCh/ EnetAppUtils_openRxCh are now configurable via syscfg GUI
@@ -252,7 +252,7 @@ The board specific portion of the enet code is auto generated in the file ti_boa
 
 For porting enet based applications to custom board the following need to be done:
 Enable "Custom Board" syscfg option
-  \imageStyle{CustomBoardSyscfg.png,width:30%} //change this
+  \imageStyle{CustomBoardSyscfg.png,width:30%}
   \image html CustomBoardSyscfg.png
 
 - Enabling “Custom Board” will prevent auto generation of board specific code.
@@ -344,7 +344,7 @@ External PHY management allows application plugging in its own PHY state machine
 - MDIO is still owned by Ethernet Driver and MDIO IOCTLs should be used to access the PHYs
   + mcu_plus_sdk/source/networking/enet/core/examples/lwip/enet_lwip_cpsw/extPhyMgmt/enetextphy_phymdio_dflt.c
 - External PHY management is enabled via syscfg option 
-![ExternalPhyManagementSyscfg](ExternalPHYManagementSyscfg.png "External PHY management syscfg") {html: width=50%}
+![ExternalPhyManagementSyscfg](ExternalPHYManagementSyscfg.png "External PHY management syscfg")
 - Application should register for MDIO link event interrupt if MDIO manual mode is not enabled
   + Application should create a periodic polling task to check link state if MDIO manual mode is enabled
     + This is because MDIO link event interrupt is not supported in MDIO manual mode (bitbanging mode)
@@ -371,8 +371,8 @@ Key params that are useful for tuning the rw data memory are
 - Maximum number of packets for Tx and Rx Dma channel. This is configurable via syscfg
 - For non-lwip application , the enet library  packet pool allocation can be enabled
   + On enabling Packet Pool allocation ,the application can configure the size of 
-    large,medium and small pools and the number of packets in each pool
-  + 
+    large, medium and small pools and the number of packets in each pool
+  + ![PacketPoolConfigSyscfg](PacketPoolConfigSyscfg.png "Packet Pool configuration")
 
 
 [Back To Top](@ref enet_migration_guide_top)
