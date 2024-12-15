@@ -684,8 +684,13 @@ static void nx_enet_drv_notifyRxPackets(void *cbArg)
     for (size_t if_ix = 0u; if_ix < NX_DRIVER_MAX_INTERFACE_COUNT; if_ix++) {
         for (size_t ch_ix = 0u; ch_ix < g_nx_enet_drv_data.t_if_data[if_ix].rx_ch_cnt; ch_ix++) {
             if (g_nx_enet_drv_data.t_if_data[if_ix].t_rx_ch[ch_ix] == p_rx_ch) {
-                /* Signal to NETX that there are received packets to process. */
-                _nx_ip_driver_deferred_processing(g_nx_enet_drv_data.t_if_data[if_ix].netx_ip_ptr);
+
+                /* Make sure the ip was created, otherwise drop the packet. */
+                if (g_nx_enet_drv_data.t_if_data[if_ix].netx_ip_ptr != NULL) {
+
+                    /* Signal to NETX that there are received packets to process. */
+                    _nx_ip_driver_deferred_processing(g_nx_enet_drv_data.t_if_data[if_ix].netx_ip_ptr);
+                }
             }
         }
     }
@@ -701,6 +706,10 @@ static void nx_enet_drv_notifyTxPackets(void *cbArg)
     for (size_t if_ix = 0u; if_ix < NX_DRIVER_MAX_INTERFACE_COUNT; if_ix++) {
         for (size_t ch_ix = 0u; ch_ix < g_nx_enet_drv_data.t_if_data[if_ix].tx_ch_cnt; ch_ix++) {
             if (g_nx_enet_drv_data.t_if_data[if_ix].t_tx_ch[ch_ix] == p_tx_ch) {
+
+                /* Should not be transmitting before the ip was created. */
+                DebugP_assert(g_nx_enet_drv_data.t_if_data[if_ix].netx_ip_ptr != NULL);
+
                 _nx_ip_driver_deferred_processing(g_nx_enet_drv_data.t_if_data[if_ix].netx_ip_ptr);
             }
         }
