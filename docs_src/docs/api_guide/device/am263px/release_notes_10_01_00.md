@@ -2,14 +2,11 @@
 
 [TOC]
 
-\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled.
-              Similar issue will be observed when enabling LTO on other examples. See **Known Issues** below.
+\attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+\attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
-\attention 3. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
-
-\attention 4. There is a known issue of OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash. So, Phy tuning is disabled by default in Examples and SBL OSPI.
+\attention 3. There is a known issue of OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash. So, Phy tuning is disabled by default in Examples and SBL OSPI.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -21,7 +18,9 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+Support added for Ethernet PHY Configuration for ENET (CPSW) in SysConfig Gui                   | Ethernet And Networking      | -
+Enablement of ethernet Ether-Ring Feature                                                       | Ethernet And Networking      | -
+Application load over Ethernet to external Flash (SBL Enet) example is added                    | SBL                          | -
 
 # Modules Not tested/supported in this release
 
@@ -61,6 +60,7 @@ Mbed-TLS                | R5F            | 2.13.1
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
 GUI for UART Uniflash Tool                                          | Bootloader
+Ether-ring Feature                                                  | Ethernet And Networking
 
 ### OS Kernel
 
@@ -150,6 +150,7 @@ Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO              
 LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
 Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
+Ether-ring Implementation | R5F            | NO                | FreeRTOS    | Duplicate Rejection, Ring termination and Packet Duplication | Latency measurement, Performance KPIs
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
 
@@ -303,13 +304,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> EQEP : CW CCW example doesn't use polling or interrupt
     <td> EQEP
     <td> 10.00.01
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-11507
-    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble
-    <td> CPSW
-    <td> 09.00.01
     <td> None
 </tr>
 <tr>
@@ -550,6 +544,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 09.02.00 onwards
     <td> Disable Phy tuning in application.
 </tr>
+<tr>
+    <td> MCUSDK-13513
+    <td> AM263Px: UDP and TCP IPERF TX is unstable with 100Mbps link speed
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Errata
@@ -729,9 +730,15 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Additional Remarks
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <th> Networking and Ethernet
+    <th> None
+    <th> Ethernet (CPSW) Examples are moved to a new diretory to source/networking/enet/core/examples from examples/networking
+    <th> -
+</tr>
+<tr>
+    <th> Networking and Ethernet
+    <th> Ethernet PHY APIs
+    <th> Ethernet PHY driver source code is moved to board driver component. The corresponding location is moved to source/board/ethphy/enet from source/networking/enet/core/src/phy
+    <th> -
 </tr>
 </table>

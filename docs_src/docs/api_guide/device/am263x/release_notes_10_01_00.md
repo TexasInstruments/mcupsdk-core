@@ -16,7 +16,7 @@
 
 Feature                                                                                                  | Module
 ---------------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                                        | -
+SBL over Ethernet                                                                                        | Bootloader
 
 ## Device and Validation Information
 
@@ -52,7 +52,7 @@ Mbed-TLS                | R5F            | 2.13.1
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
--                                                                   | -
+Ether-ring Implementation                                           | Networking
 
 ### OS Kernel
 
@@ -143,6 +143,7 @@ LwIP                                         | R5F            | YES             
 Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 Mbed-TLS                                     | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
+Ether-ring Implementation | R5F            | NO                | FreeRTOS    | EDuplicate Rejection, Ring termination and Packet Duplication | Latency measurement, Performance KPIs
 
 ### Demos
 
@@ -652,5 +653,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <th> Networking
+    <th> Networking examples and syscfg
+    <th> Moved the examples from mcu_plus_sdk/examples/networking to mcu_plus_sdk/source/networking/enet/core/examples
+    <th> -
 </tr>
 </table>
