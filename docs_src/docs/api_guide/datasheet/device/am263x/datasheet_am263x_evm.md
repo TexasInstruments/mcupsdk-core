@@ -34,13 +34,13 @@ Data Placement          | MSRAM
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   22400
-SBL : System Init                       |   712
-SBL : Drivers_open                      |   98
-SBL : LoadHsmRtFw                       |   9015
-SBL : Board_driversOpen                 |   118
-SBL : CPU Load                          |   7783
-SBL : SBL End                           |   2944
-SBL : Total time taken                  |   20673
+SBL : System Init                       |   160
+SBL : Drivers_open                      |   37
+SBL : LoadHsmRtFw                       |   9024
+SBL : Board_driversOpen                 |   26
+SBL : CPU Load                          |   7931
+SBL : SBL End                           |   2904
+SBL : Total time taken                  |   20085
 
 - Please note that the total time taken provided at the end is not including the ROM boot time.
 
@@ -53,13 +53,13 @@ SBL : Total time taken                  |   20673
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   22400
-SBL : System Init                       |   693
-SBL : Drivers_open                      |   98
-SBL : LoadHsmRtFw                       |   8815
-SBL : Board_driversOpen                 |   110
-SBL : CPU Load                          |   11056
-SBL : SBL End                           |   17
-SBL : Total time taken                  |   20788
+SBL : System Init                       |   160
+SBL : Drivers_open                      |   38
+SBL : LoadHsmRtFw                       |   8840
+SBL : Board_driversOpen                 |   26
+SBL : CPU Load                          |   9305
+SBL : SBL End                           |   5
+SBL : Total time taken                  |   18216
 
 - Please note that the total time taken provided at the end is not including the ROM boot time.
 
@@ -69,41 +69,41 @@ Please check out the secure boot times using the boot time calculator tool <a hr
 
 ### SBL SD performance
 
-- Software/Application used        : sbl_sd and hello_world
-- Size of sbl_qspi appimage        : 780 KB
-- Size of hello_world              : 31.1 KB
+- Software/Application used        : sbl_sd and ipc_notify_echo
+- Size of sbl_qspi appimage        : 762 KB
+- Size of ipc_notify_echo          : 133 KB
 
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   22400
-SBL : System Init                       |   778
-SBL : Drivers_open                      |   146593
-SBL : LoadHsmRtFw                       |   9008
-SBL : Board_driversOpen                 |   2988
-SBL : File read from SD card            |   8062
-SBL : CPU Load                          |   44
-SBL : SBL End                           |   2919
-SBL : Total time taken                  |   170394
+SBL : System Init                       |   701
+SBL : Drivers_open                      |   328388
+SBL : LoadHsmRtFw                       |   9009
+SBL : Board_driversOpen                 |   2987
+SBL : File read from SD card            |   22938
+SBL : CPU Load                          |   7769
+SBL : SBL End                           |   4459
+SBL : Total time taken                  |   376254
 
 - Please note that the total time taken provided at the end is not including the ROM boot time.
 
 ### SBL SD MULTICORE ELF performance
 
-- Software/Application used        : sbl_sd_multicore_elf and hello_world
-- Size of sbl_qspi appimage        : 313 KB
-- Size of hello_world              : 31.3 KB
+- Software/Application used        : sbl_sd_multicore_elf and ipc_notify_echo
+- Size of sbl_qspi appimage        : 306 KB
+- Size of ipc_notify_echo          : 133 KB
 
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   22400
-SBL : System Init                       |   771
-SBL : Drivers_open                      |   149706
-SBL : LoadHsmRtFw                       |   9013
-SBL : Board_driversOpen                 |   2981
-SBL : File read from SD card            |   8377
-SBL : CPU Load                          |   4363
-SBL : SBL End                           |   15
-SBL : Total time taken                  |   175229
+SBL : System Init                       |   700
+SBL : Drivers_open                      |   334324
+SBL : LoadHsmRtFw                       |   9019
+SBL : Board_driversOpen                 |   2985
+SBL : File read from SD card            |   24106
+SBL : CPU Load                          |   19094
+SBL : SBL End                           |   16
+SBL : Total time taken                  |   390247
 
 - Please note that the total time taken provided at the end is not including the ROM boot time.
 
@@ -113,11 +113,11 @@ EDMA Memory Copy Benchmark Numbers
 
 Size in Bytes | Source Memory | Destination Memory | Transfer time(us)
 --------------|---------------|--------------------|------------------
-    1024      |      OCRAM    |     OCRAM          |    48
-    1024      |      TCMA     |     TCMA           |    47
-    1024      |      TCMB     |     TCMB           |    46
-    1024      |      OCRAM    |     TCMA           |    46
-    1024      |      TCMA     |     OCRAM          |    46
+    1024      |      OCRAM    |     OCRAM          |    48   
+    1024      |      TCMA     |     TCMA           |    46   
+    1024      |      TCMB     |     TCMB           |    46   
+    1024      |      OCRAM    |     TCMA           |    45   
+    1024      |      TCMA     |     OCRAM          |    45
 
 ### MCAN performance
 
@@ -149,7 +149,7 @@ CAN FD EXTENDED FORMAT | 1                         | 5                  |  6510 
 
 Local Core  | Remote Core | Average Message Latency (us)
 ------------|-------------|------------------------------
- r5f0-0	| r5f0-1	|  1.60
+ r5f0-0	| r5f0-1	|  3.58
  r5f0-0	| r5f1-0	|  1.80
  r5f0-0	| r5f1-1	|  1.86
 
@@ -159,12 +159,12 @@ Local Core  | Remote Core | Average Message Latency (us)
 
 Local Core  | Remote Core | Message Size | Average Message Latency (us)
 ------------|-------------|--------------|------------------------------
- r5f0-0	| r5f0-1	| 4	| 9.721
- r5f0-0	| r5f1-0	| 4	| 9.794
- r5f0-0	| r5f1-1	| 4	| 9.824
- r5f0-0	| r5f0-1	| 32	| 12.553
- r5f0-0	| r5f0-1	| 64	| 15.096
- r5f0-0	| r5f0-1	| 112	| 18.910
+ r5f0-0	| r5f0-1	| 4	| 10.235
+ r5f0-0	| r5f1-0	| 4	| 10.257
+ r5f0-0	| r5f1-1	| 4	| 10.213
+ r5f0-0	| r5f0-1	| 32	| 13.057
+ r5f0-0	| r5f0-1	| 64	| 15.756
+ r5f0-0	| r5f0-1	| 112	| 19.480
 
 ### MCSPI performance
 
@@ -179,9 +179,9 @@ Local Core  | Remote Core | Message Size | Average Message Latency (us)
 
 Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time  | Interrupt mode (Mbps) Throughput / Transfer time | Dma mode (Mbps) Throughput / Transfer time
 ----------------|-----------------------|-------------------------------|-------------------------------|-------------------------------
- 400		| 08			| 10.80 Mbps / 296.18 us 	| 22.87 Mbps / 139.91 us 	|  0.91 Mbps / 3526.30 us
- 200		| 16			| 22.51 Mbps / 142.14 us 	| 29.94 Mbps / 106.88 us 	|  0.95 Mbps / 3370.35 us
- 100		| 32			| 37.22 Mbps / 85.97 us 	| 35.31 Mbps / 90.62 us 	|  0.97 Mbps / 3292.82 us
+ 400		| 08			|  8.74 Mbps / 365.96 us 	| 22.88 Mbps / 139.87 us 	|  0.91 Mbps / 3526.66 us
+ 200		| 16			| 17.76 Mbps / 180.16 us 	| 29.74 Mbps / 107.61 us 	|  0.95 Mbps / 3370.77 us
+ 100		| 32			| 32.42 Mbps / 98.71 us 	| 35.05 Mbps / 91.31 us 	|  0.97 Mbps / 3293.00 us
 
 - Theoretically for 400 Bytes at 50MHz time required for clocks is 64us.
 - Additionally hardware adds 160ns + 1bit time delay between each word transfer as measured in the scope
@@ -193,10 +193,10 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 2K performance run parameters for coremark.
 - CoreMark Size    : 666
 - Begin tick       : 72
-- End tick         : 10234487
-- Total ticks      : 10234415
-- Total time (secs): 10.234415
-- Iterations/Sec   : 1465.643127
+- End tick         : 10236140
+- Total ticks      : 10236068
+- Total time (secs): 10.236068
+- Iterations/Sec   : 1465.406443
 - Iterations       : 15000
 - Memory location  : STACK
 - seedcrc          : 0xe9f5
@@ -204,8 +204,8 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 - [0]crcmatrix     : 0x1fd7
 - [0]crcstate      : 0x8e3a
 - [0]crcfinal      : 0x65c5
-CoreMark 1.0 : 1465.643127 
-CoreMark/MHz :3.664108 / STACK
+CoreMark 1.0 : 1465.406443 
+CoreMark/MHz :3.663516 / STACK
 
 ### DTHE
 
@@ -218,20 +218,20 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | Size | Performance (Mbps) | 
 |------------|------|--------------------| 
-| 256 |  32.00 KB | 217.334964 |
-| 256 |  16.00 KB | 217.828891 |
-| 256 |  8.00 KB | 216.454735 |
-| 256 |  4.00 KB | 205.094824 |
-| 256 |  2.00 KB | 183.976194 |
-| 256 |  1024.00 B | 153.393877 |
-| 256 |  512.00 B | 114.669653 |
-| 128 |  32.00 KB | 217.517103 |
-| 128 |  16.00 KB | 217.861476 |
-| 128 |  8.00 KB | 217.186413 |
-| 128 |  4.00 KB | 205.596687 |
-| 128 |  2.00 KB | 183.000112 |
-| 128 |  1024.00 B | 153.724901 |
-| 128 |  512.00 B | 116.050432 |
+| 256 |  32.00 KB | 209.754214 |
+| 256 |  16.00 KB | 210.531219 |
+| 256 |  8.00 KB | 208.378245 |
+| 256 |  4.00 KB | 197.154117 |
+| 256 |  2.00 KB | 175.478619 |
+| 256 |  1024.00 B | 147.424304 |
+| 256 |  512.00 B | 110.174164 |
+| 128 |  32.00 KB | 210.293929 |
+| 128 |  16.00 KB | 210.417152 |
+| 128 |  8.00 KB | 208.512500 |
+| 128 |  4.00 KB | 197.534437 |
+| 128 |  2.00 KB | 178.372935 |
+| 128 |  1024.00 B | 147.743361 |
+| 128 |  512.00 B | 111.289227 |
 
 ### AES ECB
 
@@ -242,34 +242,34 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Performance (Mbps) | 
 |-------------|------------|------|-------------| 
-| 256 | Encryption |  32.00 KB | 95.745413 |
-| 256 | Decryption |  32.00 KB | 95.935853 |
-| 256 | Encryption |  16.00 KB | 96.100535 |
-| 256 | Decryption |  16.00 KB | 95.892952 |
-| 256 | Encryption |  8.00 KB | 95.726096 |
-| 256 | Decryption |  8.00 KB | 95.711766 |
-| 256 | Encryption |  4.00 KB | 97.962600 |
-| 256 | Decryption |  4.00 KB | 98.356621 |
-| 256 | Encryption |  2.00 KB | 97.825146 |
-| 256 | Decryption |  2.00 KB | 97.964065 |
-| 256 | Encryption |  1024.00 B | 95.275201 |
-| 256 | Decryption |  1024.00 B | 94.954939 |
-| 256 | Encryption |  512.00 B | 89.427433 |
-| 256 | Decryption |  512.00 B | 88.908183 |
-| 128 | Encryption |  32.00 KB | 103.889557 |
-| 128 | Decryption |  32.00 KB | 104.098824 |
-| 128 | Encryption |  16.00 KB | 103.726155 |
-| 128 | Decryption |  16.00 KB | 103.836883 |
-| 128 | Encryption |  8.00 KB | 104.935672 |
-| 128 | Decryption |  8.00 KB | 104.969708 |
-| 128 | Encryption |  4.00 KB | 106.500260 |
-| 128 | Decryption |  4.00 KB | 107.109469 |
-| 128 | Encryption |  2.00 KB | 106.217180 |
-| 128 | Decryption |  2.00 KB | 106.429349 |
-| 128 | Encryption |  1024.00 B | 102.782221 |
-| 128 | Decryption |  1024.00 B | 103.125098 |
-| 128 | Encryption |  512.00 B | 96.592383 |
-| 128 | Decryption |  512.00 B | 96.655065 |
+| 256 | Encryption |  32.00 KB | 95.361935 |
+| 256 | Decryption |  32.00 KB | 95.568617 |
+| 256 | Encryption |  16.00 KB | 95.575673 |
+| 256 | Decryption |  16.00 KB | 95.409919 |
+| 256 | Encryption |  8.00 KB | 95.064441 |
+| 256 | Decryption |  8.00 KB | 96.195750 |
+| 256 | Encryption |  4.00 KB | 98.050539 |
+| 256 | Decryption |  4.00 KB | 98.561492 |
+| 256 | Encryption |  2.00 KB | 97.547035 |
+| 256 | Decryption |  2.00 KB | 97.605147 |
+| 256 | Encryption |  1024.00 B | 93.915336 |
+| 256 | Decryption |  1024.00 B | 94.511263 |
+| 256 | Encryption |  512.00 B | 88.071816 |
+| 256 | Decryption |  512.00 B | 88.922659 |
+| 128 | Encryption |  32.00 KB | 103.540769 |
+| 128 | Decryption |  32.00 KB | 103.745141 |
+| 128 | Encryption |  16.00 KB | 103.444547 |
+| 128 | Decryption |  16.00 KB | 103.405171 |
+| 128 | Encryption |  8.00 KB | 103.672417 |
+| 128 | Decryption |  8.00 KB | 104.385361 |
+| 128 | Encryption |  4.00 KB | 106.349902 |
+| 128 | Decryption |  4.00 KB | 106.668403 |
+| 128 | Encryption |  2.00 KB | 105.851760 |
+| 128 | Decryption |  2.00 KB | 106.038444 |
+| 128 | Encryption |  1024.00 B | 102.237060 |
+| 128 | Decryption |  1024.00 B | 102.084177 |
+| 128 | Encryption |  512.00 B | 96.065670 |
+| 128 | Decryption |  512.00 B | 95.488985 |
 
 ### AES ECB
 
@@ -280,118 +280,118 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Stream Size | Performance (Mbps) | 
 |------------|------------|------|-------------|--------------------| 
-| 256 | Encryption |  512.00 B | 256 | 74.035246 |
-| 256 | Decryption |  512.00 B | 256 | 79.080992 |
-| 256 | Encryption |  1024.00 B | 256 | 86.653444 |
-| 256 | Decryption |  1024.00 B | 256 | 87.176759 |
-| 256 | Encryption |  1024.00 B | 512 | 89.281238 |
-| 256 | Decryption |  1024.00 B | 512 | 89.942907 |
-| 256 | Encryption |  2.00 KB | 256 | 90.227717 |
-| 256 | Decryption |  2.00 KB | 256 | 91.265597 |
-| 256 | Encryption |  2.00 KB | 512 | 93.354796 |
-| 256 | Decryption |  2.00 KB | 512 | 94.096026 |
-| 256 | Encryption |  2.00 KB | 1024 | 95.582294 |
-| 256 | Decryption |  2.00 KB | 1024 | 95.519604 |
-| 256 | Encryption |  4.00 KB | 256 | 92.307476 |
-| 256 | Decryption |  4.00 KB | 256 | 93.079010 |
-| 256 | Encryption |  4.00 KB | 512 | 95.650651 |
-| 256 | Decryption |  4.00 KB | 512 | 96.186220 |
-| 256 | Encryption |  4.00 KB | 1024 | 97.701184 |
-| 256 | Decryption |  4.00 KB | 1024 | 97.289273 |
-| 256 | Encryption |  4.00 KB | 2048 | 98.384675 |
-| 256 | Decryption |  4.00 KB | 2048 | 98.087227 |
-| 256 | Encryption |  8.00 KB | 256 | 90.549979 |
-| 256 | Decryption |  8.00 KB | 256 | 91.158961 |
-| 256 | Encryption |  8.00 KB | 512 | 94.053150 |
-| 256 | Decryption |  8.00 KB | 512 | 93.779268 |
-| 256 | Encryption |  8.00 KB | 1024 | 95.313653 |
-| 256 | Decryption |  8.00 KB | 1024 | 95.151396 |
-| 256 | Encryption |  8.00 KB | 2048 | 95.789758 |
-| 256 | Decryption |  8.00 KB | 2048 | 96.205282 |
-| 256 | Encryption |  8.00 KB | 4096 | 96.271704 |
-| 256 | Decryption |  8.00 KB | 4096 | 96.353091 |
-| 256 | Encryption |  16.00 KB | 256 | 90.294692 |
-| 256 | Decryption |  16.00 KB | 256 | 90.217159 |
-| 256 | Encryption |  16.00 KB | 512 | 92.965788 |
-| 256 | Decryption |  16.00 KB | 512 | 92.938102 |
-| 256 | Encryption |  16.00 KB | 1024 | 94.323207 |
-| 256 | Decryption |  16.00 KB | 1024 | 94.136236 |
-| 256 | Encryption |  16.00 KB | 2048 | 95.106519 |
-| 256 | Decryption |  16.00 KB | 2048 | 94.760319 |
-| 256 | Encryption |  16.00 KB | 4096 | 95.394469 |
-| 256 | Decryption |  16.00 KB | 4096 | 95.230553 |
-| 256 | Encryption |  16.00 KB | 8192 | 95.631459 |
-| 256 | Decryption |  16.00 KB | 8192 | 95.391345 |
-| 256 | Encryption |  32.00 KB | 256 | 90.363946 |
-| 256 | Decryption |  32.00 KB | 256 | 90.379212 |
-| 256 | Encryption |  32.00 KB | 512 | 93.069592 |
-| 256 | Decryption |  32.00 KB | 512 | 92.995305 |
-| 256 | Encryption |  32.00 KB | 1024 | 94.454819 |
-| 256 | Decryption |  32.00 KB | 1024 | 94.278259 |
-| 256 | Encryption |  32.00 KB | 2048 | 95.209714 |
-| 256 | Decryption |  32.00 KB | 2048 | 95.075475 |
-| 256 | Encryption |  32.00 KB | 4096 | 95.561824 |
-| 256 | Decryption |  32.00 KB | 4096 | 95.346761 |
-| 256 | Encryption |  32.00 KB | 8192 | 95.776547 |
-| 256 | Decryption |  32.00 KB | 8192 | 95.629715 |
-| 256 | Encryption |  32.00 KB | 16384 | 95.921110 |
-| 256 | Decryption |  32.00 KB | 16384 | 95.588393 |
-| 128 | Encryption |  512.00 B | 256 | 82.593134 |
-| 128 | Decryption |  512.00 B | 256 | 84.838442 |
-| 128 | Encryption |  1024.00 B | 256 | 93.053899 |
-| 128 | Decryption |  1024.00 B | 256 | 94.574001 |
-| 128 | Encryption |  1024.00 B | 512 | 97.911375 |
-| 128 | Decryption |  1024.00 B | 512 | 97.712837 |
-| 128 | Encryption |  2.00 KB | 256 | 98.079887 |
-| 128 | Decryption |  2.00 KB | 256 | 98.649767 |
-| 128 | Encryption |  2.00 KB | 512 | 102.162154 |
-| 128 | Decryption |  2.00 KB | 512 | 102.096900 |
-| 128 | Encryption |  2.00 KB | 1024 | 103.850664 |
-| 128 | Decryption |  2.00 KB | 1024 | 103.230684 |
-| 128 | Encryption |  4.00 KB | 256 | 100.576269 |
-| 128 | Decryption |  4.00 KB | 256 | 100.592479 |
-| 128 | Encryption |  4.00 KB | 512 | 104.307690 |
-| 128 | Decryption |  4.00 KB | 512 | 104.368321 |
-| 128 | Encryption |  4.00 KB | 1024 | 105.866294 |
-| 128 | Decryption |  4.00 KB | 1024 | 106.144066 |
-| 128 | Encryption |  4.00 KB | 2048 | 107.144492 |
-| 128 | Decryption |  4.00 KB | 2048 | 106.752673 |
-| 128 | Encryption |  8.00 KB | 256 | 98.642714 |
-| 128 | Decryption |  8.00 KB | 256 | 98.788062 |
-| 128 | Encryption |  8.00 KB | 512 | 102.181268 |
-| 128 | Decryption |  8.00 KB | 512 | 101.961883 |
-| 128 | Encryption |  8.00 KB | 1024 | 103.805017 |
-| 128 | Decryption |  8.00 KB | 1024 | 103.624059 |
-| 128 | Encryption |  8.00 KB | 2048 | 104.451909 |
-| 128 | Decryption |  8.00 KB | 2048 | 103.777484 |
-| 128 | Encryption |  8.00 KB | 4096 | 104.603622 |
-| 128 | Decryption |  8.00 KB | 4096 | 104.838310 |
-| 128 | Encryption |  16.00 KB | 256 | 97.116808 |
-| 128 | Decryption |  16.00 KB | 256 | 97.458909 |
-| 128 | Encryption |  16.00 KB | 512 | 100.710154 |
-| 128 | Decryption |  16.00 KB | 512 | 100.491062 |
-| 128 | Encryption |  16.00 KB | 1024 | 102.393600 |
-| 128 | Decryption |  16.00 KB | 1024 | 101.887379 |
-| 128 | Encryption |  16.00 KB | 2048 | 102.993014 |
-| 128 | Decryption |  16.00 KB | 2048 | 102.832217 |
-| 128 | Encryption |  16.00 KB | 4096 | 103.453529 |
-| 128 | Decryption |  16.00 KB | 4096 | 103.322639 |
-| 128 | Encryption |  16.00 KB | 8192 | 103.826396 |
-| 128 | Decryption |  16.00 KB | 8192 | 103.310830 |
-| 128 | Encryption |  32.00 KB | 256 | 97.412372 |
-| 128 | Decryption |  32.00 KB | 256 | 97.612234 |
-| 128 | Encryption |  32.00 KB | 512 | 100.812111 |
-| 128 | Decryption |  32.00 KB | 512 | 100.670899 |
-| 128 | Encryption |  32.00 KB | 1024 | 102.394600 |
-| 128 | Decryption |  32.00 KB | 1024 | 102.242443 |
-| 128 | Encryption |  32.00 KB | 2048 | 103.264741 |
-| 128 | Decryption |  32.00 KB | 2048 | 103.084951 |
-| 128 | Encryption |  32.00 KB | 4096 | 103.668830 |
-| 128 | Decryption |  32.00 KB | 4096 | 103.468433 |
-| 128 | Encryption |  32.00 KB | 8192 | 103.799571 |
-| 128 | Decryption |  32.00 KB | 8192 | 103.860745 |
-| 128 | Encryption |  32.00 KB | 16384 | 103.971039 |
-| 128 | Decryption |  32.00 KB | 16384 | 103.829686 |
+| 256 | Encryption |  512.00 B | 256 | 74.334195 |
+| 256 | Decryption |  512.00 B | 256 | 78.697344 |
+| 256 | Encryption |  1024.00 B | 256 | 85.766634 |
+| 256 | Decryption |  1024.00 B | 256 | 86.283803 |
+| 256 | Encryption |  1024.00 B | 512 | 87.701737 |
+| 256 | Decryption |  1024.00 B | 512 | 88.876834 |
+| 256 | Encryption |  2.00 KB | 256 | 88.999946 |
+| 256 | Decryption |  2.00 KB | 256 | 90.108621 |
+| 256 | Encryption |  2.00 KB | 512 | 92.689343 |
+| 256 | Decryption |  2.00 KB | 512 | 92.782513 |
+| 256 | Encryption |  2.00 KB | 1024 | 94.664163 |
+| 256 | Decryption |  2.00 KB | 1024 | 94.642290 |
+| 256 | Encryption |  4.00 KB | 256 | 91.612615 |
+| 256 | Decryption |  4.00 KB | 256 | 91.919716 |
+| 256 | Encryption |  4.00 KB | 512 | 95.304990 |
+| 256 | Decryption |  4.00 KB | 512 | 95.461862 |
+| 256 | Encryption |  4.00 KB | 1024 | 97.078146 |
+| 256 | Decryption |  4.00 KB | 1024 | 96.835728 |
+| 256 | Encryption |  4.00 KB | 2048 | 97.973584 |
+| 256 | Decryption |  4.00 KB | 2048 | 97.504222 |
+| 256 | Encryption |  8.00 KB | 256 | 89.612996 |
+| 256 | Decryption |  8.00 KB | 256 | 90.302934 |
+| 256 | Encryption |  8.00 KB | 512 | 93.512979 |
+| 256 | Decryption |  8.00 KB | 512 | 93.485300 |
+| 256 | Encryption |  8.00 KB | 1024 | 94.768884 |
+| 256 | Decryption |  8.00 KB | 1024 | 94.694939 |
+| 256 | Encryption |  8.00 KB | 2048 | 95.531091 |
+| 256 | Decryption |  8.00 KB | 2048 | 95.661821 |
+| 256 | Encryption |  8.00 KB | 4096 | 96.168930 |
+| 256 | Decryption |  8.00 KB | 4096 | 95.847898 |
+| 256 | Encryption |  16.00 KB | 256 | 89.889860 |
+| 256 | Decryption |  16.00 KB | 256 | 89.709596 |
+| 256 | Encryption |  16.00 KB | 512 | 92.579519 |
+| 256 | Decryption |  16.00 KB | 512 | 92.464410 |
+| 256 | Encryption |  16.00 KB | 1024 | 93.905412 |
+| 256 | Decryption |  16.00 KB | 1024 | 93.804100 |
+| 256 | Encryption |  16.00 KB | 2048 | 94.675958 |
+| 256 | Decryption |  16.00 KB | 2048 | 94.367008 |
+| 256 | Encryption |  16.00 KB | 4096 | 95.185082 |
+| 256 | Decryption |  16.00 KB | 4096 | 94.806242 |
+| 256 | Encryption |  16.00 KB | 8192 | 95.309148 |
+| 256 | Decryption |  16.00 KB | 8192 | 94.990035 |
+| 256 | Encryption |  32.00 KB | 256 | 89.906585 |
+| 256 | Decryption |  32.00 KB | 256 | 89.872294 |
+| 256 | Encryption |  32.00 KB | 512 | 92.576086 |
+| 256 | Decryption |  32.00 KB | 512 | 92.546345 |
+| 256 | Encryption |  32.00 KB | 1024 | 94.066566 |
+| 256 | Decryption |  32.00 KB | 1024 | 93.944617 |
+| 256 | Encryption |  32.00 KB | 2048 | 94.770168 |
+| 256 | Decryption |  32.00 KB | 2048 | 94.707426 |
+| 256 | Encryption |  32.00 KB | 4096 | 95.120409 |
+| 256 | Decryption |  32.00 KB | 4096 | 95.043934 |
+| 256 | Encryption |  32.00 KB | 8192 | 95.345460 |
+| 256 | Decryption |  32.00 KB | 8192 | 95.236607 |
+| 256 | Encryption |  32.00 KB | 16384 | 95.392386 |
+| 256 | Decryption |  32.00 KB | 16384 | 95.431106 |
+| 128 | Encryption |  512.00 B | 256 | 81.475956 |
+| 128 | Decryption |  512.00 B | 256 | 83.464086 |
+| 128 | Encryption |  1024.00 B | 256 | 92.887717 |
+| 128 | Decryption |  1024.00 B | 256 | 93.382730 |
+| 128 | Encryption |  1024.00 B | 512 | 96.331138 |
+| 128 | Decryption |  1024.00 B | 512 | 96.399153 |
+| 128 | Encryption |  2.00 KB | 256 | 97.670606 |
+| 128 | Decryption |  2.00 KB | 256 | 98.041738 |
+| 128 | Encryption |  2.00 KB | 512 | 101.348509 |
+| 128 | Decryption |  2.00 KB | 512 | 101.204522 |
+| 128 | Encryption |  2.00 KB | 1024 | 102.862883 |
+| 128 | Decryption |  2.00 KB | 1024 | 102.958227 |
+| 128 | Encryption |  4.00 KB | 256 | 98.551858 |
+| 128 | Decryption |  4.00 KB | 256 | 99.457458 |
+| 128 | Encryption |  4.00 KB | 512 | 103.718358 |
+| 128 | Decryption |  4.00 KB | 512 | 103.161623 |
+| 128 | Encryption |  4.00 KB | 1024 | 105.504129 |
+| 128 | Decryption |  4.00 KB | 1024 | 105.447261 |
+| 128 | Encryption |  4.00 KB | 2048 | 106.066761 |
+| 128 | Decryption |  4.00 KB | 2048 | 106.521898 |
+| 128 | Encryption |  8.00 KB | 256 | 98.450075 |
+| 128 | Decryption |  8.00 KB | 256 | 97.756563 |
+| 128 | Encryption |  8.00 KB | 512 | 101.053930 |
+| 128 | Decryption |  8.00 KB | 512 | 101.228752 |
+| 128 | Encryption |  8.00 KB | 1024 | 102.881453 |
+| 128 | Decryption |  8.00 KB | 1024 | 102.517735 |
+| 128 | Encryption |  8.00 KB | 2048 | 103.777073 |
+| 128 | Decryption |  8.00 KB | 2048 | 104.069998 |
+| 128 | Encryption |  8.00 KB | 4096 | 104.468143 |
+| 128 | Decryption |  8.00 KB | 4096 | 104.239253 |
+| 128 | Encryption |  16.00 KB | 256 | 97.079044 |
+| 128 | Decryption |  16.00 KB | 256 | 96.790320 |
+| 128 | Encryption |  16.00 KB | 512 | 100.282511 |
+| 128 | Decryption |  16.00 KB | 512 | 99.844602 |
+| 128 | Encryption |  16.00 KB | 1024 | 101.874906 |
+| 128 | Decryption |  16.00 KB | 1024 | 101.390452 |
+| 128 | Encryption |  16.00 KB | 2048 | 102.651416 |
+| 128 | Decryption |  16.00 KB | 2048 | 102.384402 |
+| 128 | Encryption |  16.00 KB | 4096 | 103.143763 |
+| 128 | Decryption |  16.00 KB | 4096 | 102.842302 |
+| 128 | Encryption |  16.00 KB | 8192 | 103.312255 |
+| 128 | Decryption |  16.00 KB | 8192 | 103.016084 |
+| 128 | Encryption |  32.00 KB | 256 | 96.849502 |
+| 128 | Decryption |  32.00 KB | 256 | 97.075270 |
+| 128 | Encryption |  32.00 KB | 512 | 100.288650 |
+| 128 | Decryption |  32.00 KB | 512 | 100.169851 |
+| 128 | Encryption |  32.00 KB | 1024 | 101.878965 |
+| 128 | Decryption |  32.00 KB | 1024 | 101.777211 |
+| 128 | Encryption |  32.00 KB | 2048 | 102.758148 |
+| 128 | Decryption |  32.00 KB | 2048 | 102.673328 |
+| 128 | Encryption |  32.00 KB | 4096 | 103.184972 |
+| 128 | Decryption |  32.00 KB | 4096 | 103.130170 |
+| 128 | Encryption |  32.00 KB | 8192 | 103.444241 |
+| 128 | Decryption |  32.00 KB | 8192 | 103.258640 |
+| 128 | Encryption |  32.00 KB | 16384 | 103.518280 |
+| 128 | Decryption |  32.00 KB | 16384 | 103.431691 |
 
 
 ### AES CBC
@@ -403,34 +403,34 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Performance (Mbps) | 
 |-------------|------------|------|-------------| 
-| 256 | Encryption |  32.00 KB | 95.914003 |
-| 256 | Decryption |  32.00 KB | 95.881903 |
-| 256 | Encryption |  16.00 KB | 96.186573 |
-| 256 | Decryption |  16.00 KB | 95.679278 |
-| 256 | Encryption |  8.00 KB | 96.117096 |
-| 256 | Decryption |  8.00 KB | 95.874539 |
-| 256 | Encryption |  4.00 KB | 97.475942 |
-| 256 | Decryption |  4.00 KB | 98.341862 |
-| 256 | Encryption |  2.00 KB | 97.321057 |
-| 256 | Decryption |  2.00 KB | 97.526712 |
-| 256 | Encryption |  1024.00 B | 94.231322 |
-| 256 | Decryption |  1024.00 B | 94.144688 |
-| 256 | Encryption |  512.00 B | 88.418780 |
-| 256 | Decryption |  512.00 B | 87.996133 |
-| 128 | Encryption |  32.00 KB | 103.981452 |
-| 128 | Decryption |  32.00 KB | 104.117326 |
-| 128 | Encryption |  16.00 KB | 103.788167 |
-| 128 | Decryption |  16.00 KB | 103.927243 |
-| 128 | Encryption |  8.00 KB | 104.529795 |
-| 128 | Decryption |  8.00 KB | 104.815674 |
-| 128 | Encryption |  4.00 KB | 105.928752 |
-| 128 | Decryption |  4.00 KB | 107.377976 |
-| 128 | Encryption |  2.00 KB | 105.689588 |
-| 128 | Decryption |  2.00 KB | 106.189643 |
-| 128 | Encryption |  1024.00 B | 102.316868 |
-| 128 | Decryption |  1024.00 B | 102.249821 |
-| 128 | Encryption |  512.00 B | 95.189403 |
-| 128 | Decryption |  512.00 B | 95.029291 |
+| 256 | Encryption |  32.00 KB | 95.599549 |
+| 256 | Decryption |  32.00 KB | 95.450391 |
+| 256 | Encryption |  16.00 KB | 95.882254 |
+| 256 | Decryption |  16.00 KB | 95.327864 |
+| 256 | Encryption |  8.00 KB | 95.420164 |
+| 256 | Decryption |  8.00 KB | 95.804462 |
+| 256 | Encryption |  4.00 KB | 97.487542 |
+| 256 | Decryption |  4.00 KB | 98.315306 |
+| 256 | Encryption |  2.00 KB | 96.659341 |
+| 256 | Decryption |  2.00 KB | 96.962523 |
+| 256 | Encryption |  1024.00 B | 92.719504 |
+| 256 | Decryption |  1024.00 B | 93.425329 |
+| 256 | Encryption |  512.00 B | 86.977757 |
+| 256 | Decryption |  512.00 B | 87.765160 |
+| 128 | Encryption |  32.00 KB | 103.651101 |
+| 128 | Decryption |  32.00 KB | 103.647003 |
+| 128 | Encryption |  16.00 KB | 103.348709 |
+| 128 | Decryption |  16.00 KB | 103.527888 |
+| 128 | Encryption |  8.00 KB | 103.458020 |
+| 128 | Decryption |  8.00 KB | 104.235522 |
+| 128 | Encryption |  4.00 KB | 105.380286 |
+| 128 | Decryption |  4.00 KB | 107.056104 |
+| 128 | Encryption |  2.00 KB | 104.949956 |
+| 128 | Decryption |  2.00 KB | 105.783416 |
+| 128 | Encryption |  1024.00 B | 101.082765 |
+| 128 | Decryption |  1024.00 B | 99.935954 |
+| 128 | Encryption |  512.00 B | 93.564045 |
+| 128 | Decryption |  512.00 B | 92.585895 |
 
 ### AES CBC
 
@@ -441,118 +441,118 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Stream Size | Performance (Mbps) | 
 |------------|------------|------|-------------|--------------------| 
-| 256 | Encryption |  512.00 B | 256 | 73.032005 |
-| 256 | Decryption |  512.00 B | 256 | 78.704905 |
-| 256 | Encryption |  1024.00 B | 256 | 85.549435 |
-| 256 | Decryption |  1024.00 B | 256 | 86.333816 |
-| 256 | Encryption |  1024.00 B | 512 | 88.569343 |
-| 256 | Decryption |  1024.00 B | 512 | 89.191323 |
-| 256 | Encryption |  2.00 KB | 256 | 89.429874 |
-| 256 | Decryption |  2.00 KB | 256 | 90.268729 |
-| 256 | Encryption |  2.00 KB | 512 | 93.211395 |
-| 256 | Decryption |  2.00 KB | 512 | 93.645600 |
-| 256 | Encryption |  2.00 KB | 1024 | 95.287669 |
-| 256 | Decryption |  2.00 KB | 1024 | 95.072026 |
-| 256 | Encryption |  4.00 KB | 256 | 92.479415 |
-| 256 | Decryption |  4.00 KB | 256 | 92.971393 |
-| 256 | Encryption |  4.00 KB | 512 | 95.398635 |
-| 256 | Decryption |  4.00 KB | 512 | 95.763164 |
-| 256 | Encryption |  4.00 KB | 1024 | 97.436088 |
-| 256 | Decryption |  4.00 KB | 1024 | 96.971132 |
-| 256 | Encryption |  4.00 KB | 2048 | 98.173920 |
-| 256 | Decryption |  4.00 KB | 2048 | 97.932591 |
-| 256 | Encryption |  8.00 KB | 256 | 90.487779 |
-| 256 | Decryption |  8.00 KB | 256 | 90.983049 |
-| 256 | Encryption |  8.00 KB | 512 | 93.785978 |
-| 256 | Decryption |  8.00 KB | 512 | 93.870272 |
-| 256 | Encryption |  8.00 KB | 1024 | 95.270354 |
-| 256 | Decryption |  8.00 KB | 1024 | 95.163141 |
-| 256 | Encryption |  8.00 KB | 2048 | 95.938048 |
-| 256 | Decryption |  8.00 KB | 2048 | 95.796409 |
-| 256 | Encryption |  8.00 KB | 4096 | 96.249789 |
-| 256 | Decryption |  8.00 KB | 4096 | 96.181985 |
-| 256 | Encryption |  16.00 KB | 256 | 90.415528 |
-| 256 | Decryption |  16.00 KB | 256 | 90.118224 |
-| 256 | Encryption |  16.00 KB | 512 | 92.964140 |
-| 256 | Decryption |  16.00 KB | 512 | 92.762157 |
-| 256 | Encryption |  16.00 KB | 1024 | 94.253853 |
-| 256 | Decryption |  16.00 KB | 1024 | 94.049101 |
-| 256 | Encryption |  16.00 KB | 2048 | 94.981775 |
-| 256 | Decryption |  16.00 KB | 2048 | 94.722655 |
-| 256 | Encryption |  16.00 KB | 4096 | 95.421032 |
-| 256 | Decryption |  16.00 KB | 4096 | 95.067544 |
-| 256 | Encryption |  16.00 KB | 8192 | 95.558776 |
-| 256 | Decryption |  16.00 KB | 8192 | 95.366012 |
-| 256 | Encryption |  32.00 KB | 256 | 90.274869 |
-| 256 | Decryption |  32.00 KB | 256 | 90.402276 |
-| 256 | Encryption |  32.00 KB | 512 | 93.062323 |
-| 256 | Decryption |  32.00 KB | 512 | 93.004378 |
-| 256 | Encryption |  32.00 KB | 1024 | 94.454563 |
-| 256 | Decryption |  32.00 KB | 1024 | 94.259276 |
-| 256 | Encryption |  32.00 KB | 2048 | 95.141986 |
-| 256 | Decryption |  32.00 KB | 2048 | 95.102551 |
-| 256 | Encryption |  32.00 KB | 4096 | 95.426416 |
-| 256 | Decryption |  32.00 KB | 4096 | 95.416691 |
-| 256 | Encryption |  32.00 KB | 8192 | 95.688446 |
-| 256 | Decryption |  32.00 KB | 8192 | 95.567136 |
-| 256 | Encryption |  32.00 KB | 16384 | 95.776634 |
-| 256 | Decryption |  32.00 KB | 16384 | 95.640007 |
-| 128 | Encryption |  512.00 B | 256 | 81.285969 |
-| 128 | Decryption |  512.00 B | 256 | 82.634791 |
-| 128 | Encryption |  1024.00 B | 256 | 92.304225 |
-| 128 | Decryption |  1024.00 B | 256 | 92.877186 |
-| 128 | Encryption |  1024.00 B | 512 | 96.892279 |
-| 128 | Decryption |  1024.00 B | 512 | 96.663618 |
-| 128 | Encryption |  2.00 KB | 256 | 96.756382 |
-| 128 | Decryption |  2.00 KB | 256 | 97.800328 |
-| 128 | Encryption |  2.00 KB | 512 | 101.554244 |
-| 128 | Decryption |  2.00 KB | 512 | 101.686605 |
-| 128 | Encryption |  2.00 KB | 1024 | 103.432711 |
-| 128 | Decryption |  2.00 KB | 1024 | 102.663074 |
-| 128 | Encryption |  4.00 KB | 256 | 99.043359 |
-| 128 | Decryption |  4.00 KB | 256 | 100.317626 |
-| 128 | Encryption |  4.00 KB | 512 | 104.003110 |
-| 128 | Decryption |  4.00 KB | 512 | 103.973410 |
-| 128 | Encryption |  4.00 KB | 1024 | 105.411644 |
-| 128 | Decryption |  4.00 KB | 1024 | 105.718572 |
-| 128 | Encryption |  4.00 KB | 2048 | 106.620680 |
-| 128 | Decryption |  4.00 KB | 2048 | 106.306774 |
-| 128 | Encryption |  8.00 KB | 256 | 97.896018 |
-| 128 | Decryption |  8.00 KB | 256 | 98.341124 |
-| 128 | Encryption |  8.00 KB | 512 | 101.312082 |
-| 128 | Decryption |  8.00 KB | 512 | 101.561326 |
-| 128 | Encryption |  8.00 KB | 1024 | 103.151881 |
-| 128 | Decryption |  8.00 KB | 1024 | 103.316123 |
-| 128 | Encryption |  8.00 KB | 2048 | 104.493544 |
-| 128 | Decryption |  8.00 KB | 2048 | 104.115465 |
-| 128 | Encryption |  8.00 KB | 4096 | 104.455655 |
-| 128 | Decryption |  8.00 KB | 4096 | 104.503959 |
-| 128 | Encryption |  16.00 KB | 256 | 97.425224 |
-| 128 | Decryption |  16.00 KB | 256 | 97.532518 |
-| 128 | Encryption |  16.00 KB | 512 | 100.694294 |
-| 128 | Decryption |  16.00 KB | 512 | 100.391003 |
-| 128 | Encryption |  16.00 KB | 1024 | 102.284929 |
-| 128 | Decryption |  16.00 KB | 1024 | 101.984890 |
-| 128 | Encryption |  16.00 KB | 2048 | 102.972179 |
-| 128 | Decryption |  16.00 KB | 2048 | 102.845530 |
-| 128 | Encryption |  16.00 KB | 4096 | 103.334654 |
-| 128 | Decryption |  16.00 KB | 4096 | 103.236376 |
-| 128 | Encryption |  16.00 KB | 8192 | 103.572268 |
-| 128 | Decryption |  16.00 KB | 8192 | 103.458837 |
-| 128 | Encryption |  32.00 KB | 256 | 97.495881 |
-| 128 | Decryption |  32.00 KB | 256 | 97.615506 |
-| 128 | Encryption |  32.00 KB | 512 | 100.835087 |
-| 128 | Decryption |  32.00 KB | 512 | 100.655244 |
-| 128 | Encryption |  32.00 KB | 1024 | 102.512022 |
-| 128 | Decryption |  32.00 KB | 1024 | 102.188836 |
-| 128 | Encryption |  32.00 KB | 2048 | 103.243288 |
-| 128 | Decryption |  32.00 KB | 2048 | 103.002322 |
-| 128 | Encryption |  32.00 KB | 4096 | 103.590481 |
-| 128 | Decryption |  32.00 KB | 4096 | 103.446180 |
-| 128 | Encryption |  32.00 KB | 8192 | 103.795153 |
-| 128 | Decryption |  32.00 KB | 8192 | 103.661553 |
-| 128 | Encryption |  32.00 KB | 16384 | 103.952177 |
-| 128 | Decryption |  32.00 KB | 16384 | 103.854161 |
+| 256 | Encryption |  512.00 B | 256 | 72.791896 |
+| 256 | Decryption |  512.00 B | 256 | 77.304898 |
+| 256 | Encryption |  1024.00 B | 256 | 85.253408 |
+| 256 | Decryption |  1024.00 B | 256 | 85.504788 |
+| 256 | Encryption |  1024.00 B | 512 | 87.044760 |
+| 256 | Decryption |  1024.00 B | 512 | 87.748708 |
+| 256 | Encryption |  2.00 KB | 256 | 89.786412 |
+| 256 | Decryption |  2.00 KB | 256 | 90.077658 |
+| 256 | Encryption |  2.00 KB | 512 | 92.446150 |
+| 256 | Decryption |  2.00 KB | 512 | 92.814049 |
+| 256 | Encryption |  2.00 KB | 1024 | 94.406431 |
+| 256 | Decryption |  2.00 KB | 1024 | 94.311330 |
+| 256 | Encryption |  4.00 KB | 256 | 91.070920 |
+| 256 | Decryption |  4.00 KB | 256 | 91.592129 |
+| 256 | Encryption |  4.00 KB | 512 | 95.109969 |
+| 256 | Decryption |  4.00 KB | 512 | 95.298061 |
+| 256 | Encryption |  4.00 KB | 1024 | 96.872944 |
+| 256 | Decryption |  4.00 KB | 1024 | 96.457325 |
+| 256 | Encryption |  4.00 KB | 2048 | 97.655325 |
+| 256 | Decryption |  4.00 KB | 2048 | 97.281330 |
+| 256 | Encryption |  8.00 KB | 256 | 90.085397 |
+| 256 | Decryption |  8.00 KB | 256 | 90.334675 |
+| 256 | Encryption |  8.00 KB | 512 | 93.386389 |
+| 256 | Decryption |  8.00 KB | 512 | 93.433654 |
+| 256 | Encryption |  8.00 KB | 1024 | 94.869373 |
+| 256 | Decryption |  8.00 KB | 1024 | 94.560356 |
+| 256 | Encryption |  8.00 KB | 2048 | 95.565917 |
+| 256 | Decryption |  8.00 KB | 2048 | 95.778909 |
+| 256 | Encryption |  8.00 KB | 4096 | 96.171752 |
+| 256 | Decryption |  8.00 KB | 4096 | 95.749173 |
+| 256 | Encryption |  16.00 KB | 256 | 89.738771 |
+| 256 | Decryption |  16.00 KB | 256 | 89.696704 |
+| 256 | Encryption |  16.00 KB | 512 | 92.527725 |
+| 256 | Decryption |  16.00 KB | 512 | 92.407696 |
+| 256 | Encryption |  16.00 KB | 1024 | 93.886410 |
+| 256 | Decryption |  16.00 KB | 1024 | 93.788998 |
+| 256 | Encryption |  16.00 KB | 2048 | 94.704005 |
+| 256 | Decryption |  16.00 KB | 2048 | 94.488439 |
+| 256 | Encryption |  16.00 KB | 4096 | 95.119460 |
+| 256 | Decryption |  16.00 KB | 4096 | 94.741483 |
+| 256 | Encryption |  16.00 KB | 8192 | 95.257718 |
+| 256 | Decryption |  16.00 KB | 8192 | 95.010348 |
+| 256 | Encryption |  32.00 KB | 256 | 89.762892 |
+| 256 | Decryption |  32.00 KB | 256 | 89.996481 |
+| 256 | Encryption |  32.00 KB | 512 | 92.675498 |
+| 256 | Decryption |  32.00 KB | 512 | 92.589492 |
+| 256 | Encryption |  32.00 KB | 1024 | 94.150774 |
+| 256 | Decryption |  32.00 KB | 1024 | 93.925768 |
+| 256 | Encryption |  32.00 KB | 2048 | 94.767685 |
+| 256 | Decryption |  32.00 KB | 2048 | 94.666898 |
+| 256 | Encryption |  32.00 KB | 4096 | 95.198131 |
+| 256 | Decryption |  32.00 KB | 4096 | 95.009831 |
+| 256 | Encryption |  32.00 KB | 8192 | 95.309755 |
+| 256 | Decryption |  32.00 KB | 8192 | 95.200465 |
+| 256 | Encryption |  32.00 KB | 16384 | 95.373211 |
+| 256 | Decryption |  32.00 KB | 16384 | 95.375033 |
+| 128 | Encryption |  512.00 B | 256 | 80.136953 |
+| 128 | Decryption |  512.00 B | 256 | 83.020015 |
+| 128 | Encryption |  1024.00 B | 256 | 90.757513 |
+| 128 | Decryption |  1024.00 B | 256 | 92.070806 |
+| 128 | Encryption |  1024.00 B | 512 | 95.603209 |
+| 128 | Decryption |  1024.00 B | 512 | 95.866124 |
+| 128 | Encryption |  2.00 KB | 256 | 95.808663 |
+| 128 | Decryption |  2.00 KB | 256 | 96.573879 |
+| 128 | Encryption |  2.00 KB | 512 | 100.953525 |
+| 128 | Decryption |  2.00 KB | 512 | 99.966442 |
+| 128 | Encryption |  2.00 KB | 1024 | 102.451226 |
+| 128 | Decryption |  2.00 KB | 1024 | 102.472051 |
+| 128 | Encryption |  4.00 KB | 256 | 98.326369 |
+| 128 | Decryption |  4.00 KB | 256 | 99.323305 |
+| 128 | Encryption |  4.00 KB | 512 | 103.723282 |
+| 128 | Decryption |  4.00 KB | 512 | 103.272166 |
+| 128 | Encryption |  4.00 KB | 1024 | 105.492241 |
+| 128 | Decryption |  4.00 KB | 1024 | 105.321859 |
+| 128 | Encryption |  4.00 KB | 2048 | 106.003283 |
+| 128 | Decryption |  4.00 KB | 2048 | 106.293842 |
+| 128 | Encryption |  8.00 KB | 256 | 97.583710 |
+| 128 | Decryption |  8.00 KB | 256 | 97.783547 |
+| 128 | Encryption |  8.00 KB | 512 | 101.135412 |
+| 128 | Decryption |  8.00 KB | 512 | 100.951581 |
+| 128 | Encryption |  8.00 KB | 1024 | 103.032685 |
+| 128 | Decryption |  8.00 KB | 1024 | 102.724626 |
+| 128 | Encryption |  8.00 KB | 2048 | 103.591300 |
+| 128 | Decryption |  8.00 KB | 2048 | 103.651101 |
+| 128 | Encryption |  8.00 KB | 4096 | 104.485631 |
+| 128 | Decryption |  8.00 KB | 4096 | 104.022920 |
+| 128 | Encryption |  16.00 KB | 256 | 97.054963 |
+| 128 | Decryption |  16.00 KB | 256 | 96.978665 |
+| 128 | Encryption |  16.00 KB | 512 | 100.251255 |
+| 128 | Decryption |  16.00 KB | 512 | 99.878079 |
+| 128 | Encryption |  16.00 KB | 1024 | 101.721131 |
+| 128 | Decryption |  16.00 KB | 1024 | 101.487799 |
+| 128 | Encryption |  16.00 KB | 2048 | 102.744958 |
+| 128 | Decryption |  16.00 KB | 2048 | 102.328450 |
+| 128 | Encryption |  16.00 KB | 4096 | 102.947108 |
+| 128 | Decryption |  16.00 KB | 4096 | 102.883876 |
+| 128 | Encryption |  16.00 KB | 8192 | 103.291698 |
+| 128 | Decryption |  16.00 KB | 8192 | 102.945693 |
+| 128 | Encryption |  32.00 KB | 256 | 97.281330 |
+| 128 | Decryption |  32.00 KB | 256 | 97.259133 |
+| 128 | Encryption |  32.00 KB | 512 | 100.357663 |
+| 128 | Decryption |  32.00 KB | 512 | 100.261991 |
+| 128 | Encryption |  32.00 KB | 1024 | 101.981220 |
+| 128 | Decryption |  32.00 KB | 1024 | 101.831375 |
+| 128 | Encryption |  32.00 KB | 2048 | 102.830301 |
+| 128 | Decryption |  32.00 KB | 2048 | 102.604006 |
+| 128 | Encryption |  32.00 KB | 4096 | 103.320603 |
+| 128 | Decryption |  32.00 KB | 4096 | 102.955800 |
+| 128 | Encryption |  32.00 KB | 8192 | 103.384577 |
+| 128 | Decryption |  32.00 KB | 8192 | 103.301060 |
+| 128 | Encryption |  32.00 KB | 16384 | 103.521244 |
+| 128 | Decryption |  32.00 KB | 16384 | 103.383353 |
 
 ### SHA
 
@@ -563,20 +563,20 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | SHA | Size | Performance (Mbps) | 
 |-----|------|-------------| 
-| 512 |  32.00 KB | 311.063383 |
-| 512 |  16.00 KB | 309.974636 |
-| 512 |  8.00 KB | 306.629860 |
-| 512 |  4.00 KB | 299.586295 |
+| 512 |  32.00 KB | 311.418134 |
+| 512 |  16.00 KB | 310.049794 |
+| 512 |  8.00 KB | 306.436303 |
+| 512 |  4.00 KB | 299.593143 |
 | 512 |  2.00 KB | 286.533753 |
-| 512 |  1024.00 B | 263.514274 |
+| 512 |  1024.00 B | 263.535467 |
 | 512 |  512.00 B | 226.454734 |
-| 256 |  32.00 KB | 300.827395 |
-| 256 |  16.00 KB | 299.958235 |
-| 256 |  8.00 KB | 297.556158 |
-| 256 |  4.00 KB | 292.382163 |
-| 256 |  2.00 KB | 282.348886 |
-| 256 |  1024.00 B | 264.663597 |
-| 256 |  512.00 B | 235.165782 |
+| 256 |  32.00 KB | 300.906816 |
+| 256 |  16.00 KB | 299.135039 |
+| 256 |  8.00 KB | 297.208680 |
+| 256 |  4.00 KB | 292.297400 |
+| 256 |  2.00 KB | 278.308137 |
+| 256 |  1024.00 B | 264.279377 |
+| 256 |  512.00 B | 235.300876 |
 
 ### AES CTR
 
@@ -587,118 +587,118 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Stream Size | Performance (Mbps) | 
 |------------|------------|------|-------------|--------------------| 
-| 256 | Encryption |  512.00 B | 256 | 72.960456 |
-| 256 | Decryption |  512.00 B | 256 | 78.629361 |
-| 256 | Encryption |  1024.00 B | 256 | 85.242319 |
-| 256 | Decryption |  1024.00 B | 256 | 86.390720 |
-| 256 | Encryption |  1024.00 B | 512 | 89.461614 |
-| 256 | Decryption |  1024.00 B | 512 | 89.736006 |
-| 256 | Encryption |  2.00 KB | 256 | 90.606940 |
-| 256 | Decryption |  2.00 KB | 256 | 90.981786 |
-| 256 | Encryption |  2.00 KB | 512 | 93.766185 |
-| 256 | Decryption |  2.00 KB | 512 | 93.348147 |
-| 256 | Encryption |  2.00 KB | 1024 | 95.047207 |
-| 256 | Decryption |  2.00 KB | 1024 | 95.380585 |
-| 256 | Encryption |  4.00 KB | 256 | 91.936479 |
-| 256 | Decryption |  4.00 KB | 256 | 92.967437 |
-| 256 | Encryption |  4.00 KB | 512 | 95.575324 |
-| 256 | Decryption |  4.00 KB | 512 | 95.922251 |
-| 256 | Encryption |  4.00 KB | 1024 | 97.318167 |
-| 256 | Decryption |  4.00 KB | 1024 | 97.099001 |
-| 256 | Encryption |  4.00 KB | 2048 | 98.090163 |
-| 256 | Decryption |  4.00 KB | 2048 | 98.174655 |
-| 256 | Encryption |  8.00 KB | 256 | 90.522150 |
-| 256 | Decryption |  8.00 KB | 256 | 90.827322 |
-| 256 | Encryption |  8.00 KB | 512 | 93.850108 |
-| 256 | Decryption |  8.00 KB | 512 | 93.345488 |
-| 256 | Encryption |  8.00 KB | 1024 | 95.129988 |
-| 256 | Decryption |  8.00 KB | 1024 | 94.864223 |
-| 256 | Encryption |  8.00 KB | 2048 | 95.757917 |
-| 256 | Decryption |  8.00 KB | 2048 | 95.842992 |
-| 256 | Encryption |  8.00 KB | 4096 | 96.350966 |
-| 256 | Decryption |  8.00 KB | 4096 | 96.193632 |
-| 256 | Encryption |  16.00 KB | 256 | 90.170921 |
-| 256 | Decryption |  16.00 KB | 256 | 90.116055 |
-| 256 | Encryption |  16.00 KB | 512 | 92.952602 |
-| 256 | Decryption |  16.00 KB | 512 | 92.817335 |
-| 256 | Encryption |  16.00 KB | 1024 | 94.445886 |
-| 256 | Decryption |  16.00 KB | 1024 | 94.095688 |
-| 256 | Encryption |  16.00 KB | 2048 | 95.004150 |
-| 256 | Decryption |  16.00 KB | 2048 | 94.950468 |
-| 256 | Encryption |  16.00 KB | 4096 | 95.406273 |
-| 256 | Decryption |  16.00 KB | 4096 | 95.089959 |
-| 256 | Encryption |  16.00 KB | 8192 | 95.603558 |
-| 256 | Decryption |  16.00 KB | 8192 | 95.268969 |
-| 256 | Encryption |  32.00 KB | 256 | 90.299668 |
-| 256 | Decryption |  32.00 KB | 256 | 90.355069 |
-| 256 | Encryption |  32.00 KB | 512 | 93.141019 |
-| 256 | Decryption |  32.00 KB | 512 | 92.961832 |
-| 256 | Encryption |  32.00 KB | 1024 | 94.501382 |
-| 256 | Decryption |  32.00 KB | 1024 | 94.337124 |
-| 256 | Encryption |  32.00 KB | 2048 | 95.139310 |
-| 256 | Decryption |  32.00 KB | 2048 | 94.977645 |
-| 256 | Encryption |  32.00 KB | 4096 | 95.549197 |
-| 256 | Decryption |  32.00 KB | 4096 | 95.323878 |
-| 256 | Encryption |  32.00 KB | 8192 | 95.674913 |
-| 256 | Decryption |  32.00 KB | 8192 | 95.621343 |
-| 256 | Encryption |  32.00 KB | 16384 | 95.747074 |
-| 256 | Decryption |  32.00 KB | 16384 | 95.679278 |
-| 128 | Encryption |  512.00 B | 256 | 81.044717 |
-| 128 | Decryption |  512.00 B | 256 | 84.184565 |
-| 128 | Encryption |  1024.00 B | 256 | 93.556031 |
-| 128 | Decryption |  1024.00 B | 256 | 93.966506 |
-| 128 | Encryption |  1024.00 B | 512 | 96.846461 |
-| 128 | Decryption |  1024.00 B | 512 | 96.918072 |
-| 128 | Encryption |  2.00 KB | 256 | 97.574630 |
-| 128 | Decryption |  2.00 KB | 256 | 97.835369 |
-| 128 | Encryption |  2.00 KB | 512 | 101.510200 |
-| 128 | Decryption |  2.00 KB | 512 | 101.836716 |
-| 128 | Encryption |  2.00 KB | 1024 | 103.289256 |
-| 128 | Decryption |  2.00 KB | 1024 | 103.378869 |
-| 128 | Encryption |  4.00 KB | 256 | 99.331585 |
-| 128 | Decryption |  4.00 KB | 256 | 100.264676 |
-| 128 | Encryption |  4.00 KB | 512 | 103.924771 |
-| 128 | Decryption |  4.00 KB | 512 | 104.231378 |
-| 128 | Encryption |  4.00 KB | 1024 | 105.420970 |
-| 128 | Decryption |  4.00 KB | 1024 | 105.658917 |
-| 128 | Encryption |  4.00 KB | 2048 | 106.737026 |
-| 128 | Decryption |  4.00 KB | 2048 | 106.370616 |
-| 128 | Encryption |  8.00 KB | 256 | 97.652414 |
-| 128 | Decryption |  8.00 KB | 256 | 98.074750 |
-| 128 | Encryption |  8.00 KB | 512 | 101.682661 |
-| 128 | Decryption |  8.00 KB | 512 | 101.712645 |
-| 128 | Encryption |  8.00 KB | 1024 | 103.117797 |
-| 128 | Decryption |  8.00 KB | 1024 | 102.990587 |
-| 128 | Encryption |  8.00 KB | 2048 | 104.300220 |
-| 128 | Decryption |  8.00 KB | 2048 | 103.889351 |
-| 128 | Encryption |  8.00 KB | 4096 | 104.322634 |
-| 128 | Decryption |  8.00 KB | 4096 | 104.423199 |
-| 128 | Encryption |  16.00 KB | 256 | 97.276637 |
-| 128 | Decryption |  16.00 KB | 256 | 97.445143 |
-| 128 | Encryption |  16.00 KB | 512 | 100.788952 |
-| 128 | Decryption |  16.00 KB | 512 | 100.549265 |
-| 128 | Encryption |  16.00 KB | 1024 | 102.240250 |
-| 128 | Decryption |  16.00 KB | 1024 | 102.060330 |
-| 128 | Encryption |  16.00 KB | 2048 | 103.020943 |
-| 128 | Decryption |  16.00 KB | 2048 | 102.936799 |
-| 128 | Encryption |  16.00 KB | 4096 | 103.545881 |
-| 128 | Decryption |  16.00 KB | 4096 | 103.173397 |
-| 128 | Encryption |  16.00 KB | 8192 | 103.526252 |
-| 128 | Decryption |  16.00 KB | 8192 | 103.527888 |
-| 128 | Encryption |  32.00 KB | 256 | 97.541409 |
-| 128 | Decryption |  32.00 KB | 256 | 97.592429 |
-| 128 | Encryption |  32.00 KB | 512 | 100.784495 |
-| 128 | Decryption |  32.00 KB | 512 | 100.628583 |
-| 128 | Encryption |  32.00 KB | 1024 | 102.357618 |
-| 128 | Decryption |  32.00 KB | 1024 | 102.244835 |
-| 128 | Encryption |  32.00 KB | 2048 | 103.164465 |
-| 128 | Decryption |  32.00 KB | 2048 | 103.132401 |
-| 128 | Encryption |  32.00 KB | 4096 | 103.553243 |
-| 128 | Decryption |  32.00 KB | 4096 | 103.524821 |
-| 128 | Encryption |  32.00 KB | 8192 | 103.860950 |
-| 128 | Decryption |  32.00 KB | 8192 | 103.591300 |
-| 128 | Encryption |  32.00 KB | 16384 | 104.033860 |
-| 128 | Decryption |  32.00 KB | 16384 | 103.759000 |
+| 256 | Encryption |  512.00 B | 256 | 70.699922 |
+| 256 | Decryption |  512.00 B | 256 | 76.585799 |
+| 256 | Encryption |  1024.00 B | 256 | 84.162942 |
+| 256 | Decryption |  1024.00 B | 256 | 85.591892 |
+| 256 | Encryption |  1024.00 B | 512 | 88.069449 |
+| 256 | Decryption |  1024.00 B | 512 | 88.672404 |
+| 256 | Encryption |  2.00 KB | 256 | 89.798715 |
+| 256 | Decryption |  2.00 KB | 256 | 89.721264 |
+| 256 | Encryption |  2.00 KB | 512 | 93.073722 |
+| 256 | Decryption |  2.00 KB | 512 | 93.053899 |
+| 256 | Encryption |  2.00 KB | 1024 | 94.008291 |
+| 256 | Decryption |  2.00 KB | 1024 | 94.497635 |
+| 256 | Encryption |  4.00 KB | 256 | 91.544790 |
+| 256 | Decryption |  4.00 KB | 256 | 92.248357 |
+| 256 | Encryption |  4.00 KB | 512 | 95.258583 |
+| 256 | Decryption |  4.00 KB | 512 | 95.092029 |
+| 256 | Encryption |  4.00 KB | 1024 | 96.885117 |
+| 256 | Decryption |  4.00 KB | 1024 | 96.645087 |
+| 256 | Encryption |  4.00 KB | 2048 | 97.644412 |
+| 256 | Decryption |  4.00 KB | 2048 | 97.731780 |
+| 256 | Encryption |  8.00 KB | 256 | 90.261891 |
+| 256 | Decryption |  8.00 KB | 256 | 90.556235 |
+| 256 | Encryption |  8.00 KB | 512 | 93.267110 |
+| 256 | Decryption |  8.00 KB | 512 | 93.117363 |
+| 256 | Encryption |  8.00 KB | 1024 | 94.619744 |
+| 256 | Decryption |  8.00 KB | 1024 | 94.640240 |
+| 256 | Encryption |  8.00 KB | 2048 | 95.491072 |
+| 256 | Decryption |  8.00 KB | 2048 | 95.798860 |
+| 256 | Encryption |  8.00 KB | 4096 | 95.918039 |
+| 256 | Decryption |  8.00 KB | 4096 | 95.476465 |
+| 256 | Encryption |  16.00 KB | 256 | 89.779032 |
+| 256 | Decryption |  16.00 KB | 256 | 89.778110 |
+| 256 | Encryption |  16.00 KB | 512 | 92.513031 |
+| 256 | Decryption |  16.00 KB | 512 | 92.426919 |
+| 256 | Encryption |  16.00 KB | 1024 | 93.925431 |
+| 256 | Decryption |  16.00 KB | 1024 | 93.711883 |
+| 256 | Encryption |  16.00 KB | 2048 | 94.649808 |
+| 256 | Decryption |  16.00 KB | 2048 | 94.364970 |
+| 256 | Encryption |  16.00 KB | 4096 | 95.037215 |
+| 256 | Decryption |  16.00 KB | 4096 | 94.746277 |
+| 256 | Encryption |  16.00 KB | 8192 | 95.211875 |
+| 256 | Decryption |  16.00 KB | 8192 | 94.832651 |
+| 256 | Encryption |  32.00 KB | 256 | 89.878765 |
+| 256 | Decryption |  32.00 KB | 256 | 89.954481 |
+| 256 | Encryption |  32.00 KB | 512 | 92.729672 |
+| 256 | Decryption |  32.00 KB | 512 | 92.527236 |
+| 256 | Encryption |  32.00 KB | 1024 | 94.031727 |
+| 256 | Decryption |  32.00 KB | 1024 | 93.986889 |
+| 256 | Encryption |  32.00 KB | 2048 | 94.817215 |
+| 256 | Decryption |  32.00 KB | 2048 | 94.631015 |
+| 256 | Encryption |  32.00 KB | 4096 | 95.052894 |
+| 256 | Decryption |  32.00 KB | 4096 | 95.119978 |
+| 256 | Encryption |  32.00 KB | 8192 | 95.280049 |
+| 256 | Decryption |  32.00 KB | 8192 | 95.197872 |
+| 256 | Encryption |  32.00 KB | 16384 | 95.386138 |
+| 256 | Decryption |  32.00 KB | 16384 | 95.405058 |
+| 128 | Encryption |  512.00 B | 256 | 79.906360 |
+| 128 | Decryption |  512.00 B | 256 | 82.818582 |
+| 128 | Encryption |  1024.00 B | 256 | 89.288536 |
+| 128 | Decryption |  1024.00 B | 256 | 92.291227 |
+| 128 | Encryption |  1024.00 B | 512 | 95.555815 |
+| 128 | Decryption |  1024.00 B | 512 | 96.124850 |
+| 128 | Encryption |  2.00 KB | 256 | 95.909616 |
+| 128 | Decryption |  2.00 KB | 256 | 96.665044 |
+| 128 | Encryption |  2.00 KB | 512 | 100.586303 |
+| 128 | Decryption |  2.00 KB | 512 | 100.810657 |
+| 128 | Encryption |  2.00 KB | 1024 | 102.605210 |
+| 128 | Decryption |  2.00 KB | 1024 | 102.606817 |
+| 128 | Encryption |  4.00 KB | 256 | 98.970069 |
+| 128 | Decryption |  4.00 KB | 256 | 100.150525 |
+| 128 | Encryption |  4.00 KB | 512 | 103.129967 |
+| 128 | Decryption |  4.00 KB | 512 | 103.480890 |
+| 128 | Encryption |  4.00 KB | 1024 | 105.393844 |
+| 128 | Decryption |  4.00 KB | 1024 | 104.925592 |
+| 128 | Encryption |  4.00 KB | 2048 | 106.289533 |
+| 128 | Decryption |  4.00 KB | 2048 | 105.857744 |
+| 128 | Encryption |  8.00 KB | 256 | 96.797468 |
+| 128 | Decryption |  8.00 KB | 256 | 97.680069 |
+| 128 | Encryption |  8.00 KB | 512 | 101.334405 |
+| 128 | Decryption |  8.00 KB | 512 | 101.213900 |
+| 128 | Encryption |  8.00 KB | 1024 | 102.946097 |
+| 128 | Decryption |  8.00 KB | 1024 | 103.052127 |
+| 128 | Encryption |  8.00 KB | 2048 | 103.845727 |
+| 128 | Decryption |  8.00 KB | 2048 | 103.713433 |
+| 128 | Encryption |  8.00 KB | 4096 | 104.165110 |
+| 128 | Decryption |  8.00 KB | 4096 | 103.926419 |
+| 128 | Encryption |  16.00 KB | 256 | 97.199810 |
+| 128 | Decryption |  16.00 KB | 256 | 96.967545 |
+| 128 | Encryption |  16.00 KB | 512 | 100.110366 |
+| 128 | Decryption |  16.00 KB | 512 | 99.967204 |
+| 128 | Encryption |  16.00 KB | 1024 | 101.874709 |
+| 128 | Decryption |  16.00 KB | 1024 | 101.584546 |
+| 128 | Encryption |  16.00 KB | 2048 | 102.651014 |
+| 128 | Decryption |  16.00 KB | 2048 | 102.269367 |
+| 128 | Encryption |  16.00 KB | 4096 | 103.052532 |
+| 128 | Decryption |  16.00 KB | 4096 | 102.854811 |
+| 128 | Encryption |  16.00 KB | 8192 | 103.286000 |
+| 128 | Decryption |  16.00 KB | 8192 | 102.936799 |
+| 128 | Encryption |  32.00 KB | 256 | 96.924343 |
+| 128 | Decryption |  32.00 KB | 256 | 97.129942 |
+| 128 | Encryption |  32.00 KB | 512 | 100.252597 |
+| 128 | Decryption |  32.00 KB | 512 | 100.238605 |
+| 128 | Encryption |  32.00 KB | 1024 | 101.901439 |
+| 128 | Decryption |  32.00 KB | 1024 | 101.832562 |
+| 128 | Encryption |  32.00 KB | 2048 | 102.697260 |
+| 128 | Decryption |  32.00 KB | 2048 | 102.692030 |
+| 128 | Encryption |  32.00 KB | 4096 | 103.162435 |
+| 128 | Decryption |  32.00 KB | 4096 | 103.043620 |
+| 128 | Encryption |  32.00 KB | 8192 | 103.437200 |
+| 128 | Decryption |  32.00 KB | 8192 | 103.209144 |
+| 128 | Encryption |  32.00 KB | 16384 | 103.481707 |
+| 128 | Decryption |  32.00 KB | 16384 | 103.511740 |
 
 ### AES CTR
 
@@ -709,34 +709,34 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | operation  | Size | Performance (Mbps) | 
 |-------------|------------|------|-------------| 
-| 256 | Encryption |  32.00 KB | 95.892952 |
-| 256 | Decryption |  32.00 KB | 95.859551 |
-| 256 | Encryption |  16.00 KB | 95.898038 |
-| 256 | Decryption |  16.00 KB | 95.726271 |
-| 256 | Encryption |  8.00 KB | 96.473654 |
-| 256 | Decryption |  8.00 KB | 96.475429 |
-| 256 | Encryption |  4.00 KB | 97.866049 |
-| 256 | Decryption |  4.00 KB | 98.571869 |
-| 256 | Encryption |  2.00 KB | 97.310942 |
-| 256 | Decryption |  2.00 KB | 97.386136 |
-| 256 | Encryption |  1024.00 B | 94.193400 |
-| 256 | Decryption |  1024.00 B | 94.128461 |
-| 256 | Encryption |  512.00 B | 87.807492 |
-| 256 | Decryption |  512.00 B | 87.925298 |
-| 128 | Encryption |  32.00 KB | 104.050997 |
-| 128 | Decryption |  32.00 KB | 104.062459 |
-| 128 | Encryption |  16.00 KB | 103.772554 |
-| 128 | Decryption |  16.00 KB | 103.909735 |
-| 128 | Encryption |  8.00 KB | 103.818584 |
-| 128 | Decryption |  8.00 KB | 104.293165 |
-| 128 | Encryption |  4.00 KB | 106.107117 |
-| 128 | Decryption |  4.00 KB | 107.028130 |
-| 128 | Encryption |  2.00 KB | 105.764638 |
-| 128 | Decryption |  2.00 KB | 105.739041 |
-| 128 | Encryption |  1024.00 B | 101.621957 |
-| 128 | Decryption |  1024.00 B | 101.868374 |
-| 128 | Encryption |  512.00 B | 94.787388 |
-| 128 | Decryption |  512.00 B | 94.601305 |
+| 256 | Encryption |  32.00 KB | 95.424853 |
+| 256 | Decryption |  32.00 KB | 95.497246 |
+| 256 | Encryption |  16.00 KB | 95.329251 |
+| 256 | Decryption |  16.00 KB | 95.234532 |
+| 256 | Encryption |  8.00 KB | 95.989689 |
+| 256 | Decryption |  8.00 KB | 96.145650 |
+| 256 | Encryption |  4.00 KB | 97.218555 |
+| 256 | Decryption |  4.00 KB | 98.165832 |
+| 256 | Encryption |  2.00 KB | 96.692142 |
+| 256 | Decryption |  2.00 KB | 97.116268 |
+| 256 | Encryption |  1024.00 B | 93.396038 |
+| 256 | Decryption |  1024.00 B | 93.380069 |
+| 256 | Encryption |  512.00 B | 86.802649 |
+| 256 | Decryption |  512.00 B | 87.732262 |
+| 128 | Encryption |  32.00 KB | 103.591095 |
+| 128 | Decryption |  32.00 KB | 103.664525 |
+| 128 | Encryption |  16.00 KB | 103.354413 |
+| 128 | Decryption |  16.00 KB | 103.470066 |
+| 128 | Encryption |  8.00 KB | 103.300653 |
+| 128 | Decryption |  8.00 KB | 104.187052 |
+| 128 | Encryption |  4.00 KB | 106.206852 |
+| 128 | Decryption |  4.00 KB | 106.978339 |
+| 128 | Encryption |  2.00 KB | 105.290555 |
+| 128 | Decryption |  2.00 KB | 105.780002 |
+| 128 | Encryption |  1024.00 B | 100.740923 |
+| 128 | Decryption |  1024.00 B | 101.335972 |
+| 128 | Encryption |  512.00 B | 93.993460 |
+| 128 | Decryption |  512.00 B | 94.328977 |
 
 ### HMAC SHA
 
@@ -747,20 +747,20 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | SHA | Size | Performance (Mbps) | 
 |-----|------|-------------| 
-| 512 |  32.00 KB | 308.949912 |
-| 512 |  16.00 KB | 304.776078 |
-| 512 |  8.00 KB | 297.546026 |
-| 512 |  4.00 KB | 283.068417 |
-| 512 |  2.00 KB | 258.056387 |
-| 512 |  1024.00 B | 218.978883 |
-| 512 |  512.00 B | 167.525562 |
-| 256 |  32.00 KB | 299.351951 |
-| 256 |  16.00 KB | 296.835121 |
-| 256 |  8.00 KB | 290.773565 |
-| 256 |  4.00 KB | 280.331936 |
-| 256 |  2.00 KB | 260.704909 |
-| 256 |  1024.00 B | 229.339306 |
-| 256 |  512.00 B | 184.421432 |
+| 512 |  32.00 KB | 308.764326 |
+| 512 |  16.00 KB | 305.098870 |
+| 512 |  8.00 KB | 295.886947 |
+| 512 |  4.00 KB | 282.081522 |
+| 512 |  2.00 KB | 256.631554 |
+| 512 |  1024.00 B | 216.633611 |
+| 512 |  512.00 B | 165.294592 |
+| 256 |  32.00 KB | 299.203324 |
+| 256 |  16.00 KB | 296.325100 |
+| 256 |  8.00 KB | 289.425221 |
+| 256 |  4.00 KB | 279.703805 |
+| 256 |  2.00 KB | 259.117508 |
+| 256 |  1024.00 B | 227.350309 |
+| 256 |  512.00 B | 182.145636 |
 
 ### AES CMAC
 
@@ -771,20 +771,20 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | Size | Performance (Mbps) | 
 |------------|------|--------------------| 
-| 256 |  32.00 KB | 252.043362 |
-| 256 |  16.00 KB | 252.996897 |
-| 256 |  8.00 KB | 250.393054 |
-| 256 |  4.00 KB | 239.121392 |
-| 256 |  2.00 KB | 211.406452 |
-| 256 |  1024.00 B | 171.794065 |
-| 256 |  512.00 B | 124.631066 |
-| 128 |  32.00 KB | 252.447492 |
-| 128 |  16.00 KB | 253.709430 |
-| 128 |  8.00 KB | 255.795164 |
-| 128 |  4.00 KB | 238.520891 |
-| 128 |  2.00 KB | 212.737778 |
-| 128 |  1024.00 B | 172.699484 |
-| 128 |  512.00 B | 126.166641 |
+| 256 |  32.00 KB | 253.668921 |
+| 256 |  16.00 KB | 255.042346 |
+| 256 |  8.00 KB | 252.219175 |
+| 256 |  4.00 KB | 237.854317 |
+| 256 |  2.00 KB | 210.401952 |
+| 256 |  1024.00 B | 170.037881 |
+| 256 |  512.00 B | 122.524678 |
+| 128 |  32.00 KB | 253.744425 |
+| 128 |  16.00 KB | 256.995103 |
+| 128 |  8.00 KB | 254.089367 |
+| 128 |  4.00 KB | 238.912180 |
+| 128 |  2.00 KB | 211.045632 |
+| 128 |  1024.00 B | 171.605132 |
+| 128 |  512.00 B | 124.300129 |
 
 ### AES CMAC
 
@@ -795,48 +795,48 @@ CoreMark/MHz :3.664108 / STACK
 - CPU with operating speed  : R5F with 400MHZ 
 | Key Length | Input Data Size   | Stream Size        | Performance (Mbps) | 
 |------------|-------------------|--------------------|--------------------| 
-| 256        |      32.00 KB     |        512        |      213.695492      |
-| 256        |      32.00 KB     |        1024        |      232.483726      |
-| 256        |      32.00 KB     |        2048        |      241.990990      |
-| 256        |      32.00 KB     |        4096        |      248.976859      |
-| 256        |      32.00 KB     |        8192        |      251.941019      |
-| 256        |      32.00 KB     |        16384        |      252.674395      |
-| 256        |      16.00 KB     |        512        |      212.904510      |
-| 256        |      16.00 KB     |        1024        |      232.616788      |
-| 256        |      16.00 KB     |        2048        |      244.296891      |
-| 256        |      16.00 KB     |        4096        |      253.089715      |
-| 256        |      16.00 KB     |        8192        |      256.236468      |
-| 256        |      8.00 KB     |        512        |      216.476184      |
-| 256        |      8.00 KB     |        1024        |      233.600371      |
-| 256        |      8.00 KB     |        2048        |      244.147861      |
-| 256        |      8.00 KB     |        4096        |      248.289449      |
-| 256        |      4.00 KB     |        512        |      200.848925      |
-| 256        |      4.00 KB     |        1024        |      219.624665      |
-| 256        |      4.00 KB     |        2048        |      229.612501      |
-| 256        |      2.00 KB     |        512        |      184.364363      |
-| 256        |      2.00 KB     |        1024        |      197.558255      |
-| 256        |      1024.00 B     |        512        |      150.539808      |
-| 128        |      32.00 KB     |        512        |      214.053639      |
-| 128        |      32.00 KB     |        1024        |      232.725207      |
-| 128        |      32.00 KB     |        2048        |      243.615800      |
-| 128        |      32.00 KB     |        4096        |      250.617476      |
-| 128        |      32.00 KB     |        8192        |      252.260436      |
-| 128        |      32.00 KB     |        16384        |      252.754791      |
-| 128        |      16.00 KB     |        512        |      215.377031      |
-| 128        |      16.00 KB     |        1024        |      237.474012      |
-| 128        |      16.00 KB     |        2048        |      248.792548      |
-| 128        |      16.00 KB     |        4096        |      256.453301      |
-| 128        |      16.00 KB     |        8192        |      259.178992      |
-| 128        |      8.00 KB     |        512        |      216.798439      |
-| 128        |      8.00 KB     |        1024        |      235.599055      |
-| 128        |      8.00 KB     |        2048        |      244.891401      |
-| 128        |      8.00 KB     |        4096        |      250.927539      |
-| 128        |      4.00 KB     |        512        |      205.442006      |
-| 128        |      4.00 KB     |        1024        |      221.746265      |
-| 128        |      4.00 KB     |        2048        |      231.420601      |
-| 128        |      2.00 KB     |        512        |      184.905341      |
-| 128        |      2.00 KB     |        1024        |      197.219380      |
-| 128        |      1024.00 B     |        512        |      149.019965      |
+| 256        |      32.00 KB     |        512        |      207.902292      |
+| 256        |      32.00 KB     |        1024        |      227.897798      |
+| 256        |      32.00 KB     |        2048        |      239.841170      |
+| 256        |      32.00 KB     |        4096        |      245.942535      |
+| 256        |      32.00 KB     |        8192        |      251.253420      |
+| 256        |      32.00 KB     |        16384        |      252.813293      |
+| 256        |      16.00 KB     |        512        |      206.666456      |
+| 256        |      16.00 KB     |        1024        |      230.938443      |
+| 256        |      16.00 KB     |        2048        |      246.131890      |
+| 256        |      16.00 KB     |        4096        |      254.521093      |
+| 256        |      16.00 KB     |        8192        |      256.793703      |
+| 256        |      8.00 KB     |        512        |      207.976516      |
+| 256        |      8.00 KB     |        1024        |      230.033609      |
+| 256        |      8.00 KB     |        2048        |      241.224971      |
+| 256        |      8.00 KB     |        4096        |      248.637985      |
+| 256        |      4.00 KB     |        512        |      195.975001      |
+| 256        |      4.00 KB     |        1024        |      216.080054      |
+| 256        |      4.00 KB     |        2048        |      227.508158      |
+| 256        |      2.00 KB     |        512        |      176.461402      |
+| 256        |      2.00 KB     |        1024        |      192.906131      |
+| 256        |      1024.00 B     |        512        |      142.985557      |
+| 128        |      32.00 KB     |        512        |      208.717946      |
+| 128        |      32.00 KB     |        1024        |      230.170953      |
+| 128        |      32.00 KB     |        2048        |      241.150632      |
+| 128        |      32.00 KB     |        4096        |      245.676317      |
+| 128        |      32.00 KB     |        8192        |      251.467929      |
+| 128        |      32.00 KB     |        16384        |      253.997045      |
+| 128        |      16.00 KB     |        512        |      210.212142      |
+| 128        |      16.00 KB     |        1024        |      235.254420      |
+| 128        |      16.00 KB     |        2048        |      247.321993      |
+| 128        |      16.00 KB     |        4096        |      253.466572      |
+| 128        |      16.00 KB     |        8192        |      258.099580      |
+| 128        |      8.00 KB     |        512        |      208.868031      |
+| 128        |      8.00 KB     |        1024        |      229.660779      |
+| 128        |      8.00 KB     |        2048        |      242.454287      |
+| 128        |      8.00 KB     |        4096        |      249.136579      |
+| 128        |      4.00 KB     |        512        |      197.686379      |
+| 128        |      4.00 KB     |        1024        |      216.526250      |
+| 128        |      4.00 KB     |        2048        |      227.891854      |
+| 128        |      2.00 KB     |        512        |      177.512934      |
+| 128        |      2.00 KB     |        1024        |      193.509906      |
+| 128        |      1024.00 B     |        512        |      147.510579      |
 
 ### EDMA
 
@@ -845,10 +845,10 @@ CoreMark/MHz :3.664108 / STACK
 EDMA Memory Copy Benchmark Numbers
 Size in Bytes | Source Memory | Destination Memory | Transfer time(us)
 --------------|---------------|--------------------|------------------
-    1024      |      OCRAM    |     OCRAM          |    49   
-    1024      |      TCMA     |     TCMA           |    45   
+    1024      |      OCRAM    |     OCRAM          |    48   
+    1024      |      TCMA     |     TCMA           |    46   
     1024      |      TCMB     |     TCMB           |    46   
-    1024      |      OCRAM    |     TCMA           |    46   
+    1024      |      OCRAM    |     TCMA           |    45   
     1024      |      TCMA     |     OCRAM          |    45   
 
 ### MATHLIB
@@ -860,14 +860,14 @@ Size in Bytes | Source Memory | Destination Memory | Transfer time(us)
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed 
 Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
-sin 		|0.0000007150	| 52			| 52.048000 		| 655			| 277.201996		|
-cos  		|0.0000002870	| 442			| 65.793999 		| 511			| 277.641998		|
-sincos sin  	|0.0000001790	| 79			| 78.994003 		| 481			| 276.058014		|
+sin 		|0.0000007150	| 52			| 52.048000 		| 670			| 277.253998		|
+cos  		|0.0000002870	| 462			| 65.834000 		| 497			| 277.526001		|
+sincos sin  	|0.0000001790	| 79			| 78.958000 		| 467			| 276.196014		|
 sincos cos	|0.0000001900	|			|			|			|			|
-asin 		|0.0000003430	| -260			| 73.379997 		| 583			| 428.884003		|
-acos 		|0.0000004770	| 76			| 76.000000 		| 656			| 383.851990		|
-atan 		|0.0000005360	| 80			| 80.019997 		| 511			| 370.962006		|
-atan2 		|0.0000007150	| 117			| 104.662003 		| 891			| 480.712006		|
+asin 		|0.0000003430	| 403			| 74.706001 		| 608			| 428.809998		|
+acos 		|0.0000004770	| 76			| 76.000000 		| 767			| 384.022003		|
+atan 		|0.0000005360	| 80			| 80.019997 		| 494			| 370.888000		|
+atan2 		|0.0000007150	| 117			| 104.615997 		| 885			| 480.858002		|
 
 ### Ethernet Performance
 
