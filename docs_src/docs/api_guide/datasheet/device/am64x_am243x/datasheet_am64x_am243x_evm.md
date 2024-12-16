@@ -171,7 +171,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 - Additionally hardware adds 160ns + 1bit time delay between each word transfer as measured in the scope
 
 ### CPSW Performance
-
+### R5F Core as Host
 #### TCP Test
 - Software/Application used : enet_lwip_cpsw
 - iperf test type           : TCP iperf
@@ -268,6 +268,59 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
  25 Mbps                 | 12                             | 0                     | -
  50 Mbps                 | 21                             | 0                     | -
  100 Mbps                | 38                             | 0.03                  | -
+
+### A53 core as host
+#### TCP Test
+- Software/Application used : enet_lwip_cpsw
+- iperf test type           : TCP iperf
+- iperf command used        : iperf -c 192.168.0.158 -i 10 -t 100 -r
+#### TCP Performance(am64x evm):
+
+ TCP direction           | B/W (Mb/s)                     | CPU load(%)
+-------------------------|--------------------------------|--------------
+ TCP RX                  | 92                             | 21
+ TCP TX                  | 93                             | 31
+
+#### UDP Test
+- Software/Application used : enet_lwip_cpsw
+- iperf test type           : UDP iperf
+- iperf command used        : iperf -c 192.168.0.158 -u -b 60M -l 256 -i 10 -t 100 -r
+
+
+#### UDP TX Performance(am64x evm):
+  - For Packet Size: 1500 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        
+-------------------------|--------------------------------|-----------------------
+ 25 Mbps                 | 100                            | 0.0036                     
+ 50 Mbps                 | 100                            | 0.00036                  
+ 100 Mbps                | 100                            | 0.00036                  
+
+#### UDP RX Performance(am64x evm):
+- For Packet Size: 256 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        
+-------------------------|--------------------------------|-----------------------
+ 25 Mbps                 | 29                             | 0.028                 
+ 50 Mbps                 | 51                             | 0.19                    
+ 100 Mbps                | 99                             | 5%                     
+
+- For Packet Size: 512 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        
+-------------------------|--------------------------------|-----------------------
+ 25 Mbps                 | 16                             | 0.02                     
+ 50 Mbps                 | 30                             | 0.073                  
+ 100 Mbps                | 56                             | 0.16                   
+
+- For Packet Size: 1500 B
+
+ Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        
+-------------------------|--------------------------------|-----------------------
+ 25 Mbps                 | 12                             | 51                                       
+ 100 Mbps                | 23                             | 53                  
+                 
+
 
 ### ICSSG Performance
 

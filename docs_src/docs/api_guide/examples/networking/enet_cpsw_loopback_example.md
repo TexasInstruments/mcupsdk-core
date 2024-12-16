@@ -16,7 +16,9 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechan
 \endcond
 
 The examples do below
-- A Tx channel and a Rx flow are opened to enable data transfers. Packets are transmitted from the Switch R5F (Main R5F0_0) to the host port using the Tx channel. These packets are routed back to the host port by the switch hardware as the internal loopback feature is enabled. These packets are then transmitted to the Switch R5F by the Rx flow and the application is notified.
+- A Tx channel and a Rx flow are opened to enable data transfers. Packets are transmitted from the Switch (R5F (Main R5F0_0) \cond SOC_AM64X 
+or A53(A53SS_0))  \endcond to the host port using the Tx channel. These packets are routed back to the host port by the switch hardware as the internal loopback feature is enabled. These packets are then transmitted to the Switch (R5F  \cond SOC_AM64X 
+or A53(A53SS_0) ) \endcond by the Rx flow and the application is notified.
 - The Tx and Rx functions in the example are set to transmit and receive 5000 packets. After reaching the count of 5000, the application closes the Tx channel, Rx flow, CPSW and restarts the application for a configurable number of times. Restarting the loopback test application ensures that there aren’t any memory leaks, and the hardware is closed properly and can be reopened any time.
 
 # Supported Combinations
