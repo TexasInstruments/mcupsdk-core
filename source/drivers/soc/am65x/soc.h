@@ -163,6 +163,12 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
     return status;
 }
 
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MCU_FSS0_OSPI0_CTRL_BASE ) || (baseAddr == CSL_MCU_FSS0_OSPI1_CTRL_BASE ))
+
+/** \brief Macro to check if the OSPI base address is valid */
+#define IS_OSPI_DATA_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_MCU_FSS0_DAT_REG1_BASE)
+
 /**
  * \brief Enable clock to specified module
  *
