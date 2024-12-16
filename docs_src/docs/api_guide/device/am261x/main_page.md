@@ -59,6 +59,11 @@ The main software components in the block diagram are described below
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Protocol Stacks and Middleware</b></td></tr>
 </tr>
+<tr>
+    <td>SDL
+    <td>\ref SDL_PAGE
+    <td>Software Diagnostics Libaray
+</tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Examples and Demos</b></td></tr>
 <tr>
     <td>Examples and Demos

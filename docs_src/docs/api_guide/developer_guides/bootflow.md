@@ -556,9 +556,8 @@ pBIST (parallel Built-In Self-Test) can be performed for both 200MHz and 400MHz 
 •	The software workaround described in this user guide for L2 Memory Bank-0 and R5FSS0 TCM memories is specifically designed to address the ROM errata affecting 200 MHz R5F core variants. \n
 •	The pBIST procedure performed during the SBL startup helps mitigate the limitations imposed by the ROM. \n
 •	It is important to ensure that the SBL and associated software are correctly installed and configured on the target device for the workaround to function effectively.
-\cond !(SOC_AM261X)
+
 To know more about pBIST and overall SDL support for pBIST, please take a look at \ref SDL_PBIST_PAGE
-\endcond
 \endcond
 
 \cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
