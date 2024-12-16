@@ -343,9 +343,9 @@ int main(void)
             if(SystemP_SUCCESS == status)
             {
                 Bootloader_OtfaConfig otfaConfig;
-                status = Bootloader_getOTFAConfigFromNoteSegment(bootHandle, ELF_NOTE_SEGMENT_MAX_SIZE, &otfaConfig);
+                int32_t noteSectionExists = Bootloader_getOTFAConfigFromNoteSegment(bootHandle, ELF_NOTE_SEGMENT_MAX_SIZE, &otfaConfig);
 
-                if(SystemP_SUCCESS == status)
+                if(SystemP_SUCCESS == noteSectionExists)
                 {
                     /* OTFA configuration is in NOTE section. */
                     if(TRUE == otfaConfig.isOTFAECCMEnabled)
