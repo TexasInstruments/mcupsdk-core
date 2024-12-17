@@ -171,7 +171,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 - Additionally hardware adds 160ns + 1bit time delay between each word transfer as measured in the scope
 
 ### CPSW Performance
-### R5F Core as Host
+#### R5F Core as Host
 #### TCP Test
 - Software/Application used : enet_lwip_cpsw
 - iperf test type           : TCP iperf
@@ -269,7 +269,7 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
  50 Mbps                 | 21                             | 0                     | -
  100 Mbps                | 38                             | 0.03                  | -
 
-### A53 core as host
+#### A53 core as host
 #### TCP Test
 - Software/Application used : enet_lwip_cpsw
 - iperf test type           : TCP iperf

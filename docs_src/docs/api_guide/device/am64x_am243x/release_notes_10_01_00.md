@@ -585,6 +585,23 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> -
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-55, EXT_SITMPUSW-55}
+    <td> AM64x: ENET : A53 : TCP Throughput drop in iperf application running on FreeRTOS A53 core 
+    <td> Ethernet
+    <td> 10.01.00
+    <td> AM64x
+    <td> Issue is seen only with 1Gbps Full Duplex link speed. Any other link speed such as 100 Mbps link speed shall work seemlessly 
+</tr>
+
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-56, EXT_SITMPUSW-56}
+    <td> AM64X: ENET: Data inconsitency with MAC loopback application with FreeRTOS running on A53 core 
+    <td> Ethernet
+    <td> 10.01.00
+    <td> AM64x
+    <td> Issue is seen in release mode. In debug mode it works fine. 
+</tr>
 </table>
 
 ## Errata

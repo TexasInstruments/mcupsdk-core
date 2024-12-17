@@ -10,7 +10,20 @@ Core                  | R5F             |
 Core Operating Speed  | 800 MHz         |
 Memory Type           | MSRAM           |
 Cache status          | Enabled         |
-EVM Type              | AM243x-LP E3    |
+EVM Type              | AM243x-LP E3 / AM64X-EVM    |
+\n
+\cond SOC_AM64X
+
+SOC Details           | Values          |
+----------------------|-----------------|
+Core                  | A53             |
+Core Operating Speed  | 1 GHz         |
+Memory Type           | DDR           |
+Cache status          | Enabled         |
+EVM Type              | AM64X-EVM    |
+
+
+\endcond
 
 # Layer 2 Performance
   \imageStyle{CPSW_latency_measurement_diagram.bmp,width:30%}
@@ -21,17 +34,36 @@ Configuration          | Value                    |
 --------------------------------|--------------------------|
 Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 800 MHz                  |
-Ethernet Interface Type         | RGMII at 1 Gbps           |
-Packet buffer memory      | MSRAM                      |
-Scatter-gather TX         | Yes                      |
-Scatter-gather RX         | Yes                      |
-UPDMA interrupt pacing    | NO                      |
+Ethernet Interface Type         | RGMII at 1 Gbps          |
+Packet buffer memory            | MSRAM                    |
+Scatter-gather TX               | Yes                      |
+Scatter-gather RX               | Yes                      |
+UDMA interrupt pacing          | NO                       |
+RTOS                            | FreeRTOS                 |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
+Host PC tool version            | nload                    |
+Rx packet length     | 200 B                               |
+Tx packet length     | 200 B                               |
+\n
+
+\cond SOC_AM64X
+Configuration          | Value                             |
+--------------------------------|--------------------------|
+Processing Core                 | Main A53S0 Core 0        |
+Core Frequency                  | 1 MGz                    |
+Ethernet Interface Type         | RGMII at 1 Gbps          |
+Packet buffer memory            | DDR (uncached)           |
+Scatter-gather TX               | Yes                      |
+Scatter-gather RX               | Yes                      |
+UDMA interrupt pacing           | NO   (UDMA is polled)    |
 RTOS                            | FreeRTOS                 |
 RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
 Host PC tool version            | nload                   |
-Rx packet length     | 200 B                       |
-Tx packet length     | 200 B                       |
+Rx packet length                | 200 B                       |
+Tx packet length                | 200 B                       |
 \n
+
+\endcond
 
 ## Layer 2 Latency
 <table>
@@ -75,6 +107,28 @@ Host PC tool version            | iperf v2.0.10            |
 Number of Rx packet buffers     | 32                       |
 Number of Tx packet buffers     | 16                       |
 \n
+
+
+\cond SOC_AM64X
+Configuration                   | Value                    |
+--------------------------------|--------------------------|
+Processing Core                 | Main A53S0 Core 0        |
+Core Frequency                  | 1 GHz                    |
+Ethernet Interface Type         | RGMII at 1 Gbps          |
+Packet buffer memory            | DDR                      |
+Hardware checksum offload       | Enabled on both Tx and Rx Side |
+Scatter-gather TX               | Yes                      |
+Scatter-gather RX               | Yes                      |
+UDMA interrupt pacing           | Yes (realized with timer based interrupt pacing) |
+RTOS                            | FreeRTOS                 |
+RTOS application                | \ref EXAMPLES_ENET_LWIP_CPSW in examples   |
+TCP/IP stack                    | LwIP version @VAR_LWIP_VERSION               |
+Host PC tool version            | iperf v2.0.10            |
+Number of Rx packet buffers     | 32                       |
+Number of Tx packet buffers     | 16                       |
+\n
+
+\endcond
 ### TCP Throughput
 <table>
     <tr>
