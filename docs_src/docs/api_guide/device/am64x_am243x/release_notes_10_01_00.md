@@ -26,6 +26,7 @@ LLD drivers for OSPI, MMCSD and MCAN are added                                  
 SBL shows an example usage of DDR QoS support                                                   | Drivers
 Example to demonstrate root of trust switching                                                  | Examples
 FreeRTOS AMP support is adde for A53 cores                                                      | Kernel
+Secureboot support from OSPI                                                                    | Bootloader
 Enabling FreeRTOS based Ethernet MAC and switch driver                                          | Ethernet
 Support for LwIP stack and TSN stack to run on A53 core                                         | ^
 PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | ^
@@ -38,6 +39,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
 SBL shows an example usage of DDR QoS support                                                   | Drivers
+Secureboot support from OSPI                                                                    | Bootloader
 Example to demonstrate root of trust switching                                                  | Examples
 PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | Ethernet
 Ethernet firmware - Local injection handle port block state (MRP requirement)                   | Ethernet
