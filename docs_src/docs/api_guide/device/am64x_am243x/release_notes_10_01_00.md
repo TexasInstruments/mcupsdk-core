@@ -604,6 +604,32 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x
     <td> Issue is seen in release mode. In debug mode it works fine. 
 </tr>
+<tr>
+    <td> PROC_SDL-8875
+    <td> ECC is not supported for an instance
+    SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR
+    <td> SDL
+    <td> 10.01.0 onwards
+    <td> AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-8861
+    <td> ECC is not supported for an instance due to firewall:
+    SDL_DMSC0_DMSC_LITE
+    <td> SDL
+    <td> 10.01.0 onwards
+    <td> AM64x/AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-8891
+    <td> POK Example is failing on M4F core
+    <td> DMSC
+    <td> 10.01.0 onwards
+    <td> AM243x
+    <td> Run on R5F core
+</tr>
 </table>
 
 ## Errata
