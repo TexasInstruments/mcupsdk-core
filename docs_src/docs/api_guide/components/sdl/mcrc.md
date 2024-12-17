@@ -27,7 +27,17 @@ The module supports below API's for the application
 
 ## Features NOT Supported
 
+\cond SOC_AM64X || SOC_AM243X
+
+- UDMA support is not available to test Semi and Auto modes
+
+\endcond
+
+\cond !(SOC_AM64X || SOC_AM243X)
+
 - No DMA mode examples for M4
+
+\endcond
 
 ## Important Usage Guidelines
 
