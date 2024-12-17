@@ -26,6 +26,9 @@ LLD drivers for OSPI, MMCSD and MCAN are added                                  
 SBL shows an example usage of DDR QoS support                                                   | Drivers
 Example to demonstrate root of trust switching                                                  | Examples
 FreeRTOS AMP support is adde for A53 cores                                                      | Kernel
+Enabling FreeRTOS based Ethernet MAC and switch driver                                          | Ethernet
+Support for LwIP stack and TSN stack to run on A53 core                                         | ^
+A53 FreeRTOS AMP examples demonstrating usage of Ethernet                                       | ^
 \endcond
 
 \cond SOC_AM243X
@@ -86,7 +89,6 @@ GCC support for R5F for limited examples                            | R5F
 A53 FreeRTOS dual core in SMP mode and A53 SMP FreeRTOS examples    | DPL, FreeRTOS
 A53 FreeRTOS AMP mode and A53 AMP FreeRTOS examples                 | DPL, FreeRTOS
 GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
-A53 FreeRTOS AMP examples demonstrating usage of ethernet           | Networking
 
 
 \endcond
@@ -100,6 +102,12 @@ GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 \endcond
 
 ### Features not supported in release
+
+\cond SOC_AM64X
+Feature                                                                                         | Module
+------------------------------------------------------------------------------------------------|-------------
+NORTOS based Ethernet MAC and switch driver support for A53 core                                | Ethernet
+\endcond
 
 \cond SOC_AM243X
 
@@ -234,15 +242,15 @@ CMSIS DSP                   | R5F            | NA                | FreeRTOS, NOR
 
 ### Networking
 
-Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
-----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------
-TSN                         | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
-^                           | A53            | NO                | FreeRTOS    | [Experimental] gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | ^
-LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping, LwIP bridge, shared memory driver  | Other LwIP features
-^                           | A53            | YES               | FreeRTOS    | [Experimental] TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping, LwIP bridge, shared memory driver  | ^
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW  | RMII mode
-^                           | A53            | YES               | FreeRTOS    | [Experimental] Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW  | ^
-Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
+Module                  | Supported CPUs | SysConfig Support | OS Support          | Key features tested                                                                                            | Key features not tested
+------------------------|----------------|-------------------|---------------------|----------------------------------------------------------------------------------------------------------------|------------------------
+TSN                     | R5F            | NO                | FreeRTOS            | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration | Multi-Clock Domain
+^                       | A53            | NO                | FreeRTOS            | ^                                                                                                              | ^
+LwIP                    | R5F            | YES               | FreeRTOS, NORTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping, LwIP bridge, shared memory driver | Other LwIP features
+^                       | A53            | YES               | FreeRTOS            | ^                                                                                                              | ^
+Ethernet driver (ENET)  | R5F            | YES               | FreeRTOS, NORTOS    | Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW | RMII mode
+^                       | A53            | YES               | FreeRTOS            | ^                                                                                                              | ^
+Mbed-TLS                | R5F            | NO                | FreeRTOS            | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server                   | Hardware offloaded cryptography
 
 ### USB
 
@@ -423,6 +431,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-54, EXT_SITMPUSW-54}
+    <td> MII mode via Sysconfig for Ethernet ICSSG is not functional 
+    <td> Ethernet
+    <td> 09.02.00
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues
@@ -498,6 +514,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Get device API does not return error when the LPSC is in transition state
     <td> DMSC
     <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-53, EXT_SITMPUSW-53}
+    <td> Ethernet CPSW Layer-2 example overrides syscfg-GUI ALE configurations 
+    <td> Ethernet
+    <td> 09.01.00
     <td> AM64x, AM243x
     <td> -
 </tr>
@@ -634,6 +658,12 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+<tr>
+    <td> Ethernet
+    <td> -
+    <td> Path for Ethernet examples has been changed from ${MCU_PLUS_SDK_PATH}/examples/networking to ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/examples
+    <td> Refer \ref enet_mcupsdk_10_00_update
+</tr>
 </table>
 
 ### OS Kernel
@@ -666,17 +696,5 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
-</tr>
-<tr>
-    <td> Ethernet (CPSW and ICSSG)
-    <td> EnetApp_initLinkArgs function defination
-    <td> EnetApp_initLinkArgs defination is moved to generated code. Please refer and follow \ref enet_mcupsdk_10_00_update for more details
-    <td> \ref enet_mcupsdk_10_00_update
-</tr>
-<tr>
-    <td> Ethernet (CPSW)
-    <td> example.syscfg file of all examples/application where 'ENET(CPSW)' component added
-    <td> Pinmux component parameters are defined directly under PCSW component, rather than a seperate module. Please refer and follow \ref enet_mcupsdk_10_00_update for more details.
-    <td> \ref enet_mcupsdk_10_00_update
 </tr>
 </table>

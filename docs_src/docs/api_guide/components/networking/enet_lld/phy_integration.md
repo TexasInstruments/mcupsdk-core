@@ -1,4 +1,4 @@
-Ethernet PHY Integration Guide {#enetphy_guide_top}
+Ethernet PHY Driver User Guide {#enetphy_guide_top}
 =====================
 
 [TOC]
@@ -133,11 +133,10 @@ The current version of Enet LLD includes the following PHY drivers:
 - TI [DP83822](https://www.ti.com/lit/ds/symlink/dp83822i.pdf) RMII PHY driver.
 - TI [DP83826](https://www.ti.com/lit/ds/symlink/dp83826e.pdf) RMII PHY driver.
 - TI [DP83TG720](https://www.ti.com/lit/ds/symlink/dp83tg720s-q1.pdf) Automotive PHY driver.
-- TI [DP83TG721](https://www.ti.com/lit/ds/symlink/dp83tg721s-q1.pdf) Automotive PHY driver.
 - TI [DP83TC812](https://www.ti.com/lit/ds/symlink/dp83tc812r-q1.pdf) Automotive PHY driver.
 
-The generic PHY driver is a special case because its implementation is limited
-to IEEE-Standard MII registers. Reuse of PHY generic function by other
+The generic PHY driver is a generic case with limited support for
+IEEE-Standard MII registers. Reuse of PHY generic function by other
 device-specific drivers is possible when their `Phy_DrvObj_t` implementation
 doesn't deviate from standard. The diagram in figure below shows the reuse of
 extended register read/write functions by the DP83867 driver.

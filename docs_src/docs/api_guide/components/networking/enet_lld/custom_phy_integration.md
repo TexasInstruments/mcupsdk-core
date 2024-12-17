@@ -8,7 +8,7 @@ Custom Ethernet PHY Integration Guide {#custom_enetphy_guide}
 The following list of steps is provided as guideline when adding a new PHY
 driver for a device which is not supported by Enet LLD.
 
-\note For the list of PHY drivers supported by  Enet LLD, refer to \ref enetphy_guide_device_specific
+\note For the list of PHY drivers supported by Enet LLD, refer to \ref enet_supported_phy_guide
 
 - Select "CUSTOM" (ETHPHY (ENET CPSW/ICSS) -> ETHPHY Device) option in Sys-Cfg gui. This will modify the auto-generated ti_board_config.c file based on the "Custom Device Name" specified in the GUI.
 - Add the PHY extendedCfg (if needed) to the "Extended Configuration" text box for the custom device. This configuration will be automtically updated in ti_board_config.c file.
