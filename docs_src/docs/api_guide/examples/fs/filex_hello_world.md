@@ -1,4 +1,4 @@
-# FileX Hello World Example {#EXAMPLES_ECLIPSE_THREADX_FILEX_HELLO_WORLD}
+# FileX Hello World Example {#EXAMPLES_FS_FILEX_HELLO_WORLD}
 
 [TOC]
 
@@ -9,7 +9,7 @@ Tested media can be added/removed via Sysconfig. By default all supported media 
 
 A test file is created (or truncated if it already exists). A buffer with some known data pattern is repeatedly written to the test file and then read back and compared to the original data.
 
-# Supported Combinations {#EXAMPLES_ECLIPSE_THREADX_FILEX_HELLO_WORLD_COMBOS}
+# Supported Combinations {#EXAMPLES_FS_FILEX_HELLO_WORLD_COMBOS}
 
 \cond SOC_AM243X
 
@@ -18,7 +18,7 @@ A test file is created (or truncated if it already exists). A buffer with some k
  CPU + OS       | r5fss0-0 threadx
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/eclipse_threadx/filex/hello_world
+ Example folder | examples/fs/filex/hello_world
 
 \endcond
 
@@ -32,7 +32,7 @@ A test file is created (or truncated if it already exists). A buffer with some k
 
 # See Also
 
-- \ref ECLIPSE_THREADX_FILEX
+- \ref FS_FILEX
 - \ref DRIVERS_MMCSD_PAGE
 
 # Sample Output

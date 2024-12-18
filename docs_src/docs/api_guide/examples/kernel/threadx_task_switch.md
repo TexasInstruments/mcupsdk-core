@@ -1,4 +1,4 @@
-# ThreadX Task Switch Example {#EXAMPLES_ECLIPSE_THREADX_THREADX_TASK_SWITCH}
+# ThreadX Task Switch Example {#EXAMPLES_KERNEL_THREADX_TASK_SWITCH}
 
 [TOC]
 
@@ -23,7 +23,7 @@ The example does the below
  CPU + OS       | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/eclipse_threadx/threadx/task_switch
+ Example folder | examples/kernel/threadx/task_switch
 
 \endcond
 
@@ -37,7 +37,7 @@ The example does the below
 
 # See Also
 
-\ref ECLIPSE_THREADX_THREADX
+\ref KERNEL_THREADX
 
 # Sample Output
 

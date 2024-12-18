@@ -1,4 +1,4 @@
-# FileX {#ECLIPSE_THREADX_FILEX}
+# FileX {#FS_FILEX}
 
 [TOC]
 
@@ -10,13 +10,13 @@ FileX supports an unlimited number of media devices at the same time, including 
 
 Designed to meet the growing need for FLASH devices, FileX uses the same design and coding methods as ThreadX. Like all Eclipse Foundation products, FileX is distributed with full ANSI C source code, and it has no run-time royalties.
 
-In this SDK, FileX is integrated to work with RAM disk driver and MMCSD driver. In addition, FileX can be combined with the LevelX Flash Translation Layer (FTL) and integrated to work with the SDK NOR and NAND flash drivers. There is SysConfig support for FileX. To use FileX in your application, just add the FileX module under `ECLIPSE THREADX` in the SysConfig panel. The media (RAM disk, MMCSD or LevelX) can be selected and a corresponding media instance will automatically added.
+In this SDK, FileX is integrated to work with RAM disk driver and MMCSD driver. In addition, FileX can be combined with the LevelX Flash Translation Layer (FTL) and integrated to work with the SDK NOR and NAND flash drivers. There is SysConfig support for FileX. To use FileX in your application, just add the FileX module under `FILE SYSTEM` in the SysConfig panel. The media (RAM disk, MMCSD or LevelX) can be selected and a corresponding media instance will automatically added.
 
-- \ref EXAMPLES_ECLIPSE_THREADX_FILEX_HELLO_WORLD
+- \ref EXAMPLES_FS_FILEX_HELLO_WORLD
 
 For the full FileX documentation, please refer to the below table.
 
-## Additional References {#ECLIPSE_THREADX_FILEX_ADDITIONAL_REFERENCES}
+## Additional References {#FS_FILEX_ADDITIONAL_REFERENCES}
 
 <table>
 <tr>

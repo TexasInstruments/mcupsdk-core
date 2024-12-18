@@ -1,4 +1,4 @@
-# ThreadX Hello World Example {#EXAMPLES_ECLIPSE_THREADX_THREADX_HELLO_WORLD}
+# ThreadX Hello World Example {#EXAMPLES_KERNEL_THREADX_HELLO_WORLD}
 
 [TOC]
 
@@ -6,7 +6,7 @@
 
 This example serves as a basic starting point for application development with the ThreadX kernel. The message "Hello world!" is printed on the CCS console as well as on the first available virtual COM port every one second.
 
-# Supported Combinations {#EXAMPLES_ECLIPSE_THREADX_THREADX_HELLO_WORLD_COMBOS}
+# Supported Combinations {#EXAMPLES_KERNEL_THREADX_HELLO_WORLD_COMBOS}
 
 \cond SOC_AM243X
 
@@ -15,7 +15,7 @@ This example serves as a basic starting point for application development with t
  CPU + OS       | r5fss0-0 threadx
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/eclipse_threadx/threadx/hello_world
+ Example folder | examples/kernel/threadx/hello_world
 
 \endcond
 
@@ -29,7 +29,7 @@ This example serves as a basic starting point for application development with t
 
 # See Also
 
-\ref ECLIPSE_THREADX_THREADX
+\ref KERNEL_THREADX
 
 # Sample Output
 
