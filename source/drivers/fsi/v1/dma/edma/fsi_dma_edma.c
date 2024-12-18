@@ -179,9 +179,12 @@ int32_t FSI_Tx_edmaChInit(const FSI_Tx_Object *FsiTxObj, uint32_t edmaEventNo,
                 {
                     status += EDMA_freeDmaChannel(fsiTxEdmaHandle, &(edmaChCfg->edmaTxChId[edmaEventNo]));
                 }
-                if (*edmaTccTx != EDMA_RESOURCE_ALLOC_ANY)
+                if(edmaTccTx != NULL)
                 {
-                    status += EDMA_freeTcc(fsiTxEdmaHandle, edmaTccTx);
+                    if (*edmaTccTx != EDMA_RESOURCE_ALLOC_ANY)
+                    {
+                        status += EDMA_freeTcc(fsiTxEdmaHandle, edmaTccTx);
+                    }
                 }
                 if (*edmaTxParam != EDMA_RESOURCE_ALLOC_ANY)
                 {
@@ -443,9 +446,12 @@ int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *FsiRxObj, uint32_t edmaEventNo,
                 {
                     status += EDMA_freeDmaChannel(fsiRxEdmaHandle, &(edmaChCfg->edmaRxChId[edmaEventNo]));
                 }
-                if (*edmaTccRx != EDMA_RESOURCE_ALLOC_ANY)
+                if (edmaTccRx != NULL)
                 {
-                    status += EDMA_freeTcc(fsiRxEdmaHandle, edmaTccRx);
+                    if(*edmaTccRx != EDMA_RESOURCE_ALLOC_ANY)
+                    {
+                        status += EDMA_freeTcc(fsiRxEdmaHandle, edmaTccRx);
+                    }
                 }
                 if (*edmaRxParam != EDMA_RESOURCE_ALLOC_ANY)
                 {
