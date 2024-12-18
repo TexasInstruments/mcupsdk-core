@@ -1,4 +1,4 @@
-Using Ethphy devices supported out-of-box {#enet_supported_phy_guide}
+Using Ethphy Devices Supported Out-of-Box {#enet_supported_phy_guide}
 =====================
 
 [TOC]
@@ -33,11 +33,11 @@ All the above mentioned PHY drivers can be integrated using the Sysconfig GUI.
   \imageStyle{EnetSupportedPhyExtendedCfg.png,width:65%}
   \image html EnetSupportedPhyExtendedCfg.png
 
-# Using Ethphy devices not supported out-of-box
+# Using Ethphy Devices not Supported Out-of-Box
 
 You can find the guide for using a custom ethphy device and implementing a new custom PHY Driver **[here](\ref custom_enetphy_guide)**.
 
-# MAC2MAC feature (NO-PHY mode)
+# MAC2MAC Feature (NO-PHY mode)
 
 You can find the guide to enable MAC2MAC support **[here](\ref enet_mac2mac_top)**.
 
