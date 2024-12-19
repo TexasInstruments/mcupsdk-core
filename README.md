@@ -182,6 +182,12 @@ interest. For example, we are showing for am263x below.
 repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m am263x/dev.xml -b main
 ```
 
+**For am243x threadx setup**
+
+```bash
+repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m releases/10_01_00/am243x/mcusdk_threadx.xml -b main
+```
+
 Note that repo uses symbolic links. So if you're on Windows and do not have permissions
 to create symbolic links, the above command might fail for you. So you can either enable them
 ([refer this link](https://portal.perforce.com/s/article/3472)) or use the experimental
@@ -191,6 +197,12 @@ worktree feature of repo. To do this, initialize the repo like so:
 repo init --worktree -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m am263x/dev.xml -b main
 ```
 
+**For am243x threadx setup**
+
+```bash
+repo init --worktree -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m releases/10_01_00/am243x/mcusdk_threadx.xml -b main
+```
+
 After the repo is initialized, do a
 
 ```bash
@@ -198,6 +210,14 @@ repo sync
 ```
 
 This should clone all the repositories required for MCU+ SDK development. Now download and install the dependencies.
+
+---
+
+**NOTE**
+
+- Threadx is only supported for am243x.
+
+---
 
 #### Downloading And Installing Dependencies
 
@@ -378,6 +398,23 @@ repo start dev --all
    make -s -j4 all   DEVICE=am263x PROFILE=debug
    ```
 
+5. **Building threadx libraries and examples:**
+   Follow similar makefile creating and library building steps for AM243x as shown.
+   ```bash
+   make gen-buildfiles DEVICE=am243x
+   make -s -j4 libs DEVICE=am243x PROFILE=debug
+   ```
+   Then build required example. For example, to build Hello World example for AM243x, run the following:
+   ```bash
+   make -s -C examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang all PROFILE=debug
+   ```
+   Following are the commands to build **all libraries** and **all examples**. Valid PROFILE's are "release" or "debug"
+
+   ```bash
+   make -s -j4 clean DEVICE=am243x PROFILE=debug
+   make -s -j4 all   DEVICE=am243x PROFILE=debug
+   ```
+
 ### More information on SDK usage
 
 For more details on SDK usage, please refer to the SDK userguide. User guides contain information on
@@ -418,3 +455,33 @@ The documentation can also be generated as mentioned in the below section.
 ## Contributing to the project
 
 This project is currently not accepting contributions. Coming Soon!
+
+### ThreadX features supported
+
+- Kernel Cortex-R5 with TI toolchain split mode dual instance.
+- GPIO, I2C, SPI/McSPI, UART & Timers
+- Filex, RAMDISK, SDCard
+- Sysconfig integration.
+- DMA for supported peripherals.
+- NETX, Ethernet
+- IPC Port for Azure(for supported cores)
+- QSPI flash (serial NOR) , GPMC(NAND)
+- LevelX support
+
+### Threadx examples
+- Kernel
+  - Hello World
+  - Task Switch
+
+- Filex
+  - Hello World
+
+- NetX Duo
+  - Enet NetxDuo CPSW Mac
+  - Enet NetxDuo CPSW Switch
+  - Enet NetxDuo TCP Client
+  - Enet NetxDuo TCP Server
+  - Enet NetxDuo UDP Client
+  - Enet NetxDuo ICSSG Mac
+  - Enet NetxDuo ICSSG Switch
+
