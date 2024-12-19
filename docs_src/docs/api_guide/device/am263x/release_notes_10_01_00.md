@@ -1,12 +1,11 @@
 # Release Notes 10.01.00 {#RELEASE_NOTES_10_01_00_PAGE}
 
 [TOC]
-\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled.
-              Similar issue will be observed when enabling LTO on other examples. See **Known Issues** below.
+\attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
+\attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
-\attention 3. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
+\attention 3. Test report is not uploaded in SDK due to an issue with the report generation tool.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -17,6 +16,10 @@
 Feature                                                                                                  | Module
 ---------------------------------------------------------------------------------------------------------|-----------------------------------
 SBL over Ethernet                                                                                        | Bootloader
+Pinmux CSV Generation support in SysCfg                                                                  | Pinmux
+FreeRTOS FAT Example support                                                                             | FreeRTOS
+FSI LLD Support                                                                                          | FSI
+FreeRTOS Kernel migrated to 11.1.0 LTS                                                                   | FreeRTOS
 
 ## Device and Validation Information
 
@@ -102,6 +105,7 @@ GPIO         | R5F            | YES               | NA                          
 I2C          | R5F            | YES               | No                                    | Controller mode, basic read/write                                                                                                                                   | -
 IPC Notify   | R5F            | YES               | NA                                    | Mailbox functionality, IPC between RTOS/NORTOS CPUs                                                                                                             | M4F core
 IPC Rpmsg    | R5F            | YES               | NA                                    | RPMessage protocol based IPC                                                                                                                                    | M4F core
+LIN          | R5F            | YES               | YES                                   | RX, TX, polling, interrupt, DMA mode.                                                                                                                           | -
 MCAN         | R5F            | YES               | No                                    | RX, TX, interrupt and polling mode, Corrupt Message Transmission Prevention, Error Passive state, Bus Off State, Bus Monitoring Mode                            | -
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                            | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
@@ -246,6 +250,27 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.00.00 onwards
     <td> updated the register read with corresponding API.
 </tr>
+<tr>
+    <td> MCUSDK-13641, CODEGEN-12832
+    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
+    <td> Build
+    <td> 10.00.00 onwards
+    <td> Issue fixed in latest 4.0.1 LTS compiler release.
+</tr>
+<tr>
+    <td> MCUSDK-13647
+    <td> Unable to select 3pin/4pin mode when McSPI is configured as Single Peripheral
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> Issue fixed in latest 4.0.1 LTS compiler release.
+</tr>
+<tr>
+    <td> MCUSDK-13145
+    <td> UART: Incorrect API used to catch UART TX DMA Event miss
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> Update driver with correct API.
+</tr>
 </table>
 
 ## Known Issues
@@ -298,13 +323,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> EPWM
     <td> 09.02.00
     <td> remove sync between the epwms and use the global tbclksync to synchronize the EPWMs
-</tr>
-<tr>
-    <td> MCUSDK-13641, CODEGEN-12832
-    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
-    <td> Build
-    <td> 10.00.00 onwards
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-7319
@@ -487,6 +505,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SBL, QSPI
     <td> Readelf command throws error when trying to read the RS note segment from an mcelf file.
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14110
+    <td> Error building examples in CCS in mac
+    <td> Infra
+    <td> Example build fails in CCS only in MAC Machines
+    <td> Use makefile based build
 </tr>
 </table>
 

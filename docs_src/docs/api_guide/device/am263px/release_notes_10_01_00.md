@@ -1,12 +1,11 @@
 # Release Notes 10.01.00 {#RELEASE_NOTES_10_01_00_PAGE}
 
 [TOC]
-
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
 \attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
-\attention 3. There is a known issue of OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash. So, Phy tuning is disabled by default in Examples and SBL OSPI.
+\attention 3. Test report is not uploaded in SDK due to an issue with the report generation tool.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -18,9 +17,17 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Support added for Ethernet PHY Configuration for ENET (CPSW) in SysConfig Gui                   | Ethernet And Networking      | -
-Enablement of ethernet Ether-Ring Feature                                                       | Ethernet And Networking      | -
-Application load over Ethernet to external Flash (SBL Enet) example is added                    | SBL                          | -
+Support added for Ethernet PHY Configuration for ENET (CPSW) in SysConfig Gui                   | Ethernet And Networking
+Enablement of ethernet Ether-Ring Feature                                                       | Ethernet And Networking
+Application load over Ethernet to external Flash (SBL Enet) example is added                    | SBL
+Pinmux CSV Generation support in SysCfg                                                         | Pinmux
+FreeRTOS FAT Example support                                                                    | FreeRTOS
+FSI LLD Support                                                                                 | FSI
+OSPI LLD Support                                                                                | OSPI
+FreeRTOS Kernel migrated to 11.1.0 LTS                                                          | FreeRTOS
+Optishare Tool Support                                                                          | Optiflash
+OTFA Safety ECC Support                                                                         | Optiflash
+FOTA with XIP Example                                                                           | Optiflash
 
 # Modules Not tested/supported in this release
 
@@ -110,6 +117,7 @@ GPIO         | R5F            | YES               | NA                          
 I2C          | R5F            | YES               | No                                    | Controller mode, basic read/write                                                                                                                               | -
 IPC Notify   | R5F            | YES               | NA                                    | Mailbox functionality, IPC between RTOS/NORTOS CPUs                                                                                                             | M4F core
 IPC Rpmsg    | R5F            | YES               | NA                                    | RPMessage protocol based IPC                                                                                                                                    | M4F core
+LIN          | R5F            | YES               | YES                                   | RX, TX, polling, interrupt, DMA mode.                                                                                                                           | -
 MCAN         | R5F            | YES               | No                                    | RX, TX, interrupt and polling mode, Corrupt Message Transmission Prevention, Error Passive state, Bus Off State, Bus Monitoring Mode                            | -
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                   | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
@@ -253,6 +261,20 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 10.00.00 onwards
     <td> updated the register read with corresponding API.
 </tr>
+<tr>
+    <td> MCUSDK-13641, CODEGEN-12832
+    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
+    <td> Build
+    <td> 10.00.00 onwards
+    <td> Issue fixed in latest 4.0.1 LTS compiler release.
+</tr>
+<tr>
+    <td> MCUSDK-13727
+    <td> OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash
+    <td> OSPI
+    <td> 09.02.00 onwards
+    <td> Fixed in E2 revision of AM263P LP board. For E1 board, board modification is needed for DQS and LBK signals as mentioned in the Board User guide.
+</tr>
 </table>
 
 ## Known Issues
@@ -263,13 +285,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Module
     <th> Reported in release
     <th> Workaround
-</tr>
-<tr>
-    <td> MCUSDK-13641, CODEGEN-12832
-    <td> Increased build time for examples using Link Time Optimization (-flto) with TI-ARM-CLANG 4.0.0 LTS
-    <td> Build
-    <td> 10.00.00 onwards
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-13865
@@ -538,11 +553,18 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Reconfigure OSPI Pins to original state after updating OSPI configurables.
 </tr>
 <tr>
-    <td> MCUSDK-13727
-    <td> OSPI Phy Tuning not working on AM263P LP Board with ISSI Flash
+    <td> MCUSDK-13874
+    <td> Syscfg load json function for flash configuration imports does not work
     <td> OSPI
-    <td> 09.02.00 onwards
-    <td> Disable Phy tuning in application.
+    <td> Load flash json button action never completes, it just keeps loading.
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14110
+    <td> Error building examples in CCS in mac
+    <td> Infra
+    <td> Example build fails in CCS only in MAC Machines
+    <td> Use makefile based build
 </tr>
 <tr>
     <td> MCUSDK-13513
