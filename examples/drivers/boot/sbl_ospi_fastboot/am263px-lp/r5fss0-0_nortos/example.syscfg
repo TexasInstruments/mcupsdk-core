@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -80,6 +80,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -136,32 +137,32 @@ mpu_armv77.baseAddr   = 0x88000000;
 mpu_armv77.attributes = "Device";
 mpu_armv77.size       = 27;
 
-mpu_armv78.$name = "CONFIG_MPU_REGION7";
+mpu_armv78.$name      = "CONFIG_MPU_REGION7";
 mpu_armv78.attributes = "Cached+Sharable";
 mpu_armv78.baseAddr   = 0x7007FFE0;
 mpu_armv78.size       = 5;
 
-mpu_armv79.$name = "CONFIG_MPU_REGION8";
+mpu_armv79.$name      = "CONFIG_MPU_REGION8";
 mpu_armv79.attributes = "Cached+Sharable";
 mpu_armv79.baseAddr   = 0x700FFFE0;
 mpu_armv79.size       = 5;
 
-mpu_armv710.$name = "CONFIG_MPU_REGION9";
+mpu_armv710.$name      = "CONFIG_MPU_REGION9";
 mpu_armv710.attributes = "Cached+Sharable";
 mpu_armv710.baseAddr   = 0x7017FFE0;
 mpu_armv710.size       = 5;
 
-mpu_armv711.$name = "CONFIG_MPU_REGION10";
+mpu_armv711.$name      = "CONFIG_MPU_REGION10";
 mpu_armv711.attributes = "Cached+Sharable";
 mpu_armv711.baseAddr   = 0x701FFFE0;
 mpu_armv711.size       = 5;
 
-mpu_armv712.$name = "CONFIG_MPU_REGION11";
+mpu_armv712.$name      = "CONFIG_MPU_REGION11";
 mpu_armv712.attributes = "Cached+Sharable";
 mpu_armv712.baseAddr   = 0x7027FFE0;
 mpu_armv712.size       = 5;
 
-mpu_armv713.$name = "CONFIG_MPU_REGION12";
+mpu_armv713.$name      = "CONFIG_MPU_REGION12";
 mpu_armv713.attributes = "Cached+Sharable";
 mpu_armv713.baseAddr   = 0x702FFFE0;
 mpu_armv713.size       = 5;
@@ -194,7 +195,7 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x1A500;
+region1.memory_region[4].size               = 0x1FF00;
 region1.memory_region[5].$name              = "MSRAM_HSMRT";
 region1.memory_region[5].manualStartAddress = 0x70032000;
 region1.memory_region[5].size               = 0x40000;
