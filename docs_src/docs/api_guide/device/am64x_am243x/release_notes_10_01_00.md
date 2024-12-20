@@ -64,12 +64,12 @@ AM243x | R5F, M4F        | AM243x GP EVM (referred to as am243x-evm in code), \n
 
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, M4F, A53  | 12.7.0
-SysConfig               | R5F, M4F, A53  | 1.20.0, build 3587
-TI ARM CLANG            | R5F, M4F       | 3.2.2.LTS
+Code Composer Studio    | R5F, M4F, A53  | 12.8.1
+SysConfig               | R5F, M4F, A53  | 1.22.0, build 3893
+TI ARM CLANG            | R5F, M4F       | 4.1.0.LTS
 GCC AARCH64             | A53            | 9.2-2019.12
 GCC ARM                 | R5F            | 7-2017-q4-major (AM64x only)
-FreeRTOS Kernel         | R5F, M4F, A53  | 10.4.3
+FreeRTOS Kernel         | R5F, M4F, A53  | 11.1.0
 FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
 Tiny USB                | R5F            | 0.14.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
