@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,54 +31,20 @@
  */
 
 #include <stdlib.h>
-#include <kernel/dpl/DebugP.h>
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
-#include <tx_api.h>
 
-
-#define MAIN_TASK_PRI  (1)
-
-#define MAIN_TASK_STACK_SIZE (8192U)
-
-uint8_t main_thread_stack[MAIN_TASK_STACK_SIZE] __attribute__((aligned(32)));
-
-TX_THREAD main_thread;
-
-void threadx_hello_world_main(void *args);
-
-void threadx_main(ULONG arg)
-{
-    threadx_hello_world_main(NULL);
-}
-
+void gp_timer_overflow_callback_main(void *args);
 
 int main(void)
 {
-    /* init SOC specific modules */
     System_init();
     Board_init();
 
-    /* Enter the ThreadX kernel.  */
-    tx_kernel_enter();
+    gp_timer_overflow_callback_main(NULL);
+
+    Board_deinit();
+    System_deinit();
+
+    return 0;
 }
-
-void tx_application_define(void *first_unused_memory)
-{
-    UINT status;
-
-    status = tx_thread_create(&main_thread,           /* Pointer to the main thread object. */ 
-                              "main_thread",          /* Name of the task for debugging purposes. */
-                              threadx_main,           /* Entry function for the main thread. */
-                              0,                      /* Arguments passed to the entry function. */  
-                              main_thread_stack,      /* Main thread stack. */
-                              MAIN_TASK_STACK_SIZE,   /* Main thread stack size in bytes. */
-                              MAIN_TASK_PRI,          /* Main task priority. */
-                              MAIN_TASK_PRI,          /* Highest priority level of disabled preemption. */
-                              TX_NO_TIME_SLICE,       /* No time slice. */
-                              TX_AUTO_START);         /* Start immediately. */
-
-    DebugP_assertNoLog(status == TX_SUCCESS);
-}
-
-
