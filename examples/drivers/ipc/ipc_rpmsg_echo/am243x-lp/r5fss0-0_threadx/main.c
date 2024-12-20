@@ -45,11 +45,11 @@ uint8_t main_thread_stack[MAIN_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
 TX_THREAD main_thread;
 
-void threadx_hello_world_main(void *args);
+void ipc_rpmsg_echo_main(void *args);
 
 void threadx_main(ULONG arg)
 {
-    threadx_hello_world_main(NULL);
+    ipc_rpmsg_echo_main(NULL);
 }
 
 

@@ -45,11 +45,11 @@ uint8_t main_thread_stack[MAIN_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
 TX_THREAD main_thread;
 
-void threadx_task_switch_main(ULONG arg);
+void threadx_task_switch_main(void *args);
 
 void threadx_main(ULONG arg)
 {
-    threadx_task_switch_main(arg);
+    threadx_task_switch_main(NULL);
 }
 
 
