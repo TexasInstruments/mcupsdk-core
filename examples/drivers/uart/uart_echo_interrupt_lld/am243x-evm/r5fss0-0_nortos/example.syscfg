@@ -42,10 +42,8 @@ const section11       = section.addInstance();
  */
 uart1.$name            = "CONFIG_UART_CONSOLE";
 uart1.sdkInfra         = "LLD";
-uart1.readCallbackFxn  = "UART_lld_writeCompleteCallback";
-uart1.writeCallbackFxn = "UART_lld_readCompleteCallback";
-uart1.writeMode        = "CALLBACK";
-uart1.readMode         = "CALLBACK";
+uart1.writeCallbackFxn = "UART_lld_writeCompleteCallback";
+uart1.readCallbackFxn  = "UART_lld_readCompleteCallback";
 uart1.UART.$assign     = "USART0";
 uart1.UART.RXD.$assign = "UART0_RXD";
 uart1.UART.TXD.$assign = "UART0_TXD";
