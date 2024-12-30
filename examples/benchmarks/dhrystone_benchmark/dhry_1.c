@@ -96,7 +96,6 @@
 #define REG register
 #endif
 #define No_Of_runs 500000
-#define clock_freq 200000000.0
 #define Too_Small_Time 2
                 /* Measurements should last at least 2 seconds */
 
@@ -142,6 +141,9 @@ double Microseconds, User_time, Dhrystones_Per_Second, Vax_Mips;
   /* Main and Proc_0 in the Ada version             */
 void dhrystone( void *args)
 {
+    uint32_t clkRateMHz = 0U;
+    uint64_t cpuClockRate = 0U;
+    
     DebugP_log("BENCHMARK START - ARM R5F - DHRYSTONE\r\n");
     #if (defined SOC_AM263X) || (defined SOC_AM263PX) || (defined SOC_AM273X)
     Status  = SOC_rcmIsR5FInLockStepMode(CSL_ARM_R5_CLUSTER_GROUP_ID_0);
@@ -185,6 +187,9 @@ void dhrystone( void *args)
     /***************/
     /* Start timer */
     /***************/
+    cpuClockRate = SOC_getSelfCpuClk();
+    clkRateMHz = cpuClockRate/1000000;
+
     CycleCounterP_init(SOC_getSelfCpuClk());
     Begin_Time = CycleCounterP_getCount32();
 
@@ -234,15 +239,16 @@ void dhrystone( void *args)
     User_Time = End_Time - Begin_Time;
     DebugP_log("- USER cycle count:                          %d\r\n",User_Time);
 
-    User_time = (float) User_Time/clock_freq;//time
+    User_time = (float) User_Time/cpuClockRate;//time
     Microseconds = User_time * Mic_secs_Per_Second/ No_Of_runs;//no of runs is 500000
     Dhrystones_Per_Second = No_Of_runs / User_time;
     Vax_Mips = (Dhrystones_Per_Second / 1757.0);
 
+    DebugP_log("\nBENCHMARK Using clock %llu\r\n",cpuClockRate);
     DebugP_log("- Usertime in sec:                           %lf\r\n", User_time);
     DebugP_log("- Microseconds for one run through Dhrystone:%6.1f \r\n", Microseconds);
     DebugP_log("- Dhrystones per Second:                     %6.1f \r\n", Dhrystones_Per_Second);
-    DebugP_log("\nNormalized MIPS/MHz:                       %8.4f\r\n", Dhrystones_Per_Second/1757.0/200.0);
+    DebugP_log("\nNormalized MIPS/MHz:                       %8.4f\r\n", Dhrystones_Per_Second/1757.0/clkRateMHz);
     #ifdef ROPT
         printf ("Register option selected?  YES\r\n");
     #else
