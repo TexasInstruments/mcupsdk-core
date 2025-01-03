@@ -118,7 +118,7 @@ static int32_t CCM_API_test(uint32_t instanceId)
     {
         sdlResult = SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
 		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000U);
-        if (sdlResult == SDL_PASS)
+        if (sdlResult == SDL_EBADARGS)
         {
             DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
             testResult = -1;

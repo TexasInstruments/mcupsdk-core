@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -10,7 +11,7 @@
  */
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -34,8 +35,11 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-debug_log.enableUartLog = true;
-debug_log.uartLog.$name = "CONFIG_UART0";
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -227,15 +231,13 @@ iUART1.$name = "MyUART1";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution     = "UART2";
-debug_log.uartLog.UART.RXD.$suggestSolution = "LIN2_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution = "LIN2_TXD";
-iUART1.$suggestSolution                     = "UART1";
-iUART1.CTSn.$suggestSolution                = "EPWM10_A";
-iUART1.DCDn.$suggestSolution                = "EPWM12_B";
-iUART1.DSRn.$suggestSolution                = "EPWM14_A";
-iUART1.DTRn.$suggestSolution                = "EPWM13_B";
-iUART1.RIn.$suggestSolution                 = "EPWM13_A";
-iUART1.RTSn.$suggestSolution                = "EPWM9_B";
-iUART1.RXD.$suggestSolution                 = "LIN1_RXD";
-iUART1.TXD.$suggestSolution                 = "LIN1_TXD";
+debug_log.uartLog.UART.$suggestSolution = "UART0";
+iUART1.$suggestSolution                 = "UART1";
+iUART1.CTSn.$suggestSolution            = "EPWM10_A";
+iUART1.DCDn.$suggestSolution            = "EPWM12_B";
+iUART1.DSRn.$suggestSolution            = "EPWM14_A";
+iUART1.DTRn.$suggestSolution            = "EPWM13_B";
+iUART1.RIn.$suggestSolution             = "EPWM13_A";
+iUART1.RTSn.$suggestSolution            = "EPWM9_B";
+iUART1.RXD.$suggestSolution             = "LIN1_RXD";
+iUART1.TXD.$suggestSolution             = "LIN1_TXD";

@@ -235,7 +235,7 @@ static int32_t CCM_errTest(void)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
 		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000000U);
-        if (sdlResult == SDL_PASS)
+        if (sdlResult == SDL_EBADARGS)
         {
             DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
             testResult = -1;

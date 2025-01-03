@@ -602,6 +602,13 @@ int32_t CCM_funcTest(void)
 			DebugP_log("\r\nCCM Init failed. Exiting the app.\r\n");
 		}
 	}
+    if (testResult == SDL_PASS)
+    {
+        DebugP_log("\nAll tests have Passed \r\n");
+    }
+    else{
+        DebugP_log("\nAll tests have Failed \r\n");
+    }
 	Board_driversClose();
     Drivers_close();
     while(1){
