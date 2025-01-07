@@ -122,7 +122,7 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sdl_stog_r5f";
+    property.name = "tog_app";
     property.isInternal = false;
     property.description = "This example demonstrates error enjecting usecase of Timeout Gasket (TOG)"
     property.buildOptionCombos = buildOptionCombos;

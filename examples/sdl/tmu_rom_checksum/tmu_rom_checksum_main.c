@@ -122,7 +122,7 @@ void test_main(void)
         DebugP_log("\nTMU ROM-Checksum Data integrity passed\r\n");
         DebugP_log("\nCalcuated TMU CRC High : 0x%x\r\n", sectSignVal.regH);
         DebugP_log("\nCalcuated TMU CRC Low : 0x%x\r\n", sectSignVal.regL);
-        DebugP_log("\nAll tests Passed\r\n");
+        DebugP_log("\nAll tests have Passed\r\n");
     }
     else if(testResult == SDL_EBADARGS)
     {

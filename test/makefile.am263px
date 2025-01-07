@@ -383,8 +383,8 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_tcmparity_functest_am263px-cc_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_ALL += sdl_tcmparity_functest_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += utils_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += stog_func_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -725,10 +725,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/utils/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
- stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+ tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
+ tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
  stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
@@ -1232,8 +1232,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tcmparity_functest_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tcmparity_functest_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += utils_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1569,10 +1569,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/utils/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
- stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+ tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
  stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -2076,8 +2076,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tcmparity_functest_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tcmparity_functest_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += utils_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2413,10 +2413,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  utils_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/utils/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
- stog_unit_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ tog_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- stog_unit_test_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
+ tog_test_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/stog/stog_unit_test/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
  stog_func_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:

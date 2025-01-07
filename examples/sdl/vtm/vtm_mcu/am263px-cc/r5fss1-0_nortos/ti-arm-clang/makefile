@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=vtm_example.$(PROFILE).out
-COREOUTNAME:=vtm_example.$(PROFILE).optishare.out
+OUTNAME:=vtm_app.$(PROFILE).out
+COREOUTNAME:=vtm_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=vtm_example.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=vtm_example.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=vtm_example.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=vtm_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=vtm_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=vtm_app.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=vtm_example.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=vtm_example.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=vtm_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=vtm_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=vtm_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=vtm_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=vtm_example.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=vtm_app.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=vtm_app.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=vtm_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=vtm_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=vtm_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=vtm_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=vtm_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -221,7 +221,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss1-0:nortos:ti-arm-clang vtm_example ...
+	@echo  Scrubing: am263px:r5fss1-0:nortos:ti-arm-clang vtm_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -371,12 +371,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for vtm_example.$(PROFILE) ...
+	@echo Creating Coverage Report for vtm_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o vtm_example.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=vtm_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=vtm_example.$(PROFILE).profdata > coverage/vtm_example.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/vtm_example.$(PROFILE).profdata.json --output-json=coverage/vtm_example.$(PROFILE).analysis.json --output=../vtm_example.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o vtm_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=vtm_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=vtm_app.$(PROFILE).profdata > coverage/vtm_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/vtm_app.$(PROFILE).profdata.json --output-json=coverage/vtm_app.$(PROFILE).analysis.json --output=../vtm_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

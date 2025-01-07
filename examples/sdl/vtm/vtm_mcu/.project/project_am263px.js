@@ -116,7 +116,7 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "vtm_example";
+    property.name = "vtm_app";
     property.isInternal = false;
     property.description = "This example verifies VTM operation"
     property.buildOptionCombos = buildOptionCombos;

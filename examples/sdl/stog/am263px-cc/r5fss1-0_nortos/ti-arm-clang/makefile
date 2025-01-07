@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sdl_stog_r5f.$(PROFILE).out
-COREOUTNAME:=sdl_stog_r5f.$(PROFILE).optishare.out
+OUTNAME:=tog_app.$(PROFILE).out
+COREOUTNAME:=tog_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sdl_stog_r5f.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=sdl_stog_r5f.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=sdl_stog_r5f.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=tog_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=tog_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=tog_app.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=sdl_stog_r5f.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=sdl_stog_r5f.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdl_stog_r5f.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_stog_r5f.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_stog_r5f.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_stog_r5f.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_stog_r5f.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=tog_app.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=tog_app.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=tog_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=tog_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=tog_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=tog_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=tog_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -224,7 +224,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss1-0:nortos:ti-arm-clang sdl_stog_r5f ...
+	@echo  Scrubing: am263px:r5fss1-0:nortos:ti-arm-clang tog_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -374,12 +374,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sdl_stog_r5f.$(PROFILE) ...
+	@echo Creating Coverage Report for tog_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_stog_r5f.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_stog_r5f.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_stog_r5f.$(PROFILE).profdata > coverage/sdl_stog_r5f.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_stog_r5f.$(PROFILE).profdata.json --output-json=coverage/sdl_stog_r5f.$(PROFILE).analysis.json --output=../sdl_stog_r5f.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o tog_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=tog_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=tog_app.$(PROFILE).profdata > coverage/tog_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/tog_app.$(PROFILE).profdata.json --output-json=coverage/tog_app.$(PROFILE).analysis.json --output=../tog_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -50,9 +50,11 @@ edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
-debug_log.enableUartLog       = true;
-debug_log.uartLog.$name       = "CONFIG_UART0";
-debug_log.uartLog.child.$name = "drivers_uart_v2_uart_v2_template0";
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -270,6 +272,4 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution     = "UART1";
-debug_log.uartLog.UART.RXD.$suggestSolution = "LIN1_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution = "LIN1_TXD";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -463,6 +463,10 @@ int32_t mcrcSemiCPU_main(void)
             SDL_MCRC_clearIntr(instance, mcrcChannel, SDL_MCRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL);
         }
     }
+    if (retVal == SDL_PASS)
+    {
+        DebugP_log("\n All tests have passed. \n");
+    }
     EDMA_mcrcDeinit();
     return (retVal + retVal1);
 }

@@ -1590,10 +1590,10 @@ BUILD_COMBO_EXAMPLE_ALL += r5f_cpu_utils_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += r5f_cpu_utils_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_tmu_parity_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang
@@ -3256,16 +3256,16 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/parity/sdl_tmu_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
- sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+ tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
+ tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
- vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+ vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
+ vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
  mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
@@ -3899,10 +3899,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += r5f_cpu_utils_am263px-cc_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += r5f_cpu_utils_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tmu_parity_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
@@ -5560,16 +5560,16 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/parity/sdl_tmu_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+ tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
- vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+ vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
  mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
@@ -6203,10 +6203,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += r5f_cpu_utils_am263px-cc_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += r5f_cpu_utils_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tmu_parity_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -7864,16 +7864,16 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdl_tmu_parity_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/parity/sdl_tmu_parity/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_stog_r5f_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ tog_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_stog_r5f_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
+ tog_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/stog/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
- vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ vtm_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- vtm_example_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
+ vtm_app_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
  mcan_sdl_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
