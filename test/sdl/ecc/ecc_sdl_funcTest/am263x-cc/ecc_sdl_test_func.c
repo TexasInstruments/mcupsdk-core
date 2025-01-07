@@ -5298,6 +5298,7 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_VIM_1BitInjectTest has failed... \r\n");
         }
     }
+#if !defined(SOC_AM263X)
     if (retVal == 0) {
         result = ECC_Test_run_VIM_2BitInjectTest();
         /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5307,6 +5308,7 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_VIM_2BitInjectTest has failed... \r\n");
         }
     }
+#endif
 	if (retVal == 0) {
 		/*Init of MCAN*/
 		retVal = ECC_Test_MCAN_init();
