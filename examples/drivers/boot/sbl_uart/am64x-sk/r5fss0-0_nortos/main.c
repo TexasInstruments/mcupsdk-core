@@ -47,7 +47,7 @@
 
 #define BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS (2)
 
-#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x60000) /* Size of section MSRAM_2 specified in linker.cmd */
+#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x200000) /* Size of section DDR specified in linker.cmd */
 uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 /* call this API to stop the booting process and spin, do that you can connect

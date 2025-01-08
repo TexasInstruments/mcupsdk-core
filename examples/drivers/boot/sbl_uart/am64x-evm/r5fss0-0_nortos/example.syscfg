@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM64x" --part "Default" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM6442" --package "FCBGA (ALV)" --variant "AM6442-D" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -15,7 +16,7 @@ const ddr1            = ddr.addInstance();
 const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1           = uart.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -46,6 +47,11 @@ ddr1.$name = "CONFIG_DDR0";
 uart1.$name        = "CONFIG_UART0";
 uart1.intrEnable   = "DISABLE";
 uart1.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+uart1.child             = uart_v0_template1;
 
 debug_log.enableCssLog      = false;
 debug_log.enableLogZoneInfo = true;
@@ -84,7 +90,7 @@ general1.svc_stack_size = 256;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(7);
+region1.memory_region.create(8);
 region1.memory_region[0].type               = "TCMA_R5F";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].size               = 0x40;
@@ -110,6 +116,9 @@ region1.memory_region[6].auto               = false;
 region1.memory_region[6].$name              = "MSRAM_2";
 region1.memory_region[6].manualStartAddress = 0x70180000;
 region1.memory_region[6].size               = 0x60000;
+region1.memory_region[7].type               = "DDR_ALL";
+region1.memory_region[7].$name              = "DDR";
+region1.memory_region[7].size               = 0x200000;
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;
@@ -178,10 +187,10 @@ section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.$name                       = "CONFIG_SECTION0";
 section5.group                       = false;
 section5.type                        = "NOLOAD";
-section5.load_memory                 = "MSRAM_2";
+section5.$name                       = "Appimage";
+section5.load_memory                 = "DDR";
 section5.output_section.create(1);
 section5.output_section[0].alignment = 0;
 section5.output_section[0].$name     = ".bss.filebuf";
