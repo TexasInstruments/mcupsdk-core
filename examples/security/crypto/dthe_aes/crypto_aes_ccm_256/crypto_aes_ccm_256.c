@@ -161,7 +161,7 @@ void crypto_aes_ccm_256_main(void *args)
     aesParams.dataLenBytes      = 16U;
     aesParams.useKEKMode        = FALSE;
     aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.aadLenght         = 0;
+    aesParams.aadLength         = 0;
     aesParams.ptrAAD            = (uint32_t*)NULL;    
     aesParams.ptrTag            = (uint32_t*)NULL;
     aesParams.counterWidth      = DTHE_AES_CTR_WIDTH_32;
@@ -178,7 +178,7 @@ void crypto_aes_ccm_256_main(void *args)
     /* Initialize the encryption parameters */
     aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm256PlainText[0]);
     aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-    aesParams.aadLenght         = 0;
+    aesParams.aadLength         = 0;
     aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM256Tag[0];
     aesParams.streamState       = DTHE_AES_STREAM_FINISH;
     aesParams.streamSize        = 16U;
@@ -220,7 +220,7 @@ void crypto_aes_ccm_256_main(void *args)
         aesParams.dataLenBytes      = 16U;
         aesParams.useKEKMode        = FALSE;
         aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-        aesParams.aadLenght         = 0;
+        aesParams.aadLength         = 0;
         aesParams.ptrAAD            = (uint32_t*)NULL;    
         aesParams.ptrTag            = (uint32_t*)NULL;
         aesParams.counterWidth      = DTHE_AES_CTR_WIDTH_32;
@@ -236,7 +236,7 @@ void crypto_aes_ccm_256_main(void *args)
         /* Initialize the encryption parameters */
         aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCCM256DecData[0]);
         aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-        aesParams.aadLenght         = 0;
+        aesParams.aadLength         = 0;
         aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM256Tag[0];
         aesParams.streamState       = DTHE_AES_STREAM_FINISH;
         aesParams.streamSize        = 16U;

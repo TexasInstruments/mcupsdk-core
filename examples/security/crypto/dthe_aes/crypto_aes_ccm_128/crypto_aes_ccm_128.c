@@ -193,8 +193,8 @@ void crypto_aes_ccm_128_main(void *args)
     aesParams.dataLenBytes      = 16U;
     aesParams.useKEKMode        = FALSE;
     aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.aadLenght         = 16;
-    aesParams.ptrAAD            = (uint32_t*)NULL;    
+    aesParams.aadLength         = 16;
+    aesParams.ptrAAD            = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm128AAD[0]);
     aesParams.ptrTag            = (uint32_t*)NULL;
     aesParams.counterWidth      = DTHE_AES_CTR_WIDTH_32;
     aesParams.streamState       = DTHE_AES_STREAM_INIT;
@@ -206,24 +206,10 @@ void crypto_aes_ccm_128_main(void *args)
     status = DTHE_AES_execute(handle, &aesParams);
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
-
-    /* Initialize the encryption parameters */
-    aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm128AAD[0]);
-    aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-    aesParams.aadLenght         = 16U;
-    aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM128Tag[0];
-    aesParams.streamState       = DTHE_AES_STREAM_UPDATE;
-    aesParams.streamSize        = 16U;
-    aesParams.dataLenBytes      = 16U;
-
-    /* Setup AAD */
-    status = DTHE_AES_execute(handle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
     /* Initialize the encryption parameters */
     aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm128PlainText[0]);
     aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-    aesParams.aadLenght         = 0;
+    aesParams.aadLength         = 0;
     aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM128Tag[0];
     aesParams.streamState       = DTHE_AES_STREAM_FINISH;
     aesParams.streamSize        = 16U;
@@ -265,8 +251,8 @@ void crypto_aes_ccm_128_main(void *args)
         aesParams.dataLenBytes      = 16U;
         aesParams.useKEKMode        = FALSE;
         aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-        aesParams.aadLenght         = 16;
-        aesParams.ptrAAD            = (uint32_t*)NULL;    
+        aesParams.aadLength         = 16;
+        aesParams.ptrAAD            = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm128AAD[0]);
         aesParams.ptrTag            = (uint32_t*)NULL;
         aesParams.counterWidth      = DTHE_AES_CTR_WIDTH_32;
         aesParams.streamState       = DTHE_AES_STREAM_INIT;
@@ -279,22 +265,9 @@ void crypto_aes_ccm_128_main(void *args)
         DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
         /* Initialize the encryption parameters */
-        aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-        aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCcm128AAD[0]);
-        aesParams.aadLenght         = 16U;
-        aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM128Tag[0];
-        aesParams.streamState       = DTHE_AES_STREAM_UPDATE;
-        aesParams.streamSize        = 16U;
-        aesParams.dataLenBytes      = 16U;
-
-        /* Sending encrypetd text */
-        status = DTHE_AES_execute(handle, &aesParams);
-        DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-        /* Initialize the encryption parameters */
         aesParams.ptrPlainTextData  = (uint32_t*)SOC_virtToPhy((void *)&gCryptoAesCCM128DecData[0]);
         aesParams.ptrEncryptedData  = (uint32_t*)SOC_virtToPhy((void *)&aesResult[0]);
-        aesParams.aadLenght         = 0;
+        aesParams.aadLength         = 0;
         aesParams.ptrTag            = (uint32_t*)&gCryptoAesCCM128Tag[0];
         aesParams.streamState       = DTHE_AES_STREAM_FINISH;
         aesParams.streamSize        = 16U;
