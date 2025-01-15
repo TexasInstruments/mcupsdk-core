@@ -11,14 +11,12 @@ const component_file_list = [
     "source/board/.project/project.js",
     "source/cmsis/.project/project.js",
     "source/drivers/.project/project.js",
-    "source/fs/filex/.project/project.js",
     "source/fs/freertos_fat/.project/project.js",
     "source/fs/littlefs/.project/project.js",
     "source/middleware/.project/project.js",
     "source/sdl/.project/project.js",
     "source/kernel/nortos/.project/project.js",
     "source/kernel/freertos/.project/project.js",
-    "source/kernel/threadx/.project/project.js",
     "source/mathlib/.project/project.js",
     "source/pru_io/.project/project.js",
     "source/security/.project/project.js",
@@ -47,7 +45,6 @@ const component_file_list = [
     "source/networking/lwip/.project/project_contrib_nortos.js",
     "source/networking/enet/.project/project_icssg_lwipif_ic_freertos.js",
     "source/networking/mbedtls_library/.project/project.js",
-    "source/networking/netxduo/.project/project.js",
     "source/networking/tsn/.project/project_tsn_gptp.js",
     "source/networking/tsn/.project/project_tsn_icssg_combase.js",
     "source/networking/tsn/.project/project_tsn_combase.js",
@@ -56,6 +53,12 @@ const component_file_list = [
     "source/networking/enet_cli/.project/project_enet_cli_freertos.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
+];
+
+const component_file_list_threadx = [
+    "source/fs/filex/.project/project.js",
+    "source/kernel/threadx/.project/project.js",
+    "source/networking/netxduo/.project/project.js",
 ];
 
 const device_defines = {
@@ -180,8 +183,6 @@ const example_file_list = [
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
-    "examples/empty/.project/project_threadx.js",
-    "examples/fs/filex/hello_world/.project/project.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
     "examples/kernel/dpl/dpl_demo/.project/project.js",
@@ -191,8 +192,6 @@ const example_file_list = [
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/kernel/nortos/wfi_standby_demo/.project/project_am243x.js",
     "examples/kernel/nortos/basic_smart_placement/.project/project_nortos.js",
-    "examples/kernel/threadx/hello_world/.project/project.js",
-    "examples/kernel/threadx/task_switch/.project/project.js",
     "examples/mathlib/benchmark/.project/project.js",
     "examples/otp/runtime_keyrev/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/.project/project.js",
@@ -215,6 +214,7 @@ const example_file_list = [
     "examples/usb/device/dfu/.project/project_nortos.js",
     "examples/usb/device/ncm/.project/project_nortos.js",
     "examples/usb/device/rndis/.project/project_nortos.js",
+<<<<<<< HEAD
     "source/networking/enet/core/examples/enet_cli_app/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/.project/project.js",
@@ -246,13 +246,6 @@ const example_file_list = [
     "source/networking/enet/core/examples/enet_vlan_icssg/.project/project.js",
     "source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/.project/project.js",
     "source/networking/enet/core/examples/lwip/enet_lwip_icssg/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/.project/project.js",
-    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/.project/project.js",
     "examples/pru_io/adc/ads85x8/.project/project.js",
     "examples/pru_io/adc/ads127/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
@@ -338,7 +331,6 @@ const example_file_list = [
     "test/drivers/soc/soc_m4f/.project/project.js",
     "test/drivers/uart/.project/project.js",
     "test/drivers/gp_timer/.project/project.js",
-    "test/fs/filex/.project/project.js",
     "test/kernel/dpl/.project/project.js",
     "test/kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/.project/project.js",
     "test/kernel/dpl/dpl_ut/nortos/common/HeapP_nortos/.project/project.js",
@@ -395,6 +387,21 @@ const example_file_list = [
     "tools/flasher/jtag_uniflash/.project/project.js",
 ];
 
+const example_file_list_threadx = [
+    "examples/empty/.project/project_threadx.js",
+    "examples/kernel/threadx/hello_world/.project/project.js",
+    "examples/kernel/threadx/task_switch/.project/project.js",
+    "examples/fs/filex/hello_world/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_mac/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_switch/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_udp_client/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_icssg_mac/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_icssg_switch/.project/project.js",
+    "test/fs/filex/.project/project.js",
+];
+
 function getProjectSpecCpu(cpu) {
     let projectSpecCpu =
     {
@@ -422,11 +429,29 @@ function getProjectSpecCpu(cpu) {
 }
 
 function getComponentList() {
-    return component_file_list;
+
+    if (getThreadXEnabled())
+    {
+        list = component_file_list.concat(component_file_list_threadx);
+    }
+    else
+    {
+        list = component_file_list;
+    }
+    return list;
 }
 
 function getExampleList() {
-    return example_file_list;
+
+    if (getThreadXEnabled())
+    {
+        list = example_file_list.concat(example_file_list_threadx);
+    }
+    else
+    {
+        list = example_file_list;
+    }
+    return list;
 }
 
 function getSysCfgDevice(board) {
