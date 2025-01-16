@@ -1,3 +1,4 @@
+\cond THREADX
 # Enet NetxDuo CPSW Switch Example{#EXAMPLES_ENET_NETXDUO_CPSW_SWITCH}
 
 [TOC]
@@ -217,3 +218,4 @@ Local Interface IP is: 192.168.1.100
 
 # See Also
 \ref NETWORKING
+\endcond

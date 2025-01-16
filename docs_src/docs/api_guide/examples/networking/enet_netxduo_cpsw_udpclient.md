@@ -1,3 +1,4 @@
+\cond THREADX
 # Enet NetxDuo UDP Client Example{#EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT}
 
 [TOC]
@@ -270,3 +271,4 @@ Done
 
 # See Also
 \ref NETWORKING
+\endcond

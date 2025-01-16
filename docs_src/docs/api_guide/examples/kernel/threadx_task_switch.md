@@ -1,3 +1,4 @@
+\cond THREADX
 # ThreadX Task Switch Example {#EXAMPLES_KERNEL_THREADX_TASK_SWITCH}
 
 [TOC]
@@ -62,3 +63,4 @@ time per task - ISR - task switch (semaphore give/take) = 1070 ns
 
 All tests have passed!!
 \endcode
+\endcond
