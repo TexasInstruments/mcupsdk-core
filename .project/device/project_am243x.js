@@ -214,7 +214,6 @@ const example_file_list = [
     "examples/usb/device/dfu/.project/project_nortos.js",
     "examples/usb/device/ncm/.project/project_nortos.js",
     "examples/usb/device/rndis/.project/project_nortos.js",
-<<<<<<< HEAD
     "source/networking/enet/core/examples/enet_cli_app/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/.project/project.js",
@@ -392,13 +391,13 @@ const example_file_list_threadx = [
     "examples/kernel/threadx/hello_world/.project/project.js",
     "examples/kernel/threadx/task_switch/.project/project.js",
     "examples/fs/filex/hello_world/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_cpsw_mac/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_cpsw_switch/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_cpsw_tcp_client/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_cpsw_tcp_server/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_cpsw_udp_client/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_icssg_mac/.project/project.js",
-    "examples/networking/netxduo/enet_netxduo_icssg_switch/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/.project/project.js",
     "test/fs/filex/.project/project.js",
 ];
 
