@@ -587,6 +587,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ADC singleshot example. This example demonstrates interrupts in ADC. CPU is R5FSS0-0 running THREADX.",
+        "name": "adc_singleshot",
+        "location": "../../examples/drivers/adc/adc_singleshot/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_singleshot",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC singleshot example. This example demonstrates interrupts in ADC. CPU is R5FSS0-0 running THREADX.",
+        "name": "adc_singleshot",
+        "location": "../../examples/drivers/adc/adc_singleshot/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_singleshot",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Emmc Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_emmc",
         "location": "../../examples/drivers/boot/sbl_emmc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1544,6 +1610,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ECAP APWM mode example. This example sets up ECAP in APWM mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "ecap_apwm_mode",
+        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_mode",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP APWM mode example. This example sets up ECAP in APWM mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "ecap_apwm_mode",
+        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_apwm_mode",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1676,6 +1808,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is R5FSS0-0 running THREADX.",
+        "name": "ecap_epwm_loopback",
+        "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_epwm_loopback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is R5FSS0-0 running THREADX.",
+        "name": "ecap_epwm_loopback",
+        "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_epwm_loopback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1792,6 +1990,72 @@
             "epwm",
             "epwm_duty_cycle",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running THREADX.",
+        "name": "epwm_duty_cycle",
+        "location": "../../examples/drivers/epwm/epwm_duty_cycle/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_duty_cycle",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running THREADX.",
+        "name": "epwm_duty_cycle",
+        "location": "../../examples/drivers/epwm/epwm_duty_cycle/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_duty_cycle",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -1990,6 +2254,72 @@
             "eqep",
             "eqep_capture",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Capture Example. This example captures the quadrature input signal and measures it's frequency. CPU is R5FSS0-0 running THREADX.",
+        "name": "eqep_capture",
+        "location": "../../examples/drivers/eqep/eqep_capture/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_capture",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Capture Example. This example captures the quadrature input signal and measures it's frequency. CPU is R5FSS0-0 running THREADX.",
+        "name": "eqep_capture",
+        "location": "../../examples/drivers/eqep/eqep_capture/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_capture",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -2270,6 +2600,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running THREADX.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs a Timers and prints approximate Frequency. CPU is R5FSS0-0 running THREADX.",
+        "name": "gp_timer_free_run",
+        "location": "../../examples/drivers/gp_timer/gp_timer_free_run/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_free_run",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running NORTOS.",
         "name": "gp_timer_overflow_callback",
         "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -2386,6 +2782,72 @@
             "gp_timer",
             "gp_timer_overflow_callback",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running THREAX.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-evm/r5fss0-0_threax/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threax"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_threax"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer with interrupt enabled and Triggers a Overflow Callback. CPU is R5FSS0-0 running THREAX.",
+        "name": "gp_timer_overflow_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_overflow_callback/am243x-lp/r5fss0-0_threax/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threax"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_overflow_callback",
+            "r5fss0-0_threax"
         ],
         "mainCategories": [
             [
@@ -2534,6 +2996,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running THREADX.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example Runs the Timer in Compare match mode and triggers a callback on match. CPU is R5FSS0-0 running THREADX.",
+        "name": "gp_timer_compare_match_callback",
+        "location": "../../examples/drivers/gp_timer/gp_timer_compare_match_callback/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_compare_match_callback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A GPTIMER Example. This example runs a timer in pwm generation mode and captures using another timer. CPU is R5FSS0-0 running NORTOS.",
         "name": "gp_timer_pwm_capture",
         "location": "../../examples/drivers/gp_timer/gp_timer_pwm_capture/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -2584,6 +3112,39 @@
             "gp_timer",
             "gp_timer_pwm_capture",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A GPTIMER Example. This example runs a timer in pwm generation mode and captures using another timer. CPU is R5FSS0-0 running THREADX.",
+        "name": "gp_timer_pwm_capture",
+        "location": "../../examples/drivers/gp_timer/gp_timer_pwm_capture/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gp_timer",
+            "gp_timer_pwm_capture",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -3029,6 +3590,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_led_blink",
+        "location": "../../examples/drivers/i2c/i2c_led_blink/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_led_blink",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_led_blink",
+        "location": "../../examples/drivers/i2c/i2c_led_blink/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_led_blink",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A I2c Read Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -3145,6 +3772,72 @@
             "i2c",
             "i2c_read",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_read",
+        "location": "../../examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_read",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_read",
+        "location": "../../examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_read",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -3293,6 +3986,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A I2c Memory Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_memory_read",
+        "location": "../../examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_memory_read",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Memory Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_memory_read",
+        "location": "../../examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_memory_read",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A I2c Temperature Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -3343,6 +4102,39 @@
             "i2c",
             "i2c_temperature",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Temperature Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "i2c_temperature",
+        "location": "../../examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_temperature",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -4085,6 +4877,336 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -4415,6 +5537,336 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_safeipc_echo",
         "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -4498,6 +5950,138 @@
             "ipc",
             "ipc_safeipc_echo",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -4811,6 +6395,270 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcan External Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcan_external_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -4861,6 +6709,39 @@
             "mcan",
             "mcan_external_loopback_interrupt",
             "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_external_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -5009,6 +6890,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcan Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_dma",
+        "location": "../../examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_dma",
+        "location": "../../examples/drivers/mcan/mcan_loopback_dma/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5125,6 +7072,72 @@
             "mcan",
             "mcan_loopback_interrupt",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_interrupt",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_interrupt",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -5273,6 +7286,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_polling",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_polling",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcan_loopback_polling",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_polling",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Canfd Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5389,6 +7468,72 @@
             "mcan",
             "canfd_loopback_polling",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_polling",
+        "location": "../../examples/drivers/mcan/canfd_loopback_polling/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_polling",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_polling",
+        "location": "../../examples/drivers/mcan/canfd_loopback_polling/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_polling",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -5537,6 +7682,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Canfd Loopback Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_interrupt",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_interrupt",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Canfd Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5653,6 +7864,72 @@
             "mcan",
             "canfd_loopback_dma",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_dma",
+        "location": "../../examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Canfd Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "canfd_loopback_dma",
+        "location": "../../examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "canfd_loopback_dma",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -5834,6 +8111,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5950,6 +8293,72 @@
             "mcspi",
             "mcspi_loopback_dma",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_dma",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_dma",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -6098,6 +8507,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6214,6 +8689,72 @@
             "mcspi",
             "mcspi_loopback_interrupt_lld",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -6362,6 +8903,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Loopback Multi Instances Multi Channels Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_multi_instances_multi_channels_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6478,6 +9085,72 @@
             "mcspi",
             "mcspi_loopback_multi_instances_multi_channels_lld",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Multi Instances Multi Channels Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_multi_instances_multi_channels_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_multi_instances_multi_channels_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Multi Instances Multi Channels Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_multi_instances_multi_channels_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_multi_instances_multi_channels_lld",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -6659,6 +9332,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_performance_8bit",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_performance_8bit",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_performance_8bit",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_performance_8bit",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6808,6 +9547,72 @@
             "mcspi",
             "mcspi_performance_32bit",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_performance_32bit",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_performance_32bit",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_performance_32bit",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_performance_32bit",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -6989,6 +9794,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_turbo_mode",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mcspi_loopback_turbo_mode",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mmcsd Raw Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mmcsd_raw_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7039,6 +9910,39 @@
             "mmcsd",
             "mmcsd_raw_io",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mmcsd Raw Io Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "mmcsd_raw_io",
+        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mmcsd",
+            "mmcsd_raw_io",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -9375,6 +12279,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo",
+        "location": "../../examples/drivers/uart/uart_echo/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo",
+        "location": "../../examples/drivers/uart/uart_echo/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -9540,6 +12510,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -9672,6 +12708,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -9738,6 +12840,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -9788,6 +12923,39 @@
             "uart",
             "uart_echo_interrupt_lld",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_interrupt_lld",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_interrupt_lld",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -10002,6 +13170,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Adc Read Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "udma_adc_read",
         "location": "../../examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -10068,6 +13269,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Udma Adc Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_adc_read",
+        "location": "../../examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_adc_read",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Adc Read Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_adc_read",
+        "location": "../../examples/drivers/udma/udma_adc_read/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_adc_read",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Chaining Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -10118,6 +13385,72 @@
             "udma",
             "udma_chaining",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Chaining Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_chaining",
+        "location": "../../examples/drivers/udma/udma_chaining/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_chaining",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Chaining Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_chaining",
+        "location": "../../examples/drivers/udma/udma_chaining/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_chaining",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -10464,6 +13797,270 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS0-1 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss0-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS1-0 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss1-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS1-1 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss1-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS0-1 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss0-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS1-0 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss1-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS1-1 running THREADX.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss1-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Memcpy Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10596,6 +14193,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Udma Memcpy Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_memcpy_polling",
+        "location": "../../examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_polling",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Memcpy Polling Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_memcpy_polling",
+        "location": "../../examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_polling",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Sw Trigger Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "udma_sw_trigger",
         "location": "../../examples/drivers/udma/udma_sw_trigger/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -10646,6 +14309,72 @@
             "udma",
             "udma_sw_trigger",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Sw Trigger Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_sw_trigger",
+        "location": "../../examples/drivers/udma/udma_sw_trigger/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_sw_trigger",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Udma Sw Trigger Example. CPU is R5FSS0-0 running THREADX.",
+        "name": "udma_sw_trigger",
+        "location": "../../examples/drivers/udma/udma_sw_trigger/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_sw_trigger",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -11348,72 +15077,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
-        "name": "filex_hello_world",
-        "location": "../../examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "fs",
-            "filex",
-            "hello_world",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
-        "name": "filex_hello_world",
-        "location": "../../examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "fs",
-            "filex",
-            "hello_world",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world",
         "location": "../../examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11662,6 +15325,68 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11894,6 +15619,68 @@
         "subCategories": [
             "hello_world_cpp",
             "m4fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "hello_world_cpp",
+        "location": "../../examples/hello_world_cpp/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_cpp",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "hello_world_cpp",
+        "location": "../../examples/hello_world_cpp/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_cpp",
+            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -12587,138 +16374,6 @@
             "nortos",
             "basic_smart_placement",
             "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
-        "name": "threadx_hello_world",
-        "location": "../../examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "threadx",
-            "hello_world",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
-        "name": "threadx_hello_world",
-        "location": "../../examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "threadx",
-            "hello_world",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
-        "name": "threadx_task_switch",
-        "location": "../../examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "threadx",
-            "task_switch",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
-        "name": "threadx_task_switch",
-        "location": "../../examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "threadx",
-            "task_switch",
-            "r5fss0-0_threadx"
         ],
         "mainCategories": [
             [
@@ -16658,538 +20313,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_mac",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_mac",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_mac",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_mac",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_switch",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_switch",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_switch",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_switch",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_tcp_client",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_tcp_client",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_tcp_client",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_tcp_client",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_tcp_server",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_tcp_server",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_tcp_server",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_tcp_server",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_udp_client",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_udp_client",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_cpsw_udp_client",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_cpsw_udp_client",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_icssg_mac",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_icssg_mac",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_icssg_mac",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_icssg_mac",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_icssg_switch",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDS243EVM"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_icssg_switch",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
-        "name": "enet_netxduo_icssg_switch",
-        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM243"
-        ],
-        "kernel": [
-            "threadx"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "source",
-            "networking",
-            "enet",
-            "core",
-            "examples",
-            "netxduo",
-            "enet_netxduo_icssg_switch",
-            "r5fss0-0_threadx"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.general"
         ],
         "description": "This example verifies VTM operation CPU is M4FSS0-0 running NORTOS.",
@@ -18107,6 +21230,984 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-evm/r5fss0-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-evm/r5fss1-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-evm/r5fss1-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-lp/r5fss0-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-lp/r5fss1-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running THREADX.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-lp/r5fss1-1_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_hello_world",
+        "location": "../../examples/kernel/threadx/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple ThreadX hello world example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_hello_world",
+        "location": "../../examples/kernel/threadx/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_task_switch",
+        "location": "../../examples/kernel/threadx/task_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "task_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "ThreadX task switching example.  CPU is R5FSS0-0 running THREADX.",
+        "name": "threadx_task_switch",
+        "location": "../../examples/kernel/threadx/task_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "threadx",
+            "task_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
+        "name": "filex_hello_world",
+        "location": "../../examples/fs/filex/hello_world/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "fs",
+            "filex",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" example for the FileX file system.  CPU is R5FSS0-0 running THREADX.",
+        "name": "filex_hello_world",
+        "location": "../../examples/fs/filex/hello_world/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "fs",
+            "filex",
+            "hello_world",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_mac",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in MAC mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_mac",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_switch",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with CPSW in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_switch",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_client",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_client",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_server",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_server",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple TCP server example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_tcp_server",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_tcp_server",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_udp_client",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_udp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple UDP client example for NetxDuo with CPSW. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_cpsw_udp_client",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_cpsw_udp_client",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_mac",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_icssg_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in mac mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_mac",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_icssg_mac",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_switch",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_icssg_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple example for NetxDuo with ICSSG in switch mode. CPU is R5FSS0-0 running THREADX.",
+        "name": "enet_netxduo_icssg_switch",
+        "location": "../../source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "netxduo",
+            "enet_netxduo_icssg_switch",
+            "r5fss0-0_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Benchmark Demo System Example.",
@@ -18227,6 +22328,66 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Notify Echo System Example.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo System Example.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-lp/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Rpmsg Echo System Example.",
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/system_freertos_nortos/system.projectspec",
@@ -18271,6 +22432,66 @@
             "ipc",
             "ipc_rpmsg_echo",
             "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo System Example.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-evm/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo System Example.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am243x-lp/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "system_threadx_nortos"
         ],
         "mainCategories": [
             [
@@ -18347,6 +22568,66 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Safeipc Echo System Example.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-evm/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Safeipc Echo System Example.",
+        "name": "ipc_safeipc_echo",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am243x-lp/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_safeipc_echo",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Spinlock Sharedmem System Example.",
         "name": "ipc_spinlock_sharedmem",
         "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/system_freertos_nortos/system.projectspec",
@@ -18407,6 +22688,66 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ipc Spinlock Sharedmem System Example.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-evm/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem System Example.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am243x-lp/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "system_threadx_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcan External Loopback Interrupt System Example.",
         "name": "mcan_external_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am243x-evm/system_freertos_nortos/system.projectspec",
@@ -18421,6 +22762,36 @@
             "mcan",
             "mcan_external_loopback_interrupt",
             "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt System Example.",
+        "name": "mcan_external_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/am243x-evm/system_threadx_nortos/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt",
+            "system_threadx_nortos"
         ],
         "mainCategories": [
             [
@@ -18832,6 +23203,62 @@
             "sdl",
             "stog_r5f",
             "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-evm/system_threadx/system.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "empty",
+            "system_threadx"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
+        "name": "empty",
+        "location": "../../examples/empty/am243x-lp/system_threadx/system.projectspec",
+        "devtools": [
+            "LP-AM243"
+        ],
+        "kernel": [
+            "threadx"
+        ],
+        "subCategories": [
+            "empty",
+            "system_threadx"
         ],
         "mainCategories": [
             [
