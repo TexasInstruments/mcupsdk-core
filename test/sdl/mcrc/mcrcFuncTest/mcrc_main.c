@@ -134,23 +134,23 @@ void test_sdl_mcrc_baremetal_test_app (void)
     {
         if (sdlmcrcTestList[i].testStatus != SDL_APP_TEST_PASS)
         {
-            DebugP_log("Test Name: %s  FAILED \n", sdlmcrcTestList[i].name);
+            DebugP_log("\rTest Name: %s  FAILED \n", sdlmcrcTestList[i].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Test Name: %s  PASSED \n", sdlmcrcTestList[i].name);
+            DebugP_log("\rTest Name: %s  PASSED \n", sdlmcrcTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\r\n Few/all tests Failed \n");
     }
 
 #if defined (UNITY_INCLUDE_CONFIG_H)

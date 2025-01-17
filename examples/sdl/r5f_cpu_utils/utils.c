@@ -150,7 +150,7 @@ void test_main(void *args)
     if (sdlResult==SDL_PASS)
     {
         DebugP_log("\nR5F CPU STATIC REGISTER READ Complete! \r\n");
-        DebugP_log("\nAll test have passed. \r\n");
+        DebugP_log("\nAll tests have passed. \r\n");
     }
     else
     {

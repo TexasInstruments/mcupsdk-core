@@ -310,18 +310,18 @@ int32_t mcrcAutoCPU_main(void)
 
 			/* Fetch MCRC signature value */
 			SDL_MCRC_getPSASig(instance, mcrcChannel, &refSignVal);
-			DebugP_log("\n MCRC signature value : 0x%x%xU",
+			DebugP_log("\r\n MCRC signature value : 0x%x%xU",
 					refSignVal.regH,
 					refSignVal.regL);
 			CacheP_wb((void *)signBuffPtr, params[testCase].mcrcPatternSize, CacheP_TYPE_ALL);
 			cpuModeTime = ClockP_getTimeUsec() - cpuModeTime;
-			DebugP_log("\nMCRC Full Mode Computation Time: %dus\r\n", cpuModeTime);
+			DebugP_log("\r\nMCRC Full Mode Computation Time: %dus\r\n", cpuModeTime);
 		}
 		else{
 			DebugP_log("\nUsing Pre-Defined Reference MCRC signature Value.\n");
 			refSignVal.regH = params[testCase].mcrcSignHigh;
 			refSignVal.regL = params[testCase].mcrcSignLow;
-			DebugP_log("\nPre-defined MCRC signature value : 0x%x%xU\n",
+			DebugP_log("\r\nPre-defined MCRC signature value : 0x%x%xU\n",
 						refSignVal.regH,
 						refSignVal.regL);
 		}
@@ -535,23 +535,23 @@ int32_t mcrcAutoCPU_main(void)
 			if(((refSignVal.regH == psaSignRegVal.regH) &&
 			(refSignVal.regL == psaSignRegVal.regL)) && (intrStatus == 0))
 			{
-				DebugP_log("\nSector signature matches - Passed");
-				DebugP_log("\nCalculated MCRC signature value : 0x%08x%08xU\n",
+				DebugP_log("\r\nSector signature matches - Passed");
+				DebugP_log("\r\nCalculated MCRC signature value : 0x%08x%08xU\n",
 									psaSignRegVal.regH,
 									psaSignRegVal.regL);
-				DebugP_log("\nEDMA Data transfer completed !!\r\n");
+				DebugP_log("\r\nEDMA Data transfer completed !!\r\n");
 				DebugP_log("MCRC Auto Mode Computation Time: %dus\r\n", autoModeTime);
 				retVal = SDL_PASS;
 			}
 			else
 			{
 				retVal = SDL_EFAIL;
-				DebugP_log("\nSector signature does not match.");
-				DebugP_log("\nSome tests have failed!!\r\n");
+				DebugP_log("\r\nSector signature does not match.");
+				DebugP_log("\r\nSome tests have failed!!\r\n");
 				DebugP_log("\nExpected MCRC signature value : 0x%x%xU\n",
 					refSignVal.regH,
 					refSignVal.regL);
-				DebugP_log("\nCalculated MCRC signature value : 0x%08x%08xU\n",
+				DebugP_log("\r\nCalculated MCRC signature value : 0x%08x%08xU\n",
 					psaSignRegVal.regH,
 					psaSignRegVal.regL);
 			}
@@ -560,7 +560,7 @@ int32_t mcrcAutoCPU_main(void)
 	}
 	if (retVal == SDL_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \n");
     }
     EDMA_mcrcDeinit();
 	return (retVal + retVal1);

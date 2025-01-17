@@ -283,18 +283,18 @@ int32_t mcrcSemiCPU_main(void)
 
             /* Fetch MCRC signature value */
             SDL_MCRC_getPSASig(instance, mcrcChannel, &refSignVal);
-            DebugP_log("\n MCRC signature value : 0x%x%xU",
+            DebugP_log("\r\n MCRC signature value : 0x%x%xU",
                     refSignVal.regH,
                     refSignVal.regL);
             CacheP_wb((void *)signBuffPtr, params[testCase].mcrcPatternSize, CacheP_TYPE_ALL);
             cpuModeTime = ClockP_getTimeUsec() - cpuModeTime;
-            DebugP_log("\nMCRC Full Mode Computation Time: %dus\r\n", cpuModeTime);
+            DebugP_log("\r\nMCRC Full Mode Computation Time: %dus\r\n", cpuModeTime);
         }
         else{
-            DebugP_log("\nUsing Pre-Defined Reference MCRC signature Value.\n");
+            DebugP_log("\r\nUsing Pre-Defined Reference MCRC signature Value.\n");
             refSignVal.regH = params[testCase].mcrcSignHigh;
             refSignVal.regL = params[testCase].mcrcSignLow;
-            DebugP_log("\nPre-defined MCRC signature value : 0x%x%xU\n",
+            DebugP_log("\r\nPre-defined MCRC signature value : 0x%x%xU\n",
                         refSignVal.regH,
                         refSignVal.regL);
         }
@@ -431,7 +431,7 @@ int32_t mcrcSemiCPU_main(void)
             {
                 /* Wait here till MCRC compression complete is set. */
                 SDL_MCRC_getIntrStatus(instance, mcrcChannel, &intrStatus);
-                DebugP_log("MCRC Semi CPU intrrupt status : %x\n", intrStatus);
+                DebugP_log("\r\nMCRC Semi CPU intrrupt status : %x\r\n", intrStatus);
             }
 
             /* Get MCRC PSA signature register address */
@@ -440,11 +440,11 @@ int32_t mcrcSemiCPU_main(void)
             if(((refSignVal.regH == psaSignRegVal.regH) &&
             (refSignVal.regL == psaSignRegVal.regL)))
             {
-                DebugP_log("\nSector signature matches - Passed");
-                DebugP_log("\nCalculated MCRC signature value : 0x%08x%08xU\n",
+                DebugP_log("\r\nSector signature matches - Passed");
+                DebugP_log("\r\nCalculated MCRC signature value : 0x%08x%08xU\n",
                                     psaSignRegVal.regH,
                                     psaSignRegVal.regL);
-                DebugP_log("\nEDMA Data transfer completed !!\r\n");
+                DebugP_log("\r\nEDMA Data transfer completed !!\r\n");
                 DebugP_log("MCRC Semi Mode Computation Time: %dus\r\n", semiModeTime);
                 retVal = SDL_PASS;
             }
