@@ -4,8 +4,10 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_dpl_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_dpl_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
@@ -37,8 +39,24 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stog_func_test_r5f_am243x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_firewall_am243x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_firewall_am243x-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_firewall_am243x-evm_system_threadx_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_firewall_am243x-lp_system_threadx_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_ipc_notify_am243x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_ipc_notify_am243x-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_ipc_notify_am243x-evm_system_threadx_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_ipc_notify_am243x-lp_system_threadx_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_controller_peripheral_am243x-evm_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_controller_peripheral_am243x-evm_system_threadx_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_soc_r5f_am243x-evm_system_threadx_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_soc_r5f_am243x-lp_system_threadx_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
@@ -49,11 +67,17 @@ all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
- test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
-	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+ test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
-	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+ test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
 
  test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C kernel/dpl/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -148,8 +172,56 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
  stog_func_test_r5f_am243x-evm_system_nortos_build:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile_projectspec all
+
+ test_firewall_am243x-evm_system_freertos_nortos_build:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ test_firewall_am243x-lp_system_freertos_nortos_build:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_freertos_nortos -f makefile_projectspec all
+
+ test_firewall_am243x-evm_system_threadx_nortos_build:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_threadx_nortos -f makefile_projectspec all
+
+ test_firewall_am243x-lp_system_threadx_nortos_build:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_threadx_nortos -f makefile_projectspec all
+
+ test_ipc_notify_am243x-evm_system_freertos_nortos_build:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ test_ipc_notify_am243x-lp_system_freertos_nortos_build:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_freertos_nortos -f makefile_projectspec all
+
+ test_ipc_notify_am243x-evm_system_threadx_nortos_build:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_threadx_nortos -f makefile_projectspec all
+
+ test_ipc_notify_am243x-lp_system_threadx_nortos_build:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_threadx_nortos -f makefile_projectspec all
+
+ test_mcspi_controller_peripheral_am243x-evm_system_freertos_build:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_freertos -f makefile_projectspec all
+
+ test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_build:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_freertos_nortos -f makefile_projectspec all
+
+ test_mcspi_controller_peripheral_am243x-evm_system_threadx_build:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_threadx -f makefile_projectspec all
+
+ test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_build:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_threadx_nortos -f makefile_projectspec all
+
+ test_soc_r5f_am243x-evm_system_threadx_build:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-evm/system_threadx -f makefile_projectspec all
+
+ test_soc_r5f_am243x-lp_system_threadx_build:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-lp/system_threadx -f makefile_projectspec all
 
  enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_build:
 	$(MAKE) -C ../source/networking/enet/core/test/lwip/enet_multicore_lwip/am243x-evm/system_enet_multicore_lwip -f makefile_projectspec all
@@ -158,8 +230,10 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_dpl_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_dpl_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
@@ -191,8 +265,24 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stog_func_test_r5f_am243x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_firewall_am243x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_firewall_am243x-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_firewall_am243x-evm_system_threadx_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_firewall_am243x-lp_system_threadx_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_ipc_notify_am243x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_ipc_notify_am243x-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_ipc_notify_am243x-evm_system_threadx_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_ipc_notify_am243x-lp_system_threadx_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_controller_peripheral_am243x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_controller_peripheral_am243x-evm_system_threadx_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_soc_r5f_am243x-evm_system_threadx_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_soc_r5f_am243x-lp_system_threadx_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
@@ -203,11 +293,17 @@ clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
- test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
-	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+ test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
-	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+ test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
 
  test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/dpl/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -302,8 +398,56 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
  stog_func_test_r5f_am243x-evm_system_nortos_clean:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile_projectspec clean
+
+ test_firewall_am243x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ test_firewall_am243x-lp_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_freertos_nortos -f makefile_projectspec clean
+
+ test_firewall_am243x-evm_system_threadx_nortos_clean:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_threadx_nortos -f makefile_projectspec clean
+
+ test_firewall_am243x-lp_system_threadx_nortos_clean:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_threadx_nortos -f makefile_projectspec clean
+
+ test_ipc_notify_am243x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ test_ipc_notify_am243x-lp_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_freertos_nortos -f makefile_projectspec clean
+
+ test_ipc_notify_am243x-evm_system_threadx_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_threadx_nortos -f makefile_projectspec clean
+
+ test_ipc_notify_am243x-lp_system_threadx_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_threadx_nortos -f makefile_projectspec clean
+
+ test_mcspi_controller_peripheral_am243x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_freertos -f makefile_projectspec clean
+
+ test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_freertos_nortos -f makefile_projectspec clean
+
+ test_mcspi_controller_peripheral_am243x-evm_system_threadx_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_threadx -f makefile_projectspec clean
+
+ test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_threadx_nortos -f makefile_projectspec clean
+
+ test_soc_r5f_am243x-evm_system_threadx_clean:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-evm/system_threadx -f makefile_projectspec clean
+
+ test_soc_r5f_am243x-lp_system_threadx_clean:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-lp/system_threadx -f makefile_projectspec clean
 
  enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_clean:
 	$(MAKE) -C ../source/networking/enet/core/test/lwip/enet_multicore_lwip/am243x-evm/system_enet_multicore_lwip -f makefile_projectspec clean
@@ -312,8 +456,10 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_dpl_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_dpl_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
@@ -345,8 +491,24 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stog_func_test_r5f_am243x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_firewall_am243x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_firewall_am243x-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_firewall_am243x-evm_system_threadx_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_firewall_am243x-lp_system_threadx_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_ipc_notify_am243x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_ipc_notify_am243x-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_ipc_notify_am243x-evm_system_threadx_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_ipc_notify_am243x-lp_system_threadx_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_controller_peripheral_am243x-evm_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_controller_peripheral_am243x-evm_system_threadx_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_soc_r5f_am243x-evm_system_threadx_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_soc_r5f_am243x-lp_system_threadx_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
@@ -357,11 +519,17 @@ export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
- test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
-	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+ test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
-	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+ test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ test_mcspi_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ test_mcspi_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
 
  test_dpl_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C kernel/dpl/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -456,8 +624,56 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ test_filex_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ test_filex_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
  stog_func_test_r5f_am243x-evm_system_nortos_export:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile_projectspec export
+
+ test_firewall_am243x-evm_system_freertos_nortos_export:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ test_firewall_am243x-lp_system_freertos_nortos_export:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_freertos_nortos -f makefile_projectspec export
+
+ test_firewall_am243x-evm_system_threadx_nortos_export:
+	$(MAKE) -C drivers/firewall/am243x-evm/system_threadx_nortos -f makefile_projectspec export
+
+ test_firewall_am243x-lp_system_threadx_nortos_export:
+	$(MAKE) -C drivers/firewall/am243x-lp/system_threadx_nortos -f makefile_projectspec export
+
+ test_ipc_notify_am243x-evm_system_freertos_nortos_export:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ test_ipc_notify_am243x-lp_system_freertos_nortos_export:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_freertos_nortos -f makefile_projectspec export
+
+ test_ipc_notify_am243x-evm_system_threadx_nortos_export:
+	$(MAKE) -C drivers/ipc_notify/am243x-evm/system_threadx_nortos -f makefile_projectspec export
+
+ test_ipc_notify_am243x-lp_system_threadx_nortos_export:
+	$(MAKE) -C drivers/ipc_notify/am243x-lp/system_threadx_nortos -f makefile_projectspec export
+
+ test_mcspi_controller_peripheral_am243x-evm_system_freertos_export:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_freertos -f makefile_projectspec export
+
+ test_mcspi_controller_peripheral_am243x-lp_system_freertos_nortos_export:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_freertos_nortos -f makefile_projectspec export
+
+ test_mcspi_controller_peripheral_am243x-evm_system_threadx_export:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_threadx -f makefile_projectspec export
+
+ test_mcspi_controller_peripheral_am243x-lp_system_threadx_nortos_export:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_threadx_nortos -f makefile_projectspec export
+
+ test_soc_r5f_am243x-evm_system_threadx_export:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-evm/system_threadx -f makefile_projectspec export
+
+ test_soc_r5f_am243x-lp_system_threadx_export:
+	$(MAKE) -C drivers/soc/soc_r5f/am243x-lp/system_threadx -f makefile_projectspec export
 
  enet_multicore_lwip_am243x-evm_system_enet_multicore_lwip_export:
 	$(MAKE) -C ../source/networking/enet/core/test/lwip/enet_multicore_lwip/am243x-evm/system_enet_multicore_lwip -f makefile_projectspec export
@@ -491,8 +707,10 @@ help:
 	@echo  .
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
-	@echo  $(MAKE) -s -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C kernel/dpl/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C kernel/dpl/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C kernel/dpl/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -524,10 +742,26 @@ help:
 	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C fs/filex/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C fs/filex/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
 	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/firewall/am243x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/firewall/am243x-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/firewall/am243x-evm/system_threadx_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/firewall/am243x-lp/system_threadx_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am243x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am243x-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am243x-evm/system_threadx_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am243x-lp/system_threadx_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am243x-evm/system_threadx -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am243x-lp/system_threadx_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am243x-evm/system_threadx -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am243x-lp/system_threadx -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/lwip/enet_multicore_lwip/am243x-evm/system_enet_multicore_lwip -f makefile_projectspec [export all clean]
 	@echo  .
 
