@@ -33,17 +33,26 @@ const libdirs_nortos = {
 
 const includes_nortos = {
     common: [
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
+        "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
         "${MCU_PLUS_SDK_PATH}/examples/sdl/r5f_cpu_utils/",
     ],
 };
 
-const libs_nortos_r5f = {
+const libs_nortos_r5f0_0 = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am261x.r5fss0-0.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_nortos_r5f0_1 = {
+    common: [
+        "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am261x.r5fss0-1.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -70,6 +79,7 @@ const templates_nortos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
@@ -96,9 +106,15 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    if(buildOption.cpu.match(/r5f*/))
+    if(buildOption.cpu.match(/r5fss0-1/))
     {
-        build_property.libs = libs_nortos_r5f;
+        build_property.libs = libs_nortos_r5f0_1;
+        build_property.templates = templates_nortos_r5f;
+    }
+
+    if(buildOption.cpu.match(/r5fss0-0/))
+    {
+        build_property.libs = libs_nortos_r5f0_0;
         build_property.templates = templates_nortos_r5f;
     }
 

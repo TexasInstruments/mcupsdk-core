@@ -11,7 +11,7 @@
 
     <project
         title="R5f Cpu Utils"
-        name = "r5f_cpu_utils_am261x-som_r5fss0-0_nortos_ti-arm-clang"
+        name = "r5f_cpu_utils_am261x-som_r5fss0-1_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="4.0.1"
         device="Cortex R.AM261x"
-        deviceCore="Cortex_R5_0"
+        deviceCore="Cortex_R5_1"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -61,7 +61,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2611 --package ZCZ
+            --context r5fss0-1 --part AM2611 --package ZCZ
         "
 
         description="A R5f Cpu Utils NORTOS project">
@@ -74,7 +74,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.debug.lib
                 -lboard.am261x.r5f.ti-arm-clang.debug.lib
-                -lsdl.am261x.r5fss0-0.ti-arm-clang.debug.lib
+                -lsdl.am261x.r5fss0-1.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -87,7 +87,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.release.lib
                 -lboard.am261x.r5f.ti-arm-clang.release.lib
-                -lsdl.am261x.r5fss0-0.ti-arm-clang.release.lib
+                -lsdl.am261x.r5fss0-1.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

@@ -15355,6 +15355,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example read all r5f cpu static register CPU is R5FSS0-0 running NORTOS.",
+        "name": "r5f_cpu_utils",
+        "location": "../../examples/sdl/r5f_cpu_utils/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "r5f_cpu_utils",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example read all r5f cpu static register CPU is R5FSS0-1 running NORTOS.",
+        "name": "r5f_cpu_utils",
+        "location": "../../examples/sdl/r5f_cpu_utils/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "r5f_cpu_utils",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cbc_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

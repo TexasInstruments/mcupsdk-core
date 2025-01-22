@@ -38,8 +38,6 @@ const section12  = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-clock.r5ClockFreq = "500MHz";
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
