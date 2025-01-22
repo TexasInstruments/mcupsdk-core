@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2023 Texas Instruments Incorporated.
+ * Copyright (C) 2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,7 +65,7 @@ extern "C" {
 *   Required Macros for Instances config
 ======================================================================================================*/
 
-#define SDL_STC_NUM_INSTANCES 2U
+#define SDL_STC_NUM_INSTANCES 1U
 
 /** ===========================================================================
  *  @addtogroup SDL_STC_ENUM
@@ -102,7 +102,6 @@ typedef enum {
  *
  */
 static  void SDL_STC_resetCauseClearR5F0(void);
-static  void SDL_STC_resetCauseClearR5F1(void);
 
 /** @} */
 

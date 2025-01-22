@@ -55,14 +55,8 @@ extern "C" {
 /* ========================================================================== */
 #define SDL_ECC_BUS_SAFETY_MSS_BUS_CFG         (uint32_t)SDL_MSS_CTRL_U_BASE
 #define DWORD                                  (0x20U)
-#define SDL_MSS_CTRL_R5SS0_CORE0_AHB_BASE      (0x000000A0U)
-#define SDL_MSS_CTRL_R5SS1_CORE0_AHB_BASE      (0x000000A4U)
-#define SDL_MSS_CTRL_R5SS0_CORE1_AHB_BASE      (0x000000B0U)
-#define SDL_MSS_CTRL_R5SS1_CORE1_AHB_BASE      (0x000000B4U)
 #define SDL_MSS_CTRL_R5SS0_CORE0_AHB_END       (SDL_MSS_CTRL_R5SS0_CORE0_AHB_BASE + SDL_MSS_CTRL_R5SS0_CORE0_AHB_SIZE)
-#define SDL_MSS_CTRL_R5SS1_CORE0_AHB_END       (SDL_MSS_CTRL_R5SS1_CORE0_AHB_BASE + SDL_MSS_CTRL_R5SS1_CORE0_AHB_SIZE)
 #define SDL_MSS_CTRL_R5SS0_CORE1_AHB_END       (SDL_MSS_CTRL_R5SS0_CORE1_AHB_BASE + SDL_MSS_CTRL_R5SS0_CORE1_AHB_SIZE)
-#define SDL_MSS_CTRL_R5SS1_CORE1_AHB_END       (SDL_MSS_CTRL_R5SS1_CORE1_AHB_BASE + SDL_MSS_CTRL_R5SS1_CORE1_AHB_SIZE)
 
 #define SDL_R5SS0_CORE0_TCMA_U_SIZE            (0x000000020)
 #define SDL_R5SS0_CORE0_TCMB_U_SIZE            (0x000000020)
@@ -70,7 +64,7 @@ extern "C" {
 #define SDL_MSS_CR5B_TCM_U_BASE                (SDL_R5SS0_CORE0_TCMB_U_BASE )
 #define SDL_MSS_CR5A_TCM_U_END                 (SDL_R5SS0_CORE0_TCMA_U_BASE + SDL_R5SS0_CORE0_TCMA_U_SIZE)
 #define SDL_MSS_CR5B_TCM_U_END                 (SDL_R5SS0_CORE0_TCMB_U_BASE + SDL_R5SS0_CORE0_TCMB_U_SIZE)
-#define SDL_MBOX_SRAM_U_BASE_END               (SDL_MBOX_SRAM_U_BASE+100U)
+#define SDL_MBOX_SRAM_U_BASE_END               (SDL_MBOX_SRAM_U_BASE+0x3FFFU)
 #define SDL_MMC0_U_BASE_END                    (SDL_MMC0_U_BASE+0X1FFCU-DWORD)
 #define SDL_CORE_VBUSP_START                   (0x50800000U)
 #define SDL_CORE_VBUSP_START_END               (SDL_CORE_VBUSP_START+0X1FFCU)
@@ -94,48 +88,151 @@ extern "C" {
 #define SDL_MSS_STM_STIM_U_SIZE                (0x00FFFFFFU)
 #define SDL_MSS_STM_STIM_U_END                 (SDL_MSS_STM_STIM_U_BASE + SDL_MSS_STM_STIM_U_SIZE)
 
+#define SDL_MSS_CR5A_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5A_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5A_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5A_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5A_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5A_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5B_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5B_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5B_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5B_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5B_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5B_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5C_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5C_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5C_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5C_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5C_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5C_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CR5D_AXI_RD_START                   (0x35000000U)
+#define SDL_MSS_CR5D_AXI_RD_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5D_AXI_WR_START                   (0x35000000U)
+#define SDL_MSS_CR5D_AXI_WR_END                     (0x350003FFU-8U)
+#define SDL_MSS_CR5D_AXI_S_START                    (0x0U)
+#define SDL_MSS_CR5D_AXI_S_END                      (0x0001FFFFU-8U)
+
+#define SDL_MSS_CTRL_TPCC_A0_WR_BASE                (0x52A40000U)
+#define SDL_MSS_CTRL_TPCC_A0_WR_END                 (0x52A40400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A1_WR_BASE                (0x52A60000U)
+#define SDL_MSS_CTRL_TPCC_A1_WR_END                 (0x52A60400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A0_RD_BASE                (0x52A40000U)
+#define SDL_MSS_CTRL_TPCC_A0_RD_END                 (0x52A40400U-8U)
+
+#define SDL_MSS_CTRL_TPCC_A1_RD_BASE                (0x52A60000U)
+#define SDL_MSS_CTRL_TPCC_A1_RD_END                 (0x52A60400U-8U)
+
+#define SDL_MSS_VBUSP_BASE                          (0x35000000U)
+#define SDL_MSS_VBUSP_BASE_END                      (0x350003FFU-8U)
+
+#define SDL_MSS_VBUSP_PERI_BASE                     (0x35000000U)
+#define SDL_MSS_VBUSP_PERI_BASE_END                 (0x350003FFU-8U)
+
+#define SDL_MSS_CPSW_BASE                           (0x52800000U)
+#define SDL_MSS_CPSW_BASE_END                       (0x52800400U-8U)
+
+#define SDL_QSPI_U_BASE                             (0x48200000U)
+#define SDL_QSPI_U_BASE_END                         (0x482001FFU-8U)
+
+#define SDL_MCRC_U_BASE                             (0x35000000U)
+#define SDL_MCRC_U_BASE_END                         (0x350003FFU-8U)
+
+#define SDL_STIM_U_BASE                             (0x53500000U)
+#define SDL_STIM_U_BASE_END                         (0x535001FFU-8U)
+
+#define SDL_SCRP0_U_BASE                            (0x48000000U)
+#define SDL_SCRP0_U_BASE_END                        (0x4803FFFFU-8U)
+
+#define SDL_SCRP1_U_BASE                            (0x48000000U)
+#define SDL_SCRP1_U_BASE_END                        (0x4803FFFFU-8U)
+#if 0
+#define SDL_ICSSM_PDSP0_U_BASE                      (0x48000000U)
+#define SDL_ICSSM_PDSP0_U_BASE_END                  (0x4803FFFFU-8U)
+
+#define SDL_ICSSM_PDSP1_U_BASE                      (0x48000000U)
+#define SDL_ICSSM_PDSP1_U_BASE_END                  (0x4803FFFFU-8U)
+
+#define SDL_ICSSM_S_BASE                            (0x48000000U)
+#define SDL_ICSSM_S_BASE_END                        (0x4803FFFFU-8U)
+#endif
+
+#define SDL_ICSSM0_PDSP0_U_BASE                      (SDL_ICSSM0_INTERNAL_U_BASE)
+#define SDL_ICSSM0_PDSP0_U_SIZE                      (0x000000FFU)
+#define SDL_ICSSM0_PDSP0_U_BASE_END                  (0x48038000U-8U)//(SDL_ICSSM0_INTERNAL_U_BASE+SDL_ICSSM0_PDSP0_U_SIZE)
+
+#define SDL_ICSSM0_PDSP1_U_BASE                      (SDL_ICSSM0_INTERNAL_U_BASE)
+#define SDL_ICSSM0_PDSP1_U_SIZE                      (0x000000FFU)
+#define SDL_ICSSM0_PDSP1_U_BASE_END                  (0x48038000U-8U)//(SDL_ICSSM0_INTERNAL_U_BASE+SDL_ICSSM0_PDSP1_U_SIZE)
+
+#define SDL_ICSSM0_S_BASE                            (SDL_ICSSM0_INTERNAL_U_BASE)
+#define SDL_ICSSM0_S_SIZE                            (0x000000FFU)
+#define SDL_ICSSM0_S_BASE_END                        (0x48038000U-8U)//(SDL_ICSSM0_INTERNAL_U_BASE+SDL_ICSSM0_S_SIZE)
+
+#define SDL_ICSSM1_PDSP0_U_BASE                      (SDL_ICSS_M_ICSSM_1_PR1_PDSP0_IRAM_U_BASE)
+#define SDL_ICSSM1_PDSP0_U_SIZE                      (0x000000FFU)
+#define SDL_ICSSM1_PDSP0_U_BASE_END                  (SDL_ICSS_M_ICSSM_1_PR1_PDSP0_IRAM_U_BASE+SDL_ICSSM1_PDSP0_U_SIZE)
+
+#define SDL_ICSSM1_PDSP1_U_BASE                      (SDL_ICSS_M_ICSSM_1_PR1_PDSP1_IRAM_U_BASE)
+#define SDL_ICSSM1_PDSP1_U_SIZE                      (0x000000FFU)
+#define SDL_ICSSM1_PDSP1_U_BASE_END                  (SDL_ICSS_M_ICSSM_1_PR1_PDSP1_IRAM_U_BASE+SDL_ICSSM1_PDSP1_U_SIZE)
+
+#define SDL_ICSSM1_S_BASE                            (SDL_ICSS_M_ICSSM_1_PR1_CFG_SLV_U_BASE)
+#define SDL_ICSSM1_S_SIZE                            (0x000000FFU)
+#define SDL_ICSSM1_S_BASE_END                        (SDL_ICSS_M_ICSSM_1_PR1_CFG_SLV_U_BASE+SDL_ICSSM1_S_SIZE)
+
+#define SDL_DAP_U_BASE                              (0x48000000U)
+#define SDL_DAP_U_BASE_END                          (0x4803FFFFU-8U)
+
 /* Macro defines Ecc Bus Safety Nodes in the MSS Subsystem */
-#define SDL_ECC_BUS_SAFETY_MSS_MBOX            0U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD      1U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD      2U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD     3U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD     4U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD     5U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD     6U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S      7U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S      8U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S      9U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S      10U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR      11U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR      12U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR      13U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB        14U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB        15U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AHB        16U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AHB        17U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR     18U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR     19U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_WR     20U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR     21U
-#define SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP      22U
-#define SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP      23U
-#define SDL_ECC_BUS_SAFETY_MSS_QSPI            24U
-#define SDL_ECC_BUS_SAFETY_MSS_CPSW            25U
-#define SDL_ECC_BUS_SAFETY_MSS_MCRC            26U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_A            27U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_B            28U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_C            29U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_D            30U
-#define SDL_ECC_BUS_SAFETY_MSS_SCRP            31U
-#define SDL_ECC_BUS_SAFETY_MSS_DAP             32U
-#define SDL_ECC_BUS_SAFETY_MSS_MMC             33U
-#define SDL_ECC_BUS_SAFETY_MSS_SCRP0           35U
-#define SDL_ECC_BUS_SAFETY_MSS_SCRP1           36U
-#define SDL_ECC_BUS_SAFETY_ICSSM_PDSP0         37U
-#define SDL_ECC_BUS_SAFETY_ICSSM_PDSP1         38U
-#define SDL_ECC_BUS_SAFETY_ICSSM_S             39U
-#define SDL_ECC_BUS_SAFETY_DAP                 40U
-#define SDL_ECC_BUS_SAFETY_MSS_STM_STIM        41U
+
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD            0U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD            1U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR            2U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR            3U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S             4U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S             5U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD             6U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD             7U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR             8U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR             9U
+#define SDL_ECC_BUS_SAFETY_MSS_CPSW                   10U
+#define SDL_ECC_BUS_SAFETY_DAP                        11U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_A                   12U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_B                   13U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_C                   14U
+#define SDL_ECC_BUS_SAFETY_MSS_MBOX                   15U
+#define SDL_ECC_BUS_SAFETY_MSS_STM_STIM               16U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC0_RD           17U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC1_RD           18U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC0_WR           19U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC1_WR           20U
+#define SDL_ECC_BUS_SAFETY_MSS_OSPI0                  21U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_DTHE               22U
+#define SDL_ECC_BUS_SAFETY_MSS_MMC                    23U
+#define SDL_ECC_BUS_SAFETY_MSS_SCRP0                  24U
+#define SDL_ECC_BUS_SAFETY_MSS_SCRP1                  25U
+#define SDL_ECC_BUS_SAFETY_MSS_MCRC                   26U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB               27U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB               28U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_M                  29U
+#define SDL_ECC_BUS_SAFETY_MSS_HSM_S                  30U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S               31U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0           32U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1           33U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0           35U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1           36U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S               37U
+#define SDL_ECC_BUS_SAFETY_MSS_USBSS_RD               38U
+#define SDL_ECC_BUS_SAFETY_MSS_USBSS_WR               39U
+#define SDL_ECC_BUS_SAFETY_MSS_GPMC0                  40U
+#define SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP             41U
+#define SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP             42U
 
 #ifdef _cplusplus
 }

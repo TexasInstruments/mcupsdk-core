@@ -10,7 +10,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=sdl.am261x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=sdl.am261x.r5fss0-1.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     sdl_dpl.c \
@@ -36,8 +36,6 @@ FILES_common := \
     sdl_pbist_soc.c \
     sdl_pbist.c \
     sdl_ecc_bus_safety.c \
-    sdl_ccm.c \
-    sdl_mcu_armss_ccmr5.c \
     sdl_stc_soc.c \
     sdl_tmu_rom_checksum.c \
     sdl_r5f_utils.c \
@@ -97,7 +95,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM261X \
-    -DSUBSYS_R5SS0 \
+    -DSUBSYS_R5SS0_1 \
     -DSUBSYS_MSS \
 
 CFLAGS_common := \
@@ -150,7 +148,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/sdl/
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5fss0-1/sdl/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

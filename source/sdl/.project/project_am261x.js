@@ -2,7 +2,7 @@ let path = require('path');
 
 let device = "am261x";
 
-const files_r5f = {
+const files_r5fss0_0 = {
     common: [
         "sdl_dpl.c",
 		"sdl_ip_esm.c",
@@ -42,14 +42,43 @@ const files_r5f = {
     ],
 };
 
-const files_r5fss1 = {
+const files_r5fss0_1 = {
     common: [
-      "sdl_dpl.c",
-      "sdl_ip_pbist.c",
-      "sdl_pbist_soc.c",
-      "sdl_pbist.c",
+        "sdl_dpl.c",
+		"sdl_ip_esm.c",
+        "sdl_esm.c",
+        "sdl_esm_core.c",
+        "sdl_esm_priv.c",
+	    "sdl_dcc.c",
+	    "sdl_mcrc.c",
+	    "sdl_ip_mcrc.c",
+	    "sdl_mcrc_soc.c",
+	    "sdl_rti.c",
+	    "sdl_ip_rti.c",
+	    "sdl_soc_rti.c",
+		"sdl_ecc.c",
+		"sdl_ip_ecc.c",
+		"sdl_ecc_r5.c",
+		"sdl_interrupt.c",
+		"sdl_interrupt_handlers.c",
+		"sdl_interrupt_register.c",
+		"sdl_exception.c",
+        "sdl_ip_pbist.c",
+        "sdl_pbist_soc.c",
+        "sdl_pbist.c",
+        "sdl_ecc_bus_safety.c",
+        "sdl_stc_soc.c",
+        "sdl_tmu_rom_checksum.c",
+        "sdl_r5f_utils.c",
+        "sdl_ip_tog.c",
+        "sdl_tog.c",
+        "sdl_soc_tog.c",
+        "sdl_ip_vtm.c",
+        "sdl_vtm_pvt_sensor.c",
+        "sdl_vtm.c",
+        "sdl_soc_vtm.c",
     ],
-  };
+};
 
 const asmfiles_r5f = {
     common: [
@@ -99,16 +128,17 @@ const filedirs = {
     ],
 };
 
-const defines_r5f = {
+const defines_r5fss0_0 = {
     common: [
         "SUBSYS_R5SS0",
         "SUBSYS_MSS",
     ],
 };
 
-const defines_r5fss1 = {
+const defines_r5fss0_1 = {
     common: [
-        "SUBSYS_R5SS1",
+        "SUBSYS_R5SS0_1",
+        "SUBSYS_MSS",
     ],
 };
 
@@ -119,8 +149,8 @@ const cflags_r5f = {
 };
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: device, cpu: "r5fss1", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {
@@ -139,16 +169,18 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
-    if(buildOption.cpu.match(/r5f*/)) {
-        build_property.files = files_r5f;
+    if(buildOption.cpu.match(/r5fss0-0/)) {
+        build_property.files = files_r5fss0_0;
         build_property.asmfiles = asmfiles_r5f;
         build_property.cflags = cflags_r5f;
-      build_property.defines = defines_r5f;
+        build_property.defines = defines_r5fss0_0;
     }
 
-    if(buildOption.cpu.match(/r5fss1*/)){
-        build_property.files = files_r5fss1;
-        build_property.defines = defines_r5fss1;
+    if(buildOption.cpu.match(/r5fss0-1/)) {
+        build_property.files = files_r5fss0_1;
+        build_property.asmfiles = asmfiles_r5f;
+        build_property.cflags = cflags_r5f;
+        build_property.defines = defines_r5fss0_1;
     }
 
     return build_property;
@@ -157,5 +189,4 @@ function getComponentBuildProperty(buildOption) {
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
-
 };

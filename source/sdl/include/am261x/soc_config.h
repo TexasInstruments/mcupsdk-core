@@ -41,7 +41,7 @@ extern "C"
 
 #include <sdl/include/am261x/sdlr_mss_ctrl.h>
 #include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
-#include <sdl/include/am261x/sdlr_intr_r5fss1_core0.h>
+#include <sdl/include/am261x/sdlr_intr_r5fss0_core1.h>
 #include <sdl/include/am261x/sdlr_soc_baseaddress.h>
 
 /* IP versions */

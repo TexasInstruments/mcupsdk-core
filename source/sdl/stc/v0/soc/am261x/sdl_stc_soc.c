@@ -62,14 +62,9 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 
     if (instance < SDL_STC_INVALID_INSTANCE)
     {
-        if(instance == SDL_STC_INST_MAINR5F0)
-        {
-            stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_STATUS, SDL_MSS_STC_RESET);
-        }
-        else
-        {
-            stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS1_RST_STATUS, SDL_MSS_STC_RESET);
-        }
+
+        stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_STATUS, SDL_MSS_STC_RESET);
+
             /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];
 
@@ -217,16 +212,8 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
         /* Configure this Register for R5F to be in low power mode (WFI)mode*/
         /* Provide override WFI signal to STC indicating processor idle state*/
 
-        if(instance ==SDL_STC_INST_MAINR5F0 )
-        {
-            HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_FORCE_WFI ,SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE,
-                    SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
-        }
-        else
-        {
-            HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS1_FORCE_WFI ,SDL_MSS_CTRL_R5SS1_FORCE_WFI_CR5_WFI_OVERIDE,
-                    SDL_MSS_CTRL_R5SS1_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
-        }
+        HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_FORCE_WFI ,SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE,
+                SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
 
         /* run asm( "nop") opration for delay*/
         (void)SDL_STC_delay(count);
@@ -247,10 +234,6 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
 static void SDL_STC_resetCauseClearR5F0(void)
 {
     HW_WR_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_CAUSE_CLR, SDL_MSS_STC_RESET_CLEAR, SDL_MSS_STC_RESET_CLEAR_ENABLE);
-}
-static void SDL_STC_resetCauseClearR5F1(void)
-{
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS1_RST_CAUSE_CLR, SDL_MSS_STC_RESET_CLEAR, SDL_MSS_STC_RESET_CLEAR_ENABLE);
 }
 
 /********************************************************************************************************
@@ -284,14 +267,7 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL
 
     if(instance < SDL_STC_INVALID_INSTANCE)
     {
-        if(instance==SDL_STC_INST_MAINR5F0)
-        {
-            SDL_STC_resetCauseClearR5F0();
-        }
-        else
-        {
-            SDL_STC_resetCauseClearR5F1();
-        }
+        SDL_STC_resetCauseClearR5F0();
     }
     else
     {
