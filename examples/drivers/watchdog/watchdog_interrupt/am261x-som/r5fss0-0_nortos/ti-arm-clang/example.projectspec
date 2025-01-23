@@ -73,7 +73,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.debug.lib
                 -lboard.am261x.r5f.ti-arm-clang.debug.lib
-                -lsdl.am261x.r5f.ti-arm-clang.debug.lib
+                -lsdl.am261x.r5fss0-0.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -86,7 +86,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.release.lib
                 -lboard.am261x.r5f.ti-arm-clang.release.lib
-                -lsdl.am261x.r5f.ti-arm-clang.release.lib
+                -lsdl.am261x.r5fss0-0.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
