@@ -66,6 +66,8 @@ extern "C" {
  *  address (offset) and data can be done in single I2C operation
  */
 #define EEPROM_PAGE_SIZE                (256U)
+#define TEST_COMMIT_GITHUB
+
 /**
  *  \brief Temp write buffer to hold address offset and data for page write
  *  operation - 2 bytes for offset and remaining for one page data
