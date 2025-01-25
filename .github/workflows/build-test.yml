@@ -1,0 +1,97 @@
+name: Build Test
+
+env:
+  PR_NUMBER: ${{ github.event.number }}
+  
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the $default-branch branch
+  push:
+    branches: [ "next", "next_stage" ]
+  pull_request:
+    branches: [ "next", "next_stage" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# This workflow contains a build jobs for all the SOCs in the repo
+jobs:
+
+   #AM243 build 
+  build_am64x:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+        with:
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: 'pr_checkout'
+
+      # Runs a single command using the runners shell
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am64x
+
+
+  #AM243 build 
+  build_am243x:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'pr_checkout'
+
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am243x
+          
+  #AM263 build 
+  build_am263x:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'pr_checkout'
+
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am263x
+         
+  #AM263P build 
+  build_am263px:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'pr_checkout'
+
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am263px
+
+  #AM273 build
+  build_am273x:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'pr_checkout'
+
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am273x
