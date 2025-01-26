@@ -1,0 +1,37 @@
+name: 'Commit Message Check'
+on:
+  push:
+    branches: [ "next", "next_stage" ]
+  pull_request:
+    branches: [ "next", "next_stage" ]
+
+jobs:
+  check-commit-message:
+    name: Check Commit Message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Title
+        uses: gsactions/commit-message-checker@v2
+        with:
+          pattern: '[a-z0-9/].*: .*: .*$'
+          flags: 'gm'
+          error: 'Your first line has to contain a soc and module like "am64x: i2c: add support for intr priority".'
+          checkAllCommitMessages: 'true' 
+          excludeDescription: 'true'
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Line Length
+        uses: gsactions/commit-message-checker@v2
+        with:
+          pattern: '^[^#].{5,72}$'
+          error: 'The maximum line length of 72 characters is exceeded.'
+          excludeDescription: 'true'
+          checkAllCommitMessages: 'true' 
+          accessToken: ${{ secrets.GITHUB_TOKEN }} 
+      - name: Check for Fixes
+        uses: gsactions/commit-message-checker@v2
+        with:
+          pattern: 'Fixes: [A-Z\-_]*-\d*(, [A-Z\-_]*-\d*)*'
+          error: 'You need at mention fixes like "Fixes: SITSW-1234" line.'
+          excludeTitle: 'true' 
+          checkAllCommitMessages: 'true' 
+          accessToken: ${{ secrets.GITHUB_TOKEN }} 
