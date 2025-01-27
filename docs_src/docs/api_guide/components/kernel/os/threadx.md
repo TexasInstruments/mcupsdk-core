@@ -1,3 +1,4 @@
+\cond THREADX
 # ThreadX {#KERNEL_THREADX}
 
 [TOC]
@@ -27,3 +28,4 @@ For the full ThreadX API reference, please refer to the below table.
     <td>Complete documentation of the ThreadX kernel and API references
 </tr>
 </table>
+\endcond THREADX

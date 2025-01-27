@@ -1,3 +1,4 @@
+\cond THREADX
 # Enet NetxDuo CPSW Mac Example{#EXAMPLES_ENET_NETXDUO_CPSW_MAC}
 
 [TOC]
@@ -217,3 +218,4 @@ Primary Interface IP is: 192.168.1.100
 
 # See Also
 \ref NETWORKING
+\endcond

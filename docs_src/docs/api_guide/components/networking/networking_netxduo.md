@@ -1,3 +1,4 @@
+\cond THREADX
 # NetxDuo {#NETWORKING_NETXDUO}
 
 [TOC]
@@ -30,3 +31,4 @@ For the full NetxDuo documentation, please refer to the below table.
     <td>Complete documentation of the NetxDuo TCP/IP network stack and API references
 </tr>
 </table>
+\endcond

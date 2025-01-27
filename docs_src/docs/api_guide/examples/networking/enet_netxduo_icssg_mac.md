@@ -1,3 +1,4 @@
+\cond THREADX
 # Enet NetxDuo ICSSG Mac Example{#EXAMPLES_ENET_NETXDUO_ICSSG_MAC}
 
 [TOC]
@@ -211,3 +212,4 @@ Local Interface IP is: 192.168.1.100
 
 # See Also
 \ref NETWORKING
+\endcond

@@ -138,7 +138,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 
 ### TCP/IP Stack
 - \subpage NETWORKING_LWIP
-\cond SOC_AM243X
+\cond SOC_AM243X && THREADX
 - \subpage NETWORKING_NETXDUO
 \endcond
 

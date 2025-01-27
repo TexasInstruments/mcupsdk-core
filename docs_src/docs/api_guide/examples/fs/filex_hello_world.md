@@ -1,3 +1,4 @@
+\cond THREADX
 # FileX Hello World Example {#EXAMPLES_FS_FILEX_HELLO_WORLD}
 
 [TOC]
@@ -41,3 +42,4 @@ A test file is created (or truncated if it already exists). A buffer with some k
 [FILEX HELLO WORLD] Hello world example started...
 All tests have passed!!
 \endcode
+\endcond

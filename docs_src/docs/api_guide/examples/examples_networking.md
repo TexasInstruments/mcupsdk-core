@@ -28,6 +28,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG
+\cond THREADX
 ### TCP/IP Examples using NetxDuo Stack on ThreadX
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_MAC
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_SWITCH
@@ -36,6 +37,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT
+\endcond
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 ### Enet TSN Examples on FreeRTOS
