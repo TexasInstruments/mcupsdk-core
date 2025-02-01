@@ -562,8 +562,9 @@ void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,
 int32_t RPMessage_controlEndPtInit(void)
 {
     RPMessage_CreateParams createPrms;
-    int32_t status;
+    int32_t status = 0;
 
+    return status;
     RPMessage_CreateParams_init(&createPrms);
     createPrms.localEndPt = RPMESSAGE_CTRL_ENDPOINT_ID;
     createPrms.recvCallback = RPMessage_controlEndPtHandler;

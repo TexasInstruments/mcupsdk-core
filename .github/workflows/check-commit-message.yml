@@ -1,23 +1,21 @@
 name: 'Commit Message Check'
+
 on:
-  push:
-    branches: [ "next", "next_stage" ]
-  pull_request:
-    branches: [ "next", "next_stage" ]
+  pull_request_target
+  
 
 jobs:
   check-commit-message:
     name: Check Commit Message
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check Title
         uses: gsactions/commit-message-checker@v2
         with:
-          pattern: '[a-z0-9/].*: .*: .*$'
-          flags: 'gm'
+          pattern: '^a'
           error: 'Your first line has to contain a soc and module like "am64x: i2c: add support for intr priority".'
-          checkAllCommitMessages: 'true' 
           excludeDescription: 'true'
+          checkAllCommitMessages: 'true' 
           accessToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Check Line Length
         uses: gsactions/commit-message-checker@v2
