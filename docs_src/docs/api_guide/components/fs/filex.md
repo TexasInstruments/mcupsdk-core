@@ -1,3 +1,4 @@
+\cond THREADX
 # FileX {#FS_FILEX}
 
 [TOC]
@@ -28,3 +29,4 @@ For the full FileX documentation, please refer to the below table.
     <td>Complete documentation of the FileX file system and API references
 </tr>
 </table>
+\endcond
