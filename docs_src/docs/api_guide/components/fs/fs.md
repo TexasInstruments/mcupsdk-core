@@ -12,7 +12,7 @@ It consists of below sub-modules
 - \subpage FS_FREERTOS_FAT
 - \subpage FS_LITTLEFS
 \endcond
-\cond SOC_AM243X
+\cond SOC_AM243X && THREADX
 - \subpage FS_FILEX
 \endcond
 \cond SOC_AM65X

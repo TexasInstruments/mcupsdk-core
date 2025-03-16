@@ -11,6 +11,6 @@ It consists of below sub-modules
 \cond SOC_AWR294X
 - \subpage KERNEL_SAFERTOS_PAGE
 \endcond
-\cond SOC_AM243X
+\cond SOC_AM243X && THREADX
 - \subpage KERNEL_THREADX
 \endcond
