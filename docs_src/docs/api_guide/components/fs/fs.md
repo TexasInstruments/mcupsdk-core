@@ -8,9 +8,15 @@ This module contains the details of the different file systems supported in this
 
 It consists of below sub-modules
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
 - \subpage FS_FREERTOS_FAT
 - \subpage FS_LITTLEFS
+\endcond
+\cond SOC_AM243X
+- \subpage FS_LITTLEFS
+\cond FREERTOS
+- \subpage FS_FREERTOS_FAT
+\endcond
 \endcond
 \cond SOC_AM243X && THREADX
 - \subpage FS_FILEX

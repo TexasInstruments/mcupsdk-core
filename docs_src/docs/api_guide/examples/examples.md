@@ -26,7 +26,9 @@ This page lists all the examples and demos supported in this SDK.
 \endcond
 
 \cond SOC_AM243X
+\cond THREADX
 -# \subpage EXAMPLES_FS
+\endcond
 -# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
 \endcond
 

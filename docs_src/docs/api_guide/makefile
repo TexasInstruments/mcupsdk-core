@@ -7,6 +7,7 @@ export DEVICE ?= am64x
 export API_GUIDE_OUT_DIR=$(MCU_PLUS_SDK_PATH)/docs/api_guide_$(DEVICE)
 
 all:
+	python rtos_doc_config_checker.py
 	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_$(DOC_COMBO)
 	$(MKDIR) $(API_GUIDE_OUT_DIR)
 	$(DOXYGEN) doxygen.cfg 2> doxy_warnings_$(DEVICE).txt

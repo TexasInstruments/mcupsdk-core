@@ -1,0 +1,47 @@
+{"device": {
+    "am243x": {
+        "threadx" : {
+          "enabled_sections_tag" : "THREADX",
+          "includes" : {
+              "files" : ["networking_netxduo.md"],
+              "cfg" : "includes.cfg"
+          },
+          "components": {
+              "os" : {
+                "files" : ["threadx.md"],
+                "cfg" : "os.cfg"
+              },           
+              "fs" : {
+                "files" : ["filex.md"],
+                "cfg" : "fs.cfg"
+              }
+          },
+          "examples" : {
+               "files" : ["threadx_hello_world.md", "threadx_task_switch.md", "filex_hello_world.md", "enet_netxduo_cpsw_mac.md", "enet_netxduo_cpsw_switch.md", "enet_netxduo_icssg_mac.md", "enet_netxduo_icssg_switch.md", "enet_netxduo_cpsw_tcpclient.md", "enet_netxduo_cpsw_tcpserver.md", "enet_netxduo_cpsw_udpclient.md" ],
+               "cfg" : "examples.cfg"
+          }
+       },
+       "freertos" : {
+          "enabled_sections_tag" : "FREERTOS",
+          "includes" : {
+              "files" : [],
+              "cfg" : "includes.cfg"
+          },
+          "components": {
+              "os" : {
+                "files" : ["freertos.md","freertos_important_guidelines.md"],
+                "cfg" : "os.cfg"
+              },
+            "fs" : {
+                "files" : ["freertos_fat.md"],
+                "cfg" : "fs.cfg"
+              }
+          },
+          "examples" : {
+            "files" : ["sbl_sd.md","freertos_task_switch.md","freertos_posix.md","freertos_interrupt_profiling.md"],
+            "cfg" : "examples.cfg"
+          }
+      }
+    }
+  }
+}
