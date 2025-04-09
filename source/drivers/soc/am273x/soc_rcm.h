@@ -598,6 +598,13 @@ int32_t SOC_rcmSetDspClock(SOC_RcmDspClockSource clkSource, uint32_t freqHz);
 uint32_t SOC_rcmGetDspClock(void);
 
 /**
+ *  \brief Get DSS_CM4 frequency
+ *
+ * \return DSS_CM4 frequency, in Hz
+ */
+uint64_t SOC_rcmGetDssCm4Clock(void);
+
+/**
  *  \brief Set peripheral frequency
  *
  * \param periphId [in] Peripheral ID
@@ -695,6 +702,11 @@ void SOC_rcmMemInitMssMailboxMemory(void);
  *  \brief Initialize the DSS mailbox memory
  */
 void SOC_rcmMemInitDssMailboxMemory(void);
+
+/**
+ *  \brief Initialize the DSS CM4 mailbox memory
+ */
+void SOC_rcmMemInitDssCm4MailboxMemory(void);
 
 /**
  *  \brief Start memory initialization for MSS L2

@@ -897,7 +897,7 @@ static uint8_t SOC_rcmReadXtalFreqScale (const CSL_top_ctrlRegs* ptrTopCtrlRegs)
                           SOC_RCM_XTAL_FREQ_SCALE_START_BIT));
 }
 
-static inline CSL_dss_cm4_ctrlRegs* CSL_DSSCM4_getBaseAddress (void)
+static inline CSL_dss_cm4_ctrlRegs* SOC_rcmGetBaseAddressDSSCm4CTRL (void)
 {
     return (CSL_dss_cm4_ctrlRegs*) CSL_DSS_CM4_CTRL_U_BASE;
 }
@@ -3014,6 +3014,13 @@ uint32_t SOC_rcmGetDspClock (void)
     return (freqHz);
 }
 
+uint64_t SOC_rcmGetDssCm4Clock (void)
+{
+    uint64_t freqHz = 0;
+    freqHz = SOC_rcmGetR5Clock()/2;
+    return freqHz;
+}
+
 
 SOC_RcmResetCause SOC_rcmGetResetCause (void)
 {
@@ -3270,6 +3277,13 @@ void SOC_rcmMemInitDssMailboxMemory(void)
     CSL_dss_ctrlRegs *dssCtrl = SOC_rcmGetBaseAddressDSSCTRL();
     CSL_FINS(dssCtrl->DSS_MAILBOX_MEMINIT_START, DSS_CTRL_DSS_MAILBOX_MEMINIT_START_DSS_MAILBOX_MEMINIT_START_MEMINIT_START, 1);
     while (CSL_FEXT(dssCtrl->DSS_MAILBOX_MEMINIT_DONE, DSS_CTRL_DSS_MAILBOX_MEMINIT_DONE_DSS_MAILBOX_MEMINIT_DONE_MEMINIT_DONE) != 1);
+}
+
+void SOC_rcmMemInitDssCm4MailboxMemory(void)
+{
+    CSL_dss_cm4_ctrlRegs *dssCm4Ctrl = SOC_rcmGetBaseAddressDSSCm4CTRL();
+    CSL_FINS(dssCm4Ctrl->HWA_CM4_MBOX_MEMINIT_START, DSS_CM4_CTRL_HWA_CM4_MBOX_MEMINIT_START_HWA_CM4_MBOX_MEMINIT_START_HWA_CM4_MBOX_MEMINIT_START, 1);
+    while (CSL_FEXT(dssCm4Ctrl->HWA_CM4_MBOX_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_MBOX_MEMINIT_DONE_HWA_CM4_MBOX_MEMINIT_DONE_HWA_CM4_MBOX_MEMINIT_DONE) != 1);
 }
 
 void SOC_rcmStartMemInitMSSL2(void)
@@ -3685,7 +3699,7 @@ void SOC_rcmCM4Unhalt(void)
 {
     CSL_dss_cm4_ctrlRegs *ptrDssCm4CtrlRegs;
 
-    ptrDssCm4CtrlRegs = CSL_DSSCM4_getBaseAddress();
+    ptrDssCm4CtrlRegs = SOC_rcmGetBaseAddressDSSCm4CTRL();
 
     /* Unlock DSS_CM4_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);

@@ -42,6 +42,7 @@ typedef enum Utils_mmapMemId_types
     UTILS_MEMID_DSS_L1D,
     UTILS_MEMID_DSS_L1P,
     UTILS_MEMID_MSS_L2,
+    UTILS_MEMID_DSSCM4_RAM,
     UTILS_MEMID_UNKNOWN
 }Utils_mmapMemId_e;
 
@@ -111,6 +112,15 @@ static const Utils_mmapSegmentEntry gMemSegmentTblVirtDSP[] =
     },
 };
 
+static const Utils_mmapSegmentEntry gMemSegmentTblVirtDSSCM4[] =
+{
+    {
+        .baseAddress = 0x00000000,
+        .length      = (64 * 1024),
+        .memId       = UTILS_MEMID_DSSCM4_RAM,
+    },
+};
+
 static const uint32_t gSelfCoreMemAddress[] =
 {
     [UTILS_MEMID_CR5A_TCMA_RAM] = 0x00000000,
@@ -121,6 +131,7 @@ static const uint32_t gSelfCoreMemAddress[] =
     [UTILS_MEMID_DSS_L1D]       = 0x80F00000,
     [UTILS_MEMID_DSS_L1P]       = 0x80E00000,
     [UTILS_MEMID_MSS_L2]        = 0x10200000,
+    [UTILS_MEMID_DSSCM4_RAM]    = 0x28000000,
 };
 
 
@@ -165,6 +176,10 @@ static void Utils_getVirtAddrTblInfo(Utils_mmapSegmentEntry const **tblBase, uin
         case CSL_CORE_ID_C66SS0:
             *tblBase = &gMemSegmentTblVirtDSP[0];
             *tblLen = UTILS_ARRAYSIZE(gMemSegmentTblVirtDSP);
+            break;
+        case CSL_CORE_ID_M4FSS0_1:
+            *tblBase = &gMemSegmentTblVirtDSSCM4[0];
+            *tblLen = UTILS_ARRAYSIZE(gMemSegmentTblVirtDSSCM4);
             break;
     }
 }

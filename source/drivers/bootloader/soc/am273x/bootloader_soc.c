@@ -74,6 +74,10 @@ Bootloader_CoreBootInfo gCoreBootInfo[] =
         .defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_450MHZ,
         .coreName       = "c66ss0",
     },
+    {
+        .defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_200MHZ,
+        .coreName       = "m4f0-1",
+    },
 };
 
 /* list the R5F cluster where this bootloader runs, this is fixed to R5FSS0-0, R5FSS0-1 in this SOC */
@@ -85,6 +89,7 @@ uint32_t gBootloaderSelfCpuList[] = {
 
 uint32_t gR5ss0MemInitDone = FALSE;
 uint32_t gDssMemInitDone = FALSE;
+uint32_t gDssCm4MemInitDone = FALSE;
 uint32_t gR5ss0Core1ImagePresent = FALSE;
 
 uint32_t Bootloader_socCpuGetClkDefault(uint32_t cpuId)
@@ -123,6 +128,10 @@ uint64_t Bootloader_socCpuGetClock(uint32_t cpuId)
     {
         clkRate = SOC_rcmGetDspClock();
     }
+    if (cpuId == CSL_CORE_ID_M4FSS0_1)
+    {
+        clkRate = SOC_rcmGetDssCm4Clock();
+    }
     if (clkRate != 0)
     {
         status = SystemP_SUCCESS;
@@ -155,6 +164,9 @@ int32_t Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz)
             break;
         case CSL_CORE_ID_C66SS0:
             status = SOC_rcmSetDspClock(SOC_RcmDspClockSource_DPLL_DSP_HSDIV0_CLKOUT1, cpuHz);
+            break;
+        case CSL_CORE_ID_M4FSS0_1:
+            status = SystemP_SUCCESS;
             break;
     }
     return status;
@@ -206,6 +218,9 @@ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
             SOC_rcmDspPowerOnReset();
             Bootloader_socMemInitCpu(cpuId);
             break;
+        case CSL_CORE_ID_M4FSS0_1:
+            Bootloader_socMemInitCpu(cpuId);
+            break;
     }
     return status;
 }
@@ -238,6 +253,15 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
                 gDssMemInitDone = TRUE;
             }
             break;
+        case CSL_CORE_ID_M4FSS0_1:
+            if(gDssCm4MemInitDone == FALSE)
+            {
+                SOC_rcmStartMemInitM4Ram();
+                SOC_rcmWaitMeminitM4Ram();
+                SOC_rcmMemInitDssCm4MailboxMemory();
+                gDssCm4MemInitDone = TRUE;
+            }
+            break;
         default:
             break;
     }
@@ -256,6 +280,9 @@ int32_t Bootloader_socCpuResetRelease(uint32_t cpuId, uintptr_t entryPoint)
             break;
         case CSL_CORE_ID_C66SS0:
             SOC_rcmC66xStart();
+            break;
+        case CSL_CORE_ID_M4FSS0_1:
+            SOC_rcmCM4Unhalt();
             break;
         default:
             break;
