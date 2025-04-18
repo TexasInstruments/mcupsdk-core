@@ -37,6 +37,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_HTTPS_SERVER
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_SA2UL_TLS_BENCHMARK
 \endcond
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER

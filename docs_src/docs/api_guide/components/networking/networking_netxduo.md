@@ -16,6 +16,8 @@ In this SDK, NetxDuo is integrated to work with the Enet driver, which can be co
 - \ref EXAMPLES_ENET_NETXDUO_CPSW_TCPCLIENT
 - \ref EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER
 - \ref EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT
+- \ref EXAMPLES_ENET_NETXDUO_CPSW_HTTPS_SERVER
+- \ref EXAMPLES_ENET_NETXDUO_CPSW_SA2UL_TLS_BENCHMARK
 
 For the full NetxDuo documentation, please refer to the below table.
 
