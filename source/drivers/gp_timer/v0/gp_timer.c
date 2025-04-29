@@ -151,7 +151,7 @@
 
 typedef struct
 {
-    void                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Driver lock - to protect across open/close */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
@@ -274,7 +274,6 @@ GPTIMER_Handle GPTIMER_open(uint32_t idx, const GPTIMER_Params *params)
     GPTIMER_Object          *object = NULL;
     GPTIMER_HwAttrs const   *hwAttrs = NULL;
     int32_t                 status = SystemP_SUCCESS;
-    void                    *config = NULL;
 
     /* Check index */
     if(idx >= gGpTimerConfigNum)
@@ -348,34 +347,34 @@ GPTIMER_Handle GPTIMER_open(uint32_t idx, const GPTIMER_Params *params)
         {
             case GPTIMER_MODE_CONFIG_FREE_RUN:
             {
-                config = NULL;
+                status = GPTIMER_setFreeRunMode(handle);
             }
             break;
 
             case GPTIMER_MODE_CONFIG_INPUT_CAPTURE:
             {
-                config = (void *)(&object->captureConfig);
+                GPTIMER_Capture_Config  *config = &object->captureConfig;
+                status = GPTIMER_setIpCaptureMode(handle, config);
             }
             break;
 
             case GPTIMER_MODE_CONFIG_OUTPUT_COMPARE:
             {
-                config = (void *)(&object->compareConfig);
+                GPTIMER_Compare_Config  *config = &object->compareConfig;
+                status = GPTIMER_setOpCompareMode(handle, config);
             }
             break;
 
             case GPTIMER_MODE_CONFIG_PWM_GEN:
             {
-                config = (void *)(&object->pwmConfig);
+                GPTIMER_PWM_Config  *config = &object->pwmConfig;
+                status = GPTIMER_setPWMGenMode(handle, config);
             }
             break;
 
             default:
             break;
         }
-
-
-        status = GPTIMER_setTimerConfigMode(handle, object->timerConfigMode, config);
 
         /* Load timer Counter value TCRR */
         GPTIMER_setCounterVal(hwAttrs->baseAddr,
@@ -522,8 +521,7 @@ uint32_t GPTIMER_getTimerCaptureVal2(GPTIMER_Handle handle)
     return captureVal;
 }
 
-int32_t GPTIMER_setTimerConfigMode( GPTIMER_Handle handle,
-                                    uint32_t timerConfigMode, void *config)
+int32_t GPTIMER_setFreeRunMode( GPTIMER_Handle handle)
 {
     GPTIMER_Object *object = NULL;
     GPTIMER_HwAttrs const *hwAttrs = NULL;
@@ -549,8 +547,93 @@ int32_t GPTIMER_setTimerConfigMode( GPTIMER_Handle handle,
             (void)HwiP_disableInt(hwAttrs->intNum);
         }
 
-        /* Store timer Config Mode */
-        object->timerConfigMode = timerConfigMode;
+        /* Timer Module Initialization ---------------------------------------*/
+
+        /* Execute Software Reset */
+        GPTIMER_softReset(hwAttrs->baseAddr);
+        /* Configure IDLE Mode */
+        GPTIMER_setIdleMode(hwAttrs->baseAddr, TIMER_IDLE_MODE_FORCE_IDLE);
+        /* Select Posted Mode */
+        GPTIMER_setPostedMode(hwAttrs->baseAddr, false);
+
+        /* Timer Mode Configuration ------------------------------------------*/
+        /* Set Auto reload Mode */
+        GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
+                                !(object->gptimerParams.oneShotMode));
+        /* Set Prescalar Timer Value and enable PSC or dont */
+        if(object->gptimerParams.enablePrescaler)
+        {
+            GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntPrescaler);
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
+        }
+        else
+        {
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
+        }
+        /* Load timer Counter value TCRR */
+        GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
+
+        /* If not One Shot Mode */
+        /* Load timer load value TLDR */
+        if(!(object->gptimerParams.oneShotMode))
+        {
+            GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntReloadVal);
+        }
+
+        /* Set Overflow Mask Count */
+        GPTIMER_setOverFlowMaskCount(hwAttrs->baseAddr,
+                            object->gptimerParams.overflowMaskCount);
+        /* Enable overflow interrupt */
+        GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
+                                    TIMER_IRQ_OVF_IT_FLAG_MASK);
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_TCAR_IT_FLAG_MASK);
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_MAT_IT_FLAG_MASK);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            HwiP_enableInt(hwAttrs->intNum);
+        }
+
+        /* Release the lock for this particular GPTIMER handle */
+        (void)SemaphoreP_post(&object->mutex);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t GPTIMER_setIpCaptureMode( GPTIMER_Handle handle, GPTIMER_Capture_Config *config)
+{
+    GPTIMER_Object *object = NULL;
+    GPTIMER_HwAttrs const *hwAttrs = NULL;
+    int32_t status = SystemP_SUCCESS;
+
+    if(handle != NULL)
+    {
+        /* Get the Pointers to the object and attributes */
+        object = (GPTIMER_Object*)handle->object;
+        hwAttrs = (GPTIMER_HwAttrs const *)handle->hwAttrs;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if((status == SystemP_SUCCESS) && (object->isOpen == true))
+    {
+        (void)SemaphoreP_pend(&object->mutex, SystemP_WAIT_FOREVER);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            (void)HwiP_disableInt(hwAttrs->intNum);
+        }
 
         /* Timer Module Initialization ---------------------------------------*/
 
@@ -562,183 +645,229 @@ int32_t GPTIMER_setTimerConfigMode( GPTIMER_Handle handle,
         GPTIMER_setPostedMode(hwAttrs->baseAddr, false);
 
         /* Timer Mode Configuration ------------------------------------------*/
-        switch(object->timerConfigMode)
+        /* Store the new params in driver object */
+        object->captureConfig = (*((GPTIMER_Capture_Config *)config));
+        /* Set Auto reload Mode */
+        GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
+                                !(object->gptimerParams.oneShotMode));
+        /* Set Prescalar Timer Value and enable PSC or dont */
+        if(object->gptimerParams.enablePrescaler)
         {
-            case GPTIMER_MODE_CONFIG_FREE_RUN:
-            {
-                /* Set Auto reload Mode */
-                GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
-                                        !(object->gptimerParams.oneShotMode));
-                /* Set Prescalar Timer Value and enable PSC or dont */
-                if(object->gptimerParams.enablePrescaler)
-                {
-                    GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntPrescaler);
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
-                }
-                else
-                {
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
-                }
-                /* Load timer Counter value TCRR */
-                GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
-
-                /* If not One Shot Mode */
-                /* Load timer load value TLDR */
-                if(!(object->gptimerParams.oneShotMode))
-                {
-                    GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntReloadVal);
-                }
-
-                /* Set Overflow Mask Count */
-                GPTIMER_setOverFlowMaskCount(hwAttrs->baseAddr,
-                                    object->gptimerParams.overflowMaskCount);
-                /* Enable overflow interrupt */
-                GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
-                                           TIMER_IRQ_OVF_IT_FLAG_MASK);
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_TCAR_IT_FLAG_MASK);
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_MAT_IT_FLAG_MASK);
-            }
-            break;
-
-            case GPTIMER_MODE_CONFIG_INPUT_CAPTURE:
-            {
-                /* Store the new params in driver object */
-                object->captureConfig = (*((GPTIMER_Capture_Config *)config));
-                /* Set Auto reload Mode */
-                GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
-                                        !(object->gptimerParams.oneShotMode));
-                /* Set Prescalar Timer Value and enable PSC or dont */
-                if(object->gptimerParams.enablePrescaler)
-                {
-                    GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntPrescaler);
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
-                }
-                else
-                {
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
-                }
-
-                if(!(object->gptimerParams.oneShotMode))
-                {
-                    GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntReloadVal);
-                }
-                /* Set GPO_CFG bit for input */
-                GPTIMER_setGPOConfig(hwAttrs->baseAddr, 1U);
-                /* Set Capture Mode CAPT_MODE */
-                GPTIMER_setCAPTMode(hwAttrs->baseAddr,
-                                    object->captureConfig.captureMode);
-                /* Set Transition Capture Mode TCM */
-                GPTIMER_setTranCaptureMode(hwAttrs->baseAddr,
-                                    object->captureConfig.captureEventMode);
-                /* Enable Capture Interrupt */
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_OVF_IT_FLAG_MASK);
-                GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
-                                           TIMER_IRQ_TCAR_IT_FLAG_MASK);
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_MAT_IT_FLAG_MASK);
-            }
-            break;
-
-            case GPTIMER_MODE_CONFIG_OUTPUT_COMPARE:
-            {
-                /* Store the new params in driver object */
-                object->compareConfig = (*((GPTIMER_Compare_Config *)config));
-                /* Set Auto reload Mode */
-                GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
-                                        !(object->gptimerParams.oneShotMode));
-                /* Set Prescalar Timer Value and enable PSC or dont */
-                if(object->gptimerParams.enablePrescaler)
-                {
-                    GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntPrescaler);
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
-                }
-                else
-                {
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
-                }
-                /* Load timer Counter Value TCRR */
-                GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
-                /* Load timer Compare Value TMAR */
-                GPTIMER_setTimerCompareVal(hwAttrs->baseAddr,
-                                    object->compareConfig.cntCompareValComp);
-                /* Enable Compare Mode */
-                GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
-                /* Enable Match interrupt */
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_OVF_IT_FLAG_MASK);
-                GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
-                                             TIMER_IRQ_TCAR_IT_FLAG_MASK);
-                GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
-                                           TIMER_IRQ_MAT_IT_FLAG_MASK);
-            }
-            break;
-
-            case GPTIMER_MODE_CONFIG_PWM_GEN:
-            {
-                /* Store the new params in driver object */
-                object->pwmConfig = (*((GPTIMER_PWM_Config *)config));
-                /* Set Auto reload Mode */
-                GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
-                                        !(object->gptimerParams.oneShotMode));
-                /* Set Prescalar Timer Value and enable PSC or dont */
-                if(object->gptimerParams.enablePrescaler)
-                {
-                    GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntPrescaler);
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
-                }
-                else
-                {
-                    GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
-                }
-
-                if(!(object->gptimerParams.oneShotMode))
-                {
-                    GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
-                                        object->gptimerParams.cntReloadVal);
-                }
-                /* Select Trigger output mode TRG */
-                GPTIMER_setPWMTrigOutputMode(hwAttrs->baseAddr,
-                                        object->pwmConfig.trigOutputPWMMode);
-                /* Enable CE(Compare Enable Bit if trig mode is Compare and Overflow) */
-                if(object->pwmConfig.trigOutputPWMMode ==
-                                    GPTIMER_PWM_OUT_OVERFLOW_MATCH_TRIGGER)
-                {
-                    GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
-                }
-                else
-                {
-                    GPTIMER_setCompareEnableState(hwAttrs->baseAddr, false);
-                }
-                /* Select PWM mode pulse or toggle PT */
-                GPTIMER_setModulationMode(hwAttrs->baseAddr,
-                                        object->pwmConfig.outputModulationType);
-                /* Set GPO_CFG bit for pwm output */
-                GPTIMER_setGPOConfig(hwAttrs->baseAddr, 0U);
-                /* Configure PWM output pin default Value */
-                GPTIMER_pwmOutDefaultSetting(hwAttrs->baseAddr,
-                                        object->pwmConfig.defaultPWMOutSetting);
-                /* Load timer Counter Value TCRR */
-                GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
-                /* Load timer Compare Value TMAR */
-                GPTIMER_setTimerCompareVal(hwAttrs->baseAddr,
-                                        object->pwmConfig.cntCompareValPWM);
-                /* Enable Comapare */
-                GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
-            }
-            break;
-
-            default:
-            break;
+            GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntPrescaler);
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
         }
+        else
+        {
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
+        }
+
+        if(!(object->gptimerParams.oneShotMode))
+        {
+            GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntReloadVal);
+        }
+        /* Set GPO_CFG bit for input */
+        GPTIMER_setGPOConfig(hwAttrs->baseAddr, 1U);
+        /* Set Capture Mode CAPT_MODE */
+        GPTIMER_setCAPTMode(hwAttrs->baseAddr,
+                            object->captureConfig.captureMode);
+        /* Set Transition Capture Mode TCM */
+        GPTIMER_setTranCaptureMode(hwAttrs->baseAddr,
+                            object->captureConfig.captureEventMode);
+        /* Enable Capture Interrupt */
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_OVF_IT_FLAG_MASK);
+        GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
+                                    TIMER_IRQ_TCAR_IT_FLAG_MASK);
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_MAT_IT_FLAG_MASK);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            HwiP_enableInt(hwAttrs->intNum);
+        }
+
+        /* Release the lock for this particular GPTIMER handle */
+        (void)SemaphoreP_post(&object->mutex);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t GPTIMER_setOpCompareMode( GPTIMER_Handle handle, GPTIMER_Compare_Config *config)
+{
+    GPTIMER_Object *object = NULL;
+    GPTIMER_HwAttrs const *hwAttrs = NULL;
+    int32_t status = SystemP_SUCCESS;
+
+    if(handle != NULL)
+    {
+        /* Get the Pointers to the object and attributes */
+        object = (GPTIMER_Object*)handle->object;
+        hwAttrs = (GPTIMER_HwAttrs const *)handle->hwAttrs;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if((status == SystemP_SUCCESS) && (object->isOpen == true))
+    {
+        (void)SemaphoreP_pend(&object->mutex, SystemP_WAIT_FOREVER);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            (void)HwiP_disableInt(hwAttrs->intNum);
+        }
+
+        /* Timer Module Initialization ---------------------------------------*/
+
+        /* Execute Software Reset */
+        GPTIMER_softReset(hwAttrs->baseAddr);
+        /* Configure IDLE Mode */
+        GPTIMER_setIdleMode(hwAttrs->baseAddr, TIMER_IDLE_MODE_FORCE_IDLE);
+        /* Select Posted Mode */
+        GPTIMER_setPostedMode(hwAttrs->baseAddr, false);
+
+        /* Timer Mode Configuration ------------------------------------------*/
+        /* Store the new params in driver object */
+        object->compareConfig = (*((GPTIMER_Compare_Config *)config));
+        /* Set Auto reload Mode */
+        GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
+                                !(object->gptimerParams.oneShotMode));
+        /* Set Prescalar Timer Value and enable PSC or dont */
+        if(object->gptimerParams.enablePrescaler)
+        {
+            GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntPrescaler);
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
+        }
+        else
+        {
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
+        }
+        /* Load timer Counter Value TCRR */
+        GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
+        /* Load timer Compare Value TMAR */
+        GPTIMER_setTimerCompareVal(hwAttrs->baseAddr,
+                            object->compareConfig.cntCompareValComp);
+        /* Enable Compare Mode */
+        GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
+        /* Enable Match interrupt */
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_OVF_IT_FLAG_MASK);
+        GPTIMER_clearIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_TCAR_IT_FLAG_MASK);
+        GPTIMER_setIRQStatusEnable(hwAttrs->baseAddr,
+                                        TIMER_IRQ_MAT_IT_FLAG_MASK);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            HwiP_enableInt(hwAttrs->intNum);
+        }
+
+        /* Release the lock for this particular GPTIMER handle */
+        (void)SemaphoreP_post(&object->mutex);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t GPTIMER_setPWMGenMode( GPTIMER_Handle handle, GPTIMER_PWM_Config *config)
+{
+    GPTIMER_Object *object = NULL;
+    GPTIMER_HwAttrs const *hwAttrs = NULL;
+    int32_t status = SystemP_SUCCESS;
+
+    if(handle != NULL)
+    {
+        /* Get the Pointers to the object and attributes */
+        object = (GPTIMER_Object*)handle->object;
+        hwAttrs = (GPTIMER_HwAttrs const *)handle->hwAttrs;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if((status == SystemP_SUCCESS) && (object->isOpen == true))
+    {
+        (void)SemaphoreP_pend(&object->mutex, SystemP_WAIT_FOREVER);
+
+        if (hwAttrs->enableIntr == true)
+        {
+            (void)HwiP_disableInt(hwAttrs->intNum);
+        }
+
+        /* Timer Module Initialization ---------------------------------------*/
+
+        /* Execute Software Reset */
+        GPTIMER_softReset(hwAttrs->baseAddr);
+        /* Configure IDLE Mode */
+        GPTIMER_setIdleMode(hwAttrs->baseAddr, TIMER_IDLE_MODE_FORCE_IDLE);
+        /* Select Posted Mode */
+        GPTIMER_setPostedMode(hwAttrs->baseAddr, false);
+
+        /* Timer Mode Configuration ------------------------------------------*/
+        /* Store the new params in driver object */
+        object->pwmConfig = (*((GPTIMER_PWM_Config *)config));
+        /* Set Auto reload Mode */
+        GPTIMER_setAutoReloadEnableState(hwAttrs->baseAddr,
+                                !(object->gptimerParams.oneShotMode));
+        /* Set Prescalar Timer Value and enable PSC or dont */
+        if(object->gptimerParams.enablePrescaler)
+        {
+            GPTIMER_setPrescalerClockTimerVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntPrescaler);
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, true);
+        }
+        else
+        {
+            GPTIMER_setPrescalerEnableState(hwAttrs->baseAddr, false);
+        }
+
+        if(!(object->gptimerParams.oneShotMode))
+        {
+            GPTIMER_setTimerLoadVal(hwAttrs->baseAddr,
+                                object->gptimerParams.cntReloadVal);
+        }
+        /* Select Trigger output mode TRG */
+        GPTIMER_setPWMTrigOutputMode(hwAttrs->baseAddr,
+                                object->pwmConfig.trigOutputPWMMode);
+        /* Enable CE(Compare Enable Bit if trig mode is Compare and Overflow) */
+        if(object->pwmConfig.trigOutputPWMMode ==
+                            GPTIMER_PWM_OUT_OVERFLOW_MATCH_TRIGGER)
+        {
+            GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
+        }
+        else
+        {
+            GPTIMER_setCompareEnableState(hwAttrs->baseAddr, false);
+        }
+        /* Select PWM mode pulse or toggle PT */
+        GPTIMER_setModulationMode(hwAttrs->baseAddr,
+                                object->pwmConfig.outputModulationType);
+        /* Set GPO_CFG bit for pwm output */
+        GPTIMER_setGPOConfig(hwAttrs->baseAddr, 0U);
+        /* Configure PWM output pin default Value */
+        GPTIMER_pwmOutDefaultSetting(hwAttrs->baseAddr,
+                                object->pwmConfig.defaultPWMOutSetting);
+        /* Load timer Counter Value TCRR */
+        GPTIMER_setCounterVal(hwAttrs->baseAddr, 0U);
+        /* Load timer Compare Value TMAR */
+        GPTIMER_setTimerCompareVal(hwAttrs->baseAddr,
+                                object->pwmConfig.cntCompareValPWM);
+        /* Enable Comapare */
+        GPTIMER_setCompareEnableState(hwAttrs->baseAddr, true);
 
         if (hwAttrs->enableIntr == true)
         {

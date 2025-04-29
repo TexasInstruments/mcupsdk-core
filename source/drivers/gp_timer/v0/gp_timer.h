@@ -463,17 +463,46 @@ uint32_t GPTIMER_getTimerCaptureVal1(GPTIMER_Handle handle);
 uint32_t GPTIMER_getTimerCaptureVal2(GPTIMER_Handle handle);
 
 /**
- * \brief Change Timer Configuration
+ * \brief Change Timer Configuration to freerun mode
  *
  * \param handle            [IN] #GPTIMER_Handle returned from GPTIMER_open()
- * \param timerConfigMode   [IN] Timer Config Mode \ref GptimerConfigModes
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t GPTIMER_setFreeRunMode( GPTIMER_Handle handle);
+
+/**
+ * \brief Change Timer Configuration to Input capture mode
+ *
+ * \param handle            [IN] #GPTIMER_Handle returned from GPTIMER_open()
  * \param config            [IN] Pointer to the respective Configuration
  *                               Structure.
  *
  * \return #SystemP_SUCCESS if successful; else error on failure
  */
-int32_t GPTIMER_setTimerConfigMode( GPTIMER_Handle handle,
-                                    uint32_t timerConfigMode, void *config);
+int32_t GPTIMER_setIpCaptureMode( GPTIMER_Handle handle, GPTIMER_Capture_Config *config);
+
+/**
+ * \brief Change Timer Configuration to output compare mode
+ *
+ * \param handle            [IN] #GPTIMER_Handle returned from GPTIMER_open()
+ * \param config            [IN] Pointer to the respective Configuration
+ *                               Structure.
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t GPTIMER_setOpCompareMode( GPTIMER_Handle handle, GPTIMER_Compare_Config *config);
+
+/**
+ * \brief Change Timer Configuration to PWM generation mode
+ *
+ * \param handle            [IN] #GPTIMER_Handle returned from GPTIMER_open()
+ * \param config            [IN] Pointer to the respective Configuration
+ *                               Structure.
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t GPTIMER_setPWMGenMode( GPTIMER_Handle handle, GPTIMER_PWM_Config *config);
 
 /**
  * \brief Update Callback Functions

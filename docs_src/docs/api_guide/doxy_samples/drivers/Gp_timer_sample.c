@@ -55,11 +55,7 @@ void close(void)
 void gptimer_free_run_no_interrupt(void)
 {
 
-    uint32_t conifgMode;
-    conifgMode = GPTIMER_MODE_CONFIG_FREE_RUN;
-
-    GPTIMER_setTimerConfigMode(gGpTimerHandle, conifgMode,
-                               (void *)NULL);
+    GPTIMER_setFreeRunMode(gGpTimerHandle);
     /* Start the Timer */
     GPTIMER_start(gGpTimerHandle);
 
@@ -78,13 +74,9 @@ void overflowCallback(GPTIMER_Handle handle)
 void gptimer_free_run_interrupt(void)
 {
 
-    uint32_t conifgMode;
-    conifgMode = GPTIMER_MODE_CONFIG_FREE_RUN;
-
     SemaphoreP_constructBinary(&overflowSemObj, 0);
 
-    GPTIMER_setTimerConfigMode(gGpTimerHandle, conifgMode,
-                               (void *)NULL);
+    GPTIMER_setFreeRunMode(gGpTimerHandle);
     /* Add Callback */
     GPTIMER_setCallbackFxn(gGpTimerHandle, overflowCallback, NULL, NULL);
     /* Start the Timer */
@@ -111,13 +103,9 @@ void gptimer_output_compare_interrupt(void)
 {
     SemaphoreP_constructBinary(&compareMatchSemObj, 0);
 
-    uint32_t conifgMode;
-
-    conifgMode = GPTIMER_MODE_CONFIG_OUTPUT_COMPARE;
     compareConfig.cntCompareValComp = (0x017D7840U);
 
-    GPTIMER_setTimerConfigMode(gGpTimerHandle, conifgMode,
-                               (void *)(&compareConfig));
+    GPTIMER_setOpCompareMode(gGpTimerHandle, &compareConfig);
     /* Add Callback */
     GPTIMER_setCallbackFxn(gGpTimerHandle, NULL, compareMatchCallback, NULL);
     /* Start the TImer */
@@ -145,14 +133,10 @@ void gptimer_input_capture_interrupt(void)
 {
     SemaphoreP_constructBinary(&captureSemObj, 0);
 
-    uint32_t conifgMode;
-
-    conifgMode = GPTIMER_MODE_CONFIG_INPUT_CAPTURE;
     inputCaptureConfig.captureMode = GPTIMER_INPUT_CAPTURE_MODE_SECOND;
     inputCaptureConfig.captureEventMode = GPTIMER_INPUT_CAPTURE_EVENT_EDGE;
 
-    GPTIMER_setTimerConfigMode(gGpTimerHandle, conifgMode,
-                              (void *)(&inputCaptureConfig));
+    GPTIMER_setIpCaptureMode(gGpTimerHandle, &inputCaptureConfig);
     /* Add Callback */
     GPTIMER_setCallbackFxn(gGpTimerHandle, NULL, NULL, CaptureCallbackUser);
     /* Start the Timer */
@@ -169,18 +153,12 @@ void gptimer_input_capture_interrupt(void)
 
 void gptimer_pwm_gen(void)
 {
-
-    uint32_t conifgMode;
-
-    conifgMode = GPTIMER_MODE_CONFIG_PWM_GEN;
-
     pwmConfig.trigOutputPWMMode = GPTIMER_PWM_OUT_OVERFLOW_MATCH_TRIGGER,
     pwmConfig.defaultPWMOutSetting = GPTIMER_PWM_OUT_PIN_DEFAULT_0,
     pwmConfig.cntCompareValPWM = 4294954795,
     pwmConfig.outputModulationType = GPTIMER_PWM_OUT_PIN_MODULATION_TOGGLE,
 
-    GPTIMER_setTimerConfigMode(gGpTimerHandle, conifgMode,
-                              (void *)(&pwmConfig));
+    GPTIMER_setPWMGenMode(gGpTimerHandle, &pwmConfig);
 
     /* Start the Timer */
     GPTIMER_start(gGpTimerHandle);

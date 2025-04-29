@@ -522,7 +522,6 @@ static void test_gp_timer_change_timer_config(void *args)
     GPTIMER_Object          *object = NULL;
     uint32_t                configIdx = testParams->configIdx;
 
-    uint32_t                conifgMode;
     GPTIMER_Compare_Config  compareConfig;
 
 
@@ -560,12 +559,9 @@ static void test_gp_timer_change_timer_config(void *args)
     counterVal = GPTIMER_getCount(gpTimerHandle);
     TEST_ASSERT_GREATER_OR_EQUAL_UINT32(0xFFFF9E57U, counterVal);
 
-    /* Update to Compare Config */
-    conifgMode = GPTIMER_MODE_CONFIG_OUTPUT_COMPARE;
     compareConfig.cntCompareValComp = (0x017D7840U);
 
-    GPTIMER_setTimerConfigMode(gpTimerHandle, conifgMode,
-                               (void *)(&compareConfig));
+    GPTIMER_setOpCompareMode(gpTimerHandle, &compareConfig);
     /* Add Callback */
     GPTIMER_setCallbackFxn(gpTimerHandle, NULL, compareMatchCallback, NULL);
 
