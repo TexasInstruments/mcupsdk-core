@@ -268,7 +268,7 @@ void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_
 	/* DMA Descriptor Setup */
 	for (i = 0; i < req->dwc_req.numbuf; i++, desc++) {
 		if (ep->dwc_ep.type == UE_ISOCHRONOUS) {
-			if (i != req->dwc_req.numbuf - 1) {
+			if ((i != req->dwc_req.numbuf - 1) && (i < DWC_MAX_DATA_BUFS)){
 				tlen = req->dwc_req.buflen[i];
 				len -= tlen;
 			} else {
@@ -282,7 +282,7 @@ void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_
 			dwc_usb3_fill_desc(desc, req->dwc_req.bufdma[i], tlen,
 					   0, 0, 0, i != 0);
 		} else {
-			if (i != req->dwc_req.numbuf - 1) {
+			if ((i != req->dwc_req.numbuf - 1) && (i < DWC_MAX_DATA_BUFS)) {
 				ctrl = 0;
 				tlen = req->dwc_req.buflen[i];
 				len -= tlen;

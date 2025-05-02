@@ -233,6 +233,7 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
     dwc_usb3_pcd_t *pcd = &usb_handle.dwc_usb3_dev->pcd;
     volatile dwc_usb3_pcd_ep_t  *pcd_ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
     TU_LOG2("[dcd_edpt_xfer] ep:%02x \n", ep_addr);
+    bool ret = true;
 
     if (epnum == 0){
         if (dir == TUSB_DIR_IN)
@@ -292,26 +293,33 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
     else
     {
         usb_request_t * usb_req = dwc_usb3_alloc_request(usb_handle.dwc_usb3_dev, &pcd_ep->usb_ep);
-        usb_req->length = total_bytes;
-        usb_req->actual = 0;
-        usb_req->complete = epXferCmplCb;
-        if (dir == TUSB_DIR_IN)
+        if(usb_req==NULL)
         {
-            char *local_buf = (char *)ep_in_buf[epnum-1];
-            memcpy(local_buf, buffer, total_bytes);
-            usb_req->buf = (char *)ep_in_buf[epnum-1];
-            usb_req->dma = (dwc_dma_t) ep_in_buf[epnum-1];
-            dwc_usb3_ep_queue(usb_handle.dwc_usb3_dev, &pcd_ep->usb_ep, usb_req);
+            /* pointer to usb_req was NULL pointer */ 
+            ret = false;
         }
         else
         {
-            usb_req->buf = (char *) buffer;
-            usb_req->dma = (dwc_dma_t) ep_out_buf[epnum-1];
-            dwc_usb3_ep_queue(usb_handle.dwc_usb3_dev, &pcd_ep->usb_ep, usb_req);
+            usb_req->length = total_bytes;
+            usb_req->actual = 0;
+            usb_req->complete = epXferCmplCb;
+            if (dir == TUSB_DIR_IN)
+            {
+                char *local_buf = (char *)ep_in_buf[epnum-1];
+                memcpy(local_buf, buffer, total_bytes);
+                usb_req->buf = (char *)ep_in_buf[epnum-1];
+                usb_req->dma = (dwc_dma_t) ep_in_buf[epnum-1];
+                dwc_usb3_ep_queue(usb_handle.dwc_usb3_dev, &pcd_ep->usb_ep, usb_req);
+            }
+            else
+            {
+                usb_req->buf = (char *) buffer;
+                usb_req->dma = (dwc_dma_t) ep_out_buf[epnum-1];
+                dwc_usb3_ep_queue(usb_handle.dwc_usb3_dev, &pcd_ep->usb_ep, usb_req);
+            }
         }
     }
-
-    return true;
+    return ret;
 }
 
 /* Stall endpoint */

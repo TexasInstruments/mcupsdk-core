@@ -266,10 +266,16 @@ int dwc_usb3_handle_event(volatile dwc_usb3_device_t *dev)
             continue;
         }
         event_entry = (dwc_usb3_event_req_t *)malloc(sizeof(dwc_usb3_event_req_t));
-        event_entry->event = event;
-
-        DWC_SIMPLEQ_INSERT_TAIL(&pcd->event_q, event_entry, entry);
-
+		if(event_entry==NULL)
+		{
+			/* memory allocation for new event entry failed */
+			ret = 0;
+		}
+		else
+		{
+        	event_entry->event = event;
+        	DWC_SIMPLEQ_INSERT_TAIL(&pcd->event_q, event_entry, entry);
+		}
     }
 
 #if defined(CONFIG_IPMATE) || defined(COSIM) || defined(VIRTIO_MODEL)

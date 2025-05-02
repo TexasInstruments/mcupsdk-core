@@ -23,6 +23,7 @@
 #include "../include/dev.h"
 #include "../include/os_dev.h"
 #include "../include/cil.h"
+#include <stddef.h>
 
 #ifdef TINYUSB_INTEGRATION
     #include "dcd.h"

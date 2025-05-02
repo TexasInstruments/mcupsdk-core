@@ -35,6 +35,7 @@
 #define _DWC_NO_OS_DEV_H_
 
 #include <kernel/nortos/dpl/common/printf.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
