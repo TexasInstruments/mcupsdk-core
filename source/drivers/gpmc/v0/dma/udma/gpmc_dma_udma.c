@@ -37,18 +37,7 @@
 #include <kernel/dpl/CacheP.h>
 #include <drivers/gpmc.h>
 
-static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs);
-static int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs);
-static int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
-
-GPMC_DmaFxns gGpmcDmaUdmaFxns =
-{
-    .dmaOpenFxn = GpmcDma_udmaOpen,
-    .dmaCloseFxn = GpmcDma_udmaClose,
-    .dmaCopyFxn = GpmcDma_udmaCopy,
-};
-
-static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
+int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -155,7 +144,7 @@ static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
     return status;
 }
 
-static int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs)
+int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -261,7 +250,7 @@ static int32_t GpmcDma_udmaUpdateSubmitTR(void* gpmcDmaArgs, void* dst, void* sr
     return status;
 }
 
-static int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain)
+int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;

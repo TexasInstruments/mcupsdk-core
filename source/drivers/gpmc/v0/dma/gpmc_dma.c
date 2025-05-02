@@ -43,6 +43,7 @@
 #include <kernel/dpl/SystemP.h>
 #include <string.h>
 #include <drivers/gpmc/v0/dma/gpmc_dma.h>
+#include <drivers/gpmc/v0/dma/udma/gpmc_dma_udma.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -67,11 +68,11 @@ GPMC_DmaHandle GPMC_dmaOpen(int32_t index)
 	if((gGpmcDmaConfigNum > 0) && (index >= 0))
 	{
 		config = &gGpmcDmaConfig[index];
-		if((config->fxns) && (config->fxns->dmaOpenFxn) && (config->gpmcDmaArgs))
+		if(config->gpmcDmaArgs)
 		{
 			int32_t status;
 
-			status = config->fxns->dmaOpenFxn(config->gpmcDmaArgs);
+			status = GpmcDma_udmaOpen(config->gpmcDmaArgs);
 			if(status != SystemP_SUCCESS)
 			{
 				config = NULL;
@@ -90,9 +91,9 @@ int32_t GPMC_dmaClose(GPMC_DmaHandle handle)
 	{
 		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
 
-		if((config->fxns) && (config->fxns->dmaCloseFxn))
+		if(config->gpmcDmaArgs)
 		{
-			status = config->fxns->dmaCloseFxn(handle, config->gpmcDmaArgs);
+			status = GpmcDma_udmaClose(handle, config->gpmcDmaArgs);
 		}
 	}
 	else
@@ -111,9 +112,9 @@ int32_t GPMC_dmaCopy(GPMC_DmaHandle handle, void* dst, void* src, uint32_t lengt
 	{
 		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
 
-		if((config->fxns) && (config->fxns->dmaCopyFxn))
+		if(config->gpmcDmaArgs)
 		{
-			status = config->fxns->dmaCopyFxn(config->gpmcDmaArgs, dst, src, length, fifoDrain);
+			status = GpmcDma_udmaCopy(config->gpmcDmaArgs, dst, src, length, fifoDrain);
 		}
 	}
 	else

@@ -64,7 +64,9 @@ typedef struct GpmcDma_UdmaArgs_s
 
 } GpmcDma_UdmaArgs;
 
-extern GPMC_DmaFxns gGpmcDmaUdmaFxns;
+int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs);
+int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs);
+int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
 
 #ifdef __cplusplus
 }
