@@ -62,64 +62,10 @@ extern "C"
 typedef void* GPMC_DmaHandle;
 
 /**
- * \brief Driver implementation to open a specific DMA driver channel - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param gpmcDmaArgs   [in] DMA specific arguments, obtained from the config
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*GPMC_dmaOpenFxn)(void *gpmcDmaArgs);
-
-/**
- * \brief Driver implementation to close a specific DMA driver channel - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param GPMC_DmaHandle   [in] GPMC DMA Object handle returned from \ref GPMC_dmaOpen
- * \param gpmcDmaArgs      [in] DMA specific arguments, obtained from the config
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*GPMC_dmaCloseFxn)(GPMC_DmaHandle, void *gpmcDmaArgs);
-
-/**
- * \brief Driver implementation to do a DMA copy using a specific DMA driver - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param gpmcDmaArgs   [in] DMA specific arguments, obtained from the config
- * \param dst           [in] Destination address to which the data is to be copied
- * \param src           [in] Source address from which the data is to be copied
- * \param length        [in] Data length
- * \param fifoDrain     [in] Drain GPMC FIFO
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*GPMC_dmaCopyFxn)(void *gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain);
-
-/**
- * \brief Driver implementation callbacks
- */
-typedef struct GPMC_DmaFxns_s
-{
-	GPMC_dmaOpenFxn    dmaOpenFxn;
-	GPMC_dmaCloseFxn   dmaCloseFxn;
-	GPMC_dmaCopyFxn    dmaCopyFxn;
-
-} GPMC_DmaFxns;
-
-/**
  * \brief GPMC DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
  */
 typedef struct GPMC_DmaConfig_s
 {
-	GPMC_DmaFxns *fxns;
-	/* Registered callbacks for a particular DMA driver. This will be set by Sysconfig depending on the DMA driver selected*/
 	void *gpmcDmaArgs;
 	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
