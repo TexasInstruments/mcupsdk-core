@@ -575,6 +575,10 @@ function getFlashAddr() {
     return 0x60000000;
 }
 
+function getOsList(cpu) {
+    return ["nortos", "freertos", "freertos_mpu"];    
+}
+
 module.exports = {
     getComponentList,
     getExampleList,
@@ -589,4 +593,5 @@ module.exports = {
     getLinuxFwName,
     getProductNameProjectSpec,
     getFlashAddr,
+    getOsList,
 };

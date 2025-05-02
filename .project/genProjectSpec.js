@@ -239,8 +239,11 @@ function genProjectSpecExample(device) {
             project.relpath = common.path.relative(path.normalize(__dirname + "/.."), project.dirPath);
             project = _.merge({}, project, buildOption);
             project = _.merge({}, project, build_property);
+            project = common.updateLibsWithOs(project, buildOption.os);
             project = common.mergeCgtOptions(project, commonCgtOptions);
             project = common.mergeCgtOptions(project, common_build_property);
+            project = common.addOsDefine(project, buildOption.os);
+            project = common.addOsIncludes(project, buildOption.os, buildOption);
             project.dirPath = projectSpecOutPath;
 
             let args = {

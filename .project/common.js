@@ -54,6 +54,132 @@ function mergeCgtOptions(project, commonCgtOptions) {
     return project;
 }
 
+function addOsDefine(project, os) {
+
+    let osDefine = "OS_" + os.toUpperCase().replace(/-/g, "_");;
+    if (project.hasOwnProperty("defines") &&
+        project["defines"].hasOwnProperty("common") &&
+        project["defines"]["common"].includes(osDefine) == false) {
+            project["defines"]["common"].push(osDefine);
+    }
+    return project;
+}
+
+function addOsIncludes(project, os, buildOption) {
+    let includes = [];
+    switch(os) {
+        case "freertos":
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include");
+            if (buildOption.cpu.match(/m4f*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CM4F");
+                cpu = "m4f";
+            } else if (buildOption.cpu.match (/r5f*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F");
+                cpu = "r5f";
+            } else if (buildOption.cpu.match(/a53*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53");
+                cpu = "a53";
+            } else if (buildOption.cpu.match(/c66*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_CGT/DSP_C66");
+                cpu = "c66";
+            }
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/" + buildOption.device + "/" + cpu);
+            break;
+        case "freertos-smp":
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel-smp/include");
+            if (buildOption.cpu.match(/a53*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable_smp/GCC/ARM_CA53");
+                cpu = "a53";
+            }
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/" + buildOption.device + "/" + cpu + "-smp");
+            break;
+        case "freertos_mpu":
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include");
+            if (buildOption.cpu.match (/r5f*/)) {
+                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F_MPU");
+                cpu = "r5f_mpu";
+            }
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/" + buildOption.device + "/" + cpu);
+            break;
+        case "safertos":
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/safertos/safeRTOS/kernel/include_api");
+            includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/safertos/safeRTOS/config");
+            break;
+        case "nortos":
+        default: 
+            break;
+    }
+    if (project.hasOwnProperty("includes") &&
+        project["includes"].hasOwnProperty("common")) {
+            for (let include of includes) {
+                if (project["includes"]["common"].includes(include) == false)
+                    project["includes"]["common"].push(include);
+            };
+    }
+    return project;
+}
+
+function getLibsBuitwihOS() {
+    return [
+        "lwipif-cpsw-freertos",
+        "lwipif-cpsw-nortos",
+        "lwipif-icssg-freertos",
+        "lwipif-icssg-nortos",
+        "lwipif-ic-freertos",
+        "enet_cli_freertos",
+        "lwip-contrib-freertos-icss_emac",
+        "lwip-contrib-freertos",
+        "lwip-contrib-nortos",
+        "lwip-freertos-icss_emac",
+        "lwip-freertos",
+        "lwip-nortos",
+        "tsn_combase-freertos",
+        "tsn_gptp-freertos",
+        "tsn_icssg_combase-freertos",
+        "tsn_icssg_gptp-freertos",
+        "tsn_l2-freertos",
+        "tsn_lldp-freertos",
+        "tsn_netconf-freertos",
+        "tsn_unibase-freertos",
+        "tsn_uniconf-freertos",
+        "usbd_tusb_dfu_nortos",
+        "usbd_cdn_nortos",
+        "usbd_cdn_freertos",
+        "usbd_synp_nortos",
+        "usbd_synp_freertos",
+        "usbd_tusb_cdc_nortos",
+        "usbd_tusb_cdc_freertos",
+        "usbd_tusb_dfu_nortos",
+        "usbd_tusb_dfu_freertos",
+        "usbd_tusb_ncm_nortos",
+        "usbd_tusb_ncm_freertos",
+        "usbd_tusb_rndis_nortos",
+        "usbd_tusb_rndis_freertos"
+    ];
+}
+
+function updateLibsWithOs(project, os) {
+    let osList = require(`./device/project_${device}`).getOsList(buildOption.cpu);
+    if (project.hasOwnProperty("libs") &&
+        project["libs"].hasOwnProperty("common")) {
+        let libs_list = [];
+
+        for (let lib of project["libs"]["common"]) {
+            let libWithOs = lib.replace(/\${ConfigName}/, buildOption.os + "." + "${ConfigName}");
+            libWithOs = libWithOs.replace(/release\.lib/, buildOption.os + "." + "release.lib");
+            if (osList.some(osItem => lib.match(new RegExp("^" + osItem + "\\."))) || 
+            getLibsBuitwihOS().some(libWithOs => lib.match(new RegExp("^" + libWithOs)))) {
+                libs_list.push(lib);
+            }
+            else
+            {
+                libs_list.push(libWithOs);
+            }
+        };
+        project["libs"]["common"] = libs_list;
+    }
+    return project;
+}
 function relative(pathStr1, pathStr2) {
     let relpath = path.relative(pathStr1, pathStr2)
 
@@ -192,6 +318,10 @@ module.exports = {
     setInstrumentationMode,
     cleanBuildfiles,
     mergeCgtOptions,
+    addOsDefine,
+    addOsIncludes,
+    updateLibsWithOs,
+    getLibsBuitwihOS,
     convertTemplateToFile,
     path: {
         relative,

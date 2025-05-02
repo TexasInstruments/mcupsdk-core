@@ -446,6 +446,15 @@ function getEnableGccBuild() {
     const IsGccBuildEnabled = 0;
     return IsGccBuildEnabled;
 }
+function getOsList(cpu) {
+    switch(cpu) {
+        default:
+            return ["nortos", "freertos"];
+        case "a53":
+        case "a53-smp":
+            return ["nortos", "freertos", "freertos-smp"];
+    }
+}
 
 module.exports = {
     getComponentList,
@@ -462,4 +471,5 @@ module.exports = {
     getProductNameProjectSpec,
     getFlashAddr,
     getEnableGccBuild,
+    getOsList,
 };

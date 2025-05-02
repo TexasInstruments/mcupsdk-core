@@ -25,6 +25,7 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
         let buildTargetScrub_gcc = [];
         let buildTargetClean = [];
         let buildTargetScrub = [];
+        let osList = require(`./device/project_${device}`).getOsList(buildOption.cpu);
 
         property = require(`../${component}`).getComponentProperty(device);
 
@@ -46,17 +47,38 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
             component_make.isPrebuilt = true;
         }
         for(buildOption of property.buildOptionCombos) {
-            if(buildOption.cgt === "gcc-armv7" && (device === "am64x" ||  device === "am243x")){
-                buildTarget_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
-                buildTargetClean_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
-                buildTargetScrub_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+            if (osList.includes(property.name) || 
+            common.getLibsBuitwihOS().some(libWithOs => libWithOs.match(new RegExp("^" + property.name))))
+            {
+                if(buildOption.cgt === "gcc-armv7" && (device === "am64x" ||  device === "am243x")){
+                    buildTarget_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
+                    buildTargetClean_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
+                    buildTargetScrub_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+                }
+                else{
+                    buildTarget +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
+                    buildTargetClean +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
+                    buildTargetScrub +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+                }
             }
-            else{
-                buildTarget +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
-                buildTargetClean +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
-                buildTargetScrub +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+            else
+            {
+                let osList = require(`./device/project_${device}`).getOsList(buildOption.cpu);
+                if(buildOption.cgt === "gcc-armv7" && (device === "am64x" ||  device === "am243x")){
+                    osList.forEach(os => {
+                        buildTarget_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}`;
+                        buildTargetClean_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}_clean`;
+                        buildTargetScrub_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}_scrub`;
+                    });
+                }
+                else{
+                    osList.forEach(os => { 
+                        buildTarget +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}`;
+                        buildTargetClean +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}_clean`;
+                        buildTargetScrub +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}.${os}_scrub`;
+                    });
+                }
             }
-
         }
         if((device === "am64x" ||  device === "am243x")){
             component_make.buildTarget_gcc = buildTarget_gcc;
@@ -203,6 +225,7 @@ function genMakefileLibrary(component_file_list, device) {
         for(buildOption of property.buildOptionCombos) {
             let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
+            let osList = require(`./device/project_${device}`).getOsList(buildOption.cpu);
             build_property = require(`../${component}`).getComponentBuildProperty(buildOption);
 
             let project = [];
@@ -225,10 +248,36 @@ function genMakefileLibrary(component_file_list, device) {
             {
                 tag = `.${property.tag}`;
             }
-            common.convertTemplateToFile(
+            if(osList.includes(property.name) || 
+            common.getLibsBuitwihOS().some(libWithOs => libWithOs.match(new RegExp("^" + property.name))))
+            {
+                /* Kernel libraries */
+                projectClone = _.cloneDeep(project)
+                projectClone = common.addOsDefine( projectClone, buildOption.os);
+                if (common.getLibsBuitwihOS().some(libWithOs => libWithOs.match(new RegExp("^" + property.name))))
+                {
+                    projectClone = common.addOsIncludes(projectClone, buildOption.os, buildOption);
+                }
+                args.project = projectClone;
+                common.convertTemplateToFile(
                     `.project/templates/makefile_${project.type}.xdt`,
                     `${project.dirPath}/makefile${tag}.${project.device}.${project.cpu}.${project.cgt}`,
                     args);
+            }
+            else
+            {
+                osList.forEach(os => {   
+                    args.os = os;
+                    projectClone = _.cloneDeep(project)
+
+                    projectClone = common.addOsDefine(projectClone, os);
+                    args.project = common.addOsIncludes(projectClone, os, buildOption);
+                    common.convertTemplateToFile(
+                            `.project/templates/makefile_${project.type}.xdt`,
+                            `${project.dirPath}/makefile${tag}.${project.device}.${project.cpu}.${project.cgt}.${os}`,
+                            args);
+                });
+            }
         }
     }
 }
@@ -244,7 +293,7 @@ function cleanMakefileLibrary(component_file_list, device) {
             project = _.merge({}, project, property);
             project.relpath = common.path.relative(path.normalize(__dirname + "/.."), property.dirPath);
 
-            common.deleteFile(`${project.dirPath}/makefile.${buildOption.device}.${buildOption.cpu}.${buildOption.cgt}`);
+            common.deleteFile(`${project.dirPath}/makefile.${buildOption.device}.${buildOption.cpu}.${buildOption.cgt}.${project.os}`);
         }
     }
 }
@@ -269,8 +318,11 @@ function genMakefileExample(example_file_list, device) {
             project.relpath = common.path.relative(path.normalize(__dirname + "/.."), project.dirPath);
             project = _.merge({}, project, buildOption);
             project = _.merge({}, project, build_property);
+            project = common.updateLibsWithOs(project, buildOption.os);
             project = common.mergeCgtOptions(project, commonCgtOptions);
             project = common.mergeCgtOptions(project, common_build_property);
+            project = common.addOsDefine(project, buildOption.os);
+            project = common.addOsIncludes(project, buildOption.os, buildOption);
             project.dirPath = makefileOutPath;
 
             let isInstrumentationMode = false;
@@ -353,6 +405,7 @@ function genMakefileProjectSpec(example_file_list, device) {
             project.relpath = common.path.relative(path.normalize(__dirname + "/.."), project.dirPath);
             project = _.merge({}, project, buildOption);
             project = common.mergeCgtOptions(project, common_build_property);
+            project = common.addOsDefine(project, buildOption.os);
             project = _.merge({}, project, build_property);
             project.dirPath = makefileOutPath;
 
