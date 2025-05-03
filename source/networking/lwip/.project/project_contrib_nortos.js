@@ -131,14 +131,14 @@ const deviceSpecific_cflags = {
 
 
 const buildOptionCombos = [
-    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
-    { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7", os:"nortos"},
+    { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
+    { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang", os:"nortos"},
 ];
 
 function getComponentProperty() {

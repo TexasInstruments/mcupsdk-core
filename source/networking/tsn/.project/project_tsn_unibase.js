@@ -141,14 +141,14 @@ const deviceSpecific_cflags_a53 = {
 };
 
 const buildOptionCombos = [
-    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am64x", cpu: "a53", cgt: "gcc-aarch64"},
-    { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am64x", cpu: "a53", cgt: "gcc-aarch64", os: "freertos"},
+    { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
 ];
 
 function getComponentProperty(device) {

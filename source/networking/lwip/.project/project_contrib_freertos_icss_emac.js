@@ -104,9 +104,9 @@ const deviceSpecific_cflags = {
 
 
 const buildOptionCombos = [
-    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
 ];
 
 function getComponentProperty() {

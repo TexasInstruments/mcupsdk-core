@@ -126,7 +126,7 @@ const cflags = {
 };
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
 ];
 
 function getComponentProperty() {

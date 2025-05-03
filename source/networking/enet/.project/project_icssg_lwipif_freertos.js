@@ -76,9 +76,9 @@ const defines_r5f = {
 };
 
 const buildOptionCombos = [
-    { device: "am64x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
+    { device: "am64x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7", os: "freertos"},
 ];
 
 function getComponentProperty(device) {
