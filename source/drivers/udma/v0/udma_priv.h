@@ -144,59 +144,6 @@ typedef struct Udma_RingObjectInt_t    *Udma_RingHandleInt;
 typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandleInt;
 
 /**
- *  \anchor Udma_RingLocalApiPrototypes
- *  \name UDMA Ring Local API's function prototypes
- *
- *  Function prototypes for various local UDMA Ring API's.
- *  For Normal RA / LCDMA RA, function pointers will be used
- *  to call the appropriate function.
- *
- *  @{
- */
-/** \brief UDMA Ring handle clear register function prototype */
-typedef void (*Udma_ringHandleClearRegsFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring set doorbell function prototype */
-typedef void (*Udma_ringSetDoorBellFxn)(Udma_RingHandleInt ringHandle,
-                                        int32_t count);
-/** \brief UDMA Ring prime function prototype */
-typedef void (*Udma_ringPrimeFxn)(Udma_RingHandleInt ringHandle,
-                                  uint64_t phyDescMem);
-/** \brief UDMA Ring prime read function prototype */
-typedef void (*Udma_ringPrimeReadFxn)(Udma_RingHandleInt ringHandle,
-                                      uint64_t *phyDescMem);
-/** \brief UDMA Ring get mem pointer function prototype */
-typedef void *(*Udma_ringGetMemPtrFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get ring mode function prototype */
-typedef uint32_t (*Udma_ringGetModeFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get element count function prototype */
-typedef uint32_t (*Udma_ringGetElementCntFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get forward ring occupancy function prototype */
-typedef uint32_t (*Udma_ringGetForwardRingOccFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get reverse ring occupancy function prototype */
-typedef uint32_t (*Udma_ringGetReverseRingOccFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get write index value function prototype */
-typedef uint32_t (*Udma_ringGetWrIdxFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring get read index value function prototype */
-typedef uint32_t (*Udma_ringGetRdIdxFxn)(Udma_RingHandleInt ringHandle);
-/** \brief UDMA Ring dequeue raw function prototype */
-typedef int32_t (*Udma_ringDequeueRawFxn)(Udma_DrvHandleInt  drvHandle,
-                                          Udma_RingHandleInt ringHandle,
-                                          uint64_t *phyDescMem);
-/** \brief UDMA Ring queue raw function prototype */
-typedef int32_t (*Udma_ringQueueRawFxn)(Udma_DrvHandleInt  drvHandle,
-                                        Udma_RingHandleInt ringHandle,
-                                        uint64_t phyDescMem);
-/** \brief UDMA Ring flush raw function prototype */
-typedef int32_t (*Udma_ringFlushRawFxn)(Udma_DrvHandleInt  drvHandle,
-                                        Udma_RingHandleInt ringHandle,
-                                        uint64_t *phyDescMem);
-/** \brief UDMA Ring set Cfg function prototype */
-typedef void (*Udma_ringSetCfgFxn)(Udma_DrvHandleInt drvHandle,
-                                   Udma_RingHandleInt ringHandle,
-                                   const Udma_RingPrms *ringPrms);
-/* @} */
-
-/**
  *  \anchor Udma_RmMaxSize
  *  Resource management related macros.
  *
@@ -872,42 +819,6 @@ typedef struct Udma_DrvObjectInt_t
     /**< Mutex to protect RM allocation. */
     SemaphoreP_Object       rmLockObj;
     /**< Mutex object. */
-
-    /*
-     * UDMA Ring Local API's function pointers
-     * For Normal RA / LCDMA RA, these function pointers are used
-     * to call the appropriate function.
-     */
-    Udma_ringDequeueRawFxn            ringDequeueRaw;
-    /**< UDMA Ring dequeue raw function pointer */
-    Udma_ringQueueRawFxn              ringQueueRaw;
-    /**< UDMA Ring queue raw function pointer */
-    Udma_ringFlushRawFxn              ringFlushRaw;
-    /**< UDMA Ring flush raw function pointer */
-    Udma_ringGetElementCntFxn         ringGetElementCnt;
-    /**< UDMA Ring get element count function pointer */
-    Udma_ringGetMemPtrFxn             ringGetMemPtr;
-    /**< UDMA Ring get mem pointer function pointer */
-    Udma_ringGetModeFxn               ringGetMode;
-    /**< UDMA Ring get ring mode function pointer */
-    Udma_ringGetForwardRingOccFxn     ringGetForwardRingOcc;
-    /**< UDMA Ring get forward ring occupancy function pointer */
-    Udma_ringGetReverseRingOccFxn     ringGetReverseRingOcc;
-    /**< UDMA Ring get reverse ring occupancy function pointer */
-    Udma_ringGetWrIdxFxn              ringGetWrIdx;
-    /**< UDMA Ring get write index value function pointer */
-    Udma_ringGetRdIdxFxn              ringGetRdIdx;
-    /**< UDMA Ring get read index value function pointer */
-    Udma_ringPrimeFxn                 ringPrime;
-    /**< UDMA Ring prime function pointer */
-    Udma_ringPrimeReadFxn             ringPrimeRead;
-    /**< UDMA Ring prime read function pointer */
-    Udma_ringSetDoorBellFxn           ringSetDoorBell;
-    /**< UDMA Ring set doorbell function pointer */
-    Udma_ringSetCfgFxn                ringSetCfg;
-    /**< UDMA Ring set Cfg function pointer */
-    Udma_ringHandleClearRegsFxn       ringHandleClearRegs;
-    /**< UDMA Ring handle clear register function pointer */
 } Udma_DrvObjectInt;
 
 #if((UDMA_NUM_MAPPED_TX_GROUP + UDMA_NUM_MAPPED_RX_GROUP) > 0)

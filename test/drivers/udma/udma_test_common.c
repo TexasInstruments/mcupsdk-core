@@ -360,21 +360,20 @@ int32_t udmaTestCompareRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t cnt,
     return (retVal);
 }
 
-uint32_t udmaTestGetRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t direction)
+uint32_t udmaTestGetRingHwOccDriver(Udma_RingObjectInt *ringHandle, uint32_t direction)
 {
     uint32_t            occ = 0U;
-    Udma_RingObjectInt *ringObj = (Udma_RingObjectInt *) ringHandle;
-    Udma_DrvHandle      drvHandle = ringObj->drvHandle;
-    Udma_DrvObjectInt  *drvObj = (Udma_DrvObjectInt *) drvHandle;
-
+#if (UDMA_SOC_CFG_LCDMA_PRESENT == 1U)
     if(UDMA_TEST_RING_ACC_DIRECTION_FORWARD == direction)
     {
-        occ = drvObj->ringGetForwardRingOcc(ringHandle);
+        occ = Udma_ringGetForwardRingOccLcdma(ringHandle);
     }
     else
     {
-        occ = drvObj->ringGetReverseRingOcc(ringHandle);
+        occ = Udma_ringGetReverseRingOccLcdma(ringHandle);
     }
-
+#else
+    occ = Udma_ringGetRingOccNormal(ringHandle);
+#endif
     return (occ);
 }
