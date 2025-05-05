@@ -141,22 +141,6 @@ void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle)
     pRaRegs->maxMonitors     = CSL_RINGACC_MAX_MONITORS;
     pRaRegs->bTraceSupported = (bool)true;
 
-    drvHandle->ringDequeueRaw           = &Udma_ringDequeueRawNormal;
-    drvHandle->ringQueueRaw             = &Udma_ringQueueRawNormal;
-    drvHandle->ringFlushRaw             = &Udma_ringFlushRawNormal;
-    drvHandle->ringGetElementCnt        = &Udma_ringGetElementCntNormal;
-    drvHandle->ringGetMemPtr            = &Udma_ringGetMemPtrNormal;
-    drvHandle->ringGetMode              = &Udma_ringGetModeNormal;
-    drvHandle->ringGetForwardRingOcc    = &Udma_ringGetRingOccNormal;
-    drvHandle->ringGetReverseRingOcc    = &Udma_ringGetRingOccNormal;
-    drvHandle->ringGetWrIdx             = &Udma_ringGetWrIdxNormal;
-    drvHandle->ringGetRdIdx             = &Udma_ringGetRdIdxNormal;
-    drvHandle->ringPrime                = &Udma_ringPrimeNormal;
-    drvHandle->ringPrimeRead            = &Udma_ringPrimeReadNormal;
-    drvHandle->ringSetDoorBell          = &Udma_ringSetDoorBellNormal;
-    drvHandle->ringSetCfg               = &Udma_ringSetCfgNormal;
-    drvHandle->ringHandleClearRegs      = &Udma_ringHandleClearRegsNormal;
-
     /*
      * All interrupt related config should be based on core and not
      * based on NAVSS instance

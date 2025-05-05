@@ -62,7 +62,6 @@
 
 static int32_t Udma_ringCheckParams(Udma_DrvHandleInt drvHandle,
                                     const Udma_RingPrms *ringPrms);
-static inline void Udma_ringAssertFnPointers(Udma_DrvHandleInt drvHandle);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -142,13 +141,12 @@ int32_t Udma_ringAlloc(Udma_DrvHandle drvHandle,
 
     if(UDMA_SOK == retVal)
     {
-        Udma_ringAssertFnPointers(drvHandleInt);
         ringHandleInt->drvHandle = drvHandleInt;
         /* Set the mapped group in ringHandleInt, since only ringHandleInt is passed to rmFreeMappedRing() and
          * the mapped group parameter is required to reset the appropriate flag */
         ringHandleInt->mappedRingGrp   = ringPrms->mappedRingGrp;
         ringHandleInt->mappedChNum     = ringPrms->mappedChNum;
-        drvHandleInt->ringSetCfg(drvHandleInt, ringHandleInt, ringPrms);
+        Udma_ringSetCfgNormal(drvHandleInt, ringHandleInt, ringPrms);
         /* Perform ring reset */
         retVal = Udma_ringReset(drvHandleInt, ringHandleInt);
         if(UDMA_SOK != retVal)
@@ -249,7 +247,7 @@ int32_t Udma_ringFree(Udma_RingHandle ringHandle)
 
         ringHandleInt->ringNum         = UDMA_RING_INVALID;
         ringHandleInt->ringInitDone    = UDMA_DEINIT_DONE;
-        drvHandle->ringHandleClearRegs(ringHandleInt);
+        Udma_ringHandleClearRegsNormal(ringHandleInt);
         ringHandleInt->drvHandle       = (Udma_DrvHandleInt) NULL_PTR;
     }
 
@@ -289,7 +287,7 @@ int32_t Udma_ringAttach(Udma_DrvHandle drvHandle,
     {
         ringHandleInt->ringNum = ringNum;
         ringHandleInt->drvHandle = drvHandleInt;
-        drvHandleInt->ringSetCfg(drvHandleInt, ringHandleInt, (Udma_RingPrms *) NULL_PTR);
+        Udma_ringSetCfgNormal(drvHandleInt, ringHandleInt, (Udma_RingPrms *) NULL_PTR);
         ringHandleInt->ringInitDone = UDMA_INIT_DONE;
     }
 
@@ -329,7 +327,7 @@ int32_t Udma_ringDetach(Udma_RingHandle ringHandle)
         /* Clear handle object */
         DebugP_assert(ringHandleInt->ringNum != UDMA_RING_INVALID);
         ringHandleInt->ringInitDone    = UDMA_DEINIT_DONE;
-        drvHandle->ringHandleClearRegs(ringHandleInt);
+        Udma_ringHandleClearRegsNormal(ringHandleInt);
         ringHandleInt->drvHandle       = (Udma_DrvHandleInt) NULL_PTR;
 
     }
@@ -365,7 +363,7 @@ int32_t Udma_ringQueueRaw(Udma_RingHandle ringHandle, uint64_t phyDescMem)
     {
         cookie = HwiP_disable();
 
-        retVal = drvHandle->ringQueueRaw(drvHandle, ringHandleInt, phyDescMem);
+        retVal = Udma_ringQueueRawNormal(drvHandle, ringHandleInt, phyDescMem);
 
         HwiP_restore(cookie);
     }
@@ -401,7 +399,7 @@ int32_t Udma_ringDequeueRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
     {
         cookie = HwiP_disable();
 
-        retVal = drvHandle->ringDequeueRaw(drvHandle, ringHandleInt, phyDescMem);
+        retVal = Udma_ringDequeueRawNormal(drvHandle, ringHandleInt, phyDescMem);
 
         HwiP_restore(cookie);
     }
@@ -434,7 +432,7 @@ int32_t Udma_ringFlushRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 
     if(UDMA_SOK == retVal)
     {
-        retVal = drvHandle->ringFlushRaw(drvHandle, ringHandleInt, phyDescMem);
+        retVal = Udma_ringFlushRawNormal(drvHandle, ringHandleInt, phyDescMem);
     }
 
     return (retVal);
@@ -443,9 +441,8 @@ int32_t Udma_ringFlushRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 void Udma_ringPrime(Udma_RingHandle ringHandle, uint64_t phyDescMem)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    drvHandle->ringPrime(ringHandleInt, phyDescMem);
+    Udma_ringPrimeNormal(ringHandleInt, phyDescMem);
 
     return;
 }
@@ -453,9 +450,8 @@ void Udma_ringPrime(Udma_RingHandle ringHandle, uint64_t phyDescMem)
 void Udma_ringPrimeRead(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    drvHandle->ringPrimeRead(ringHandleInt, phyDescMem);
+    Udma_ringPrimeReadNormal(ringHandleInt, phyDescMem);
 
     return;
 }
@@ -463,9 +459,8 @@ void Udma_ringPrimeRead(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 void Udma_ringSetDoorBell(Udma_RingHandle ringHandle, int32_t count)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    drvHandle->ringSetDoorBell(ringHandleInt, count);
+    Udma_ringSetDoorBellNormal(ringHandleInt, count);
 
     return;
 }
@@ -488,9 +483,8 @@ void *Udma_ringGetMemPtr(Udma_RingHandle ringHandle)
 {
     void               *ringMem = NULL_PTR;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    ringMem = drvHandle->ringGetMemPtr(ringHandleInt);
+    ringMem = Udma_ringGetMemPtrNormal(ringHandleInt);
 
     return (ringMem);
 }
@@ -499,9 +493,8 @@ uint32_t Udma_ringGetMode(Udma_RingHandle ringHandle)
 {
     uint32_t            ringMode;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    ringMode = drvHandle->ringGetMode(ringHandleInt);
+    ringMode = Udma_ringGetModeNormal(ringHandleInt);
 
     return (ringMode);
 }
@@ -510,9 +503,8 @@ uint32_t Udma_ringGetElementCnt(Udma_RingHandle ringHandle)
 {
     uint32_t            size = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    size = drvHandle->ringGetElementCnt(ringHandleInt);
+    size = Udma_ringGetElementCntNormal(ringHandleInt);
 
     return (size);
 }
@@ -521,9 +513,8 @@ uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandle ringHandle)
 {
     uint32_t            occ = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    occ = drvHandle->ringGetForwardRingOcc(ringHandleInt);
+    occ = Udma_ringGetRingOccNormal(ringHandleInt);
 
     return (occ);
 }
@@ -532,9 +523,8 @@ uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandle ringHandle)
 {
     uint32_t            occ = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    occ = drvHandle->ringGetReverseRingOcc(ringHandleInt);
+    occ = Udma_ringGetRingOccNormal(ringHandleInt);
 
     return (occ);
 }
@@ -543,9 +533,8 @@ uint32_t Udma_ringGetWrIdx(Udma_RingHandle ringHandle)
 {
     uint32_t            idx = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    idx = drvHandle->ringGetWrIdx(ringHandleInt);
+    idx = Udma_ringGetWrIdxNormal(ringHandleInt);
 
     return (idx);
 }
@@ -554,9 +543,8 @@ uint32_t Udma_ringGetRdIdx(Udma_RingHandle ringHandle)
 {
     uint32_t            idx = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
-    Udma_DrvHandleInt   drvHandle = ringHandleInt->drvHandle;
 
-    idx = drvHandle->ringGetRdIdx(ringHandleInt);
+    idx = Udma_ringGetRdIdxNormal(ringHandleInt);
 
     return (idx);
 }
@@ -639,27 +627,6 @@ static int32_t Udma_ringCheckParams(Udma_DrvHandleInt drvHandle,
     }
 
     return (retVal);
-}
-
-static inline void Udma_ringAssertFnPointers(Udma_DrvHandleInt drvHandle)
-{
-    DebugP_assert(drvHandle->ringDequeueRaw        != (Udma_ringDequeueRawFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringQueueRaw          != (Udma_ringQueueRawFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringFlushRaw          != (Udma_ringFlushRawFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetElementCnt     != (Udma_ringGetElementCntFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetMemPtr         != (Udma_ringGetMemPtrFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetMode           != (Udma_ringGetModeFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetForwardRingOcc != (Udma_ringGetForwardRingOccFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetReverseRingOcc != (Udma_ringGetReverseRingOccFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetWrIdx          != (Udma_ringGetWrIdxFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringGetRdIdx          != (Udma_ringGetRdIdxFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringPrime             != (Udma_ringPrimeFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringPrimeRead         != (Udma_ringPrimeReadFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringSetDoorBell       != (Udma_ringSetDoorBellFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringSetCfg            != (Udma_ringSetCfgFxn) NULL_PTR);
-    DebugP_assert(drvHandle->ringHandleClearRegs   != (Udma_ringHandleClearRegsFxn) NULL_PTR);
-
-    return;
 }
 
 int32_t Udma_ringProxyQueueRaw(Udma_RingHandleInt ringHandle,

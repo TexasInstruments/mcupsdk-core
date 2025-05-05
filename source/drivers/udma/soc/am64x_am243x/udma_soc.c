@@ -191,21 +191,6 @@ void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle)
         pLcdmaRaRegs->pCredRegs      = (CSL_lcdma_ringacc_credRegs *) CSL_DMASS0_PKTDMA_CRED_BASE;
         pLcdmaRaRegs->maxRings       = CSL_DMSS_PKTDMA_NUM_RX_FLOWS + CSL_DMSS_PKTDMA_NUM_TX_FLOWS;
     }
-    drvHandle->ringDequeueRaw           = &Udma_ringDequeueRawLcdma;
-    drvHandle->ringQueueRaw             = &Udma_ringQueueRawLcdma;
-    drvHandle->ringFlushRaw             = &Udma_ringFlushRawLcdma;
-    drvHandle->ringGetElementCnt        = &Udma_ringGetElementCntLcdma;
-    drvHandle->ringGetMemPtr            = &Udma_ringGetMemPtrLcdma;
-    drvHandle->ringGetMode              = &Udma_ringGetModeLcdma;
-    drvHandle->ringGetForwardRingOcc    = &Udma_ringGetForwardRingOccLcdma;
-    drvHandle->ringGetReverseRingOcc    = &Udma_ringGetReverseRingOccLcdma;
-    drvHandle->ringGetWrIdx             = &Udma_ringGetWrIdxLcdma;
-    drvHandle->ringGetRdIdx             = &Udma_ringGetRdIdxLcdma;
-    drvHandle->ringPrime                = &Udma_ringPrimeLcdma;
-    drvHandle->ringPrimeRead            = &Udma_ringPrimeReadLcdma;
-    drvHandle->ringSetDoorBell          = &Udma_ringSetDoorBellLcdma;
-    drvHandle->ringSetCfg               = &Udma_ringSetCfgLcdma;
-    drvHandle->ringHandleClearRegs      = &Udma_ringHandleClearRegsLcdma;
 
     /* IA config init */
     pIaRegs = &drvHandle->iaRegs;
