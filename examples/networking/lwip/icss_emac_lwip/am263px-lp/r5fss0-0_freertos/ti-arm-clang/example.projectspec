@@ -59,6 +59,7 @@
             -Wno-unused-function
             -DSOC_AM263PX
             -DAM263PX_LP
+            -DOS_FREERTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -91,10 +92,10 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263px.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
-                -lboard.am263px.r5f.ti-arm-clang.debug.lib
-                -licss_emac.am263px.r5f.ti-arm-clang.debug.lib
-                -licss_emac_lwip_if.am263px.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am263px.r5f.ti-arm-clang.freertos.debug.lib
+                -lboard.am263px.r5f.ti-arm-clang.freertos.debug.lib
+                -licss_emac.am263px.r5f.ti-arm-clang.freertos.debug.lib
+                -licss_emac_lwip_if.am263px.r5f.ti-arm-clang.freertos.debug.lib
                 -llwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.debug.lib
                 -llwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
@@ -107,10 +108,10 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263px.r5f.ti-arm-clang.release.lib
-                -ldrivers.am263px.r5f.ti-arm-clang.release.lib
-                -lboard.am263px.r5f.ti-arm-clang.release.lib
-                -licss_emac.am263px.r5f.ti-arm-clang.release.lib
-                -licss_emac_lwip_if.am263px.r5f.ti-arm-clang.release.lib
+                -ldrivers.am263px.r5f.ti-arm-clang.freertos.release.lib
+                -lboard.am263px.r5f.ti-arm-clang.freertos.release.lib
+                -licss_emac.am263px.r5f.ti-arm-clang.freertos.release.lib
+                -licss_emac_lwip_if.am263px.r5f.ti-arm-clang.freertos.release.lib
                 -llwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.release.lib
                 -llwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a

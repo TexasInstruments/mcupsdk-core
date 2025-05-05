@@ -59,6 +59,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -98,8 +99,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:freertos.am64x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am64x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:board.am64x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am64x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	-l:board.am64x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -117,8 +118,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am64x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am64x.r5f.gcc-armv7.${ConfigName}.lib \
-	board.am64x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am64x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	board.am64x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

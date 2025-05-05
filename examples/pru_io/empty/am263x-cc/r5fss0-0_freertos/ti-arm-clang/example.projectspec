@@ -46,6 +46,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM263X
+            -DOS_FREERTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -75,8 +76,8 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.debug.lib
-                -lboard.am263x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am263x.r5f.ti-arm-clang.freertos.debug.lib
+                -lboard.am263x.r5f.ti-arm-clang.freertos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -87,8 +88,8 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.release.lib
-                -lboard.am263x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am263x.r5f.ti-arm-clang.freertos.release.lib
+                -lboard.am263x.r5f.ti-arm-clang.freertos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

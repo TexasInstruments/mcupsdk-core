@@ -64,6 +64,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM243X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -108,8 +109,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lusbd_cdn_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_tusb_cdc_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -124,8 +125,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	drivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	usbd_cdn_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_tusb_cdc_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \

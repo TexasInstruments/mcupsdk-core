@@ -70,7 +70,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am243x.r5f.ti-arm-clang.nortos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -81,7 +81,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am243x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am243x.r5f.ti-arm-clang.nortos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

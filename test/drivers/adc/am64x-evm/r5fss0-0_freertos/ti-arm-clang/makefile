@@ -61,10 +61,14 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -108,9 +112,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -123,9 +127,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

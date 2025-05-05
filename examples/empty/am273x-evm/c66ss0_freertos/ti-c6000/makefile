@@ -62,6 +62,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM273X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mv6600 \
@@ -93,7 +94,7 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-ldrivers.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-ldrivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -105,7 +106,7 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	drivers.am273x.c66.ti-c6000.${ConfigName}.lib \
+	drivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \

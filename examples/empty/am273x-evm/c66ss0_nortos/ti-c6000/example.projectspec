@@ -42,6 +42,7 @@
             -pds1110
             --emit_warnings_as_errors
             -DSOC_AM273X
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -69,7 +70,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am273x.c66.ti-c6000.debug.lib
-                -ldrivers.am273x.c66.ti-c6000.debug.lib
+                -ldrivers.am273x.c66.ti-c6000.nortos.debug.lib
                 -llibc.a
             "
         ></configuration>
@@ -81,7 +82,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am273x.c66.ti-c6000.release.lib
-                -ldrivers.am273x.c66.ti-c6000.release.lib
+                -ldrivers.am273x.c66.ti-c6000.nortos.release.lib
                 -llibc.a
             "
         ></configuration>

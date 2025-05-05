@@ -1,0 +1,11 @@
+GEN_FILES__QUOTED += \
+*.appimage* \
+*.appimage_xip \
+*.rprc* \
+*.rprc_xip \
+*.tiimage* \
+*.bin \
+*.lnkxml \
+*.map \
+*.ossr
+

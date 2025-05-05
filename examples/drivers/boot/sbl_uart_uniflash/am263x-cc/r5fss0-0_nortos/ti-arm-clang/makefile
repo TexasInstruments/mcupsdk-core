@@ -60,6 +60,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM263X \
 	-DR5F0_INPUTS \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -104,10 +105,10 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lmiddleware.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lboard.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lmiddleware.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lsdl.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -120,10 +121,10 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	middleware.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	board.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	middleware.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	sdl.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

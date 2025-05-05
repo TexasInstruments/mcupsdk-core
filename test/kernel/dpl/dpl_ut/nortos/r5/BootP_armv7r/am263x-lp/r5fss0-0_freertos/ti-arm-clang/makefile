@@ -117,8 +117,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -131,8 +131,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

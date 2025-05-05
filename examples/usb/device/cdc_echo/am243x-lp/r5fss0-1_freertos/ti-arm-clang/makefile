@@ -67,6 +67,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM243X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -111,8 +112,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am243x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-lusbd_cdn_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_tusb_cdc_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -127,8 +128,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am243x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	drivers.am243x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	usbd_cdn_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_tusb_cdc_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \

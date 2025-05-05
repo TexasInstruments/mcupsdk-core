@@ -58,10 +58,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -101,8 +103,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:freertos_fat.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	-l:freertos_fat.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -120,8 +122,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	freertos_fat.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	freertos_fat.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

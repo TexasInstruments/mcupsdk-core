@@ -73,6 +73,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM263PX \
 	-DMPU_FREERTOS \
+	-DOS_FREERTOS_MPU \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -115,8 +116,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
+	-lboard.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -129,8 +130,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
+	board.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

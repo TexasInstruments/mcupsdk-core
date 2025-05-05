@@ -50,6 +50,7 @@
             -Wno-unused-function
             -DSOC_AM64X
             -DTINYUSB_INTEGRATION
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -80,8 +81,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am64x.r5f.ti-arm-clang.debug.lib
-                -lboard.am64x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am64x.r5f.ti-arm-clang.debug.lib
+                -lboard.am64x.r5f.ti-arm-clang.nortos.debug.lib
+                -ldrivers.am64x.r5f.ti-arm-clang.nortos.debug.lib
                 -lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.debug.lib
                 -lusbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
@@ -94,8 +95,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am64x.r5f.ti-arm-clang.release.lib
-                -lboard.am64x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am64x.r5f.ti-arm-clang.release.lib
+                -lboard.am64x.r5f.ti-arm-clang.nortos.release.lib
+                -ldrivers.am64x.r5f.ti-arm-clang.nortos.release.lib
                 -lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.release.lib
                 -lusbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.release.lib
                 -llibc.a

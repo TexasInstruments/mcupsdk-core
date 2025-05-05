@@ -37,6 +37,7 @@
             -v4
             -DSOC_AM263X
             -DENABLE_ENHANCED_SERIAL_MESSAGE
+            -DOS_FW
         "
         linkerBuildOptions="
             -m=sent_decoder_using_iep_capture_enhanced_serial_msg.${ConfigName}.map

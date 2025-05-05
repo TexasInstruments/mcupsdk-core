@@ -59,10 +59,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53 \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-a53+fp+simd \
@@ -97,10 +99,10 @@ LIBS_PATH_common = \
 	-L$(CGT_GCC_AARCH64_PATH)/lib \
 
 LIBS_common = \
-	-l:drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib \
-	-l:freertos_fat.am64x.a53.gcc-aarch64.${ConfigName}.lib \
+	-l:drivers.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
+	-l:freertos_fat.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 	-l:freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
-	-l:unity.am64x.a53.gcc-aarch64.${ConfigName}.lib \
+	-l:unity.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-Wl,-static \
@@ -114,10 +116,10 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib \
-	freertos_fat.am64x.a53.gcc-aarch64.${ConfigName}.lib \
+	drivers.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
+	freertos_fat.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 	freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
-	unity.am64x.a53.gcc-aarch64.${ConfigName}.lib \
+	unity.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

@@ -66,10 +66,14 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/test/drivers/i2c/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM263PX \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -115,11 +119,11 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lpmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lpmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -132,11 +136,11 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	pmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	pmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

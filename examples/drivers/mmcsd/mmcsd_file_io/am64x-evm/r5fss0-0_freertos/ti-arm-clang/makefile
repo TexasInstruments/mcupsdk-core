@@ -61,10 +61,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -107,8 +109,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lfreertos_fat.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lfreertos_fat.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -121,8 +123,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	freertos_fat.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	freertos_fat.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

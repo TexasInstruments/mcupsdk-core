@@ -70,6 +70,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM263PX \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -114,10 +115,10 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lfreertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lpmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lpmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-ldrivers.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lfreertos_fat.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lpmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -130,10 +131,10 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	pmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	drivers.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	freertos_fat.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	pmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

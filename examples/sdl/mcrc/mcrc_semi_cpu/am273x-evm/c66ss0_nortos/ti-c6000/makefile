@@ -65,6 +65,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM273X \
 	-DC66_INPUTS \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mv6600 \
@@ -98,9 +99,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-ldrivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-lboard.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-lsdl.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-ldrivers.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
+	-lboard.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
+	-lsdl.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -112,9 +113,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	drivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	board.am273x.c66.ti-c6000.${ConfigName}.lib \
-	sdl.am273x.c66.ti-c6000.${ConfigName}.lib \
+	drivers.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
+	board.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
+	sdl.am273x.c66.ti-c6000.nortos.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \

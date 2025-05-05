@@ -79,6 +79,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -122,9 +123,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -137,9 +138,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am64x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

@@ -62,6 +62,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-m4 \
@@ -102,7 +103,7 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am243x.m4f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.m4f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am243x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -114,7 +115,7 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am243x.m4f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.m4f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am243x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

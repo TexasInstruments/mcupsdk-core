@@ -31,13 +31,13 @@ help:
 	@echo  .
 	@echo  Library build targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang unity_m4f.ti-arm-clang unity_a53.gcc-aarch64
-	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang.nortos unity_r5f.ti-arm-clang.freertos unity_m4f.ti-arm-clang.nortos unity_m4f.ti-arm-clang.freertos unity_a53.gcc-aarch64.nortos unity_a53.gcc-aarch64.freertos unity_a53.gcc-aarch64.freertos-smp
+	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang.nortos doxy_samples_r5f.ti-arm-clang.freertos
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang_clean unity_m4f.ti-arm-clang_clean unity_a53.gcc-aarch64_clean
-	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang.nortos_clean unity_r5f.ti-arm-clang.freertos_clean unity_m4f.ti-arm-clang.nortos_clean unity_m4f.ti-arm-clang.freertos_clean unity_a53.gcc-aarch64.nortos_clean unity_a53.gcc-aarch64.freertos_clean unity_a53.gcc-aarch64.freertos-smp_clean
+	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang.nortos_clean doxy_samples_r5f.ti-arm-clang.freertos_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -224,8 +224,8 @@ help:
 	@echo  .
 
 # Various Component Targets
-BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_m4f.ti-arm-clang unity_a53.gcc-aarch64
-BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
+BUILD_COMBO_unity = unity_r5f.ti-arm-clang.nortos unity_r5f.ti-arm-clang.freertos unity_m4f.ti-arm-clang.nortos unity_m4f.ti-arm-clang.freertos unity_a53.gcc-aarch64.nortos unity_a53.gcc-aarch64.freertos unity_a53.gcc-aarch64.freertos-smp
+BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos doxy_samples_r5f.ti-arm-clang.freertos
 
 
 # Combine all Components
@@ -255,8 +255,8 @@ $(BUILD_COMBO_doxy_samples):
 
 
 # Various Component Clean Targets
-BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_m4f.ti-arm-clang_clean unity_a53.gcc-aarch64_clean
-BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang.nortos_clean unity_r5f.ti-arm-clang.freertos_clean unity_m4f.ti-arm-clang.nortos_clean unity_m4f.ti-arm-clang.freertos_clean unity_a53.gcc-aarch64.nortos_clean unity_a53.gcc-aarch64.freertos_clean unity_a53.gcc-aarch64.freertos-smp_clean
+BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_clean doxy_samples_r5f.ti-arm-clang.freertos_clean
 
 
 # Combine all Components Clean
@@ -280,8 +280,8 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 
 
 # Various Component Scrub Targets
-BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_m4f.ti-arm-clang_scrub unity_a53.gcc-aarch64_scrub_scrub
-BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang.nortos_scrub unity_r5f.ti-arm-clang.freertos_scrub unity_m4f.ti-arm-clang.nortos_scrub unity_m4f.ti-arm-clang.freertos_scrub unity_a53.gcc-aarch64.nortos_scrub unity_a53.gcc-aarch64.freertos_scrub unity_a53.gcc-aarch64.freertos-smp_scrub_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_scrub doxy_samples_r5f.ti-arm-clang.freertos_scrub_scrub
 
 
 # Combine all Components Scrub Targets

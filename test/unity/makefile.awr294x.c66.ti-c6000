@@ -65,7 +65,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/awr294x/ti-c6000/$(PROFILE)/c66/unity/
+OBJDIR := obj/am273x/ti-c6000/$(PROFILE)/c66/unity/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 OBJS += $(ASMEXTNFILES:%.asm=%.obj)

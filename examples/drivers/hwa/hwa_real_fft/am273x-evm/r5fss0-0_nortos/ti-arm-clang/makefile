@@ -64,6 +64,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM273X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -106,8 +107,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am273x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lboard.am273x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -120,8 +121,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am273x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	board.am273x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

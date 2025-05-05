@@ -103,6 +103,7 @@ DEFINES_common := \
 	-DSOC_AM263X \
 	-DSUBSYS_MSS \
 	-DR5F0_INPUTS \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -146,9 +147,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lsdl.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -161,9 +162,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	sdl.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

@@ -36,6 +36,7 @@
             -DSLICE0
             -v4
             -DSOC_AM263X
+            -DOS_FW
         "
         linkerBuildOptions="
             -m=sent_decoder_using_iep_capture.${ConfigName}.map

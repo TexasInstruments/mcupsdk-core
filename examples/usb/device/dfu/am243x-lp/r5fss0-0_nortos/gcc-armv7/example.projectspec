@@ -54,6 +54,7 @@
             -ffunction-sections
             -DSOC_AM243X
             -DTINYUSB_INTEGRATION
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -L${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -91,8 +92,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.r5f.gcc-armv7.debug.lib
-                -lboard.am243x.r5f.gcc-armv7.debug.lib
-                -ldrivers.am243x.r5f.gcc-armv7.debug.lib
+                -lboard.am243x.r5f.gcc-armv7.nortos.debug.lib
+                -ldrivers.am243x.r5f.gcc-armv7.nortos.debug.lib
                 -lusbd_cdn_nortos.am243x.r5f.gcc-armv7.debug.lib
                 -lusbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.debug.lib
             "
@@ -103,8 +104,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.r5f.gcc-armv7.release.lib
-                -lboard.am243x.r5f.gcc-armv7.release.lib
-                -ldrivers.am243x.r5f.gcc-armv7.release.lib
+                -lboard.am243x.r5f.gcc-armv7.nortos.release.lib
+                -ldrivers.am243x.r5f.gcc-armv7.nortos.release.lib
                 -lusbd_cdn_nortos.am243x.r5f.gcc-armv7.release.lib
                 -lusbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.release.lib
             "

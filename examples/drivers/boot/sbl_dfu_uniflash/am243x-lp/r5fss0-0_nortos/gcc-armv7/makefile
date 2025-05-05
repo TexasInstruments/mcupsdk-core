@@ -59,6 +59,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM243X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -101,9 +102,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:middleware.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	-l:board.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	-l:middleware.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
 	-l:usbd_cdn_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:usbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 
@@ -123,9 +124,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	middleware.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	board.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	middleware.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
 	usbd_cdn_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	usbd_tusb_dfu_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 

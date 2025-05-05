@@ -36,6 +36,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53
             -mcpu=cortex-a53+fp+simd
             -mabi=lp64
             -mcmodel=large
@@ -51,6 +52,7 @@
             -fdata-sections
             -ffunction-sections
             -DSOC_AM64X
+            -DOS_FREERTOS
         "
         linkerBuildOptions="
             -L${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -82,8 +84,8 @@
                 -D_DEBUG_=1
             "
             linkerBuildOptions="
-                -ldrivers.am64x.a53.gcc-aarch64.debug.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.debug.lib
+                -ldrivers.am64x.a53.gcc-aarch64.freertos.debug.lib
+                -lfreertos_fat.am64x.a53.gcc-aarch64.freertos.debug.lib
                 -lfreertos.am64x.a53.gcc-aarch64.debug.lib
             "
         ></configuration>
@@ -92,8 +94,8 @@
                 -O2
             "
             linkerBuildOptions="
-                -ldrivers.am64x.a53.gcc-aarch64.release.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.release.lib
+                -ldrivers.am64x.a53.gcc-aarch64.freertos.release.lib
+                -lfreertos_fat.am64x.a53.gcc-aarch64.freertos.release.lib
                 -lfreertos.am64x.a53.gcc-aarch64.release.lib
             "
         ></configuration>

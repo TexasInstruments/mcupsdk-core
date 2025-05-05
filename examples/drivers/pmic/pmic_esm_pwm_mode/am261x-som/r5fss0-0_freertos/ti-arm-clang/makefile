@@ -70,6 +70,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM261X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -114,10 +115,10 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lpmic_blackbird.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lpmic_blackbird.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lsdl.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -130,10 +131,10 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	pmic_blackbird.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	pmic_blackbird.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	sdl.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

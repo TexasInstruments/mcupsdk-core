@@ -36,6 +36,7 @@
             -DSLICE0
             -v4
             -DSOC_AM64X
+            -DOS_FW
         "
         linkerBuildOptions="
             -m=empty.${ConfigName}.map

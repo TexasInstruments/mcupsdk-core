@@ -69,6 +69,7 @@ DEFINES_common := \
 	-DSOC_AM243X \
 	-DAPP_MAIN_CORE \
 	-DAPP_ENABLE_INA_CURRENT_MONITOR \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -111,8 +112,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lcmsis.am243x.r5f.ti-arm-clang.release.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lcmsis.am243x.r5f.ti-arm-clang.nortos.release.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -125,8 +126,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	cmsis.am243x.r5f.ti-arm-clang.release.lib \
+	drivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	cmsis.am243x.r5f.ti-arm-clang.nortos.release.lib \
 	libc.a \
 	libsysbm.a \
 

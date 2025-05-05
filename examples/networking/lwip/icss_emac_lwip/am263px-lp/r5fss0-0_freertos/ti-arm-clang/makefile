@@ -86,6 +86,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM263PX \
 	-DAM263PX_LP \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -131,10 +132,10 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-licss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-licss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-licss_emac.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-licss_emac_lwip_if.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -150,10 +151,10 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	icss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	icss_emac.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	icss_emac_lwip_if.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	lwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	lwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \

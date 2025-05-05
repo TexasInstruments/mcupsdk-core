@@ -60,6 +60,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -102,8 +103,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lboard.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -116,8 +117,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	board.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

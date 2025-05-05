@@ -70,10 +70,14 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/mcrc/mcrcUt/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM263X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -117,9 +121,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lsdl.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -132,9 +136,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	sdl.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

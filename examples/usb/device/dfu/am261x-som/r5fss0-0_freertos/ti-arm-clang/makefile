@@ -73,6 +73,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM261X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_FREERTOS \
 
 CFLAGS_release := \
 	-Os \
@@ -118,8 +119,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-lusbd_synp_freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_tusb_dfu_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -134,8 +135,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	usbd_synp_freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_tusb_dfu_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \

@@ -56,6 +56,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -96,9 +97,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:mathlib.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	-l:board.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	-l:mathlib.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -116,9 +117,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	mathlib.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	board.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
+	mathlib.am243x.r5f.gcc-armv7.nortos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \

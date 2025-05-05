@@ -48,6 +48,7 @@
             -fdata-sections
             -ffunction-sections
             -DSOC_AM64X
+            -DOS_FREERTOS_SMP
         "
         linkerBuildOptions="
             -L${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -80,8 +81,8 @@
             "
             linkerBuildOptions="
                 -lfreertos.am64x.a53-smp.gcc-aarch64.debug.lib
-                -ldrivers.am64x.a53.gcc-aarch64.debug.lib
-                -lboard.am64x.a53.gcc-aarch64.debug.lib
+                -ldrivers.am64x.a53.gcc-aarch64.freertos-smp.debug.lib
+                -lboard.am64x.a53.gcc-aarch64.freertos-smp.debug.lib
             "
         ></configuration>
         <configuration name="Release"
@@ -90,8 +91,8 @@
             "
             linkerBuildOptions="
                 -lfreertos.am64x.a53-smp.gcc-aarch64.release.lib
-                -ldrivers.am64x.a53.gcc-aarch64.release.lib
-                -lboard.am64x.a53.gcc-aarch64.release.lib
+                -ldrivers.am64x.a53.gcc-aarch64.freertos-smp.release.lib
+                -lboard.am64x.a53.gcc-aarch64.freertos-smp.release.lib
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />

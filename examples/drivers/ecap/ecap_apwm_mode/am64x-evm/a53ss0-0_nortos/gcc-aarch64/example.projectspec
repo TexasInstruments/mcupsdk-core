@@ -46,6 +46,7 @@
             -ffunction-sections
             -Wno-implicit-function-declaration
             -DSOC_AM64X
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -L${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -77,7 +78,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am64x.a53.gcc-aarch64.debug.lib
-                -ldrivers.am64x.a53.gcc-aarch64.debug.lib
+                -ldrivers.am64x.a53.gcc-aarch64.nortos.debug.lib
             "
         ></configuration>
         <configuration name="Release"
@@ -86,7 +87,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am64x.a53.gcc-aarch64.release.lib
-                -ldrivers.am64x.a53.gcc-aarch64.release.lib
+                -ldrivers.am64x.a53.gcc-aarch64.nortos.release.lib
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />

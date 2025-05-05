@@ -70,6 +70,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM261X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_NORTOS \
 
 CFLAGS_release := \
 	-Os \
@@ -115,8 +116,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lusbd_synp_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_tusb_cdc_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -131,8 +132,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	usbd_synp_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_tusb_cdc_nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \

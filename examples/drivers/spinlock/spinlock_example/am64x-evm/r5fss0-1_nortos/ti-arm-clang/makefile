@@ -58,6 +58,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -99,7 +100,7 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -112,7 +113,7 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

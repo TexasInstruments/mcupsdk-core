@@ -67,6 +67,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM65X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -110,9 +111,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lfreertos_fat.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lfreertos_fat.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lunity.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -125,9 +126,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	freertos_fat.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am65x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	freertos_fat.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	unity.am65x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -174,7 +175,7 @@ endif
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: am65x:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
-	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
 

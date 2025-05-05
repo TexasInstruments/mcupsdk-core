@@ -42,6 +42,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM273X
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -74,8 +75,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am273x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am273x.r5f.ti-arm-clang.debug.lib
-                -lboard.am273x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.nortos.debug.lib
+                -lboard.am273x.r5f.ti-arm-clang.nortos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -88,8 +89,8 @@
             "
             linkerBuildOptions="
                 -lnortos.am273x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am273x.r5f.ti-arm-clang.release.lib
-                -lboard.am273x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.nortos.release.lib
+                -lboard.am273x.r5f.ti-arm-clang.nortos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

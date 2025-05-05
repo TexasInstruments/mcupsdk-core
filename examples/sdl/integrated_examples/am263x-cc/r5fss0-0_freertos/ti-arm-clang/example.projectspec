@@ -48,6 +48,7 @@
             -DSOC_AM263X
             -DSUBSYS_MSS
             -DR5F0_INPUTS
+            -DOS_FREERTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -77,9 +78,9 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.debug.lib
-                -lboard.am263x.r5f.ti-arm-clang.debug.lib
-                -lsdl.am263x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am263x.r5f.ti-arm-clang.freertos.debug.lib
+                -lboard.am263x.r5f.ti-arm-clang.freertos.debug.lib
+                -lsdl.am263x.r5f.ti-arm-clang.freertos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -90,9 +91,9 @@
             "
             linkerBuildOptions="
                 -lfreertos.am263x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.release.lib
-                -lboard.am263x.r5f.ti-arm-clang.release.lib
-                -lsdl.am263x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am263x.r5f.ti-arm-clang.freertos.release.lib
+                -lboard.am263x.r5f.ti-arm-clang.freertos.release.lib
+                -lsdl.am263x.r5f.ti-arm-clang.freertos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

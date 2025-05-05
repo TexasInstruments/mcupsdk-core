@@ -31,13 +31,13 @@ help:
 	@echo  .
 	@echo  Library build targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am273x unity_r5f.ti-arm-clang unity_c66.ti-c6000
-	@echo  $(MAKE) -s -f makefile.am273x doxy_samples_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x unity_r5f.ti-arm-clang.nortos unity_r5f.ti-arm-clang.freertos unity_c66.ti-c6000.nortos unity_c66.ti-c6000.freertos
+	@echo  $(MAKE) -s -f makefile.am273x doxy_samples_r5f.ti-arm-clang.nortos doxy_samples_r5f.ti-arm-clang.freertos
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am273x unity_r5f.ti-arm-clang_clean unity_c66.ti-c6000_clean
-	@echo  $(MAKE) -s -f makefile.am273x doxy_samples_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x unity_r5f.ti-arm-clang.nortos_clean unity_r5f.ti-arm-clang.freertos_clean unity_c66.ti-c6000.nortos_clean unity_c66.ti-c6000.freertos_clean
+	@echo  $(MAKE) -s -f makefile.am273x doxy_samples_r5f.ti-arm-clang.nortos_clean doxy_samples_r5f.ti-arm-clang.freertos_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -234,8 +234,8 @@ help:
 	@echo  .
 
 # Various Component Targets
-BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_c66.ti-c6000
-BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
+BUILD_COMBO_unity = unity_r5f.ti-arm-clang.nortos unity_r5f.ti-arm-clang.freertos unity_c66.ti-c6000.nortos unity_c66.ti-c6000.freertos
+BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos doxy_samples_r5f.ti-arm-clang.freertos
 
 
 # Combine all Components
@@ -265,8 +265,8 @@ $(BUILD_COMBO_doxy_samples):
 
 
 # Various Component Clean Targets
-BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_c66.ti-c6000_clean
-BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang.nortos_clean unity_r5f.ti-arm-clang.freertos_clean unity_c66.ti-c6000.nortos_clean unity_c66.ti-c6000.freertos_clean
+BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_clean doxy_samples_r5f.ti-arm-clang.freertos_clean
 
 
 # Combine all Components Clean
@@ -290,8 +290,8 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 
 
 # Various Component Scrub Targets
-BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_c66.ti-c6000_scrub_scrub
-BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang.nortos_scrub unity_r5f.ti-arm-clang.freertos_scrub unity_c66.ti-c6000.nortos_scrub unity_c66.ti-c6000.freertos_scrub_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_scrub doxy_samples_r5f.ti-arm-clang.freertos_scrub_scrub
 
 
 # Combine all Components Scrub Targets

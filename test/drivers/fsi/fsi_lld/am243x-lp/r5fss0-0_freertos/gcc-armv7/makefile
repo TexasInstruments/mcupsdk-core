@@ -62,6 +62,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -101,8 +102,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:unity.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	-l:unity.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -120,8 +121,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	unity.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	unity.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

@@ -81,6 +81,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM261X \
 	-DR5F0_0_INPUTS \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -124,9 +125,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lunity.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lsdl.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -139,9 +140,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	unity.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	sdl.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

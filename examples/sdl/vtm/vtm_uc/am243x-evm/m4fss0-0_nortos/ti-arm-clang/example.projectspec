@@ -43,6 +43,7 @@
             -Wno-unused-function
             -DSOC_AM243X
             -DM4F_CORE
+            -DOS_NORTOS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -71,9 +72,9 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.m4f.ti-arm-clang.debug.lib
-                -ldrivers.am243x.m4f.ti-arm-clang.debug.lib
-                -lboard.am243x.m4f.ti-arm-clang.debug.lib
-                -lsdl.am243x.m4f.ti-arm-clang.debug.lib
+                -ldrivers.am243x.m4f.ti-arm-clang.nortos.debug.lib
+                -lboard.am243x.m4f.ti-arm-clang.nortos.debug.lib
+                -lsdl.am243x.m4f.ti-arm-clang.nortos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -84,9 +85,9 @@
             "
             linkerBuildOptions="
                 -lnortos.am243x.m4f.ti-arm-clang.release.lib
-                -ldrivers.am243x.m4f.ti-arm-clang.release.lib
-                -lboard.am243x.m4f.ti-arm-clang.release.lib
-                -lsdl.am243x.m4f.ti-arm-clang.release.lib
+                -ldrivers.am243x.m4f.ti-arm-clang.nortos.release.lib
+                -lboard.am243x.m4f.ti-arm-clang.nortos.release.lib
+                -lsdl.am243x.m4f.ti-arm-clang.nortos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

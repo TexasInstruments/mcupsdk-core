@@ -106,8 +106,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lunity.am64x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -119,8 +119,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
-	unity.am64x.m4f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
+	unity.am64x.m4f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
