@@ -49,88 +49,10 @@ extern "C"
 #endif
 
 /**
- * \brief Driver implementation to open a specific DMA driver channel - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param uartHandle    [in] UART Handle
- * \param uartDmaArgs   [in] DMA specific arguments, obtained from the config
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*UART_dmaOpenFxn)(UART_Handle uartHandle, void *uartDmaArgs);
-
-/**
- * \brief Driver implementation to do a DMA read using a specific DMA driver - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param obj           [in] Pointer to UART object
- * \param attrs         [in] Pointer to UART attributes.
- * \param transaction   [in] Pointer to #UART_Transaction. This parameter can't be NULL
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*UART_dmaTransferReadFxn)(UART_Object *obj, const UART_Attrs *attrs,
-                                           UART_Transaction *transaction);
-
-/**
- * \brief Driver implementation to do a DMA write using a specific DMA driver - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param obj           [in] Pointer to UART object.
- * \param attrs         [in] Pointer to UART attributes.
- * \param transaction   [in] Pointer to #UART_Transaction. This parameter can't be NULL
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*UART_dmaTransferWriteFxn)(UART_Object *obj, const UART_Attrs *attrs,
-                                            UART_Transaction *transaction);
-
-/**
- * \brief Driver implementation to close a specific DMA driver channel - UDMA, EDMA etc
- *
- * Typically this callback is hidden from the end application and is implemented
- * when a new DMA driver needs to be supported.
- *
- * \param handle   [in] UART handle returned from \ref UART_open
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*UART_dmaCloseFxn)(UART_Handle handle);
-
-/**
- * \brief Driver implementation to diisable a specific DMA driver channel - UDMA, EDMA etc
- *
- * \param handle        [in] UART handle returned from \ref UART_open
- * \param isChannelTx   [in] Variable to indicate if it is TX/RX Channel
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-typedef int32_t (*UART_dmaDisableChannelFxn)(UART_Handle handle, uint32_t isChannelTx);
-
-/**
- * \brief Driver implementation callbacks
- */
-typedef struct UART_DmaFxns_s
-{
-	UART_dmaOpenFxn                dmaOpenFxn;
-    UART_dmaTransferWriteFxn       dmaTransferWriteFxn;
-    UART_dmaTransferReadFxn        dmaTransferReadFxn;
-	UART_dmaCloseFxn               dmaCloseFxn;
-	UART_dmaDisableChannelFxn      dmaDisableChannelFxn;
-} UART_DmaFxns;
-
-/**
  * \brief UART DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
  */
 typedef struct UART_DmaConfig_s
 {
-	UART_DmaFxns *fxns;
 	/** Registered callbacks for a particular DMA driver. This will be set by Sysconfig depending on the DMA driver selected */
 	void *uartDmaArgs;
 	/** Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
