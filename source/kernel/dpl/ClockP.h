@@ -39,6 +39,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
+#include <kernel/dpl/TimerP.h>
 
 /**
  * \defgroup KERNEL_DPL_CLOCK APIs for Clock
@@ -50,24 +51,43 @@ extern "C" {
  */
 
 /**
- * \brief Max size of clock object across no-RTOS and all OS's
- */
-#if defined (OS_SAFERTOS)
-#define ClockP_OBJECT_SIZE_MAX    (120u)
-#else
-#define ClockP_OBJECT_SIZE_MAX    (104u)
-#endif
-/**
  * \brief Opaque clock object used with the clock APIs
  */
-typedef struct ClockP_Object_ {
-
-    /* uintptr_t translates to uint64_t for A53 and uint32_t for R5 and M4 */
-    /* This accounts for the 64bit pointer in A53 and 32bit pointer in R5 and M4 */
-    uintptr_t rsv[ClockP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
+#if defined (OS_NORTOS)
+typedef struct ClockP_Object_
+{
+    void (*callback)(struct ClockP_Object_ *obj, void *args);
+    void *args;
+    uint32_t startTimeout;  /* timeout passed to ClockP_construct() */
+    uint32_t timeout;
+    uint32_t period;
+    struct ClockP_Object_ *next;
+} ClockP_Object;
+#elif defined (OS_FREERTOS) || defined (OS_FREERTOS_SMP) || defined (OS_FREERTOS_MPU)
+#include <FreeRTOS.h>
+#include <timers.h>
+typedef struct ClockP_Object_
+{
+    StaticTimer_t timerObj;
+    TimerHandle_t timerHndl;
+    void (*callback)(struct ClockP_Object_ *obj, void *args);
+    void *args;
 
 } ClockP_Object;
-
+#elif defined (OS_SAFERTOS)
+#include <SafeRTOS.h>
+#include <timers.h>
+typedef struct ClockP_Object_
+{
+    timerInitParametersType timerParameters;
+    timerControlBlockType timerControlBlock;
+    timerHandleType timerHndl;
+    void (*callback)(struct ClockP_Object_ *obj, void *args);
+    void *args;
+} ClockP_Object;
+#else 
+#error "Define OS_NORTOS, OS_FREERTOS or OS_SAFERTOS"
+#endif
 
 /**
  * \brief ClockP module config, set as part of SysConfig, not to be set by end-users directly

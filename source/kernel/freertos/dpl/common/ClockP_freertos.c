@@ -33,14 +33,7 @@
 #include <kernel/freertos/dpl/common/ClockP_freertos_priv.h>
 #include <kernel/dpl/TimerP.h>
 
-typedef struct ClockP_Struct_
-{
-    StaticTimer_t timerObj;
-    TimerHandle_t timerHndl;
-    ClockP_FxnCallback callback;
-    void *args;
 
-} ClockP_Struct;
 
 
 static void ClockP_sleepTicks(uint32_t ticks);
@@ -61,21 +54,19 @@ void ClockP_timerTickIsr(void *args)
 
 void ClockP_timerCallbackFunction( TimerHandle_t xTimer )
 {
-    ClockP_Struct *pTimer = (ClockP_Struct *) pvTimerGetTimerID(xTimer);
+    ClockP_Object *pTimer = (ClockP_Object *) pvTimerGetTimerID(xTimer);
 
     if((pTimer != NULL) && (pTimer->callback) )
     {
-        pTimer->callback((ClockP_Object*)pTimer, pTimer->args);
+        pTimer->callback(pTimer, pTimer->args);
     }
 }
 
 int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
     UBaseType_t uxAutoReload = pdFALSE;
     int32_t status;
-
-    DebugP_assert(sizeof(ClockP_Struct) <= sizeof(ClockP_Object));
 
     if(params->period == 0U)
     {
@@ -117,7 +108,7 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 
 void ClockP_destruct(ClockP_Object *handle)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
 
     (void)xTimerDelete(pTimer->timerHndl, portMAX_DELAY);
 }
@@ -148,7 +139,7 @@ uint32_t ClockP_getTicks(void)
 
 uint32_t ClockP_getTimeout(ClockP_Object *handle)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
     uint32_t value = 0;
 
     if(xTimerIsTimerActive(pTimer->timerHndl) != 0)
@@ -160,7 +151,7 @@ uint32_t ClockP_getTimeout(ClockP_Object *handle)
 
 uint32_t ClockP_isActive(ClockP_Object *handle)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
 
     return (uint32_t)xTimerIsTimerActive(pTimer->timerHndl);
 }
@@ -178,7 +169,7 @@ void ClockP_Params_init(ClockP_Params *params)
 
 void ClockP_setTimeout(ClockP_Object *handle, uint32_t timeout)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
 
     if(HwiP_inISR() != 0U)
     {
@@ -195,7 +186,7 @@ void ClockP_setTimeout(ClockP_Object *handle, uint32_t timeout)
 
 void ClockP_start(ClockP_Object *handle)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
 
     if(HwiP_inISR() != 0U)
     {
@@ -212,7 +203,7 @@ void ClockP_start(ClockP_Object *handle)
 
 void ClockP_stop(ClockP_Object *handle)
 {
-    ClockP_Struct *pTimer = (ClockP_Struct*)handle;
+    ClockP_Object *pTimer = handle;
 
     if(HwiP_inISR() != 0U)
     {

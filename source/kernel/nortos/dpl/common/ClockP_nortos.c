@@ -33,13 +33,13 @@
 #include "ClockP_nortos_priv.h"
 
 static void ClockP_sleepTicks(uint32_t ticks);
-static void ClockP_addToList(ClockP_Struct *obj);
+static void ClockP_addToList(ClockP_Object *obj);
 
 ClockP_Control gClockCtrl;
 
 void ClockP_timerTickIsr(void *args)
 {
-    ClockP_Struct *obj, *temp;
+    ClockP_Object *obj, *temp;
 
     /* increment the systick counter */
     gClockCtrl.ticks++;
@@ -74,7 +74,7 @@ void ClockP_timerTickIsr(void *args)
 
         if(obj->callback!=NULL)
         {
-            (obj->callback)((ClockP_Object*)obj, obj->args);
+            (obj->callback)(obj, obj->args);
         }
 		obj = gClockCtrl.list;
     }
@@ -83,9 +83,9 @@ void ClockP_timerTickIsr(void *args)
 
 int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 {
-    ClockP_Struct *obj = (ClockP_Struct *)handle;
+    ClockP_Object *obj = (ClockP_Object *)handle;
 
-    DebugP_assert(sizeof(ClockP_Struct) < sizeof(ClockP_Object));
+    DebugP_assert(sizeof(ClockP_Object) < sizeof(ClockP_Object));
 
     /* populate the new clock instance */
     obj->callback = params->callback;
@@ -104,8 +104,8 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 
 void ClockP_destruct(ClockP_Object *handle)
 {
-    ClockP_Struct *obj = (ClockP_Struct*) handle;
-    ClockP_Struct *temp;
+    ClockP_Object *obj = handle;
+    ClockP_Object *temp;
     uintptr_t   key;
 
     key = HwiP_disable();
@@ -152,7 +152,7 @@ uint32_t ClockP_getTicks(void)
 
 uint32_t ClockP_getTimeout(ClockP_Object *handle)
 {
-    ClockP_Struct *obj = (ClockP_Struct *)handle;
+    ClockP_Object *obj = (ClockP_Object *)handle;
 	uint32_t status = 0;
     if (obj->timeout > 0U) {
         status = (obj->timeout - (uint32_t)gClockCtrl.ticks);
@@ -165,7 +165,7 @@ uint32_t ClockP_getTimeout(ClockP_Object *handle)
 
 uint32_t ClockP_isActive(ClockP_Object *handle)
 {
-    ClockP_Struct *obj = (ClockP_Struct *)handle;
+    ClockP_Object *obj = (ClockP_Object *)handle;
 	uint32_t result=0;
     if(obj->timeout > 0U)
     {
@@ -186,14 +186,14 @@ void ClockP_Params_init(ClockP_Params *params)
 
 void ClockP_setTimeout(ClockP_Object *handle, uint32_t timeout)
 {
-    ClockP_Struct *obj = (ClockP_Struct*)handle;
+    ClockP_Object *obj = handle;
 
     obj->startTimeout = timeout;
 }
 
 void ClockP_start(ClockP_Object *handle)
 {
-    ClockP_Struct *obj = (ClockP_Struct*)handle;
+    ClockP_Object *obj = handle;
     uintptr_t   key;
 
     /* protect the context by disable the interrupt */
@@ -213,8 +213,8 @@ void ClockP_start(ClockP_Object *handle)
 
 void ClockP_stop(ClockP_Object *handle)
 {
-    ClockP_Struct *obj = (ClockP_Struct*)handle;
-    ClockP_Struct *temp;
+    ClockP_Object *obj = handle;
+    ClockP_Object *temp;
     uintptr_t   key;
 
     /* protect the context by disable the interrupt */
@@ -308,11 +308,11 @@ uint64_t ClockP_getTimeUsec(void)
 /*
  *  Add clock to control list.  Call with interrupts disabled.
  */
-static void ClockP_addToList(ClockP_Struct *obj)
+static void ClockP_addToList(ClockP_Object *obj)
 {
     /* check if the linked list exists */
     if (gClockCtrl.list != NULL) {
-        ClockP_Struct *temp = gClockCtrl.list;
+        ClockP_Object *temp = gClockCtrl.list;
 
         if (temp->timeout > obj->timeout) {
             obj->next = gClockCtrl.list;

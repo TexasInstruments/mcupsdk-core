@@ -46,20 +46,12 @@ extern "C"
 #include <kernel/dpl/TimerP.h>
 #include <drivers/hw_include/csl_types.h>
 
-typedef struct ClockP_Struct_
-{
-    ClockP_FxnCallback callback;
-    void *args;
-    uint32_t startTimeout;  /* timeout passed to ClockP_construct() */
-    uint32_t timeout;
-    uint32_t period;
-    struct ClockP_Struct_ *next;
-} ClockP_Struct;
+
 
 typedef struct ClockP_Control_
 {
     uint64_t ticks;
-    ClockP_Struct *list;
+    ClockP_Object *list;
     uint32_t usecPerTick;
     HwiP_Object timerHwiObj;
     uint32_t timerBaseAddr;
