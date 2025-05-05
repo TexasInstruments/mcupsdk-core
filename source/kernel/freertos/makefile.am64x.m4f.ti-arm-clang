@@ -82,6 +82,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-m4 \
@@ -131,7 +132,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/m4f/freertos/
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/m4f/freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

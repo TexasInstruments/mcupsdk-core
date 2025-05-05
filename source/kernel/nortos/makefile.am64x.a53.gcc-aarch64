@@ -97,7 +97,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/nortos/
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

@@ -87,6 +87,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 
 DEFINES_common := \
     -DSOC_AM64X \
@@ -94,6 +95,7 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=3 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -152,7 +154,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/tsn_gptp-freertos/
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/tsn_gptp-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

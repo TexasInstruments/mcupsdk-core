@@ -38,6 +38,9 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am261x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/enet \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
 
 DEFINES_common := \
     -DSOC_AM261X \
@@ -47,6 +50,7 @@ DEFINES_common := \
     -DENET_CFG_TRACE_LEVEL=3 \
     -DENET_ENABLE_PER_CPSW=1 \
     -DENABLE_ENET_LOG \
+    -DOS_FREERTOS \
 
 DEFINES_debug := \
     -DENET_CFG_DEV_ERROR=1 \
@@ -106,7 +110,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/lwipif-cpsw-freertos/
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/lwipif-cpsw-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

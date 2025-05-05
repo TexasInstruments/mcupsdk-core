@@ -47,6 +47,7 @@ DEFINES_common := \
     -DENET_CFG_TRACE_LEVEL=3 \
     -DENET_ENABLE_PER_ICSSG=1 \
     -DENABLE_ENET_LOG \
+    -DOS_NORTOS \
 
 DEFINES_debug := \
     -DENET_CFG_DEV_ERROR=1 \
@@ -107,7 +108,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/lwipif-icssg-nortos/
+OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/lwipif-icssg-nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

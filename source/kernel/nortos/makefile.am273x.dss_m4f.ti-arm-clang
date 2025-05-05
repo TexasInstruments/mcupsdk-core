@@ -49,6 +49,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM273X \
+    -DOS_NORTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-m4 \
@@ -99,7 +100,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am273x/ti-arm-clang/$(PROFILE)/dss_m4f/nortos/
+OBJDIR := obj/am273x/ti-arm-clang/$(PROFILE)/dss_m4f/nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

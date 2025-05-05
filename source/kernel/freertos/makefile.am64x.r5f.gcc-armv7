@@ -94,6 +94,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -139,7 +140,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/gcc-armv7/$(PROFILE)/r5f/freertos/
+OBJDIR := obj/am64x/gcc-armv7/$(PROFILE)/r5f/freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

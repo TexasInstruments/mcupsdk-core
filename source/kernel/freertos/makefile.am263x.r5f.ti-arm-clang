@@ -96,6 +96,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM263X \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -149,7 +150,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am263x/ti-arm-clang/$(PROFILE)/r5f/freertos/
+OBJDIR := obj/am263x/ti-arm-clang/$(PROFILE)/r5f/freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

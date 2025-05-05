@@ -50,6 +50,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM273X \
+    -DOS_NORTOS \
 
 CFLAGS_common := \
     -mv6600 \
@@ -87,7 +88,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am273x/ti-c6000/$(PROFILE)/c66/nortos/
+OBJDIR := obj/am273x/ti-c6000/$(PROFILE)/c66/nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

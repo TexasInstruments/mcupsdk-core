@@ -7,7 +7,7 @@ export DEVICE ?= am64x
 export API_GUIDE_OUT_DIR=$(MCU_PLUS_SDK_PATH)/docs/api_guide_$(DEVICE)
 
 all:
-	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_$(DOC_COMBO)
+	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_$(DOC_COMBO).freertos
 	$(MKDIR) $(API_GUIDE_OUT_DIR)
 	$(DOXYGEN) doxygen.cfg 2> doxy_warnings_$(DEVICE).txt
 	cd theme && $(COPY) *.png $(API_GUIDE_OUT_DIR)
@@ -15,7 +15,7 @@ all:
 
 
 clean:
-	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_$(DOC_COMBO)_clean
+	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_.free$(DOC_COMBO).freertos_clean
 	$(RMDIR) $(API_GUIDE_OUT_DIR)
 
 help:

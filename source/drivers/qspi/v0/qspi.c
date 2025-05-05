@@ -712,6 +712,6 @@ void QSPI_interruptCallback(void* args)
 void OSPI_phyGetTuningData(uint32_t *tuningData, uint32_t *tuningDataSize)
 {
     /* Dummy function. Turing data not supported for QSPI. */
-    *tuningData = NULL;
+    *tuningData = (uint32_t) NULL;
     *tuningDataSize = 0;
 }

@@ -63,6 +63,7 @@
             -DTWO_PORT_CFG
             -DPTP
             -DSOC_AM261X
+            -DOS_FW
         "
         linkerBuildOptions="
             -m=switch.${ConfigName}.map

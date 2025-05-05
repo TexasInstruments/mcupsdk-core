@@ -128,6 +128,7 @@ DEFINES_common := \
     -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
     -D__STDC_WANT_LIB_EXT1__=1 \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -185,7 +186,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/tsn_uniconf-freertos/
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/tsn_uniconf-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

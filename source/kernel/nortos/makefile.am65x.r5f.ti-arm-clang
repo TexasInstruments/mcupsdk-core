@@ -126,7 +126,7 @@ $(OBJDIR)/%.obj %.obj: %.c
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+	$(CC) -c $(ASMFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 
 all: $(LIBDIR)/$(LIBNAME)
 

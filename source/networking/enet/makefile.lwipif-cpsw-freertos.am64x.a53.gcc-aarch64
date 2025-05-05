@@ -37,6 +37,9 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53 \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53 \
 
 DEFINES_common := \
     -DSOC_AM64X \
@@ -46,6 +49,7 @@ DEFINES_common := \
     -DENET_CFG_TRACE_LEVEL=3 \
     -DENET_ENABLE_PER_CPSW=1 \
     -DENABLE_ENET_LOG \
+    -DOS_FREERTOS \
 
 DEFINES_debug := \
     -DENET_CFG_DEV_ERROR=1 \
@@ -93,7 +97,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/lwipif-cpsw-freertos/
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/lwipif-cpsw-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

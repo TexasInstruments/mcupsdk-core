@@ -54,6 +54,7 @@ DEFINES_common := \
     -DSOC_AM243X \
     -DTINYUSB_INTEGRATION \
     -DCFG_TUSB_OS=OPT_OS_NONE \
+    -DOS_NORTOS \
 
 DEFINES_debug := \
 
@@ -102,7 +103,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/gcc-armv7/$(PROFILE)/r5f/usbd_cdn_nortos/
+OBJDIR := obj/am243x/gcc-armv7/$(PROFILE)/r5f/usbd_cdn_nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

@@ -54,6 +54,7 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=3 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+    -DOS_FREERTOS \
 
 DEFINES_debug := \
     -DENET_DEBUG_MODE \
@@ -113,7 +114,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/enet_cli_freertos/
+OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/enet_cli_freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

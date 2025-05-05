@@ -68,9 +68,13 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53 \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53 \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-a53+fp+simd \
@@ -113,7 +117,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/lwip-contrib-freertos/
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/lwip-contrib-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

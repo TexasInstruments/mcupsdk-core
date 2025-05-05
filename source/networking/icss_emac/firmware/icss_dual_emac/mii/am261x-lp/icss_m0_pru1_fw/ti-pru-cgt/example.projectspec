@@ -63,6 +63,7 @@
             -DICSS_DUAL_EMAC_BUILD
             -DPTP
             -DSOC_AM261X
+            -DOS_FW
         "
         linkerBuildOptions="
             -m=dual_emac.${ConfigName}.map

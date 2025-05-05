@@ -119,6 +119,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/tsnconf/generated \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_unibase \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53 \
 
 DEFINES_common := \
     -DSOC_AM64X \
@@ -127,6 +128,7 @@ DEFINES_common := \
     -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
     -D__STDC_WANT_LIB_EXT1__=1 \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-a53+fp+simd \
@@ -169,7 +171,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/tsn_uniconf-freertos/
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/tsn_uniconf-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)
