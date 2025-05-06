@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -140,7 +140,7 @@ int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle,
 /**
  *  \brief  Function to check for DMA restricted regions.
  *
- *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
+ *  \param  handle  An #GPMC_Handle  returned from an #GPMC_open()
  *
  *  \param  addr  Address to be checked
  *

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,17 +43,17 @@ extern "C"
 #define GPMC_DMA_UDMA_MAX_L0_XFER_SIZE (65536U)
 #define GPMC_DMA_UDMA_XFER_SIZE        (64512U)
 
-typedef struct GpmcDma_UdmaArgs_s
+typedef struct Gpmc_DmaArgs
 {
     void            *drvHandle;
     /**< UDMA driver handle */
     void            *chHandle;
     /**< UDMA channel handle */
-    void            *trpdMem;
+    uint8_t         *trpdMem;
     /**< UDMA TR PD memory pointers */
     uint32_t        trpdMemSize;
     /**< Size of TR PD memory */
-    void            *ringMem;
+    uint8_t         *ringMem;
     /**< UDMA Ring memory pointers */
     uint32_t        ringMemSize;
     /**< Size of Ring Memory */
@@ -62,11 +62,11 @@ typedef struct GpmcDma_UdmaArgs_s
     uint32_t        localEventID;
     /**< local Event ID for BCDMA trigger */
 
-} GpmcDma_UdmaArgs;
+} Gpmc_DmaArgs;
 
-int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs);
-int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs);
-int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
+int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs);
+int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* gpmcDmaArgs);
+int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 
 #ifdef __cplusplus
 }

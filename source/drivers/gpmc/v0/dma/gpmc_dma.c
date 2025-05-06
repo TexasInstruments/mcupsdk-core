@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,7 +61,7 @@ extern uint32_t gGpmcDmaConfigNum;
 /*                             Function Definitions                           */
 /* ========================================================================== */
 
-GPMC_DmaHandle GPMC_dmaOpen(int32_t index)
+Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index)
 {
 	GPMC_DmaConfig *config = NULL;
 
@@ -80,21 +80,16 @@ GPMC_DmaHandle GPMC_dmaOpen(int32_t index)
 		}
 	}
 
-	return (GPMC_DmaHandle)config;
+	return config->gpmcDmaArgs;
 }
 
-int32_t GPMC_dmaClose(GPMC_DmaHandle handle)
+int32_t GPMC_dmaClose(Gpmc_DmaArgs *gpmcDmaArgs)
 {
 	int32_t status = SystemP_SUCCESS;
 
-	if(handle != NULL)
+	if(gpmcDmaArgs != NULL)
 	{
-		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
-
-		if(config->gpmcDmaArgs)
-		{
-			status = GpmcDma_udmaClose(handle, config->gpmcDmaArgs);
-		}
+		status = GpmcDma_udmaClose(gpmcDmaArgs);
 	}
 	else
 	{
@@ -104,18 +99,13 @@ int32_t GPMC_dmaClose(GPMC_DmaHandle handle)
 	return status;
 }
 
-int32_t GPMC_dmaCopy(GPMC_DmaHandle handle, void* dst, void* src, uint32_t length, uint8_t fifoDrain)
+int32_t GPMC_dmaCopy(Gpmc_DmaArgs *gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain)
 {
 	int32_t status = SystemP_SUCCESS;
 
-	if(handle != NULL)
+	if(gpmcDmaArgs != NULL)
 	{
-		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
-
-		if(config->gpmcDmaArgs)
-		{
-			status = GpmcDma_udmaCopy(config->gpmcDmaArgs, dst, src, length, fifoDrain);
-		}
+		status = GpmcDma_udmaCopy(gpmcDmaArgs, (uint32_t*) dst, (uint32_t*) src, length, fifoDrain);
 	}
 	else
 	{

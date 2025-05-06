@@ -1681,16 +1681,10 @@ index 0000000000..f64559ebab
 +#include <kernel/dpl/CacheP.h>
 +#include <drivers/gpmc.h>
 +
-+static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs);
-+static int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs);
-+static int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
++int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs);
++int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* handle);
++int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 +
-+GPMC_DmaFxns gGpmcDmaUdmaFxns =
-+{
-+    .dmaOpenFxn = GpmcDma_udmaOpen,
-+    .dmaCloseFxn = GpmcDma_udmaClose,
-+    .dmaCopyFxn = GpmcDma_udmaCopy,
-+};
 +
 +static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
 +{
@@ -1705,7 +1699,7 @@ index 0000000000..f64559ebab
 +    uint8_t*            trpdMem;
 +    uint32_t            trpdMemSize;
 +
-+    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
 +
 +    drvHandle   = udmaArgs->drvHandle;
 +    chHandle    = udmaArgs->chHandle;
@@ -1804,7 +1798,7 @@ index 0000000000..f64559ebab
 +    int32_t status = SystemP_SUCCESS;
 +    int32_t udmaStatus = UDMA_SOK;
 +
-+    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
 +
 +    Udma_ChHandle chHandle = udmaArgs->chHandle;
 +
@@ -1836,7 +1830,7 @@ index 0000000000..f64559ebab
 +                                            uint16_t icnt[4], int32_t dim[3], uint8_t fifodrain)
 +{
 +    int32_t status = UDMA_SOK;
-+    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
 +    Udma_ChHandle chHandle = udmaArgs->chHandle;
 +    uint8_t *trpdMem     = (uint8_t *) udmaArgs->trpdMem;
 +    uint32_t trpdMemSize = udmaArgs->trpdMemSize;
@@ -2049,7 +2043,7 @@ index 0000000000..e90f6df8e1
 +    uint32_t        localEventID;
 +    /**< local Event ID for BCDMA trigger */
 +
-+} GpmcDma_UdmaArgs;
++} Gpmc_DmaArgs;
 +
 +extern GPMC_DmaFxns gGpmcDmaUdmaFxns;
 +
@@ -2594,8 +2588,6 @@ index 0000000000..14ba864dad
 +/** \brief Invalid value for params initialisation. */
 +#define GPMC_CMD_INVALID                             (0xFFFFFFFFU)
 +
-+/** \brief A handle that is returned from a #GPMC_open() call */
-+typedef void* GPMC_Handle;
 +
 +/* ========================================================================== */
 +/*                         Structure Declarations                             */
@@ -2724,15 +2716,6 @@ index 0000000000..14ba864dad
 +    /**< Status code set by GPMC read or write transaction */
 +} GPMC_Transaction;
 +
-+/**
-+ *  \brief      The definition of a callback function used by the GPMC driver
-+ *              when used in GPMC_OPERATING_MODE_CALLBACK mode.
-+ *
-+ *  \param      GPMC_Handle          GPMC_Handle
-+ *  \param      GPMC_Transaction*    GPMC_Transaction*
-+ */
-+typedef void (*GPMC_CallbackFxn)(GPMC_Handle handle,
-+                                 GPMC_Transaction * transaction);
 +
 +
 +/**
@@ -2763,8 +2746,6 @@ index 0000000000..14ba864dad
 +    /**< Enable GPMC DMA mode. */
 +    GPMC_TransferMode       transferMode;
 +    /**< Polling, blocking or callback mode . Refer \ref GPMC_TransferMode */
-+    GPMC_CallbackFxn        transferCallBckFunc;
-+    /**< External Callback function pointer*/
 +} GPMC_Params;
 +
 +/**
@@ -2790,10 +2771,6 @@ index 0000000000..14ba864dad
 + */
 +typedef struct GPMC_Object_s {
 +
-+    GPMC_Handle                     handle;
-+    /**< Instance handle */
-+    GPMC_CallbackFxn                transferCallbackFxn;
-+    /**< Callback function pointer */
 +    GPMC_Params                     params;
 +    /**< Driver user configurable params structure */
 +    GPMC_OperatingMode              operMode;
@@ -2971,7 +2948,7 @@ index 0000000000..14ba864dad
 + *
 + *  \pre    GPMC controller has been initialized using #GPMC_init()
 + *
-+ *  \param  index       Index of config to use in the #GPMC_Config array
++ *  \param  index       Index of config to use in the #GPMC_Handle array
 + *  \param  prms  Pointer to parameters #GPMC_Params to open the driver instance.
 + *
 + *  \return A #GPMC_Handle on success or a NULL on an error or if it has been
@@ -3383,8 +3360,7 @@ index 0000000000..2afc4b223a
 +
 +static void GPMC_nandAddressWrite(GPMC_Handle handle, uint32_t address);
 +static void GPMC_nandCommandWrite(GPMC_Handle handle, uint32_t cmd);
-+static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg);
-+static int32_t GPMC_programInstance(GPMC_Config *config);
++static int32_t GPMC_programInstance(GPMC_Handle config);
 +static void GPMC_disableInterupt(uint32_t baseAddr, uint32_t interupt);
 +static void GPMC_enableInterupt(uint32_t baseAddr, uint32_t interupt);
 +static void GPMC_interuptStatusClear(uint32_t baseAddr, uint32_t interupt);
@@ -3396,7 +3372,7 @@ index 0000000000..2afc4b223a
 +static int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle,
 +                                uint32_t timeOut);
 +static uint32_t GPMC_waitPinStatusGet(uint32_t baseAddr, uint32_t pin);
-+static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Config *config,
++static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Handle config,
 +                                uint32_t timeOut);
 +static int32_t GPMC_isDmaRestrictedRegion(GPMC_Handle handle, uint32_t addr);
 +static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mode,
@@ -3459,8 +3435,8 @@ index 0000000000..2afc4b223a
 +
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-+        GPMC_Object *object  = ((GPMC_Config*)handle)->object;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
++        GPMC_Object *object  = ((GPMC_Handle)handle)->object;
 +
 +
 +        /* CONFIG2 reister timing config, no extra delay */
@@ -3532,7 +3508,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        GPMC_Config *config = (GPMC_Config*)handle;
++        GPMC_Handle config = (GPMC_Handle)handle;
 +        const GPMC_HwAttrs *attrs = config->attrs;
 +        GPMC_Object *object = config->object;
 +        /* Set Device type interfaced with GPMC. */
@@ -3555,7 +3531,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        GPMC_Config *config = (GPMC_Config*)handle;
++        GPMC_Handle config = (GPMC_Handle)handle;
 +        const GPMC_HwAttrs *attrs = config->attrs;
 +        GPMC_Object *object = config->object;
 +        /* Set device width interfaced with GPMC. */
@@ -3571,10 +3547,10 @@ index 0000000000..2afc4b223a
 +    return status;
 +}
 +
-+GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
++GPMC_Config GPMC_open(uint32_t index, const GPMC_Params *prms)
 +{
 +    int32_t status = SystemP_SUCCESS;
-+    GPMC_Handle         handle = NULL;
++    GPMC_Config         handle = NULL;
 +    GPMC_Config         *config = NULL;
 +    GPMC_Object         *object = NULL;
 +    const GPMC_HwAttrs  *hwAttrs = NULL;
@@ -3609,7 +3585,7 @@ index 0000000000..2afc4b223a
 +
 +    if(status == SystemP_SUCCESS)
 +    {
-+        object->handle = (GPMC_Handle)config;
++        object->handle = (GPMC_Config)config;
 +
 +        if(prms != NULL)
 +        {
@@ -3673,8 +3649,6 @@ index 0000000000..2afc4b223a
 +            */
 +            status += SemaphoreP_constructBinary(&object->transferComplete, 0);
 +
-+            /* Store internal callback function */
-+            object->params.transferCallBckFunc = &GPMC_transferCallback;
 +        }
 +
 +        if(object->operMode == GPMC_OPERATING_MODE_CALLBACK)
@@ -3687,7 +3661,7 @@ index 0000000000..2afc4b223a
 +    if(status == SystemP_SUCCESS)
 +    {
 +        object->isOpen = 1;
-+        handle = (GPMC_Handle)config;
++        handle = (GPMC_Config)config;
 +    }
 +
 +    SemaphoreP_post(&gGpmcDrvObj.lockObj);
@@ -3697,7 +3671,7 @@ index 0000000000..2afc4b223a
 +    {
 +        if(NULL != config)
 +        {
-+            GPMC_close((GPMC_Handle) config);
++            GPMC_close((GPMC_Config) config);
 +        }
 +    }
 +
@@ -3712,8 +3686,8 @@ index 0000000000..2afc4b223a
 +        GPMC_Object        *object = NULL;
 +        const GPMC_HwAttrs *hwAttrs = NULL;
 +        /* Get the pointer to the object and hwAttrs */
-+        object = ((GPMC_Config*)handle)->object;
-+        hwAttrs = ((GPMC_Config*)handle)->attrs;
++        object = ((GPMC_Handle)handle)->object;
++        hwAttrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /* Disable all interupts associated to GPMC. */
 +        GPMC_disableInterupt(hwAttrs->gpmcBaseAddr,GPMC_FIFOEVENT_INT);
@@ -3766,8 +3740,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
 +
 +        /*Disable and stop the prefetch engine*/
 +        CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_PREFETCH_CONTROL, GPMC_PREFETCH_CONTROL_STARTENGINE, \
@@ -3799,8 +3773,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL && trans != NULL)
 +    {
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +        uint32_t byteCount = trans->count;
 +        uint32_t threshold = 0;
 +
@@ -3889,8 +3863,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL && trans != NULL)
 +    {
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +        uint32_t byteCount = trans->count;
 +        uint32_t threshold = 0;
 +        uint32_t remainBytes = 0;
@@ -3992,7 +3966,7 @@ index 0000000000..2afc4b223a
 +        uint32_t colAddress = 0;
 +        uint32_t rowAddress = 0;
 +
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +
 +        if(hwAttrs->waitPinNum == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
 +        {
@@ -4075,7 +4049,7 @@ index 0000000000..2afc4b223a
 +    if(handle != NULL)
 +    {
 +        /* Set ECC used and unused bytes size in nibbles. */
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +
 +        if (eccSize == GPMC_ECC_SIZE_0)
 +        {
@@ -4112,7 +4086,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +        /* Configure ELM module.*/
 +        ELM_moduleReset(hwAttrs->elmBaseAddr);
 +
@@ -4145,8 +4119,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
 +
 +        /* Select ECC result register */
 +        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCPOINTER, GPMC_ECCPOINTER_RESULT_1);
@@ -4187,7 +4161,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +        /* Enable ECC engine. */
 +        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCPOINTER,
 +                        GPMC_ECCPOINTER_RESULT_1);
@@ -4207,16 +4181,16 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +        /* Clear all the ECC result registers. */
 +        CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCCLEAR,
 +                    CSL_GPMC_ECC_CONTROL_ECCCLEAR_MAX);
 +    }
 +}
 +
-+GPMC_Handle GPMC_getHandle(uint32_t driverInstanceIndex)
++GPMC_Config GPMC_getHandle(uint32_t driverInstanceIndex)
 +{
-+    GPMC_Handle         handle = NULL;
++    GPMC_Config         handle = NULL;
 +    /* Check index */
 +    if(driverInstanceIndex < gGpmcConfigNum)
 +    {
@@ -4260,7 +4234,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /* Fill BCH syndrome polynomial to ELM module per sector. */
 +        ELM_setSyndromeFragment(attrs->elmBaseAddr, ELM_SYNDROME_FRGMT_0, bchData[0], sector);
@@ -4284,7 +4258,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /* Start ELM error processing. */
 +        ELM_errorLocationProcessingStart(attrs->elmBaseAddr, sector);
@@ -4305,7 +4279,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        curTime = ClockP_getTimeUsec();
 +
@@ -4341,7 +4315,7 @@ index 0000000000..2afc4b223a
 +    if(handle != NULL)
 +    {
 +        /* Get number of errors located by ELM per sector. */
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        if(status == SystemP_SUCCESS)
 +        {
@@ -4415,7 +4389,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +        /* Disable write protect. */
 +        CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_CONFIG, GPMC_CONFIG_WRITEPROTECT, \
 +                        CSL_GPMC_CONFIG_WRITEPROTECT_WPHIGH);
@@ -4436,7 +4410,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /* Enable Write protect. */
 +        CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_CONFIG, GPMC_CONFIG_WRITEPROTECT, \
@@ -4458,7 +4432,7 @@ index 0000000000..2afc4b223a
 +    if(handle != NULL)
 +    {
 +        /* Get GPMC interface clock. */
-+        const GPMC_HwAttrs* attrs = ((GPMC_Config *)handle)->attrs;
++        const GPMC_HwAttrs* attrs = ((GPMC_Handle )handle)->attrs;
 +        retVal = attrs->inputClkFreq;
 +    }
 +    return retVal;
@@ -4473,7 +4447,7 @@ index 0000000000..2afc4b223a
 +    /* Currently interupt mode not supported.*/
 +}
 +
-+static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Config *config, uint32_t timeOut)
++static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Handle config, uint32_t timeOut)
 +{
 +    int32_t status  =   SystemP_SUCCESS;
 +    const GPMC_HwAttrs *hwAttrs = config->attrs;
@@ -4542,7 +4516,7 @@ index 0000000000..2afc4b223a
 +
 +    if(handle != NULL)
 +    {
-+        hwAttrs = ((GPMC_Config*)handle)->attrs;
++        hwAttrs = ((GPMC_Handle)handle)->attrs;
 +        
 +        if(timeOut != 0)
 +        {
@@ -4594,7 +4568,7 @@ index 0000000000..2afc4b223a
 +
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +
 +        if(hwAttrs->waitPinNum == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
 +        {
@@ -4653,7 +4627,7 @@ index 0000000000..2afc4b223a
 +{
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +        /* Select WAIT PIN polarity. */
 +        if (pin == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
 +        {
@@ -4808,7 +4782,7 @@ index 0000000000..2afc4b223a
 +    }
 +}
 +
-+static int32_t GPMC_programInstance(GPMC_Config *config)
++static int32_t GPMC_programInstance(GPMC_Handle config)
 +{
 +    int32_t status = SystemP_SUCCESS;
 +
@@ -4876,7 +4850,7 @@ index 0000000000..2afc4b223a
 +                        GPMC_CONFIG7_MASKADDRESS,  hwAttrs->chipSelAddrSize);
 +
 +            /* Set Wait pin polarity*/
-+            GPMC_waitPinPolaritySelect((GPMC_Handle*)config, hwAttrs->waitPinNum, hwAttrs->waitPinPol);
++            GPMC_waitPinPolaritySelect((GPMC_Handle)config, hwAttrs->waitPinNum, hwAttrs->waitPinPol);
 +
 +            GPMC_interuptStatusClear(hwAttrs->gpmcBaseAddr,GPMC_WAIT0EDGEDETECTION_STATUS);
 +            /* Enable interupt for the WAIT PIN*/
@@ -4885,7 +4859,7 @@ index 0000000000..2afc4b223a
 +            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel), \
 +                            GPMC_CONFIG7_CSVALID, CSL_GPMC_CONFIG7_CSVALID_CSENABLED);
 +
-+            status += GPMC_waitPinStatusReadyWaitTimeout((GPMC_Handle)config, GPMC_WAIT_PIN_STATUS_WAIT_TIME_MAX);
++            status += GPMC_waitPinStatusReadyWaitTimeout((GPMC_Config)config, GPMC_WAIT_PIN_STATUS_WAIT_TIME_MAX);
 +        }
 +
 +    }
@@ -4894,20 +4868,6 @@ index 0000000000..2afc4b223a
 +}
 +
 +
-+static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg)
-+{
-+    GPMC_Object   *object; /* GPMC object */
-+
-+    /* Input parameter validation */
-+    if (handle != NULL)
-+    {
-+        /* Get the pointer to the object. */
-+        object = ((GPMC_Config*)handle)->object;
-+
-+        /* Indicate transfer complete. */
-+        SemaphoreP_post(&object->transferComplete);
-+    }
-+}
 +
 +static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mode,
 +                                                uint32_t transferCount, uint8_t modeDMA)
@@ -4917,7 +4877,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        if(mode == GPMC_PREFETCH_ACCESSMODE_READ)
 +        {
@@ -4968,7 +4928,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /*Disable and stop the prefetch engine*/
 +        CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_PREFETCH_CONTROL, GPMC_PREFETCH_CONTROL_STARTENGINE, \
@@ -4991,7 +4951,7 @@ index 0000000000..2afc4b223a
 +static int32_t GPMC_isDmaRestrictedRegion(GPMC_Handle handle, uint32_t addr)
 +{
 +    int32_t isRestricted = FALSE;
-+    const GPMC_HwAttrs *attrs = ((GPMC_Config *)handle)->attrs;
++    const GPMC_HwAttrs *attrs = ((GPMC_Handle )handle)->attrs;
 +
 +    if(NULL != attrs->dmaRestrictedRegions)
 +    {
@@ -5023,8 +4983,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
 +        /* Set NAND command. */
 +        CSL_REG8_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_NAND_COMMAND(object->params.chipSel),
 +                    cmd);
@@ -5036,8 +4996,8 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-+        GPMC_Object *object = ((GPMC_Config*)handle)->object;
++        const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
++        GPMC_Object *object = ((GPMC_Handle)handle)->object;
 +        /* Set NAND address. */
 +        CSL_REG8_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_NAND_ADDRESS(object->params.chipSel),
 +                    address);
@@ -5047,7 +5007,7 @@ index 0000000000..2afc4b223a
 +static void GPMC_eccResultSizeSelect(GPMC_Handle handle, uint32_t eccResReg,
 +                             uint32_t eccSize)
 +{
-+    const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
++    const GPMC_HwAttrs *hwAttrs = ((GPMC_Handle)handle)->attrs;
 +
 +    /* Set ECC size for ECC result register. */
 +    switch (eccResReg)
@@ -5110,7 +5070,7 @@ index 0000000000..2afc4b223a
 +    /* Input parameter validation. */
 +    if(handle != NULL)
 +    {
-+        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
++        const GPMC_HwAttrs *attrs = ((GPMC_Handle)handle)->attrs;
 +
 +        /* Get BCH syndrome polynomial per sector. */
 +        switch (resIndex)
