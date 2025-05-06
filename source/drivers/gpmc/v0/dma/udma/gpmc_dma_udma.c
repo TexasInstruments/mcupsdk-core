@@ -37,7 +37,7 @@
 #include <kernel/dpl/CacheP.h>
 #include <drivers/gpmc.h>
 
-int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
+int32_t GpmcDma_udmaOpen(GpmcDma_UdmaArgs* gpmcDmaArgs)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -50,19 +50,17 @@ int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
     uint8_t*            trpdMem;
     uint32_t            trpdMemSize;
 
-    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
-
-    drvHandle   = udmaArgs->drvHandle;
-    chHandle    = udmaArgs->chHandle;
-    trpdMem     = (uint8_t *) udmaArgs->trpdMem;
-    trpdMemSize = udmaArgs->trpdMemSize;
+    drvHandle   = gpmcDmaArgs->drvHandle;
+    chHandle    = gpmcDmaArgs->chHandle;
+    trpdMem     = (uint8_t *) gpmcDmaArgs->trpdMem;
+    trpdMemSize = gpmcDmaArgs->trpdMemSize;
 
     /* Init channel parameters */
     chType = UDMA_CH_TYPE_TR_BLK_COPY;
     UdmaChPrms_init(&chPrms, chType);
-    chPrms.fqRingPrms.ringMem       = udmaArgs->ringMem;
-    chPrms.fqRingPrms.ringMemSize   = udmaArgs->ringMemSize;
-    chPrms.fqRingPrms.elemCnt       = udmaArgs->ringElemCount;
+    chPrms.fqRingPrms.ringMem       = gpmcDmaArgs->ringMem;
+    chPrms.fqRingPrms.ringMemSize   = gpmcDmaArgs->ringMemSize;
+    chPrms.fqRingPrms.elemCnt       = gpmcDmaArgs->ringElemCount;
 
     /* Open channel for block copy */
     udmaStatus = Udma_chOpen(drvHandle, chHandle, chType, &chPrms);
@@ -130,7 +128,7 @@ int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
 
     /* Mapping GPMC local DMA event to Global event for BCDMA trigger*/
     UdmaUtils_mapLocaltoGlobalEvent(drvHandle,chHandle,
-                                    udmaArgs->localEventID,CSL_INTAGGR_EVT_DETECT_MODE_RISING_EDGE);
+                                    gpmcDmaArgs->localEventID,CSL_INTAGGR_EVT_DETECT_MODE_RISING_EDGE);
 
     if (UDMA_SOK == udmaStatus)
     {
@@ -144,14 +142,12 @@ int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
     return status;
 }
 
-int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs)
+int32_t GpmcDma_udmaClose(GpmcDma_UdmaArgs* handle)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
 
-    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
-
-    Udma_ChHandle chHandle = udmaArgs->chHandle;
+    Udma_ChHandle chHandle = handle->chHandle;
 
     /* Flush any pending request from the free queue */
     while(1)
@@ -177,14 +173,13 @@ int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs)
 
 }
 
-static int32_t GpmcDma_udmaUpdateSubmitTR(void* gpmcDmaArgs, void* dst, void* src,
+static int32_t GpmcDma_udmaUpdateSubmitTR(GpmcDma_UdmaArgs* gpmcDmaArgs, uint8_t *dst, uint8_t *src,
                                             uint16_t icnt[4], int32_t dim[3], uint8_t fifodrain)
 {
     int32_t status = UDMA_SOK;
-    GpmcDma_UdmaArgs *udmaArgs = (GpmcDma_UdmaArgs *)gpmcDmaArgs;
-    Udma_ChHandle chHandle = udmaArgs->chHandle;
-    uint8_t *trpdMem     = (uint8_t *) udmaArgs->trpdMem;
-    uint32_t trpdMemSize = udmaArgs->trpdMemSize;
+    Udma_ChHandle chHandle = gpmcDmaArgs->chHandle;
+    uint8_t *trpdMem     = (uint8_t *) gpmcDmaArgs->trpdMem;
+    uint32_t trpdMemSize = gpmcDmaArgs->trpdMemSize;
     uint64_t pDesc;
     uint32_t trRespStatus;
     uint64_t trpdMemPhy = (uint64_t) Udma_defaultVirtToPhyFxn(trpdMem, 0U, NULL);
@@ -250,7 +245,7 @@ static int32_t GpmcDma_udmaUpdateSubmitTR(void* gpmcDmaArgs, void* dst, void* sr
     return status;
 }
 
-int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain)
+int32_t GpmcDma_udmaCopy(GpmcDma_UdmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -298,7 +293,7 @@ int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t lengt
         dim[2]     = (int32_t)icnt[0] * (int32_t)icnt[1] * (int32_t)icnt[2];
     }
 
-    udmaStatus = GpmcDma_udmaUpdateSubmitTR(gpmcDmaArgs, dst, src, icnt, dim, fifoDrain);
+    udmaStatus = GpmcDma_udmaUpdateSubmitTR(gpmcDmaArgs, (uint8_t*)dst, (uint8_t*)src, icnt, dim, fifoDrain);
 
     if(rmainder != 0)
     {

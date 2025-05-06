@@ -53,28 +53,28 @@
 /* ========================================================================== */
 
 /* Internal functions */
-static uint32_t GPMC_eccBchResultGet(GPMC_Handle handle, uint32_t resIndex, uint32_t sector);
-static void GPMC_eccResultSizeSelect(GPMC_Handle handle, uint32_t eccResReg,
+static uint32_t GPMC_eccBchResultGet(GPMC_Config *handle, uint32_t resIndex, uint32_t sector);
+static void GPMC_eccResultSizeSelect(GPMC_Config *handle, uint32_t eccResReg,
                              uint32_t eccSize);
-static void GPMC_nandAddressWrite(GPMC_Handle handle, uint32_t address);
-static void GPMC_nandCommandWrite(GPMC_Handle handle, uint32_t cmd);
-static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mode,
+static void GPMC_nandAddressWrite(GPMC_Config *handle, uint32_t address);
+static void GPMC_nandCommandWrite(GPMC_Config *handle, uint32_t cmd);
+static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Config *handle, uint8_t mode,
                                     uint32_t transferCount, uint8_t modeDMA);
-static int32_t GPMC_prefetchPostWriteConfigDisable(GPMC_Handle handle);
+static int32_t GPMC_prefetchPostWriteConfigDisable(GPMC_Config *handle);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Handle handle)
+int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *attrs = handle->attrs;
+        GPMC_Object *object = handle->object;
 
         /*Disable and stop the prefetch engine*/
         CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_PREFETCH_CONTROL, GPMC_PREFETCH_CONTROL_STARTENGINE, \
@@ -99,15 +99,15 @@ int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Handle handle)
     return status;
 }
 
-int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans)
+int32_t GPMC_nandReadData(GPMC_Config *handle, GPMC_Transaction *trans)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation */
     if(handle != NULL && trans != NULL)
     {
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        GPMC_Object *object = handle->object;
+        const GPMC_HwAttrs *attrs = handle->attrs;
         uint32_t byteCount = trans->count;
         uint32_t threshold = 0;
 
@@ -127,7 +127,7 @@ int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans)
                     if(status == SystemP_SUCCESS)
                     {
                         /* Perform DMA copy. */
-                        GPMC_dmaCopy(object->gpmcDmaHandle, trans->Buf, (void*)attrs->chipSelBaseAddr, trans->count, TRUE);
+                        GPMC_dmaCopy(object->gpmcDmaHandle, trans->Buf, (uint32_t*) attrs->chipSelBaseAddr, trans->count, TRUE);
                     }
                     /* Disable prefetch read engine. */
                     status += GPMC_prefetchPostWriteConfigDisable(handle);
@@ -141,7 +141,7 @@ int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans)
 
                     if(status == SystemP_SUCCESS)
                     {
-                        uint32_t *ptr = (uint32_t *)trans->Buf;
+                        uint32_t *ptr = trans->Buf;
 
                         while(byteCount)
                         {
@@ -165,7 +165,7 @@ int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans)
             else if(trans->transType == GPMC_TRANSACTION_TYPE_READ_CMDREG)
             {
                 /* Read data from GPMC command register. */
-                uint32_t *bufPtr = (uint32_t*)trans->Buf;
+                uint32_t *bufPtr = trans->Buf;
 
                 *bufPtr = CSL_REG32_RD(attrs->gpmcBaseAddr + CSL_GPMC_NAND_DATA(object->params.chipSel));
             }
@@ -189,15 +189,15 @@ int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans)
     return status;
 }
 
-int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans)
+int32_t GPMC_nandWriteData(GPMC_Config *handle, GPMC_Transaction *trans)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation */
     if(handle != NULL && trans != NULL)
     {
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        GPMC_Object *object = handle->object;
+        const GPMC_HwAttrs *attrs = handle->attrs;
         uint32_t byteCount = trans->count;
         uint32_t threshold = 0;
         uint32_t remainBytes = 0;
@@ -211,7 +211,7 @@ int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans)
             if(trans->transType == GPMC_TRANSACTION_TYPE_WRITE)
             {
                 /* Perform write using post write engine with CPU. */
-                uint32_t *bufPtr = (uint32_t*)trans->Buf;
+                uint32_t *bufPtr = trans->Buf;
                 /* Enable post write engine. */
                 status += GPMC_prefetchPostWriteConfigEnable(handle, GPMC_PREFETCH_ACCESSMODE_WRITE, byteCount, FALSE);
                 /* Enable FIFO event interupt. */
@@ -252,7 +252,7 @@ int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans)
             else if(trans->transType == GPMC_TRANSACTION_TYPE_WRITE_CMDREG)
             {
                 /* Write data using GPMC command register. */
-                uint32_t *bufPtr = (uint32_t*)trans->Buf;
+                uint32_t *bufPtr = trans->Buf;
 
                 CSL_REG32_WR(attrs->gpmcBaseAddr + CSL_GPMC_NAND_DATA(object->params.chipSel), *bufPtr);
             }
@@ -288,7 +288,7 @@ void GPMC_writeNandCommandParamsInit(GPMC_nandCmdParams *cmdParams)
     cmdParams->checkReadypin = TRUE;
 }
 
-int32_t GPMC_writeNandCommand(GPMC_Handle handle, GPMC_nandCmdParams *cmdParams)
+int32_t GPMC_writeNandCommand(GPMC_Config *handle, GPMC_nandCmdParams *cmdParams)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -299,7 +299,7 @@ int32_t GPMC_writeNandCommand(GPMC_Handle handle, GPMC_nandCmdParams *cmdParams)
         uint32_t colAddress = 0;
         uint32_t rowAddress = 0;
 
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
 
         if(hwAttrs->waitPinNum == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
         {
@@ -373,7 +373,7 @@ int32_t GPMC_writeNandCommand(GPMC_Handle handle, GPMC_nandCmdParams *cmdParams)
 
 }
 
-int32_t GPMC_eccValueSizeSet(GPMC_Handle handle, uint32_t eccSize,
+int32_t GPMC_eccValueSizeSet(GPMC_Config *handle, uint32_t eccSize,
                        uint32_t eccSizeVal)
 {
     int32_t status = SystemP_SUCCESS;
@@ -382,7 +382,7 @@ int32_t GPMC_eccValueSizeSet(GPMC_Handle handle, uint32_t eccSize,
     if(handle != NULL)
     {
         /* Set ECC used and unused bytes size in nibbles. */
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
 
         if (eccSize == GPMC_ECC_SIZE_0)
         {
@@ -412,14 +412,14 @@ int32_t GPMC_eccValueSizeSet(GPMC_Handle handle, uint32_t eccSize,
 
 }
 
-int32_t GPMC_eccBchConfigureElm(GPMC_Handle handle, uint8_t numSectors)
+int32_t GPMC_eccBchConfigureElm(GPMC_Config *handle, uint8_t numSectors)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
         /* Configure ELM module.*/
         ELM_moduleReset(hwAttrs->elmBaseAddr);
 
@@ -445,15 +445,15 @@ int32_t GPMC_eccBchConfigureElm(GPMC_Handle handle, uint8_t numSectors)
     return status;
 }
 
-int32_t GPMC_eccEngineBCHConfig (GPMC_Handle handle , uint32_t eccSteps)
+int32_t GPMC_eccEngineBCHConfig (GPMC_Config *handle , uint32_t eccSteps)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *object = handle->object;
 
         /* Select ECC result register */
         CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCPOINTER, GPMC_ECCPOINTER_RESULT_1);
@@ -487,14 +487,14 @@ int32_t GPMC_eccEngineBCHConfig (GPMC_Handle handle , uint32_t eccSteps)
     return status;
 }
 
-int32_t GPMC_eccEngineEnable(GPMC_Handle handle)
+int32_t GPMC_eccEngineEnable(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
         /* Enable ECC engine. */
         CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCPOINTER,
                         GPMC_ECCPOINTER_RESULT_1);
@@ -509,19 +509,19 @@ int32_t GPMC_eccEngineEnable(GPMC_Handle handle)
     return status;
 }
 
-void GPMC_eccResultRegisterClear(GPMC_Handle handle)
+void GPMC_eccResultRegisterClear(GPMC_Config *handle)
 {
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
         /* Clear all the ECC result registers. */
         CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_ECC_CONTROL, GPMC_ECC_CONTROL_ECCCLEAR,
                     CSL_GPMC_ECC_CONTROL_ECCCLEAR_MAX);
     }
 }
 
-int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Handle handle, uint32_t sector, uint32_t *bchData)
+int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Config *handle, uint32_t sector, uint32_t *bchData)
 {
         int32_t status = SystemP_SUCCESS;
 
@@ -542,14 +542,14 @@ int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Handle handle, uint32_t sector, ui
     return status;
 }
 
-int32_t GPMC_eccBchFillSyndromeValue(GPMC_Handle handle, uint32_t sector, uint32_t *bchData)
+int32_t GPMC_eccBchFillSyndromeValue(GPMC_Config *handle, uint32_t sector, uint32_t *bchData)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         /* Fill BCH syndrome polynomial to ELM module per sector. */
         ELM_setSyndromeFragment(attrs->elmBaseAddr, ELM_SYNDROME_FRGMT_0, bchData[0], sector);
@@ -566,14 +566,14 @@ int32_t GPMC_eccBchFillSyndromeValue(GPMC_Handle handle, uint32_t sector, uint32
     return status;
 }
 
-int32_t GPMC_eccBchStartErrorProcessing(GPMC_Handle handle, uint8_t sector)
+int32_t GPMC_eccBchStartErrorProcessing(GPMC_Config *handle, uint8_t sector)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         /* Start ELM error processing. */
         ELM_errorLocationProcessingStart(attrs->elmBaseAddr, sector);
@@ -586,7 +586,7 @@ int32_t GPMC_eccBchStartErrorProcessing(GPMC_Handle handle, uint8_t sector)
     return status;
 }
 
-int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Handle handle, uint32_t sector)
+int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Config *handle, uint32_t sector)
 {
     int32_t status = SystemP_SUCCESS;
     uint64_t curTime;
@@ -594,7 +594,7 @@ int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Handle handle, uint32_t secto
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         curTime = ClockP_getTimeUsec();
 
@@ -622,7 +622,7 @@ int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Handle handle, uint32_t secto
     return status;
 }
 
-int32_t GPMC_eccBchSectorGetError(GPMC_Handle handle, uint32_t sector, uint32_t *errCount, uint32_t *errLoc)
+int32_t GPMC_eccBchSectorGetError(GPMC_Config *handle, uint32_t sector, uint32_t *errCount, uint32_t *errLoc)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -630,7 +630,7 @@ int32_t GPMC_eccBchSectorGetError(GPMC_Handle handle, uint32_t sector, uint32_t 
     if(handle != NULL)
     {
         /* Get number of errors located by ELM per sector. */
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         if(status == SystemP_SUCCESS)
         {
@@ -658,7 +658,7 @@ int32_t GPMC_eccBchSectorGetError(GPMC_Handle handle, uint32_t sector, uint32_t 
     return status;
 }
 
-int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Handle handle, uint8_t *pEccdata, uint32_t sector)
+int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Config *handle, uint8_t *pEccdata, uint32_t sector)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -702,7 +702,7 @@ int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Handle handle, uint8_t *pEcc
 /*                     Internal function definitions                          */
 /* ========================================================================== */
 
-static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mode,
+static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Config *handle, uint8_t mode,
                                                 uint32_t transferCount, uint8_t modeDMA)
 {
     int32_t status = SystemP_SUCCESS;
@@ -710,7 +710,7 @@ static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mo
     /* Input parameter validation */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         if(mode == GPMC_PREFETCH_ACCESSMODE_READ)
         {
@@ -764,14 +764,14 @@ static int32_t GPMC_prefetchPostWriteConfigEnable(GPMC_Handle handle, uint8_t mo
     return status;
 }
 
-static int32_t GPMC_prefetchPostWriteConfigDisable(GPMC_Handle handle)
+static int32_t GPMC_prefetchPostWriteConfigDisable(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         /*Disable and stop the prefetch engine*/
         CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_PREFETCH_CONTROL, GPMC_PREFETCH_CONTROL_STARTENGINE, \
@@ -794,36 +794,36 @@ static int32_t GPMC_prefetchPostWriteConfigDisable(GPMC_Handle handle)
     return status;
 }
 
-static void GPMC_nandCommandWrite(GPMC_Handle handle, uint32_t cmd)
+static void GPMC_nandCommandWrite(GPMC_Config *handle, uint32_t cmd)
 {
     /* Input parameter validation */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *object = handle->object;
         /* Set NAND command. */
         CSL_REG8_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_NAND_COMMAND(object->params.chipSel),
                     cmd);
     }
 }
 
-static void GPMC_nandAddressWrite(GPMC_Handle handle, uint32_t address)
+static void GPMC_nandAddressWrite(GPMC_Config *handle, uint32_t address)
 {
     /* Input parameter validation */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *object = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *object = handle->object;
         /* Set NAND address. */
         CSL_REG8_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_NAND_ADDRESS(object->params.chipSel),
                     address);
     }
 }
 
-static void GPMC_eccResultSizeSelect(GPMC_Handle handle, uint32_t eccResReg,
+static void GPMC_eccResultSizeSelect(GPMC_Config *handle, uint32_t eccResReg,
                              uint32_t eccSize)
 {
-    const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+    const GPMC_HwAttrs *hwAttrs = handle->attrs;
 
     /* Set ECC size for ECC result register. */
     switch (eccResReg)
@@ -879,14 +879,14 @@ static void GPMC_eccResultSizeSelect(GPMC_Handle handle, uint32_t eccResReg,
     }
 }
 
-static uint32_t GPMC_eccBchResultGet(GPMC_Handle handle, uint32_t resIndex , uint32_t sector)
+static uint32_t GPMC_eccBchResultGet(GPMC_Config *handle, uint32_t resIndex , uint32_t sector)
 {
     uint32_t result = 0;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         /* Get BCH syndrome polynomial per sector. */
         switch (resIndex)

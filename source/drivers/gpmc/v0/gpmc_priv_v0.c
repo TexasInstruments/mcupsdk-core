@@ -181,14 +181,14 @@ uint32_t  GPMC_interuptStatusGet(uint32_t baseAddr, uint32_t interupt)
     return (retVal);
 }
 
-int32_t GPMC_disableFlashWriteProtect(GPMC_Handle handle)
+int32_t GPMC_disableFlashWriteProtect(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
         /* Disable write protect. */
         CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_CONFIG, GPMC_CONFIG_WRITEPROTECT, \
                         CSL_GPMC_CONFIG_WRITEPROTECT_WPHIGH);
@@ -202,14 +202,14 @@ int32_t GPMC_disableFlashWriteProtect(GPMC_Handle handle)
     return status;
 }
 
-int32_t GPMC_enableFlashWriteProtect(GPMC_Handle handle)
+int32_t GPMC_enableFlashWriteProtect(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *attrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *attrs = handle->attrs;
 
         /* Enable Write protect. */
         CSL_REG32_FINS(attrs->gpmcBaseAddr + CSL_GPMC_CONFIG, GPMC_CONFIG_WRITEPROTECT, \
@@ -223,7 +223,7 @@ int32_t GPMC_enableFlashWriteProtect(GPMC_Handle handle)
     return status;
 }
 
-int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t timeOut)
+int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Config *handle, uint32_t timeOut)
 {
     int32_t status  =   SystemP_SUCCESS;
     uint32_t waitPinInterupt = 0;
@@ -231,7 +231,7 @@ int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t 
 
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
 
         if(hwAttrs->waitPinNum == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
         {
@@ -285,7 +285,7 @@ int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t 
 
  }
 
-int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t timeOut)
+int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Config *handle, uint32_t timeOut)
 {
 
     int32_t status  =   SystemP_SUCCESS;
@@ -294,7 +294,7 @@ int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t timeOut)
 
     if(handle != NULL)
     {
-        hwAttrs = ((GPMC_Config*)handle)->attrs;
+        hwAttrs = handle->attrs;
 
         if(timeOut != 0)
         {
@@ -338,10 +338,10 @@ int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t timeOut)
 
  }
 
-int32_t GPMC_isDmaRestrictedRegion(GPMC_Handle handle, uint32_t addr)
+int32_t GPMC_isDmaRestrictedRegion(GPMC_Config *handle, uint32_t addr)
 {
     int32_t isRestricted = FALSE;
-    const GPMC_HwAttrs *attrs = ((GPMC_Config *)handle)->attrs;
+    const GPMC_HwAttrs *attrs = handle->attrs;
 
     if(NULL != attrs->dmaRestrictedRegions)
     {

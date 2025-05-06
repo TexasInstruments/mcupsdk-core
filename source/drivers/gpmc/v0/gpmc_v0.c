@@ -57,7 +57,7 @@
 
 typedef struct
 {
-    void *openLock;
+    SemaphoreP_Object *openLock;
     /**<  Lock to protect GPMC open*/
     SemaphoreP_Object lockObj;
     /**< Lock object */
@@ -69,9 +69,9 @@ typedef struct
 
 /* Internal functions */
 static void GPMC_isr(void *arg);
-static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg);
+static void GPMC_transferCallback(SemaphoreP_Object *transferComplete);
 static int32_t GPMC_programInstance(GPMC_Config *config);
-static void GPMC_waitPinPolaritySelect(GPMC_Handle handle, uint32_t pin,
+static void GPMC_waitPinPolaritySelect(GPMC_Config *handle, uint32_t pin,
                                 uint32_t polarity);
 static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Config *config,
                                 uint32_t timeOut);
@@ -125,15 +125,15 @@ void GPMC_deinit(void)
     return;
 }
 
-int32_t GPMC_configureTimingParameters(GPMC_Handle handle)
+int32_t GPMC_configureTimingParameters(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t timeConfig = 0;
 
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *object  = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *object  = handle->object;
         uint32_t devType = object->params.devType;
 
         /* CONFIG2 reister timing config, no extra delay */
@@ -206,13 +206,13 @@ int32_t GPMC_configureTimingParameters(GPMC_Handle handle)
     return status;
 }
 
-int32_t GPMC_setDeviceType(GPMC_Handle handle)
+int32_t GPMC_setDeviceType(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        GPMC_Config *config = (GPMC_Config*)handle;
+        GPMC_Config *config = handle;
         const GPMC_HwAttrs *attrs = config->attrs;
         GPMC_Object *object = config->object;
         /* Set Device type interfaced with GPMC. */
@@ -228,14 +228,14 @@ int32_t GPMC_setDeviceType(GPMC_Handle handle)
     return status;
 }
 
-int32_t GPMC_setDeviceSize(GPMC_Handle handle)
+int32_t GPMC_setDeviceSize(GPMC_Config *handle)
 {
     int32_t status = SystemP_SUCCESS;
 
     /* Input parameter validation. */
     if(handle != NULL)
     {
-        GPMC_Config *config = (GPMC_Config*)handle;
+        GPMC_Config *config = handle;
         const GPMC_HwAttrs *attrs = config->attrs;
         GPMC_Object *object = config->object;
         /* Set device width interfaced with GPMC. */
@@ -251,10 +251,10 @@ int32_t GPMC_setDeviceSize(GPMC_Handle handle)
     return status;
 }
 
-GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
+GPMC_Config* GPMC_open(uint32_t index, const GPMC_Params *prms)
 {
     int32_t status = SystemP_SUCCESS;
-    GPMC_Handle         handle = NULL;
+    GPMC_Config         *handle = NULL;
     GPMC_Config         *config = NULL;
     GPMC_Object         *object = NULL;
     const GPMC_HwAttrs  *hwAttrs = NULL;
@@ -289,8 +289,6 @@ GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
 
     if(status == SystemP_SUCCESS)
     {
-        object->handle = (GPMC_Handle)config;
-
         if(prms != NULL)
         {
             memcpy((void*)&object->params, (void*)prms, sizeof(GPMC_Params));
@@ -367,7 +365,7 @@ GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
     if(status == SystemP_SUCCESS)
     {
         object->isOpen = 1;
-        handle = (GPMC_Handle)config;
+        handle = config;
     }
 
     SemaphoreP_post(&gGpmcDrvObj.lockObj);
@@ -377,14 +375,14 @@ GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
     {
         if(NULL != config)
         {
-            GPMC_close((GPMC_Handle) config);
+            GPMC_close(config);
         }
     }
 
     return(handle);
 }
 
-void GPMC_close(GPMC_Handle handle)
+void GPMC_close(GPMC_Config *handle)
 {
     /* Input parameter validation */
     if (handle != NULL)
@@ -392,8 +390,8 @@ void GPMC_close(GPMC_Handle handle)
         GPMC_Object        *object = NULL;
         const GPMC_HwAttrs *hwAttrs = NULL;
         /* Get the pointer to the object and hwAttrs */
-        object = ((GPMC_Config*)handle)->object;
-        hwAttrs = ((GPMC_Config*)handle)->attrs;
+        object = handle->object;
+        hwAttrs = handle->attrs;
 
         /* Disable all interupts associated to GPMC. */
         GPMC_disableInterupt(hwAttrs->gpmcBaseAddr,GPMC_FIFOEVENT_INT);
@@ -439,9 +437,9 @@ void GPMC_transactionInit(GPMC_Transaction *trans)
     trans->transferTimeout = SystemP_WAIT_FOREVER;
 }
 
-GPMC_Handle GPMC_getHandle(uint32_t driverInstanceIndex)
+GPMC_Config* GPMC_getHandle(uint32_t driverInstanceIndex)
 {
-    GPMC_Handle         handle = NULL;
+    GPMC_Config*         handle = NULL;
     /* Check index */
     if(driverInstanceIndex < gGpmcConfigNum)
     {
@@ -451,13 +449,13 @@ GPMC_Handle GPMC_getHandle(uint32_t driverInstanceIndex)
         if(obj && (TRUE == obj->isOpen))
         {
             /* valid handle */
-            handle = obj->handle;
+            handle = &gGpmcConfig[driverInstanceIndex];
         }
     }
     return handle;
 }
 
-uint32_t GPMC_getInputClk(GPMC_Handle handle)
+uint32_t GPMC_getInputClk(GPMC_Config *handle)
 {
     uint32_t retVal = 0U;
 
@@ -465,7 +463,7 @@ uint32_t GPMC_getInputClk(GPMC_Handle handle)
     if(handle != NULL)
     {
         /* Get GPMC interface clock. */
-        const GPMC_HwAttrs* attrs = ((GPMC_Config *)handle)->attrs;
+        const GPMC_HwAttrs* attrs = handle->attrs;
         retVal = attrs->inputClkFreq;
     }
     return retVal;
@@ -514,12 +512,12 @@ static int32_t GPMC_moduleResetStatusWaitTimeout(GPMC_Config *config, uint32_t t
 
  }
 
-static void GPMC_waitPinPolaritySelect(GPMC_Handle handle, uint32_t pin,
+static void GPMC_waitPinPolaritySelect(GPMC_Config *handle, uint32_t pin,
                                 uint32_t polarity)
 {
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
         /* Select WAIT PIN polarity. */
         if (pin == CSL_GPMC_CONFIG1_WAITPINSELECT_W0)
         {
@@ -631,7 +629,7 @@ static int32_t GPMC_programInstance(GPMC_Config *config)
             if(devType == CSL_GPMC_CONFIG1_DEVICETYPE_NANDLIKE)
             /* Set Wait pin polarity*/
             {
-                GPMC_waitPinPolaritySelect((GPMC_Handle*)config, hwAttrs->waitPinNum, hwAttrs->waitPinPol);
+                GPMC_waitPinPolaritySelect(config, hwAttrs->waitPinNum, hwAttrs->waitPinPol);
 
                 GPMC_interuptStatusClear(hwAttrs->gpmcBaseAddr,GPMC_WAIT0EDGEDETECTION_STATUS);
                 /* Enable interupt for the WAIT PIN*/
@@ -640,7 +638,7 @@ static int32_t GPMC_programInstance(GPMC_Config *config)
                 CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel), \
                                 GPMC_CONFIG7_CSVALID, CSL_GPMC_CONFIG7_CSVALID_CSENABLED);
 
-                status += GPMC_waitPinStatusReadyWaitTimeout((GPMC_Handle)config, GPMC_WAIT_PIN_STATUS_WAIT_TIME_MAX);
+                status += GPMC_waitPinStatusReadyWaitTimeout(config, GPMC_WAIT_PIN_STATUS_WAIT_TIME_MAX);
             }
         }
 
@@ -651,17 +649,12 @@ static int32_t GPMC_programInstance(GPMC_Config *config)
 
 
 
-static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg)
+static void GPMC_transferCallback(SemaphoreP_Object *transferComplete)
 {
-    GPMC_Object   *object; /* GPMC object */
-
     /* Input parameter validation */
-    if (handle != NULL)
+    if (transferComplete != NULL)
     {
-        /* Get the pointer to the object. */
-        object = ((GPMC_Config*)handle)->object;
-
         /* Indicate transfer complete. */
-        SemaphoreP_post(&object->transferComplete);
+        SemaphoreP_post(transferComplete);
     }
 }

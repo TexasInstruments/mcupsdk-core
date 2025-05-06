@@ -64,10 +64,10 @@ uint8_t *GPMC_norMakeAddr(uint8_t busWidth,uint32_t blkAddr,uint32_t offset)
     return ((uint8_t *) addr);
 }
 
-void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, void *cmdBuf)
+void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, uint8_t *cmdBuf)
 {
     uint32_t i;
-    uint8_t *cmdPtr = (uint8_t *)cmdBuf;
+    uint8_t *cmdPtr = cmdBuf;
 
     for (i = (1 << busWidth); i > 0; i--)
     {
@@ -76,7 +76,7 @@ void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, void *cmdBuf)
     }
 }
 
-int32_t GPMC_norWriteData(GPMC_Handle handle,uint32_t offset,
+int32_t GPMC_norWriteData(GPMC_Config *handle,uint32_t offset,
                                          uint8_t *buf, uint32_t len)
 
 {
@@ -85,8 +85,8 @@ int32_t GPMC_norWriteData(GPMC_Handle handle,uint32_t offset,
 
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *obj = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *obj = handle->object;
         uint32_t devSize = obj->params.devSize;
         uint32_t baseAddress = hwAttrs->dataBaseAddr;
 
@@ -129,7 +129,7 @@ int32_t GPMC_norWriteData(GPMC_Handle handle,uint32_t offset,
 
 }
 
-int32_t GPMC_norReadData(GPMC_Handle handle, uint32_t offset,
+int32_t GPMC_norReadData(GPMC_Config *handle, uint32_t offset,
                                   uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
@@ -137,8 +137,8 @@ int32_t GPMC_norReadData(GPMC_Handle handle, uint32_t offset,
 
     if(handle != NULL)
     {
-        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
-        GPMC_Object *obj = ((GPMC_Config*)handle)->object;
+        const GPMC_HwAttrs *hwAttrs = handle->attrs;
+        GPMC_Object *obj = handle->object;
         uint32_t devSize = obj->params.devSize;
         uint32_t baseAddress = hwAttrs->dataBaseAddr;
 

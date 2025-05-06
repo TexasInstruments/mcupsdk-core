@@ -49,11 +49,11 @@ typedef struct GpmcDma_UdmaArgs_s
     /**< UDMA driver handle */
     void            *chHandle;
     /**< UDMA channel handle */
-    void            *trpdMem;
+    uint8_t         *trpdMem;
     /**< UDMA TR PD memory pointers */
     uint32_t        trpdMemSize;
     /**< Size of TR PD memory */
-    void            *ringMem;
+    uint8_t         *ringMem;
     /**< UDMA Ring memory pointers */
     uint32_t        ringMemSize;
     /**< Size of Ring Memory */
@@ -64,9 +64,9 @@ typedef struct GpmcDma_UdmaArgs_s
 
 } GpmcDma_UdmaArgs;
 
-int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs);
-int32_t GpmcDma_udmaClose(GPMC_DmaHandle handle, void* gpmcDmaArgs);
-int32_t GpmcDma_udmaCopy(void* gpmcDmaArgs, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
+int32_t GpmcDma_udmaOpen(GpmcDma_UdmaArgs* gpmcDmaArgs);
+int32_t GpmcDma_udmaClose(GpmcDma_UdmaArgs* handle);
+int32_t GpmcDma_udmaCopy(GpmcDma_UdmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 
 #ifdef __cplusplus
 }

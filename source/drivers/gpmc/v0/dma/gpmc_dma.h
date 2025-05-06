@@ -41,6 +41,7 @@
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
+#include <drivers/gpmc/v0/dma/udma/gpmc_dma_udma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -57,16 +58,11 @@ extern "C"
  */
 
 /**
- * \brief Handle to the GPMC DMA Config Object returned by \ref GPMC_dmaOpen
- */
-typedef void* GPMC_DmaHandle;
-
-/**
  * \brief GPMC DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
  */
 typedef struct GPMC_DmaConfig_s
 {
-	void *gpmcDmaArgs;
+	GpmcDma_UdmaArgs *gpmcDmaArgs;
 	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
 	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
@@ -83,7 +79,7 @@ typedef struct GPMC_DmaConfig_s
  *
  * \return Handle to the GPMC DMA Config Object
  */
-GPMC_DmaHandle GPMC_dmaOpen(int32_t index);
+GpmcDma_UdmaArgs* GPMC_dmaOpen(int32_t index);
 
 /**
  * \brief API to close an GPMC DMA channel
@@ -94,7 +90,7 @@ GPMC_DmaHandle GPMC_dmaOpen(int32_t index);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t GPMC_dmaClose(GPMC_DmaHandle handle);
+int32_t GPMC_dmaClose(GpmcDma_UdmaArgs *handle);
 
 /**
  * \brief API to do a DMA Copy using appropriate DMA Channel opened
@@ -109,7 +105,7 @@ int32_t GPMC_dmaClose(GPMC_DmaHandle handle);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t GPMC_dmaCopy(GPMC_DmaHandle handle, void* dst, void* src, uint32_t length, uint8_t fifoDrain);
+int32_t GPMC_dmaCopy(GpmcDma_UdmaArgs *handle, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 
 /** @} */
 

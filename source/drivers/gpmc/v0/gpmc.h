@@ -65,6 +65,7 @@
 #include <kernel/dpl/HwiP.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_gpmc.h>
+#include <drivers/gpmc/v0/dma/gpmc_dma.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -473,9 +474,6 @@ extern "C" {
 #define GPMC_MEM_TYPE_PSRAM                          (1)
 #define GPMC_MEM_TYPE_NORLIKE                        (1)    //Same as pSRAM
 
-/** \brief A handle that is returned from a #GPMC_open() call */
-typedef void* GPMC_Handle;
-
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -593,7 +591,7 @@ typedef struct GPMC_Transaction_s {
     /**< Transaction type : GPMC_TransactionType */
     uint32_t                count;
     /**< Number of bytes for this transaction */
-    void                    *Buf;
+    uint32_t                *Buf;
     /**< void * to a buffer to receive/send data */
     void                    *arg;
     /**< Argument to be passed to the callback function */
@@ -610,8 +608,7 @@ typedef struct GPMC_Transaction_s {
  *  \param      handle          GPMC_Handle
  *  \param      transaction*    GPMC_Transaction*
  */
-typedef void (*GPMC_CallbackFxn)(GPMC_Handle handle,
-                                 GPMC_Transaction * transaction);
+typedef void (*GPMC_CallbackFxn)(SemaphoreP_Object *obj);
 
 
 /**
@@ -670,11 +667,6 @@ typedef struct
  *
  */
 typedef struct GPMC_Object_s {
-
-    GPMC_Handle                     handle;
-    /**< Instance handle */
-    GPMC_CallbackFxn                transferCallbackFxn;
-    /**< Callback function pointer */
     GPMC_Params                     params;
     /**< Driver user configurable params structure */
     GPMC_OperatingMode              operMode;
@@ -692,7 +684,7 @@ typedef struct GPMC_Object_s {
     /**< Transfer Sync Semaphore object */
     GPMC_Transaction                *transaction;
     /**< Pointer to current transaction struct */
-    void* gpmcDmaHandle;
+    GpmcDma_UdmaArgs* gpmcDmaHandle;
     /**< DMA configuration handle */
 } GPMC_Object;
 
@@ -865,7 +857,7 @@ void GPMC_deinit(void);
  *  \sa     #GPMC_init()
  *  \sa     #GPMC_close()
  */
-GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms);
+GPMC_Config* GPMC_open(uint32_t index, const GPMC_Params *prms);
 
 /**
  *  \brief  Function to close a GPMC peripheral specified by the GPMC handle
@@ -876,7 +868,7 @@ GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms);
  *
  *  \sa     #GPMC_open()
  */
-void GPMC_close(GPMC_Handle handle);
+void GPMC_close(GPMC_Config *handle);
 
 /**
  *  \brief  This function returns the input clk frequency GPMC was programmed at
@@ -887,7 +879,7 @@ void GPMC_close(GPMC_Handle handle);
  *
  *  \return GPMC RCLK in Hertz
  */
-uint32_t GPMC_getInputClk(GPMC_Handle handle);
+uint32_t GPMC_getInputClk(GPMC_Config *handle);
 
 /**
  *  \brief  This function returns the handle of an open GPMC Instance from the instance index
@@ -901,7 +893,7 @@ uint32_t GPMC_getInputClk(GPMC_Handle handle);
  *  \sa     #GPMC_init()
  *  \sa     #GPMC_open()
  */
-GPMC_Handle GPMC_getHandle(uint32_t driverInstanceIndex);
+GPMC_Config* GPMC_getHandle(uint32_t driverInstanceIndex);
 
 /**
  *  \brief  Function to initialise #GPMC_nandCmdParams structure to default values.
@@ -922,7 +914,7 @@ void GPMC_writeNandCommandParamsInit(GPMC_nandCmdParams *cmdParams);
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  *
  */
-int32_t GPMC_writeNandCommand(GPMC_Handle handle, GPMC_nandCmdParams *cmdParams);
+int32_t GPMC_writeNandCommand(GPMC_Config *handle, GPMC_nandCmdParams *cmdParams);
 
 /**
  *  \brief  Function to initialise #GPMC_Transaction structure to default values.
@@ -943,7 +935,7 @@ void GPMC_transactionInit(GPMC_Transaction *trans);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans);
+int32_t GPMC_nandReadData(GPMC_Config *handle, GPMC_Transaction *trans);
 
 /**
  *  \brief  Function to write data to NANDflash using CPU prefetch/post write engine.
@@ -954,7 +946,7 @@ int32_t GPMC_nandReadData(GPMC_Handle handle, GPMC_Transaction *trans);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans);
+int32_t GPMC_nandWriteData(GPMC_Config *handle, GPMC_Transaction *trans);
 
 /**
  *  \brief  Function to set device width for GPMC instance connected to external
@@ -965,7 +957,7 @@ int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_setDeviceSize(GPMC_Handle handle);
+int32_t GPMC_setDeviceSize(GPMC_Config *handle);
 
 /**
  *  \brief  Function to set device type (NANDLIKE OR NORLIKE) for GPMC instance connected
@@ -976,7 +968,7 @@ int32_t GPMC_setDeviceSize(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_setDeviceType(GPMC_Handle handle);
+int32_t GPMC_setDeviceType(GPMC_Config *handle);
 
 /**
  *  \brief  Function to configure GPMC timing parameters.
@@ -986,7 +978,7 @@ int32_t GPMC_setDeviceType(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_configureTimingParameters(GPMC_Handle handle);
+int32_t GPMC_configureTimingParameters(GPMC_Config *handle);
 
 /**
  *  \brief  Function to set ECC used and unused bytes size in nibbles.
@@ -1000,7 +992,7 @@ int32_t GPMC_configureTimingParameters(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccValueSizeSet(GPMC_Handle handle, uint32_t eccSize, uint32_t eccSizeVal);
+int32_t GPMC_eccValueSizeSet(GPMC_Config *handle, uint32_t eccSize, uint32_t eccSizeVal);
 
 /**
  *  \brief  Function to configure ELM module for error correction.
@@ -1012,7 +1004,7 @@ int32_t GPMC_eccValueSizeSet(GPMC_Handle handle, uint32_t eccSize, uint32_t eccS
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccBchConfigureElm(GPMC_Handle handle, uint8_t numSectors);
+int32_t GPMC_eccBchConfigureElm(GPMC_Config *handle, uint8_t numSectors);
 
 /**
  *  \brief  Function to configure GPMC ECC engine for BCH algorithm
@@ -1024,7 +1016,7 @@ int32_t GPMC_eccBchConfigureElm(GPMC_Handle handle, uint8_t numSectors);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccEngineBCHConfig (GPMC_Handle handle, uint32_t eccSteps);
+int32_t GPMC_eccEngineBCHConfig (GPMC_Config *handle, uint32_t eccSteps);
 
 /**
  *  \brief  Function to enable GPMC ECC engine.
@@ -1033,7 +1025,7 @@ int32_t GPMC_eccEngineBCHConfig (GPMC_Handle handle, uint32_t eccSteps);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccEngineEnable(GPMC_Handle handle);
+int32_t GPMC_eccEngineEnable(GPMC_Config *handle);
 
 /**
  *  \brief  Function to clear GPMC ECC result register.
@@ -1041,7 +1033,7 @@ int32_t GPMC_eccEngineEnable(GPMC_Handle handle);
  *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
  *
  */
-void GPMC_eccResultRegisterClear(GPMC_Handle handle);
+void GPMC_eccResultRegisterClear(GPMC_Config *handle);
 
 /**
  *  \brief  Function to fill BCH syndrome value per sector to ELM module.
@@ -1055,7 +1047,7 @@ void GPMC_eccResultRegisterClear(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccBchFillSyndromeValue(GPMC_Handle handle, uint32_t sector, uint32_t *bchData);
+int32_t GPMC_eccBchFillSyndromeValue(GPMC_Config *handle, uint32_t sector, uint32_t *bchData);
 
 /**
  *  \brief  Function to start error processing for a sector by ELM module.
@@ -1068,7 +1060,7 @@ int32_t GPMC_eccBchFillSyndromeValue(GPMC_Handle handle, uint32_t sector, uint32
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccBchStartErrorProcessing(GPMC_Handle handle, uint8_t sector);
+int32_t GPMC_eccBchStartErrorProcessing(GPMC_Config *handle, uint8_t sector);
 
 /**
  *  \brief  Function to get error processing status for a sector by ELM module.
@@ -1079,7 +1071,7 @@ int32_t GPMC_eccBchStartErrorProcessing(GPMC_Handle handle, uint8_t sector);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Handle handle, uint32_t sector);
+int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Config *handle, uint32_t sector);
 
 /**
  *  \brief  Function to get number of errors per sector by ELM module.
@@ -1094,7 +1086,7 @@ int32_t GPMC_eccBchCheckErrorProcessingStatus(GPMC_Handle handle, uint32_t secto
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccBchSectorGetError(GPMC_Handle handle, uint32_t sector, uint32_t *errCount, uint32_t *errLoc);
+int32_t GPMC_eccBchSectorGetError(GPMC_Config *handle, uint32_t sector, uint32_t *errCount, uint32_t *errLoc);
 
 /**
  *  \brief  Function to compute BCH syndrome polynomial for NAND write operation.
@@ -1107,7 +1099,7 @@ int32_t GPMC_eccBchSectorGetError(GPMC_Handle handle, uint32_t sector, uint32_t 
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Handle handle, uint8_t *pEccdata, uint32_t sector);
+int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Config *handle, uint8_t *pEccdata, uint32_t sector);
 
 /**
  *  \brief  Function to get BCH syndrome polynomial per sector NAND read operation.
@@ -1120,7 +1112,7 @@ int32_t GPMC_eccCalculateBchSyndromePolynomial(GPMC_Handle handle, uint8_t *pEcc
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Handle handle, uint32_t sector, uint32_t *bchData);
+int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Config *handle, uint32_t sector, uint32_t *bchData);
 
 /**
  *  \brief  Function to configure GPMC PREFETCH read and POST write engine.
@@ -1130,7 +1122,7 @@ int32_t GPMC_eccGetBchSyndromePolynomial(GPMC_Handle handle, uint32_t sector, ui
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Handle handle);
+int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Config *handle);
 
 /**
  *  \brief  Function to disable WRITE protect line.
@@ -1140,7 +1132,7 @@ int32_t GPMC_configurePrefetchPostWriteEngine(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_disableFlashWriteProtect(GPMC_Handle handle);
+int32_t GPMC_disableFlashWriteProtect(GPMC_Config *handle);
 
 /**
  *  \brief  Function to disable WRITE protect line.
@@ -1150,7 +1142,7 @@ int32_t GPMC_disableFlashWriteProtect(GPMC_Handle handle);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_enableFlashWriteProtect(GPMC_Handle handle);
+int32_t GPMC_enableFlashWriteProtect(GPMC_Config *handle);
 
 /**
  *  \brief  Function to create correct address based on bus width.
@@ -1176,7 +1168,7 @@ uint8_t *GPMC_norMakeAddr(uint8_t busWidth,uint32_t blkAddr,uint32_t offset);
  *  \param  cmdBuf  Buffer pointer to store the modified cmd.
  *
  */
-void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, void *cmdBuf);
+void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, uint8_t *cmdBuf);
 
 /**
  *  \brief  Function to read data from norlike device.
@@ -1192,7 +1184,7 @@ void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, void *cmdBuf);
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_norReadData(GPMC_Handle handle, uint32_t offset,uint8_t *buf, uint32_t len);
+int32_t GPMC_norReadData(GPMC_Config *handle, uint32_t offset,uint8_t *buf, uint32_t len);
 
 /**
  *  \brief  Function to write data to norlike device.
@@ -1208,7 +1200,7 @@ int32_t GPMC_norReadData(GPMC_Handle handle, uint32_t offset,uint8_t *buf, uint3
  *
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
-int32_t GPMC_norWriteData(GPMC_Handle handle,uint32_t offset,uint8_t *buf, uint32_t len);
+int32_t GPMC_norWriteData(GPMC_Config *handle,uint32_t offset,uint8_t *buf, uint32_t len);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

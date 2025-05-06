@@ -135,7 +135,7 @@ static int32_t Flash_nandGpmcReadId (Flash_Config *config)
         {
             GPMC_Transaction trans;
             GPMC_transactionInit(&trans);
-            trans.Buf = readId;
+            trans.Buf = (uint32_t*) readId;
             trans.count = devConfig->idCfg.numBytes;
             trans.transType = GPMC_TRANSACTION_TYPE_READ_CMDREG;
 
@@ -597,7 +597,7 @@ static int32_t Flash_nandGpmcReadPage(Flash_Config *config, uint32_t blockNum,
         if(status == SystemP_SUCCESS)
         {
             GPMC_transactionInit(&trans);
-            trans.Buf = buf;
+            trans.Buf = (uint32_t*) buf;
             trans.count = config->attrs->pageSize;
             trans.transType = GPMC_TRANSACTION_TYPE_READ;
             /* Read DATA either using the DMA or CPU prefetch read.
@@ -630,7 +630,7 @@ static int32_t Flash_nandGpmcReadPage(Flash_Config *config, uint32_t blockNum,
                      * Read ECC for the sectors in one cycle.
                      */
                     GPMC_transactionInit(&trans);
-                    trans.Buf = pEccData;
+                    trans.Buf = (uint32_t*) pEccData;
                     trans.count = object->attrs.eccByteCount * object->attrs.eccSteps;
                     trans.transType = GPMC_TRANSACTION_TYPE_READ;
                     status += GPMC_nandReadData(object->gpmcHandle, &trans);
@@ -954,7 +954,7 @@ static int32_t Flash_nandGpmcWritePage(Flash_Config *config,
         if(status == SystemP_SUCCESS)
         {
             GPMC_transactionInit(&trans);
-            trans.Buf = buf;
+            trans.Buf = (uint32_t*) buf;
             trans.count = config->attrs->pageSize;;
             trans.transType = GPMC_TRANSACTION_TYPE_WRITE;
 

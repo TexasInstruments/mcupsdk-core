@@ -40,7 +40,7 @@ extern "C" {
 #include <drivers/gpmc.h>
 
 typedef struct {
-    GPMC_Handle gpmcHandle;
+    GPMC_Config *gpmcHandle;
 } Ram_GpmcPsramObject;
 
 /* PSRAM specific externs */

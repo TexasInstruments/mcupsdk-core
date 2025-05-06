@@ -131,10 +131,10 @@ void GPMC_interuptStatusClear(uint32_t baseAddr, uint32_t interupt);
  */
 uint32_t  GPMC_interuptStatusGet(uint32_t baseAddr, uint32_t interupt);
 
-int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Handle handle,
+int32_t GPMC_waitPinInteruptStatusReadyWaitTimeout(GPMC_Config *handle,
                                 uint32_t timeOut);
 
-int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle,
+int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Config *handle,
                                 uint32_t timeOut);
 
 /**
@@ -146,7 +146,7 @@ int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle,
  *
  *  \return TRUE or FALSE
  */
-int32_t GPMC_isDmaRestrictedRegion(GPMC_Handle handle, uint32_t addr);
+int32_t GPMC_isDmaRestrictedRegion(GPMC_Config *handle, uint32_t addr);
 
 /**
  *  \brief  Function to check WAIT pin status.

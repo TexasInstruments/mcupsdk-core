@@ -50,7 +50,7 @@ typedef struct
 
 typedef struct {
 
-    GPMC_Handle gpmcHandle;
+    GPMC_Config *gpmcHandle;
     Flash_NandGpmc_Attrs attrs;
     uint8_t  *dataMemScratch;
     uint8_t  *eccMemScratch;

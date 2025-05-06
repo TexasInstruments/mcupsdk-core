@@ -4,7 +4,7 @@
 //! [include]
 
 
-GPMC_Handle gGpmcHandle;
+GPMC_Config* gGpmcHandle;
 
 void open(void)
 {

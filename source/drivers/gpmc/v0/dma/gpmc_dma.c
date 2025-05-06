@@ -61,7 +61,7 @@ extern uint32_t gGpmcDmaConfigNum;
 /*                             Function Definitions                           */
 /* ========================================================================== */
 
-GPMC_DmaHandle GPMC_dmaOpen(int32_t index)
+GpmcDma_UdmaArgs* GPMC_dmaOpen(int32_t index)
 {
 	GPMC_DmaConfig *config = NULL;
 
@@ -80,21 +80,16 @@ GPMC_DmaHandle GPMC_dmaOpen(int32_t index)
 		}
 	}
 
-	return (GPMC_DmaHandle)config;
+	return config->gpmcDmaArgs;
 }
 
-int32_t GPMC_dmaClose(GPMC_DmaHandle handle)
+int32_t GPMC_dmaClose(GpmcDma_UdmaArgs *handle)
 {
 	int32_t status = SystemP_SUCCESS;
 
 	if(handle != NULL)
 	{
-		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
-
-		if(config->gpmcDmaArgs)
-		{
-			status = GpmcDma_udmaClose(handle, config->gpmcDmaArgs);
-		}
+		status = GpmcDma_udmaClose(handle);
 	}
 	else
 	{
@@ -104,18 +99,13 @@ int32_t GPMC_dmaClose(GPMC_DmaHandle handle)
 	return status;
 }
 
-int32_t GPMC_dmaCopy(GPMC_DmaHandle handle, void* dst, void* src, uint32_t length, uint8_t fifoDrain)
+int32_t GPMC_dmaCopy(GpmcDma_UdmaArgs *handle, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain)
 {
 	int32_t status = SystemP_SUCCESS;
 
 	if(handle != NULL)
 	{
-		GPMC_DmaConfig *config = (GPMC_DmaConfig *)handle;
-
-		if(config->gpmcDmaArgs)
-		{
-			status = GpmcDma_udmaCopy(config->gpmcDmaArgs, dst, src, length, fifoDrain);
-		}
+		status = GpmcDma_udmaCopy(handle, dst, src, length, fifoDrain);
 	}
 	else
 	{
