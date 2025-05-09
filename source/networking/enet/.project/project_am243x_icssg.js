@@ -13,7 +13,6 @@ const files = {
         "enet_rm.c",
         "enet_rm_ioctl.c",
         "enet_rm_ioctl_register.c",
-        "enet_osal_dflt.c",
         "enet_utils_dflt.c",
         "enet_phymdio_dflt.c",
         "mod_null.c",
@@ -136,6 +135,7 @@ const defines_r5f = {
         "ENET_CFG_TRACE_LEVEL=3",
         "ENET_ENABLE_PER_ICSSG=1",
         "ENABLE_ENET_LOG",
+        "ENET_ICSSG",
     ],
 
     debug: [

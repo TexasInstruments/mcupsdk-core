@@ -107,6 +107,7 @@ const defines_r5f = {
         "ENET_CFG_PRINT_ENABLE",
         "ENET_CFG_TRACE_LEVEL=3",
         "ENABLE_ENET_LOG",
+        "ENET_ICSSG",
     ],
     debug: [
         "ENET_CFG_DEV_ERROR=1",
