@@ -236,21 +236,21 @@ typedef struct
      */
     uint32_t                isOpen;
     /**< Flag to indicate whether the instance is opened already */
-    SemaphoreP_Object                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Instance lock - to protect across transfers */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
-    SemaphoreP_Object                   *readTransferSem;
+    SemaphoreP_Object       *readTransferSem;
     /**< Read Transfer Sync Sempahore - to sync between transfer completion ISR
      *   and task */
     SemaphoreP_Object       readTransferSemObj;
     /**< Read Transfer Sync Sempahore object */
-    SemaphoreP_Object                   *writeTransferSem;
+    SemaphoreP_Object       *writeTransferSem;
     /**< Write Transfer Sync Sempahore - to sync between transfer completion ISR
      *   and task */
     SemaphoreP_Object       writeTransferSemObj;
     /**< Write Transfer Sync Sempahore object */
-    HwiP_Object                   *hwiHandle;
+    HwiP_Object             *hwiHandle;
     /**< Interrupt handle for controller ISR */
     HwiP_Object             hwiObj;
     /**< Interrupt object */
