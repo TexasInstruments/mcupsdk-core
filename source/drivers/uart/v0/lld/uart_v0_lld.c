@@ -2683,8 +2683,6 @@ int32_t UART_procLineStatusErr(UARTLLD_Handle hUart)
                     hUart->readErrorCnt++;
                 }
             }
-
-            hUart->hUartInit->errorCallbackFxn(hUart);
             UART_lld_Transaction_deInit(&hUart->readTrans);
         }
     }

@@ -75,16 +75,6 @@ static void UART_lld_readCompleteCallback(void *args);
 
 
 /**
- *  \brief  This API is the callback that gets called when a UART error occurs.
- *
- *  \param  hUart           Handle to the UART instance used
- *  \param  transaction     Structure pointing to the current transaction. The transaction
- *                          status holds the error flag.
- *
- */
-static void UART_lld_errorCallback(void *args);
-
-/**
  *  \brief  This function checks the openParameters for UART
  *
  *  \param  prms        Pointer to open parameters. If NULL is passed, then
@@ -329,7 +319,6 @@ UART_Config* UART_open(uint32_t index, const UART_Params *prms)
         /* Read, Write & Error callback Functions */
         uartLldInit_handle->readCompleteCallbackFxn =  UART_lld_readCompleteCallback;
         uartLldInit_handle->writeCompleteCallbackFxn = UART_lld_writeCompleteCallback;
-        uartLldInit_handle->errorCallbackFxn =         UART_lld_errorCallback;
 
         /* Check open parameters */
         status = UART_checkOpenParams(&object->prms);
@@ -935,11 +924,6 @@ static void UART_lld_readCompleteCallback(void *args)
             }
         }
     }
-}
-
-static void UART_lld_errorCallback(void *args)
-{
-    UART_NOT_IN_USE(args);
 }
 
 /**

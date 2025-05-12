@@ -489,13 +489,6 @@ typedef void (*UART_readCompCallbackFxn) (void *hUart);
  */
 typedef void (*UART_writeCompCallbackFxn) (void *hUart);
 
-/**
- *  \brief  The definition of a error callback function used by the UART driver
- *  when used in #UART_TRANSFER_MODE_CALLBACK
- *
- *  \param hUart          Handle to the UART instance used
- */
-typedef void (*UART_errorCallbackFxn) (void *hUart);
 
 /* ========================================================================== */
 /*                  Internal/Private Structure Declarations                   */
@@ -566,8 +559,6 @@ typedef struct
     /**< Read Callback function pointer */
     UART_writeCompCallbackFxn       writeCompleteCallbackFxn;
     /**< Write Callback function pointer */
-    UART_errorCallbackFxn           errorCallbackFxn;
-    /**< Error callback function */
 } UARTLLD_InitObject, *UARTLLD_InitHandle;
 
 /**
