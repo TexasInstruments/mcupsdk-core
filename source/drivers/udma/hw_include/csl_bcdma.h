@@ -119,49 +119,6 @@ extern "C" {
  */
 
 /** ---------------------------------------------------------------------------
- * @brief This enumerator defines the possible channel operations
- *
- *  \anchor CSL_BcdmaChanOp
- *  \name BCDMA channel operations
- *
- *  @{
- * ----------------------------------------------------------------------------
- */
-typedef uint32_t CSL_BcdmaChanOp;
-    /** Configure channel */
-#define CSL_BCDMA_CHAN_OP_CONFIG                ((uint32_t) 0U)
-    /** Enable channel */
-#define CSL_BCDMA_CHAN_OP_ENABLE                ((uint32_t) 1U)
-    /** Disable channel */
-#define CSL_BCDMA_CHAN_OP_DISABLE               ((uint32_t) 2U)
-    /** Pause channel */
-#define CSL_BCDMA_CHAN_OP_PAUSE                 ((uint32_t) 3U)
-    /** Resume channel */
-#define CSL_BCDMA_CHAN_OP_RESUME                ((uint32_t) 4U)
-    /** Teardown channel */
-#define CSL_BCDMA_CHAN_OP_TEARDOWN              ((uint32_t) 5U)
-    /** Trigger channel */
-#define CSL_BCDMA_CHAN_OP_TRIGGER               ((uint32_t) 6U)
-    /** Get channel real-time values */
-#define CSL_BCDMA_CHAN_OP_GET_RT                ((uint32_t) 7U)
-    /** Set channel real-time values */
-#define CSL_BCDMA_CHAN_OP_SET_RT                ((uint32_t) 8U)
-    /** Get channel statistics  */
-#define CSL_BCDMA_CHAN_OP_GET_STATS             ((uint32_t) 9U)
-    /** Decrement channel statistics */
-#define CSL_BCDMA_CHAN_OP_DEC_STATS             ((uint32_t) 10U)
-    /** Get (read) remote peer register */
-#define CSL_BCDMA_CHAN_OP_GET_REMOTE_PEER_REG   ((uint32_t) 11U)
-    /** Set (write) remote peer register */
-#define CSL_BCDMA_CHAN_OP_SET_REMOTE_PEER_REG   ((uint32_t) 12U)
-    /** Set (write) channel burst size */
-#define CSL_BCDMA_CHAN_OP_SET_BURST_SIZE        ((uint32_t) 13U)
-    /** Clear channel error */
-#define CSL_BCDMA_CHAN_OP_CLEAR_ERROR           ((uint32_t) 14U)
-
-/* @} */
-
-/** ---------------------------------------------------------------------------
  * @brief This enumerator defines the possible channel directions
  *
  *  \anchor CSL_BcdmaChanDir
@@ -734,54 +691,6 @@ extern void CSL_bcdmaInitRxChanCfg( CSL_BcdmaRxChanCfg *pRxChanCfg );
 extern void CSL_bcdmaInitRxFlowCfg( CSL_BcdmaRxFlowCfg *pFlow );
 
 /**
- *  \brief Perform a channel operation
- *
- *  This function performs the operation specified by 'chanOp' on the channel
- *  specified by channel type 'chanType' and index 'chanIdx'. Any operation-
- *  specific input parameters or output values are provided in the structure
- *  pointed to by 'pOpData'.
- *
- *  The following table describes the valid channel operations and the
- *  structure type to be passed in 'pOpData':
- *
- *  'chanOp'                                Description                     'pOpData'
- *  --------------------------------------  ------------------------------  -----------------------------------------------------------------
- *  CSL_BCDMA_CHAN_OP_CONFIG                Configure channel               CSL_BcdmaTxChanCfg ('chanType' == CSL_BCDMA_CHAN_TYPE_BLOCK_COPY)
- *                                                                          CSL_BcdmaTxChanCfg ('chanType' == CSL_BCDMA_CHAN_TYPE_SPLIT_TX)
- *                                                                          CSL_BcdmaRxChanCfg ('chanType' == CSL_BCDMA_CHAN_TYPE_SPLIT_RX)
- *  CSL_BCDMA_CHAN_OP_ENABLE                Enable channel                  N/A
- *  CSL_BCDMA_CHAN_OP_DISABLE               Disable channel                 N/A
- *  CSL_BCDMA_CHAN_OP_PAUSE                 Pause channel                   N/A
- *  CSL_BCDMA_CHAN_OP_RESUME                Resume channel                  N/A
- *  CSL_BCDMA_CHAN_OP_TEARDOWN              Teardown channel                CSL_BcdmaTeardownOpts (optional)
- *    Notes:
- *      - Channel can be torn down only when it is enabled
- *      - pOpData (CSL_BcdmaTeardownOpts) is optional. If NULL, then force and wait CSL_BcdmaTeardownOpts fields are assumed 0.
- *  CSL_BCDMA_CHAN_OP_TRIGGER               Trigger channel                 N/A
- *    Notes: This operation is valid only for 'chanType' == CSL_BCDMA_CHAN_TYPE_BLOCK_COPY
- *  CSL_BCDMA_CHAN_OP_GET_RT                Get channel real-time values    CSL_BcdmaRT
- *  CSL_BCDMA_CHAN_OP_SET_RT                Set channel real-time values    CSL_BcdmaRT
- *  CSL_BCDMA_CHAN_OP_GET_STATS             Get channel statistics          CSL_BcdmaChanStats
- *  CSL_BCDMA_CHAN_OP_DEC_STATS             Decrement channel statistics    CSL_BcdmaChanStats
- *  CSL_BCDMA_CHAN_OP_GET_REMOTE_PEER_REG   Get remote peer reg value       CSL_BcdmaRemotePeerOpts
- *  CSL_BCDMA_CHAN_OP_SET_REMOTE_PEER_REG   Set remote peer reg value       CSL_BcdmaRemotePeerOpts
- *  CSL_BCDMA_CHAN_OP_SET_BURST_SIZE        Set channel burst size          CSL_BcdmaChanBurstSize
- *  CSL_BCDMA_CHAN_OP_CLEAR_ERROR           Clear channel error             N/A
- *
- *  \param pCfg         [IN]        Pointer to the BCDMA configuration structure
- *  \param chanOp       [IN]        Channel operation. See #CSL_BcdmaChanOp.
- *  \param chanType     [IN]        Channel type. See #CSL_BcdmaChanType.
- *  \param chanIdx      [IN]        Zero-based channel index
- *  \param pOpData      [IN/OUT]    Pointer to optional operation-specific structure
- *
- *  \return CSL_PASS = Function executed successfully
- *          CSL_EFAIL = Function execution failed
- *          CSL_EBADARGS = One or more arguments are invalid
- *          CSL_EINVALID_PARAMS = One or more parameters in 'pOpData' are invalid
- */
-extern int32_t CSL_bcdmaChanOp( CSL_BcdmaCfg *pCfg, CSL_BcdmaChanOp chanOp, CSL_BcdmaChanType chanType, uint32_t chanIdx, void *pOpData );
-
-/**
  *  \brief Set performance control parmeters
  *
  *  This function is used to set performance control paramaters available
@@ -904,7 +813,7 @@ extern int32_t CSL_bcdmaTxChanSetTrEvent( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, 
  *          CSL_EFAIL = Function execution failed (burstSize is invalid or this
  *                      function is not available in the version of BCDMA being used)
  */
-extern int32_t CSL_bcdmaRxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanBurstSize burstSize );
+extern int32_t CSL_bcdmaRxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanBurstSize burstSize, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Configure TX channel burst size
@@ -922,7 +831,7 @@ extern int32_t CSL_bcdmaRxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx
  *          CSL_EFAIL = Function execution failed (burstSize is invalid or this
  *                      function is not available in the version of BCDMA being used)
  */
-extern int32_t CSL_bcdmaTxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanBurstSize burstSize );
+extern int32_t CSL_bcdmaTxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanBurstSize burstSize, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Get an RX channel's real-time register values
@@ -937,7 +846,7 @@ extern int32_t CSL_bcdmaTxChanSetBurstSize( CSL_BcdmaCfg *pCfg, uint32_t chanIdx
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaGetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaRT *pRT );
+extern int32_t CSL_bcdmaGetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType, CSL_BcdmaRT *pRT );
 
 /**
  *  \brief Get a TX channel's real-time register values
@@ -952,7 +861,7 @@ extern int32_t CSL_bcdmaGetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_Bcdma
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaGetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaRT *pRT );
+extern int32_t CSL_bcdmaGetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType, CSL_BcdmaRT *pRT );
 
 /**
  *  \brief Set an RX channel's real-time register values
@@ -967,7 +876,7 @@ extern int32_t CSL_bcdmaGetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_Bcdma
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaSetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, const CSL_BcdmaRT *pRT );
+extern int32_t CSL_bcdmaSetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType, CSL_BcdmaRT *pRT );
 
 /**
  *  \brief Set a TX channel's real-time register values
@@ -982,7 +891,7 @@ extern int32_t CSL_bcdmaSetRxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, const CSL
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaSetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, const CSL_BcdmaRT *pRT );
+extern int32_t CSL_bcdmaSetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType, CSL_BcdmaRT *pRT );
 
 /**
  *  \brief Enable a transmit channel.
@@ -995,7 +904,7 @@ extern int32_t CSL_bcdmaSetTxRT( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, const CSL
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaEnableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaEnableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Disable a transmit channel.
@@ -1008,7 +917,7 @@ extern int32_t CSL_bcdmaEnableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaDisableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaDisableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Teardown a transmit channel.
@@ -1028,7 +937,7 @@ extern int32_t CSL_bcdmaDisableTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaTeardownTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bool bForce, bool bWait );
+extern int32_t CSL_bcdmaTeardownTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bool bForce, bool bWait, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Pause a transmit channel.
@@ -1044,7 +953,7 @@ extern int32_t CSL_bcdmaTeardownTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bo
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaPauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaPauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Un-pause a transmit channel.
@@ -1057,7 +966,7 @@ extern int32_t CSL_bcdmaPauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaUnpauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaUnpauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx,CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Send a trigger event to a TX channel
@@ -1071,7 +980,7 @@ extern int32_t CSL_bcdmaUnpauseTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaTriggerTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaTriggerTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Clear error indication in a transmit channel.
@@ -1083,7 +992,7 @@ extern int32_t CSL_bcdmaTriggerTxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *
  *  \return None
  */
-extern void CSL_bcdmaClearTxChanError( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern void CSL_bcdmaClearTxChanError( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Enable a receive channel.
@@ -1096,7 +1005,7 @@ extern void CSL_bcdmaClearTxChanError( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaEnableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaEnableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx,CSL_BcdmaChanType chanType);
 
 /**
  *  \brief Disable a receive channel.
@@ -1109,7 +1018,7 @@ extern int32_t CSL_bcdmaEnableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaDisableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaDisableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx,CSL_BcdmaChanType chanType);
 
 /**
  *  \brief Teardown a receive channel.
@@ -1129,7 +1038,7 @@ extern int32_t CSL_bcdmaDisableRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaTeardownRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bool bForce, bool bWait );
+extern int32_t CSL_bcdmaTeardownRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bool bForce, bool bWait, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Pause a receive channel.
@@ -1145,7 +1054,7 @@ extern int32_t CSL_bcdmaTeardownRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, bo
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaPauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaPauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Un-pause a receive channel.
@@ -1158,7 +1067,7 @@ extern int32_t CSL_bcdmaPauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (channel is disabled)
  */
-extern int32_t CSL_bcdmaUnpauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaUnpauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx,CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Send a trigger event to an RX channel
@@ -1172,7 +1081,7 @@ extern int32_t CSL_bcdmaUnpauseRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed
  */
-extern int32_t CSL_bcdmaTriggerRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern int32_t CSL_bcdmaTriggerRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Clear error indication in a receive channel.
@@ -1184,7 +1093,7 @@ extern int32_t CSL_bcdmaTriggerRxChan( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
  *
  *  \return None
  */
-extern void CSL_bcdmaClearRxChanError( CSL_BcdmaCfg *pCfg, uint32_t chanIdx );
+extern void CSL_bcdmaClearRxChanError( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanType chanType);
 
 /**
  *  \brief [udmap_only] Configure the receive flow ID range firewall
@@ -1236,7 +1145,7 @@ extern bool CSL_bcdmaGetRxFlowIdFirewallStatus( CSL_BcdmaCfg *pCfg, CSL_BcdmaRxF
  *                                  where the statistics are returned
  *  \return None
  */
-extern void CSL_bcdmaGetChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, CSL_BcdmaChanStats *pChanStats );
+extern void CSL_bcdmaGetChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, CSL_BcdmaChanStats *pChanStats, CSL_BcdmaChanType chanType  );
 
 /**
  *  \brief Decrement channel statistics
@@ -1252,7 +1161,7 @@ extern void CSL_bcdmaGetChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_Bcd
  *                                  statistic by
  *  \return None
  */
-extern void CSL_bcdmaDecChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, const CSL_BcdmaChanStats *pChanStats );
+extern void CSL_bcdmaDecChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, CSL_BcdmaChanStats *pChanStats, CSL_BcdmaChanType chanType  );
 
 /**
  *  \brief Read a channel peer register
@@ -1269,7 +1178,7 @@ extern void CSL_bcdmaDecChanStats( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_Bcd
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (regIdx is out of range)
  */
-extern int32_t CSL_bcdmaGetChanPeerReg( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, uint32_t regIdx, uint32_t *pVal );
+extern int32_t CSL_bcdmaGetChanPeerReg( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, uint32_t regIdx, uint32_t *pVal, CSL_BcdmaChanType chanType  );
 
 /**
  *  \brief Write a TX channel peer register
@@ -1286,7 +1195,7 @@ extern int32_t CSL_bcdmaGetChanPeerReg( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CS
  *  \return CSL_PASS  = Function executed successfully
  *          CSL_EFAIL = Function execution failed (regIdx is out of range)
  */
-extern int32_t CSL_bcdmaSetChanPeerReg( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, uint32_t regIdx, uint32_t *pVal );
+extern int32_t CSL_bcdmaSetChanPeerReg( CSL_BcdmaCfg *pCfg, uint32_t chanIdx, CSL_BcdmaChanDir chanDir, uint32_t regIdx, uint32_t *pVal, CSL_BcdmaChanType chanType );
 
 /**
  *  \brief Enable a directional data flow for a paired link

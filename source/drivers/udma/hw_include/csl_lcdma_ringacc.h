@@ -258,7 +258,7 @@ typedef struct
 
 /** \brief CSL_LcdmaRingaccRingCfg contains information to configure a ring. */
 typedef struct {
-    void                        *virtBase;          /**< [IN] Virtual base address of the ring memory */
+    uint64_t                    *virtBase;          /**< [IN] Virtual base address of the ring memory */
     uint64_t                    physBase;           /**< [IN] Physical base address of the ring memory */
     CSL_LcdmaRingaccRingMode    mode;               /**< [IN] Ring mode */
     uint32_t                    elCnt;              /**< [IN] Ring element count */
@@ -472,7 +472,7 @@ extern void CSL_lcdma_ringaccResetRing( CSL_LcdmaRingaccCfg *pCfg, CSL_LcdmaRing
  *  \return NULL if the ring is full, otherwise a void pointer to the next
  *          free forward ring element
  */
-extern void *CSL_lcdma_ringaccGetForwardRingPtr( CSL_LcdmaRingaccCfg *pCfg, CSL_LcdmaRingaccRingCfg *pRing );
+extern uint32_t *CSL_lcdma_ringaccGetForwardRingPtr( CSL_LcdmaRingaccCfg *pCfg, CSL_LcdmaRingaccRingCfg *pRing );
 
 /**
  *  \brief Get pointer to next available reverse ring element.
@@ -491,7 +491,7 @@ extern void *CSL_lcdma_ringaccGetForwardRingPtr( CSL_LcdmaRingaccCfg *pCfg, CSL_
  *  \return NULL if the ring is empty, otherwise a void pointer to the next
  *          available reverse ring element
  */
-extern void *CSL_lcdma_ringaccGetReverseRingPtr( CSL_LcdmaRingaccCfg *pCfg, CSL_LcdmaRingaccRingCfg *pRing );
+extern uint64_t *CSL_lcdma_ringaccGetReverseRingPtr( CSL_LcdmaRingaccCfg *pCfg, CSL_LcdmaRingaccRingCfg *pRing );
 
 /**
  *  \brief Write to the ring foward doorbell.

@@ -996,12 +996,12 @@ uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger)
     return (triggerEvent);
 }
 
-void *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle)
+uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle)
 {
     int32_t                 retVal = UDMA_SOK;
     Udma_DrvHandleInt       drvHandle;
     Udma_ChHandleInt        chHandleInt = (Udma_ChHandleInt) chHandle;
-    void                   *pSwTriggerReg = NULL;
+    uint32_t                *pSwTriggerReg = NULL;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) ||
@@ -1026,7 +1026,7 @@ void *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle)
             if(UDMA_INST_TYPE_NORMAL == drvHandle->instType)
             {
                 Udma_assert(drvHandle, chHandleInt->pTxRtRegs != NULL_PTR);
-                pSwTriggerReg = (void *) &chHandleInt->pTxRtRegs->SWTRIG;
+                pSwTriggerReg = (uint32_t *) &chHandleInt->pTxRtRegs->SWTRIG;
             }
         }
         else if((chHandleInt->chType & UDMA_CH_FLAG_RX) == UDMA_CH_FLAG_RX)
@@ -1047,7 +1047,7 @@ int32_t Udma_chSetSwTrigger(Udma_ChHandle chHandle, uint32_t trigger)
     int32_t                 retVal = UDMA_SOK;
     Udma_DrvHandleInt       drvHandle;
     Udma_ChHandleInt        chHandleInt = (Udma_ChHandleInt) chHandle;
-    void                   *pSwTriggerReg = NULL;
+    uint32_t                *pSwTriggerReg = NULL;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) ||
