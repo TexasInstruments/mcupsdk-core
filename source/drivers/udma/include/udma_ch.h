@@ -766,7 +766,7 @@ uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger);
  *
  *  \return SW trigger register address
  */
-void *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle);
+uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle);
 
 /**
  *  \brief Sets the software trigger register based on the trigger mode

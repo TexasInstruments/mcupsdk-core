@@ -252,13 +252,13 @@ typedef struct
  *  \addtogroup CSL_UDMAP_CPPI5_FUNCTION
  *  @{
  */
-static inline uint32_t  CSL_udmapCppi5GetDescType( const void *pDesc );
-static inline void      CSL_udmapCppi5SetDescType( void *pDesc, uint32_t descType );
-static inline uint32_t  CSL_udmapCppi5GetPktLen( const void *pDesc );
-static inline void      CSL_udmapCppi5SetPktLen( void *pDesc, uint32_t descType, uint32_t pktLen );
-static inline void      CSL_udmapCppi5HostSetPktLen( void *pDesc, uint32_t pktLen );
-static inline void      CSL_udmapCppi5MonoSetPktLen( void *pDesc, uint32_t pktLen );
-static inline void      CSL_udmapCppi5TrSetPktLen( void *pDesc, uint32_t pktLen );
+static inline uint32_t  CSL_udmapCppi5GetDescType( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetDescType( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType );
+static inline uint32_t  CSL_udmapCppi5GetPktLen( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t pktLen );
+static inline void      CSL_udmapCppi5HostSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen );
+static inline void      CSL_udmapCppi5MonoSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen );
+static inline void      CSL_udmapCppi5TrSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen );
 static inline uint64_t  CSL_udmapCppi5GetBufferAddr( const CSL_UdmapCppi5HMPD *pDesc );
 static inline uint32_t  CSL_udmapCppi5GetBufferLen( const CSL_UdmapCppi5HMPD *pDesc );
 static inline void      CSL_udmapCppi5SetBufferAddr( CSL_UdmapCppi5HMPD *pDesc, uint64_t physBufferAddr );
@@ -266,30 +266,30 @@ static inline void      CSL_udmapCppi5SetOrgBufferAddr( CSL_UdmapCppi5HMPD *pDes
 static inline void      CSL_udmapCppi5SetBufferLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t bufferLenBytes );
 static inline void      CSL_udmapCppi5SetOrgBufferLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t bufferLenBytes );
 static inline void      CSL_udmapCppi5LinkDesc( CSL_UdmapCppi5HMPD *pDesc, uint64_t physBufferDescAddr );
-static inline bool      CSL_udmapCppi5IsEpiDataPresent( const void *pDesc );
-static inline void      CSL_udmapCppi5SetEpiDataPresent( void *pDesc, bool bEpiDataPresent );
-static inline uint32_t *CSL_udmapCppi5GetEpiDataPtr( const void *pDesc );
-static inline int32_t   CSL_udmapCppi5RdEpiData( const void *pDesc, uint32_t *pTsInfo, uint32_t *pSwInfo0, uint32_t *pSwInfo1, uint32_t *pSwInfo2 );
-static inline void      CSL_udmapCppi5WrEpiData( const void *pDesc, uint32_t tsInfo, uint32_t swInfo0, uint32_t swInfo1, uint32_t swInfo2 );
-static inline uint32_t  CSL_udmapCppi5GetPsDataLoc( const void *pDesc );
-static inline void      CSL_udmapCppi5SetPsDataLoc( void *pDesc, uint32_t psLoc );
-static inline uint32_t  CSL_udmapCppi5GetPsDataLen( const void *pDesc );
-static inline void      CSL_udmapCppi5SetPsDataLen( void *pDesc, uint32_t psDataLen );
-static inline uint64_t  CSL_udmapCppi5GetPsDataAddr( const void *pDesc, bool bInSopBuf, bool bEpiPresent );
-static inline uint8_t   *CSL_udmapCppi5GetPsDataPtr( const void *pDesc );
-static inline uint32_t  CSL_udmapCppi5GetSrcTag( const void *pDesc );
-static inline uint32_t  CSL_udmapCppi5GetDstTag( const void *pDesc );
-static inline void      CSL_udmapCppi5SetSrcTag( void *pDesc, uint32_t srcTag );
-static inline void      CSL_udmapCppi5SetDstTag( void *pDesc, uint32_t dstTag );
-static inline uint32_t  CSL_udmapCppi5GetErrorFlags( const void *pDesc );
-static inline uint32_t  CSL_udmapCppi5GetPsFlags( const void *pDesc );
-static inline void      CSL_udmapCppi5SetPsFlags( void *pDesc, uint32_t psFlags );
-static inline uint32_t  CSL_udmapCppi5GetPktType( const void *pDesc );
-static inline void      CSL_udmapCppi5SetPktType( void *pDesc, uint32_t pktType );
-static inline void      CSL_udmapCppi5GetIds( const void *pDesc, uint32_t *pPktId, uint32_t *pFlowId );
-static inline void      CSL_udmapCppi5SetIds( void *pDesc, uint32_t descType, uint32_t pktId, uint32_t flowId );
-static inline void      CSL_udmapCppi5GetReturnPolicy( const void *pDesc, uint32_t *pRetPolicy, uint32_t *pEarlyReturn, uint32_t *pRetPushPolicy, uint32_t *pRetQnum );
-static inline void      CSL_udmapCppi5SetReturnPolicy( void *pDesc, uint32_t descType, uint32_t retPolicy, uint32_t earlyReturn, uint32_t retPushPolicy, uint32_t retQnum );
+static inline bool      CSL_udmapCppi5IsEpiDataPresent( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetEpiDataPresent( CSL_UdmapCppi5HMPD *pDesc, bool bEpiDataPresent );
+static inline uint32_t *CSL_udmapCppi5GetEpiDataPtr( const CSL_UdmapCppi5HMPD *pDesc );
+static inline int32_t   CSL_udmapCppi5RdEpiData( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pTsInfo, uint32_t *pSwInfo0, uint32_t *pSwInfo1, uint32_t *pSwInfo2 );
+static inline void      CSL_udmapCppi5WrEpiData( const CSL_UdmapCppi5HMPD *pDesc, uint32_t tsInfo, uint32_t swInfo0, uint32_t swInfo1, uint32_t swInfo2 );
+static inline uint32_t  CSL_udmapCppi5GetPsDataLoc( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetPsDataLoc( CSL_UdmapCppi5HMPD *pDesc, uint32_t psLoc );
+static inline uint32_t  CSL_udmapCppi5GetPsDataLen( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetPsDataLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t psDataLen );
+static inline uint64_t  CSL_udmapCppi5GetPsDataAddr( const CSL_UdmapCppi5HMPD *pDesc, bool bInSopBuf, bool bEpiPresent );
+static inline uint8_t   *CSL_udmapCppi5GetPsDataPtr( const CSL_UdmapCppi5HMPD *pDesc );
+static inline uint32_t  CSL_udmapCppi5GetSrcTag( const CSL_UdmapCppi5HMPD *pDesc );
+static inline uint32_t  CSL_udmapCppi5GetDstTag( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetSrcTag( CSL_UdmapCppi5HMPD *pDesc, uint32_t srcTag );
+static inline void      CSL_udmapCppi5SetDstTag( CSL_UdmapCppi5HMPD *pDesc, uint32_t dstTag );
+static inline uint32_t  CSL_udmapCppi5GetErrorFlags( const CSL_UdmapCppi5HMPD *pDesc );
+static inline uint32_t  CSL_udmapCppi5GetPsFlags( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetPsFlags( CSL_UdmapCppi5HMPD *pDesc, uint32_t psFlags );
+static inline uint32_t  CSL_udmapCppi5GetPktType( const CSL_UdmapCppi5HMPD *pDesc );
+static inline void      CSL_udmapCppi5SetPktType( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktType );
+static inline void      CSL_udmapCppi5GetIds( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pPktId, uint32_t *pFlowId );
+static inline void      CSL_udmapCppi5SetIds( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t pktId, uint32_t flowId );
+static inline void      CSL_udmapCppi5GetReturnPolicy( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pRetPolicy, uint32_t *pEarlyReturn, uint32_t *pRetPushPolicy, uint32_t *pRetQnum );
+static inline void      CSL_udmapCppi5SetReturnPolicy( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t retPolicy, uint32_t earlyReturn, uint32_t retPushPolicy, uint32_t retQnum );
 static inline uint32_t  CSL_udmapCppi5MonoGetDataOffset( const CSL_UdmapCppi5MMPD *pDesc );
 static inline void      CSL_udmapCppi5MonoSetDataOffset( CSL_UdmapCppi5MMPD *pDesc, uint32_t dataOffset );
 static inline void      CSL_udmapCppi5TrGetReload( const CSL_UdmapCppi5TRPD *pDesc, uint32_t *pReloadEnable, uint32_t *pReloadIdx );
@@ -309,7 +309,7 @@ static inline void      CSL_udmapCppi5TrSetEntryStride( CSL_UdmapCppi5TRPD *pDes
  *
  *  \return Descriptor type
  */
-static inline uint32_t CSL_udmapCppi5GetDescType( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetDescType( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_DTYPE );
 }
@@ -330,7 +330,7 @@ static inline uint32_t CSL_udmapCppi5GetDescType( const void *pDesc )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5SetDescType( void *pDesc, uint32_t descType )
+static inline void CSL_udmapCppi5SetDescType( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_DTYPE, descType );
 }
@@ -351,7 +351,7 @@ static inline void CSL_udmapCppi5SetDescType( void *pDesc, uint32_t descType )
  *
  *  \return Packet length
  */
-static inline uint32_t CSL_udmapCppi5GetPktLen( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetPktLen( const CSL_UdmapCppi5HMPD *pDesc )
 {
     uint32_t pktLen;
     uint32_t descType = CSL_udmapCppi5GetDescType( pDesc );
@@ -390,7 +390,7 @@ static inline uint32_t CSL_udmapCppi5GetPktLen( const void *pDesc )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5SetPktLen( void *pDesc, uint32_t descType, uint32_t pktLen )
+static inline void CSL_udmapCppi5SetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t pktLen )
 {
     if( (descType == CSL_UDMAP_CPPI5_PD_DESCINFO_DTYPE_VAL_HOST) ||
         (descType == CSL_UDMAP_CPPI5_PD_DESCINFO_DTYPE_VAL_MONO) )
@@ -413,7 +413,7 @@ static inline void CSL_udmapCppi5SetPktLen( void *pDesc, uint32_t descType, uint
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5HostSetPktLen( void *pDesc, uint32_t pktLen )
+static inline void CSL_udmapCppi5HostSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PKTLEN, pktLen );
 }
@@ -428,7 +428,7 @@ static inline void CSL_udmapCppi5HostSetPktLen( void *pDesc, uint32_t pktLen )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5MonoSetPktLen( void *pDesc, uint32_t pktLen )
+static inline void CSL_udmapCppi5MonoSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen )
 {
     CSL_FINS( ((CSL_UdmapCppi5MMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PKTLEN, pktLen );
 }
@@ -443,7 +443,7 @@ static inline void CSL_udmapCppi5MonoSetPktLen( void *pDesc, uint32_t pktLen )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5TrSetPktLen( void *pDesc, uint32_t pktLen )
+static inline void CSL_udmapCppi5TrSetPktLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktLen )
 {
     CSL_FINS( ((CSL_UdmapCppi5TRPD *)pDesc)->descInfo, UDMAP_CPPI5_TRPD_DESCINFO_LASTIDX, pktLen-1U );
 }
@@ -613,7 +613,7 @@ static inline void CSL_udmapCppi5LinkDesc( CSL_UdmapCppi5HMPD *pDesc, uint64_t p
  *  \return  true = EPI block is present in the descriptor
  *          false = EPI block is not present in the descriptor
  */
-static inline bool CSL_udmapCppi5IsEpiDataPresent( const void *pDesc )
+static inline bool CSL_udmapCppi5IsEpiDataPresent( const CSL_UdmapCppi5HMPD *pDesc )
 {
     uint32_t fieldVal;
 
@@ -635,7 +635,7 @@ static inline bool CSL_udmapCppi5IsEpiDataPresent( const void *pDesc )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetEpiDataPresent( void *pDesc, bool bEpiDataPresent )
+static inline void CSL_udmapCppi5SetEpiDataPresent( CSL_UdmapCppi5HMPD *pDesc, bool bEpiDataPresent )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_EINFO, (bEpiDataPresent==(bool)true) ? (uint32_t)1U : (uint32_t)0U );
 }
@@ -654,7 +654,7 @@ static inline void CSL_udmapCppi5SetEpiDataPresent( void *pDesc, bool bEpiDataPr
  *  \return A pointer to the EPI block data within the descriptor is returned,
  *          or NULL is the EPI block is not present in the descriptor
  */
-static inline uint32_t *CSL_udmapCppi5GetEpiDataPtr( const void *pDesc )
+static inline uint32_t *CSL_udmapCppi5GetEpiDataPtr( const CSL_UdmapCppi5HMPD *pDesc )
 {
     uint32_t *pEpiData = NULL;
 
@@ -692,7 +692,7 @@ static inline uint32_t *CSL_udmapCppi5GetEpiDataPtr( const void *pDesc )
  *  \return  0 = success
  *          -1 = No EPI block data is present in the descriptor
  */
-static inline int32_t CSL_udmapCppi5RdEpiData( const void *pDesc, uint32_t *pTsInfo, uint32_t *pSwInfo0, uint32_t *pSwInfo1, uint32_t *pSwInfo2 )
+static inline int32_t CSL_udmapCppi5RdEpiData( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pTsInfo, uint32_t *pSwInfo0, uint32_t *pSwInfo1, uint32_t *pSwInfo2 )
 {
     int32_t retVal = -1;
     uint32_t *pSrcEpiData = CSL_udmapCppi5GetEpiDataPtr(pDesc);
@@ -725,7 +725,7 @@ static inline int32_t CSL_udmapCppi5RdEpiData( const void *pDesc, uint32_t *pTsI
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5WrEpiData( const void *pDesc, uint32_t tsInfo, uint32_t swInfo0, uint32_t swInfo1, uint32_t swInfo2 )
+static inline void CSL_udmapCppi5WrEpiData( const CSL_UdmapCppi5HMPD *pDesc, uint32_t tsInfo, uint32_t swInfo0, uint32_t swInfo1, uint32_t swInfo2 )
 {
     uint32_t *pDstEpiData = CSL_udmapCppi5GetEpiDataPtr(pDesc);
 
@@ -751,7 +751,7 @@ static inline void CSL_udmapCppi5WrEpiData( const void *pDesc, uint32_t tsInfo, 
  *  \return 0 = Protocol-specific data is in the descriptor
  *          1 = Protocol-specific data is in the SOP buffer
  */
-static inline uint32_t CSL_udmapCppi5GetPsDataLoc( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetPsDataLoc( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PSINFO );
 }
@@ -770,7 +770,7 @@ static inline uint32_t CSL_udmapCppi5GetPsDataLoc( const void *pDesc )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5SetPsDataLoc( void *pDesc, uint32_t psLoc )
+static inline void CSL_udmapCppi5SetPsDataLoc( CSL_UdmapCppi5HMPD *pDesc, uint32_t psLoc )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PSINFO, psLoc );
 }
@@ -788,7 +788,7 @@ static inline void CSL_udmapCppi5SetPsDataLoc( void *pDesc, uint32_t psLoc )
  *
  *  \return The number of bytes of ps data is returned
  */
-static inline uint32_t CSL_udmapCppi5GetPsDataLen( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetPsDataLen( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return ((uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PSWCNT )) * 4U;
 }
@@ -809,7 +809,7 @@ static inline uint32_t CSL_udmapCppi5GetPsDataLen( const void *pDesc )
  *
  *  \return None
  */
-static inline void CSL_udmapCppi5SetPsDataLen( void *pDesc, uint32_t psDataLen )
+static inline void CSL_udmapCppi5SetPsDataLen( CSL_UdmapCppi5HMPD *pDesc, uint32_t psDataLen )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->descInfo, UDMAP_CPPI5_PD_DESCINFO_PSWCNT, (psDataLen/4U) );
 }
@@ -833,7 +833,7 @@ static inline void CSL_udmapCppi5SetPsDataLen( void *pDesc, uint32_t psDataLen )
  *
  *  \return Address of the protocol-specific data
  */
-static inline uint64_t CSL_udmapCppi5GetPsDataAddr( const void *pDesc, bool bInSopBuf, bool bEpiPresent )
+static inline uint64_t CSL_udmapCppi5GetPsDataAddr( const CSL_UdmapCppi5HMPD *pDesc, bool bInSopBuf, bool bEpiPresent )
 {
     uint64_t psDataAddr;
     uint32_t descType = CSL_udmapCppi5GetDescType( pDesc );
@@ -862,7 +862,7 @@ static inline uint64_t CSL_udmapCppi5GetPsDataAddr( const void *pDesc, bool bInS
     return psDataAddr;
 }
 
-static inline uint8_t *CSL_udmapCppi5GetPsDataPtr( const void *pDesc )
+static inline uint8_t *CSL_udmapCppi5GetPsDataPtr( const CSL_UdmapCppi5HMPD *pDesc )
 {
     uint8_t *pPsData = NULL;
     uint32_t psDataLen;
@@ -906,7 +906,7 @@ static inline uint8_t *CSL_udmapCppi5GetPsDataPtr( const void *pDesc )
  *
  *  \return  Source tag
  */
-static inline uint32_t CSL_udmapCppi5GetSrcTag( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetSrcTag( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->srcDstTag, UDMAP_CPPI5_PD_SRCDSTTAG_SRCTAG );
 }
@@ -920,7 +920,7 @@ static inline uint32_t CSL_udmapCppi5GetSrcTag( const void *pDesc )
  *
  *  \return  Destination tag
  */
-static inline uint32_t CSL_udmapCppi5GetDstTag( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetDstTag( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->srcDstTag, UDMAP_CPPI5_PD_SRCDSTTAG_DSTTAG );
 }
@@ -935,7 +935,7 @@ static inline uint32_t CSL_udmapCppi5GetDstTag( const void *pDesc )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetSrcTag( void *pDesc, uint32_t srcTag )
+static inline void CSL_udmapCppi5SetSrcTag( CSL_UdmapCppi5HMPD *pDesc, uint32_t srcTag )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->srcDstTag, UDMAP_CPPI5_PD_SRCDSTTAG_SRCTAG, srcTag );
 }
@@ -950,7 +950,7 @@ static inline void CSL_udmapCppi5SetSrcTag( void *pDesc, uint32_t srcTag )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetDstTag( void *pDesc, uint32_t dstTag )
+static inline void CSL_udmapCppi5SetDstTag( CSL_UdmapCppi5HMPD *pDesc, uint32_t dstTag )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->srcDstTag, UDMAP_CPPI5_PD_SRCDSTTAG_DSTTAG, dstTag );
 }
@@ -967,7 +967,7 @@ static inline void CSL_udmapCppi5SetDstTag( void *pDesc, uint32_t dstTag )
  *
  *  \return  The error flags are returned
  */
-static inline uint32_t CSL_udmapCppi5GetErrorFlags( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetErrorFlags( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->pktInfo1, UDMAP_CPPI5_PD_PKTINFO1_PKTERROR );
 }
@@ -984,7 +984,7 @@ static inline uint32_t CSL_udmapCppi5GetErrorFlags( const void *pDesc )
  *
  *  \return  The protocol-specific (ps) flags are returned
  */
-static inline uint32_t CSL_udmapCppi5GetPsFlags( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetPsFlags( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->pktInfo1, UDMAP_CPPI5_PD_PKTINFO1_PSFLGS );
 }
@@ -1002,7 +1002,7 @@ static inline uint32_t CSL_udmapCppi5GetPsFlags( const void *pDesc )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetPsFlags( void *pDesc, uint32_t psFlags )
+static inline void CSL_udmapCppi5SetPsFlags( CSL_UdmapCppi5HMPD *pDesc, uint32_t psFlags )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->pktInfo1, UDMAP_CPPI5_PD_PKTINFO1_PSFLGS, psFlags );
 }
@@ -1019,7 +1019,7 @@ static inline void CSL_udmapCppi5SetPsFlags( void *pDesc, uint32_t psFlags )
  *
  *  \return  Packet type
  */
-static inline uint32_t CSL_udmapCppi5GetPktType( const void *pDesc )
+static inline uint32_t CSL_udmapCppi5GetPktType( const CSL_UdmapCppi5HMPD *pDesc )
 {
     return (uint32_t)CSL_FEXT( ((const CSL_UdmapCppi5HMPD *)pDesc)->pktInfo2, UDMAP_CPPI5_PD_PKTINFO2_PKTTYPE );
 }
@@ -1037,7 +1037,7 @@ static inline uint32_t CSL_udmapCppi5GetPktType( const void *pDesc )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetPktType( void *pDesc, uint32_t pktType  )
+static inline void CSL_udmapCppi5SetPktType( CSL_UdmapCppi5HMPD *pDesc, uint32_t pktType  )
 {
     CSL_FINS( ((CSL_UdmapCppi5HMPD *)pDesc)->pktInfo2, UDMAP_CPPI5_PD_PKTINFO2_PKTTYPE, pktType );
 }
@@ -1053,7 +1053,7 @@ static inline void CSL_udmapCppi5SetPktType( void *pDesc, uint32_t pktType  )
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5GetIds( const void *pDesc, uint32_t *pPktId, uint32_t *pFlowId )
+static inline void CSL_udmapCppi5GetIds( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pPktId, uint32_t *pFlowId )
 {
     uint32_t descType = CSL_udmapCppi5GetDescType( pDesc );
 
@@ -1081,7 +1081,7 @@ static inline void CSL_udmapCppi5GetIds( const void *pDesc, uint32_t *pPktId, ui
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetIds( void *pDesc, uint32_t descType, uint32_t pktId, uint32_t flowId )
+static inline void CSL_udmapCppi5SetIds( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t pktId, uint32_t flowId )
 {
     uint32_t v;
 
@@ -1120,7 +1120,7 @@ static inline void CSL_udmapCppi5SetIds( void *pDesc, uint32_t descType, uint32_
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5GetReturnPolicy( const void *pDesc, uint32_t *pRetPolicy, uint32_t *pEarlyReturn, uint32_t *pRetPushPolicy, uint32_t *pRetQnum )
+static inline void CSL_udmapCppi5GetReturnPolicy( const CSL_UdmapCppi5HMPD *pDesc, uint32_t *pRetPolicy, uint32_t *pEarlyReturn, uint32_t *pRetPushPolicy, uint32_t *pRetQnum )
 {
     uint32_t descType = CSL_udmapCppi5GetDescType( pDesc );
 
@@ -1184,7 +1184,7 @@ static inline void CSL_udmapCppi5GetReturnPolicy( const void *pDesc, uint32_t *p
  *
  *  \return  None
  */
-static inline void CSL_udmapCppi5SetReturnPolicy( void *pDesc, uint32_t descType, uint32_t retPolicy, uint32_t earlyReturn, uint32_t retPushPolicy, uint32_t retQnum )
+static inline void CSL_udmapCppi5SetReturnPolicy( CSL_UdmapCppi5HMPD *pDesc, uint32_t descType, uint32_t retPolicy, uint32_t earlyReturn, uint32_t retPushPolicy, uint32_t retQnum )
 {
     uint32_t v;
 
