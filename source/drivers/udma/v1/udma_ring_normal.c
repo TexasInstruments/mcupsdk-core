@@ -72,8 +72,8 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void Udma_ringSetCfgNormal(Udma_DrvHandleInt drvHandle,
-                           Udma_RingHandleInt ringHandle,
+void Udma_ringSetCfgNormal(Udma_DrvHandle drvHandle,
+                           Udma_RingHandle ringHandle,
                            const Udma_RingPrms *ringPrms)
 {
     uint32_t            addrHi, addrLo, elemSize;
@@ -92,7 +92,7 @@ void Udma_ringSetCfgNormal(Udma_DrvHandleInt drvHandle,
     if(NULL_PTR != ringPrms)
     {
         ringCfg->physBase    =
-            Udma_virtToPhyFxn(ringPrms->ringMem, drvHandle, (Udma_ChHandleInt) NULL_PTR);
+            Udma_virtToPhyFxn(ringPrms->ringMem, drvHandle, (Udma_ChHandle) NULL_PTR);
         ringCfg->virtBase    = (void *) ringPrms->ringMem;
         ringCfg->mode        = ringPrms->mode;
         ringCfg->elCnt       = ringPrms->elemCnt;
@@ -106,7 +106,7 @@ void Udma_ringSetCfgNormal(Udma_DrvHandleInt drvHandle,
         addrLo = CSL_REG32_FEXT(&ringHandle->pCfgRegs->BA_LO, RINGACC_CFG_RING_BA_LO_ADDR_LO);
         ringCfg->physBase    = (uint64_t)((((uint64_t) addrHi) << 32UL) |
                                             ((uint64_t) addrLo));
-        ringCfg->virtBase    = Udma_phyToVirtFxn(ringCfg->physBase, drvHandle, (Udma_ChHandleInt) NULL_PTR);
+        ringCfg->virtBase    = Udma_phyToVirtFxn(ringCfg->physBase, drvHandle, (Udma_ChHandle) NULL_PTR);
         ringCfg->mode        = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_QMODE);
         ringCfg->elCnt       = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_ELCNT);
         elemSize             = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_ELSIZE);
@@ -131,13 +131,13 @@ void Udma_ringSetCfgNormal(Udma_DrvHandleInt drvHandle,
     return;
 }
 
-void Udma_ringHandleClearRegsNormal(Udma_RingHandleInt ringHandle)
+void Udma_ringHandleClearRegsNormal(Udma_RingHandle ringHandle)
 {
     ringHandle->pCfgRegs        = (volatile CSL_ringacc_cfgRegs_RING *) NULL_PTR;
     ringHandle->pRtRegs         = (volatile CSL_ringacc_rtRegs_RINGRT *) NULL_PTR;
 }
 
-int32_t Udma_ringQueueRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
+int32_t Udma_ringQueueRawNormal(Udma_DrvHandle drvHandle, Udma_RingHandle ringHandle, uint64_t phyDescMem)
 {
     int32_t         retVal = UDMA_SOK;
 
@@ -159,7 +159,7 @@ int32_t Udma_ringQueueRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt 
     return (retVal);
 }
 
-int32_t Udma_ringDequeueRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringDequeueRawNormal(Udma_DrvHandle drvHandle, Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     int32_t         retVal = UDMA_SOK, cslRetVal;
 
@@ -185,7 +185,7 @@ int32_t Udma_ringDequeueRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleIn
     return (retVal);
 }
 
-int32_t Udma_ringFlushRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringFlushRawNormal(Udma_DrvHandle drvHandle, Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     int32_t         retVal = UDMA_SOK;
 
@@ -195,7 +195,7 @@ int32_t Udma_ringFlushRawNormal(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt 
     return (retVal);
 }
 
-void Udma_ringPrimeNormal(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
+void Udma_ringPrimeNormal(Udma_RingHandle ringHandle, uint64_t phyDescMem)
 {
     volatile uint64_t        *ringPtr;
     CSL_RingAccRingCfg       *pRing;
@@ -219,7 +219,7 @@ void Udma_ringPrimeNormal(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
     return;
 }
 
-void Udma_ringPrimeReadNormal(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+void Udma_ringPrimeReadNormal(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     volatile uint64_t        *ringPtr;
     CSL_RingAccRingCfg       *pRing;
@@ -244,7 +244,7 @@ void Udma_ringPrimeReadNormal(Udma_RingHandleInt ringHandle, uint64_t *phyDescMe
     }
 }
 
-void Udma_ringSetDoorBellNormal(Udma_RingHandleInt ringHandle, int32_t count)
+void Udma_ringSetDoorBellNormal(Udma_RingHandle ringHandle, int32_t count)
 {
     uint32_t    regVal;
     int32_t     thisDbRingCnt;
@@ -295,18 +295,18 @@ void Udma_ringSetDoorBellNormal(Udma_RingHandleInt ringHandle, int32_t count)
     }
 }
 
-void *Udma_ringGetMemPtrNormal(Udma_RingHandleInt ringHandle)
+uint8_t *Udma_ringGetMemPtrNormal(Udma_RingHandle ringHandle)
 {
-    void   *ringMem = NULL_PTR;
+    uint8_t   *ringMem = NULL_PTR;
 
     if((NULL_PTR != ringHandle) && (UDMA_INIT_DONE == ringHandle->ringInitDone))
     {
-        ringMem = ringHandle->cfg.virtBase;
+        ringMem = (uint8_t*) ringHandle->cfg.virtBase;
     }
 
     return (ringMem);
 }
-uint32_t Udma_ringGetModeNormal(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetModeNormal(Udma_RingHandle ringHandle)
 {
     uint32_t ringMode = CSL_RINGACC_RING_MODE_INVALID;
 
@@ -318,7 +318,7 @@ uint32_t Udma_ringGetModeNormal(Udma_RingHandleInt ringHandle)
     return (ringMode);
 }
 
-uint32_t Udma_ringGetElementCntNormal(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetElementCntNormal(Udma_RingHandle ringHandle)
 {
     uint32_t size = 0U;
 
@@ -330,7 +330,7 @@ uint32_t Udma_ringGetElementCntNormal(Udma_RingHandleInt ringHandle)
     return (size);
 }
 
-uint32_t Udma_ringGetRingOccNormal(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetRingOccNormal(Udma_RingHandle ringHandle)
 {
     uint32_t occ = 0U;
 
@@ -345,7 +345,7 @@ uint32_t Udma_ringGetRingOccNormal(Udma_RingHandleInt ringHandle)
     return (occ);
 }
 
-uint32_t Udma_ringGetWrIdxNormal(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetWrIdxNormal(Udma_RingHandle ringHandle)
 {
     uint32_t idx = 0U;
 
@@ -357,7 +357,7 @@ uint32_t Udma_ringGetWrIdxNormal(Udma_RingHandleInt ringHandle)
     return (idx);
 }
 
-uint32_t Udma_ringGetRdIdxNormal(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetRdIdxNormal(Udma_RingHandle ringHandle)
 {
     uint32_t idx = 0U;
 

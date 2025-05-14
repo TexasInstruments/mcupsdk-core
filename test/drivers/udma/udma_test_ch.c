@@ -138,12 +138,12 @@ static int32_t udmaTestChPktdmaParamCheckTestLoop(UdmaTestTaskObj *taskObj)
     Udma_DrvHandle      drvHandle;
     uint32_t            chType;
     Udma_ChObject       chObj;
-    Udma_ChHandle       chHandle = &chObj;
+    Udma_ChHandle    chHandle = (Udma_ChHandle) &chObj;
     Udma_ChPrms         chPrms;
     void               *ringMem = NULL;
     Udma_ChObjectInt   *chObjInt = (Udma_ChObjectInt *) chHandle;
 
-    drvHandle = &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
+    drvHandle = (Udma_DrvHandle) &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
     ringMemSize = elemCnt * sizeof (uint64_t);
     ringMem = Utils_memAlloc(heapId, ringMemSize, UDMA_CACHELINE_ALIGNMENT);
     if(NULL == ringMem)
@@ -224,7 +224,7 @@ static int32_t udmaTestChPktdmaChApiTestLoop(UdmaTestTaskObj *taskObj)
     Udma_DrvHandle      drvHandle;
     uint32_t            chType;
     Udma_ChObject       chObj;
-    Udma_ChHandle       chHandle = &chObj;
+    Udma_ChHandle    chHandle = (Udma_ChHandle) &chObj;
     Udma_ChPrms         chPrms;
     Udma_ChTxPrms       txPrms;
     Udma_ChRxPrms       rxPrms;
@@ -236,7 +236,7 @@ static int32_t udmaTestChPktdmaChApiTestLoop(UdmaTestTaskObj *taskObj)
     const UdmaTestPktdmaChPrm  *pktdmaChPrms = NULL;
     Udma_DrvObjectInt  *drvObj;
 
-    drvHandle = &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
+    drvHandle = (Udma_DrvHandle) &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
     drvObj = (Udma_DrvObjectInt *) drvHandle;
     rmInitPrms = &drvObj->rmInitPrms;
     ringMemSize = elemCnt * sizeof (uint64_t);

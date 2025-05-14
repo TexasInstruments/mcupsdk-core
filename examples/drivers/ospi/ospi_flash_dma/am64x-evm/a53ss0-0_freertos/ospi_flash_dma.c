@@ -180,7 +180,7 @@ int32_t App_OspiFlashDmaInit(App_OspiFlashDmaObj *appObj)
 
     appObj->flashHandle         = gFlashHandle[CONFIG_FLASH0];
     appObj->ospiHandle          = OSPI_getHandle(CONFIG_OSPI0);
-    appObj->udmaDrvHandle       = &gUdmaDrvObj[CONFIG_UDMA0];
+    appObj->udmaDrvHandle       = (Udma_DrvHandle) &gUdmaDrvObj[CONFIG_UDMA0];
     appObj->udmaChHandle        = gConfigUdma0BlkCopyChHandle[CONFIG_UDMA0];
     appObj->txTotalTicks        = 0U;
     memset(&appObj->rxTotalTicks, 0, APP_OSPI_FLASH_DMA_REPEAT_CNT * sizeof(uint32_t));
@@ -308,7 +308,7 @@ int32_t App_OspiFlashDmaTrEventRegister(App_OspiFlashDmaObj *appObj)
 
     if(NULL != appObj)
     {
-        Udma_EventHandle eventHandle = &appObj->trEventObj;
+        Udma_EventHandle eventHandle = (Udma_EventHandle) &appObj->trEventObj;
         UdmaEventPrms_init(&appObj->trEventParams);
         appObj->trEventParams.eventType = UDMA_EVENT_TYPE_TR;
         appObj->trEventParams.eventMode = UDMA_EVENT_MODE_SHARED;

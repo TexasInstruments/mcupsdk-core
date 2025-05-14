@@ -60,22 +60,22 @@
 /* ========================================================================== */
 
 static void Udma_eventIsrFxn(void *args);
-static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
+static int32_t Udma_eventCheckParams(Udma_DrvHandle drvHandle,
                                      const Udma_EventPrms *eventPrms);
-static int32_t Udma_eventCheckUnRegister(Udma_DrvHandleInt drvHandle,
-                                         Udma_EventHandleInt eventHandle);
-static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
-                                       Udma_EventHandleInt eventHandle);
-static void Udma_eventFreeResource(Udma_DrvHandleInt drvHandle,
-                                   Udma_EventHandleInt eventHandle);
-static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
-                                Udma_EventHandleInt eventHandle);
-static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
-                               Udma_EventHandleInt eventHandle);
-static void Udma_eventProgramSteering(Udma_DrvHandleInt drvHandle,
-                                      Udma_EventHandleInt eventHandle);
-static void Udma_eventResetSteering(Udma_DrvHandleInt drvHandle,
-                                    Udma_EventHandleInt eventHandle);
+static int32_t Udma_eventCheckUnRegister(Udma_DrvHandle drvHandle,
+                                         Udma_EventHandle eventHandle);
+static int32_t Udma_eventAllocResource(Udma_DrvHandle drvHandle,
+                                       Udma_EventHandle eventHandle);
+static void Udma_eventFreeResource(Udma_DrvHandle drvHandle,
+                                   Udma_EventHandle eventHandle);
+static int32_t Udma_eventConfig(Udma_DrvHandle drvHandle,
+                                Udma_EventHandle eventHandle);
+static int32_t Udma_eventReset(Udma_DrvHandle drvHandle,
+                               Udma_EventHandle eventHandle);
+static void Udma_eventProgramSteering(Udma_DrvHandle drvHandle,
+                                      Udma_EventHandle eventHandle);
+static void Udma_eventResetSteering(Udma_DrvHandle drvHandle,
+                                    Udma_EventHandle eventHandle);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -87,14 +87,14 @@ static void Udma_eventResetSteering(Udma_DrvHandleInt drvHandle,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
-                           Udma_EventHandleInt eventHandle,
+int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
+                           Udma_EventHandle eventHandle,
                            Udma_EventPrms *eventPrms)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            allocDone = (uint32_t) FALSE;
-    Udma_DrvHandleInt   drvHandleInt;
-    Udma_EventHandleInt eventHandleInt;
+    Udma_DrvHandle   drvHandleInt;
+    Udma_EventHandle eventHandleInt;
 
     /* Error check */
     if((NULL_PTR == drvHandle) || (NULL_PTR == eventHandle) || (NULL_PTR == eventPrms))
@@ -103,7 +103,7 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
     }
     if(UDMA_SOK == retVal)
     {
-        drvHandleInt = (Udma_DrvHandleInt) drvHandle;
+        drvHandleInt = (Udma_DrvHandle) drvHandle;
         if(drvHandleInt->drvInitDone != UDMA_INIT_DONE)
         {
             retVal = UDMA_EFAIL;
@@ -118,7 +118,7 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
     if(UDMA_SOK == retVal)
     {
         /* Copy and init parameters */
-        eventHandleInt = (Udma_EventHandleInt) eventHandle;
+        eventHandleInt = (Udma_EventHandle) eventHandle;
         (void) memcpy(
             &eventHandleInt->eventPrms, eventPrms, sizeof(eventHandleInt->eventPrms));
         eventHandleInt->drvHandle       = drvHandleInt;
@@ -127,8 +127,8 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
         eventHandleInt->vintrBitNum     = UDMA_EVENT_INVALID;
         eventHandleInt->irIntrNum       = UDMA_INTR_INVALID;
         eventHandleInt->coreIntrNum     = UDMA_INTR_INVALID;
-        eventHandleInt->nextEvent       = (Udma_EventHandleInt) NULL_PTR;
-        eventHandleInt->prevEvent       = (Udma_EventHandleInt) NULL_PTR;
+        eventHandleInt->nextEvent       = (Udma_EventHandle) NULL_PTR;
+        eventHandleInt->prevEvent       = (Udma_EventHandle) NULL_PTR;
         eventHandleInt->hwiHandle       = NULL_PTR;
         eventHandleInt->vintrBitAllocFlag = 0U;
         eventHandleInt->pIaGeviRegs     = (volatile CSL_intaggr_imapRegs_gevi *) NULL_PTR;
@@ -215,9 +215,9 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
                     /* Copy core number from master handle */
                     /* Copy from master handle */
                     eventPrms->vintrNum       =
-                       ((Udma_EventHandleInt) (eventHandleInt->eventPrms.controllerEventHandle))->vintrNum;
+                       ((Udma_EventHandle) (eventHandleInt->eventPrms.controllerEventHandle))->vintrNum;
                     eventPrms->coreIntrNum    =
-                        ((Udma_EventHandleInt) (eventHandleInt->eventPrms.controllerEventHandle))->coreIntrNum;
+                        ((Udma_EventHandle) (eventHandleInt->eventPrms.controllerEventHandle))->coreIntrNum;
                 }
                 /* Copy the same info to eventHandleInt->eventPrms*/
                 eventHandleInt->eventPrms.intrStatusReg   = eventPrms->intrStatusReg;
@@ -231,11 +231,11 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle)
+int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_DrvHandleInt   drvHandle;
-    Udma_EventHandleInt eventHandleInt;
+    Udma_DrvHandle   drvHandle;
+    Udma_EventHandle eventHandleInt;
 
     /* Error check */
     if(NULL_PTR == eventHandle)
@@ -244,7 +244,7 @@ int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle)
     }
     if(UDMA_SOK == retVal)
     {
-        eventHandleInt = (Udma_EventHandleInt) eventHandle;
+        eventHandleInt = (Udma_EventHandle) eventHandle;
         drvHandle = eventHandleInt->drvHandle;
         if((NULL_PTR == drvHandle) || (drvHandle->drvInitDone != UDMA_INIT_DONE))
         {
@@ -285,18 +285,18 @@ int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle)
                 eventHandleInt->eventInitDone  = UDMA_DEINIT_DONE;
                 eventHandleInt->pIaGeviRegs    = (volatile CSL_intaggr_imapRegs_gevi *) NULL_PTR;
                 eventHandleInt->pIaVintrRegs   = (volatile CSL_intaggr_intrRegs_vint *) NULL_PTR;
-                eventHandleInt->drvHandle      = (Udma_DrvHandleInt) NULL_PTR;
+                eventHandleInt->drvHandle      = (Udma_DrvHandle) NULL_PTR;
             }
         }
     }
     return (retVal);
 }
 
-uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle)
+uint32_t Udma_eventGetId(Udma_EventHandle eventHandle)
 {
     uint32_t            evtNum = UDMA_EVENT_INVALID;
-    Udma_DrvHandleInt   drvHandle;
-    Udma_EventHandleInt eventHandleInt = (Udma_EventHandleInt) eventHandle;
+    Udma_DrvHandle   drvHandle;
+    Udma_EventHandle eventHandleInt = (Udma_EventHandle) eventHandle;
 
     if((NULL_PTR != eventHandleInt) &&
        (UDMA_INIT_DONE == eventHandleInt->eventInitDone))
@@ -311,13 +311,13 @@ uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle)
     return (evtNum);
 }
 
-int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle)
+int32_t Udma_eventDisable(Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_EFAIL;
-    Udma_DrvHandleInt   drvHandle;
+    Udma_DrvHandle   drvHandle;
     uint32_t            vintrBitNum;
     uint32_t            vintrNum;
-    Udma_EventHandleInt eventHandleInt = (Udma_EventHandleInt) eventHandle;
+    Udma_EventHandle eventHandleInt = (Udma_EventHandle) eventHandle;
 
     if((NULL_PTR != eventHandleInt) &&
        (UDMA_INIT_DONE == eventHandleInt->eventInitDone))
@@ -343,13 +343,13 @@ int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle)
     return (retVal);
 }
 
-int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle)
+int32_t Udma_eventEnable(Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_EFAIL;
-    Udma_DrvHandleInt   drvHandle;
+    Udma_DrvHandle   drvHandle;
     uint32_t            vintrBitNum;
     uint32_t            vintrNum;
-    Udma_EventHandleInt eventHandleInt = (Udma_EventHandleInt) eventHandle;
+    Udma_EventHandle eventHandleInt = (Udma_EventHandle) eventHandle;
 
     if((NULL_PTR != eventHandleInt) &&
        (UDMA_INIT_DONE == eventHandleInt->eventInitDone))
@@ -375,10 +375,10 @@ int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle)
     return (retVal);
 }
 
-Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandleInt drvHandle)
+Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandle drvHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_DrvHandleInt   drvHandleInt;
+    Udma_DrvHandle   drvHandleInt;
     Udma_EventHandle    eventHandle = (Udma_EventHandle) NULL_PTR;
 
     /* Error check */
@@ -388,7 +388,7 @@ Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandleInt drvHandle)
     }
     if(UDMA_SOK == retVal)
     {
-        drvHandleInt = (Udma_DrvHandleInt) drvHandle;
+        drvHandleInt = (Udma_DrvHandle) drvHandle;
         if(drvHandleInt->drvInitDone != UDMA_INIT_DONE)
         {
             retVal = UDMA_EFAIL;
@@ -430,10 +430,10 @@ static void Udma_eventIsrFxn(void *args)
     uint32_t            vintrBitNum;
     uint32_t            vintrNum;
     uint32_t            teardownStatus;
-    Udma_EventHandleInt eventHandle = (Udma_EventHandleInt) args;
-    Udma_DrvHandleInt   drvHandle;
+    Udma_EventHandle eventHandle = (Udma_EventHandle) args;
+    Udma_DrvHandle   drvHandle;
     Udma_EventPrms     *eventPrms;
-    Udma_RingHandleInt  ringHandle;
+    Udma_RingHandle  ringHandle;
 
     teardownStatus = UDMA_EVENT_CH_TEARDOWN_STATUS_NA;
     ringHandle = NULL;
@@ -464,7 +464,7 @@ static void Udma_eventIsrFxn(void *args)
                    (UDMA_EVENT_TYPE_TEARDOWN_COMPLETION == eventPrms->eventType))
                 {
                     DebugP_assert(eventPrms->chHandle != NULL_PTR);
-                    ringHandle = ((Udma_ChHandleInt) (eventPrms->chHandle))->cqRing;
+                    ringHandle = ((Udma_ChHandle) (eventPrms->chHandle))->cqRing;
 
                     /* Read the teardown status bit in the Reverse Ring Occupancy register */
                     if( CSL_lcdma_ringaccIsTeardownComplete(&ringHandle->drvHandle->lcdmaRaRegs, ringHandle->ringNum) == TRUE )
@@ -500,11 +500,11 @@ static void Udma_eventIsrFxn(void *args)
     return;
 }
 
-static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
+static int32_t Udma_eventCheckParams(Udma_DrvHandle drvHandle,
                                      const Udma_EventPrms *eventPrms)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_EventHandleInt controllerEventHandle;
+    Udma_EventHandle controllerEventHandle;
 
     DebugP_assert(eventPrms != NULL_PTR);
 
@@ -529,7 +529,7 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
              * interrupt registered, all slaves should have a callback as IA
              * is same and there is no individual control to disable
              * interrupt */
-            controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
+            controllerEventHandle = (Udma_EventHandle) eventPrms->controllerEventHandle;
             if(((Udma_EventCallback) NULL_PTR != controllerEventHandle->eventPrms.eventCb) &&
                ((Udma_EventCallback) NULL_PTR == eventPrms->eventCb))
             {
@@ -589,8 +589,8 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-static int32_t Udma_eventCheckUnRegister(Udma_DrvHandleInt drvHandle,
-                                         Udma_EventHandleInt eventHandle)
+static int32_t Udma_eventCheckUnRegister(Udma_DrvHandle drvHandle,
+                                         Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_EventPrms     *eventPrms;
@@ -629,7 +629,7 @@ static int32_t Udma_eventCheckUnRegister(Udma_DrvHandleInt drvHandle,
             if((UDMA_EVENT_TYPE_DMA_COMPLETION == eventPrms->eventType) || (UDMA_EVENT_TYPE_TEARDOWN_COMPLETION == eventPrms->eventType))
             {
                 DebugP_assert(eventPrms->chHandle != NULL_PTR);
-                ringHandle = ((Udma_ChHandleInt) (eventPrms->chHandle))->cqRing;
+                ringHandle = ((Udma_ChHandle) (eventPrms->chHandle))->cqRing;
             }
             else
             {
@@ -651,14 +651,14 @@ static int32_t Udma_eventCheckUnRegister(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
-                                       Udma_EventHandleInt eventHandle)
+static int32_t Udma_eventAllocResource(Udma_DrvHandle drvHandle,
+                                       Udma_EventHandle eventHandle)
 {
     int32_t                 retVal = UDMA_SOK;
     uint32_t                vintrNum;
     uint32_t                preferredIrIntrNum;
     const Udma_EventPrms   *eventPrms;
-    Udma_EventHandleInt     lastEvent;
+    Udma_EventHandle     lastEvent;
     uintptr_t               cookie;
 
     DebugP_assert(eventHandle != NULL_PTR);
@@ -751,12 +751,12 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
         cookie = HwiP_disable();
 
         /* Link shared events to master event */
-        eventHandle->prevEvent = (Udma_EventHandleInt) NULL_PTR;
-        eventHandle->nextEvent = (Udma_EventHandleInt) NULL_PTR;
+        eventHandle->prevEvent = (Udma_EventHandle) NULL_PTR;
+        eventHandle->nextEvent = (Udma_EventHandle) NULL_PTR;
         if(NULL_PTR != eventPrms->controllerEventHandle)
         {
             /* Go to the last node - insert node at the end */
-            lastEvent = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
+            lastEvent = (Udma_EventHandle) eventPrms->controllerEventHandle;
             while(NULL_PTR != lastEvent->nextEvent)
             {
                 /* Move to next node */
@@ -773,9 +773,9 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
     {
         if(UDMA_EVENT_TYPE_TR == eventPrms->eventType)
         {
-            Udma_ChHandleInt chHandle;
+            Udma_ChHandle chHandle;
             DebugP_assert(eventPrms->chHandle != NULL_PTR);
-            chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+            chHandle = (Udma_ChHandle) eventPrms->chHandle;
 
             if(TRUE == chHandle->chOesAllocDone)
             {
@@ -798,7 +798,7 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
         else
         {
             /* Use master event's info */
-            vintrNum = ((Udma_EventHandleInt) (eventPrms->controllerEventHandle))->vintrNum;
+            vintrNum = ((Udma_EventHandle) (eventPrms->controllerEventHandle))->vintrNum;
         }
         DebugP_assert(drvHandle->iaRegs.pIntrRegs != NULL_PTR);
         eventHandle->pIaVintrRegs = &drvHandle->iaRegs.pIntrRegs->VINT[vintrNum];
@@ -807,8 +807,8 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-static void Udma_eventFreeResource(Udma_DrvHandleInt drvHandle,
-                                   Udma_EventHandleInt eventHandle)
+static void Udma_eventFreeResource(Udma_DrvHandle drvHandle,
+                                   Udma_EventHandle eventHandle)
 {
     uintptr_t   cookie;
 
@@ -866,13 +866,13 @@ static void Udma_eventFreeResource(Udma_DrvHandleInt drvHandle,
     return;
 }
 
-static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
-                                Udma_EventHandleInt eventHandle)
+static int32_t Udma_eventConfig(Udma_DrvHandle drvHandle,
+                                Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            vintrNum, coreIntrNum;
-    Udma_ChHandleInt    chHandle;
-    Udma_RingHandleInt  ringHandle;
+    Udma_ChHandle    chHandle;
+    Udma_RingHandle  ringHandle;
     Udma_EventPrms     *eventPrms;
     HwiP_Params         hwiPrms;
     struct tisci_msg_rm_irq_set_req     rmIrqReq;
@@ -914,7 +914,7 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
     /* Get master IA register number for slaves */
     if(NULL_PTR != eventHandle->eventPrms.controllerEventHandle)
     {
-        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
+        vintrNum = ((Udma_EventHandle) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
     }
     else
     {
@@ -940,7 +940,7 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
        (UDMA_EVENT_TYPE_TEARDOWN_COMPLETION == eventPrms->eventType))
     {
         DebugP_assert(eventPrms->chHandle != NULL_PTR);
-        chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+        chHandle = (Udma_ChHandle) eventPrms->chHandle;
 
         rmIrqReq.src_id = drvHandle->srcIdRingIrq;
         if((UDMA_EVENT_TYPE_DMA_COMPLETION == eventPrms->eventType) || (UDMA_EVENT_TYPE_TEARDOWN_COMPLETION == eventPrms->eventType))
@@ -983,7 +983,7 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
         else
         {
             DebugP_assert(eventPrms->chHandle != NULL_PTR);
-            chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+            chHandle = (Udma_ChHandle) eventPrms->chHandle;
             rmIrqReq.src_id = drvHandle->srcIdTrIrq;
             if((chHandle->chType & UDMA_CH_FLAG_BLK_COPY) == UDMA_CH_FLAG_BLK_COPY)
             {
@@ -1017,7 +1017,7 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
     if(UDMA_EVENT_TYPE_RING == eventPrms->eventType)
     {
         DebugP_assert(eventPrms->ringHandle != NULL_PTR);
-        ringHandle = (Udma_RingHandleInt) eventPrms->ringHandle;
+        ringHandle = (Udma_RingHandle) eventPrms->ringHandle;
         DebugP_assert(ringHandle->ringNum != UDMA_RING_INVALID);
 
         rmIrqReq.src_id     = drvHandle->srcIdRingIrq;
@@ -1087,13 +1087,13 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
-                               Udma_EventHandleInt eventHandle)
+static int32_t Udma_eventReset(Udma_DrvHandle drvHandle,
+                               Udma_EventHandle eventHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            vintrNum;
-    Udma_ChHandleInt    chHandle;
-    Udma_RingHandleInt  ringHandle;
+    Udma_ChHandle    chHandle;
+    Udma_RingHandle  ringHandle;
     Udma_EventPrms     *eventPrms;
     struct tisci_msg_rm_irq_release_req     rmIrqReq;
 
@@ -1132,7 +1132,7 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
     /* Get master IA register number for slaves */
     if(NULL_PTR != eventHandle->eventPrms.controllerEventHandle)
     {
-        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
+        vintrNum = ((Udma_EventHandle) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
     }
     else
     {
@@ -1157,7 +1157,7 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
        (UDMA_EVENT_TYPE_TEARDOWN_PACKET == eventPrms->eventType))
     {
         DebugP_assert(eventPrms->chHandle != NULL_PTR);
-        chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+        chHandle = (Udma_ChHandle) eventPrms->chHandle;
 
         rmIrqReq.src_id = drvHandle->srcIdRingIrq;
         if((UDMA_EVENT_TYPE_DMA_COMPLETION == eventPrms->eventType) || (UDMA_EVENT_TYPE_TEARDOWN_COMPLETION == eventPrms->eventType))
@@ -1200,7 +1200,7 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
         else
         {
             DebugP_assert(eventPrms->chHandle != NULL_PTR);
-            chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+            chHandle = (Udma_ChHandle) eventPrms->chHandle;
             rmIrqReq.src_id = drvHandle->srcIdTrIrq;
             if((chHandle->chType & UDMA_CH_FLAG_BLK_COPY) == UDMA_CH_FLAG_BLK_COPY)
             {
@@ -1234,7 +1234,7 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
     if(UDMA_EVENT_TYPE_RING == eventPrms->eventType)
     {
         DebugP_assert(eventPrms->ringHandle != NULL_PTR);
-        ringHandle = (Udma_RingHandleInt) eventPrms->ringHandle;
+        ringHandle = (Udma_RingHandle) eventPrms->ringHandle;
         DebugP_assert(ringHandle->ringNum != UDMA_RING_INVALID);
 
         rmIrqReq.src_id     = drvHandle->srcIdRingIrq;
@@ -1274,10 +1274,10 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
     return (retVal);
 }
 
-static void Udma_eventProgramSteering(Udma_DrvHandleInt drvHandle,
-                                      Udma_EventHandleInt eventHandle)
+static void Udma_eventProgramSteering(Udma_DrvHandle drvHandle,
+                                      Udma_EventHandle eventHandle)
 {
-    Udma_ChHandleInt    chHandle;
+    Udma_ChHandle    chHandle;
     Udma_EventPrms     *eventPrms;
 
     DebugP_assert(eventHandle != NULL_PTR);
@@ -1286,7 +1286,7 @@ static void Udma_eventProgramSteering(Udma_DrvHandleInt drvHandle,
     if(UDMA_EVENT_TYPE_TR == eventPrms->eventType)
     {
         DebugP_assert(eventPrms->chHandle != NULL_PTR);
-        chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+        chHandle = (Udma_ChHandle) eventPrms->chHandle;
 
         /* Mark OES alloc flag */
         chHandle->chOesAllocDone = TRUE;
@@ -1295,10 +1295,10 @@ static void Udma_eventProgramSteering(Udma_DrvHandleInt drvHandle,
     return;
 }
 
-static void Udma_eventResetSteering(Udma_DrvHandleInt drvHandle,
-                                    Udma_EventHandleInt eventHandle)
+static void Udma_eventResetSteering(Udma_DrvHandle drvHandle,
+                                    Udma_EventHandle eventHandle)
 {
-    Udma_ChHandleInt    chHandle;
+    Udma_ChHandle    chHandle;
     Udma_EventPrms     *eventPrms;
 
     DebugP_assert(eventHandle != NULL_PTR);
@@ -1307,7 +1307,7 @@ static void Udma_eventResetSteering(Udma_DrvHandleInt drvHandle,
     if(UDMA_EVENT_TYPE_TR == eventPrms->eventType)
     {
         DebugP_assert(eventPrms->chHandle != NULL_PTR);
-        chHandle = (Udma_ChHandleInt) eventPrms->chHandle;
+        chHandle = (Udma_ChHandle) eventPrms->chHandle;
 
         /* Mark OES alloc flag */
         chHandle->chOesAllocDone = FALSE;

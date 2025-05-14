@@ -119,8 +119,8 @@ typedef struct
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowAllocMapped(Udma_DrvHandleInt drvHandle,
-                             Udma_FlowHandleInt flowHandle,
+int32_t Udma_flowAllocMapped(Udma_DrvHandle drvHandle,
+                             Udma_FlowHandle flowHandle,
                              const Udma_FlowAllocMappedPrms *flowAllocMappedPrms);
 
 /**
@@ -136,7 +136,7 @@ int32_t Udma_flowAllocMapped(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowFree(Udma_FlowHandleInt flowHandle);
+int32_t Udma_flowFree(Udma_FlowHandle flowHandle);
 
 /**
  *  \brief UDMA flow attach API. This API is used to attach to an already
@@ -168,8 +168,8 @@ int32_t Udma_flowFree(Udma_FlowHandleInt flowHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowAttach(Udma_DrvHandleInt drvHandle,
-                        Udma_FlowHandleInt flowHandle,
+int32_t Udma_flowAttach(Udma_DrvHandle drvHandle,
+                        Udma_FlowHandle flowHandle,
                         uint32_t flowStart,
                         uint32_t flowCnt);
 
@@ -202,8 +202,8 @@ int32_t Udma_flowAttach(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowAttachMapped(Udma_DrvHandleInt drvHandle,
-                              Udma_FlowHandleInt flowHandle,
+int32_t Udma_flowAttachMapped(Udma_DrvHandle drvHandle,
+                              Udma_FlowHandle flowHandle,
                               uint32_t mappepdFlowNum,
                               const Udma_FlowAllocMappedPrms *flowAllocMappedPrms);
 
@@ -223,7 +223,7 @@ int32_t Udma_flowAttachMapped(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowDetach(Udma_FlowHandleInt flowHandle);
+int32_t Udma_flowDetach(Udma_FlowHandle flowHandle);
 
 /**
  *  \brief   This API configures the flow configurations.
@@ -244,7 +244,7 @@ int32_t Udma_flowDetach(Udma_FlowHandleInt flowHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_flowConfig(Udma_FlowHandleInt flowHandle,
+int32_t Udma_flowConfig(Udma_FlowHandle flowHandle,
                         uint32_t flowIdx,
                         const Udma_FlowPrms *flowPrms);
 
@@ -259,7 +259,7 @@ int32_t Udma_flowConfig(Udma_FlowHandleInt flowHandle,
  *
  *  \return Start flow number on success or #UDMA_FLOW_INVALID on error
  */
-uint32_t Udma_flowGetNum(Udma_FlowHandleInt flowHandle);
+uint32_t Udma_flowGetNum(Udma_FlowHandle flowHandle);
 
 /**
  *  \brief Returns the number of flows managed by this flow handle.
@@ -274,7 +274,7 @@ uint32_t Udma_flowGetNum(Udma_FlowHandleInt flowHandle);
  *
  *  \return Flow count on success or #UDMA_FLOW_INVALID on error
  */
-uint32_t Udma_flowGetCount(Udma_FlowHandleInt flowHandle);
+uint32_t Udma_flowGetCount(Udma_FlowHandle flowHandle);
 
 /*
  * Structure Init functions

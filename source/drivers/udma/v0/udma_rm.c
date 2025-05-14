@@ -60,7 +60,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static int32_t Udma_rmCheckResLeak(Udma_DrvHandleInt drvHandle,
+static int32_t Udma_rmCheckResLeak(Udma_DrvHandle drvHandle,
                                    const uint32_t *allocFlag,
                                    uint32_t numRes,
                                    uint32_t arrSize);
@@ -75,7 +75,7 @@ static int32_t Udma_rmCheckResLeak(Udma_DrvHandleInt drvHandle,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void Udma_rmInit(Udma_DrvHandleInt drvHandle)
+void Udma_rmInit(Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -239,7 +239,7 @@ void Udma_rmInit(Udma_DrvHandleInt drvHandle)
     return;
 }
 
-int32_t Udma_rmDeinit(Udma_DrvHandleInt drvHandle)
+int32_t Udma_rmDeinit(Udma_DrvHandle drvHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -351,7 +351,7 @@ int32_t Udma_rmDeinit(Udma_DrvHandleInt drvHandle)
     return (retVal);
 }
 
-uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -401,7 +401,7 @@ uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHan
     return (chNum);
 }
 
-void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -423,7 +423,7 @@ void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -473,7 +473,7 @@ uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvH
     return (chNum);
 }
 
-void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -495,7 +495,7 @@ void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -545,7 +545,7 @@ uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drv
     return (chNum);
 }
 
-void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -567,7 +567,7 @@ void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -617,7 +617,7 @@ uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
     return (chNum);
 }
 
-void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -639,7 +639,7 @@ void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -689,7 +689,7 @@ uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
     return (chNum);
 }
 
-void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -711,7 +711,7 @@ void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -761,7 +761,7 @@ uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle
     return (chNum);
 }
 
-void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -783,7 +783,7 @@ void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -833,7 +833,7 @@ uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle
     return (chNum);
 }
 
-void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -855,7 +855,7 @@ void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -905,7 +905,7 @@ uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandl
     return (chNum);
 }
 
-void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -927,7 +927,7 @@ void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -977,7 +977,7 @@ uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandl
     return (chNum);
 }
 
-void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -1001,7 +1001,7 @@ void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle)
 
 #if (UDMA_NUM_MAPPED_TX_GROUP > 0)
 uint32_t Udma_rmAllocMappedTxCh(uint32_t preferredChNum,
-                                Udma_DrvHandleInt drvHandle,
+                                Udma_DrvHandle drvHandle,
                                 const uint32_t mappedChGrp)
 {
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -1055,7 +1055,7 @@ uint32_t Udma_rmAllocMappedTxCh(uint32_t preferredChNum,
 }
 
 void Udma_rmFreeMappedTxCh(uint32_t chNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedChGrp)
 {
     uint32_t            i, offset, bitPos, bitMask;
@@ -1081,7 +1081,7 @@ void Udma_rmFreeMappedTxCh(uint32_t chNum,
 
 #if (UDMA_NUM_MAPPED_RX_GROUP > 0)
 uint32_t Udma_rmAllocMappedRxCh(uint32_t preferredChNum,
-                                Udma_DrvHandleInt drvHandle,
+                                Udma_DrvHandle drvHandle,
                                 const uint32_t mappedChGrp)
 {
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
@@ -1135,7 +1135,7 @@ uint32_t Udma_rmAllocMappedRxCh(uint32_t preferredChNum,
 }
 
 void Udma_rmFreeMappedRxCh(uint32_t chNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedChGrp)
 {
     uint32_t            i, offset, bitPos, bitMask;
@@ -1160,7 +1160,7 @@ void Udma_rmFreeMappedRxCh(uint32_t chNum,
 #endif
 
 #if((UDMA_NUM_MAPPED_TX_GROUP + UDMA_NUM_MAPPED_RX_GROUP) > 0)
-uint32_t Udma_rmAllocMappedRing(Udma_DrvHandleInt drvHandle,
+uint32_t Udma_rmAllocMappedRing(Udma_DrvHandle drvHandle,
                                 const uint32_t mappedRingGrp,
                                 const uint32_t mappedChNum)
 {
@@ -1238,7 +1238,7 @@ uint32_t Udma_rmAllocMappedRing(Udma_DrvHandleInt drvHandle,
 }
 
 void Udma_rmFreeMappedRing(uint32_t ringNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedRingGrp,
                            const uint32_t mappedChNum)
 {
@@ -1275,19 +1275,19 @@ void Udma_rmFreeMappedRing(uint32_t ringNum,
 }
 #endif
 
-uint16_t Udma_rmAllocFreeRing(Udma_DrvHandleInt drvHandle)
+uint16_t Udma_rmAllocFreeRing(Udma_DrvHandle drvHandle)
 {
     uint16_t            ringNum = UDMA_RING_INVALID;
 
     return (ringNum);
 }
 
-void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandle drvHandle)
 {
     return;
 }
 
-uint32_t Udma_rmAllocEvent(Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocEvent(Udma_DrvHandle drvHandle)
 {
     uint32_t            globalEvent = UDMA_EVENT_INVALID;
     uint32_t            i, offset, bitPos, bitMask;
@@ -1314,7 +1314,7 @@ uint32_t Udma_rmAllocEvent(Udma_DrvHandleInt drvHandle)
     return (globalEvent);
 }
 
-void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -1337,7 +1337,7 @@ void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocVintr(Udma_DrvHandleInt drvHandle)
+uint32_t Udma_rmAllocVintr(Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            vintrNum = UDMA_EVENT_INVALID;
@@ -1364,7 +1364,7 @@ uint32_t Udma_rmAllocVintr(Udma_DrvHandleInt drvHandle)
     return (vintrNum);
 }
 
-void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -1387,21 +1387,21 @@ void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle)
+uint32_t Udma_rmAllocVintrBit(Udma_EventHandle eventHandle)
 {
     uint32_t                i;
     uint32_t                vintrBitNum = UDMA_EVENT_INVALID;
     uint64_t                bitMask;
-    Udma_EventHandleInt     controllerEventHandle;
+    Udma_EventHandle     controllerEventHandle;
     const Udma_EventPrms   *eventPrms;
-    Udma_DrvHandleInt       drvHandle = eventHandle->drvHandle;
+    Udma_DrvHandle       drvHandle = eventHandle->drvHandle;
 
     controllerEventHandle = eventHandle;
     eventPrms = &eventHandle->eventPrms;
     if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
+        controllerEventHandle = (Udma_EventHandle) eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
@@ -1423,11 +1423,11 @@ uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle)
 }
 
 void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
-                         Udma_DrvHandleInt drvHandle,
-                         Udma_EventHandleInt eventHandle)
+                         Udma_DrvHandle drvHandle,
+                         Udma_EventHandle eventHandle)
 {
     uint64_t                bitMask;
-    Udma_EventHandleInt     controllerEventHandle;
+    Udma_EventHandle     controllerEventHandle;
     const Udma_EventPrms   *eventPrms;
 
     controllerEventHandle = eventHandle;
@@ -1435,7 +1435,7 @@ void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
     if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
+        controllerEventHandle = (Udma_EventHandle) eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
@@ -1451,7 +1451,7 @@ void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
 }
 
 uint32_t Udma_rmAllocIrIntr(uint32_t preferredIrIntrNum,
-                            Udma_DrvHandleInt drvHandle)
+                            Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     uint32_t            irIntrNum = UDMA_INTR_INVALID;
@@ -1501,7 +1501,7 @@ uint32_t Udma_rmAllocIrIntr(uint32_t preferredIrIntrNum,
     return (irIntrNum);
 }
 
-void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandleInt drvHandle)
+void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandle drvHandle)
 {
     uint32_t            i, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms = &drvHandle->rmInitPrms;
@@ -1524,7 +1524,7 @@ void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandleInt drvHandle)
     return;
 }
 
-uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandleInt drvHandle, uint32_t irIntrNum)
+uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandle drvHandle, uint32_t irIntrNum)
 {
     uint32_t    coreIntrNum = UDMA_INTR_INVALID;
 
@@ -1538,7 +1538,7 @@ uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandleInt drvHandle, uint32_t irIntrNu
     return (coreIntrNum);
 }
 
-uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandleInt drvHandle, uint32_t coreIntrNum)
+uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandle drvHandle, uint32_t coreIntrNum)
 {
     uint32_t    irIntrNum = UDMA_INTR_INVALID;
 
@@ -1715,7 +1715,7 @@ int32_t Udma_rmSetSharedResRmInitPrms(const Udma_RmSharedResPrms *rmSharedResPrm
     return (retVal);
 }
 
-static int32_t Udma_rmCheckResLeak(Udma_DrvHandleInt drvHandle,
+static int32_t Udma_rmCheckResLeak(Udma_DrvHandle drvHandle,
                                    const uint32_t *allocFlag,
                                    uint32_t numRes,
                                    uint32_t arrSize)

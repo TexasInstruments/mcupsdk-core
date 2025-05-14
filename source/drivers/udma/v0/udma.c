@@ -74,7 +74,7 @@
 int32_t Udma_init(Udma_DrvHandle drvHandle, const Udma_InitPrms *initPrms)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_DrvHandleInt   drvHandleInt;
+    Udma_DrvHandle   drvHandleInt;
 
     /* Structure size assert */
     DebugP_assert(sizeof(Udma_DrvObjectInt) <= sizeof(Udma_DrvObject));
@@ -90,7 +90,7 @@ int32_t Udma_init(Udma_DrvHandle drvHandle, const Udma_InitPrms *initPrms)
 
     if(UDMA_SOK == retVal)
     {
-        drvHandleInt = (Udma_DrvHandleInt) drvHandle;
+        drvHandleInt = (Udma_DrvHandle) drvHandle;
         (void) memset(drvHandleInt, 0, sizeof(*drvHandleInt));
         (void) memcpy(&drvHandleInt->initPrms, initPrms, sizeof(Udma_InitPrms));
         UdmaRmInitPrms_init(initPrms->instId, &drvHandleInt->rmInitPrms);
@@ -136,7 +136,7 @@ int32_t Udma_init(Udma_DrvHandle drvHandle, const Udma_InitPrms *initPrms)
 int32_t Udma_deinit(Udma_DrvHandle drvHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_DrvHandleInt   drvHandleInt = (Udma_DrvHandleInt) drvHandle;
+    Udma_DrvHandle   drvHandleInt = (Udma_DrvHandle) drvHandle;
 
     /* Error check */
     if((NULL_PTR == drvHandleInt) || (drvHandleInt->drvInitDone != UDMA_INIT_DONE))
@@ -153,7 +153,7 @@ int32_t Udma_deinit(Udma_DrvHandle drvHandle)
             {
                 DebugP_logError("[UDMA] Global event free failed!!!\r\n");
             }
-            drvHandleInt->globalEventHandle = (Udma_EventHandleInt) NULL_PTR;
+            drvHandleInt->globalEventHandle = (Udma_EventHandle) NULL_PTR;
         }
 
         retVal += Udma_rmDeinit(drvHandleInt);

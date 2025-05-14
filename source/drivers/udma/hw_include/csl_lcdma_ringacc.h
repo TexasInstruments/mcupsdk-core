@@ -258,7 +258,7 @@ typedef struct
 
 /** \brief CSL_LcdmaRingaccRingCfg contains information to configure a ring. */
 typedef struct {
-    uint64_t                    *virtBase;          /**< [IN] Virtual base address of the ring memory */
+    void                        *virtBase;          /**< [IN] Virtual base address of the ring memory */
     uint64_t                    physBase;           /**< [IN] Physical base address of the ring memory */
     CSL_LcdmaRingaccRingMode    mode;               /**< [IN] Ring mode */
     uint32_t                    elCnt;              /**< [IN] Ring element count */

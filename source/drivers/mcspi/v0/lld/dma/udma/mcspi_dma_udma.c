@@ -285,7 +285,7 @@ static int32_t MCSPI_udmaInitRxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = dmaChConfig->cqRxEvtHandle;
+    eventHandle = (Udma_EventHandle) dmaChConfig->cqRxEvtHandle;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -347,7 +347,7 @@ static int32_t MCSPI_udmaInitTxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = dmaChConfig->cqTxEvtHandle;
+    eventHandle = (Udma_EventHandle) dmaChConfig->cqTxEvtHandle;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;

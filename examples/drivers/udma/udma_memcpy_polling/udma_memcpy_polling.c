@@ -64,8 +64,8 @@ uint8_t gUdmaTestDestBuf[UDMA_ALIGN_SIZE(UDMA_TEST_NUM_BYTES)] __attribute__((al
 
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length);
 static void App_udmaInitBuf(uint8_t *srcBuf, uint8_t *destBuf, uint32_t length);
 static void App_udmaCompareBuf(uint8_t *srcBuf, uint8_t *destBuf, uint32_t length);
@@ -140,8 +140,8 @@ void *udma_memcpy_polling_main(void *args)
 
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length)
 {
     CSL_UdmapTR15  *pTr;

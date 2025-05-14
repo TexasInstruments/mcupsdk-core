@@ -73,8 +73,8 @@ static SemaphoreP_Object gUdmaTestDoneSem;
 void App_udmaEventCb(Udma_EventHandle eventHandle, uint32_t eventType, void *appData);
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length);
 static void App_udmaInitBuf(uint8_t *srcBuf, uint8_t *destBuf, uint32_t length);
 static void App_udmaCompareBuf(uint8_t *srcBuf, uint8_t *destBuf, uint32_t length);
@@ -158,8 +158,8 @@ void App_udmaEventCb(Udma_EventHandle eventHandle, uint32_t eventType, void *app
 
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length)
 {
     CSL_UdmapTR15  *pTr;
