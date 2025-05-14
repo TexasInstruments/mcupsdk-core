@@ -188,6 +188,7 @@ const example_file_list = [
     "examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/.project/project.js",
     "examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/.project/project.js",
+    "examples/security/crypto/sa2ul_aes/crypto_aes_gcm_128/.project/project.js",
     "examples/security/crypto/sa2ul_sha/.project/project.js",
     "examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/.project/project.js",
     "examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/.project/project.js",
