@@ -61,13 +61,8 @@
 
 #include <drivers/udma.h>
 
-#include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/CacheP.h>
-#include <kernel/dpl/SemaphoreP.h>
-
-#include <drivers/udma/hw_include/csl_udmap.h>
-#include <drivers/udma/hw_include/csl_intaggr.h>
 
 #include <drivers/sciclient.h>
 
@@ -127,17 +122,6 @@ extern "C" {
 
 /** \brief Macro used to specify shift value for RX flow threshold before passing to SysFw */
 #define UDMA_RFLOW_RX_SIZE_THRESH_VAL_SHIFT      ((uint32_t) 0x00000005U)
-
-/** \brief UDMA driver handle */
-typedef struct Udma_DrvObjectInt_t     *Udma_DrvHandleInt;
-/** \brief UDMA channel handle */
-typedef struct Udma_ChObjectInt_t      *Udma_ChHandleInt;
-/** \brief UDMA event handle */
-typedef struct Udma_EventObjectInt_t   *Udma_EventHandleInt;
-/** \brief UDMA ring handle */
-typedef struct Udma_RingObjectInt_t    *Udma_RingHandleInt;
-/** \brief UDMA flow handle */
-typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandleInt;
 
 /** \brief Default ring order ID */
 #define UDMA_DEFAULT_RING_ORDER_ID      (0U)
@@ -246,7 +230,7 @@ struct Udma_RingMonObj
 /* ========================================================================== */
 
 /* SOC APIs */
-void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle);
+void Udma_initDrvHandle(Udma_DrvHandle drvHandle);
 int32_t UdmaRmInitPrms_init(uint32_t instId, Udma_RmInitPrms *rmInitPrms);
 const Udma_RmDefBoardCfgPrms *Udma_rmGetDefBoardCfgPrms(uint32_t instId);
 /**
@@ -258,82 +242,82 @@ const Udma_RmDefBoardCfgPrms *Udma_rmGetDefBoardCfgPrms(uint32_t instId);
  */
 void Udma_ringaccMemOps(void *pVirtAddr, uint32_t size, uint32_t opsType);
 /* Private APIs */
-int32_t Udma_ringReset(Udma_DrvHandleInt drvHandle,
-                       Udma_RingHandleInt ringHandle);
+int32_t Udma_ringReset(Udma_DrvHandle drvHandle,
+                       Udma_RingHandle ringHandle);
 /* Normal RA APIs*/
-void Udma_ringHandleClearRegsNormal(Udma_RingHandleInt ringHandle);
-void Udma_ringSetDoorBellNormal(Udma_RingHandleInt ringHandle, int32_t count);
-void Udma_ringPrimeNormal(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
-void Udma_ringPrimeReadNormal(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
-void *Udma_ringGetMemPtrNormal(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetModeNormal(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetElementCntNormal(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetRingOccNormal(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetWrIdxNormal(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetRdIdxNormal(Udma_RingHandleInt ringHandle);
-int32_t Udma_ringDequeueRawNormal(Udma_DrvHandleInt  drvHandle,
-                                  Udma_RingHandleInt ringHandle,
+void Udma_ringHandleClearRegsNormal(Udma_RingHandle ringHandle);
+void Udma_ringSetDoorBellNormal(Udma_RingHandle ringHandle, int32_t count);
+void Udma_ringPrimeNormal(Udma_RingHandle ringHandle, uint64_t phyDescMem);
+void Udma_ringPrimeReadNormal(Udma_RingHandle ringHandle, uint64_t *phyDescMem);
+uint8_t *Udma_ringGetMemPtrNormal(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetModeNormal(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetElementCntNormal(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetRingOccNormal(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetWrIdxNormal(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetRdIdxNormal(Udma_RingHandle ringHandle);
+int32_t Udma_ringDequeueRawNormal(Udma_DrvHandle  drvHandle,
+                                  Udma_RingHandle ringHandle,
                                   uint64_t *phyDescMem);
-int32_t Udma_ringQueueRawNormal(Udma_DrvHandleInt  drvHandle,
-                                Udma_RingHandleInt ringHandle,
+int32_t Udma_ringQueueRawNormal(Udma_DrvHandle  drvHandle,
+                                Udma_RingHandle ringHandle,
                                 uint64_t phyDescMem);
-int32_t Udma_ringFlushRawNormal(Udma_DrvHandleInt  drvHandle,
-                                Udma_RingHandleInt ringHandle,
+int32_t Udma_ringFlushRawNormal(Udma_DrvHandle  drvHandle,
+                                Udma_RingHandle ringHandle,
                                 uint64_t *phyDescMem);
-void Udma_ringSetCfgNormal(Udma_DrvHandleInt drvHandle,
-                           Udma_RingHandleInt ringHandle,
+void Udma_ringSetCfgNormal(Udma_DrvHandle drvHandle,
+                           Udma_RingHandle ringHandle,
                            const Udma_RingPrms *ringPrms);
 
-int32_t Udma_ringProxyQueueRaw(Udma_RingHandleInt ringHandle,
-                               Udma_DrvHandleInt drvHandle,
+int32_t Udma_ringProxyQueueRaw(Udma_RingHandle ringHandle,
+                               Udma_DrvHandle drvHandle,
                                uint64_t phyDescMem);
-int32_t Udma_ringProxyDequeueRaw(Udma_RingHandleInt ringHandle,
-                                 Udma_DrvHandleInt drvHandle,
+int32_t Udma_ringProxyDequeueRaw(Udma_RingHandle ringHandle,
+                                 Udma_DrvHandle drvHandle,
                                  uint64_t *phyDescMem);
 /*
  * RM APIs
  */
-void Udma_rmInit(Udma_DrvHandleInt drvHandle);
-int32_t Udma_rmDeinit(Udma_DrvHandleInt drvHandle);
+void Udma_rmInit(Udma_DrvHandle drvHandle);
+int32_t Udma_rmDeinit(Udma_DrvHandle drvHandle);
 
 /* Channel RM APIs */
-uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
+uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
 
-uint16_t Udma_rmAllocFreeRing(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandleInt drvHandle);
+uint16_t Udma_rmAllocFreeRing(Udma_DrvHandle drvHandle);
+void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandle drvHandle);
 
 /* Event RM APIs */
-uint32_t Udma_rmAllocEvent(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocVintr(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle);
+uint32_t Udma_rmAllocEvent(Udma_DrvHandle drvHandle);
+void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocVintr(Udma_DrvHandle drvHandle);
+void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocVintrBit(Udma_EventHandle eventHandle);
 void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
-                         Udma_DrvHandleInt drvHandle,
-                         Udma_EventHandleInt eventHandle);
+                         Udma_DrvHandle drvHandle,
+                         Udma_EventHandle eventHandle);
 uint32_t Udma_rmAllocIrIntr(uint32_t preferredIrIntrNum,
-                              Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandleInt drvHandle, uint32_t irIntrNum);
-uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandleInt drvHandle, uint32_t coreIntrNum);
-void Udma_rmFreeCoreIntr(uint32_t coreIntrNum, Udma_DrvHandleInt drvHandle);
+                              Udma_DrvHandle drvHandle);
+void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandle drvHandle, uint32_t irIntrNum);
+uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandle drvHandle, uint32_t coreIntrNum);
+void Udma_rmFreeCoreIntr(uint32_t coreIntrNum, Udma_DrvHandle drvHandle);
 
 /* Query Sciclient_DefaultBoardCfg_rm API */
 int32_t Udma_rmGetSciclientDefaultBoardCfgRmRange(const Udma_RmDefBoardCfgPrms *rmDefBoardCfgPrms,
@@ -349,11 +333,11 @@ int32_t Udma_rmSetSharedResRmInitPrms(const Udma_RmSharedResPrms *rmSharedResPrm
 
 /* Utils APIs */
 uint64_t Udma_virtToPhyFxn(const void *virtAddr,
-                           Udma_DrvHandleInt drvHandle,
-                           Udma_ChHandleInt chHandle);
+                           Udma_DrvHandle drvHandle,
+                           Udma_ChHandle chHandle);
 void *Udma_phyToVirtFxn(uint64_t phyAddr,
-                        Udma_DrvHandleInt drvHandle,
-                        Udma_ChHandleInt chHandle);
+                        Udma_DrvHandle drvHandle,
+                        Udma_ChHandle chHandle);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

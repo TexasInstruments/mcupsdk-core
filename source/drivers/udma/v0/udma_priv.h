@@ -61,19 +61,8 @@
 
 #include <drivers/udma.h>
 
-#include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/CacheP.h>
-#include <kernel/dpl/SemaphoreP.h>
-
-#if (UDMA_SOC_CFG_RA_LCDMA_PRESENT == 1)
-#include <drivers/udma/hw_include/csl_lcdma_ringacc.h>
-#endif
-#if (UDMA_SOC_CFG_LCDMA_PRESENT == 1)
-#include <drivers/udma/hw_include/csl_bcdma.h>
-#include <drivers/udma/hw_include/csl_pktdma.h>
-#endif
-#include <drivers/udma/hw_include/csl_intaggr.h>
 
 #include <drivers/sciclient.h>
 
@@ -131,17 +120,6 @@ extern "C" {
 
 /** \brief Macro used to specify shift value for RX flow threshold before passing to SysFw */
 #define UDMA_RFLOW_RX_SIZE_THRESH_VAL_SHIFT      ((uint32_t) 0x00000005U)
-
-/** \brief UDMA driver handle */
-typedef struct Udma_DrvObjectInt_t     *Udma_DrvHandleInt;
-/** \brief UDMA channel handle */
-typedef struct Udma_ChObjectInt_t      *Udma_ChHandleInt;
-/** \brief UDMA event handle */
-typedef struct Udma_EventObjectInt_t   *Udma_EventHandleInt;
-/** \brief UDMA ring handle */
-typedef struct Udma_RingObjectInt_t    *Udma_RingHandleInt;
-/** \brief UDMA flow handle */
-typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandleInt;
 
 /** \brief Default ring order ID */
 #define UDMA_DEFAULT_RING_ORDER_ID      (0U)
@@ -245,11 +223,11 @@ typedef struct
 /* ========================================================================== */
 
 /* SOC APIs */
-void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle);
+void Udma_initDrvHandle(Udma_DrvHandle drvHandle);
 int32_t UdmaRmInitPrms_init(uint32_t instId, Udma_RmInitPrms *rmInitPrms);
 const Udma_RmDefBoardCfgPrms *Udma_rmGetDefBoardCfgPrms(uint32_t instId);
 #if ((UDMA_NUM_MAPPED_TX_GROUP + UDMA_NUM_MAPPED_RX_GROUP) > 0)
-int32_t Udma_getMappedChRingAttributes(Udma_DrvHandleInt drvHandle,
+int32_t Udma_getMappedChRingAttributes(Udma_DrvHandle drvHandle,
                                        uint32_t mappedGrp,
                                        uint32_t chNum,
                                        Udma_MappedChRingAttributes *chAttr);
@@ -258,101 +236,101 @@ int32_t Udma_getMappedChRingAttributes(Udma_DrvHandleInt drvHandle,
 #if (UDMA_SOC_CFG_RA_LCDMA_PRESENT == 1)
 /* LCDMA RA APIs*/
 void Udma_lcdmaRingaccMemOps(void *pVirtAddr, uint32_t size, uint32_t opsType);
-void Udma_ringHandleClearRegsLcdma(Udma_RingHandleInt ringHandle);
-void Udma_ringSetDoorBellLcdma(Udma_RingHandleInt ringHandle, int32_t count);
-void Udma_ringPrimeLcdma(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
-void Udma_ringPrimeReadLcdma(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
-void *Udma_ringGetMemPtrLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetModeLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetElementCntLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetForwardRingOccLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetReverseRingOccLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetWrIdxLcdma(Udma_RingHandleInt ringHandle);
-uint32_t Udma_ringGetRdIdxLcdma(Udma_RingHandleInt ringHandle);
-int32_t Udma_ringDequeueRawLcdma(Udma_DrvHandleInt  drvHandle,
-                                 Udma_RingHandleInt ringHandle,
+void Udma_ringHandleClearRegsLcdma(Udma_RingHandle ringHandle);
+void Udma_ringSetDoorBellLcdma(Udma_RingHandle ringHandle, int32_t count);
+void Udma_ringPrimeLcdma(Udma_RingHandle ringHandle, uint64_t phyDescMem);
+void Udma_ringPrimeReadLcdma(Udma_RingHandle ringHandle, uint64_t *phyDescMem);
+uint8_t *Udma_ringGetMemPtrLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetModeLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetElementCntLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetForwardRingOccLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetReverseRingOccLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetWrIdxLcdma(Udma_RingHandle ringHandle);
+uint32_t Udma_ringGetRdIdxLcdma(Udma_RingHandle ringHandle);
+int32_t Udma_ringDequeueRawLcdma(Udma_DrvHandle  drvHandle,
+                                 Udma_RingHandle ringHandle,
                                  uint64_t *phyDescMem);
-int32_t Udma_ringQueueRawLcdma(Udma_DrvHandleInt  drvHandle,
-                               Udma_RingHandleInt ringHandle,
+int32_t Udma_ringQueueRawLcdma(Udma_DrvHandle  drvHandle,
+                               Udma_RingHandle ringHandle,
                                uint64_t phyDescMem);
-int32_t Udma_ringFlushRawLcdma(Udma_DrvHandleInt  drvHandle,
-                               Udma_RingHandleInt ringHandle,
+int32_t Udma_ringFlushRawLcdma(Udma_DrvHandle  drvHandle,
+                               Udma_RingHandle ringHandle,
                                uint64_t *phyDescMem);
-void Udma_ringSetCfgLcdma(Udma_DrvHandleInt drvHandle,
-                          Udma_RingHandleInt ringHandle,
+void Udma_ringSetCfgLcdma(Udma_DrvHandle drvHandle,
+                          Udma_RingHandle ringHandle,
                           const Udma_RingPrms *ringPrms);
 #endif
 
 /*
  * RM APIs
  */
-void Udma_rmInit(Udma_DrvHandleInt drvHandle);
-int32_t Udma_rmDeinit(Udma_DrvHandleInt drvHandle);
+void Udma_rmInit(Udma_DrvHandle drvHandle);
+int32_t Udma_rmDeinit(Udma_DrvHandle drvHandle);
 
 /* Channel RM APIs */
-uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandleInt drvHandle);
+uint32_t Udma_rmAllocBlkCopyCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocBlkCopyHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocBlkCopyUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeBlkCopyUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxHcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxHcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocTxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeTxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocRxUhcCh(uint32_t preferredChNum, Udma_DrvHandle drvHandle);
+void Udma_rmFreeRxUhcCh(uint32_t chNum, Udma_DrvHandle drvHandle);
 #if (UDMA_NUM_MAPPED_TX_GROUP > 0)
 uint32_t Udma_rmAllocMappedTxCh(uint32_t preferredChNum,
-                                Udma_DrvHandleInt drvHandle,
+                                Udma_DrvHandle drvHandle,
                                 const uint32_t mappedChGrp);
 void Udma_rmFreeMappedTxCh(uint32_t chNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedChGrp);
 #endif
 #if (UDMA_NUM_MAPPED_RX_GROUP > 0)
 uint32_t Udma_rmAllocMappedRxCh(uint32_t preferredChNum,
-                                Udma_DrvHandleInt drvHandle,
+                                Udma_DrvHandle drvHandle,
                                 const uint32_t mappedChGrp);
 void Udma_rmFreeMappedRxCh(uint32_t chNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedChGrp);
 #endif
 
 /* Ring RM APIs */
 #if((UDMA_NUM_MAPPED_TX_GROUP + UDMA_NUM_MAPPED_RX_GROUP) > 0)
-uint32_t Udma_rmAllocMappedRing(Udma_DrvHandleInt drvHandle,
+uint32_t Udma_rmAllocMappedRing(Udma_DrvHandle drvHandle,
                                 const uint32_t mappedRingGrp,
                                 const uint32_t mappedChNum);
 void Udma_rmFreeMappedRing(uint32_t ringNum,
-                           Udma_DrvHandleInt drvHandle,
+                           Udma_DrvHandle drvHandle,
                            const uint32_t mappedRingGrp,
                            const uint32_t mappedChNum);
 #endif
-uint16_t Udma_rmAllocFreeRing(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandleInt drvHandle);
+uint16_t Udma_rmAllocFreeRing(Udma_DrvHandle drvHandle);
+void Udma_rmFreeFreeRing(uint16_t ringNum, Udma_DrvHandle drvHandle);
 
 /* Event RM APIs */
-uint32_t Udma_rmAllocEvent(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocVintr(Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle);
+uint32_t Udma_rmAllocEvent(Udma_DrvHandle drvHandle);
+void Udma_rmFreeEvent(uint32_t globalEvent, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocVintr(Udma_DrvHandle drvHandle);
+void Udma_rmFreeVintr(uint32_t vintrNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmAllocVintrBit(Udma_EventHandle eventHandle);
 void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
-                         Udma_DrvHandleInt drvHandle,
-                         Udma_EventHandleInt eventHandle);
+                         Udma_DrvHandle drvHandle,
+                         Udma_EventHandle eventHandle);
 uint32_t Udma_rmAllocIrIntr(uint32_t preferredIrIntrNum,
-                              Udma_DrvHandleInt drvHandle);
-void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandleInt drvHandle);
-uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandleInt drvHandle, uint32_t irIntrNum);
-uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandleInt drvHandle, uint32_t coreIntrNum);
-void Udma_rmFreeCoreIntr(uint32_t coreIntrNum, Udma_DrvHandleInt drvHandle);
+                              Udma_DrvHandle drvHandle);
+void Udma_rmFreeIrIntr(uint32_t irIntrNum, Udma_DrvHandle drvHandle);
+uint32_t Udma_rmTranslateIrOutput(Udma_DrvHandle drvHandle, uint32_t irIntrNum);
+uint32_t Udma_rmTranslateCoreIntrInput(Udma_DrvHandle drvHandle, uint32_t coreIntrNum);
+void Udma_rmFreeCoreIntr(uint32_t coreIntrNum, Udma_DrvHandle drvHandle);
 
 /* Query Sciclient_DefaultBoardCfg_rm API */
 int32_t Udma_rmGetSciclientDefaultBoardCfgRmRange(const Udma_RmDefBoardCfgPrms *rmDefBoardCfgPrms,
@@ -368,11 +346,11 @@ int32_t Udma_rmSetSharedResRmInitPrms(const Udma_RmSharedResPrms *rmSharedResPrm
 
 /* Utils APIs */
 uint64_t Udma_virtToPhyFxn(const void *virtAddr,
-                           Udma_DrvHandleInt drvHandle,
-                           Udma_ChHandleInt chHandle);
+                           Udma_DrvHandle drvHandle,
+                           Udma_ChHandle chHandle);
 void *Udma_phyToVirtFxn(uint64_t phyAddr,
-                        Udma_DrvHandleInt drvHandle,
-                        Udma_ChHandleInt chHandle);
+                        Udma_DrvHandle drvHandle,
+                        Udma_ChHandle chHandle);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

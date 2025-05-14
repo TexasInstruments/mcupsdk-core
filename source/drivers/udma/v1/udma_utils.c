@@ -191,8 +191,8 @@ uint32_t UdmaUtils_getTrSizeBytes(uint32_t trType)
 }
 
 uint64_t Udma_virtToPhyFxn(const void *virtAddr,
-                           Udma_DrvHandleInt drvHandle,
-                           Udma_ChHandleInt chHandle)
+                           Udma_DrvHandle drvHandle,
+                           Udma_ChHandle chHandle)
 {
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
     void               *appData = NULL_PTR;
@@ -217,8 +217,8 @@ uint64_t Udma_virtToPhyFxn(const void *virtAddr,
 }
 
 void *Udma_phyToVirtFxn(uint64_t phyAddr,
-                        Udma_DrvHandleInt drvHandle,
-                        Udma_ChHandleInt chHandle)
+                        Udma_DrvHandle drvHandle,
+                        Udma_ChHandle chHandle)
 {
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
     void               *appData = NULL_PTR;

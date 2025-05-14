@@ -69,8 +69,8 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void Udma_ringSetCfgLcdma(Udma_DrvHandleInt drvHandle,
-                          Udma_RingHandleInt ringHandle,
+void Udma_ringSetCfgLcdma(Udma_DrvHandle drvHandle,
+                          Udma_RingHandle ringHandle,
                           const Udma_RingPrms *ringPrms)
 {
     uint32_t            addrHi, addrLo /*, elemSize*/;
@@ -90,7 +90,7 @@ void Udma_ringSetCfgLcdma(Udma_DrvHandleInt drvHandle,
     {
         lcdmaRingCfg->virtBase       = (void *) ringPrms->ringMem;
         lcdmaRingCfg->physBase       =
-            Udma_virtToPhyFxn(ringPrms->ringMem, drvHandle, (Udma_ChHandleInt) NULL_PTR);
+            Udma_virtToPhyFxn(ringPrms->ringMem, drvHandle, (Udma_ChHandle) NULL_PTR);
         lcdmaRingCfg->mode           = ringPrms->mode;
         lcdmaRingCfg->elCnt          = ringPrms->elemCnt;
         /* CSL expects ring size in bytes */
@@ -105,7 +105,7 @@ void Udma_ringSetCfgLcdma(Udma_DrvHandleInt drvHandle,
         addrLo = CSL_REG32_FEXT(&ringHandle->pLcdmaCfgRegs->BA_LO, LCDMA_RINGACC_RING_CFG_RING_BA_LO_ADDR_LO);
         lcdmaRingCfg->physBase       = (uint64_t)((((uint64_t) addrHi) << 32UL) |
                                             ((uint64_t) addrLo));
-        lcdmaRingCfg->virtBase       = Udma_phyToVirtFxn(lcdmaRingCfg->physBase, drvHandle, (Udma_ChHandleInt) NULL_PTR);
+        lcdmaRingCfg->virtBase       = Udma_phyToVirtFxn(lcdmaRingCfg->physBase, drvHandle, (Udma_ChHandle) NULL_PTR);
         lcdmaRingCfg->mode           = CSL_REG32_FEXT(&ringHandle->pLcdmaCfgRegs->SIZE, LCDMA_RINGACC_RING_CFG_RING_SIZE_QMODE);
         lcdmaRingCfg->elCnt          = CSL_REG32_FEXT(&ringHandle->pLcdmaCfgRegs->SIZE, LCDMA_RINGACC_RING_CFG_RING_SIZE_ELCNT);
         /* CSL expects ring size in bytes; ring_elsize for AM64x is hardcoded as 1=8bytes*/
@@ -122,13 +122,13 @@ void Udma_ringSetCfgLcdma(Udma_DrvHandleInt drvHandle,
     return;
 }
 
-void Udma_ringHandleClearRegsLcdma(Udma_RingHandleInt ringHandle)
+void Udma_ringHandleClearRegsLcdma(Udma_RingHandle ringHandle)
 {
     ringHandle->pLcdmaCfgRegs   = (volatile CSL_lcdma_ringacc_ring_cfgRegs_RING *) NULL_PTR;
     ringHandle->pLcdmaRtRegs    = (volatile CSL_lcdma_ringacc_ringrtRegs_ring *) NULL_PTR;
 }
 
-int32_t Udma_ringQueueRawLcdma(Udma_DrvHandleInt  drvHandle, Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
+int32_t Udma_ringQueueRawLcdma(Udma_DrvHandle  drvHandle, Udma_RingHandle ringHandle, uint64_t phyDescMem)
 {
     int32_t         retVal = UDMA_SOK;
 
@@ -141,7 +141,7 @@ int32_t Udma_ringQueueRawLcdma(Udma_DrvHandleInt  drvHandle, Udma_RingHandleInt 
     return (retVal);
 }
 
-int32_t Udma_ringDequeueRawLcdma(Udma_DrvHandleInt  drvHandle, Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringDequeueRawLcdma(Udma_DrvHandle  drvHandle, Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     int32_t         retVal = UDMA_SOK, cslRetVal;
 
@@ -158,7 +158,7 @@ int32_t Udma_ringDequeueRawLcdma(Udma_DrvHandleInt  drvHandle, Udma_RingHandleIn
     return (retVal);
 }
 
-int32_t Udma_ringFlushRawLcdma(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringFlushRawLcdma(Udma_DrvHandle drvHandle, Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     int32_t         retVal = UDMA_SOK, cslRetVal;
     uint32_t        addrlo;
@@ -210,7 +210,7 @@ int32_t Udma_ringFlushRawLcdma(Udma_DrvHandleInt drvHandle, Udma_RingHandleInt r
     return (retVal);
 }
 
-void Udma_ringPrimeLcdma(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
+void Udma_ringPrimeLcdma(Udma_RingHandle ringHandle, uint64_t phyDescMem)
 {
     volatile uint64_t        *ringPtr;
     CSL_LcdmaRingaccRingCfg  *pLcdmaRing;
@@ -233,7 +233,7 @@ void Udma_ringPrimeLcdma(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
     return;
 }
 
-void Udma_ringPrimeReadLcdma(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
+void Udma_ringPrimeReadLcdma(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
 {
     volatile uint64_t        *ringPtr;
     CSL_LcdmaRingaccRingCfg  *pLcdmaRing;
@@ -258,7 +258,7 @@ void Udma_ringPrimeReadLcdma(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem
     }
 }
 
-void Udma_ringSetDoorBellLcdma(Udma_RingHandleInt ringHandle, int32_t count)
+void Udma_ringSetDoorBellLcdma(Udma_RingHandle ringHandle, int32_t count)
 {
     uint32_t    regVal;
     int32_t     thisDbRingCnt, maxDbRingCnt;
@@ -318,19 +318,19 @@ void Udma_ringSetDoorBellLcdma(Udma_RingHandleInt ringHandle, int32_t count)
     return;
 }
 
-void *Udma_ringGetMemPtrLcdma(Udma_RingHandleInt ringHandle)
+uint8_t *Udma_ringGetMemPtrLcdma(Udma_RingHandle ringHandle)
 {
-    void   *ringMem = NULL_PTR;
+    uint8_t   *ringMem = NULL_PTR;
 
     if((NULL_PTR != ringHandle) && (UDMA_INIT_DONE == ringHandle->ringInitDone))
     {
-        ringMem = ringHandle->lcdmaCfg.virtBase;
+        ringMem = (uint8_t*) ringHandle->lcdmaCfg.virtBase;
     }
 
     return (ringMem);
 }
 
-uint32_t Udma_ringGetModeLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetModeLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t ringMode = CSL_LCDMA_RINGACC_RING_MODE_INVALID;
 
@@ -342,7 +342,7 @@ uint32_t Udma_ringGetModeLcdma(Udma_RingHandleInt ringHandle)
     return (ringMode);
 }
 
-uint32_t Udma_ringGetElementCntLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetElementCntLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t size = 0U;
 
@@ -354,7 +354,7 @@ uint32_t Udma_ringGetElementCntLcdma(Udma_RingHandleInt ringHandle)
     return (size);
 }
 
-uint32_t Udma_ringGetForwardRingOccLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetForwardRingOccLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t occ = 0U;
 
@@ -370,7 +370,7 @@ uint32_t Udma_ringGetForwardRingOccLcdma(Udma_RingHandleInt ringHandle)
     return (occ);
 }
 
-uint32_t Udma_ringGetReverseRingOccLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetReverseRingOccLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t occ = 0U;
 
@@ -386,7 +386,7 @@ uint32_t Udma_ringGetReverseRingOccLcdma(Udma_RingHandleInt ringHandle)
     return (occ);
 }
 
-uint32_t Udma_ringGetWrIdxLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetWrIdxLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t idx = 0U;
 
@@ -398,7 +398,7 @@ uint32_t Udma_ringGetWrIdxLcdma(Udma_RingHandleInt ringHandle)
     return (idx);
 }
 
-uint32_t Udma_ringGetRdIdxLcdma(Udma_RingHandleInt ringHandle)
+uint32_t Udma_ringGetRdIdxLcdma(Udma_RingHandle ringHandle)
 {
     uint32_t idx = 0U;
 

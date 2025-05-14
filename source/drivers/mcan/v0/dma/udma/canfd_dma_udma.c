@@ -79,7 +79,7 @@ static void CANFD_udmaIsrTx(Udma_EventHandle eventHandle,
         CANFD_MessageObject* ptrCanMsgObj = (CANFD_MessageObject *)(args);
         CANFD_Object *ptrCanFdObj         = ptrCanMsgObj->canfdHandle->object;
         CANFD_UdmaChConfig *udmaChCfg     = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
-        Udma_ChHandle txChHandle          = udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
+        Udma_ChHandle txChHandle          = (Udma_ChHandle) udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
         
         ptrCanMsgObj->dmaMsgConfig.currentMsgNum++;
         currentDataPtr = (uint8_t *)(ptrCanMsgObj->dmaMsgConfig.data);
@@ -133,7 +133,7 @@ int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
             chPrms.fqRingPrms.ringMem       = udmaChCfg->txRingMem[ptrCanMsgObj->dmaEventNo];
             chPrms.fqRingPrms.ringMemSize   = udmaChCfg->ringMemSize;
             chPrms.fqRingPrms.elemCnt       = udmaChCfg->ringElemCnt;
-            txChHandle                      = udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
+            txChHandle                      = (Udma_ChHandle) udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
 
             /* Open channel for block copy */
             retVal = Udma_chOpen(canfdUdmaHandle, txChHandle, chType, &chPrms);
@@ -145,7 +145,7 @@ int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
             DebugP_assert(UDMA_SOK == retVal);
 
             /* Register ring completion callback */
-            eventHandle = udmaChCfg->cqTxEvtHandle[ptrCanMsgObj->dmaEventNo];
+            eventHandle = (Udma_EventHandle) udmaChCfg->cqTxEvtHandle[ptrCanMsgObj->dmaEventNo];
             UdmaEventPrms_init(&eventPrms);
             eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
             eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -172,8 +172,8 @@ int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
     if((NULL_PTR != ptrCanFdObj) && (NULL_PTR != ptrCanMsgObj))
     {
         udmaChCfg = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
-        txChHandle                      = udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
-        eventHandle = udmaChCfg->cqTxEvtHandle[ptrCanMsgObj->dmaEventNo];
+        txChHandle                      = (Udma_ChHandle) udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
+        eventHandle = (Udma_EventHandle) udmaChCfg->cqTxEvtHandle[ptrCanMsgObj->dmaEventNo];
 
         /* Disable Channel */
         status = Udma_chDisable(txChHandle, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
@@ -272,7 +272,7 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
     if((NULL_PTR != ptrCanFdObj) && (NULL_PTR != ptrCanMsgObj))
     {
         udmaChCfg   = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
-        txChHandle  = udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
+        txChHandle  = (Udma_ChHandle) udmaChCfg->txChHandle[ptrCanMsgObj->dmaEventNo];
 
         /* Store the current Tx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;
@@ -325,7 +325,7 @@ static void CANFD_udmaIsrRx(Udma_EventHandle eventHandle,
         CANFD_MessageObject* ptrCanMsgObj = (CANFD_MessageObject *)(args);
         CANFD_Object *ptrCanFdObj         = ptrCanMsgObj->canfdHandle->object;
         CANFD_UdmaChConfig *udmaChCfg     = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
-        Udma_ChHandle rxChHandle          = udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
+        Udma_ChHandle rxChHandle          = (Udma_ChHandle) udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
         uint8_t *currentDataPtr;
         uint64_t pDesc;
 
@@ -365,7 +365,7 @@ int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
             chPrms.fqRingPrms.ringMem       = udmaChCfg->rxRingMem[ptrCanMsgObj->dmaEventNo];
             chPrms.fqRingPrms.ringMemSize   = udmaChCfg->ringMemSize;
             chPrms.fqRingPrms.elemCnt       = udmaChCfg->ringElemCnt;
-            rxChHandle                      = udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
+            rxChHandle                      = (Udma_ChHandle) udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
 
             /* Open channel for block copy */
             retVal = Udma_chOpen(canfdUdmaHandle, rxChHandle, chType, &chPrms);
@@ -377,7 +377,7 @@ int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_Messag
             DebugP_assert(UDMA_SOK == retVal);
 
             /* Register ring completion callback */
-            eventHandle = udmaChCfg->cqRxEvtHandle[ptrCanMsgObj->dmaEventNo];
+            eventHandle = (Udma_EventHandle) udmaChCfg->cqRxEvtHandle[ptrCanMsgObj->dmaEventNo];
             UdmaEventPrms_init(&eventPrms);
             eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
             eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -404,8 +404,8 @@ int32_t CANFD_deleteDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
     if((NULL_PTR != ptrCanFdObj) && (NULL_PTR != ptrCanMsgObj))
     {
         udmaChCfg   = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;
-        rxChHandle  = udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
-        eventHandle = udmaChCfg->cqRxEvtHandle[ptrCanMsgObj->dmaEventNo];
+        rxChHandle  = (Udma_ChHandle) udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
+        eventHandle = (Udma_EventHandle) udmaChCfg->cqRxEvtHandle[ptrCanMsgObj->dmaEventNo];
 
         /* Disable Channel */
         status = Udma_chDisable(rxChHandle, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
@@ -449,7 +449,7 @@ int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
     if((NULL_PTR != ptrCanFdObj) && (NULL_PTR != ptrCanMsgObj))
     {
         udmaChCfg  = (CANFD_UdmaChConfig *)ptrCanFdObj->canfdDmaChCfg;;
-        rxChHandle = udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
+        rxChHandle = (Udma_ChHandle) udmaChCfg->rxChHandle[ptrCanMsgObj->dmaEventNo];
 
         /* Store the current Rx msg. */
         ptrCanMsgObj->dmaMsgConfig.dataLengthPerMsg = dataLengthPerMsg;

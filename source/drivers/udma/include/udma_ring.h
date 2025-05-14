@@ -141,8 +141,8 @@ extern "C" {
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringAlloc(Udma_DrvHandleInt drvHandle,
-                       Udma_RingHandleInt ringHandle,
+int32_t Udma_ringAlloc(Udma_DrvHandle drvHandle,
+                       Udma_RingHandle ringHandle,
                        uint16_t ringNum,
                        const Udma_RingPrms *ringPrms);
 
@@ -156,7 +156,7 @@ int32_t Udma_ringAlloc(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringFree(Udma_RingHandleInt ringHandle);
+int32_t Udma_ringFree(Udma_RingHandle ringHandle);
 
 /**
  *  \brief UDMA ring attach API. This API is used to attach to an already
@@ -188,8 +188,8 @@ int32_t Udma_ringFree(Udma_RingHandleInt ringHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringAttach(Udma_DrvHandleInt drvHandle,
-                        Udma_RingHandleInt ringHandle,
+int32_t Udma_ringAttach(Udma_DrvHandle drvHandle,
+                        Udma_RingHandle ringHandle,
                         uint16_t ringNum);
 
 /**
@@ -205,7 +205,7 @@ int32_t Udma_ringAttach(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringDetach(Udma_RingHandleInt ringHandle);
+int32_t Udma_ringDetach(Udma_RingHandle ringHandle);
 
 /**
  *  \brief UDMA queue descriptor to a ring - raw version
@@ -235,7 +235,7 @@ int32_t Udma_ringDetach(Udma_RingHandleInt ringHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringQueueRaw(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
+int32_t Udma_ringQueueRaw(Udma_RingHandle ringHandle, uint64_t phyDescMem);
 
 /**
  *  \brief UDMA dequeue descriptor from a ring - raw version
@@ -273,7 +273,7 @@ int32_t Udma_ringQueueRaw(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringDequeueRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
+int32_t Udma_ringDequeueRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem);
 
 /**
  *  \brief UDMA dequeue descriptor from a ring when UDMA channel is disabled -
@@ -298,7 +298,7 @@ int32_t Udma_ringDequeueRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_ringFlushRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
+int32_t Udma_ringFlushRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem);
 
 /**
  *  \brief UDMA prime descriptor to a exposed/"RING" mode ring - raw version
@@ -326,7 +326,7 @@ int32_t Udma_ringFlushRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
  *  \param phyDescMem   [IN] Descriptor memory physical pointer to push to the
  *                           ring.
  */
-void Udma_ringPrime(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
+void Udma_ringPrime(Udma_RingHandle ringHandle, uint64_t phyDescMem);
 
 /**
  *  \brief UDMA read descriptor from a exposed/"RING" mode ring - raw version
@@ -356,7 +356,7 @@ void Udma_ringPrime(Udma_RingHandleInt ringHandle, uint64_t phyDescMem);
  *  \param phyDescMem   [IN] Descriptor memory physical pointer to pop from the
  *                           ring.
  */
-void Udma_ringPrimeRead(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
+void Udma_ringPrimeRead(Udma_RingHandle ringHandle, uint64_t *phyDescMem);
 
 /**
  *  \brief UDMA ring API to set the doorbell in exposed/"RING" mode ring.
@@ -385,7 +385,7 @@ void Udma_ringPrimeRead(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem);
  *                           This parameter can't be NULL.
  *  \param count        [IN] Number of count to commit.
  */
-void Udma_ringSetDoorBell(Udma_RingHandleInt ringHandle, int32_t count);
+void Udma_ringSetDoorBell(Udma_RingHandle ringHandle, int32_t count);
 
 /**
  *  \brief Returns the ring number allocated for this ring.
@@ -395,7 +395,7 @@ void Udma_ringSetDoorBell(Udma_RingHandleInt ringHandle, int32_t count);
  *
  *  \return The ring number on success or #UDMA_RING_INVALID on error
  */
-uint16_t Udma_ringGetNum(Udma_RingHandleInt ringHandle);
+uint16_t Udma_ringGetNum(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the ring memory pointer which is passed during ring alloc.
@@ -407,7 +407,7 @@ uint16_t Udma_ringGetNum(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring memory pointer on success or NULL on error
  */
-void *Udma_ringGetMemPtr(Udma_RingHandleInt ringHandle);
+uint8_t *Udma_ringGetMemPtr(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the ring mode which is configured during ring alloc.
@@ -419,7 +419,7 @@ void *Udma_ringGetMemPtr(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring mode on success or CSL_RINGACC_RING_MODE_INVALID on error
  */
-uint32_t Udma_ringGetMode(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetMode(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the ring element count which is passed during ring alloc.
@@ -431,7 +431,7 @@ uint32_t Udma_ringGetMode(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring element count on success or zero on error
  */
-uint32_t Udma_ringGetElementCnt(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetElementCnt(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the forward ring occupancy.
@@ -449,7 +449,7 @@ uint32_t Udma_ringGetElementCnt(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring occupancy value from the register
  */
-uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the reverse ring occupancy.
@@ -467,7 +467,7 @@ uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring occupancy value from the register
  */
-uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the ring write index value.
@@ -485,7 +485,7 @@ uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring read/write index value
  */
-uint32_t Udma_ringGetWrIdx(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetWrIdx(Udma_RingHandle ringHandle);
 
 /**
  *  \brief Returns the ring read index value.
@@ -503,7 +503,7 @@ uint32_t Udma_ringGetWrIdx(Udma_RingHandleInt ringHandle);
  *
  *  \return Ring read/write index value
  */
-uint32_t Udma_ringGetRdIdx(Udma_RingHandleInt ringHandle);
+uint32_t Udma_ringGetRdIdx(Udma_RingHandle ringHandle);
 
 /*
  * Structure Init functions

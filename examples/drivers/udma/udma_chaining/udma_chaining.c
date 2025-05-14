@@ -79,8 +79,8 @@ void App_udmaEventCb(Udma_EventHandle eventHandle, uint32_t eventType, void *app
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint32_t chIdx,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length);
 static void App_udmaInitSrcBuf(uint8_t *srcBuf, uint32_t length);
 static void App_udmaInitDestBuf(uint8_t *destBuf, uint32_t length);
@@ -200,8 +200,8 @@ void App_udmaEventCb(Udma_EventHandle eventHandle, uint32_t eventType, void *app
 static void App_udmaTrpdInit(Udma_ChHandle chHandle,
                              uint32_t chIdx,
                              uint8_t *trpdMem,
-                             const void *destBuf,
-                             const void *srcBuf,
+                             const uint8_t *destBuf,
+                             const uint8_t *srcBuf,
                              uint32_t length)
 {
     CSL_UdmapTR15  *pTr;

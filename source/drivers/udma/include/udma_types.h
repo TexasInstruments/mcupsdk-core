@@ -54,8 +54,6 @@
 /* None */
 
 #include <kernel/dpl/HwiP.h>
-#include <kernel/dpl/ClockP.h>
-#include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/SemaphoreP.h>
 
 #if (UDMA_SOC_CFG_RA_LCDMA_PRESENT == 1)
@@ -69,8 +67,6 @@
 #endif
 #include <drivers/udma/hw_include/csl_intaggr.h>
 
-#include <drivers/sciclient.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -79,31 +75,21 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/** \brief UDMA driver handle */
-typedef void *                          Udma_DrvHandle;
-/** \brief UDMA channel handle */
-typedef void *                          Udma_ChHandle;
-/** \brief UDMA event handle */
-typedef void *                          Udma_EventHandle;
-/** \brief UDMA ring handle */
-typedef void *                          Udma_RingHandle;
-/** \brief UDMA flow handle */
-typedef void *                          Udma_FlowHandle;
 #if (UDMA_SOC_CFG_RING_MON_PRESENT == 1)
 /** \brief UDMA ring monitor handle */
 typedef struct Udma_RingMonObj *        Udma_RingMonHandle;
 #endif
 
 /** \brief UDMA driver handle */
-typedef struct Udma_DrvObjectInt_t     *Udma_DrvHandleInt;
+typedef struct Udma_DrvObjectInt_t     *Udma_DrvHandle;
 /** \brief UDMA channel handle */
-typedef struct Udma_ChObjectInt_t      *Udma_ChHandleInt;
+typedef struct Udma_ChObjectInt_t      *Udma_ChHandle;
 /** \brief UDMA event handle */
-typedef struct Udma_EventObjectInt_t   *Udma_EventHandleInt;
+typedef struct Udma_EventObjectInt_t   *Udma_EventHandle;
 /** \brief UDMA ring handle */
-typedef struct Udma_RingObjectInt_t    *Udma_RingHandleInt;
+typedef struct Udma_RingObjectInt_t    *Udma_RingHandle;
 /** \brief UDMA flow handle */
-typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandleInt;
+typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandle;
 
 /**
  *  \brief UDMA ring parameters.
@@ -774,7 +760,7 @@ typedef struct
  */
 typedef struct Udma_RingObjectInt_t
 {
-    Udma_DrvHandleInt           drvHandle;
+    Udma_DrvHandle           drvHandle;
     /**< Pointer to global driver handle. */
 
     uint16_t                    ringNum;
@@ -824,7 +810,7 @@ typedef struct Udma_RingObjectInt_t
  */
 typedef struct Udma_FlowObjectInt_t
 {
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
 
     uint32_t                flowStart;
@@ -872,7 +858,7 @@ typedef struct Udma_FlowObjectInt_t
  */
 typedef struct Udma_EventObjectInt_t
 {
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
     Udma_EventPrms          eventPrms;
     /**< Event parameters passed during event registeration. */
@@ -890,9 +876,9 @@ typedef struct Udma_EventObjectInt_t
     uint32_t                coreIntrNum;
     /**< Allocated core interrupt number. */
 
-    Udma_EventHandleInt     nextEvent;
+    Udma_EventHandle     nextEvent;
     /**< Pointer to next event - used in shared event for traversing in ISR */
-    Udma_EventHandleInt     prevEvent;
+    Udma_EventHandle     prevEvent;
     /**< Pointer to previous event - used in shared event for traversing during
      *   event un-registration */
 
@@ -928,7 +914,7 @@ typedef struct Udma_ChObjectInt_t
     /**< UDMA channel type. Refer \ref Udma_ChType. */
     Udma_ChPrms             chPrms;
     /**< Object to store the channel params. */
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
 
     uint32_t                txChNum;
@@ -949,14 +935,14 @@ typedef struct Udma_ChObjectInt_t
     uint32_t                peerThreadId;
     /**< Peer channel thread ID - this is or'ed with thread offset. */
 
-    Udma_RingHandleInt      fqRing;
+    Udma_RingHandle      fqRing;
     /**< Free queue ring handle */
-    Udma_RingHandleInt      cqRing;
+    Udma_RingHandle      cqRing;
     /**< Completion queue ring handle
     *    For AM64x kind of devices, where there is no seperate Completion queue,
     *    this points to fqRing itself.
     */
-    Udma_RingHandleInt      tdCqRing;
+    Udma_RingHandle      tdCqRing;
     /**< Teardown completion queue ring handle */
 
     Udma_RingObjectInt      fqRingObj;
@@ -970,7 +956,7 @@ typedef struct Udma_ChObjectInt_t
     *    Not used for AM64x kind of devices, where teardown function is not present.
     */
 
-    Udma_FlowHandleInt      defaultFlow;
+    Udma_FlowHandle      defaultFlow;
     /**< Default flow handle */
     Udma_FlowObjectInt      defaultFlowObj;
     /**< Default flow object - Flow ID equal to the RX channel is reserved
@@ -1254,7 +1240,7 @@ typedef struct Udma_DrvObjectInt_t
 
     Udma_EventObjectInt     globalEventObj;
     /**< Object to store global event. */
-    Udma_EventHandleInt     globalEventHandle;
+    Udma_EventHandle     globalEventHandle;
     /**< Global event handle. */
 
     Udma_InitPrms           initPrms;
@@ -1314,7 +1300,7 @@ typedef struct Udma_DrvObjectInt_t
     uint32_t                irIntrFlag[UDMA_RM_IR_INTR_ARR_SIZE];
     /**< IR interrupt allocation flag */
 
-    void                   *rmLock;
+    SemaphoreP_Object       *rmLock;
     /**< Mutex to protect RM allocation. */
     SemaphoreP_Object       rmLockObj;
     /**< Mutex object. */
@@ -1416,10 +1402,10 @@ typedef struct
     /**< Proxy thread to push/pop to ring in proxy mode.
      *   By default driver will initialize to a default value based on
      *   core and NAVSS instance. User can override this based on need.
-     *   The default proxy allocation starts from #UDMA_DEFAULT_RM_PROXY_THREAD_START
+     *   The default proxy allocation starts from UDMA_DEFAULT_RM_PROXY_THREAD_START
      *   and will allocate 1 per core. So total allocation will be from
-     *   #UDMA_DEFAULT_RM_PROXY_THREAD_START to
-     *   (#UDMA_DEFAULT_RM_PROXY_THREAD_START + num cores) in an SOC.
+     *   UDMA_DEFAULT_RM_PROXY_THREAD_START to
+     *   (UDMA_DEFAULT_RM_PROXY_THREAD_START + num cores) in an SOC.
      *
      *   The proxy thread number should be allocated within a NAVSS instance
      *   as a proxy can access ring only within the same NAVSS instance. The
@@ -1441,12 +1427,12 @@ typedef struct
      *   Note this should not overlap with proxyThreadNum */
     uint32_t                numProxy;
     /**< Number of proxy to be managed.
-     *   Note: This cannot exceed #UDMA_RM_MAX_PROXY */
+     *   Note: This cannot exceed UDMA_RM_MAX_PROXY */
     uint32_t                startRingMon;
     /**< Start monitor from which this UDMA driver instance manages */
     uint32_t                numRingMon;
     /**< Number of monitors to be managed.
-     *   Note: This cannot exceed #UDMA_RM_MAX_RING_MON */
+     *   Note: This cannot exceed UDMA_RM_MAX_RING_MON */
 } Udma_RmInitPrms;
 /**
  *  \brief UDMA ring object.
@@ -1456,7 +1442,7 @@ typedef struct
  */
 typedef struct Udma_RingObjectInt_t
 {
-    Udma_DrvHandleInt           drvHandle;
+    Udma_DrvHandle           drvHandle;
     /**< Pointer to global driver handle. */
 
     uint16_t                    ringNum;
@@ -1506,7 +1492,7 @@ typedef struct Udma_RingObjectInt_t
  */
 typedef struct Udma_FlowObjectInt_t
 {
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
 
     uint32_t                flowStart;
@@ -1554,7 +1540,7 @@ typedef struct Udma_FlowObjectInt_t
  */
 typedef struct Udma_EventObjectInt_t
 {
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
     Udma_EventPrms          eventPrms;
     /**< Event parameters passed during event registeration. */
@@ -1572,13 +1558,13 @@ typedef struct Udma_EventObjectInt_t
     uint32_t                coreIntrNum;
     /**< Allocated core interrupt number. */
 
-    Udma_EventHandleInt     nextEvent;
+    Udma_EventHandle     nextEvent;
     /**< Pointer to next event - used in shared event for traversing in ISR */
-    Udma_EventHandleInt     prevEvent;
+    Udma_EventHandle     prevEvent;
     /**< Pointer to previous event - used in shared event for traversing during
      *   event un-registration */
 
-    void                   *hwiHandle;
+    HwiP_Object            *hwiHandle;
     /**< HWI handle. */
     HwiP_Object             hwiObject;
     /**< HWI Object. */
@@ -1610,7 +1596,7 @@ typedef struct Udma_ChObjectInt_t
     /**< UDMA channel type. Refer \ref Udma_ChType. */
     Udma_ChPrms             chPrms;
     /**< Object to store the channel params. */
-    Udma_DrvHandleInt       drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
     uint32_t                txChNum;
     /**< Allocated TX channel number - this is relative channel number from
@@ -1630,14 +1616,14 @@ typedef struct Udma_ChObjectInt_t
     uint32_t                peerThreadId;
     /**< Peer channel thread ID - this is or'ed with thread offset. */
 
-    Udma_RingHandleInt      fqRing;
+    Udma_RingHandle      fqRing;
     /**< Free queue ring handle */
-    Udma_RingHandleInt      cqRing;
+    Udma_RingHandle      cqRing;
     /**< Completion queue ring handle
     *    For AM64x kind of devices, where there is no seperate Completion queue,
     *    this points to fqRing itself.
     */
-    Udma_RingHandleInt      tdCqRing;
+    Udma_RingHandle      tdCqRing;
     /**< Teardown completion queue ring handle */
 
     Udma_RingObjectInt      fqRingObj;
@@ -1651,7 +1637,7 @@ typedef struct Udma_ChObjectInt_t
     *    Not used for AM64x kind of devices, where teardown function is not present.
     */
 
-    Udma_FlowHandleInt      defaultFlow;
+    Udma_FlowHandle      defaultFlow;
     /**< Default flow handle */
     Udma_FlowObjectInt      defaultFlowObj;
     /**< Default flow object - Flow ID equal to the RX channel is reserved
@@ -1801,7 +1787,7 @@ typedef struct Udma_DrvObjectInt_t
 
     Udma_EventObjectInt     globalEventObj;
     /**< Object to store global event. */
-    Udma_EventHandleInt     globalEventHandle;
+    Udma_EventHandle     globalEventHandle;
     /**< Global event handle. */
 
     Udma_InitPrms           initPrms;
@@ -1848,7 +1834,7 @@ typedef struct Udma_DrvObjectInt_t
     uint32_t                irIntrFlag[UDMA_RM_IR_INTR_ARR_SIZE];
     /**< IR interrupt allocation flag */
 
-    void                   *rmLock;
+    SemaphoreP_Object      *rmLock;
     /**< Mutex to protect RM allocation. */
     SemaphoreP_Object       rmLockObj;
     /**< Mutex object. */

@@ -690,7 +690,7 @@ static void udmaTestInitTestObj(UdmaTestObj *testObj, UdmaTestParams *testPrms)
             chObj->chHandle         = NULL;
             chObj->cqEventHandle    = NULL;
             chObj->tdCqEventHandle  = NULL;
-            chObj->drvHandle        = &testObj->drvObj[testPrms->instId[chCnt]];
+            chObj->drvHandle        = (Udma_DrvHandle) &testObj->drvObj[testPrms->instId[chCnt]];
             chObj->instId           = testPrms->instId[chCnt];
             chObj->queueCnt         = 0U;
             chObj->dequeueCnt       = 0U;

@@ -243,8 +243,8 @@ typedef struct
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
-                           Udma_EventHandleInt eventHandle,
+int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
+                           Udma_EventHandle eventHandle,
                            Udma_EventPrms *eventPrms);
 
 /**
@@ -278,7 +278,7 @@ int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle);
+int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle);
 
 /**
  *  \brief Returns the event ID allocated for this event.
@@ -290,7 +290,7 @@ int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle);
  *
  *  \return the event ID on success or #UDMA_EVENT_INVALID on error
  */
-uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle);
+uint32_t Udma_eventGetId(Udma_EventHandle eventHandle);
 
 /**
  *  \brief Disable the event at interrupt aggregator
@@ -302,7 +302,7 @@ uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle);
+int32_t Udma_eventDisable(Udma_EventHandle eventHandle);
 
 /**
  *  \brief Enable the event at interrupt aggregator
@@ -318,7 +318,7 @@ int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle);
+int32_t Udma_eventEnable(Udma_EventHandle eventHandle);
 
 /**
  *  \brief Get the global event handle of the driver handle.
@@ -330,7 +330,7 @@ int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle);
  *
  *  \return Returns global event handle else NULL on error
  */
-Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandleInt drvHandle);
+Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandle drvHandle);
 
 /*
  * Structure Init functions

@@ -121,7 +121,7 @@ const Udma_MappedChRingAttributes gUdmaRxMappedChRingAttributes[CSL_DMSS_PKTDMA_
 /* ========================================================================== */
 
 
-void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle)
+void Udma_initDrvHandle(Udma_DrvHandle drvHandle)
 {
     uint32_t                 instId;
     CSL_BcdmaCfg             *pBcdmaRegs;
@@ -265,7 +265,7 @@ uint32_t Udma_isCacheCoherent(void)
     return (isCacheCoherent);
 }
 
-int32_t Udma_getMappedChRingAttributes(Udma_DrvHandleInt drvHandle,
+int32_t Udma_getMappedChRingAttributes(Udma_DrvHandle drvHandle,
                                        uint32_t mappedGrp,
                                        uint32_t chNum,
                                        Udma_MappedChRingAttributes *chAttr)

@@ -71,7 +71,7 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void Udma_initDrvHandle(Udma_DrvHandleInt drvHandle)
+void Udma_initDrvHandle(Udma_DrvHandle drvHandle)
 {
     uint32_t            instId;
     CSL_UdmapCfg       *pUdmapRegs;

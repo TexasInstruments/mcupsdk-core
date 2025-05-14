@@ -107,7 +107,7 @@ static int32_t UART_udmaInitRxCh(UARTLLD_Handle hUart, const UART_UdmaChConfig *
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = udmaChCfg->cqRxEvtHandle;
+    eventHandle = (Udma_EventHandle) udmaChCfg->cqRxEvtHandle;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -157,7 +157,7 @@ static int32_t UART_udmaInitTxCh(UARTLLD_Handle hUart, const UART_UdmaChConfig *
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = udmaChCfg->cqTxEvtHandle;
+    eventHandle = (Udma_EventHandle) udmaChCfg->cqTxEvtHandle;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;

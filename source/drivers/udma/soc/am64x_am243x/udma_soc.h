@@ -240,7 +240,7 @@ extern "C" {
 #define UDMA_RM_GLOBAL_EVENT_ARR_SIZE       (UDMA_RM_MAX_GLOBAL_EVENT >> 5U)
 #define UDMA_RM_VINTR_ARR_SIZE              (UDMA_RM_MAX_VINTR >> 5U)
 #define UDMA_RM_IR_INTR_ARR_SIZE            (UDMA_RM_MAX_IR_INTR >> 5U)
-/* @} */
+/** @} */
 
 /**
  *  \anchor Udma_RmResId

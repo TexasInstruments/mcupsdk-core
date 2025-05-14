@@ -233,8 +233,8 @@ extern "C" {
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chOpen(Udma_DrvHandleInt drvHandle,
-                    Udma_ChHandleInt chHandle,
+int32_t Udma_chOpen(Udma_DrvHandle drvHandle,
+                    Udma_ChHandle chHandle,
                     uint32_t chType,
                     const Udma_ChPrms *chPrms);
 
@@ -250,7 +250,7 @@ int32_t Udma_chOpen(Udma_DrvHandleInt drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chClose(Udma_ChHandleInt chHandle);
+int32_t Udma_chClose(Udma_ChHandle chHandle);
 
 /**
  *  \brief UDMA configure TX channel.
@@ -269,7 +269,7 @@ int32_t Udma_chClose(Udma_ChHandleInt chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigTx(Udma_ChHandleInt chHandle, const Udma_ChTxPrms *txPrms);
+int32_t Udma_chConfigTx(Udma_ChHandle chHandle, const Udma_ChTxPrms *txPrms);
 
 /**
  *  \brief UDMA configure RX channel.
@@ -290,7 +290,7 @@ int32_t Udma_chConfigTx(Udma_ChHandleInt chHandle, const Udma_ChTxPrms *txPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigRx(Udma_ChHandleInt chHandle, const Udma_ChRxPrms *rxPrms);
+int32_t Udma_chConfigRx(Udma_ChHandle chHandle, const Udma_ChRxPrms *rxPrms);
 
 /**
  *  \brief UDMA configure PDMA channel (peerChNum as part of #Udma_ChPrms)
@@ -307,7 +307,7 @@ int32_t Udma_chConfigRx(Udma_ChHandleInt chHandle, const Udma_ChRxPrms *rxPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigPdma(Udma_ChHandleInt chHandle,
+int32_t Udma_chConfigPdma(Udma_ChHandle chHandle,
                           const Udma_ChPdmaPrms *pdmaPrms);
 
 /**
@@ -322,7 +322,7 @@ int32_t Udma_chConfigPdma(Udma_ChHandleInt chHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chEnable(Udma_ChHandleInt chHandle);
+int32_t Udma_chEnable(Udma_ChHandle chHandle);
 
 /**
  *  \brief UDMA channel teardown and disable API.
@@ -345,7 +345,7 @@ int32_t Udma_chEnable(Udma_ChHandleInt chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chDisable(Udma_ChHandleInt chHandle, uint32_t timeout);
+int32_t Udma_chDisable(Udma_ChHandle chHandle, uint32_t timeout);
 
 /**
  *  \brief UDMA channel pause API.
@@ -360,7 +360,7 @@ int32_t Udma_chDisable(Udma_ChHandleInt chHandle, uint32_t timeout);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chPause(Udma_ChHandleInt chHandle);
+int32_t Udma_chPause(Udma_ChHandle chHandle);
 
 /**
  *  \brief UDMA channel resume API.
@@ -375,7 +375,7 @@ int32_t Udma_chPause(Udma_ChHandleInt chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chResume(Udma_ChHandleInt chHandle);
+int32_t Udma_chResume(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the channel number offset with in a channel type - TX, RX
@@ -389,7 +389,7 @@ int32_t Udma_chResume(Udma_ChHandleInt chHandle);
  *
  *  \return Channel number. Returns #UDMA_DMA_CH_INVALID for error.
  */
-uint32_t Udma_chGetNum(Udma_ChHandleInt chHandle);
+uint32_t Udma_chGetNum(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the default free ring handle of the channel.
@@ -399,7 +399,7 @@ uint32_t Udma_chGetNum(Udma_ChHandleInt chHandle);
  *
  *  \return Free ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandleInt chHandle);
+Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the default completion ring handle of the channel.
@@ -409,7 +409,7 @@ Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandleInt chHandle);
  *
  *  \return Completion ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandleInt chHandle);
+Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the teardown completion ring handle of the channel.
@@ -419,7 +419,7 @@ Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandleInt chHandle);
  *
  *  \return Teardown completion ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandleInt chHandle);
+Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the default free ring number to be programmed
@@ -430,7 +430,7 @@ Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandleInt chHandle);
  *
  *  \return Free ring number. Returns #UDMA_RING_INVALID for error.
  */
-uint16_t Udma_chGetFqRingNum(Udma_ChHandleInt chHandle);
+uint16_t Udma_chGetFqRingNum(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the default completion ring number to be programmed in
@@ -443,7 +443,7 @@ uint16_t Udma_chGetFqRingNum(Udma_ChHandleInt chHandle);
  *
  *  \return Completion ring number. Returns #UDMA_RING_INVALID for error.
  */
-uint16_t Udma_chGetCqRingNum(Udma_ChHandleInt chHandle);
+uint16_t Udma_chGetCqRingNum(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the default flow handle of the RX channel.
@@ -453,7 +453,7 @@ uint16_t Udma_chGetCqRingNum(Udma_ChHandleInt chHandle);
  *
  *  \return Default flow handle. Returns NULL for error.
  */
-Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandleInt chHandle);
+Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandle chHandle);
 
 /**
  *  \brief Returns the global trigger event for the channel
@@ -471,7 +471,7 @@ Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandleInt chHandle);
  *
  *  \return Global trigger event
  */
-uint32_t Udma_chGetTriggerEvent(Udma_ChHandleInt chHandle, uint32_t trigger);
+uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger);
 
 /**
  *  \brief Returns the software trigger register address for the channel
@@ -492,7 +492,7 @@ uint32_t Udma_chGetTriggerEvent(Udma_ChHandleInt chHandle, uint32_t trigger);
  *
  *  \return SW trigger register address
  */
-uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandleInt chHandle);
+uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle);
 
 /**
  *  \brief Sets the software trigger register based on the trigger mode
@@ -516,7 +516,7 @@ uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandleInt chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chSetSwTrigger(Udma_ChHandleInt chHandle, uint32_t trigger);
+int32_t Udma_chSetSwTrigger(Udma_ChHandle chHandle, uint32_t trigger);
 
 /**
  *  \brief Chains the trigger channel with the chained channel.
@@ -540,8 +540,8 @@ int32_t Udma_chSetSwTrigger(Udma_ChHandleInt chHandle, uint32_t trigger);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chSetChaining(Udma_ChHandleInt triggerChHandle,
-                           Udma_ChHandleInt chainedChHandle,
+int32_t Udma_chSetChaining(Udma_ChHandle triggerChHandle,
+                           Udma_ChHandle chainedChHandle,
                            uint32_t trigger);
 
 /**
@@ -556,8 +556,8 @@ int32_t Udma_chSetChaining(Udma_ChHandleInt triggerChHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chBreakChaining(Udma_ChHandleInt triggerChHandle,
-                             Udma_ChHandleInt chainedChHandle);
+int32_t Udma_chBreakChaining(Udma_ChHandle triggerChHandle,
+                             Udma_ChHandle chainedChHandle);
 
 /*
  * Structure Init functions
@@ -609,7 +609,7 @@ void UdmaChPdmaPrms_init(Udma_ChPdmaPrms *pdmaPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chGetStats(Udma_ChHandleInt chHandle, Udma_ChStats *chStats);
+int32_t Udma_chGetStats(Udma_ChHandle chHandle, Udma_ChStats *chStats);
 
 /**
  *  \brief Get real-time peer data which contains number of bytes written.
@@ -620,7 +620,7 @@ int32_t Udma_chGetStats(Udma_ChHandleInt chHandle, Udma_ChStats *chStats);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_getPeerData(Udma_ChHandleInt chHandle, uint32_t *peerData);
+int32_t Udma_getPeerData(Udma_ChHandle chHandle, uint32_t *peerData);
 
 /**
  *  \brief Clear real-time peer data which contains number of bytes written.
@@ -631,7 +631,7 @@ int32_t Udma_getPeerData(Udma_ChHandleInt chHandle, uint32_t *peerData);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_clearPeerData(Udma_ChHandleInt chHandle, uint32_t peerData);
+int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData);
 
 #if (UDMA_SOC_CFG_RA_NORMAL_PRESENT == 1)
 /**
@@ -650,7 +650,7 @@ int32_t Udma_clearPeerData(Udma_ChHandleInt chHandle, uint32_t peerData);
  *
  *  \return Global trigger event
  */
-int32_t Udma_chDequeueTdResponse(Udma_ChHandleInt chHandle,
+int32_t Udma_chDequeueTdResponse(Udma_ChHandle chHandle,
                                  CSL_UdmapTdResponse *tdResponse);
 #endif
 /* ========================================================================== */
