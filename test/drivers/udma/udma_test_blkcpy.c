@@ -763,7 +763,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
             chPrms.tdCqRingPrms.elemCnt = chObj->qdepth;
 
             /* Open channel for block copy */
-            retVal = Udma_chOpen(chObj->drvHandle, &chObj->drvChObj, chType, &chPrms);
+            retVal = Udma_chOpen(chObj->drvHandle, (Udma_ChHandleInt) &chObj->drvChObj, chType, &chPrms);
             if(UDMA_SOK != retVal)
             {
                 GT_0trace(taskObj->traceMask, GT_ERR,

@@ -87,8 +87,8 @@ static void Udma_eventResetSteering(Udma_DrvHandleInt drvHandle,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
-                           Udma_EventHandle eventHandle,
+int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
+                           Udma_EventHandleInt eventHandle,
                            Udma_EventPrms *eventPrms)
 {
     int32_t             retVal = UDMA_SOK;
@@ -231,7 +231,7 @@ int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
     return (retVal);
 }
 
-int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle)
+int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandle;
@@ -292,7 +292,7 @@ int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle)
     return (retVal);
 }
 
-uint32_t Udma_eventGetId(Udma_EventHandle eventHandle)
+uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle)
 {
     uint32_t            evtNum = UDMA_EVENT_INVALID;
     Udma_DrvHandleInt   drvHandle;
@@ -311,7 +311,7 @@ uint32_t Udma_eventGetId(Udma_EventHandle eventHandle)
     return (evtNum);
 }
 
-int32_t Udma_eventDisable(Udma_EventHandle eventHandle)
+int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle)
 {
     int32_t             retVal = UDMA_EFAIL;
     Udma_DrvHandleInt   drvHandle;
@@ -343,7 +343,7 @@ int32_t Udma_eventDisable(Udma_EventHandle eventHandle)
     return (retVal);
 }
 
-int32_t Udma_eventEnable(Udma_EventHandle eventHandle)
+int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle)
 {
     int32_t             retVal = UDMA_EFAIL;
     Udma_DrvHandleInt   drvHandle;
@@ -375,7 +375,7 @@ int32_t Udma_eventEnable(Udma_EventHandle eventHandle)
     return (retVal);
 }
 
-Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandle drvHandle)
+Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandleInt drvHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandleInt;

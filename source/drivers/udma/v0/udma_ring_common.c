@@ -73,8 +73,8 @@ static int32_t Udma_ringCheckParams(Udma_DrvHandleInt drvHandle,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t Udma_ringAlloc(Udma_DrvHandle drvHandle,
-                       Udma_RingHandle ringHandle,
+int32_t Udma_ringAlloc(Udma_DrvHandleInt drvHandle,
+                       Udma_RingHandleInt ringHandle,
                        uint16_t ringNum,
                        const Udma_RingPrms *ringPrms)
 {
@@ -214,7 +214,7 @@ int32_t Udma_ringAlloc(Udma_DrvHandle drvHandle,
     return (retVal);
 }
 
-int32_t Udma_ringFree(Udma_RingHandle ringHandle)
+int32_t Udma_ringFree(Udma_RingHandleInt ringHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandle;
@@ -268,8 +268,8 @@ int32_t Udma_ringFree(Udma_RingHandle ringHandle)
     return (retVal);
 }
 
-int32_t Udma_ringAttach(Udma_DrvHandle drvHandle,
-                        Udma_RingHandle ringHandle,
+int32_t Udma_ringAttach(Udma_DrvHandleInt drvHandle,
+                        Udma_RingHandleInt ringHandle,
                         uint16_t ringNum)
 {
     int32_t             retVal = UDMA_SOK;
@@ -308,7 +308,7 @@ int32_t Udma_ringAttach(Udma_DrvHandle drvHandle,
     return (retVal);
 }
 
-int32_t Udma_ringDetach(Udma_RingHandle ringHandle)
+int32_t Udma_ringDetach(Udma_RingHandleInt ringHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandle;
@@ -349,7 +349,7 @@ int32_t Udma_ringDetach(Udma_RingHandle ringHandle)
     return (retVal);
 }
 
-int32_t Udma_ringQueueRaw(Udma_RingHandle ringHandle, uint64_t phyDescMem)
+int32_t Udma_ringQueueRaw(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
 {
     int32_t             retVal = UDMA_SOK;
     uintptr_t           cookie;
@@ -385,7 +385,7 @@ int32_t Udma_ringQueueRaw(Udma_RingHandle ringHandle, uint64_t phyDescMem)
     return (retVal);
 }
 
-int32_t Udma_ringDequeueRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringDequeueRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
 {
     int32_t             retVal = UDMA_SOK;
     uintptr_t           cookie;
@@ -421,7 +421,7 @@ int32_t Udma_ringDequeueRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
     return (retVal);
 }
 
-int32_t Udma_ringFlushRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
+int32_t Udma_ringFlushRaw(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandle;
@@ -452,7 +452,7 @@ int32_t Udma_ringFlushRaw(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
     return (retVal);
 }
 
-void Udma_ringPrime(Udma_RingHandle ringHandle, uint64_t phyDescMem)
+void Udma_ringPrime(Udma_RingHandleInt ringHandle, uint64_t phyDescMem)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
 
@@ -461,7 +461,7 @@ void Udma_ringPrime(Udma_RingHandle ringHandle, uint64_t phyDescMem)
     return;
 }
 
-void Udma_ringPrimeRead(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
+void Udma_ringPrimeRead(Udma_RingHandleInt ringHandle, uint64_t *phyDescMem)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
 
@@ -470,7 +470,7 @@ void Udma_ringPrimeRead(Udma_RingHandle ringHandle, uint64_t *phyDescMem)
     return;
 }
 
-void Udma_ringSetDoorBell(Udma_RingHandle ringHandle, int32_t count)
+void Udma_ringSetDoorBell(Udma_RingHandleInt ringHandle, int32_t count)
 {
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
 
@@ -479,7 +479,7 @@ void Udma_ringSetDoorBell(Udma_RingHandle ringHandle, int32_t count)
     return;
 }
 
-uint16_t Udma_ringGetNum(Udma_RingHandle ringHandle)
+uint16_t Udma_ringGetNum(Udma_RingHandleInt ringHandle)
 {
     uint16_t            ringNum = UDMA_RING_INVALID;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -493,7 +493,7 @@ uint16_t Udma_ringGetNum(Udma_RingHandle ringHandle)
     return (ringNum);
 }
 
-void *Udma_ringGetMemPtr(Udma_RingHandle ringHandle)
+void *Udma_ringGetMemPtr(Udma_RingHandleInt ringHandle)
 {
     void               *ringMem = NULL_PTR;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -503,7 +503,7 @@ void *Udma_ringGetMemPtr(Udma_RingHandle ringHandle)
     return (ringMem);
 }
 
-uint32_t Udma_ringGetMode(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetMode(Udma_RingHandleInt ringHandle)
 {
     uint32_t            ringMode;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -513,7 +513,7 @@ uint32_t Udma_ringGetMode(Udma_RingHandle ringHandle)
     return (ringMode);
 }
 
-uint32_t Udma_ringGetElementCnt(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetElementCnt(Udma_RingHandleInt ringHandle)
 {
     uint32_t            size = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -523,7 +523,7 @@ uint32_t Udma_ringGetElementCnt(Udma_RingHandle ringHandle)
     return (size);
 }
 
-uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandleInt ringHandle)
 {
     uint32_t            occ = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -533,7 +533,7 @@ uint32_t Udma_ringGetForwardRingOcc(Udma_RingHandle ringHandle)
     return (occ);
 }
 
-uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandleInt ringHandle)
 {
     uint32_t            occ = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -543,7 +543,7 @@ uint32_t Udma_ringGetReverseRingOcc(Udma_RingHandle ringHandle)
     return (occ);
 }
 
-uint32_t Udma_ringGetWrIdx(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetWrIdx(Udma_RingHandleInt ringHandle)
 {
     uint32_t            idx = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;
@@ -553,7 +553,7 @@ uint32_t Udma_ringGetWrIdx(Udma_RingHandle ringHandle)
     return (idx);
 }
 
-uint32_t Udma_ringGetRdIdx(Udma_RingHandle ringHandle)
+uint32_t Udma_ringGetRdIdx(Udma_RingHandleInt ringHandle)
 {
     uint32_t            idx = 0U;
     Udma_RingHandleInt  ringHandleInt = (Udma_RingHandleInt) ringHandle;

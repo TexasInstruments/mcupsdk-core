@@ -192,125 +192,6 @@ extern "C" {
 /** @} */
 
 /**
- *  \brief UDMA event callback function.
- *
- *  \param eventHandle  [IN] UDMA event handle
- *  \param eventType    [IN] Event that occurred
- *  \param appData      [IN] Callback pointer passed during event register
- */
-typedef void (*Udma_EventCallback)(Udma_EventHandle eventHandle,
-                                   uint32_t eventType,
-                                   void *appData);
-
-/* ========================================================================== */
-/*                         Structure Declarations                             */
-/* ========================================================================== */
-
-/**
- *  \brief UDMA event related parameters.
- *
- *  Requirement: DOX_REQ_TAG(PDK-2628), DOX_REQ_TAG(PDK-2627)
- *               DOX_REQ_TAG(PDK-2626), DOX_REQ_TAG(PDK-2625)
- */
-typedef struct
-{
-    uint32_t                eventType;
-    /**< [IN] Event type to register. Refer \ref Udma_EventType */
-    uint32_t                eventMode;
-    /**< [IN] Event mode - exclusive or shared. Refer \ref Udma_EventMode.
-     *   This parameter should be set to #UDMA_EVENT_MODE_SHARED for
-     *   #UDMA_EVENT_TYPE_MASTER event type. */
-    Udma_ChHandle           chHandle;
-    /**< [IN] Channel handle when the event type is one of below
-     *          - #UDMA_EVENT_TYPE_DMA_COMPLETION
-     *          - #UDMA_EVENT_TYPE_TEARDOWN_PACKET
-     *          - #UDMA_EVENT_TYPE_TR.
-     *   This parameter can be NULL for other types. */
-    Udma_RingHandle         ringHandle;
-    /**< [IN] Ring handle when the event type is one of below
-     *          - #UDMA_EVENT_TYPE_RING
-     *   This parameter can be NULL for other types. */
-    Udma_EventHandle        controllerEventHandle;
-    /**< [IN] Master event handle used to share the IA register when the event
-     *   mode is set to #UDMA_EVENT_MODE_SHARED.
-     *   This is typically used to share multiple events from same source
-     *   like same peripheral to one IA register which eventually routes to
-     *   a single core interrupt.
-     *   For the first(or master) event this should be set to NULL. The driver
-     *   will allocate the required resources (IA/IR) for the first event.
-     *   For the subsequent shared event registration, the master event handle
-     *   should be passed as reference and the driver will allocate only the
-     *   IA status bits. At a maximum #UDMA_MAX_EVENTS_PER_VINTR number of
-     *   events can be shared. Beyond that the driver will return error.
-     *   This parameter should be set to NULL for #UDMA_EVENT_TYPE_MASTER
-     *   event type. */
-    Udma_EventCallback      eventCb;
-    /**< [IN] When callback function is set (non-NULL), the driver will allocate
-     *   core level interrupt through Interrupt Router and the function
-     *   will be called when the registered event occurs.
-     *   When set to NULL, the API will only allocate event and no interrupt
-     *   routing is performed.
-     *   Note: In case of shared events (multiple events mapped to same
-     *   interrupt), the driver will call the callbacks in the order
-     *   of event registration.
-     *   This parameter should be set to NULL for #UDMA_EVENT_TYPE_MASTER
-     *   event type. */
-    uint32_t                intrPriority;
-    /**< [IN] Priority of interrupt to register with OSAL. The interpretation
-     *   depends on the OSAL implementation */
-    void                   *appData;
-    /**< [IN] Application/caller context pointer passed back in the event
-     *    callback function. This could be used by the caller to identify
-     *    the channel/event for which the callback is called.
-     *    This can be set to NULL, if not required by caller. */
-    uint32_t                preferredCoreIntrNum;
-    /**< [IN] Preferred core interrupt number which goes to a core.
-     *
-     *   If set to #UDMA_CORE_INTR_ANY, will allocate from free pool.
-     *   Else will try to allocate the mentioned interrupt itself. */
-    #if (UDMA_SOC_CFG_RING_MON_PRESENT == 1)
-    Udma_RingMonHandle      monHandle;
-    /**< [IN] Ring monitor handle when the event type is one of below
-     *          - #UDMA_EVENT_TYPE_RING_MON
-     *   This parameter can be NULL for other types. */
-    #endif
-    /*
-     * Output parameters
-     */
-    volatile uint64_t      *intrStatusReg;
-    /**< [OUT] Interrupt status register address of the allocated IA VINT
-     *   register. This is used to check if interrupt occurred */
-    volatile uint64_t      *intrClearReg;
-    /**< [OUT] Interrupt clear register address of the allocated IA VINT
-     *   register. This is used to clear if interrupt occurred */
-    uint64_t                intrMask;
-    /**< [OUT] Interrupt mask to check and clear */
-    uint32_t                vintrNum;
-    /**< [OUT] IA Virtual interrupt number allocated. */
-    uint32_t                coreIntrNum;
-    /**< [OUT] Core interrupt number allocated.
-     *   This number can be used to register with the OSAL
-     *
-     *   Note: Incase of C7x, this represents the GIC SPI events to the CLEC.
-     *   For routing this event, the driver further uses the Udma_RmInitPrms - 'startC7xCoreIntr'
-     *   parameter as the start C7x interrupt and assumes that numIrIntr
-     *   C7x interrupt are used by UDMA driver for one to one mapping.
-     *   The UDMA driver directly programs the CLEC for this routing
-     *
-     *   Example: startIrIntr = 700, numIrIntr = 3, startC7xCoreIntr = 32
-     *
-     *   First Event registration:
-     *   CLEC input         : 700+1024-32
-     *   CLEC output        : 32
-     *   OSAL registration  : 32
-     *
-     *   Second Event registration:
-     *   CLEC input         : 701+1024-32
-     *   CLEC output        : 33
-     *   OSAL registration  : 33 */
-} Udma_EventPrms;
-
-/**
  *  \brief UDMAP receive flow id firewall status
  *
  *  This structure contains status information collected whenever the receive
@@ -362,8 +243,8 @@ typedef struct
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
-                           Udma_EventHandle eventHandle,
+int32_t Udma_eventRegister(Udma_DrvHandleInt drvHandle,
+                           Udma_EventHandleInt eventHandle,
                            Udma_EventPrms *eventPrms);
 
 /**
@@ -397,7 +278,7 @@ int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle);
+int32_t Udma_eventUnRegister(Udma_EventHandleInt eventHandle);
 
 /**
  *  \brief Returns the event ID allocated for this event.
@@ -409,7 +290,7 @@ int32_t Udma_eventUnRegister(Udma_EventHandle eventHandle);
  *
  *  \return the event ID on success or #UDMA_EVENT_INVALID on error
  */
-uint32_t Udma_eventGetId(Udma_EventHandle eventHandle);
+uint32_t Udma_eventGetId(Udma_EventHandleInt eventHandle);
 
 /**
  *  \brief Disable the event at interrupt aggregator
@@ -421,7 +302,7 @@ uint32_t Udma_eventGetId(Udma_EventHandle eventHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventDisable(Udma_EventHandle eventHandle);
+int32_t Udma_eventDisable(Udma_EventHandleInt eventHandle);
 
 /**
  *  \brief Enable the event at interrupt aggregator
@@ -437,7 +318,7 @@ int32_t Udma_eventDisable(Udma_EventHandle eventHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_eventEnable(Udma_EventHandle eventHandle);
+int32_t Udma_eventEnable(Udma_EventHandleInt eventHandle);
 
 /**
  *  \brief Get the global event handle of the driver handle.
@@ -449,7 +330,7 @@ int32_t Udma_eventEnable(Udma_EventHandle eventHandle);
  *
  *  \return Returns global event handle else NULL on error
  */
-Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandle drvHandle);
+Udma_EventHandle Udma_eventGetGlobalHandle(Udma_DrvHandleInt drvHandle);
 
 /*
  * Structure Init functions

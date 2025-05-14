@@ -140,15 +140,15 @@ void UdmaUtils_makeTrpd(uint8_t *trpdMem,
     uint32_t trSizeEncoded = UdmaUtils_getTrSizeEncoded(trType);
 
     /* Setup descriptor */
-    CSL_udmapCppi5SetDescType(trpdMem, descType);
+    CSL_udmapCppi5SetDescType((CSL_UdmapCppi5HMPD *)trpdMem, descType);
     CSL_udmapCppi5TrSetReload((CSL_UdmapCppi5TRPD *)trpdMem, 0U, 0U);
-    CSL_udmapCppi5SetPktLen(trpdMem, descType, trCnt);
-    CSL_udmapCppi5SetIds(trpdMem, descType, 0U, UDMA_DEFAULT_FLOW_ID); /* Flow ID and Packet ID */
-    CSL_udmapCppi5SetSrcTag(trpdMem, 0x0000);
-    CSL_udmapCppi5SetDstTag(trpdMem, 0x0000);
+    CSL_udmapCppi5SetPktLen((CSL_UdmapCppi5HMPD *)trpdMem, descType, trCnt);
+    CSL_udmapCppi5SetIds((CSL_UdmapCppi5HMPD *)trpdMem, descType, 0U, UDMA_DEFAULT_FLOW_ID); /* Flow ID and Packet ID */
+    CSL_udmapCppi5SetSrcTag((CSL_UdmapCppi5HMPD *)trpdMem, 0x0000);
+    CSL_udmapCppi5SetDstTag((CSL_UdmapCppi5HMPD *)trpdMem, 0x0000);
     CSL_udmapCppi5TrSetEntryStride((CSL_UdmapCppi5TRPD *)trpdMem, trSizeEncoded);
     CSL_udmapCppi5SetReturnPolicy(
-            trpdMem,
+            (CSL_UdmapCppi5HMPD *)trpdMem,
             descType,
             CSL_UDMAP_CPPI5_PD_PKTINFO2_RETPOLICY_VAL_ENTIRE_PKT,
             CSL_UDMAP_CPPI5_PD_PKTINFO2_EARLYRET_VAL_NO,
