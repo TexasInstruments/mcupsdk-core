@@ -359,22 +359,22 @@ static void App_mcanDmaDeinit()
     int32_t  tempRetVal;
 
     /* Disable Channel */
-    status = Udma_chDisable(&App_mcanUdmaTxChObj, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
+    status = Udma_chDisable((Udma_ChHandleInt)&App_mcanUdmaTxChObj, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
     DebugP_assert(UDMA_SOK == status);
-    status = Udma_chDisable(&App_mcanUdmaRxChObj, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
+    status = Udma_chDisable((Udma_ChHandleInt)&App_mcanUdmaRxChObj, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
     DebugP_assert(UDMA_SOK == status);
 
     /* UnRegister Event */
-    status = Udma_eventUnRegister(&App_mcanUdmaCqTxEventObjCh);
+    status = Udma_eventUnRegister((Udma_EventHandleInt)&App_mcanUdmaCqTxEventObjCh);
     DebugP_assert(UDMA_SOK == status);
-    status = Udma_eventUnRegister(&App_mcanUdmaCqRxEventObjCh);
+    status = Udma_eventUnRegister((Udma_EventHandleInt)&App_mcanUdmaCqRxEventObjCh);
     DebugP_assert(UDMA_SOK == status);
 
     /* Flush any pending request from the free queue */
     while(1)
     {
         tempRetVal = Udma_ringFlushRaw(
-                         Udma_chGetFqRingHandle(&App_mcanUdmaTxChObj), &pDesc);
+                         Udma_chGetFqRingHandle((Udma_ChHandleInt)&App_mcanUdmaTxChObj), &pDesc);
         if(UDMA_ETIMEOUT == tempRetVal)
         {
             break;
@@ -383,7 +383,7 @@ static void App_mcanDmaDeinit()
     while(1)
     {
         tempRetVal = Udma_ringFlushRaw(
-                         Udma_chGetFqRingHandle(&App_mcanUdmaRxChObj), &pDesc);
+                         Udma_chGetFqRingHandle((Udma_ChHandleInt)&App_mcanUdmaRxChObj), &pDesc);
         if(UDMA_ETIMEOUT == tempRetVal)
         {
             break;
@@ -391,9 +391,9 @@ static void App_mcanDmaDeinit()
     }
 
     /* Close channel */
-    status = Udma_chClose(&App_mcanUdmaTxChObj);
+    status = Udma_chClose((Udma_ChHandleInt)&App_mcanUdmaTxChObj);
     DebugP_assert(UDMA_SOK == status);
-    status = Udma_chClose(&App_mcanUdmaRxChObj);
+    status = Udma_chClose((Udma_ChHandleInt)&App_mcanUdmaRxChObj);
     DebugP_assert(UDMA_SOK == status);
 }
 
@@ -681,7 +681,7 @@ static void App_udmaCallbackTx(Udma_EventHandle eventHandle,
     uint64_t pDesc;
 
     CacheP_inv(&App_mcanUdmaTxHpdMemCh, APP_MCAN_UDMA_TEST_DESC_SIZE, CacheP_TYPE_ALLD);
-    Udma_ringDequeueRaw(Udma_chGetCqRingHandle(&App_mcanUdmaTxChObj), &pDesc);
+    Udma_ringDequeueRaw(Udma_chGetCqRingHandle((Udma_ChHandleInt)&App_mcanUdmaTxChObj), &pDesc);
 
     SemaphoreP_post(&App_mcanTxDoneSem);
 }
@@ -693,7 +693,7 @@ static void App_udmaCallbackRx(Udma_EventHandle eventHandle,
     uint64_t pDesc;
 
     CacheP_inv(&App_mcanUdmaRxHpdMemCh, APP_MCAN_UDMA_TEST_DESC_SIZE, CacheP_TYPE_ALLD);
-    Udma_ringDequeueRaw(Udma_chGetCqRingHandle(&App_mcanUdmaRxChObj), &pDesc);
+    Udma_ringDequeueRaw(Udma_chGetCqRingHandle((Udma_ChHandleInt)&App_mcanUdmaRxChObj), &pDesc);
 
     SemaphoreP_post(&App_mcanRxDoneSem);
 }

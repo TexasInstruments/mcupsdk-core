@@ -69,7 +69,7 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t Udma_flowFree(Udma_FlowHandle flowHandle)
+int32_t Udma_flowFree(Udma_FlowHandleInt flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandleInt   drvHandle;
@@ -137,8 +137,8 @@ int32_t Udma_flowFree(Udma_FlowHandle flowHandle)
     return (retVal);
 }
 
-int32_t Udma_flowAttach(Udma_DrvHandle drvHandle,
-                        Udma_FlowHandle flowHandle,
+int32_t Udma_flowAttach(Udma_DrvHandleInt drvHandle,
+                        Udma_FlowHandleInt flowHandle,
                         uint32_t flowStart,
                         uint32_t flowCnt)
 {
@@ -175,7 +175,7 @@ int32_t Udma_flowAttach(Udma_DrvHandle drvHandle,
     return (retVal);
 }
 
-int32_t Udma_flowDetach(Udma_FlowHandle flowHandle)
+int32_t Udma_flowDetach(Udma_FlowHandleInt flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_FlowHandleInt  flowHandleInt = (Udma_FlowHandleInt) flowHandle;
@@ -206,7 +206,7 @@ int32_t Udma_flowDetach(Udma_FlowHandle flowHandle)
     return (retVal);
 }
 
-int32_t Udma_flowConfig(Udma_FlowHandle flowHandle,
+int32_t Udma_flowConfig(Udma_FlowHandleInt flowHandle,
                         uint32_t flowIdx,
                         const Udma_FlowPrms *flowPrms)
 {
@@ -328,7 +328,7 @@ int32_t Udma_flowConfig(Udma_FlowHandle flowHandle,
     return (retVal);
 }
 
-uint32_t Udma_flowGetNum(Udma_FlowHandle flowHandle)
+uint32_t Udma_flowGetNum(Udma_FlowHandleInt flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            flowNum = UDMA_FLOW_INVALID;
@@ -349,7 +349,7 @@ uint32_t Udma_flowGetNum(Udma_FlowHandle flowHandle)
     return (flowNum);
 }
 
-uint32_t Udma_flowGetCount(Udma_FlowHandle flowHandle)
+uint32_t Udma_flowGetCount(Udma_FlowHandleInt flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            flowCnt = UDMA_FLOW_INVALID;

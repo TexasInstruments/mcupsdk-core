@@ -205,281 +205,7 @@ extern "C" {
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-/**
- *  \brief UDMA channel open parameters.
- */
-typedef struct
-{
-    uint32_t                chNum;
-    /**< [IN] UDMAP channel to allocate.
-     *
-     *   Set to #UDMA_DMA_CH_ANY  if the channel to allocate and open
-     *   could be any from the free pool.
-     *   Set to the actual DMA channel when specific DMA channel need to be
-     *   allocated. This channel number is relative to the channel type
-     *   (TX, RX or External). The driver will internally calculate the
-     *   respective offset to get the actual UDMAP channel number.
-     */
-    uint32_t                peerChNum;
-    /**< [IN] The peer channel to link the #chNum using PSILCFG.
-     *
-     *   Incase of PDMA peripherals this represent the PDMA channel to which the
-     *   UDMA channel should pair with. Refer \ref Udma_PdmaCh macros.
-     *
-     *   Incase of other PSIL master peripherals this represent the thread ID
-     *   to which the UDMA channel should pair with. Refer \ref Udma_PsilCh macros.
-     *
-     *   Incase of Block copy channel type (#UDMA_CH_TYPE_TR_BLK_COPY), set
-     *   this to #UDMA_DMA_CH_NA, as the corresponding RX channel (same
-     *   index as TX channel) is assumed to be paired with and the driver
-     *   internally sets this up. The #UdmaChPrms_init API takes care of
-     *   this.
-     *
-     */
-    uint32_t                mappedChGrp;
-    /**< [IN] The Mapped channel group to use when channel type is
-     *   #UDMA_CH_TYPE_TX_MAPPED or #UDMA_CH_TYPE_RX_MAPPED.
-     *   Refer \ref Udma_MappedTxGrpSoc macro for details about mapped TX channel groups
-     *   or \ref Udma_MappedRxGrpSoc macro for details about mapped RX channel groups.
-     *
-     *   For other channel type set to #UDMA_MAPPED_GROUP_INVALID
-     */
-    void                   *appData;
-    /**< [IN] Application/caller context pointer passed back in all the channel
-     *    callback functions. This could be used by the caller to identify
-     *    the channel for which the callback is called.
-     *    This can be set to NULL, if not required by caller. */
-    Udma_RingPrms           fqRingPrms;
-    /**< [IN] Free queue ring params where descriptors are queued */
-    Udma_RingPrms           cqRingPrms;
-    /**< [IN] Completion queue ring params where descriptors are dequeued
-     *   This is not used for AM64x kind of devices, but even if the application
-     *   sets this it will be ignored. But its not required to be set.
-     */
-    Udma_RingPrms           tdCqRingPrms;
-    /**< [IN] Teardown completion queue ring params where teardown
-     *   response and TR response incase of direct TR mode are received from
-     *   UDMA
-     *   This is not used for AM64x kind of devices, but even if the application
-     *   sets this it will be ignored. But its not required to be set.
-     */
-} Udma_ChPrms;
 
-/**
- *  \brief UDMA TX channel parameters.
- */
-typedef struct
-{
-    uint8_t                 pauseOnError;
-    /**< [IN] Bool: When set (TRUE), pause channel on error */
-    uint8_t                 filterEinfo;
-    /**< [IN] Bool: When set (TRUE), filter out extended info */
-    uint8_t                 filterPsWords;
-    /**< [IN] Bool: When set (TRUE), filter out protocl specific words */
-    uint8_t                 addrType;
-    /**< [IN] Address type for this channel.
-     *   Refer \ref tisci_msg_rm_udmap_tx_ch_cfg_req::tx_atype */
-    uint8_t                 chanType;
-    /**< [IN] Channel type. Refer \ref tisci_msg_rm_udmap_tx_ch_cfg_req::tx_chan_type */
-    uint16_t                fetchWordSize;
-    /**< [IN] Descriptor/TR Size in 32-bit words */
-    uint8_t                 busPriority;
-    /**< [IN] 3-bit priority value (0=highest, 7=lowest) */
-    uint8_t                 busQos;
-    /**< [IN] 3-bit qos value (0=highest, 7=lowest) */
-    uint8_t                 busOrderId;
-    /**< [IN] 4-bit orderid value */
-    uint8_t                 dmaPriority;
-    /**< [IN] This field selects which scheduling bin the channel will be
-     *   placed in for bandwidth allocation of the Tx DMA units.
-     *   Refer \ref tisci_msg_rm_udmap_tx_ch_cfg_req::tx_sched_priority */
-    uint8_t                 txCredit;
-    /**< [IN] TX credit for external channels */
-    uint16_t                fifoDepth;
-    /**< [IN] The fifo depth is used to specify how many FIFO data phases
-     *   deep the Tx per channel FIFO will be for the channel.
-     *   While the maximum depth of the Tx FIFO is set at design time,
-     *   the FIFO depth can be artificially reduced in order to control the
-     *   maximum latency which can be introduced due to buffering effects.
-     *
-     *   The maximum FIFO depth suppported depends on the channel type as
-     *   given below:
-     *   Normal Capacity Channel        - CSL_NAVSS_UDMAP_TX_CHANS_FDEPTH (128 bytes)
-     *   High Capacity Channel          - CSL_NAVSS_UDMAP_TX_HC_CHANS_FDEPTH (1024 bytes)
-     *   Ultra High Capacity Channel    - CSL_NAVSS_UDMAP_TX_UHC_CHANS_FDEPTH (4096 bytes)
-     *
-     *   The default init API will set this paramater as per the channel type.
-     */
-    uint8_t                 burstSize;
-    /**< [IN] Specifies the nominal burst size and alignment for data transfers
-     *   on this channel.
-     *   Refer \ref tisci_msg_rm_udmap_tx_ch_cfg_req::tx_burst_size.
-     *   Note1: This parameter should be set less than or equal to the FIFO
-     *   depth parameter set for UTC channel i.e.
-     *          fifoDepth >= burstSize
-     *   Note2: In case of packet mode TX channels, the Tx fifoDepth must be at
-     *   least 2 PSI-L data phases (32 bytes) larger than the burst size given
-     *   in this field in order to hold the packet info and extended packet info
-     *   header which is placed at the front of the data packet in addition
-     *   to the payload i.e.
-     *          fifoDepth >= (burstSize + 32 bytes)
-     *
-     *   Below are the supported burst sizes for various channel types
-     *   Normal Capacity Channel        - 64 bytes
-     *   High Capacity Channel          - 64, 128 or 256 bytes
-     *   Ultra High Capacity Channel    - 64, 128 or 256 bytes
-     */
-    uint8_t                 supressTdCqPkt;
-    /**< [IN] Bool: Specifies whether or not the channel should suppress
-     *   sending the single data phase teardown packet when teardown is
-     *   complete.
-     *      FALSE = TD packet is sent
-     *      TRUE = Suppress sending TD packet
-     */
-} Udma_ChTxPrms;
-
-/**
- *  \brief UDMA RX channel parameters.
- */
-typedef struct
-{
-    uint8_t                 pauseOnError;
-    /**< [IN] Bool: When set (TRUE), pause channel on error */
-    uint8_t                 addrType;
-    /**< [IN] Address type for this channel.
-     *   Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_atype */
-    uint8_t                 chanType;
-    /**< [IN] Channel type. Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_chan_type */
-    uint16_t                fetchWordSize;
-    /**< [IN] Descriptor/TR Size in 32-bit words */
-    uint8_t                 busPriority;
-    /**< [IN] 3-bit priority value (0=highest, 7=lowest) */
-    uint8_t                 busQos;
-    /**< [IN] 3-bit qos value (0=highest, 7=lowest) */
-    uint8_t                 busOrderId;
-    /**< [IN] 4-bit orderid value */
-    uint8_t                 dmaPriority;
-    /**< [IN] This field selects which scheduling bin the channel will be
-     *   placed in for bandwidth allocation of the Tx DMA units.
-     *   Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_sched_priority */
-    uint16_t                flowIdFwRangeStart;
-    /**< [IN] Starting flow ID value for firewall check */
-    uint16_t                flowIdFwRangeCnt;
-    /**< [IN] Number of valid flow ID's starting from flowIdFwRangeStart
-     *   for firewall check */
-    uint8_t                flowEInfoPresent;
-    /**< [IN] default flow config parameter for EPIB
-     *   Refer \ref tisci_msg_rm_udmap_flow_cfg_req::rx_einfo_present */
-    uint8_t                flowPsInfoPresent;
-    /**< [IN] default flow config parameter for psInfo
-     *   Refer \ref tisci_msg_rm_udmap_flow_cfg_req::rx_psinfo_present */
-    uint8_t                flowErrorHandling;
-    /**< [IN] default flow config parameter for Error Handling
-     *   Refer \ref tisci_msg_rm_udmap_flow_cfg_req::rx_error_handling */
-    uint8_t                flowSopOffset;
-    /**< [IN] default flow config parameter for SOP offset
-     *   Refer \ref tisci_msg_rm_udmap_flow_cfg_req::rx_sop_offset */
-    uint8_t                 ignoreShortPkts;
-    /**< [IN] Bool: This field controls whether or not short packets will be
-     *   treated as exceptions (FALSE) or ignored (TRUE) for the channel.
-     *   This field is only used when the channel is in split UTC mode. */
-    uint8_t                 ignoreLongPkts;
-    /**< [IN] Bool: This field controls whether or not long packets will be
-     *   treated as exceptions (FALSE) or ignored (TRUE) for the channel.
-     *   This field is only used when the channel is in split UTC mode. */
-    uint32_t                configDefaultFlow;
-    /**< [IN] Bool: This field controls whether or not to program the default
-     *   flow.
-     *   TRUE - Configures the default flow equal to the RX channel number
-     *   FALSE - Doesn't configure the default flow of channel.
-     *   The caller can allocate and use other generic flows or get the
-     *   default flow handle and configure the flow using #Udma_flowConfig
-     *   API at a later point of time */
-    uint8_t                 burstSize;
-    /**< [IN] Specifies the nominal burst size and alignment for data transfers
-     *   on this channel.
-     *   Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_burst_size.
-     *   Note1: This parameter should be set less than or equal to the FIFO
-     *   depth parameter set for UTC channel i.e.
-     *          fifoDepth >= burstSize
-     *   Note2: In case of packet mode TX channels, the Tx fifoDepth must be at
-     *   least 2 PSI-L data phases (32 bytes) larger than the burst size given
-     *   in this field in order to hold the packet info and extended packet info
-     *   header which is placed at the front of the data packet in addition
-     *   to the payload i.e.
-     *          fifoDepth >= (burstSize + 32 bytes)
-     *
-     *   Below are the supported burst sizes for various channel types
-     *   Normal Capacity Channel        - 64 bytes
-     *   High Capacity Channel          - 64, 128 or 256 bytes
-     *   Ultra High Capacity Channel    - 64, 128 or 256 bytes
-     */
-} Udma_ChRxPrms;
-
-/**
- *  \brief UDMA PDMA channel Static TR parameters.
- */
-typedef struct
-{
-    uint32_t                elemSize;
-    /**< [IN] Element size. This field specifies how much data is transferred
-     *   in each write which is performed by the PDMA.
-     *   This is the X static TR parameter of PDMA.
-     *
-     *   In case of MCAN TX/RX PDMA channel, this is not used and should be
-     *   set to 0.
-     *
-     *   Refer \ref Udma_PdmaElemSize for supported values. */
-    uint32_t                elemCnt;
-    /**< [IN] Element count. This field specifies how many elements to
-     *   transfer each time a trigger is received on the PDMA channel.
-     *   This is the Y static TR parameter of PDMA.
-     *
-     *   In case of MCAN PDMA channel, this represents the buffer size.
-     *   In case of MCAN TX, this field specifies how many bytes should be
-     *   written to an MCAN TX buffer. This field includes the 8 byte MCAN
-     *   header on the initial packet fragment. The PDMA will break up the
-     *   source packet into fragments of this buffer size, copying the 8 byte
-     *   MCAN header for the initial fragment, and then skipping it for each
-     *   additional fragment and thus reusing the header from the first
-     *   fragment. A buffer size less than 16 is treated as 16, and a buffer
-     *   size greater than 72 is treated as 72.
-     *   In case of MCAN RX, this field specifies how many bytes should be
-     *   read from an MCAN RX buffer. This field includes the 8 byte MCAN
-     *   header on the initial packet fragment. A buffer size less than 16
-     *   is treated as 16, and a buffer size greater than 72 is treated as 72.
-     */
-    uint32_t                fifoCnt;
-    /**< [IN] FIFO count. This field specifies how many full FIFO operations
-     *   comprise a complete packet. When the count has been reached, the
-     *   PDMA will close the packet with an 'EOP' indication. If this parameter
-     *   is set to 0, then no packet delineation is supplied by the PDMA and
-     *   all framing is controlled via the UDMA TR.
-     *
-     *   This is the Z static TR parameter of PDMA.
-     *   This is NA for TX and should be set to 0.
-     *   In case of MCAN RX, this represents the buffer count. This field
-     *   specifies how many MCAN RX buffers should be read before closing the
-     *   CPPI packet with an 'EOP' indication. When this count is greater
-     *   than 1, multiple MCAN RX buffers will be read into a single CPPI
-     *   packet buffer. The 8 byte MCAN header will be skipped on subsequent
-     *   MCAN buffer reads. Setting this field to NULL will suppress all
-     *   packet delineation, and should be avoided.
-     */
-} Udma_ChPdmaPrms;
-
-/**
- *  \brief UDMA channel statistics.
- */
-typedef struct
-{
-    uint32_t                packetCnt;
-    /**< [OUT] Current completed packet count for the channel */
-    uint32_t                completedByteCnt;
-    /**< [OUT] Current completed payload byte count for the channel */
-    uint32_t                startedByteCnt;
-    /**< [OUT] Current started byte count for the channel */
-} Udma_ChStats;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -507,8 +233,8 @@ typedef struct
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chOpen(Udma_DrvHandle drvHandle,
-                    Udma_ChHandle chHandle,
+int32_t Udma_chOpen(Udma_DrvHandleInt drvHandle,
+                    Udma_ChHandleInt chHandle,
                     uint32_t chType,
                     const Udma_ChPrms *chPrms);
 
@@ -524,7 +250,7 @@ int32_t Udma_chOpen(Udma_DrvHandle drvHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chClose(Udma_ChHandle chHandle);
+int32_t Udma_chClose(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief UDMA configure TX channel.
@@ -543,7 +269,7 @@ int32_t Udma_chClose(Udma_ChHandle chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigTx(Udma_ChHandle chHandle, const Udma_ChTxPrms *txPrms);
+int32_t Udma_chConfigTx(Udma_ChHandleInt chHandle, const Udma_ChTxPrms *txPrms);
 
 /**
  *  \brief UDMA configure RX channel.
@@ -564,7 +290,7 @@ int32_t Udma_chConfigTx(Udma_ChHandle chHandle, const Udma_ChTxPrms *txPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigRx(Udma_ChHandle chHandle, const Udma_ChRxPrms *rxPrms);
+int32_t Udma_chConfigRx(Udma_ChHandleInt chHandle, const Udma_ChRxPrms *rxPrms);
 
 /**
  *  \brief UDMA configure PDMA channel (peerChNum as part of #Udma_ChPrms)
@@ -581,7 +307,7 @@ int32_t Udma_chConfigRx(Udma_ChHandle chHandle, const Udma_ChRxPrms *rxPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chConfigPdma(Udma_ChHandle chHandle,
+int32_t Udma_chConfigPdma(Udma_ChHandleInt chHandle,
                           const Udma_ChPdmaPrms *pdmaPrms);
 
 /**
@@ -596,7 +322,7 @@ int32_t Udma_chConfigPdma(Udma_ChHandle chHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chEnable(Udma_ChHandle chHandle);
+int32_t Udma_chEnable(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief UDMA channel teardown and disable API.
@@ -619,7 +345,7 @@ int32_t Udma_chEnable(Udma_ChHandle chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chDisable(Udma_ChHandle chHandle, uint32_t timeout);
+int32_t Udma_chDisable(Udma_ChHandleInt chHandle, uint32_t timeout);
 
 /**
  *  \brief UDMA channel pause API.
@@ -634,7 +360,7 @@ int32_t Udma_chDisable(Udma_ChHandle chHandle, uint32_t timeout);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chPause(Udma_ChHandle chHandle);
+int32_t Udma_chPause(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief UDMA channel resume API.
@@ -649,7 +375,7 @@ int32_t Udma_chPause(Udma_ChHandle chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chResume(Udma_ChHandle chHandle);
+int32_t Udma_chResume(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the channel number offset with in a channel type - TX, RX
@@ -663,7 +389,7 @@ int32_t Udma_chResume(Udma_ChHandle chHandle);
  *
  *  \return Channel number. Returns #UDMA_DMA_CH_INVALID for error.
  */
-uint32_t Udma_chGetNum(Udma_ChHandle chHandle);
+uint32_t Udma_chGetNum(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the default free ring handle of the channel.
@@ -673,7 +399,7 @@ uint32_t Udma_chGetNum(Udma_ChHandle chHandle);
  *
  *  \return Free ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle);
+Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the default completion ring handle of the channel.
@@ -683,7 +409,7 @@ Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle);
  *
  *  \return Completion ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle);
+Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the teardown completion ring handle of the channel.
@@ -693,7 +419,7 @@ Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle);
  *
  *  \return Teardown completion ring handle. Returns NULL for error.
  */
-Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandle chHandle);
+Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the default free ring number to be programmed
@@ -704,7 +430,7 @@ Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandle chHandle);
  *
  *  \return Free ring number. Returns #UDMA_RING_INVALID for error.
  */
-uint16_t Udma_chGetFqRingNum(Udma_ChHandle chHandle);
+uint16_t Udma_chGetFqRingNum(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the default completion ring number to be programmed in
@@ -717,7 +443,7 @@ uint16_t Udma_chGetFqRingNum(Udma_ChHandle chHandle);
  *
  *  \return Completion ring number. Returns #UDMA_RING_INVALID for error.
  */
-uint16_t Udma_chGetCqRingNum(Udma_ChHandle chHandle);
+uint16_t Udma_chGetCqRingNum(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the default flow handle of the RX channel.
@@ -727,7 +453,7 @@ uint16_t Udma_chGetCqRingNum(Udma_ChHandle chHandle);
  *
  *  \return Default flow handle. Returns NULL for error.
  */
-Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandle chHandle);
+Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Returns the global trigger event for the channel
@@ -745,7 +471,7 @@ Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandle chHandle);
  *
  *  \return Global trigger event
  */
-uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger);
+uint32_t Udma_chGetTriggerEvent(Udma_ChHandleInt chHandle, uint32_t trigger);
 
 /**
  *  \brief Returns the software trigger register address for the channel
@@ -766,7 +492,7 @@ uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger);
  *
  *  \return SW trigger register address
  */
-uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle);
+uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandleInt chHandle);
 
 /**
  *  \brief Sets the software trigger register based on the trigger mode
@@ -790,7 +516,7 @@ uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chSetSwTrigger(Udma_ChHandle chHandle, uint32_t trigger);
+int32_t Udma_chSetSwTrigger(Udma_ChHandleInt chHandle, uint32_t trigger);
 
 /**
  *  \brief Chains the trigger channel with the chained channel.
@@ -814,8 +540,8 @@ int32_t Udma_chSetSwTrigger(Udma_ChHandle chHandle, uint32_t trigger);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chSetChaining(Udma_ChHandle triggerChHandle,
-                           Udma_ChHandle chainedChHandle,
+int32_t Udma_chSetChaining(Udma_ChHandleInt triggerChHandle,
+                           Udma_ChHandleInt chainedChHandle,
                            uint32_t trigger);
 
 /**
@@ -830,8 +556,8 @@ int32_t Udma_chSetChaining(Udma_ChHandle triggerChHandle,
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chBreakChaining(Udma_ChHandle triggerChHandle,
-                             Udma_ChHandle chainedChHandle);
+int32_t Udma_chBreakChaining(Udma_ChHandleInt triggerChHandle,
+                             Udma_ChHandleInt chainedChHandle);
 
 /*
  * Structure Init functions
@@ -883,7 +609,7 @@ void UdmaChPdmaPrms_init(Udma_ChPdmaPrms *pdmaPrms);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_chGetStats(Udma_ChHandle chHandle, Udma_ChStats *chStats);
+int32_t Udma_chGetStats(Udma_ChHandleInt chHandle, Udma_ChStats *chStats);
 
 /**
  *  \brief Get real-time peer data which contains number of bytes written.
@@ -894,7 +620,7 @@ int32_t Udma_chGetStats(Udma_ChHandle chHandle, Udma_ChStats *chStats);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_getPeerData(Udma_ChHandle chHandle, uint32_t *peerData);
+int32_t Udma_getPeerData(Udma_ChHandleInt chHandle, uint32_t *peerData);
 
 /**
  *  \brief Clear real-time peer data which contains number of bytes written.
@@ -905,7 +631,7 @@ int32_t Udma_getPeerData(Udma_ChHandle chHandle, uint32_t *peerData);
  *
  *  \return \ref Udma_ErrorCodes
  */
-int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData);
+int32_t Udma_clearPeerData(Udma_ChHandleInt chHandle, uint32_t peerData);
 
 #if (UDMA_SOC_CFG_RA_NORMAL_PRESENT == 1)
 /**
@@ -924,7 +650,7 @@ int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData);
  *
  *  \return Global trigger event
  */
-int32_t Udma_chDequeueTdResponse(Udma_ChHandle chHandle,
+int32_t Udma_chDequeueTdResponse(Udma_ChHandleInt chHandle,
                                  CSL_UdmapTdResponse *tdResponse);
 #endif
 /* ========================================================================== */

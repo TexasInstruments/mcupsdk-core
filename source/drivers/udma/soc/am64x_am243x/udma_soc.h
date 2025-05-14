@@ -195,6 +195,54 @@ extern "C" {
 /** @} */
 
 /**
+ *  \anchor Udma_RmMaxSize
+ *  Resource management related macros.
+ *
+ *  These values are based on an optimal value typically used for allocation
+ *  per core and not based on actual resources in a given SOC.
+ *
+ *  Note: Kept to be multiple of 32 to store as bit fields in uint32_t
+ *  @{
+ */
+#define UDMA_RM_MAX_BLK_COPY_CH             (32U)
+#define UDMA_RM_MAX_BLK_COPY_HC_CH          (32U)
+#define UDMA_RM_MAX_BLK_COPY_UHC_CH         (32U)
+#define UDMA_RM_MAX_TX_CH                   (256U)
+#define UDMA_RM_MAX_TX_HC_CH                (32U)
+#define UDMA_RM_MAX_TX_UHC_CH               (32U)
+#define UDMA_RM_MAX_RX_CH                   (256U)
+#define UDMA_RM_MAX_RX_HC_CH                (32U)
+#define UDMA_RM_MAX_RX_UHC_CH               (32U)
+#define UDMA_RM_MAX_MAPPED_TX_CH_PER_GROUP  (32U)
+#define UDMA_RM_MAX_MAPPED_RX_CH_PER_GROUP  (32U)
+#define UDMA_RM_MAX_MAPPED_RING_PER_GROUP   (64U)
+#define UDMA_RM_MAX_FREE_RING               (1024U)
+#define UDMA_RM_MAX_FREE_FLOW               (256U)
+#define UDMA_RM_MAX_GLOBAL_EVENT            (1024U)
+#define UDMA_RM_MAX_VINTR                   (512U)
+#define UDMA_RM_MAX_IR_INTR                 (128U)
+
+/* Array allocation macros */
+#define UDMA_RM_BLK_COPY_CH_ARR_SIZE        (UDMA_RM_MAX_BLK_COPY_CH >> 5U)
+#define UDMA_RM_BLK_COPY_HC_CH_ARR_SIZE     (UDMA_RM_MAX_BLK_COPY_HC_CH >> 5U)
+#define UDMA_RM_BLK_COPY_UHC_CH_ARR_SIZE    (UDMA_RM_MAX_BLK_COPY_UHC_CH >> 5U)
+#define UDMA_RM_TX_CH_ARR_SIZE              (UDMA_RM_MAX_TX_CH >> 5U)
+#define UDMA_RM_TX_HC_CH_ARR_SIZE           (UDMA_RM_MAX_TX_HC_CH >> 5U)
+#define UDMA_RM_TX_UHC_CH_ARR_SIZE          (UDMA_RM_MAX_TX_UHC_CH >> 5U)
+#define UDMA_RM_RX_CH_ARR_SIZE              (UDMA_RM_MAX_RX_CH >> 5U)
+#define UDMA_RM_RX_HC_CH_ARR_SIZE           (UDMA_RM_MAX_RX_HC_CH >> 5U)
+#define UDMA_RM_RX_UHC_CH_ARR_SIZE          (UDMA_RM_MAX_RX_UHC_CH >> 5U)
+#define UDMA_RM_MAPPED_TX_CH_ARR_SIZE       (UDMA_RM_MAX_MAPPED_TX_CH_PER_GROUP >> 5U)
+#define UDMA_RM_MAPPED_RX_CH_ARR_SIZE       (UDMA_RM_MAX_MAPPED_RX_CH_PER_GROUP >> 5U)
+#define UDMA_RM_MAPPED_RING_ARR_SIZE        (UDMA_RM_MAX_MAPPED_RING_PER_GROUP >> 5U)
+#define UDMA_RM_FREE_RING_ARR_SIZE          (UDMA_RM_MAX_FREE_RING >> 5U)
+#define UDMA_RM_FREE_FLOW_ARR_SIZE          (UDMA_RM_MAX_FREE_FLOW >> 5U)
+#define UDMA_RM_GLOBAL_EVENT_ARR_SIZE       (UDMA_RM_MAX_GLOBAL_EVENT >> 5U)
+#define UDMA_RM_VINTR_ARR_SIZE              (UDMA_RM_MAX_VINTR >> 5U)
+#define UDMA_RM_IR_INTR_ARR_SIZE            (UDMA_RM_MAX_IR_INTR >> 5U)
+/* @} */
+
+/**
  *  \anchor Udma_RmResId
  *  \name UDMA Resources ID
  *
