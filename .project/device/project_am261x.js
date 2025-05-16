@@ -348,7 +348,7 @@ const example_file_list = [
 	"test/board/ram/.project/project.js",
 	// "test/board/nand_flash/.project/project.js",
 	// "test/drivers/adc/.project/project.js",
-	// "test/drivers/boot/boot_testapp_mb/.project/project.js",
+	"test/drivers/boot/boot_testapp_mb/.project/project.js",
 	// "test/drivers/cmpss/.project/project.js",
 	// "test/drivers/dac/.project/project.js",
 	// "test/drivers/ecap/.project/project.js",
@@ -376,7 +376,7 @@ const example_file_list = [
 	"test/drivers/ospi/.project/project.js",
     "test/drivers/rti/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
-	// "test/drivers/soc/soc_r5f/.project/project.js",
+	"test/drivers/soc/soc_r5f/.project/project.js",
 	"test/drivers/uart/.project/project.js",
 	"test/kernel/dpl/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/.project/project.js",
@@ -447,6 +447,7 @@ const example_file_list = [
 	"test/security/crypto/test_dthe_aes_stream_state_test/.project/project.js",
 	"test/security/crypto/test_dthe_hmac_sha/.project/project.js",
 	"test/security/crypto/test_dthe_sha/.project/project.js",
+	"test/syscfg/syscfg_combo_1/.project/project.js",
 	"tools/flasher/jtag_uniflash/.project/project.js",
 ];
 

@@ -61,6 +61,8 @@
 
 #define OSPI_PSRAM_RD_CAPTURE_DELAY       8U
 
+static uint8_t gReadBuf[OSPI_FLASH_ATTACK_VECTOR_SIZE] = { 0U };
+
 static int32_t Psram_ospiOpen(Ram_Config *config);
 static int32_t Psram_ospiRead(Ram_Config *config, uint32_t ramOffset, uint8_t *pbuf, uint32_t pbufLen);
 static int32_t Psram_ospiWrite(Ram_Config *config, uint32_t ramOffset,uint8_t *pbuf, uint32_t pbufLen);
@@ -94,8 +96,6 @@ uint32_t gProtocolMap[] =
 static int32_t Psram_ospiOpen(Ram_Config *config)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t manfId = 0U;
-    uint32_t deviceId = 0U;
     uint8_t txDataMR0 = OSPI_PSRAM_MR0_DRIVE_STRENGTH + OSPI_PSRAM_MR0_READ_LATENCY_CODE + OSPI_PSRAM_MR0_LATENCY_TYPE;
     uint8_t txDataMR4 = OSPI_PSRAM_MR4_WLC_3;
     uint8_t txDataMR8 = OSPI_PSRAM_MR8_BT;
@@ -154,14 +154,27 @@ static int32_t Psram_ospiOpen(Ram_Config *config)
     {   
         uint8_t readCaptureDelay = 0U;
 
-        OSPI_setRdDataCaptureDelay(obj->ospiHandle, readCaptureDelay);
-        status = Psram_ospiReadId(config, &manfId, &deviceId);
+        status += Psram_ospiWrite(config, 0, gOspiFlashAttackVector, OSPI_FLASH_ATTACK_VECTOR_SIZE);
+        
+        if(status == SystemP_SUCCESS)
+        {
+            OSPI_setRdDataCaptureDelay(obj->ospiHandle, readCaptureDelay);
+            status = Psram_ospiRead(config, 0, gReadBuf, OSPI_FLASH_ATTACK_VECTOR_SIZE);
+            if(memcmp(gReadBuf, gOspiFlashAttackVector, OSPI_FLASH_ATTACK_VECTOR_SIZE)!=0)
+            {
+                status = SystemP_FAILURE;
+            }
+        }
 
-        while((status != SystemP_SUCCESS) && readCaptureDelay<=OSPI_PSRAM_RD_CAPTURE_DELAY)
+        while((status != SystemP_SUCCESS) && readCaptureDelay <= OSPI_PSRAM_RD_CAPTURE_DELAY)
         {
             readCaptureDelay++;
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readCaptureDelay);
-            status = Psram_ospiReadId(config, &manfId, &deviceId);
+            status = Psram_ospiRead(config, 0, gReadBuf, OSPI_FLASH_ATTACK_VECTOR_SIZE);
+            if(memcmp(gReadBuf, gOspiFlashAttackVector, OSPI_FLASH_ATTACK_VECTOR_SIZE)!=0)
+            {
+                status = SystemP_FAILURE;
+            }
         }
 
     }

@@ -486,6 +486,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/rl2/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1615,6 +1617,8 @@ BUILD_COMBO_EXAMPLE_ALL += rl2_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rl2_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -2996,6 +3000,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -4102,6 +4112,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += rl2_am261x-som_r5fss0-0_nortos_ti-arm-clang_cle
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rl2_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -5478,6 +5490,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -6584,6 +6602,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += rl2_am261x-som_r5fss0-0_nortos_ti-arm-clang_scr
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rl2_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -7959,6 +7979,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ rti_led_blink_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_led_blink_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

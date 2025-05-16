@@ -219,7 +219,7 @@ typedef struct Ram_Params_s {
 #include <board/ram/gpmc/psram_gpmc.h>
 #endif
 
-#if defined (DRV_VERSION_RAM_V0) && defined (DRV_VERSION_OSPI_V0)
+#if defined (DRV_VERSION_RAM_V0) && defined (DRV_VERSION_OSPI_V0) && defined (SOC_AM261X)
 #include <board/ram/ospi/psram_ospi.h>
 #endif
 
