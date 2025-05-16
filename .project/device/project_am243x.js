@@ -370,6 +370,7 @@ const example_file_list = [
     "test/syscfg/syscfg_combo_1/.project/project.js",
     "test/security/crypto/test_sa2ul_sha/.project/project.js",
     "test/security/crypto/test_sa2ul_aes/.project/project.js",
+    "test/security/crypto/test_sa2ul_aes_gcm/.project/project.js",
     "test/security/crypto/test_sa2ul_rng/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_signing_verification/.project/project.js",

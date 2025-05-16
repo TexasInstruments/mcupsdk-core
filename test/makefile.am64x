@@ -200,6 +200,7 @@ help:
 	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_aes_gcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -463,6 +464,7 @@ BUILD_COMBO_EXAMPLE_ALL += enet_test_cpsw_layer2_performance_am64x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_ALL += enet_test_cpsw_layer2_performance_am64x-sk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -974,6 +976,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_aes_gcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1190,6 +1195,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_test_cpsw_layer2_performance_am64x-evm_r5f
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_test_cpsw_layer2_performance_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1696,6 +1702,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_aes_gcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1912,6 +1921,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_test_cpsw_layer2_performance_am64x-evm_r5f
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_test_cpsw_layer2_performance_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2417,6 +2427,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sa2ul_aes_gcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_aes_gcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

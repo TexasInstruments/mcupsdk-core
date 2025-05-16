@@ -341,6 +341,7 @@ const example_file_list = [
     "source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",    "test/syscfg/syscfg_combo_1/.project/project.js",
     "test/security/crypto/test_sa2ul_sha/.project/project.js",
     "test/security/crypto/test_sa2ul_aes/.project/project.js",
+    "test/security/crypto/test_sa2ul_aes_gcm/.project/project.js",
     "test/security/crypto/test_sa2ul_rng/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_signing_verification/.project/project.js",
