@@ -71,14 +71,6 @@ void loop_forever(void)
         ;
 }
 
-/*
-    This example:
-    1. writes data to flash at 18MB offset.
-    2. remaps address from 16MB and above to 0MB and above.
-    3. reads back the data from 2MB offset.
-    4. checks if data that is read back is correct or not.
-*/
-
 uint32_t FLSOPSKD_usrGetTicks()
 {
     /* in syscfg, 1 tick is config as 1ms */
