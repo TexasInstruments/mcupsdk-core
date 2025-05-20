@@ -102,12 +102,13 @@ void switch_b_img_main(void *args)
     DebugP_log("Receiving application... \r\n");
 
     /*
-        new applciation can be recieved over any interface like ethernet, CAN, etc.
-        Entire appication will never be recieved at once and will be recieved in chunks.
-        Following code emulates such case.
+        new application can be received over any interface like Ethernet, CAN, etc.
+        The entire application will never be received at once, and will be received in chunks.
+        The following code emulates such a case.
 
         Usually, 2 different files are expected to be received on the interface, viz. mcelf and
-        mcelf_xip and each one is required to be handled separately.
+        mcelf_xip, and each one must be handled separately.
+
     */
 
     /* Step 1: Handle mcelf file */
@@ -117,7 +118,7 @@ void switch_b_img_main(void *args)
     for (uint32_t cnt = 0; cnt < MCELF_FILE_LEN; cnt++)
     {
         /*
-            as and when a byte is being recv, it is being sent to agent which will handle
+            as and when a byte is being received, it is being sent to agent, which will handle
             all the intricacies.
         */
         uint8_t byte = mcelf_file[cnt];
@@ -133,7 +134,7 @@ void switch_b_img_main(void *args)
     for (uint32_t cnt = 0; cnt < MCELFXIP_FILE_LEN; cnt++)
     {
         /*
-            as and when a byte is being recv, it is being sent to agent which will handle
+            as and when a byte is being received, it is being sent to agent, which will handle
             all the intricacies.
         */
         uint8_t byte = mcelfxip_file[cnt];
