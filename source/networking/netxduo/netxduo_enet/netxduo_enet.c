@@ -73,25 +73,23 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define NX_DRIVER_DEFERRED_PACKET_RECEIVED    (1U)
-#define NX_DRIVER_DEFERRED_DEVICE_RESET       (2U)
-#define NX_DRIVER_DEFERRED_PACKET_TRANSMITTED (4U)
+#define NX_DRIVER_DEFERRED_PACKET_RECEIVED            (1U)
+#define NX_DRIVER_DEFERRED_DEVICE_RESET               (2U)
+#define NX_DRIVER_DEFERRED_PACKET_TRANSMITTED         (4U)
 
-#define NX_DRIVER_ETHERNET_IP     (0x0800U)
-#define NX_DRIVER_ETHERNET_IPV6   (0x86ddU)
-#define NX_DRIVER_ETHERNET_ARP    (0x0806U)
-#define NX_DRIVER_ETHERNET_RARP   (0x8035U)
+#define NX_DRIVER_ETHERNET_IP                    (0x0800U)
+#define NX_DRIVER_ETHERNET_IPV6                  (0x86ddU)
+#define NX_DRIVER_ETHERNET_ARP                   (0x0806U)
+#define NX_DRIVER_ETHERNET_RARP                  (0x8035U)
 
-#define NX_DRIVER_ETHERNET_MTU           (1514U)
-#define NX_DRIVER_ETHERNET_FRAME_SIZE    (14U)
-#define NX_DRIVER_PHYSICAL_ADDRESS_SIZE  (6U)
+#define NX_DRIVER_ETHERNET_MTU                     (1514U)
+#define NX_DRIVER_ETHERNET_FRAME_SIZE                (14U)
+#define NX_DRIVER_PHYSICAL_ADDRESS_SIZE               (6U)
 
-#define NX_DRIVER_MAX_RX_CHANNELS        (8u)
-#define NX_DRIVER_MAX_TX_CHANNELS        (8u)
+#define NX_DRIVER_MAX_RX_CHANNELS                     (8u)
+#define NX_DRIVER_MAX_TX_CHANNELS                     (8u)
 
-#define NX_DRIVER_MAX_INTERFACE_COUNT    (2u)
-
-#define NX_DRIVER_PACKET_SIZE            ENET_UTILS_ALIGN(1536U, ENETDMA_CACHELINE_ALIGNMENT)
+#define NX_DRIVER_MAX_INTERFACE_COUNT                 (2u)
 
 
 /* ========================================================================== */
@@ -168,16 +166,18 @@ static void nx_enet_drv_link_enable(NX_IP_DRIVER *driver_req_ptr);
 static void nx_enet_drv_link_disable(NX_IP_DRIVER *driver_req_ptr);
 
 
+
 /* ========================================================================== */
 /*                            Function Definitions                            */
 /* ========================================================================== */
 
-void NetxEnetDriver_allocRxCh(EnetDma_RxChHandle hRxCh, uint32_t numPkts, nx_enet_drv_rx_ch_hndl_t *pRxChHandle)
+void NetxEnetDriver_allocRxCh(EnetDma_RxChHandle hRxCh, uint32_t numPkts, NX_PACKET_POOL *pRxPacketPool, nx_enet_drv_rx_ch_hndl_t *pRxChHandle)
 {
     nx_enet_drv_rx_ch_t *pRxCh;
-    EnetDma_Pkt *pPkt;
+    EnetDma_Pkt *pDmaPkt;
     EnetQ submit_queue;
-    uint32_t t_seg_sizes[] = { NX_DRIVER_PACKET_SIZE };
+    NX_PACKET *pNxPacket;
+    UINT status;
     int32_t ret;
 
      pRxCh = &g_nx_enet_drv_data.t_rx_ch[g_nx_enet_drv_data.rx_ch_cnt];
@@ -196,10 +196,23 @@ void NetxEnetDriver_allocRxCh(EnetDma_RxChHandle hRxCh, uint32_t numPkts, nx_ene
      /* Allocate netx receive packets and corresponding DMA descriptors. */
      for(size_t k = 0u; k < numPkts; k++) {
 
-         pPkt = EnetMem_allocEthPkt(NULL, sizeof(ULONG), 1u, t_seg_sizes);
-         DebugP_assert(pPkt != NULL);
+         pDmaPkt = EnetMem_allocEthPktInfoMem(NULL, sizeof(ULONG));
+         DebugP_assert(pDmaPkt != NULL);
 
-         EnetQueue_enq(&submit_queue, &pPkt->node);
+         status = nx_packet_allocate(pRxPacketPool, &pNxPacket, NX_RECEIVE_PACKET, NX_NO_WAIT);
+         DebugP_assert(status == NX_SUCCESS);
+
+         pDmaPkt->appPriv = (void *)pNxPacket;
+         pDmaPkt->sgList.numScatterSegments = 1u;
+         pDmaPkt->sgList.list[0].disableCacheOps = false;
+         pDmaPkt->sgList.list[0].bufPtr = pNxPacket->nx_packet_data_start + 2u;  /* Align buffer start so that TCP and IP headers are properly aligned. */
+         pDmaPkt->sgList.list[0].segmentAllocLen = pNxPacket->nx_packet_data_end - (pNxPacket->nx_packet_data_start + 2u);
+         pDmaPkt->sgList.list[0].segmentFilledLen = 0u;
+
+         pDmaPkt->node.next  = NULL;
+         pDmaPkt->chkSumInfo = 0u;
+
+         EnetQueue_enq(&submit_queue, &pDmaPkt->node);
      }
 
      ret = EnetDma_submitRxPktQ(hRxCh, &submit_queue);
@@ -215,8 +228,7 @@ void NetxEnetDriver_allocRxCh(EnetDma_RxChHandle hRxCh, uint32_t numPkts, nx_ene
 void NetxEnetDriver_allocTxCh(EnetDma_TxChHandle hTxCh, uint32_t numPkts, nx_enet_drv_tx_ch_hndl_t *pTxChHandle)
 {
     nx_enet_drv_tx_ch_t *pTxCh;
-    EnetDma_Pkt *p_pkt;
-    uint32_t t_seg_sizes[] = { NX_DRIVER_PACKET_SIZE };
+    EnetDma_Pkt *pPkt;
     int32_t ret;
 
 
@@ -233,10 +245,10 @@ void NetxEnetDriver_allocTxCh(EnetDma_TxChHandle hTxCh, uint32_t numPkts, nx_ene
     /* Fill the free TX packet queue. */
     for (size_t k = 0u; k < numPkts; k++) {
 
-        p_pkt = EnetMem_allocEthPkt(NULL, sizeof(ULONG), 1u, t_seg_sizes);
-        DebugP_assert(p_pkt != NULL);
+        pPkt = EnetMem_allocEthPktInfoMem(NULL, sizeof(ULONG));
+        DebugP_assert(pPkt != NULL);
 
-        EnetQueue_enq(&pTxCh->freePktQ, &p_pkt->node);
+        EnetQueue_enq(&pTxCh->freePktQ, &pPkt->node);
     }
 
     ret = EnetDma_enableTxEvent(pTxCh->hTxCh);
@@ -395,56 +407,53 @@ static void nx_enet_drv_interface_attach(NX_IP_DRIVER *driver_req_ptr)
 }
 
 
-
 static void nx_enet_drv_packet_send(NX_IP_DRIVER *driver_req_ptr)
 {
-    EnetDma_Pkt *p_pkt;
-    NX_PACKET *p_nx_packet;
+    EnetDma_Pkt *p_dma_pkt;
+    EnetDma_PktQ submit_queue;
+    NX_PACKET *p_cur_nx_pkt;
     nx_enet_drv_if_data_t *p_if_data;
-    EnetQ submit_queue;
     ULONG *p_frame;
-    UINT status;
     int32_t ret;
 
 
     driver_req_ptr->nx_ip_driver_status =  NX_SUCCESS;
 
-    /* Place the Ethernet frame at the front of the packet. */
-    p_nx_packet = driver_req_ptr->nx_ip_driver_packet;
+    /* Initialize submit queue. */
+    EnetQueue_initQ(&submit_queue);
 
-    /* Adjust the prepend pointer and packet length. */
-    p_nx_packet->nx_packet_prepend_ptr = p_nx_packet->nx_packet_prepend_ptr - NX_DRIVER_ETHERNET_FRAME_SIZE;
 
-    p_nx_packet->nx_packet_length = p_nx_packet->nx_packet_length + NX_DRIVER_ETHERNET_FRAME_SIZE;
+    /* Send each packet in the packet chain. */
+
+    p_cur_nx_pkt = driver_req_ptr->nx_ip_driver_packet;
+
+    if (p_cur_nx_pkt->nx_packet_length != p_cur_nx_pkt->nx_packet_append_ptr - p_cur_nx_pkt->nx_packet_prepend_ptr) {
+        DebugP_log("PACKET LENGTH MISMATCH.\n");
+    }
 
     /* Setup the Ethernet frame pointer to build the Ethernet frame. */
-    p_frame = (ULONG *) (p_nx_packet->nx_packet_prepend_ptr - 2);
+    p_frame = (ULONG *)(p_cur_nx_pkt->nx_packet_prepend_ptr - NX_DRIVER_ETHERNET_FRAME_SIZE - 2);
 
     /* Write the hardware addresses in the Ethernet header. */
     *p_frame = driver_req_ptr->nx_ip_driver_physical_address_msw;
     *(p_frame + 1) = driver_req_ptr->nx_ip_driver_physical_address_lsw;
 
-    *(p_frame + 2) = (driver_req_ptr->nx_ip_driver_interface->nx_interface_physical_address_msw << 16) |
-        (driver_req_ptr->nx_ip_driver_interface->nx_interface_physical_address_lsw >> 16);
+    *(p_frame + 2) = (driver_req_ptr->nx_ip_driver_interface->nx_interface_physical_address_msw << 16) | (driver_req_ptr->nx_ip_driver_interface->nx_interface_physical_address_lsw >> 16);
     *(p_frame + 3) = (driver_req_ptr->nx_ip_driver_interface->nx_interface_physical_address_lsw << 16);
 
+
     /* Write the frame type field in the Ethernet harder. */
-    if((driver_req_ptr->nx_ip_driver_command == NX_LINK_ARP_SEND) || (driver_req_ptr->nx_ip_driver_command == NX_LINK_ARP_RESPONSE_SEND))
-    {
+    if ((driver_req_ptr->nx_ip_driver_command == NX_LINK_ARP_SEND) || (driver_req_ptr->nx_ip_driver_command == NX_LINK_ARP_RESPONSE_SEND)) {
         *(p_frame + 3) |= NX_DRIVER_ETHERNET_ARP;
-    }
-    else if(driver_req_ptr->nx_ip_driver_command == NX_LINK_RARP_SEND)
-    {
+    } else if(driver_req_ptr->nx_ip_driver_command == NX_LINK_RARP_SEND) {
         *(p_frame + 3) |= NX_DRIVER_ETHERNET_RARP;
     }
 #ifdef FEATURE_NX_IPV6
-    else if(p_nx_packet->nx_packet_ip_version == NX_IP_VERSION_V6)
-    {
+    else if (p_cur_nx_pkt->nx_packet_ip_version == NX_IP_VERSION_V6) {
         *(p_frame + 3) |= NX_DRIVER_ETHERNET_IPV6;
     }
 #endif
-    else
-    {
+    else {
         *(p_frame + 3) |= NX_DRIVER_ETHERNET_IP;
     }
 
@@ -455,66 +464,55 @@ static void nx_enet_drv_packet_send(NX_IP_DRIVER *driver_req_ptr)
     NX_CHANGE_ULONG_ENDIAN(*(p_frame + 3));
 
     /* Determine if the packet exceeds the driver's MTU. */
-    if(p_nx_packet->nx_packet_length > NX_DRIVER_ETHERNET_MTU) {
-
-        /* Remove the Ethernet header. */
-        p_nx_packet->nx_packet_prepend_ptr += NX_DRIVER_ETHERNET_FRAME_SIZE;
-        p_nx_packet->nx_packet_length -= NX_DRIVER_ETHERNET_FRAME_SIZE;
+    if (p_cur_nx_pkt->nx_packet_length + NX_DRIVER_ETHERNET_FRAME_SIZE > NX_DRIVER_ETHERNET_MTU) {
 
         /* Indicate an unsuccessful packet send. */
-        driver_req_ptr->nx_ip_driver_status =  NX_DRIVER_ERROR;
-
-        status = nx_packet_transmit_release(p_nx_packet);
-        DebugP_assert(status == NX_SUCCESS);
+        driver_req_ptr->nx_ip_driver_status = NX_DRIVER_ERROR;
         return;
     }
 
+    /* Get interface data from NetX ip instance. */
     p_if_data = nx_enet_drv_if_data_get(driver_req_ptr->nx_ip_driver_interface);
     DebugP_assert(p_if_data != NULL);
 
 
-    p_pkt = (EnetDma_Pkt *)EnetQueue_deq(&p_if_data->t_tx_ch[0]->freePktQ);
-    DebugP_assert(p_pkt != NULL);
+    /* Get and set a DMA packet for transmission. */
+    p_dma_pkt = (EnetDma_Pkt *)EnetQueue_deq(&p_if_data->t_tx_ch[0]->freePktQ);
+    DebugP_assert(p_dma_pkt != NULL);
+
+    p_dma_pkt->sgList.numScatterSegments = 1;
+    p_dma_pkt->sgList.list[0].bufPtr = ((uint8_t *)p_frame) + 2u;
+    p_dma_pkt->sgList.list[0].disableCacheOps = false;
+    p_dma_pkt->sgList.list[0].segmentAllocLen = p_cur_nx_pkt->nx_packet_length + NX_DRIVER_ETHERNET_FRAME_SIZE;
+    p_dma_pkt->sgList.list[0].segmentFilledLen = p_cur_nx_pkt->nx_packet_length + NX_DRIVER_ETHERNET_FRAME_SIZE;
+
+    p_dma_pkt->appPriv = (void *)p_cur_nx_pkt;
+    p_dma_pkt->txPortNum = ENET_MAC_PORT_INV;
+    p_dma_pkt->node.next = NULL;
+    p_dma_pkt->chkSumInfo = 0u;
+
+    /* Append the dma descriptor to the submit queue. */
+    EnetQueue_enq(&submit_queue, &p_dma_pkt->node);
 
 
-    p_pkt->sgList.numScatterSegments = 1;
-    memcpy(p_pkt->sgList.list[0].bufPtr, p_nx_packet->nx_packet_prepend_ptr, p_nx_packet->nx_packet_length);
-    p_pkt->sgList.list[0].disableCacheOps = false;
-    p_pkt->sgList.list[0].segmentAllocLen = p_nx_packet->nx_packet_length;
-    p_pkt->sgList.list[0].segmentFilledLen = p_nx_packet->nx_packet_length;
 
-    p_pkt->appPriv    = (void *)p_nx_packet;
-    p_pkt->txPortNum  = ENET_MAC_PORT_INV;
-    p_pkt->node.next  = NULL;
-    p_pkt->chkSumInfo = 0u;
-
-
-    EnetQueue_initQ(&submit_queue);
-    EnetQueue_enq(&submit_queue, &p_pkt->node);
-
-
-    ret = EnetDma_submitTxPktQ(p_if_data->t_tx_ch[0]->hTxCh, &submit_queue);
-    if (ret != ENET_SOK) {
-
-        /* Remove the Ethernet header. */
-        p_nx_packet->nx_packet_prepend_ptr += NX_DRIVER_ETHERNET_FRAME_SIZE;
-        p_nx_packet->nx_packet_length -= NX_DRIVER_ETHERNET_FRAME_SIZE;
-
-        /* Indicate an unsuccessful packet send. */
-        driver_req_ptr->nx_ip_driver_status = NX_DRIVER_ERROR;
-
-        /* Release the packet. */
-        status = nx_packet_transmit_release(p_nx_packet);
-        DebugP_assert(status == NX_SUCCESS);
+    /* If no error, send queued dma packets. */
+    if (driver_req_ptr->nx_ip_driver_status == NX_SUCCESS) {
+        ret = EnetDma_submitTxPktQ(p_if_data->t_tx_ch[0]->hTxCh, &submit_queue);
+        if (ret != ENET_SOK) {
+            driver_req_ptr->nx_ip_driver_status = NX_DRIVER_ERROR;
+        }
     }
+
+    return;
 }
 
 
 static void nx_enet_drv_packet_transmitted(NX_IP_DRIVER *driver_req_ptr)
 {
     nx_enet_drv_if_data_t *p_if_data;
-    EnetDma_Pkt *p_cur_pkt;
-    NX_PACKET *p_nx_packet;
+    EnetDma_Pkt *p_dma_pkt;
+    NX_PACKET *p_nx_pkt;
     EnetDma_PktQ retrieved_queue;
     int32_t ret;
 
@@ -529,24 +527,24 @@ static void nx_enet_drv_packet_transmitted(NX_IP_DRIVER *driver_req_ptr)
         DebugP_log("nx_enet_drv_packet_transmitted: Failed to retrieve TX pkts: %d\n", ret);
     }
 
-    p_cur_pkt = (EnetDma_Pkt *)EnetQueue_deq(&retrieved_queue);
+    /* Get the first transmitted packet. */
+    p_dma_pkt = (EnetDma_Pkt *)EnetQueue_deq(&retrieved_queue);
 
-    while (p_cur_pkt != NULL) {
+    while (p_dma_pkt != NULL) {
 
-        p_nx_packet = (NX_PACKET *)p_cur_pkt->appPriv;
-        DebugP_assert(p_nx_packet != NULL);
+        /* Get NetX packet from DMA packet. */
+        p_nx_pkt = (NX_PACKET *)p_dma_pkt->appPriv;
+        DebugP_assert(p_nx_pkt != NULL);
 
 
-        /* Remove the Ethernet header. */
-        p_nx_packet->nx_packet_prepend_ptr += NX_DRIVER_ETHERNET_FRAME_SIZE;
-        p_nx_packet->nx_packet_length -= NX_DRIVER_ETHERNET_FRAME_SIZE;
+        /* Release the transmitted NetX packet and return DMA packet to the free queue. */
+        nx_packet_transmit_release(p_nx_pkt);
 
-        nx_packet_transmit_release(p_nx_packet);
+        EnetQueue_enq(&p_if_data->t_tx_ch[0]->freePktQ, &p_dma_pkt->node);
 
-        /* Return packet info to free pool */
-        EnetQueue_enq(&p_if_data->t_tx_ch[0]->freePktQ, &p_cur_pkt->node);
 
-        p_cur_pkt = (EnetDma_Pkt *)EnetQueue_deq(&retrieved_queue);
+        /* Get the next transmitted packet. */
+        p_dma_pkt = (EnetDma_Pkt *)EnetQueue_deq(&retrieved_queue);
     }
 }
 
@@ -586,7 +584,8 @@ static void nx_enet_drv_deferred_processing(NX_IP_DRIVER *driver_req_ptr)
 static void nx_enet_drv_packet_received(NX_IP_DRIVER *driver_req_ptr)
 {
     nx_enet_drv_if_data_t *p_if_data;
-    NX_PACKET *p_nx_packet;
+    NX_PACKET *p_received_nx_packet;
+    NX_PACKET *p_new_nx_packet;
     EnetDma_Pkt *p_cur_pkt;
     EnetDma_PktQ submit_queue;
     EnetDma_PktQ retrieved_queue;
@@ -638,11 +637,11 @@ static void nx_enet_drv_packet_received(NX_IP_DRIVER *driver_req_ptr)
 
             EnetDma_checkPktState(&p_cur_pkt->pktState, ENET_PKTSTATE_MODULE_APP, ENET_PKTSTATE_APP_WITH_DRIVER, ENET_PKTSTATE_APP_WITH_FREEQ);
 
-            status = nx_packet_allocate(p_if_data->netx_packet_pool_ptr, &p_nx_packet, NX_RECEIVE_PACKET, NX_NO_WAIT);
-            if(status != NX_SUCCESS) {
+            status = nx_packet_allocate(p_if_data->netx_packet_pool_ptr, &p_new_nx_packet, NX_RECEIVE_PACKET, NX_NO_WAIT);
+            if (status != NX_SUCCESS) {
                 if(status == NX_NO_PACKET) {
                     /* No packet buffer available. Reset desc and exit. */
-                    EnetQueue_enq(&submit_queue, &p_cur_pkt->node);
+                    EnetQueue_enq(&skip_queue, &p_cur_pkt->node);
                     break;
                 } else {
                     /* Unexpected error return. */
@@ -652,13 +651,28 @@ static void nx_enet_drv_packet_received(NX_IP_DRIVER *driver_req_ptr)
                 }
             }
 
-            p_nx_packet->nx_packet_length = p_cur_pkt->sgList.list[0].segmentFilledLen;
-            p_nx_packet->nx_packet_prepend_ptr += 2u;
-            p_nx_packet->nx_packet_append_ptr = p_nx_packet->nx_packet_prepend_ptr + p_nx_packet->nx_packet_length;
-            memcpy(p_nx_packet->nx_packet_prepend_ptr, p_cur_pkt->sgList.list[0].bufPtr, p_cur_pkt->sgList.list[0].segmentFilledLen);
-            nx_enet_drv_transfer_to_netx(p_if_data, p_nx_packet);
+            /* Save a pointer to the received NetX packet for later. */
+            p_received_nx_packet = (NX_PACKET *)p_cur_pkt->appPriv;
+            DebugP_assert(p_cur_pkt->sgList.list[0].bufPtr == p_received_nx_packet->nx_packet_data_start + 2u);
+
+            p_received_nx_packet->nx_packet_length = p_cur_pkt->sgList.list[0].segmentFilledLen;
+            p_received_nx_packet->nx_packet_prepend_ptr = p_cur_pkt->sgList.list[0].bufPtr;
+            p_received_nx_packet->nx_packet_append_ptr = p_cur_pkt->sgList.list[0].bufPtr + p_cur_pkt->sgList.list[0].segmentFilledLen;
+
+
+            p_cur_pkt->appPriv = (void *)p_new_nx_packet;
+            p_cur_pkt->sgList.numScatterSegments = 1u;
+            p_cur_pkt->sgList.list[0].bufPtr = p_new_nx_packet->nx_packet_data_start + 2u; /* Align buffer start so that TCP and IP headers are properly aligned. */
+            p_cur_pkt->sgList.list[0].segmentAllocLen = p_new_nx_packet->nx_packet_data_end - (p_new_nx_packet->nx_packet_data_start + 2u);
+            p_cur_pkt->sgList.list[0].segmentFilledLen = 0u;
+
+            p_cur_pkt->node.next  = NULL;
+            p_cur_pkt->chkSumInfo = 0u;
 
             EnetQueue_enq(&submit_queue, &p_cur_pkt->node);
+
+            nx_enet_drv_transfer_to_netx(p_if_data, p_received_nx_packet);
+
             p_cur_pkt = (EnetDma_Pkt *)EnetQueue_deq(&g_nx_enet_drv_data.t_rx_ch[ch_ix].rxPktQ);
         }
 
@@ -784,10 +798,12 @@ static nx_enet_drv_if_data_t *nx_enet_drv_if_data_get(NX_INTERFACE *interface_pt
     return (NULL);
 }
 
+
 static void nx_enet_drv_link_enable(NX_IP_DRIVER *driver_req_ptr)
 {
     driver_req_ptr->nx_ip_driver_interface->nx_interface_link_up = true;
 }
+
 
 static void nx_enet_drv_link_disable(NX_IP_DRIVER *driver_req_ptr)
 {

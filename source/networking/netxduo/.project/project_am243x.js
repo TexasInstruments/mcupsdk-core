@@ -4,6 +4,7 @@ let nx_core = require("./nx_core.js");
 let nx_addons = require("./nx_addons.js");
 let nx_secure = require("./nx_secure.js");
 let nx_crypto = require("./nx_crypto.js");
+let nx_crypto_sa2ul = require("./nx_crypto_sa2ul.js");
 
 let device = "am243x";
 
@@ -23,7 +24,13 @@ const files = {
         ...nx_addons.files,
 
         // crypto
-        ...nx_crypto.files
+        ...nx_crypto.files,
+
+        // crypto sa2ul
+        ...nx_crypto_sa2ul.files,
+
+        // iperf
+        "nx_iperf.c",
     ],
 };
 
@@ -43,6 +50,12 @@ const filedirs = {
 
         // crypto
         ...nx_crypto.file_dirs,
+
+        // crypto sa2ul
+        ...nx_crypto_sa2ul.file_dirs,
+
+        // iperf
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/utility/iperf",
     ],
 };
 
@@ -79,6 +92,12 @@ const includes = {
 
         // addons
         ...nx_addons.includes,
+
+        // crypto sa2ul
+        ...nx_crypto_sa2ul.includes,
+
+        // iperf
+        "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/utility/iperf",
     ],
 };
 

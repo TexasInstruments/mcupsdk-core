@@ -5,16 +5,6 @@ files = [
     // auto-ip
     "nx_auto_ip.c",
 
-    // azure-iot
-    // "nx_azure_iot.c",
-    // "nx_azure_iot_adu_agent.c",
-    // "nx_azure_iot_adu_root_key.c",
-    // "nx_azure_iot_hub_client.c",
-    // "nx_azure_iot_hub_client_properties.c",
-    // "nx_azure_iot_json_reader.c", 
-    // "nx_azure_iot_json_writer.c",
-    // "nx_azure_iot_provisioning_client.c",
-
     // BSD
     "nxd_bsd.c",
 
@@ -98,7 +88,6 @@ files = [
 
 file_dirs = [
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip",
-    "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp",
@@ -125,7 +114,6 @@ file_dirs = [
 
 includes = [
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip",
-    "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp",
@@ -148,7 +136,6 @@ includes = [
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/tftp",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/web",
     "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/websocket",
-    "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot/azure-sdk-for-c/sdk/inc",
 ];
 
 module.exports = {
