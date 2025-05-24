@@ -37,7 +37,13 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_HTTPS_SERVER
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_SA2UL_TLS_BENCHMARK
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_AZURE_IOT
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_IPERF
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_GPTP
 \endcond
+
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 ### Enet TSN Examples on FreeRTOS

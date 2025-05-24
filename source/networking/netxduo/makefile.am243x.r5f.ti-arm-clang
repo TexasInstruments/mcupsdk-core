@@ -922,12 +922,17 @@ FILES_common := \
     nx_crypto_tls_prf_1.c \
     nx_crypto_ctr.c \
     nx_crypto_hmac_sha1.c \
+    nx_crypto_sa2ul.c \
+    nx_crypto_sa2ul_aes.c \
+    nx_crypto_sa2ul_ecdsa.c \
+    nx_crypto_sa2ul_rsa.c \
+    nx_crypto_sa2ul_util.c \
+    nx_iperf.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/src \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip \
-    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp \
@@ -952,6 +957,8 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/websocket \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/src \
     ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/crypto_libraries/src \
+    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet/crypto_hw/sa2ul \
+    ${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/utility/iperf \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -975,7 +982,6 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/nx_secure/ports \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/crypto_libraries/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/auto_ip \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/BSD \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/cloud \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/dhcp \
@@ -998,7 +1004,8 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/tftp \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/web \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/websocket \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/addons/azure_iot/azure-sdk-for-c/sdk/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/security \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/utility/iperf \
 
 DEFINES_common := \
     -DSOC_AM243X \

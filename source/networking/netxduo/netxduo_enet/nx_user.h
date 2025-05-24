@@ -60,6 +60,9 @@
 #ifndef NX_USER_H
 #define NX_USER_H
 
+/* Include dma header for cache alignement (see NX_PACKET_ALIGNMENT below). */
+#include <dma/udma/enet_udma.h>
+
 
 /* Define various build options for the NetX Duo port.  The application should either make changes
    here by commenting or un-commenting the conditional compilation defined OR supply the defines
@@ -95,13 +98,8 @@
 
 /* This defines specifies the number of ThreadX timer ticks in one second. The default value is based
    on ThreadX timer interrupt.  */
-/*
-#ifdef TX_TIMER_TICKS_PER_SECOND
 #define NX_IP_PERIODIC_RATE         TX_TIMER_TICKS_PER_SECOND
-#else
-#define NX_IP_PERIODIC_RATE         100
-#endif
-*/
+
 
 /* Defined, NX_ENABLE_IP_RAW_PACKET_FILTER allows an application to install a filter
    for incoming raw packets. This feature is disabled by default. */
@@ -141,9 +139,8 @@
 /* Configuration options for IPv6 */
 
 /* Disable IPv6 processing in NetX Duo.  */
-/*
+
 #define NX_DISABLE_IPV6
-*/
 
 /* Define the number of entries in IPv6 address pool. */
 /*
@@ -693,9 +690,9 @@
 */
 
 /* Defined, packet header and payload are aligned automatically by the value. The default value is sizeof(ULONG). */
-/*
-#define NX_PACKET_ALIGNMENT sizeof(ULONG)
-*/
+
+#define NX_PACKET_ALIGNMENT      ENETDMA_CACHELINE_ALIGNMENT
+
 
 /* If defined, the packet chain feature is removed. */
 /*
@@ -742,6 +739,16 @@
 
 /* Enable BSD native API*/
 #define NX_BSD_ENABLE_NATIVE_API
+
+/* Enable HTTPS */
+#define NX_WEB_HTTPS_ENABLE
+
+/* Allow self-signed certificates for testing purposes. */
+#define NX_SECURE_ALLOW_SELF_SIGNED_CERTIFICATES
+
+/* Enable TLS 1.3 */
+#define NX_SECURE_TLS_ENABLE_TLS_1_3
+
 
 /* Defined, ASSERT is disabled. The default is enabled. */
 /*

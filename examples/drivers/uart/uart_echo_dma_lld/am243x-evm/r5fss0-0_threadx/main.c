@@ -37,7 +37,7 @@
 #include <tx_api.h>
 
 
-#define MAIN_TASK_PRI  (1)
+#define MAIN_TASK_PRI  (4)
 
 #define MAIN_TASK_STACK_SIZE (8192U)
 

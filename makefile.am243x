@@ -620,6 +620,28 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_icssg_tcpserver/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-lp/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am243x-evm/r5fss0-0_threadx/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1806,6 +1828,28 @@ BUILD_COMBO_EXAMPLE_ALL += enet_icssg_tcpserver_am243x-evm_r5fss0-0_freertos_ti-
 BUILD_COMBO_EXAMPLE_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -3396,6 +3440,72 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
+ enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile all
+
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -4173,6 +4283,28 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_icssg_tcpserver_am243x-evm_r5fss0-0_freert
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -5758,6 +5890,72 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
+ enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile clean
+
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -6535,6 +6733,28 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_icssg_tcpserver_am243x-evm_r5fss0-0_freert
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_icssg_tcpserver_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_icssg_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -8119,6 +8339,72 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  enet_lwip_icssg_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C source/networking/enet/core/examples/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_tcp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_tcp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_tcp_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_tcp_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_tcp_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_udp_client_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_udp_client_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_udp_client/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_icssg_mac_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_https_server_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_https_server_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_https_server/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_sa2ul_tls_benchmark_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_netxduo_gptp_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_iperf_am243x-evm_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
+
+ enet_netxduo_cpsw_iperf_am243x-lp_r5fss0-0_threadx_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile scrub
 
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
