@@ -254,8 +254,8 @@ void MasterTask(void * a)
         DebugP_log("%10dus", (unsigned int) gElapsedTime);
         DebugP_log("%10d",  icm);
         DebugP_log("%10d",  ica);
-        DebugP_log("%10d",  icnt);
-        DebugP_log("%10.1f", is);
+        DebugP_log("%10d ",  icnt);
+        DebugP_log("%10.1f ", is);
         DebugP_log("%10.1f\r\n", ics);
     }
 
