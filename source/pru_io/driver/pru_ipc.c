@@ -125,44 +125,42 @@ uint16_t PRU_IPC_getBlockId(PRU_IPC_Handle handle)
     return handle->attrs->config->blockId;
 }
 
-int32_t PRU_IPC_getData(PRU_IPC_Handle handle, void *container)
+int32_t PRU_IPC_getData(PRU_IPC_Handle handle, int32_t *container)
 {
-    int32_t *array = (int32_t *) container;
     uint16_t id_block    = PRU_IPC_getBlockId(handle);
     uint32_t blockOffset = id_block * handle->attrs->blockSizeBytes;
     if (handle->attrs->dataSize == 4)
     {
     for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
         for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
-            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
+            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
                                             + blockOffset + (dataPacketIdx << 2));
     }
     else if (handle->attrs->dataSize == 2)
     {
     for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
         for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
-            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
+            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
                                             + blockOffset + (dataPacketIdx << 1));
     }
     else if (handle->attrs->dataSize == 1)
     {
     for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
         for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
-            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
+            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx] = CSL_REG32_RD(handle->attrs->bufferAddrs[bufferIdx]
                                             + blockOffset + (dataPacketIdx));
     }
     /*
       TODO: memcpy for variable size? test -
-      memcpy(array[bufferIdx*handle->attrs->blockSize + dataPacketIdx], (handle->attrs->bufferAddrs[bufferIdx] +
+      memcpy(container[bufferIdx*handle->attrs->blockSize + dataPacketIdx], (handle->attrs->bufferAddrs[bufferIdx] +
              blockOffset + (dataPacketIdx * handle->attrs->dataSize)), handle->attrs->dataSize);
     */
     return SystemP_SUCCESS;
 }
 
-int32_t PRU_IPC_sendData(PRU_IPC_Handle handle, void *container)
+int32_t PRU_IPC_sendData(PRU_IPC_Handle handle, int32_t *container)
 {
     int32_t status = SystemP_SUCCESS;
-    int32_t *array = (int32_t *) container;
     uint16_t id_block = PRU_IPC_getBlockId(handle);
     uint32_t blockOffset = id_block * handle->attrs->blockSizeBytes;
     if (handle->attrs->dataSize == 4)
@@ -170,21 +168,21 @@ int32_t PRU_IPC_sendData(PRU_IPC_Handle handle, void *container)
         for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
             for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
                 CSL_REG32_WR(handle->attrs->bufferAddrs[bufferIdx] + blockOffset + (dataPacketIdx << 2),
-                            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
+                            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
     }
     else if (handle->attrs->dataSize == 2)
     {
         for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
             for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
                 CSL_REG32_WR(handle->attrs->bufferAddrs[bufferIdx] + blockOffset + (dataPacketIdx << 1),
-                            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
+                            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
     }
     else if (handle->attrs->dataSize == 1)
     {
         for (uint32_t bufferIdx = 0; bufferIdx < handle->attrs->noOfBuffers; bufferIdx++)
             for (uint32_t dataPacketIdx = 0; dataPacketIdx < handle->attrs->blockSize; dataPacketIdx++)
                 CSL_REG32_WR(handle->attrs->bufferAddrs[bufferIdx] + blockOffset + (dataPacketIdx),
-                            array[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
+                            container[bufferIdx*handle->attrs->blockSize + dataPacketIdx]);
     }
 
     if (handle->attrs->enableTxInt)

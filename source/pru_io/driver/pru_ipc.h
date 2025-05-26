@@ -182,7 +182,7 @@ uint16_t PRU_IPC_getBlockId(PRU_IPC_Handle handle);
  *
  *  \return     #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
  */
-int32_t PRU_IPC_getData(PRU_IPC_Handle handle, void *container);
+int32_t PRU_IPC_getData(PRU_IPC_Handle handle, int32_t *container);
 
 /**
  *  \brief      Send/Write data to the configured shared memory (generates interrupt to PRU  if it is enabled)
@@ -193,7 +193,7 @@ int32_t PRU_IPC_getData(PRU_IPC_Handle handle, void *container);
  *
  *  \return     #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
  */
-int32_t PRU_IPC_sendData(PRU_IPC_Handle handle, void *container);
+int32_t PRU_IPC_sendData(PRU_IPC_Handle handle, int32_t *container);
 
 /** @} */
 
