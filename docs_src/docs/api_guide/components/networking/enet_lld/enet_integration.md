@@ -129,20 +129,13 @@ Each of these sequences will be covered in detail in the following sections.
 
 ## Init Sequence {#enet_init_sequence}
 
-This is a one-time initialization where the application sets the OSAL and utils
-functions that Enet LLD will use throughout its lifecycle.
+This is a one-time initialization where the application sets the utils
+function that Enet LLD will use throughout its lifecycle.
 
 At this stage Enet LLD also initializes its SoC layer which contains data about
 the Ethernet hardware available in the TI device.
 
 The application should follow the next steps:
-
--# (Optional) \ref Enet_initOsalCfg() to initialize the OSAL configuration
-   (see \ref EnetOsal_Cfg) with a default implementation.  The default
-   implementation of Enet OSAL interface is based on OSAL layer.
-   Typically, applications can directly use the default Enet OSAL implementation,
-   unless Enet is being used on another OS (i.e. QNX) of if OS is not supported
-   by OSAL layer.
 
 -# (Optional) \ref Enet_initUtilsCfg() to initialize utils configuration
    (see \ref EnetUtils_Cfg) with a default implementation.  The default
@@ -157,9 +150,9 @@ The application should follow the next steps:
         utilsCfg.physToVirt = &myPhysToVirtFxn;
         utilsCfg.virtToPhys = &myVirtToPhysFxn;
 
--# \ref Enet_init() to pass the OSAL and utils configurations setup in the
-   previous two steps.  The application can pass NULL to either the OSAL config
-   or utils config if it intends to use the driver's default implementation.
+-# \ref Enet_init() to pass the utils configurations setup in the
+   previous two steps.  The application can pass NULL to either the utils 
+   config if it intends to use the driver's default implementation.
 
 
 ## Peripheral Open Sequence {#enet_open_sequence}

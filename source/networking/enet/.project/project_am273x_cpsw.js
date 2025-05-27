@@ -13,7 +13,6 @@ const files = {
         "enet_rm.c",
         "enet_rm_ioctl.c",
         "enet_rm_ioctl_register.c",
-        "enet_osal_dflt.c",
         "enet_utils_dflt.c",
         "enet_phymdio_dflt.c",
         "enet_phymdio_dflt_ioctl.c",
