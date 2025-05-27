@@ -53,7 +53,7 @@ static void UART_udmaIsrTx(Udma_EventHandle eventHandle, uint32_t eventType, voi
 int32_t UART_lld_dmaInit(UARTLLD_Handle hUart, UART_DmaChConfig dmaChCfg)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
-    UART_UdmaChConfig *udmaChCfg = (UART_UdmaChConfig *)dmaChCfg;
+    UART_UdmaChConfig *udmaChCfg = dmaChCfg;
 
     status  = UART_udmaInitRxCh(hUart, udmaChCfg);
     status += UART_udmaInitTxCh(hUart, udmaChCfg);
@@ -202,7 +202,7 @@ int32_t UART_lld_dmaDeInit(UARTLLD_Handle hUart)
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
     UART_UdmaChConfig *udmaChCfg;
 
-    udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    udmaChCfg    = hUart->hUartInit->dmaChCfg;
 
     if (udmaChCfg->isOpen != FALSE)
     {
@@ -223,7 +223,7 @@ static int32_t UART_udmaConfigPdmaTx(UARTLLD_Handle hUart, const UART_Transactio
     Udma_ChHandle       txChHandle;
     UART_UdmaChConfig   *udmaChCfg;
 
-    udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    udmaChCfg    = hUart->hUartInit->dmaChCfg;
     txChHandle  = udmaChCfg->txChHandle;
 
     /* Config PDMA channel */
@@ -258,7 +258,7 @@ static int32_t UART_udmaConfigPdmaRx(UARTLLD_Handle hUart, const UART_Transactio
     Udma_ChHandle       rxChHandle;
     UART_UdmaChConfig   *udmaChCfg;
 
-    udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    udmaChCfg    = hUart->hUartInit->dmaChCfg;
     rxChHandle  = udmaChCfg->rxChHandle;
 
     /* Config PDMA channel */
@@ -363,7 +363,7 @@ int32_t UART_lld_dmaDisableChannel(UARTLLD_Handle hUart,
     UART_UdmaChConfig *udmaChCfg;
     Udma_ChHandle chHandle;
 
-    udmaChCfg   = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    udmaChCfg   = hUart->hUartInit->dmaChCfg;
 
     /* Disable Channel */
     if (isChannelTx == TRUE)
@@ -409,7 +409,7 @@ static void UART_udmaIsrTx(Udma_EventHandle eventHandle,
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
-        udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+        udmaChCfg    = hUart->hUartInit->dmaChCfg;
         txChHandle  = udmaChCfg->txChHandle;
 
         if (eventType == UDMA_EVENT_TYPE_DMA_COMPLETION)
@@ -455,7 +455,7 @@ static void UART_udmaIsrRx(Udma_EventHandle eventHandle,
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
-        udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
+        udmaChCfg    = hUart->hUartInit->dmaChCfg;
         rxChHandle  = udmaChCfg->rxChHandle;
 
         if (eventType == UDMA_EVENT_TYPE_DMA_COMPLETION)

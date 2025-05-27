@@ -80,7 +80,7 @@ void read_transfer_blocking(void)
 }
 
 //! [write_transfer_nonblocking]
-void write_callback(UART_Handle handle, UART_Transaction *trans)
+void write_callback(UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesWritten = trans->count;
@@ -118,7 +118,7 @@ void write_transfer_nonblocking(void)
 //! [write_transfer_nonblocking]
 
 //! [read_transfer_nonblocking]
-void read_callback(UART_Handle handle, UART_Transaction *trans)
+void read_callback(UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesRead = trans->count;

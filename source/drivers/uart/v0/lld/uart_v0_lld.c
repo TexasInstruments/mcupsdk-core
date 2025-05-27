@@ -49,6 +49,7 @@
 #include <drivers/uart/v0/lld/uart_lld.h>
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
 #include <drivers/soc.h>
+#include <drivers/uart/v0/uart.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */

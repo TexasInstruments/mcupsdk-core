@@ -70,7 +70,7 @@ static void UART_edmaDoNothing(Edma_IntrHandle intrHandle, void *args);
 int32_t UART_lld_dmaInit(UARTLLD_Handle hUart, UART_DmaChConfig dmaChCfg)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
-    UART_EdmaChConfig *edmaChCfg = (UART_EdmaChConfig *)dmaChCfg;
+    UART_EdmaChConfig *edmaChCfg = dmaChCfg;
 
     status = UART_edmaChInit(hUart, edmaChCfg);
 
@@ -237,7 +237,7 @@ int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction *transact
     isTxFifoEmpty = FALSE;
     isEdmaEventPending = FALSE;
 
-    edmaChCfg = (UART_EdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    edmaChCfg = hUart->hUartInit->dmaChCfg;
 
     /* Fetch the EDMA paramters for UART transfer */
     baseAddr               = edmaChCfg->edmaBaseAddr;
@@ -336,7 +336,7 @@ int32_t UART_lld_dmaRead(UARTLLD_Handle hUart, const UART_Transaction *transacti
     EDMACCPaRAMEntry    edmaRxParam;
     UART_EdmaChConfig   *edmaChCfg;
 
-    edmaChCfg = (UART_EdmaChConfig *)hUart->hUartInit->dmaChCfg;
+    edmaChCfg = hUart->hUartInit->dmaChCfg;
 
     /* Fetch the EDMA paramters for UART transfer */
     baseAddr               = edmaChCfg->edmaBaseAddr;
@@ -415,7 +415,7 @@ int32_t UART_lld_dmaDeInit(UARTLLD_Handle hUart)
     if(UART_TRANSFER_STATUS_SUCCESS == status)
     {
         hUartInit = hUart->hUartInit;
-        edmaChCfg    = (UART_EdmaChConfig *)hUartInit->dmaChCfg;
+        edmaChCfg    = hUartInit->dmaChCfg;
         uartEdmaHandle = (EDMA_Handle)hUartInit->uartDmaHandle;
 
         /* Fetch the EDMA paramters */
@@ -516,7 +516,7 @@ int32_t UART_lld_dmaDisableChannel(UARTLLD_Handle hUart,
 
     if(NULL_PTR != hUart)
     {
-        edmaChCfg = (UART_EdmaChConfig *)hUart->hUartInit->dmaChCfg;
+        edmaChCfg = hUart->hUartInit->dmaChCfg;
 
         baseAddr               = edmaChCfg->edmaBaseAddr;
         regionId               = edmaChCfg->edmaRegionId;

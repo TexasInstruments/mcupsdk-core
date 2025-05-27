@@ -56,6 +56,7 @@
 #include <drivers/hw_include/cslr.h>
 #include <drivers/hw_include/cslr_uart.h>
 #include <drivers/hw_include/hw_types.h>
+#include <drivers/uart/v0/lld/dma/uart_dma.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,11 +65,6 @@ extern "C" {
 /* ========================================================================== */
 /*                             Macros & Typedefs                              */
 /* ========================================================================== */
-
-/** \brief A handle that is returned from a #UART_open() call */
-typedef void *UART_DmaHandle;
-
-typedef void *UART_DmaChConfig;
 
 /** \brief Uart FIFO Size */
 #define UART_FIFO_SIZE                  (64U)
@@ -443,6 +439,10 @@ typedef void *UART_DmaChConfig;
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
+
+struct UARTLLD_Object_s;
+struct UART_Config_s;
+
 typedef struct UART_ExtendedParams_s
 {
     uint32_t                   *args;
@@ -479,7 +479,7 @@ typedef uint32_t (*UART_clockUsecToTick) (uint64_t usecs);
  *
  *  \param hUart          Handle to the UART instance used
  */
-typedef void (*UART_readCompCallbackFxn) (void *hUart);
+typedef void (*UART_readCompCallbackFxn) (struct UARTLLD_Object_s *args);
 
 /**
  *  \brief  The definition of a write complete callback function used by
@@ -487,7 +487,7 @@ typedef void (*UART_readCompCallbackFxn) (void *hUart);
  *
  *  \param hUart          Handle to the UART instance used
  */
-typedef void (*UART_writeCompCallbackFxn) (void *hUart);
+typedef void (*UART_writeCompCallbackFxn) (struct UARTLLD_Object_s *args);
 
 
 /* ========================================================================== */
@@ -564,7 +564,7 @@ typedef struct
 /**
  *  \brief UART driver object
  */
-typedef struct
+typedef struct UARTLLD_Object_s
 {
     uint32_t                baseAddr;
     /**< Peripheral base address */
@@ -609,12 +609,12 @@ typedef struct
      */
     uint32_t                state;
     /**< Flag to indicate whether the instance is opened already */
-    void                *readTransferMutex;
+    void                    *readTransferMutex;
     /**< Read Transfer Sync Sempahore - to signal transfer completion */
-    void                *writeTransferMutex;
+    void                    *writeTransferMutex;
     /**< Write Transfer Sync Sempahore - to signal transfer completion */
 
-    void*                   args;
+    struct UART_Config_s    *args;
     /**< Pointer to be used by application to store miscellaneous data.*/
     uint64_t                lineStatusTimeout;
     /**< Variable to hold the line status timeout in ticks */
@@ -1102,6 +1102,68 @@ void UART_lld_Transaction_init(UART_Transaction *trans);
  *                      initialization
  */
 void UART_lld_Transaction_deInit(UART_Transaction *trans);
+
+/**
+ *  \defgroup UART_DMA_LLD APIs for UART DMA mode
+ *  \ingroup DRV_UART_LLD_MODULE
+ *
+ *  This module contains APIs to program and use DMA drivers available in the SoC with UART.
+ *
+ *  @{
+ */
+
+/**
+ * \brief API to open an UART DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *
+ * \param hUart    [in] UART Handle
+ * \param dmaChCfg     [in] UART DMA Handle
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t UART_lld_dmaInit(UARTLLD_Handle hUart, UART_DmaChConfig dmaChCfg);
+
+/**
+ * \brief API to close an UART DMA channel
+ *
+ * \param hUart   [in] UART handle returned from \ref UART_open
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t UART_lld_dmaDeInit(UARTLLD_Handle hUart);
+
+/**
+ * \brief API to write data using an UART DMA channel
+ *
+ * \param hUart           [in] Pointer to UART object
+ * \param transaction   [in] Pointer to #UART_Transaction. This parameter can't be NULL
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction  *transaction);
+
+/**
+ * \brief API to read data using an UART DMA channel
+ *
+ * \param hUart           [in] Pointer to UART object
+ * \param transaction   [in] Pointer to #UART_Transaction. This parameter can't be NULL
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t UART_lld_dmaRead(UARTLLD_Handle hUart, const UART_Transaction  *transaction);
+
+/**
+ * \brief API to disable DMA channel
+ *
+ * \param hUart               [in] UART Handle
+ * \param isChannelTx         [in] Variable to hold the Tx channel
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t UART_lld_dmaDisableChannel(UARTLLD_Handle hUart,
+                                       uint32_t isChannelTx);
+/** @} */
 
 #ifdef __cplusplus
 }

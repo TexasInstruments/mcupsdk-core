@@ -41,13 +41,17 @@
 #define UART_DMA_H_
 
 #include <stdint.h>
-#include <drivers/uart/v0/lld/uart_lld.h>
-#include <drivers/uart/v0/uart.h>
-
+//#include <drivers/uart/v0/lld/uart_lld.h>
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
+typedef void* UART_DmaChConfig;
+typedef void* UARTLLD_Handle;
+typedef void* UART_Transaction;
+/** \brief Transaction success */
+#define UART_STATUS_SUCCESS                 ((int32_t)0)
 
 int32_t UART_lld_dmaInit(UARTLLD_Handle hUart, UART_DmaChConfig dmaChCfg)
 {

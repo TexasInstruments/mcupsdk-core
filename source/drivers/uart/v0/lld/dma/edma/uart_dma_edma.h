@@ -74,6 +74,22 @@ typedef struct UART_EdmaChConfig_s
     /**< Flag to indicate whether the DMA instance is opened already */
 }UART_EdmaChConfig;
 
+/**
+ * \brief UART DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
+ */
+typedef struct UART_DmaConfig_s
+{
+	/** Registered callbacks for a particular DMA driver. This will be set by Sysconfig depending on the DMA driver selected */
+	UART_EdmaChConfig *uartDmaArgs;
+	/** Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
+	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
+	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
+	 */
+} UART_DmaConfig;
+
+typedef struct UART_EdmaChConfig_s *UART_DmaChConfig;
+typedef EDMA_Config *UART_DmaHandle;
+
 #ifdef __cplusplus
 }
 #endif

@@ -50,6 +50,7 @@
 #include <kernel/dpl/TaskP.h>
 #include <drivers/uart/v0/lld/uart_lld.h>
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
+#include <drivers/uart/v0/uart.h>
 
 /* UART Config,DMA structure handles */
 extern UART_DmaHandle       gUartDmaHandle[];
@@ -62,7 +63,7 @@ extern UART_DmaChConfig     gUartDmaChConfig[];
  *  \param  transaction      Structure pointing to the current transaction
  *
  */
-static void UART_lld_writeCompleteCallback(void *args);
+static void UART_lld_writeCompleteCallback(struct UARTLLD_Object_s *args);
 
 /**
  *  \brief  This API is the callback that gets after UART read completion.
@@ -71,7 +72,7 @@ static void UART_lld_writeCompleteCallback(void *args);
  *  \param  transaction     Structure pointing to the current transaction
  *
  */
-static void UART_lld_readCompleteCallback(void *args);
+static void UART_lld_readCompleteCallback(struct UARTLLD_Object_s *args);
 
 
 /**
@@ -147,7 +148,7 @@ static int32_t UART_checkOpenParams(const UART_Params *prms);
 
 typedef struct
 {
-    void                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Driver lock - to protect across open/close */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
@@ -871,7 +872,7 @@ void UART_flushTxFifo(UART_Config *handle)
     return;
 }
 
-static void UART_lld_writeCompleteCallback(void *args)
+static void UART_lld_writeCompleteCallback(struct UARTLLD_Object_s *args)
 {
     UART_Config   *config;
     UART_Object   *obj;
@@ -880,10 +881,9 @@ static void UART_lld_writeCompleteCallback(void *args)
 
     if(NULL_PTR != hUart)
     {
-        UART_Handle handle = (UART_Handle)hUart->args;
-        if(NULL_PTR != handle)
+        config = hUart->args;
+        if(NULL_PTR != config)
         {
-            config = (UART_Config *) handle;
             obj = config->object;
             obj->writeTrans->count = hUart->writeTrans.count;
             if (obj->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
@@ -899,7 +899,7 @@ static void UART_lld_writeCompleteCallback(void *args)
 
 }
 
-static void UART_lld_readCompleteCallback(void *args)
+static void UART_lld_readCompleteCallback(struct UARTLLD_Object_s *args)
 {
     UART_Config   *config;
     UART_Object   *obj;
@@ -908,10 +908,9 @@ static void UART_lld_readCompleteCallback(void *args)
 
     if(NULL_PTR != hUart)
     {
-        UART_Handle handle = (UART_Handle)hUart->args;
-        if(NULL_PTR != handle)
+        config = hUart->args;
+        if(NULL_PTR != config)
         {
-            config = (UART_Config *) handle;
             obj = config->object;
             obj->readTrans->count = hUart->readTrans.count;
             if (obj->prms.readMode == UART_TRANSFER_MODE_CALLBACK)

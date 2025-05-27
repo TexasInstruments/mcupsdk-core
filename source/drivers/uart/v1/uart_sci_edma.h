@@ -49,7 +49,7 @@ extern "C" {
  *  \brief  Function to configure the edma channels for UART DMA mode
  *          Called from the #UART_open()
  *
- *  \param  uartHandle      #UART_Handle returned assigned in #UART_open()
+ *  \param  uartHandle      #UART_UART_ConfigHandle returned assigned in #UART_open()
  *  \param  edmaInst        edma instance to be used
  *
  *  \return #SystemP_SUCCESS if edma configuration is successfully; else error on failure
