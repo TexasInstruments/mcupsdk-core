@@ -78,7 +78,7 @@ static void UART_txEdmaIsrFxn(Edma_IntrHandle intrHandle, void *args);
 /* ========================================================================== */
 
 
-int32_t UART_edmaChannelConfig(UART_Config *uartHandle, uint32_t edmaInst)
+int32_t UART_edmaChannelConfig(UART_Handle uartHandle, uint32_t edmaInst)
 {
     uint32_t            baseAddr, regionId, dmaCh, tcc, param;
     int32_t             status = SystemP_SUCCESS;
@@ -241,7 +241,7 @@ static void UART_rxEdmaIsrFxn(Edma_IntrHandle intrHandle, void *args)
         if(object->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
         {
             object->readTrans->status = UART_TRANSFER_STATUS_SUCCESS;
-            object->prms.readCallbackFxn(object->readTrans);
+            object->prms.readCallbackFxn(config, object->readTrans);
         }
         else
         {
@@ -355,7 +355,7 @@ static void UART_txEdmaIsrFxn(Edma_IntrHandle intrHandle, void *args)
         if(object->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
         {
             object->writeTrans->status = UART_TRANSFER_STATUS_SUCCESS;
-            object->prms.writeCallbackFxn(object->writeTrans);
+            object->prms.writeCallbackFxn(config, object->writeTrans);
         }
         else
         {

@@ -136,7 +136,7 @@ void uart_echo_callback(void *args)
     return;
 }
 
-void uart_echo_write_callback(UART_Transaction *trans)
+void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesWritten = trans->count;
@@ -145,7 +145,7 @@ void uart_echo_write_callback(UART_Transaction *trans)
     return;
 }
 
-void uart_echo_read_callback(UART_Transaction *trans)
+void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesRead = trans->count;

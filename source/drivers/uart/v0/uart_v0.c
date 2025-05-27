@@ -50,6 +50,7 @@
 #include <kernel/dpl/TaskP.h>
 #include <drivers/uart/v0/lld/uart_lld.h>
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
+#include <drivers/uart/v0/uart.h>
 
 /* UART Config,DMA structure handles */
 extern UART_DmaHandle       gUartDmaHandle[];
@@ -62,7 +63,7 @@ extern UART_DmaChConfig     gUartDmaChConfig[];
  *  \param  transaction      Structure pointing to the current transaction
  *
  */
-static void UART_lld_writeCompleteCallback(void *args);
+static void UART_lld_writeCompleteCallback(struct UARTLLD_Object_s *args);
 
 /**
  *  \brief  This API is the callback that gets after UART read completion.
@@ -71,7 +72,7 @@ static void UART_lld_writeCompleteCallback(void *args);
  *  \param  transaction     Structure pointing to the current transaction
  *
  */
-static void UART_lld_readCompleteCallback(void *args);
+static void UART_lld_readCompleteCallback(struct UARTLLD_Object_s *args);
 
 
 /**
@@ -147,7 +148,7 @@ static int32_t UART_checkOpenParams(const UART_Params *prms);
 
 typedef struct
 {
-    void                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Driver lock - to protect across open/close */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
@@ -223,10 +224,10 @@ static int32_t UART_checkOpenParams(const UART_Params *prms)
     return (status);
 }
 
-UART_Config* UART_open(uint32_t index, const UART_Params *prms)
+UART_Handle UART_open(uint32_t index, const UART_Params *prms)
 {
     int32_t             status = SystemP_SUCCESS;
-    UART_Config        *handle = NULL;
+    UART_Handle         handle = NULL;
     UART_Config        *config = NULL;
     UART_Object        *object    = NULL;
     const UART_Attrs   *attrs;
@@ -281,7 +282,7 @@ UART_Config* UART_open(uint32_t index, const UART_Params *prms)
 
         uartLld_handle->hUartInit          = uartLldInit_handle;
         uartLld_handle->baseAddr           = attrs->baseAddr;
-        uartLld_handle->args               = (void *) config;
+        uartLld_handle->args               = config;
         uartLld_handle->writeBuf           = object->writeBuf;
         uartLld_handle->writeCount         = object->writeCount;
         uartLld_handle->writeSizeRemaining = object->writeSizeRemaining;
@@ -401,9 +402,9 @@ UART_Config* UART_open(uint32_t index, const UART_Params *prms)
     return (handle);
 }
 
-UART_Config* UART_getHandle(uint32_t index)
+UART_Handle UART_getHandle(uint32_t index)
 {
-    UART_Config*         handle = NULL;
+    UART_Handle         handle = NULL;
 
     /* Check index */
     if(index < gUartConfigNum)
@@ -422,13 +423,11 @@ UART_Config* UART_getHandle(uint32_t index)
     return handle;
 }
 
-void UART_close(UART_Config *handle)
+void UART_close(UART_Handle config)
 {
-    UART_Config        *config;
     UART_Object        *object;
     const UART_Attrs   *attrs;
 
-    config = handle;
     UARTLLD_Handle      uartLld_handle;
 
     if ((NULL != config) && (config->object != NULL) && (config->object->isOpen != FALSE))
@@ -444,7 +443,7 @@ void UART_close(UART_Config *handle)
         (void)SemaphoreP_pend(&gUartDrvObj.lockObj, SystemP_WAIT_FOREVER);
 
         /* Flush TX FIFO */
-        UART_flushTxFifo(handle);
+        UART_flushTxFifo(config);
 
         /* Disable UART and interrupts. */
         UART_intrDisable(attrs->baseAddr,
@@ -490,10 +489,9 @@ void UART_close(UART_Config *handle)
     return;
 }
 
-int32_t UART_write(UART_Config *handle, UART_Transaction *trans)
+int32_t UART_write(UART_Handle config, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS, semStatus = SystemP_SUCCESS;
-    UART_Config        *config;
     UART_Object        *object;
     const UART_Attrs   *attrs;
     UART_Params        *prms;
@@ -502,14 +500,13 @@ int32_t UART_write(UART_Config *handle, UART_Transaction *trans)
     UART_ExtendedParams extendedParams;
 
     /* Check parameters */
-    if ((NULL_PTR == handle) || (NULL_PTR == trans))
+    if ((NULL_PTR == config) || (NULL_PTR == trans))
     {
         status = SystemP_FAILURE;
     }
 
     if(SystemP_SUCCESS == status)
     {
-        config  = handle;
         object  = config->object;
         attrs   = config->attrs;
         prms    = &config->object->prms;
@@ -601,10 +598,9 @@ int32_t UART_write(UART_Config *handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_read(UART_Config *handle, UART_Transaction *trans)
+int32_t UART_read(UART_Handle config, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS, semStatus = SystemP_SUCCESS;
-    UART_Config        *config;
     UART_Object        *object;
     const UART_Attrs   *attrs;
     UART_Params        *prms;
@@ -613,14 +609,13 @@ int32_t UART_read(UART_Config *handle, UART_Transaction *trans)
     UART_ExtendedParams extendedParams;
 
     /* Check parameters */
-    if ((NULL_PTR == handle) || (NULL_PTR == trans))
+    if ((NULL_PTR == config) || (NULL_PTR == trans))
     {
         status = SystemP_FAILURE;
     }
 
     if(SystemP_SUCCESS == status)
     {
-        config  = handle;
         object  = config->object;
         attrs   = config->attrs;
         prms    = &config->object->prms;
@@ -712,23 +707,21 @@ int32_t UART_read(UART_Config *handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans)
+int32_t UART_writeCancel(UART_Handle config, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
-    UART_Config        *config;
     UART_Object        *object;
     UART_Params        *prms;
     UARTLLD_Handle      uartLld_handle;
 
     /* Check parameters */
-    if((NULL == handle) || (NULL == trans))
+    if((NULL == config) || (NULL == trans))
     {
         status = SystemP_FAILURE;
     }
 
     if(SystemP_SUCCESS == status)
     {
-        config = handle;
         object = config->object;
         prms    = &config->object->prms;
         DebugP_assert(NULL != object);
@@ -753,7 +746,7 @@ int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans)
             */
             if (object->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                 object->prms.writeCallbackFxn(object->writeTrans);
+                 object->prms.writeCallbackFxn(config, object->writeTrans);
             }
             else
             {
@@ -771,23 +764,21 @@ int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans)
+int32_t UART_readCancel(UART_Handle config, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
-    UART_Config        *config;
     UART_Object        *object;
     UART_Params        *prms;
     UARTLLD_Handle      uartLld_handle;
 
     /* Check parameters */
-    if((NULL == handle) || (NULL == trans))
+    if((NULL == config) || (NULL == trans))
     {
         status = SystemP_FAILURE;
     }
 
     if(SystemP_SUCCESS == status)
     {
-        config = handle;
         object = config->object;
         prms    = &config->object->prms;
         uartLld_handle = object->uartLld_handle;
@@ -808,7 +799,7 @@ int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans)
             object->readTrans->status = UART_TRANSFER_STATUS_CANCELLED;
             if (object->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                object->prms.readCallbackFxn(object->readTrans);
+                object->prms.readCallbackFxn(config, object->readTrans);
             }
             else
             {
@@ -826,15 +817,12 @@ int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans)
     return (status);
 }
 
-void UART_flushTxFifo(UART_Config *handle)
+void UART_flushTxFifo(UART_Handle config)
 {
-    UART_Config        *config;
     const UART_Attrs   *attrs;
     uint32_t            isTxFifoEmpty, startTicks, elapsedTicks;
     uint32_t            timeout = UART_TRANSMITEMPTY_TRIALCOUNT;
     uint32_t            timeoutElapsed  = FALSE;
-
-    config = handle;
 
     if (NULL != config)
     {
@@ -871,7 +859,7 @@ void UART_flushTxFifo(UART_Config *handle)
     return;
 }
 
-static void UART_lld_writeCompleteCallback(void *args)
+static void UART_lld_writeCompleteCallback(struct UARTLLD_Object_s *args)
 {
     UART_Config   *config;
     UART_Object   *obj;
@@ -880,15 +868,14 @@ static void UART_lld_writeCompleteCallback(void *args)
 
     if(NULL_PTR != hUart)
     {
-        UART_Handle handle = (UART_Handle)hUart->args;
-        if(NULL_PTR != handle)
+        config = hUart->args;
+        if(NULL_PTR != config)
         {
-            config = (UART_Config *) handle;
             obj = config->object;
             obj->writeTrans->count = hUart->writeTrans.count;
             if (obj->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                obj->prms.writeCallbackFxn(&hUart->writeTrans);
+                obj->prms.writeCallbackFxn(config, &hUart->writeTrans);
             }
             else
             {
@@ -899,7 +886,7 @@ static void UART_lld_writeCompleteCallback(void *args)
 
 }
 
-static void UART_lld_readCompleteCallback(void *args)
+static void UART_lld_readCompleteCallback(struct UARTLLD_Object_s *args)
 {
     UART_Config   *config;
     UART_Object   *obj;
@@ -908,15 +895,14 @@ static void UART_lld_readCompleteCallback(void *args)
 
     if(NULL_PTR != hUart)
     {
-        UART_Handle handle = (UART_Handle)hUart->args;
-        if(NULL_PTR != handle)
+        config = hUart->args;
+        if(NULL_PTR != config)
         {
-            config = (UART_Config *) handle;
             obj = config->object;
             obj->readTrans->count = hUart->readTrans.count;
             if (obj->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                obj->prms.readCallbackFxn(&hUart->readTrans);
+                obj->prms.readCallbackFxn(config, &hUart->readTrans);
             }
             else
             {
@@ -980,20 +966,18 @@ void UART_Transaction_init(UART_Transaction *trans)
 /*                       Advanced Function Definitions                        */
 /* ========================================================================== */
 
-uint32_t UART_getBaseAddr(UART_Config *handle)
+uint32_t UART_getBaseAddr(UART_Handle config)
 {
-    UART_Config       *config;
     UART_Attrs        *attrs;
     uint32_t           baseAddr;
 
     /* Check parameters */
-    if (NULL_PTR == handle)
+    if (NULL_PTR == config)
     {
         baseAddr = 0U;
     }
     else
     {
-        config = handle;
         attrs = config->attrs;
         baseAddr = attrs->baseAddr;
     }

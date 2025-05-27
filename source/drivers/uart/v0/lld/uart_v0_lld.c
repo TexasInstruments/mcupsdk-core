@@ -49,6 +49,7 @@
 #include <drivers/uart/v0/lld/uart_lld.h>
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
 #include <drivers/soc.h>
+#include <drivers/uart/v0/uart.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -1599,7 +1600,7 @@ int32_t UART_readCancelNoCB(UARTLLD_Handle hUart)
     return (status);
 }
 
-int32_t UART_lld_write(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_write(UARTLLD_Handle hUart, void * txBuf, uint32_t size, uint32_t timeout,
                        const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1644,7 +1645,7 @@ int32_t UART_lld_write(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size, uin
             {
 
                 /* Initialize transaction params */
-                hUart->writeBuf                = trans->buf;
+                hUart->writeBuf                = (const uint8_t*) trans->buf;
                 hUart->writeTrans.timeout      = trans->timeout;
                 hUart->writeCount              = 0U;
                 hUart->writeSizeRemaining      = trans->count;
@@ -1666,7 +1667,7 @@ int32_t UART_lld_write(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size, uin
     return status;
 }
 
-int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
+int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
                            const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1710,7 +1711,7 @@ int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
             if(UART_TRANSFER_STATUS_SUCCESS == status)
             {
                /* Initialize transaction params */
-                hUart->writeBuf                = trans->buf;
+                hUart->writeBuf                = (const uint8_t*) trans->buf;
                 hUart->writeTrans.timeout      = trans->timeout;
                 hUart->writeCount              = 0U;
                 hUart->writeSizeRemaining      = trans->count;
@@ -1731,7 +1732,7 @@ int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
     return status;
 }
 
-int32_t UART_lld_writeDma(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
+int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
                          const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1776,7 +1777,7 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
             {
 
                 /* Initialize transaction params */
-                hUart->writeBuf                = trans->buf;
+                hUart->writeBuf                = (const uint8_t*) trans->buf;
                 hUart->writeTrans.timeout      = trans->timeout;
                 hUart->writeCount              = 0U;
                 hUart->writeSizeRemaining      = trans->count;
@@ -1801,7 +1802,7 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
     return status;
 }
 
-int32_t UART_lld_read(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
                      const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1845,7 +1846,7 @@ int32_t UART_lld_read(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint
             if(UART_TRANSFER_STATUS_SUCCESS == status)
             {
                 /* Initialize transaction params */
-                hUart->readBuf             = trans->buf;
+                hUart->readBuf             = (uint8_t *) trans->buf;
                 hUart->readTrans.timeout   = trans->timeout;
                 hUart->readCount           = 0U;
                 hUart->rxTimeoutCnt        = 0U;
@@ -1867,7 +1868,7 @@ int32_t UART_lld_read(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint
     return status;
 }
 
-int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
                      const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1911,7 +1912,7 @@ int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t
             if(UART_TRANSFER_STATUS_SUCCESS == status)
             {
                 /* Initialize transaction params */
-                hUart->readBuf             = trans->buf;
+                hUart->readBuf             = (uint8_t *) trans->buf;
                 hUart->readTrans.timeout   = trans->timeout;
                 hUart->readCount           = 0U;
                 hUart->rxTimeoutCnt        = 0U;
@@ -1933,7 +1934,7 @@ int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t
     return status;
 }
 
-int32_t UART_lld_readIntr(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
+int32_t UART_lld_readIntr(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
                           const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -1976,7 +1977,7 @@ int32_t UART_lld_readIntr(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
             if(UART_TRANSFER_STATUS_SUCCESS == status)
             {
                 /* Initialize transaction params */
-                hUart->readBuf             = trans->buf;
+                hUart->readBuf             = (uint8_t *) trans->buf;
                 hUart->readTrans.timeout   = trans->timeout;
                 hUart->readCount           = 0U;
                 hUart->rxTimeoutCnt        = 0U;
@@ -1997,7 +1998,7 @@ int32_t UART_lld_readIntr(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
     return status;
 }
 
-int32_t UART_lld_readDma(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
+int32_t UART_lld_readDma(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
                         const UART_ExtendedParams *extendedParams)
 {
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
@@ -2040,7 +2041,7 @@ int32_t UART_lld_readDma(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
             if(UART_TRANSFER_STATUS_SUCCESS == status)
             {
                 /* Initialize transaction params */
-                hUart->readBuf             = trans->buf;
+                hUart->readBuf             = (uint8_t *) trans->buf;
                 hUart->readTrans.timeout   = trans->timeout;
                 hUart->readCount           = 0U;
                 hUart->rxTimeoutCnt        = 0U;

@@ -41,13 +41,15 @@
 #define UART_DMA_H_
 
 #include <stdint.h>
+#include <drivers/uart/v0/lld/dma/uart_dma.h>
+#include <drivers/uart/v0/lld/dma/udma/uart_dma_udma.h>
 #include <drivers/uart/v0/lld/uart_lld.h>
-#include <drivers/uart/v0/uart.h>
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
+
 
 int32_t UART_lld_dmaInit(UARTLLD_Handle hUart, UART_DmaChConfig dmaChCfg)
 {

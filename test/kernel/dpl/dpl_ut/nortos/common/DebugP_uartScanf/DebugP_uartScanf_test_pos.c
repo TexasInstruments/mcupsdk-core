@@ -81,7 +81,7 @@
  */
 void posTest_DebugP_readLine(void * args)
 {
-	UART_Config* handle = NULL;
+	UART_Handle handle = NULL;
     UART_close(handle);
 	if(testStatus==SystemP_SUCCESS)
 	{
@@ -105,7 +105,7 @@ void posTest_DebugP_readLine(void * args)
  */
 void posTest_DebugP_scanf(void * args)
 {
-	UART_Config* handle = NULL;
+	UART_Handle handle = NULL;
 	if(testStatus==SystemP_SUCCESS)
 	{
     	value32 = 0;
@@ -128,7 +128,7 @@ void posTest_DebugP_scanf(void * args)
  */
 void posTest_DebugP_scanfOne(void * args)
 {
-    UART_Config* handle = NULL;
+    UART_Handle handle = NULL;
     UART_close(handle);
 
 	if(testStatus==SystemP_SUCCESS)
@@ -198,7 +198,7 @@ void posTest_DebugP_scanfTwo(void * args)
 {
     extern uint32_t gDebugP_uartDrvIndex;
     gDebugP_uartDrvIndex = 3U;
-	UART_Config* handle = NULL;
+	UART_Handle handle = NULL;
 	if(testStatus==SystemP_SUCCESS)
 	{
     	value32 = 0;

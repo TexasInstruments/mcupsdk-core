@@ -40,7 +40,7 @@ extern uint32_t gDebugP_uartDrvIndex;
 int32_t DebugP_readLine(char *lineBuf, uint32_t bufSize)
 {
     int32_t status = SystemP_FAILURE;
-    UART_Config* uartHandle;
+    UART_Handle uartHandle;
 
     uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
     if(uartHandle!=NULL)

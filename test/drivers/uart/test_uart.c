@@ -414,7 +414,8 @@ static void uart_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*     uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -498,7 +499,8 @@ static void uart_six_bit_char_length_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*     uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -582,7 +584,8 @@ static void uart_echo_read_partial_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*      uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -660,7 +663,8 @@ static void uart_autobaud_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*      uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -748,7 +752,8 @@ static void uart_write_cancel_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*      uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -834,7 +839,8 @@ static void uart_read_cancel_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
-    UART_Config*      uartHandle, uartHandle1;
+    UART_Config*     uartHandle;
+    UART_Config*     uartHandle1;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_TestParams  *testParams1 = (UART_TestParams*)args;
     UART_Params     *uartParams = &(testParams->uartParams);
@@ -962,7 +968,7 @@ static void test_printExitString(void *args)
     return;
 }
 
-void uart_echo_write_callback(UART_Transaction *trans)
+void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesWritten = trans->count;
@@ -971,7 +977,7 @@ void uart_echo_write_callback(UART_Transaction *trans)
     return;
 }
 
-void uart_echo_read_callback(UART_Transaction *trans)
+void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesRead = trans->count;
@@ -980,7 +986,7 @@ void uart_echo_read_callback(UART_Transaction *trans)
     return;
 }
 
-void uart_echo_writeCancel_callback(UART_Transaction *trans)
+void uart_echo_writeCancel_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
     gNumBytesWritten = trans->count;
@@ -989,7 +995,7 @@ void uart_echo_writeCancel_callback(UART_Transaction *trans)
     return;
 }
 
-void uart_echo_readCancel_callback(UART_Transaction *trans)
+void uart_echo_readCancel_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
     gNumBytesRead = trans->count;

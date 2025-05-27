@@ -77,6 +77,22 @@ typedef struct UART_UdmaChConfig_s
     /**< This is only used for AM65x */
 }UART_UdmaChConfig;
 
+/**
+ * \brief UART DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
+ */
+typedef struct UART_DmaConfig_s
+{
+	/** Registered callbacks for a particular DMA driver. This will be set by Sysconfig depending on the DMA driver selected */
+	UART_UdmaChConfig *uartDmaArgs;
+	/** Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
+	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
+	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
+	 */
+} UART_DmaConfig;
+
+typedef struct UART_UdmaChConfig_s *UART_DmaChConfig;
+typedef struct Udma_DrvObjectInt_t  *UART_DmaHandle;
+
 #ifdef __cplusplus
 }
 #endif

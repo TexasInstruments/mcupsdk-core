@@ -68,9 +68,7 @@ extern "C" {
 /*                             Macros & Typedefs                              */
 /* ========================================================================== */
 
-
-/** \brief A handle that is returned from a #UART_open() call */
-typedef void *UART_Handle;
+typedef struct UART_Config_s* UART_Handle;
 
 /**
  *  \anchor UART_TransferMode
@@ -103,10 +101,10 @@ typedef void *UART_Handle;
  *  \brief  The definition of a callback function used by the UART driver
  *  when used in #UART_TRANSFER_MODE_CALLBACK
  *
- *  \param handle          UART_Handle
  *  \param transaction*    Pointer to a #UART_Transaction
  */
-typedef void (*UART_CallbackFxn) (UART_Transaction *transaction);
+typedef void (*UART_CallbackFxn) (UART_Handle handle,
+                                  UART_Transaction *transaction);
 
 /**
  *  \brief UART Parameters
@@ -269,13 +267,15 @@ typedef struct
  *  This structure needs to be defined before calling #UART_init() and it must
  *  not be changed by user thereafter.
  */
-typedef struct
+typedef struct UART_Config_s
 {
     UART_Attrs       *attrs;
     /**< Pointer to driver specific attributes */
     UART_Object      *object;
     /**< Pointer to driver specific data object */
 } UART_Config;
+
+//typedef UART_Config* UART_Handle;
 
 /** \brief Externally defined driver configuration array */
 extern UART_Config gUartConfig[];
@@ -311,25 +311,25 @@ void UART_deinit(void);
  *  \param  prms        Pointer to open parameters. If NULL is passed, then
  *                      default values will be used
  *
- *  \return A #UART_Handle on success or a NULL on an error or if it has been
+ *  \return A #UART_Config on success or a NULL on an error or if it has been
  *          opened already
  *
  *  \sa     #UART_init()
  *  \sa     #UART_close()
  *  \sa     #UART_Params_init
  */
-UART_Config* UART_open(uint32_t index, const UART_Params *prms);
+UART_Handle UART_open(uint32_t index, const UART_Params *prms);
 
 /**
  *  \brief  Function to close a UART peripheral specified by the UART handle
  *
  *  \pre    #UART_open() has to be called first
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *
  *  \sa     #UART_open()
  */
-void UART_close(UART_Config *handle);
+void UART_close(UART_Handle handle);
 
 /**
  *  \brief  Function to perform UART write operation
@@ -353,7 +353,7 @@ void UART_close(UART_Config *handle);
  *  during a transaction, even though the physical transfer might not have
  *  started yet. Doing this can result in data corruption.
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *  \param  trans       Pointer to a #UART_Transaction. All of the fields
  *                      within transaction except #UART_Transaction.count and
  *                      #UART_Transaction.status are WO (write-only) unless
@@ -369,7 +369,7 @@ void UART_close(UART_Config *handle);
  *
  *  \sa     #UART_open
  */
-int32_t UART_write(UART_Config *handle, UART_Transaction *trans);
+int32_t UART_write(UART_Handle handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART read operation
@@ -389,7 +389,7 @@ int32_t UART_write(UART_Config *handle, UART_Transaction *trans);
  *  during a transaction, even though the physical transfer might not have
  *  started yet. Doing this can result in data corruption.
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *  \param  trans       Pointer to a #UART_Transaction. All of the fields
  *                      within transaction except #UART_Transaction.count and
  *                      #UART_Transaction.status are WO (write-only) unless
@@ -405,7 +405,7 @@ int32_t UART_write(UART_Config *handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_read(UART_Config *handle, UART_Transaction *trans);
+int32_t UART_read(UART_Handle handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART canceling of current write transaction.
@@ -422,7 +422,7 @@ int32_t UART_read(UART_Config *handle, UART_Transaction *trans);
  *  during a transaction, even though the physical transfer might not have
  *  started yet. Doing this can result in data corruption.
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *  \param  trans       Pointer to a #UART_Transaction. All of the fields
  *                      within transaction except #UART_Transaction.count and
  *                      #UART_Transaction.status are WO (write-only) unless
@@ -438,7 +438,7 @@ int32_t UART_read(UART_Config *handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans);
+int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART canceling of current read transaction
@@ -455,7 +455,7 @@ int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans);
  *  during a transaction, even though the physical transfer might not have
  *  started yet. Doing this can result in data corruption.
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *  \param  trans       Pointer to a #UART_Transaction. All of the fields
  *                      within transaction except #UART_Transaction.count and
  *                      #UART_Transaction.status are WO (write-only) unless
@@ -471,28 +471,28 @@ int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans);
+int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to return a open'ed UART handle given a UART instance index
  *
  *  \param  index       Index of config to use in the *UART_Config* array
  *
- *  \return A #UART_Handle on success or a NULL on an error or if the instance
+ *  \return A #UART_Config on success or a NULL on an error or if the instance
  *            index has  NOT been opened yet
  */
-UART_Config* UART_getHandle(uint32_t index);
+UART_Handle UART_getHandle(uint32_t index);
 
 /**
  *  \brief  Function to flush a TX FIFO of peripheral specified by the UART handle
  *
  *  \pre    #UART_open() has to be called first
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *
  *  \sa     #UART_open()
  */
-void UART_flushTxFifo(UART_Config *handle);
+void UART_flushTxFifo(UART_Handle handle);
 
 /* ========================================================================== */
 /*                       Advanced Function Declarations                       */
@@ -501,11 +501,11 @@ void UART_flushTxFifo(UART_Config *handle);
  *  \brief  Function to get base address of UART instance of a particular
  *          handle.
  *
- *  \param  handle      #UART_Handle returned from #UART_open()
+ *  \param  handle      #UART_Config returned from #UART_open()
  *
  *  \sa     #UART_open
  */
-uint32_t UART_getBaseAddr(UART_Config *handle);
+uint32_t UART_getBaseAddr(UART_Handle handle);
 
 /**
  *  \brief  Function to initialize the #UART_Transaction struct to its defaults
