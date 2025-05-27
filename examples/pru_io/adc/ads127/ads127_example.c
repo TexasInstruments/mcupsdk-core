@@ -78,7 +78,7 @@ void ADC_stopConversion();
 
 void PRU_IPC_Isr(void *args)
 {
-    PRU_IPC_getData(gPruIpc0Handle, samples);
+    PRU_IPC_getData(gPruIpc0Handle, (int32_t *) samples);
     SemaphoreP_post(&gAdcDataRecSem);
     PRUICSS_clearEvent(gPruIcss0Handle, gPruIpc0Handle->attrs->sysEventNum);
 }

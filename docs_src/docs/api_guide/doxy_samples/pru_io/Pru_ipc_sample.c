@@ -35,8 +35,8 @@ void transferData(void)
 {
 //! [transferData]
     /* Receive Data from PRU core */
-    PRU_IPC_getData(gPruIpc0Handle, samples);
+    PRU_IPC_getData(gPruIpc0Handle, (int32_t *) samples);
     /* Send Data to PRU core */
-    PRU_IPC_sendData(gPruIpc0Handle, samples);
+    PRU_IPC_sendData(gPruIpc0Handle, (int32_t *) samples);
 //! [transferData]
 }
