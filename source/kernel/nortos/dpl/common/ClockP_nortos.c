@@ -85,8 +85,6 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 {
     ClockP_Object *obj = (ClockP_Object *)handle;
 
-    DebugP_assert(sizeof(ClockP_Object) < sizeof(ClockP_Object));
-
     /* populate the new clock instance */
     obj->callback = params->callback;
     obj->args = params->args;

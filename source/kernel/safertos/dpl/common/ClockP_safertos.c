@@ -69,8 +69,6 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
     int32_t status;
     portBaseType xReturn;
 
-    DebugP_assert(sizeof(ClockP_Object) <= sizeof(ClockP_Object));
-
     memset(pTimer, 0U, sizeof(ClockP_Object));
     if(params->period == 0)
     {
