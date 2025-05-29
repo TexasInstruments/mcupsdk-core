@@ -48,10 +48,6 @@
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-typedef struct HwiP_Struct_s
-{
-    uint32_t intNum;
-} HwiP_Struct;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -147,13 +143,12 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
 {
     uint32_t            key;
     uint32_t            ecmId, eventId;
-    HwiP_Struct        *obj;
+    HwiP_Object        *obj;
     HwiP_IntcRegsOvly   pIntcRegs;
     int32_t             currentState;
 
-    obj = (HwiP_Struct *)handle;
+    obj = handle;
     pIntcRegs = gHwiCtrl.pIntcRegs;
-    DebugP_assertNoLog(sizeof(HwiP_Struct) <= sizeof(HwiP_Object));
     DebugP_assertNoLog(params->callback != NULL);
     DebugP_assertNoLog(params->intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0, 2, 3 */
@@ -190,11 +185,11 @@ void HwiP_destruct(HwiP_Object *handle)
 {
     uint32_t            key;
     uint32_t            ecmId, eventId;
-    HwiP_Struct        *obj;
+    HwiP_Object        *obj;
     HwiP_IntcRegsOvly   pIntcRegs;
     int32_t             currentState;
 
-    obj = (HwiP_Struct *) handle;
+    obj =  handle;
     pIntcRegs = gHwiCtrl.pIntcRegs;
     DebugP_assertNoLog(obj->intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0 to 3 */
@@ -260,7 +255,7 @@ int32_t HwiP_unregisterNmiHandler(void)
 
 int32_t HwiP_setArgs(HwiP_Object *handle, void *args)
 {
-    HwiP_Struct *obj = (HwiP_Struct *)handle;
+    HwiP_Object *obj = handle;
 
     DebugP_assertNoLog(obj->intNum < HwiP_MAX_EVENTS);
 

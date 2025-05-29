@@ -43,11 +43,7 @@ static void Hwip_dataAndInstructionBarrier(void)
     __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
 }
 
-typedef struct HwiP_Struct_s {
 
-    uint32_t intNum;
-
-} HwiP_Struct;
 
 HwiP_Ctrl gHwiCtrl;
 #ifdef INTR_PROF
@@ -145,9 +141,8 @@ void HWI_SECTION HwiP_Params_init(HwiP_Params *params)
 
 int32_t HWI_SECTION HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
 {
-    HwiP_Struct *obj = (HwiP_Struct *)handle;
+    HwiP_Object *obj = handle;
 
-    DebugP_assertNoLog( sizeof(HwiP_Struct) <= sizeof(HwiP_Object) );
     DebugP_assertNoLog( params->callback != NULL );
     DebugP_assertNoLog( params->intNum < HwiP_MAX_INTERRUPTS );
     DebugP_assertNoLog( params->priority < HwiP_MAX_PRIORITY );
@@ -180,7 +175,7 @@ int32_t HWI_SECTION HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
 
 int32_t HwiP_setArgs(HwiP_Object *handle, void *args)
 {
-    HwiP_Struct *obj = (HwiP_Struct *)handle;
+    HwiP_Object *obj = handle;
 
     DebugP_assertNoLog( obj->intNum < HwiP_MAX_INTERRUPTS );
 
@@ -191,7 +186,7 @@ int32_t HwiP_setArgs(HwiP_Object *handle, void *args)
 
 void HWI_SECTION HwiP_destruct(HwiP_Object *handle)
 {
-    HwiP_Struct *obj = (HwiP_Struct *)handle;
+    HwiP_Object *obj = handle;
 
     /* disable interrupt, clear pending if any, make as pulse, ISR, lowest priority
      * set valid default vector address

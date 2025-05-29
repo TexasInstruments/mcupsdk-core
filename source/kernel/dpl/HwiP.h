@@ -84,15 +84,11 @@ typedef struct HwiP_Params_ {
 } HwiP_Params;
 
 /**
- * \brief Max size of Hwi object across no-RTOS and all OS's
- */
-#define HwiP_OBJECT_SIZE_MAX    (32u)
-/**
  * \brief Opaque Hwi object used with the Hwi APIs
  */
 typedef struct HwiP_Object_ {
 
-    uint32_t rsv[HwiP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
+    uint32_t intNum;
 
 } HwiP_Object;
 
