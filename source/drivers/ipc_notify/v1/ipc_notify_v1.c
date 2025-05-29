@@ -65,7 +65,7 @@ typedef struct
     IpcNotify_CrcHookFxn    crcHookFxn; /* Hook Function to be provided by application for CRC calculation. */
 } IpcNotify_Ctrl;
 
-IpcNotify_Ctrl gIpcNotifyCtrl;
+IpcNotify_Ctrl gIpcNotifyCtrl = {0};
 
 /**
  * \brief Callback that is invoked during initialization for a given client ID
@@ -104,6 +104,29 @@ static inline void IpcNotify_getReadMailbox(uint32_t *mailboxBaseAddr)
     *mailboxBaseAddr = pMailboxConfig->readReqMailboxBaseAddr;
 
 }
+
+#if (defined(SOC_AM273X))
+/* Function to get Mailbox register address at which core will post acknowledgement interrupt */
+static inline void IpcNotify_getReadDoneAckMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *intrBitPos)
+{
+    IpcNotify_MailboxConfig *pMailboxConfig;
+
+    pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
+
+    *mailboxBaseAddr = pMailboxConfig->readDoneAckMailboxBaseAddr;
+    *intrBitPos = pMailboxConfig->intrBitPos;
+}
+
+/* Function to get Mailbox register address at which core will receive acknowledgement interrupt*/
+static inline void IpcNotify_getReadDoneMailbox(uint32_t *mailboxBaseAddr)
+{
+    IpcNotify_MailboxConfig *pMailboxConfig;
+
+    pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][gIpcNotifyCtrl.selfCoreId];
+
+    *mailboxBaseAddr = pMailboxConfig->readDoneMailboxBaseAddr;
+}
+#endif
 
 static inline void IpcNotify_getReadSwQ(uint32_t remoteCoreId, IpcNotify_SwQueue **swQ)
 {
@@ -152,6 +175,9 @@ void IpcNotify_isr(void *args)
     uint8_t inputCrc, calcCrc;
     uint32_t crcData;
     int32_t crcStatus = SystemP_SUCCESS;
+#if (defined(SOC_AM273X))
+    uint32_t mailboxBaseAddrAck, intrBitPos;
+#endif
 
     IpcNotify_getReadMailbox(&mailboxBaseAddr);
     DebugP_assertNoLog(mailboxBaseAddr!=0U);
@@ -238,6 +264,11 @@ void IpcNotify_isr(void *args)
                         }
                     }
                 } while(status == SystemP_SUCCESS);
+#if (defined(SOC_AM273X))
+                /* trigger Read done ack (MBOX_READ_DONE_ACK) to notify sender core for acknowledgement*/
+                IpcNotify_getReadDoneAckMailbox(remoteCoreId, &mailboxBaseAddrAck, &intrBitPos);
+                IpcNotify_trigInterrupt_ack(gIpcNotifyCtrl.selfCoreId, remoteCoreId, mailboxBaseAddrAck, intrBitPos);
+#endif
             }
         }
 
@@ -246,6 +277,26 @@ void IpcNotify_isr(void *args)
     } while ( pendingIntr != 0U );
 
 }
+
+#if (defined(SOC_AM273X))
+/* Callback for sender self-core to receive acknowledgement from the receiver remote core
+ * The receiver core writes to READ_DONE_ACK once it recieves the mailbox message which triggers
+ * the MBOX_READ_DONE interrupt to sender core. The sender core recieves this interrrupt,
+ * marking completion of the ipc message transaction.
+*/
+void IpcNotify_readAckCallback (void *args)
+{
+    uint32_t mailboxBaseAddr;
+    uint32_t pendingIntr;
+
+    IpcNotify_getReadDoneMailbox(&mailboxBaseAddr);
+
+    pendingIntr = IpcNotify_mailboxGetPendingIntr(mailboxBaseAddr);
+
+    IpcNotify_wait();
+    IpcNotify_mailboxClearPendingIntr(mailboxBaseAddr, pendingIntr);
+}
+#endif
 
 int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32_t msgValue, uint32_t waitForFifoNotFull)
 {
@@ -266,7 +317,11 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
         oldIntState = HwiP_disable();
         do
         {
+#if !(defined(SOC_AM273X))
             status = IpcNotify_mailboxWrite(mailboxBaseAddr, intrBitPos, swQ, value);
+#else
+            status = IpcNotify_mailboxWrite(gIpcNotifyCtrl.selfCoreId, remoteCoreId, mailboxBaseAddr, intrBitPos, swQ, value);
+#endif
             if((status != SystemP_SUCCESS) && (waitForFifoNotFull != 0U))
             {
                 /* allow interrupt enable and check again */
@@ -345,6 +400,7 @@ void IpcNotify_Params_init(IpcNotify_Params *params)
     params->linuxCoreId = CSL_CORE_ID_MAX;
     params->isCrcEnabled = 0;
     params->crcHookFxn = NULL;
+    params->isMailboxIpcEnabled = 0;
 }
 
 int32_t IpcNotify_init(const IpcNotify_Params *params)
@@ -410,6 +466,11 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
         /* check if mailbox info is valid for this core */
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
         DebugP_assert(mailboxBaseAddr!=0U);
+
+#if (defined(SOC_AM273X))
+        IpcNotify_getReadDoneMailbox(&mailboxBaseAddr);
+        DebugP_assert(mailboxBaseAddr!=0U);
+#endif
     }
 
     IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_SYNC, IpcNotify_syncCallback, NULL);
@@ -430,10 +491,22 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
             IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
         }
 
+#if (defined(SOC_AM273X))
+        IpcNotify_getReadDoneMailbox(&mailboxBaseAddr);
+
+        if((pInterruptConfig->clearIntOnInit) != 0U)
+        {
+            IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
+        }
+#endif
         HwiP_Params_init(&hwiParams);
         hwiParams.intNum = pInterruptConfig->intNum;
         hwiParams.priority = params->intrPriority;
+#if !(defined(SOC_AM273X))
         hwiParams.callback = IpcNotify_isr;
+#else
+        hwiParams.callback = pInterruptConfig->callback;
+#endif
         hwiParams.args = (void*)pInterruptConfig;
         hwiParams.eventId = pInterruptConfig->eventId;
         hwiParams.isPulse = 0;
@@ -469,6 +542,10 @@ void IpcNotify_deInit(void)
 
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
         IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
+#if (defined(SOC_AM273X))
+        IpcNotify_getReadDoneMailbox(&mailboxBaseAddr);
+        IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
+#endif
 
         HwiP_destruct(&pInterruptConfig->hwiObj);
     }

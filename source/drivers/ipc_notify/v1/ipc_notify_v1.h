@@ -59,6 +59,9 @@ typedef struct IpcNotify_InterruptConfig_s
                                            *   See \ref CSL_CoreID for valid values for this field.
                                            */
     uint32_t clearIntOnInit;            /* 0: do not clear pending interrupts during IpcNotify_init, 1: clear pending interrupts */
+#if (defined(SOC_AM273X))
+    void (*callback)(void *args); /**< Callback associated with every interrupt */
+#endif
 } IpcNotify_InterruptConfig;
 
 /**
@@ -68,6 +71,11 @@ typedef struct IpcNotify_MailboxConfig_s
 {
     uint32_t writeDoneMailboxBaseAddr;   /**< Mailbox register address at which core will post interrupt */
     uint32_t readReqMailboxBaseAddr;   /**< Mailbox register address at which core will receive interrupt */
+#if (defined(SOC_AM273X))
+    uint32_t readDoneMailboxBaseAddr;   /**< Mailbox register address at which core will receive acknowledgement interrupt */
+    uint32_t readDoneAckMailboxBaseAddr;  /**< Mailbox register address at which core will post acknowledgement interrupt */
+    uint32_t mailboxMemoryAddr;  /**< Mailbox register address at which core will write message for the remote core */
+#endif
     uint8_t intrBitPos;    /**< Bit pos in the mailbox register which should be set or cleared to post or clear a interrupt to other core */
     IpcNotify_SwQueue *swQ;      /**< Infomration about the SW queue associated with this HW mailbox */
 

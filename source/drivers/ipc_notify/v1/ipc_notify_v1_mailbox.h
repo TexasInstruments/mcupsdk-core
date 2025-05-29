@@ -63,8 +63,18 @@ typedef struct {
 
 } IpcNotify_SwQueue;
 
+#if !(defined(SOC_AM273X))
 extern void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos);
+#else
+extern void IpcNotify_trigInterrupt(uint32_t selfCoreId, uint32_t remoteCoreId, uint32_t mailboxBaseAddr, uint32_t intrBitPos);
+extern void IpcNotify_trigInterrupt_ack(uint32_t selfCoreId, uint32_t remoteCoreId, uint32_t mailboxBaseAddr, uint32_t intrBitPos);
+#endif
 
+/* Function to set Instruction Synchronization Barrier (ISB) and Data Synchronization Barrier on arm core (Cortex-R/Cortex-M).
+ * This ensure that all instructions and memory transactions, including cache operations, are completed. This is needed
+ * to avoid any coherency issue especially while doing read/write operation on a shared memory.
+ * For C66 core, _mefence() can be used for this purpose.
+ */
 #if defined(__aarch64__) || defined(__arm__)
 static inline void IpcNotify_dataAndInstructionBarrier(void)
 {
@@ -94,6 +104,9 @@ static inline int32_t IpcNotify_mailboxReadSwQ(IpcNotify_SwQueue *swQ, uint32_t 
 
             rdIdx = swQ->rdIdx; /* read back to ensure the update has reached the memory */
 
+            /* ensure that all instructions and memory transactions, including cache operations, are completed
+            * this is required to avoid any multi-core coherency issue since shared memory is being written/accessed
+            */
             #if defined(__aarch64__) || defined(__arm__)
             IpcNotify_dataAndInstructionBarrier();
             #endif
@@ -110,7 +123,11 @@ static inline int32_t IpcNotify_mailboxReadSwQ(IpcNotify_SwQueue *swQ, uint32_t 
 }
 
 /* write to SW fifo and trigger HW interrupt using HW mailbox */
+#if !(defined(SOC_AM273X))
 static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t intrBitPos, IpcNotify_SwQueue *swQ, uint32_t value)
+#else
+static inline int32_t IpcNotify_mailboxWrite(uint32_t selfCoreId, uint32_t remoteCoreId, uint32_t mailboxBaseAddr, uint32_t intrBitPos, IpcNotify_SwQueue *swQ, uint32_t value)
+#endif
 {
     int32_t status = SystemP_FAILURE;
 
@@ -130,6 +147,9 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
 
             wrIdx = swQ->wrIdx; /* read back to ensure the update has reached the memory */
 
+            /* ensure that all instructions and memory transactions, including cache operations, are completed
+            * this is required to avoid any multi-core coherency issue since shared memory is being written/accessed
+            */
             #if defined(__aarch64__) || defined(__arm__)
             IpcNotify_dataAndInstructionBarrier();
             #endif
@@ -139,8 +159,11 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
             #endif
 
             /* trigger interrupt to other core */
+#if !(defined(SOC_AM273X))
             IpcNotify_trigInterrupt(mailboxBaseAddr, intrBitPos);
-
+#else
+            IpcNotify_trigInterrupt(selfCoreId, remoteCoreId, mailboxBaseAddr, intrBitPos);
+#endif
             status = SystemP_SUCCESS;
         }
     }
