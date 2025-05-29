@@ -50,19 +50,32 @@ extern "C" {
  */
 
 /**
- * \brief Max size of Event object across no-RTOS and all OS's
- */
-#define EventP_OBJECT_SIZE_MAX    (60u)
-/**
  * \brief Opaque Event object used with the Event APIs
  */
+#if defined (OS_NORTOS)
 typedef struct EventP_Object_
 {
-    /* uintptr_t translates to uint64_t for A53 and uint32_t for R5 and M4 */
-    /* This accounts for the 64bit pointer in A53 and 32bit pointer in R5 and M4 */
-    uintptr_t rsv[EventP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
+    volatile uint32_t eventMask;
 } EventP_Object;
-
+#elif defined (OS_FREERTOS) || defined (OS_FREERTOS_SMP) || defined (OS_FREERTOS_MPU)
+#include <FreeRTOS.h>
+#include <event_groups.h>
+typedef struct EventP_Object_
+{
+    StaticEventGroup_t eventObj;
+    EventGroupHandle_t eventHndl;
+} EventP_Object;
+#elif defined (OS_SAFERTOS)
+#include <SafeRTOS.h>
+#include <eventgroups.h>
+typedef struct EventP_Object_
+{
+    eventGroupType eventObj;
+    eventGroupHandleType eventHndl;
+} EventP_Object;
+#else 
+#error "Define OS_NORTOS, OS_FREERTOS or OS_SAFERTOS"
+#endif
 /**
  * \brief Create an Event object
  *

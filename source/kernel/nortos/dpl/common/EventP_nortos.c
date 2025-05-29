@@ -33,12 +33,9 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/EventP.h>
+#include <stddef.h>
 
 
-typedef struct EventP_Struct_
-{
-    volatile uint32_t eventMask;
-} EventP_Struct;
 
 
 static inline uint32_t EventP_ffs(uint32_t num)
@@ -59,11 +56,19 @@ static inline uint32_t EventP_ffs(uint32_t num)
 
 int32_t EventP_construct(EventP_Object *obj)
 {
-    EventP_Struct *pEvent = (EventP_Struct *)obj;
-    DebugP_assert(sizeof(EventP_Object) >= sizeof(EventP_Struct));
-    pEvent->eventMask = 0;
+    int32_t       status  = SystemP_SUCCESS;
+    EventP_Object *pEvent = obj;
 
-    return SystemP_SUCCESS;
+    if (pEvent == NULL)
+    {
+        status = SystemP_FAILURE;
+    }    
+    else 
+    {
+        pEvent->eventMask = 0;
+    }
+
+    return status;
 }
 
 void EventP_destruct(EventP_Object *obj)
@@ -79,7 +84,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
                         uint32_t       *eventBits)
 {
 
-    EventP_Struct *pEvent = (EventP_Struct *)obj;
+    EventP_Object *pEvent = obj;
     ClockP_Params clockParams;
     ClockP_Object clockObj;
     uintptr_t     key;
@@ -136,7 +141,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
 
 int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
 {
-    EventP_Struct *pEvent = (EventP_Struct *)obj;
+    EventP_Object *pEvent = obj;
     uintptr_t key;
 
     key = HwiP_disable();
@@ -147,7 +152,7 @@ int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
 
 int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
 {
-   EventP_Struct *pEvent = (EventP_Struct *)obj;
+   EventP_Object *pEvent = obj;
    uintptr_t key;
    key = HwiP_disable();
    pEvent->eventMask &= ~bitsToClear;
@@ -158,7 +163,7 @@ int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
 
 int32_t EventP_getBits(EventP_Object *obj, uint32_t *eventBits)
 {
-    EventP_Struct *pEvent = (EventP_Struct *)obj;
+    EventP_Object *pEvent = obj;
     uintptr_t key;
     key = HwiP_disable();
     *eventBits = pEvent->eventMask;

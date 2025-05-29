@@ -35,24 +35,24 @@
 #include <FreeRTOS.h>
 #include <event_groups.h>
 
-typedef struct EventP_Struct_
-{
-    StaticEventGroup_t eventObj;
-    EventGroupHandle_t eventHndl;
-} EventP_Struct;
-
 int32_t EventP_construct(EventP_Object *obj)
 {
-    EventP_Struct   *pEvent = (EventP_Struct *)obj;
+    EventP_Object   *pEvent = obj;
     int32_t         status = SystemP_SUCCESS;
 
-    DebugP_assert(sizeof(EventP_Struct) <= sizeof(EventP_Object));
-
-    pEvent->eventHndl = xEventGroupCreateStatic(&(pEvent->eventObj));
-
-    if(pEvent->eventHndl == NULL)
+    if (pEvent == NULL)
     {
         status = SystemP_FAILURE;
+    }
+    
+    if (status == SystemP_SUCCESS)
+    {
+        pEvent->eventHndl = xEventGroupCreateStatic(&(pEvent->eventObj));
+
+        if(pEvent->eventHndl == NULL)
+        {
+            status = SystemP_FAILURE;
+        }
     }
 
     return status;
@@ -60,7 +60,7 @@ int32_t EventP_construct(EventP_Object *obj)
 
 void EventP_destruct(EventP_Object *obj)
 {
-    EventP_Struct *pEvent = (EventP_Struct *)obj;
+    EventP_Object *pEvent = obj;
 
     if(pEvent != NULL)
     {
@@ -76,7 +76,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
                         uint32_t       timeToWaitInTicks,
                         uint32_t       *eventBits)
 {
-    EventP_Struct   *pEvent = (EventP_Struct *)obj;
+    EventP_Object   *pEvent = obj;
     int32_t         status;
 
     if((pEvent == NULL) || (clearOnExit > 2U) || (waitForAll > 2U) || (eventBits == NULL))
@@ -98,7 +98,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
 
 int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
 {
-    EventP_Struct   *pEvent = (EventP_Struct *)obj;
+    EventP_Object   *pEvent = obj;
     int32_t         status;
 
     if(pEvent == NULL)
@@ -137,7 +137,7 @@ int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
 
 int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
 {
-    EventP_Struct   *pEvent = (EventP_Struct *)obj;
+    EventP_Object   *pEvent = obj;
     int32_t         status;
 
     if(pEvent == NULL)
@@ -172,7 +172,7 @@ int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
 
 int32_t EventP_getBits(EventP_Object *obj, uint32_t *eventBits)
 {
-    EventP_Struct   *pEvent = (EventP_Struct *)obj;
+    EventP_Object   *pEvent = obj;
     int32_t         status;
 
     if((pEvent == NULL) || (eventBits == NULL))
