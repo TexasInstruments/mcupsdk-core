@@ -39,15 +39,13 @@
 
 void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
 {
-    DebugP_assert( sizeof(StaticHeap_t) < sizeof(HeapP_Object) );
-
-    vHeapCreateStatic((StaticHeap_t*)heap, heapAddr, heapSize);
+    vHeapCreateStatic(heap, heapAddr, heapSize);
 }
 
 void   HeapP_destruct(HeapP_Object *heap)
 {
     vTaskSuspendAll();
-    vHeapDelete((StaticHeap_t*)heap);
+    vHeapDelete(heap);
     (void)xTaskResumeAll();
 }
 
@@ -56,7 +54,7 @@ void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
     void *ptr;
 
     vTaskSuspendAll();
-    ptr = pvHeapMalloc((StaticHeap_t*)heap, allocSize);
+    ptr = pvHeapMalloc(heap, allocSize);
     (void)xTaskResumeAll();
 
     return ptr;
@@ -65,24 +63,24 @@ void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
 void   HeapP_free( HeapP_Object *heap, void * ptr )
 {
     vTaskSuspendAll();
-    vHeapFree((StaticHeap_t*)heap, ptr);
+    vHeapFree(heap, ptr);
     (void)xTaskResumeAll();
 }
 
 size_t HeapP_getFreeHeapSize( HeapP_Object *heap )
 {
-    return xHeapGetFreeHeapSize((StaticHeap_t*)heap);
+    return xHeapGetFreeHeapSize(heap);
 }
 
 size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heap )
 {
-    return xHeapGetMinimumEverFreeHeapSize((StaticHeap_t*)heap);
+    return xHeapGetMinimumEverFreeHeapSize(heap);
 }
 
 void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats )
 {
     vTaskSuspendAll();
-    vHeapGetHeapStats((StaticHeap_t*)heap, pHeapStats);
+    vHeapGetHeapStats(heap, pHeapStats);
     (void)xTaskResumeAll();
 }
 

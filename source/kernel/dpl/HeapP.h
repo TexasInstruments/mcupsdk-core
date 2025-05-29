@@ -68,17 +68,45 @@ typedef struct HeapP_MemStats_
 } HeapP_MemStats;
 
 /**
- * \brief Max size of heap object across no-RTOS and all OS's
+ * \brief The linked list structure is used to link free blocks in order of their memory address.
  */
-#define HeapP_OBJECT_SIZE_MAX    (128U)
+typedef struct HEAP_BLOCK_LINK
+{
+    struct HEAP_BLOCK_LINK * pxNextFreeBlock; /* The next free block in the list. */
+    size_t xBlockSize;                     /* The size of the free block. */
+} HeapBlockLink_t;
+
+/**
+ * \brief Static heap instance structure.
+ */
+typedef struct StaticHeap_ {
+
+    /* Create a couple of list links to mark the start and end of the list. */
+    HeapBlockLink_t xStart;
+    HeapBlockLink_t *pxEnd;
+
+    /* Keeps track of the number of calls to allocate and free memory as well as the
+    * number of free bytes remaining, but says nothing about fragmentation. */
+    size_t xFreeBytesRemaining;
+    size_t xMinimumEverFreeBytesRemaining;
+    size_t xNumberOfSuccessfulAllocations;
+    size_t xNumberOfSuccessfulFrees;
+
+    /* Gets set to the top bit of an size_t type.  When this bit in the xBlockSize
+    * member of an HeapBlockLink_t structure is set then the block belongs to the
+    * application.  When the bit is free the block is still part of the free heap
+    * space. */
+    size_t xBlockAllocatedBit;
+
+    /* base address and size of heap */
+    void *pvHeap;
+    size_t xTotalHeapSize;
+
+} StaticHeap_t;
 /**
  * \brief Opaque heap object used with the heap APIs
  */
-typedef struct HeapP_Object_ {
-
-    uint32_t rsv[HeapP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
-
-} HeapP_Object;
+typedef StaticHeap_t HeapP_Object;
 
 /**
  * \brief Create a user defined heap
