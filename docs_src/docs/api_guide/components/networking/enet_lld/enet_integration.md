@@ -443,7 +443,7 @@ status = Enet_ioctl(hEnet, coreId, ENET_PER_IOCTL_OPEN_PORT_LINK, &prms);
    done using the below steps:
 
     - Initialize the Tx Channel and Rx Flow parameters using
-      \ref EnetDma_initTxChParams() and \ref EnetDma_initRxChParams(),
+      EnetUdma_initTxChParams() and EnetUdma_initRxFlowParams(),
       respectively.
 
     - For Tx Channel set the following parameters:

@@ -671,7 +671,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> Ethernet CPSW
-    <td> Structure \ref EnetCpdma_Cfg in \ref Cpsw_Cfg \n
+    <td> Structure \ref EnetDma_Cfg in \ref Cpsw_Cfg \n
     Function Enet_open
     <td> Removed the parameter isCacheable.
     <td> Support to place descriptor in cached memory is removed. CPDMA descriptiors has be placed un-cached memory section always.

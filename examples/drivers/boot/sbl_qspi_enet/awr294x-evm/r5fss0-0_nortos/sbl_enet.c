@@ -1264,7 +1264,7 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId, Cpsw_Cfg *c
     CpswHostPort_Cfg *hostPortCfg = &cpswCfg->hostPortCfg;
     CpswAle_Cfg *aleCfg = &cpswCfg->aleCfg;
     CpswCpts_Cfg *cptsCfg = &cpswCfg->cptsCfg;
-    EnetCpdma_Cfg *dmaCfg = (EnetCpdma_Cfg *)cpswCfg->dmaCfg;
+    EnetDma_Cfg *dmaCfg = (EnetDma_Cfg *)cpswCfg->dmaCfg;
 
     dmaCfg->rxInterruptPerMSec = 8;
     dmaCfg->txInterruptPerMSec = 2;
