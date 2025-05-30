@@ -76,16 +76,21 @@ void lin_external_main(void)
 {
     uint32_t                i;
     uint16_t                txID, error = 0;
+
+#if !defined(SOC_AM261X)
     int32_t                 status;
     uint8_t                 txBuffer[1];
     I2C_Handle              i2cHandle;
     I2C_Transaction         i2cTransaction;
+#endif
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
+#if !defined(SOC_AM261X)
     i2cHandle = gI2cHandle[CONFIG_I2C2];
+#endif
 
     DebugP_log("[LIN] LIN mode external, application started ...\r\n");
 
@@ -111,6 +116,7 @@ void lin_external_main(void)
     /* Enable the triggering of checksum compare on extended frames */
     LIN_triggerChecksumCompare(APP_LIN_BASE_ADDR);
 
+#if !defined(SOC_AM261X)
     DebugP_log("[I2C] LIN Volatage Level Shifter started ...\r\n");
 
     I2C_Transaction_init(&i2cTransaction);
@@ -120,6 +126,7 @@ void lin_external_main(void)
     txBuffer[0] = I2C_POLARITY_INV;
     status = I2C_transfer(i2cHandle, &i2cTransaction);
     DebugP_assert(status == SystemP_SUCCESS);
+#endif
 
     /*
      * Perform 8 data transmissions with different transmit IDs and varying
