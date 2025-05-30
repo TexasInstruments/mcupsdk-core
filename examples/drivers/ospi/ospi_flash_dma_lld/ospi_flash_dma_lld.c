@@ -75,7 +75,7 @@ void ospi_flash_dma_lld(void *args)
 
 #if defined (SOC_AM64X)
 /* The OSPI Controller will be configured in 8s-8s-8s mode */
-    OSPI_setProtocol(gOspiHandle,525320);
+    OSPI_lld_setProtocol(gOspiHandle,525320);
 #endif
 
     OSPI_lld_configResetPin(gOspiHandle,2);

@@ -83,7 +83,6 @@ const files_r5f = {
         "ospi_v0_lld.c",
         "ospi_phy_dqs_lld.c",
         "ospi_nor_flash_lld.c",
-        "ospi_lld_dma.c",
         "ospi_udma_lld.c",
         "ospi_phy_tuning.c",
         "pcie.c",

@@ -622,7 +622,7 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     }
 
     /* Disable PHY */
-    OSPI_disablePhy(hOspi);
+    OSPI_lld_disablePhy(hOspi);
 
     return OSPI_SYSTEM_SUCCESS;
 }

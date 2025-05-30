@@ -93,6 +93,7 @@ extern "C"
 
 /* Driver DMA integration */
 #define DMA_VERSION_MCSPI_EDMA
+#define DMA_VERSION_OSPI_EDMA
 #define DMA_VERSION_UART_EDMA
 #define DMA_VERSION_CANFD_EDMA
 

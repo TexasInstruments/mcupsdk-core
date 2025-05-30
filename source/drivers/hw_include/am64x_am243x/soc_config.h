@@ -110,6 +110,7 @@ extern "C"
 /* Driver DMA integration */
 #define DMA_VERSION_MCSPI_UDMA
 #define DMA_VERSION_UART_UDMA
+#define DMA_VERSION_OSPI_UDMA
 #define DMA_VERSION_GPMC_UDMA
 #define DMA_VERSION_CANFD_UDMA
 

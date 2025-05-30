@@ -56,7 +56,6 @@
 
 #include <stdint.h>
 #include <drivers/ospi/v0/lld/ospi_lld.h>
-#include <drivers/ospi/v0/lld/dma/udma/ospi_udma_lld.h>
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/SemaphoreP.h>
@@ -70,8 +69,10 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+struct OSPI_Config_s;
+
 /** \brief A handle that is returned from a #OSPI_open() call */
-typedef void *OSPI_Handle;
+typedef struct OSPI_Config_s *OSPI_Handle;
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -169,7 +170,7 @@ typedef struct
     /* QSPI LLD Object and Handle */
 } OSPI_Object;
 
-typedef struct
+typedef struct OSPI_Config_s
 {
     const OSPI_Attrs *attrs;
     /**< Pointer to driver specific hardware attributes */

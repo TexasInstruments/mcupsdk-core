@@ -222,14 +222,13 @@ OSPI_Handle OSPI_open(uint32_t index, const OSPI_Params *openParams)
         {
             ospilldInitHandle->ospiDmaHandle    = (OSPI_DmaHandle) dmaConfig;
             ospilldInitHandle->ospiDmaChConfig  = (OSPI_DmaChConfig) dmaConfig->ospiDmaArgs;
-            dmaConfig->ospiDrvHandle            = (OSPI_DrvHandle) ospilldHandle;
 
             if (NULL != ospilldInitHandle->ospiDmaHandle)
             {
                 /* Program OSPI instance according the user config */
                 status += OSPI_lld_initDma(ospilldHandle);
 
-                dmaInterrupt = OSPI_isDmaInterruptEnabled(ospilldInitHandle->ospiDmaHandle);
+                dmaInterrupt = OSPI_isDmaInterruptEnabled(ospilldHandle);
                 if (dmaInterrupt == OSPI_TRUE)
                 {
                     ospilldHandle->readCompleteCallback = &OSPI_dmaInterruptCallback;
@@ -865,7 +864,7 @@ int32_t OSPI_readDirect(OSPI_Handle handle, OSPI_Transaction *trans)
         hOspi = &obj->ospilldObject;
         if (hOspi->hOspiInit->dmaEnable == OSPI_TRUE)
         {
-            dmaInterruptStatus = OSPI_isDmaInterruptEnabled(hOspi->hOspiInit->ospiDmaHandle);
+            dmaInterruptStatus = OSPI_isDmaInterruptEnabled(hOspi);
 
             status = OSPI_lld_readDirectDma(hOspi, trans);
 

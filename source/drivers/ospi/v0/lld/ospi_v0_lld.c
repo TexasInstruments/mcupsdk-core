@@ -45,7 +45,6 @@
 #include <string.h>
 #include <drivers/ospi/v0/lld/ospi_lld.h>
 #include <drivers/hw_include/cslr.h>
-#include <drivers/ospi/v0/lld/dma/udma/ospi_udma_lld.h>
 #include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 #include <drivers/soc.h>
 
@@ -257,8 +256,7 @@ int32_t OSPI_lld_initDma(OSPILLD_Handle hOspi)
         status += OSPI_lld_isChipSelectValid(hOspiInit->chipSelect);
         status += OSPI_lld_isDecoderChipSelectValid(hOspiInit->decChipSelect);
 
-        // status = OSPI_udmaInit(hOspi);
-        status += OSPI_dmaOpen(hOspi->openParams->ospiDmaChIndex);
+        status += OSPI_dmaOpen(hOspi);
 
         /* Program OSPI instance according the user config */
         status += OSPI_programInstance(hOspi);
@@ -353,8 +351,7 @@ int32_t OSPI_lld_deInitDma(OSPILLD_Handle hOspi)
         hOspiInit = hOspi->hOspiInit;
         if (hOspiInit != NULL)
         {
-            // status = OSPI_udmaDeInit(hOspi);
-            status = OSPI_dmaClose(hOspi->hOspiInit->ospiDmaHandle);
+            status = OSPI_dmaClose(hOspi);
 
             if(hOspiInit->phyEnable == TRUE)
             {
@@ -1308,7 +1305,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
                     trans->transferTimeout = 5000;
                 }
                 hOspi->currTrans->state = OSPI_TRANSFER_MODE_BLOCKING;
-                OSPI_dmaCopy(hOspi->hOspiInit->ospiDmaHandle, tempDst, tempSrc, remainingBytes - unalignedBytes, trans->transferTimeout);
+                OSPI_dmaCopy(hOspi, tempDst, tempSrc, remainingBytes - unalignedBytes, trans->transferTimeout);
             }
         }
         else

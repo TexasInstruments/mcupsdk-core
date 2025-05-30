@@ -58,6 +58,7 @@
 #include <stdbool.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_ospi.h>
+#include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 #include <drivers/ospi/v0/cslr_ospi.h>
 
 #ifdef __cplusplus
@@ -68,13 +69,6 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/** \brief The handle for DMA instance used with OSPI */
-typedef void *OSPI_DmaHandle;
-
-/** \brief A handle that holds DMA configuration parameters for OSPI */
-typedef void *OSPI_DmaChConfig;
-
-typedef void *OSPI_DrvHandle;
 
 /**
  *  \anchor OSPI_TransferStatus
@@ -1545,6 +1539,54 @@ int32_t OSPI_lld_getBaudRateDivFromObj(OSPILLD_Handle handle, uint32_t *baudDiv)
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t OSPI_lld_setResetPinStatus(OSPILLD_Handle hOspi, uint32_t pinStatus);
+
+/**
+ * \brief API to open an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *
+ * \param  hOspi        An #OSPILLD_Handle returned from an #OSPI_open()
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_dmaOpen(OSPILLD_Handle hOspi);
+
+/**
+ * \brief API to close an OSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param handle  [in] An #OSPILLD_Handle returned from an #OSPI_open()
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_dmaClose(OSPILLD_Handle handle);
+
+/**
+ * \brief API to do a DMA Copy using appropriate DMA Channel opened
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param handle        [in] An #OSPILLD_Handle returned from an #OSPI_open()
+ * \param dst           [in] Destination address to which the data is to be copied
+ * \param src           [in] Source address from which the data is to be copied
+ * \param length        [in] Data length
+ * \param timeout 		[in] Timeout for the transaction
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_dmaCopy(OSPILLD_Handle handle, void* dst, void* src, uint32_t length,uint32_t timeout);
+
+/**
+ * \brief API to get the DMA Interrupt status
+ *
+ * This API will retrieve the interrrupt status of the DMA Channel
+
+ * \param handle        [in] An #OSPILLD_Handle returned from an #OSPI_open()
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_isDmaInterruptEnabled(OSPILLD_Handle handle);
 
 /** @} */
 

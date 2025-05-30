@@ -51,14 +51,6 @@
 static void OSPI_edmaIsrFxn(Edma_IntrHandle intrHandle, void *args);
 void OSPI_EdmaParams_init(void * pvEdmaParams);
 
-OSPI_DmaFxns gOspiDmaEdmaFxns =
-{
-    .dmaOpenFxn = OSPI_edmaInit,
-    .dmaCloseFxn = OSPI_edmaDeInit,
-    .dmaCopyFxn = OSPI_edmaCopy,
-    .dmaItrStatusFxn = OSPI_edmaItrStatus,
-};
-
 void OSPI_EdmaParams_init(void * pvEdmaParams)
 {
     if( pvEdmaParams != NULL)
@@ -75,14 +67,13 @@ void OSPI_EdmaParams_init(void * pvEdmaParams)
     }
 }
 
-int32_t OSPI_edmaInit(OSPI_DmaHandle ospiDmaArgs)
+int32_t OSPI_dmaOpen(OSPILLD_Handle hOspi)
 {
 
     uint32_t baseAddr, regionId, dmaCh, tcc, param,dmaChainCh, chainParam;
     int32_t status = SystemP_FAILURE;
     uint32_t isEdmaInterruptEnabled;
 
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaArgs;
     OspiDma_EdmaArgs *edmaParams = (OspiDma_EdmaArgs*)hOspi->hOspiInit->ospiDmaChConfig;
     Edma_IntrObject *edmaIntrObject = &(edmaParams->edmaIntrObj);
     EDMA_Handle ospiEdmaHandle = EDMA_getHandle(edmaParams->edmaInst);
@@ -182,13 +173,12 @@ int32_t OSPI_edmaInit(OSPI_DmaHandle ospiDmaArgs)
     return status;
 }
 
-int32_t OSPI_edmaDeInit(OSPI_DmaHandle ospiDmaArgs)
+int32_t OSPI_dmaClose(OSPILLD_Handle hOspi)
 {
     int32_t             status = SystemP_SUCCESS;
     int32_t             retVal;
     uint32_t            baseAddr, regionId, dmaCh, tcc, param,dmaChainCh, chainParam;
 
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaArgs;
     OspiDma_EdmaArgs *edmaParams = (OspiDma_EdmaArgs*)hOspi->hOspiInit->ospiDmaChConfig;
     
     EDMA_Handle ospiEdmaHandle = EDMA_getHandle(edmaParams->edmaInst);
@@ -222,13 +212,12 @@ int32_t OSPI_edmaDeInit(OSPI_DmaHandle ospiDmaArgs)
     return status;
 }
 
-int32_t OSPI_edmaCopy(OSPI_DmaHandle ospiDmaArgs, void* dst, void* src, uint32_t length,uint32_t timeout)
+int32_t OSPI_dmaCopy(OSPILLD_Handle hOspi, void* dst, void* src, uint32_t length,uint32_t timeout)
 {
     int32_t         status = SystemP_SUCCESS;
     uint32_t        baseAddr, regionId, dmaCh, tcc, param,dmaChainCh, chainParam, chainOptions;
     uint32_t        edmaStatus;
     uint32_t        startTicks, elapsedTicks = 0;
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaArgs;
     OspiDma_EdmaArgs *edmaParams = (OspiDma_EdmaArgs*)hOspi->hOspiInit->ospiDmaChConfig;
     uint32_t transTimeout = hOspi->Clock_usecToTicks(timeout);
 
@@ -369,11 +358,8 @@ static void OSPI_edmaIsrFxn(Edma_IntrHandle intrHandle, void *args)
     OSPI_lld_readCompleteCallback((OSPILLD_Handle)args);
 }
 
-int32_t OSPI_edmaItrStatus(OSPI_DmaHandle ospiDmaHandle)
-{
-
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaHandle;
-    
+int32_t OSPI_isDmaInterruptEnabled(OSPILLD_Handle hOspi)
+{    
     OspiDma_EdmaArgs *edmaParams = (OspiDma_EdmaArgs*)hOspi->hOspiInit->ospiDmaChConfig;
 
     return (int32_t)edmaParams->isIntEnabled;

@@ -299,7 +299,7 @@ static int32_t Flash_norOspiSet4ByteAddrMode(Flash_Config *config)
     return status;
 }
 
-static int32_t Flash_norOspiSetAddressBytes(Flash_Config *config, void *ospiHandle)
+static int32_t Flash_norOspiSetAddressBytes(Flash_Config *config, OSPI_Handle ospiHandle)
 {
     int32_t status = SystemP_SUCCESS;
     Flash_DevConfig *devCfg = config->devConfig;
@@ -504,7 +504,7 @@ static int32_t Flash_setOeBit(Flash_Config *config, uint8_t oeType)
     return status;
 }
 
-static int32_t Flash_norOspiSetModeDummy(Flash_Config *config, void *ospiHandle)
+static int32_t Flash_norOspiSetModeDummy(Flash_Config *config, OSPI_Handle ospiHandle)
 {
     int32_t status = SystemP_SUCCESS;
     Flash_DevConfig *devCfg = config->devConfig;
@@ -546,7 +546,7 @@ static int32_t Flash_norOspiSetModeDummy(Flash_Config *config, void *ospiHandle)
     return status;
 }
 
-static int32_t Flash_norOspiSetDTR(Flash_Config *config, void *ospiHandle)
+static int32_t Flash_norOspiSetDTR(Flash_Config *config, OSPI_Handle ospiHandle)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -727,11 +727,11 @@ static int32_t Flash_set888mode(Flash_Config *config, uint8_t seq)
     return status;
 }
 
-static int32_t Flash_norOspiSetProtocol(Flash_Config *config, void *ospiHandle, Flash_Params *params)
+static int32_t Flash_norOspiSetProtocol(Flash_Config *config, OSPI_Handle ospiHandle, Flash_Params *params)
 {
     int32_t status = SystemP_SUCCESS;
 
-    if((config == NULL) || (NULL == ospiHandle))
+    if((config == NULL) || (ospiHandle == NULL))
     {
         status = SystemP_FAILURE;
     }

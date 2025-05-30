@@ -30,22 +30,14 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <drivers/udma.h>
+#include <drivers/ospi.h>
 #include <drivers/ospi/v0/lld/dma/udma/ospi_udma_lld.h>
 #include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
-#include <drivers/udma.h>
 #include <kernel/dpl/CacheP.h>
 #include <drivers/ospi/v0/lld/dma/soc/ospi_dma_soc.h>
 
-OSPI_DmaFxns gOspiDmaUdmaFxns =
-{
-    .dmaOpenFxn = OSPI_udmaInit,
-    .dmaCloseFxn = OSPI_udmaDeInit,
-    .dmaCopyFxn = OSPI_udmaCopy,
-    .dmaItrStatusFxn = OSPI_udmaItrStatus,
-};
-
-
-int32_t OSPI_udmaInit(OSPI_DmaHandle ospiDmaHandle)
+int32_t OSPI_dmaOpen(OSPILLD_Handle hOspi)
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -58,8 +50,6 @@ int32_t OSPI_udmaInit(OSPI_DmaHandle ospiDmaHandle)
     Udma_DrvHandle      drvHandle;
     uint8_t*            trpdMem;
     uint32_t            trpdMemSize;
-
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaHandle;
 
     udmaParams = (OSPI_UdmaParams *)hOspi->hOspiInit->ospiDmaChConfig;
     
@@ -165,12 +155,11 @@ int32_t OSPI_udmaInit(OSPI_DmaHandle ospiDmaHandle)
     return status;
 }
 
-int32_t OSPI_udmaDeInit(OSPI_DmaHandle ospiDmaHandle)
+int32_t OSPI_dmaClose(OSPILLD_Handle hOspi)
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
     OSPI_UdmaParams     *udmaParams;
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaHandle;
 
     udmaParams = (OSPI_UdmaParams *)hOspi->hOspiInit->ospiDmaChConfig;
 
@@ -265,7 +254,7 @@ static int32_t OSPI_udmaUpdateSubmitTR(OSPI_UdmaParams *udmaParams, void* dst, v
     return status;
 }
 
-int32_t OSPI_udmaCopy(OSPI_DmaHandle ospiDmaHandle, void* dst, void* src, uint32_t length,uint32_t timeout)
+int32_t OSPI_dmaCopy(OSPILLD_Handle hOspi, void* dst, void* src, uint32_t length,uint32_t timeout)
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -273,8 +262,6 @@ int32_t OSPI_udmaCopy(OSPI_DmaHandle ospiDmaHandle, void* dst, void* src, uint32
     uint32_t rmainder = 0U;
     uint16_t icnt[4] = { 0U, 0U, 0U, 0U };
     OSPI_UdmaParams     *udmaParams;
-
-    OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaHandle;
 
     udmaParams = (OSPI_UdmaParams *)hOspi->hOspiInit->ospiDmaChConfig;
 
@@ -334,7 +321,7 @@ int32_t OSPI_udmaCopy(OSPI_DmaHandle ospiDmaHandle, void* dst, void* src, uint32
 }
 
 
-int32_t OSPI_udmaItrStatus(OSPI_DmaHandle ospiDmaHandle)
+int32_t OSPI_isDmaInterruptEnabled(OSPILLD_Handle hOspi)
 {
     int32_t status = OSPI_SYSTEM_FAILURE;
     /* UDMA Interrupt TO-DO */

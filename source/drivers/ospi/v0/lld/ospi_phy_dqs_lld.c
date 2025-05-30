@@ -704,9 +704,9 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     uint32_t rdDelay;
     uint8_t rxDll, txDll;
 
-    OSPI_enablePhy(hOspi);
+    OSPI_lld_enablePhy(hOspi);
     /* keep phy pipeline disabled */
-    OSPI_disablePhyPipeline(hOspi);
+    OSPI_lld_disablePhyPipeline(hOspi);
 
     /* Perform the Basic PHY configuration for the OSPI controller */
     OSPI_phyBasicConfig(hOspi);
@@ -737,7 +737,7 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     }
 
     /* Disable PHY */
-    OSPI_disablePhy(hOspi);
+    OSPI_lld_disablePhy(hOspi);
 
     return OSPI_SYSTEM_SUCCESS;
 }

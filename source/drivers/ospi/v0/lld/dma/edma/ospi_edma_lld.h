@@ -34,11 +34,7 @@
 #define OSPI_EDMA_LLD_H_
 
 #include <stdint.h>
-#include <kernel/dpl/SemaphoreP.h>
-#include <drivers/ospi.h>
 #include <drivers/edma.h>
-#include <drivers/ospi/v0/lld/ospi_lld.h>
-#include <drivers/ospi/v0/lld/dma/ospi_lld_dma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -51,7 +47,7 @@ extern "C"
  *  Used to store the EDMA parameters allocated for OSPI transfer.
  *
  */
-typedef struct
+typedef struct OspiDma_EdmaArgs_s
 {
     uint32_t edmaTcc;
     /**< EDMA TCC used for QSPI transfer */
@@ -75,55 +71,18 @@ typedef struct
     /**< EDMA Interrupt object */
 } OspiDma_EdmaArgs;
 
-extern OSPI_DmaFxns gOspiDmaEdmaFxns;
+typedef struct OSPI_DmaConfig_s
+{
+	OspiDma_EdmaArgs *ospiDmaArgs;
+	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct 
+	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
+	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
+	 */
 
-/**
- * \brief API to open an OSPI DMA channel
- *
- * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
- *
- * \param index [in] Index of the DMA Config selected for this particular OSPI driver instance
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-int32_t OSPI_edmaInit(OSPI_DmaHandle handle);
+} OSPI_DmaConfig;
 
-/**
- * \brief API to close an OSPI DMA channel
- *
- * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
- *
- * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-int32_t OSPI_edmaDeInit(OSPI_DmaHandle handle);
-
-/**
- * \brief API to do a DMA Copy using appropriate DMA Channel opened
- *
- * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
- *
- * \param handle        [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
- * \param dst           [in] Destination address to which the data is to be copied
- * \param src           [in] Source address from which the data is to be copied
- * \param length        [in] Data length
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-int32_t OSPI_edmaCopy(OSPI_DmaHandle handle, void* dst, void* src, uint32_t length,uint32_t timeout);
-
-/**
- * \brief API to close an OSPI DMA channel
- *
- * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
- *
- * \param index [in] Handle to the OSPI DMA Config Object returned from \ref OSPI_dmaOpen
- *
- * \return SystemP_SUCCESS on success, else failure
- */
-int32_t OSPI_edmaItrStatus(OSPI_DmaHandle handle);
-
+typedef struct OspiDma_EdmaArgs_s *OSPI_DmaChConfig;
+typedef EDMA_Config *OSPI_DmaHandle;
 
 #ifdef __cplusplus
 }
