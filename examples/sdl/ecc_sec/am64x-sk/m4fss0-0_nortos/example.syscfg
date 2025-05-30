@@ -1,0 +1,182 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc             = scripting.addModule("/drivers/ipc/ipc");
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const addr_translate2 = addr_translate.addInstance();
+const addr_translate3 = addr_translate.addInstance();
+const addr_translate4 = addr_translate.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.r5fss0_0 = "notify";
+ipc.r5fss0_1 = "notify";
+ipc.r5fss1_0 = "notify";
+ipc.r5fss1_1 = "notify";
+ipc.a53ss0_0 = "notify";
+
+addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
+addr_translate1.localAddr = 0x80000000;
+
+addr_translate2.$name      = "CONFIG_ADDR_TRANSLATE_REGION1";
+addr_translate2.systemAddr = 0x20000000;
+addr_translate2.localAddr  = 0xA0000000;
+
+addr_translate3.$name      = "CONFIG_ADDR_TRANSLATE_REGION2";
+addr_translate3.systemAddr = 0x40000000;
+addr_translate3.localAddr  = 0xC0000000;
+
+addr_translate4.$name      = "CONFIG_ADDR_TRANSLATE_REGION3";
+addr_translate4.systemAddr = 0x60000000;
+addr_translate4.localAddr  = 0x60000000;
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.MCU_UART.$assign = "MCU_USART0";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 18;
+
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(6);
+region1.memory_region[0].type               = "RAM0_M4F";
+region1.memory_region[0].$name              = "M4F_VECS";
+region1.memory_region[0].size               = 0x200;
+region1.memory_region[1].type               = "RAM0_M4F";
+region1.memory_region[1].$name              = "M4F_IRAM";
+region1.memory_region[1].size               = 0x2FE00;
+region1.memory_region[1].auto               = false;
+region1.memory_region[1].manualStartAddress = 0x200;
+region1.memory_region[2].type               = "DRAM_M4F";
+region1.memory_region[2].$name              = "M4F_DRAM";
+region1.memory_region[2].size               = 0x10000;
+region1.memory_region[2].auto               = false;
+region1.memory_region[3].$name              = "USER_SHM_MEM";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x701D0000;
+region1.memory_region[3].size               = 0x80;
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0x701D0080;
+region1.memory_region[4].size               = 0x3F80;
+region1.memory_region[4].$name              = "LOG_SHM_MEM";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x701D4000;
+region1.memory_region[5].size               = 0xC000;
+region1.memory_region[5].$name              = "IPC_VRING_MEM";
+
+section1.load_memory                  = "M4F_VECS";
+section1.group                        = false;
+section1.$name                        = "Vector Table";
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.load_memory                  = "M4F_IRAM";
+section2.group                        = false;
+section2.$name                        = "Text Segments";
+section2.output_section.create(1);
+section2.output_section[0].$name      = ".text";
+section2.output_section[0].palignment = true;
+
+section3.group                                   = false;
+section3.load_memory                             = "M4F_DRAM";
+section3.$name                                   = "Bss Segment";
+section3.output_section.create(1);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+
+section4.load_memory                  = "M4F_DRAM";
+section4.group                        = false;
+section4.$name                        = "Code and Read-Only Data";
+section4.output_section.create(2);
+section4.output_section[0].$name      = ".data";
+section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".rodata";
+section4.output_section[1].palignment = true;
+
+section5.load_memory                  = "M4F_IRAM";
+section5.group                        = false;
+section5.$name                        = "Memory and Stack Segments";
+section5.output_section.create(5);
+section5.output_section[0].$name      = ".sysmem";
+section5.output_section[0].palignment = true;
+section5.output_section[1].$name      = ".stack";
+section5.output_section[1].palignment = true;
+section5.output_section[2].$name      = ".ARM.exidx";
+section5.output_section[2].palignment = true;
+section5.output_section[3].$name      = ".init_array";
+section5.output_section[3].palignment = true;
+section5.output_section[4].$name      = ".fini_array";
+section5.output_section[4].palignment = true;
+
+section6.type                        = "NOLOAD";
+section6.load_memory                 = "USER_SHM_MEM";
+section6.group                       = false;
+section6.$name                       = "User Shared Memory";
+section6.output_section.create(1);
+section6.output_section[0].$name     = ".bss.user_shared_mem";
+section6.output_section[0].alignment = 0;
+
+section7.load_memory                 = "LOG_SHM_MEM";
+section7.group                       = false;
+section7.type                        = "NOLOAD";
+section7.$name                       = "Log Shared Memory";
+section7.output_section.create(1);
+section7.output_section[0].$name     = ".bss.log_shared_mem";
+section7.output_section[0].alignment = 0;
+
+section8.load_memory                 = "IPC_VRING_MEM";
+section8.type                        = "NOLOAD";
+section8.group                       = false;
+section8.$name                       = "IPC Shared Memory";
+section8.output_section.create(1);
+section8.output_section[0].$name     = ".bss.ipc_vring_mem";
+section8.output_section[0].alignment = 0;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.MCU_UART.RXD.$suggestSolution = "MCU_UART0_RXD";
+debug_log.uartLog.MCU_UART.TXD.$suggestSolution = "MCU_UART0_TXD";
