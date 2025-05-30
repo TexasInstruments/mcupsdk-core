@@ -21,6 +21,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_ECC
 -# ECC_R5F_CACHE
    -# \subpage EXAMPLES_SDL_ECC_R5F_CACHE
+-# ECC_SEC
+   -# \subpage EXAMPLES_SDL_ECC_SEC
 -# RTI
    -# \subpage EXAMPLES_SDL_RTI
 -# PBIST
