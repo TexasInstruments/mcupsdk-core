@@ -65,7 +65,7 @@ const mcan_v1_template_hld1 = mcan_v1_template_hld.addInstance({}, false);
 mcan_v1_template_hld1.$name = "drivers_mcan_v1_mcan_v1_template_hld0";
 mcan1.child                 = mcan_v1_template_hld1;
 
-clock.r5ClockFreq = "400MHz";
+
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

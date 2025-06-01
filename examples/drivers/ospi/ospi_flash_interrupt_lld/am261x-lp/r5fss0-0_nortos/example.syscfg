@@ -41,7 +41,6 @@ const section12  = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ospi1.$name             = "CONFIG_OSPI0";
-ospi1.inputClkFreq      = 83333333;
 ospi1.sdkInfra          = "LLD";
 ospi1.advanced          = true;
 ospi1.intrEnable        = true;

@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -47,6 +47,12 @@ const section12       = section.addInstance();
  */
 ioexp1.$name = "CONFIG_IOEXP0";
 
+const divider56       = system.clockTree["WDT0_CLK_GCM_CLKDIV"];
+divider56.divideValue = 4;
+
+const mux38       = system.clockTree["WDT0_CLK_GCM_CLKSRC_SEL"];
+mux38.inputSelect = "XTALCLK";
+
 const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1              = i2c.addInstance({}, false);
 i2c1.$name              = "CONFIG_I2C0";
@@ -83,8 +89,6 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 watchdog1.$name          = "CONFIG_WDT0";
 watchdog1.expirationTime = 2000;
-watchdog1.wdt_clk_src    = "SOC_RcmPeripheralClockSource_XTALCLK";
-watchdog1.wdt_func_clk   = 12500000;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

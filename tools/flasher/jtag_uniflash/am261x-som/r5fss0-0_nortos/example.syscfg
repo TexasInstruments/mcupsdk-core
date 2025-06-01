@@ -87,7 +87,7 @@ uart1.UART.RXD.$assign = "GPIO27";
 uart1.UART.TXD.$assign = "GPIO28";
 uart1.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
-clock.r5ClockFreq = "400MHz";
+
 
 debug_log.enableCssLog      = false;
 debug_log.enableLogZoneInfo = true;

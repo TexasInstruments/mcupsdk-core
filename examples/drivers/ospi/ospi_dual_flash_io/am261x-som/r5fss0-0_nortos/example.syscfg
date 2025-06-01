@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -46,15 +46,12 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 flash1.$name                                    = "CONFIG_FLASH0";
-flash1.proto_isAddrReg                          = true;
 flash1.proto_cmdRegRd                           = "0x85";
 flash1.proto_cmdRegWr                           = "0x81";
 flash1.proto_mask                               = "0xff";
-flash1.dummy_isAddrReg                          = true;
 flash1.dummy_cfgReg                             = "1";
 flash1.dummy_cmdRegRd                           = "0x85";
 flash1.dummy_cmdRegWr                           = "0x81";
-flash1.strDtr_isAddrReg                         = true;
 flash1.strDtr_cmdRegRd                          = "0x85";
 flash1.strDtr_cmdRegWr                          = "0x81";
 flash1.strDtr_mask                              = "255";
@@ -64,7 +61,6 @@ flash1.dummy_mask                               = "0xFF";
 flash1.dummy_bitP                               = 16;
 flash1.proto_bitP                               = 231;
 flash1.fname                                    = "IS25LX064";
-flash1.protocol                                 = "8d_8d_8d";
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.OSPI.$assign            = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
@@ -81,24 +77,14 @@ flash1.peripheralDriver.OSPI.D0.$assign         = "GPIO2";
 flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO66";
 flash1.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
-flash2.device                                   = "CUSTOM_FLASH";
 flash2.$name                                    = "CONFIG_FLASH1";
+flash2.device                                   = "CUSTOM_FLASH";
 flash2.fname                                    = "MX25UW064";
-flash2.fourByteEnableSeq                        = "0x20";
 flash2.flashDeviceBusyTimeout                   = 20000000;
-flash2.flashPageProgTimeout                     = 152;
-flash2.flashManfId                              = "0xC2";
-flash2.flashDeviceId                            = "0x8137";
-flash2.flashBlockSize                           = 65536;
-flash2.resetType                                = "0x10";
-flash2.deviceBusyType                           = "1";
-flash2.cmdExtType                               = "INVERSE";
-flash2.xspiWipRdCmd                             = "0x05";
 flash2.dummyId8                                 = 0;
 flash2.protocol                                 = "1s_1s_1s";
 flash2.addressByteSupport                       = "0";
 flash2.peripheralDriver.$name                   = "CONFIG_OSPI1";
-flash2.peripheralDriver.inputClkFreq            = 83333333;
 flash2.peripheralDriver.OSPI.$assign            = "OSPI1";
 flash2.peripheralDriver.OSPI.CLK.$assign        = "GPIO29";
 flash2.peripheralDriver.OSPI.CSn0.$assign       = "GPIO38";
@@ -113,6 +99,9 @@ flash2.peripheralDriver.OSPI.D1.$assign         = "GPIO31";
 flash2.peripheralDriver.OSPI.D0.$assign         = "GPIO30";
 flash2.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO61";
 flash2.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template1";
+
+const divider33       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider33.divideValue = 2;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";

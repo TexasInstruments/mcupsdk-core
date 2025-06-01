@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -51,7 +51,6 @@ flash1.$name                                    = "CONFIG_FLASH0";
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.advanced                = true;
 flash1.peripheralDriver.intrEnable              = true;
-flash1.peripheralDriver.inputClkFreq            = 83333333;
 flash1.peripheralDriver.baudRateDiv             = 8;
 flash1.peripheralDriver.OSPI.$assign            = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO2";
@@ -67,6 +66,9 @@ flash1.peripheralDriver.OSPI.D1.$assign         = "GPIO4";
 flash1.peripheralDriver.OSPI.D0.$assign         = "GPIO3";
 flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO66";
 flash1.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
+
+const divider31       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider31.divideValue = 2;
 
 const i2c                = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1               = i2c.addInstance({}, false);

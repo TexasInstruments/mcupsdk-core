@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -50,6 +50,9 @@ const section12       = section.addInstance();
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
+const divider29       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider29.divideValue = 5;
+
 i2c1.$name           = "CONFIG_I2C0";
 i2c1.bitRate         = "100KHZ";
 i2c1.I2C.SCL.$assign = "UART0_RTSn";
@@ -60,23 +63,12 @@ i2c2.$name               = "CONFIG_I2C1";
 eeprom1.peripheralDriver = i2c2;
 i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template2";
 
-littlefs1.$name                                          = "CONFIG_LITTLEFS0";
-littlefs1.flashOffset                                    = "0x400000";
-littlefs1.peripheralDriver.$name                         = "CONFIG_FLASH0";
-littlefs1.peripheralDriver.protocol                      = "1s_1s_1s";
-littlefs1.peripheralDriver.peripheralDriver.$name        = "CONFIG_OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.inputClkFreq = 80000000;
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$suggestSolution   = "MCAN1_TX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$suggestSolution   = "MCAN0_TX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";
+littlefs1.$name                                         = "CONFIG_LITTLEFS0";
+littlefs1.flashOffset                                   = "0x400000";
+littlefs1.peripheralDriver.$name                        = "CONFIG_FLASH0";
+littlefs1.peripheralDriver.protocol                     = "1s_1s_1s";
+littlefs1.peripheralDriver.peripheralDriver.$name       = "CONFIG_OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 debug_log.enableUartLog       = true;
 debug_log.uartLog.$name       = "CONFIG_UART0";
@@ -300,12 +292,23 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.$suggestSolution                                              = "I2C2";
-i2c2.I2C.$suggestSolution                                              = "I2C0";
-i2c2.I2C.SCL.$suggestSolution                                          = "I2C0_SCL";
-i2c2.I2C.SDA.$suggestSolution                                          = "I2C0_SDA";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.$suggestSolution     = "OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$suggestSolution = "UART1_TXD";
-debug_log.uartLog.UART.$suggestSolution                                = "UART0";
-debug_log.uartLog.UART.RXD.$suggestSolution                            = "MMC_CLK";
-debug_log.uartLog.UART.TXD.$suggestSolution                            = "MMC_CMD";
+i2c1.I2C.$suggestSolution                                                    = "I2C2";
+i2c2.I2C.$suggestSolution                                                    = "I2C0";
+i2c2.I2C.SCL.$suggestSolution                                                = "I2C0_SCL";
+i2c2.I2C.SDA.$suggestSolution                                                = "I2C0_SDA";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$suggestSolution        = "OSPI0_CLK";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$suggestSolution       = "EPWM11_A";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$suggestSolution        = "UART1_TXD";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$suggestSolution         = "EPWM12_B";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$suggestSolution         = "MCAN1_RX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$suggestSolution         = "EPWM12_A";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$suggestSolution         = "MCAN0_RX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution         = "EPWM13_A";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution         = "MCAN0_TX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_CSn0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+debug_log.uartLog.UART.$suggestSolution                                      = "UART0";
+debug_log.uartLog.UART.RXD.$suggestSolution                                  = "MMC_CLK";
+debug_log.uartLog.UART.TXD.$suggestSolution                                  = "MMC_CMD";

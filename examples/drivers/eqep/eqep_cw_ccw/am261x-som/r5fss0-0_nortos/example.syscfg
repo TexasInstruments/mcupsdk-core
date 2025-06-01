@@ -88,7 +88,7 @@ gpio3.$name          = "GPIO_CCW_PIN";
 gpio3.pinDir         = "OUTPUT";
 gpio3.GPIO_n.$assign = "GPIO50";
 
-clock.r5ClockFreq = "500MHz";
+
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

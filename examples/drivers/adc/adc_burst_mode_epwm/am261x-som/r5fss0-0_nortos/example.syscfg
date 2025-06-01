@@ -125,7 +125,7 @@ const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
 soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
 soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
 
-clock.r5ClockFreq = "400MHz";
+
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

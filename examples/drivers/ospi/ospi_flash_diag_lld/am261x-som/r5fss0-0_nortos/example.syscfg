@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.999+169"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -43,9 +43,11 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+const divider33       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider33.divideValue = 2;
+
 ospi1.$name             = "CONFIG_OSPI0";
-ospi1.inputClkFreq      = 83333333;
-ospi1.sdkInfra     = "LLD";
+ospi1.sdkInfra          = "LLD";
 ospi1.OSPI.$assign      = "OSPI0";
 ospi1.OSPI.CLK.$assign  = "GPIO2";
 ospi1.OSPI.CSn0.$assign = "GPIO0";
@@ -58,6 +60,7 @@ ospi1.OSPI.D3.$assign   = "GPIO6";
 ospi1.OSPI.D2.$assign   = "GPIO5";
 ospi1.OSPI.D1.$assign   = "GPIO4";
 ospi1.OSPI.D0.$assign   = "GPIO3";
+ospi1.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_lld_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -283,3 +286,5 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+ospi1.OSPI.RESET_OUT0.$suggestSolution  = "GPIO18";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -41,21 +42,23 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-ospi1.$name             = "CONFIG_OSPI0";
-ospi1.sdkInfra          = "LLD";
-ospi1.inputClkFreq      = 80000000;
-ospi1.OSPI.CLK.$assign  = "OSPI0_CLK";
-ospi1.OSPI.CSn0.$assign = "OSPI0_CSn0";
-ospi1.OSPI.D7.$assign   = "MCAN1_TX";
-ospi1.OSPI.D6.$assign   = "MCAN1_RX";
-ospi1.OSPI.D5.$assign   = "MCAN0_TX";
-ospi1.OSPI.D4.$assign   = "MCAN0_RX";
-ospi1.OSPI.D3.$assign   = "OSPI0_D3";
-ospi1.OSPI.D2.$assign   = "OSPI0_D2";
-ospi1.OSPI.D1.$assign   = "OSPI0_D1";
-ospi1.OSPI.D0.$assign   = "OSPI0_D0";
-ospi1.OSPI.RESET_OUT0.$assign   = "EPWM11_B";
-ospi1.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_lld_template0";
+const divider29       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider29.divideValue = 5;
+
+ospi1.$name                   = "CONFIG_OSPI0";
+ospi1.sdkInfra                = "LLD";
+ospi1.OSPI.CLK.$assign        = "OSPI0_CLK";
+ospi1.OSPI.CSn0.$assign       = "OSPI0_CSn0";
+ospi1.OSPI.D7.$assign         = "MCAN1_TX";
+ospi1.OSPI.D6.$assign         = "MCAN1_RX";
+ospi1.OSPI.D5.$assign         = "MCAN0_TX";
+ospi1.OSPI.D4.$assign         = "MCAN0_RX";
+ospi1.OSPI.D3.$assign         = "OSPI0_D3";
+ospi1.OSPI.D2.$assign         = "OSPI0_D2";
+ospi1.OSPI.D1.$assign         = "OSPI0_D1";
+ospi1.OSPI.D0.$assign         = "OSPI0_D0";
+ospi1.OSPI.RESET_OUT0.$assign = "EPWM11_B";
+ospi1.child.$name             = "drivers_ospi_v0_ospi_v0_am263px_lld_template0";
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_LOG";

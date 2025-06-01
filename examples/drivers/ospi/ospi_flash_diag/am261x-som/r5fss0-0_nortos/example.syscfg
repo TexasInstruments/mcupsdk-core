@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -40,21 +40,24 @@ const section12  = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-ospi1.$name             = "CONFIG_OSPI0";
-ospi1.inputClkFreq      = 83333333;
-ospi1.OSPI.$assign      = "OSPI0";
-ospi1.OSPI.CLK.$assign  = "GPIO2";
-ospi1.OSPI.CSn0.$assign = "GPIO0";
-ospi1.OSPI.DQS.$assign  = "GPIO76";
-ospi1.OSPI.D7.$assign   = "GPIO10";
-ospi1.OSPI.D6.$assign   = "GPIO9";
-ospi1.OSPI.D5.$assign   = "GPIO8";
-ospi1.OSPI.D4.$assign   = "GPIO7";
-ospi1.OSPI.D3.$assign   = "GPIO6";
-ospi1.OSPI.D2.$assign   = "GPIO5";
-ospi1.OSPI.D1.$assign   = "GPIO4";
-ospi1.OSPI.D0.$assign   = "GPIO3";
-ospi1.OSPI.RESET_OUT0.$assign   = "GPIO66";
+const divider31       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider31.divideValue = 2;
+
+ospi1.$name                   = "CONFIG_OSPI0";
+ospi1.OSPI.$assign            = "OSPI0";
+ospi1.OSPI.CLK.$assign        = "GPIO2";
+ospi1.OSPI.CSn0.$assign       = "GPIO0";
+ospi1.OSPI.DQS.$assign        = "GPIO76";
+ospi1.OSPI.D7.$assign         = "GPIO10";
+ospi1.OSPI.D6.$assign         = "GPIO9";
+ospi1.OSPI.D5.$assign         = "GPIO8";
+ospi1.OSPI.D4.$assign         = "GPIO7";
+ospi1.OSPI.D3.$assign         = "GPIO6";
+ospi1.OSPI.D2.$assign         = "GPIO5";
+ospi1.OSPI.D1.$assign         = "GPIO4";
+ospi1.OSPI.D0.$assign         = "GPIO3";
+ospi1.OSPI.RESET_OUT0.$assign = "GPIO66";
+ospi1.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
