@@ -445,7 +445,7 @@ typedef void *UART_DmaChConfig;
 /* ========================================================================== */
 typedef struct UART_ExtendedParams_s
 {
-     void                   *args;
+    uint32_t                   *args;
     /**< [IN] Argument to be passed to the callback function */
 } UART_ExtendedParams;
 
@@ -466,7 +466,7 @@ typedef struct
     /**< Timeout for this transaction in units of system ticks */
     uint32_t                status;
     /**< [OUT] \ref UART_TransferStatus code */
-    void                   *args;
+    uint32_t                *args;
     /**< [IN] Argument to be passed to the callback function */
 } UART_Transaction;
 
@@ -583,7 +583,7 @@ typedef struct
     /*
      * UART write variables
      */
-    const void             *writeBuf;
+    const uint8_t          *writeBuf;
     /**< Buffer data pointer */
     uint32_t                writeCount;
     /**< Number of Chars sent */
@@ -593,7 +593,7 @@ typedef struct
     /*
      * UART receive variables
      */
-    void                   *readBuf;
+    uint8_t                 *readBuf;
     /**< Buffer data pointer */
     uint32_t                readCount;
     /**< Number of Chars read */
@@ -735,7 +735,7 @@ int32_t UART_lld_deInitDma(UARTLLD_Handle hUart);
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_write(UARTLLD_Handle hUart, void * txBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_write(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size, uint32_t timeout,
                        const UART_ExtendedParams *extendedParams);
 
 /**
@@ -749,7 +749,7 @@ int32_t UART_lld_write(UARTLLD_Handle hUart, void * txBuf, uint32_t size, uint32
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
+int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
                            const UART_ExtendedParams *extendedParams);
 
 /**
@@ -763,7 +763,7 @@ int32_t UART_lld_writeIntr(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
+int32_t UART_lld_writeDma(UARTLLD_Handle hUart, uint8_t * txBuf, uint32_t size,
                           const UART_ExtendedParams *extendedParams);
 
 /**
@@ -778,7 +778,7 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_read(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint32_t timeout,
                       const UART_ExtendedParams *extendedParams);
 
 /**
@@ -793,7 +793,7 @@ int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
+int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size, uint32_t timeout,
                       const UART_ExtendedParams *extendedParams);
 
 /**
@@ -807,7 +807,7 @@ int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t si
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_readIntr(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
+int32_t UART_lld_readIntr(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
                          const UART_ExtendedParams *extendedParams);
 
 /**
@@ -821,7 +821,7 @@ int32_t UART_lld_readIntr(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
  *  \return #SystemP_SUCCESS if successful; else error on failure
  *
  */
-int32_t UART_lld_readDma(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
+int32_t UART_lld_readDma(UARTLLD_Handle hUart, uint8_t * rxBuf, uint32_t size,
                         const UART_ExtendedParams *extendedParams);
 
 /**

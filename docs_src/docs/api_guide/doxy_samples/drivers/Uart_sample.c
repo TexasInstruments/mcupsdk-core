@@ -7,7 +7,7 @@
 #define CONFIG_UART0            (0U)
 #define APP_UART_MSGSIZE        (8U)
 
-UART_Handle        gUartHandle;
+UART_Config*        gUartHandle;
 /* Semaphore to indicate Write/Read completion used in callback api's */
 SemaphoreP_Object gUartWriteDoneSem;
 SemaphoreP_Object gUartReadDoneSem;

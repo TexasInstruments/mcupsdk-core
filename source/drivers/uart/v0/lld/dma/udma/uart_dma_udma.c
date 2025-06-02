@@ -241,7 +241,7 @@ static int32_t UART_udmaConfigPdmaTx(UARTLLD_Handle hUart, const UART_Transactio
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Update host packet descriptor, length should be always in terms of total number of bytes */
-    UART_udmaHpdInit(txChHandle, (uint8_t *) udmaChCfg->txHpdMem, hUart->writeBuf, transaction->count);
+    UART_udmaHpdInit(txChHandle, (uint8_t *) udmaChCfg->txHpdMem, ((const void*)hUart->writeBuf), transaction->count);
 
     retVal = Udma_ringQueueRaw(
                  Udma_chGetFqRingHandle(txChHandle),
@@ -276,7 +276,7 @@ static int32_t UART_udmaConfigPdmaRx(UARTLLD_Handle hUart, const UART_Transactio
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Update host packet descriptor, length should be always in terms of total number of bytes */
-    UART_udmaHpdInit(rxChHandle, (uint8_t *) udmaChCfg->rxHpdMem, hUart->readBuf, transaction->count);
+    UART_udmaHpdInit(rxChHandle, (uint8_t *) udmaChCfg->rxHpdMem, (void*) hUart->readBuf, transaction->count);
 
     /* Submit HPD to channel */
     retVal = Udma_ringQueueRaw(

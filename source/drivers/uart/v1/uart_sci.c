@@ -77,7 +77,7 @@
 
 typedef struct
 {
-    void                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Driver lock - to protect across open/close */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
@@ -178,10 +178,10 @@ void UART_deinit(void)
     return;
 }
 
-UART_Handle UART_open(uint32_t index, const UART_Params *prms)
+UART_Config* UART_open(uint32_t index, const UART_Params *prms)
 {
     int32_t             status = SystemP_SUCCESS;
-    UART_Handle         handle = NULL;
+    UART_Config        *handle = NULL;
     UART_Config        *config = NULL;
     UART_Object        *object    = NULL;
     HwiP_Params         hwiPrms;
@@ -213,8 +213,6 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
 
     if(SystemP_SUCCESS == status)
     {
-        /* Init state */
-        object->handle = (UART_Handle) config;
         if(NULL != prms)
         {
             memcpy(&object->prms, prms, sizeof(UART_Params));
@@ -270,7 +268,7 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
         /* Initialize the DMA configuration */
         if(UART_CONFIG_MODE_DMA == object->prms.transferMode)
         {
-            UART_edmaChannelConfig((UART_Handle) config, object->prms.edmaInst);
+            UART_edmaChannelConfig(config, object->prms.edmaInst);
         }
 
         /* Start the SCI */
@@ -281,7 +279,7 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
     if(SystemP_SUCCESS == status)
     {
         object->isOpen = TRUE;
-        handle = (UART_Handle) config;
+        handle = config;
     }
 
     SemaphoreP_post(&gUartDrvObj.lockObj);
@@ -291,16 +289,16 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
     {
         if(NULL != config)
         {
-            UART_close((UART_Handle) config);
+            UART_close(config);
         }
     }
 
     return (handle);
 }
 
-UART_Handle UART_getHandle(uint32_t index)
+UART_Config* UART_getHandle(uint32_t index)
 {
-    UART_Handle         handle = NULL;
+    UART_Config*         handle = NULL;
 
     /* Check index */
     if(index < gUartConfigNum)
@@ -312,20 +310,20 @@ UART_Handle UART_getHandle(uint32_t index)
         if(object && (TRUE == object->isOpen))
         {
             /* valid handle */
-            handle = object->handle;
+            handle = &gUartConfig[index];
         }
     }
 
     return handle;
 }
 
-void UART_close(UART_Handle handle)
+void UART_close(UART_Config *handle)
 {
     UART_Config        *config;
     UART_Object        *object;
     const UART_Attrs   *attrs;
 
-    config = (UART_Config *) handle;
+    config = handle;
 
     if((NULL != config) &&
        (config->object != NULL) &&
@@ -378,7 +376,7 @@ void UART_close(UART_Handle handle)
     return;
 }
 
-int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
+int32_t UART_write(UART_Config *handle, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
     UART_Config        *config;
@@ -394,7 +392,7 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
 
     if(SystemP_SUCCESS == status)
     {
-        config  = (UART_Config *) handle;
+        config  = handle;
         object  = config->object;
         attrs   = config->attrs;
 
@@ -466,7 +464,7 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
+int32_t UART_read(UART_Config *handle, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
     UART_Config        *config;
@@ -482,7 +480,7 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
 
     if(SystemP_SUCCESS == status)
     {
-        config  = (UART_Config *) handle;
+        config  = handle;
         object     = config->object;
         attrs   = config->attrs;
         DebugP_assert(NULL != object);
@@ -554,7 +552,7 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans)
+int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
     UART_Config        *config;
@@ -569,7 +567,7 @@ int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans)
 
     if(SystemP_SUCCESS == status)
     {
-        config = (UART_Config *) handle;
+        config = handle;
         object = config->object;
         attrs = config->attrs;
         DebugP_assert(NULL != object);
@@ -600,7 +598,7 @@ int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans)
             */
             if(object->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                 object->prms.writeCallbackFxn((UART_Handle) config, object->writeTrans);
+                 object->prms.writeCallbackFxn(object->writeTrans);
             }
             else
             {
@@ -618,7 +616,7 @@ int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans)
     return (status);
 }
 
-int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans)
+int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans)
 {
     int32_t             status = SystemP_SUCCESS;
     UART_Config        *config;
@@ -633,7 +631,7 @@ int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans)
 
     if(SystemP_SUCCESS == status)
     {
-        config = (UART_Config *) handle;
+        config = handle;
         object = config->object;
         attrs = config->attrs;
         DebugP_assert(NULL != object);
@@ -660,7 +658,7 @@ int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans)
             object->readTrans->status = UART_TRANSFER_STATUS_CANCELLED;
             if(object->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
             {
-                object->prms.readCallbackFxn((UART_Handle) config, object->readTrans);
+                object->prms.readCallbackFxn(object->readTrans);
             }
             else
             {
@@ -678,7 +676,7 @@ int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans)
     return (status);
 }
 
-void UART_flushTxFifo(UART_Handle handle)
+void UART_flushTxFifo(UART_Config *handle)
 {
     UART_Config        *config;
     UART_Object        *object;
@@ -686,7 +684,7 @@ void UART_flushTxFifo(UART_Handle handle)
     uint32_t            timeout = UART_TRANSMITEMPTY_TRIALCOUNT;
     uint32_t            timeoutElapsed  = FALSE;
 
-    config = (UART_Config *) handle;
+    config = handle;
 
     if ((NULL != config) &&
        (config->object != NULL) &&
@@ -759,7 +757,7 @@ static void UART_controllerIsr(void *arg)
                         /* Update the driver internal status */
                         /* Reset the read buffer so we can pass it back */
                         object->readBuf =
-                            (uint8_t *)object->readBuf - object->readCount;
+                            object->readBuf - object->readCount;
                         if(object->readTrans != NULL)
                         {
                             object->readTrans->count = (uint32_t)(object->readCount);
@@ -772,7 +770,7 @@ static void UART_controllerIsr(void *arg)
                          */
                         if(object->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
                         {
-                            object->prms.readCallbackFxn((UART_Handle) config, object->readTrans);
+                            object->prms.readCallbackFxn(object->readTrans);
                         }
                         else
                         {
@@ -807,7 +805,7 @@ static void UART_controllerIsr(void *arg)
                         UART_txIntrDisable(object->pSCIRegs);
 
                         /* Reset the write buffer so we can pass it back */
-                        object->writeBuf = (const uint8_t *)object->writeBuf - object->writeCount;
+                        object->writeBuf = object->writeBuf - object->writeCount;
                         if(object->writeTrans != NULL)
                         {
                             object->writeTrans->count = (uint32_t)(object->writeCount);
@@ -820,7 +818,7 @@ static void UART_controllerIsr(void *arg)
                         */
                         if(object->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
                         {
-                             object->prms.writeCallbackFxn((UART_Handle) config, object->writeTrans);
+                             object->prms.writeCallbackFxn(object->writeTrans);
                         }
                         else
                         {
@@ -888,7 +886,7 @@ static Bool UART_writeCancelNoCB(UART_Object *object, UART_Attrs const *attrs)
     else
     {
         /* Reset the write buffer so we can pass it back */
-        object->writeBuf = (const uint8_t *)object->writeBuf - object->writeCount;
+        object->writeBuf = object->writeBuf - object->writeCount;
         if(object->writeTrans != NULL)
         {
             object->writeTrans->count = (uint32_t)(object->writeCount);
@@ -922,7 +920,7 @@ static Bool UART_readCancelNoCB(UART_Object *object, UART_Attrs const *attrs)
     else
     {
         /* Reset the read buffer so we can pass it back */
-        object->readBuf = (uint8_t *)object->readBuf - object->readCount;
+        object->readBuf = object->readBuf - object->readCount;
         if(object->readTrans != NULL)
         {
             object->readTrans->count = object->readCount;
@@ -1309,10 +1307,10 @@ static inline void UART_txChar(UART_Object *object)
 {
     uint8_t txCh;
 
-    txCh = *((uint8_t *) object->writeBuf);
+    txCh = *(object->writeBuf);
     CSL_FINS(object->pSCIRegs->SCITD, SCI_SCITD_TD, txCh);
     object->writeSizeRemaining--;
-    object->writeBuf = (uint8_t *) object->writeBuf + 1;
+    object->writeBuf = object->writeBuf + 1;
     object->writeCount++;
 
     return;
@@ -1324,9 +1322,9 @@ static inline void UART_rxChar(UART_Object *object)
 
     rxCh = (uint8_t) CSL_FEXT(object->pSCIRegs->SCIRD, SCI_SCIRD_RD);
     rxCh >>= object->shiftJustification;
-    *((uint8_t *) object->readBuf) = rxCh;
+    *(object->readBuf) = rxCh;
     object->readSizeRemaining--;
-    object->readBuf = (uint8_t *) object->readBuf + 1;
+    object->readBuf = object->readBuf + 1;
     object->readCount++;
 
     return;

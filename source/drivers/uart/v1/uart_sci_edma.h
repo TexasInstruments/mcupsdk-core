@@ -54,7 +54,7 @@ extern "C" {
  *
  *  \return #SystemP_SUCCESS if edma configuration is successfully; else error on failure
  */
-int32_t UART_edmaChannelConfig(UART_Handle uartHandle, uint32_t edmaInst);
+int32_t UART_edmaChannelConfig(UART_Config *uartHandle, uint32_t edmaInst);
 
 /**
  *  \brief  This function called by UART_read in DMA mode

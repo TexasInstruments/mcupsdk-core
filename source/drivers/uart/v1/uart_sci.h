@@ -210,7 +210,7 @@ typedef struct
     /**< Timeout for this transaction in units of system ticks */
     uint32_t                status;
     /**< [OUT] \ref UART_TransferStatus code */
-    void                   *args;
+    uint32_t                *args;
     /**< [IN] Argument to be passed to the callback function */
 } UART_Transaction;
 
@@ -221,8 +221,7 @@ typedef struct
  *  \param handle          UART_Handle
  *  \param transaction*    Pointer to a #UART_Transaction
  */
-typedef void (*UART_CallbackFxn) (UART_Handle handle,
-                                  UART_Transaction *transaction);
+typedef void (*UART_CallbackFxn) (UART_Transaction *transaction);
 
 /**
  *  \brief UART Parameters
@@ -318,14 +317,12 @@ typedef struct
     /*
      * User parameters
      */
-    UART_Handle             handle;
-    /**< Instance handle to which this object belongs */
     UART_Params             prms;
     /**< Open parameter as provided by user */
     /*
      * UART write variables
      */
-    const void             *writeBuf;
+    const uint8_t          *writeBuf;
     /**< Buffer data pointer */
     uint32_t                writeCount;
     /**< Number of Chars sent */
@@ -334,7 +331,7 @@ typedef struct
     /*
      * UART receive variables
      */
-    void                   *readBuf;
+    uint8_t                 *readBuf;
     /**< Buffer data pointer */
     uint32_t                readCount;
     /**< Number of Chars read */
@@ -356,21 +353,21 @@ typedef struct
      */
     uint32_t                isOpen;
     /**< Flag to indicate whether the instance is opened already */
-    void                   *lock;
+    SemaphoreP_Object       *lock;
     /**< Instance lock - to protect across transfers */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
-    void                   *readTransferSem;
+    SemaphoreP_Object       *readTransferSem;
     /**< Read Transfer Sync Sempahore - to sync between transfer completion ISR
      *   and task */
     SemaphoreP_Object       readTransferSemObj;
     /**< Read Transfer Sync Sempahore object */
-    void                   *writeTransferSem;
+    SemaphoreP_Object       *writeTransferSem;
     /**< Write Transfer Sync Sempahore - to sync between transfer completion ISR
      *   and task */
     SemaphoreP_Object       writeTransferSemObj;
     /**< Write Transfer Sync Sempahore object */
-    void                   *hwiHandle;
+    HwiP_Object             *hwiHandle;
     /**< Interrupt handle for controller ISR */
     HwiP_Object             hwiObj;
     /**< Interrupt object */
@@ -448,7 +445,7 @@ void UART_deinit(void);
  *  \sa     #UART_close()
  *  \sa     #UART_Params_init
  */
-UART_Handle UART_open(uint32_t index, const UART_Params *prms);
+UART_Config* UART_open(uint32_t index, const UART_Params *prms);
 
 /**
  *  \brief  Function to close a UART peripheral specified by the UART handle
@@ -459,7 +456,7 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms);
  *
  *  \sa     #UART_open()
  */
-void UART_close(UART_Handle handle);
+void UART_close(UART_Config *handle);
 
 /**
  *  \brief  Function to perform UART write operation
@@ -499,7 +496,7 @@ void UART_close(UART_Handle handle);
  *
  *  \sa     #UART_open
  */
-int32_t UART_write(UART_Handle handle, UART_Transaction *trans);
+int32_t UART_write(UART_Config *handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART read operation
@@ -535,7 +532,7 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_read(UART_Handle handle, UART_Transaction *trans);
+int32_t UART_read(UART_Config *handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART canceling of current write transaction.
@@ -568,7 +565,7 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans);
+int32_t UART_writeCancel(UART_Config *handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to perform UART canceling of current read transaction
@@ -601,7 +598,7 @@ int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans);
  *
  *  \sa     #UART_open
  */
-int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans);
+int32_t UART_readCancel(UART_Config *handle, UART_Transaction *trans);
 
 /**
  *  \brief  Function to return a open'ed UART handle given a UART instance index
@@ -611,7 +608,7 @@ int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans);
  *  \return A #UART_Handle on success or a NULL on an error or if the instance
  *            index has  NOT been opened yet
  */
-UART_Handle UART_getHandle(uint32_t index);
+UART_Config* UART_getHandle(uint32_t index);
 
 /**
  *  \brief  Function to flush a TX FIFO of peripheral specified by the UART handle
@@ -622,7 +619,7 @@ UART_Handle UART_getHandle(uint32_t index);
  *
  *  \sa     #UART_open()
  */
-void UART_flushTxFifo(UART_Handle handle);
+void UART_flushTxFifo(UART_Config *handle);
 
 /**
  *  \brief  Function to initialize the #UART_Params struct to its defaults

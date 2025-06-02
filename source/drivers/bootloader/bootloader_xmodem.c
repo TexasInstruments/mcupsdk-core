@@ -37,7 +37,7 @@
 int xmodemReceive(unsigned char *dest, int destsz);
 int xmodemTransmit(unsigned char *src, int srcsz);
 
-static UART_Handle gUartHandle;
+static UART_Config* gUartHandle;
 
 int32_t _inbyte(uint16_t timeout)
 {
