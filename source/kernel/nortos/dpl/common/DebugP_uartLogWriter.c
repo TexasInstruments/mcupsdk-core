@@ -47,7 +47,7 @@ void DebugP_uartSetDrvIndex(uint32_t uartDrvIndex)
 
 void DebugP_uartLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
 {
-    UART_Handle uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
+    UART_Config* uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
     if(uartHandle!=NULL)
     {
         UART_Transaction trans;
@@ -61,7 +61,7 @@ void DebugP_uartLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
 void DebugP_uartLogWriterPutChar(char character)
 {
     char value = character;
-    UART_Handle uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
+    UART_Config* uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
     if(uartHandle!=NULL)
     {
         UART_Transaction trans;

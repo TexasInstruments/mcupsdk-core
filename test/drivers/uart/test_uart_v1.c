@@ -84,8 +84,8 @@ static void uart_echo_callback_test(void *args);
 static void uart_read_write_cancel_test(void *args);
 static void uart_int_disable_read_write_test(void *args);
 static void uart_timeout_test(void *args);
-static void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans);
-static void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans);
+static void uart_echo_write_callback(UART_Transaction *trans);
+static void uart_echo_read_callback(UART_Transaction *trans);
 static void test_printExitString(void *args);
 
 void test_main(void *args)
@@ -121,7 +121,7 @@ static void block_mode_read_write_test(void *args)
 {
 	int32_t         transferOK;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config*     uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;  
 	
 	UART_close(gUartHandle[CONFIG_UART_CONSOLE]);
@@ -163,7 +163,7 @@ static void uartB_write_test(void *args)
 {
 	int32_t         transferOK;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config*     uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;  
 	
 	UART_close(gUartHandle[CONFIG_UARTB_CONSOLE]);
@@ -198,7 +198,7 @@ static void uart_echo_callback_test(void *args)
 {
 	int32_t         transferOK,status;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config*     uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;
 	
 	UART_close(gUartHandle[CONFIG_UART_CONSOLE]);
@@ -257,7 +257,7 @@ static void uart_read_write_cancel_test(void *args)
 {
 	int32_t         transferOK,status;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config *   uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;
 	
 	UART_close(gUartHandle[CONFIG_UART_CONSOLE]);
@@ -393,7 +393,7 @@ static void uart_timeout_test(void *args)
 {
 	int32_t         transferOK;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config*     uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;
 	
 	UART_close(gUartHandle[CONFIG_UART_CONSOLE]);
@@ -424,7 +424,7 @@ static void uart_timeout_test(void *args)
 	return;	
 }
 
-static void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans)
+static void uart_echo_write_callback(UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesWritten = trans->count;
@@ -433,7 +433,7 @@ static void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans
     return;
 }
 
-static void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
+static void uart_echo_read_callback(UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
     gNumBytesRead = trans->count;
@@ -457,7 +457,7 @@ static void test_printExitString(void *args)
 {
 	int32_t         transferOK;
     UART_Transaction trans;
-	UART_Handle      uartHandle;
+	UART_Config*     uartHandle;
     UART_Params *	uartParams = (UART_Params*)args;
 
     uartHandle = UART_open(CONFIG_UART_CONSOLE, uartParams);
