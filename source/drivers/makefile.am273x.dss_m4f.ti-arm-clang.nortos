@@ -13,6 +13,7 @@ ConfigName:=$(PROFILE)
 LIBNAME:=drivers.am273x.dss_m4f.ti-arm-clang.nortos.$(PROFILE).lib
 
 FILES_common := \
+    edma.c \
     soc.c \
     soc_rcm.c \
 

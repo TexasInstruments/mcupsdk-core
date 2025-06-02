@@ -109,6 +109,7 @@ const files_c66 = {
 
 const files_dss_m4f = {
     common: [
+        "edma.c",
         "soc.c",
         "soc_rcm.c",
     ],

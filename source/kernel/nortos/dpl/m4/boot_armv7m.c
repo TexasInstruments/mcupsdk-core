@@ -34,16 +34,21 @@
 
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
-int32_t _system_pre_init(void);
-void stack_init(register char* stack_ptr);
+/*----------------------------------------------------------------------------*/
+/* Linker defined symbol that will point to the end of the user mode stack.   */
+/* The linker will enforce 8-byte alignment.                                  */
+/*----------------------------------------------------------------------------*/
+extern int32_t __STACK_END;
 
-void stack_init(register char* stack_ptr)
+int32_t _system_pre_init(void);
+
+static inline void stack_init()
 {
    __asm__ __volatile__  ("mrs r1, control"   "\n\t": : : "cc");
    __asm__ __volatile__  ("bic r1, r1, #0x2"  "\n\t": : : "cc");
    __asm__ __volatile__  ("msr control, r1"   "\n\t": : : "cc");
    __asm__ __volatile__  ("isb sy"            "\n\t": : : "memory");
-   __asm volatile ("MSR msp, %0" : : "r" (stack_ptr) : );
+   __asm volatile ("MSR msp, %0" : : "r" ((char*)&__STACK_END) : );
 
 }
 
@@ -71,12 +76,6 @@ __attribute__((section(".stack")))
 int32_t __stack;
 
 /*----------------------------------------------------------------------------*/
-/* Linker defined symbol that will point to the end of the user mode stack.   */
-/* The linker will enforce 8-byte alignment.                                  */
-/*----------------------------------------------------------------------------*/
-extern int32_t __STACK_END;
-
-/*----------------------------------------------------------------------------*/
 /* Function declarations.                                                     */
 /*----------------------------------------------------------------------------*/
 __attribute__((weak)) extern void __mpu_init(void);
@@ -97,14 +96,12 @@ extern int32_t main(int32_t argc, char **argv);
 __attribute__((section(".text:_c_int00"), noreturn))
 void _c_int00(void)
 {
-    /* Initialize the stack pointer */
-   register char* stack_ptr = (char*)&__STACK_END;
    /*
     * Initialize the CONTROL register to change to Main
     * Stack Pointer (MSP) by setting SPSEL to 0.
     *
     */
-   stack_init(stack_ptr);
+   stack_init();
 
    /* Initialize the FPU if building for floating point */
    #ifdef __ARM_FP
