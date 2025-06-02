@@ -20,6 +20,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am273x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -268,6 +269,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_build:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -838,6 +842,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1086,6 +1091,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -1656,6 +1664,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am273x-evm_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1904,6 +1913,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_export:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -2490,6 +2502,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_multimem_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
