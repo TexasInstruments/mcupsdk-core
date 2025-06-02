@@ -1681,9 +1681,9 @@ index 0000000000..f64559ebab
 +#include <kernel/dpl/CacheP.h>
 +#include <drivers/gpmc.h>
 +
-+int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs);
-+int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* handle);
-+int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
++int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs gpmcDmaArgs);
++int32_t GpmcDma_udmaClose(Gpmc_DmaArgs handle);
++int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 +
 +
 +static int32_t GpmcDma_udmaOpen(void* gpmcDmaArgs)
@@ -1699,7 +1699,7 @@ index 0000000000..f64559ebab
 +    uint8_t*            trpdMem;
 +    uint32_t            trpdMemSize;
 +
-+    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs udmaArgs = (Gpmc_DmaArgs)gpmcDmaArgs;
 +
 +    drvHandle   = udmaArgs->drvHandle;
 +    chHandle    = udmaArgs->chHandle;
@@ -1798,7 +1798,7 @@ index 0000000000..f64559ebab
 +    int32_t status = SystemP_SUCCESS;
 +    int32_t udmaStatus = UDMA_SOK;
 +
-+    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs udmaArgs = (Gpmc_DmaArgs )gpmcDmaArgs;
 +
 +    Udma_ChHandle chHandle = udmaArgs->chHandle;
 +
@@ -1830,7 +1830,7 @@ index 0000000000..f64559ebab
 +                                            uint16_t icnt[4], int32_t dim[3], uint8_t fifodrain)
 +{
 +    int32_t status = UDMA_SOK;
-+    Gpmc_DmaArgs *udmaArgs = (Gpmc_DmaArgs *)gpmcDmaArgs;
++    Gpmc_DmaArgs udmaArgs = (Gpmc_DmaArgs)gpmcDmaArgs;
 +    Udma_ChHandle chHandle = udmaArgs->chHandle;
 +    uint8_t *trpdMem     = (uint8_t *) udmaArgs->trpdMem;
 +    uint32_t trpdMemSize = udmaArgs->trpdMemSize;

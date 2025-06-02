@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-2025 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,8 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef GPMC_UDMA_H_
-#define GPMC_UDMA_H_
+#ifndef GPMC_EDMA_H_
+#define GPMC_EDMA_H_
 
 #include <stdint.h>
 
@@ -40,33 +40,17 @@ extern "C"
 {
 #endif
 
-#define GPMC_DMA_UDMA_MAX_L0_XFER_SIZE (65536U)
-#define GPMC_DMA_UDMA_XFER_SIZE        (64512U)
-
-typedef struct Gpmc_UdmaArgs_s
+typedef struct Gpmc_EdmaArgs_s
 {
-    void            *drvHandle;
+	void            *drvHandle;
     /**< UDMA driver handle */
     void            *chHandle;
     /**< UDMA channel handle */
-    uint8_t         *trpdMem;
-    /**< UDMA TR PD memory pointers */
-    uint32_t        trpdMemSize;
-    /**< Size of TR PD memory */
-    uint8_t         *ringMem;
-    /**< UDMA Ring memory pointers */
-    uint32_t        ringMemSize;
-    /**< Size of Ring Memory */
-    uint32_t        ringElemCount;
-    /**< Ring Element Count */
-    uint32_t        localEventID;
-    /**< local Event ID for BCDMA trigger */
-
-} Gpmc_UdmaArgs;
+}Gpmc_EdmaArgs;
 
 typedef struct GPMC_DmaConfig_s
 {
-	Gpmc_UdmaArgs *gpmcDmaArgs;
+	Gpmc_EdmaArgs *gpmcDmaArgs;
 	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
 	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
@@ -74,11 +58,7 @@ typedef struct GPMC_DmaConfig_s
 
 } GPMC_DmaConfig;
 
-typedef struct Gpmc_UdmaArgs_s *Gpmc_DmaArgs;
-
-int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs gpmcDmaArgs);
-int32_t GpmcDma_udmaClose(Gpmc_DmaArgs gpmcDmaArgs);
-int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
+typedef struct Gpmc_EdmaArgs_s *Gpmc_DmaArgs;
 
 #ifdef __cplusplus
 }

@@ -30,14 +30,13 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <drivers/gpmc.h>
 #include <drivers/gpmc/v0/dma/gpmc_dma.h>
-#include <drivers/gpmc/v0/dma/udma/gpmc_dma_udma.h>
 #include <drivers/udma.h>
 #include <drivers/udma/hw_include/csl_intaggr.h>
 #include <kernel/dpl/CacheP.h>
-#include <drivers/gpmc.h>
 
-int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs)
+int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs gpmcDmaArgs)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -142,7 +141,7 @@ int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs)
     return status;
 }
 
-int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* gpmcDmaArgs)
+int32_t GpmcDma_udmaClose(Gpmc_DmaArgs gpmcDmaArgs)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
@@ -173,7 +172,7 @@ int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* gpmcDmaArgs)
 
 }
 
-static int32_t GpmcDma_udmaUpdateSubmitTR(Gpmc_DmaArgs* gpmcDmaArgs, uint8_t *dst, uint8_t *src,
+static int32_t GpmcDma_udmaUpdateSubmitTR(Gpmc_DmaArgs gpmcDmaArgs, uint8_t *dst, uint8_t *src,
                                             uint16_t icnt[4], int32_t dim[3], uint8_t fifodrain)
 {
     int32_t status = UDMA_SOK;
@@ -245,7 +244,7 @@ static int32_t GpmcDma_udmaUpdateSubmitTR(Gpmc_DmaArgs* gpmcDmaArgs, uint8_t *ds
     return status;
 }
 
-int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain)
+int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain)
 {
     int32_t status = SystemP_SUCCESS;
     int32_t udmaStatus = UDMA_SOK;
