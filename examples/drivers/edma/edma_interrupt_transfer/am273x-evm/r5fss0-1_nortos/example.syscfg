@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM273x" --part "Default" --package "ZCE" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2732-Q1" --package "NFBGA (ZCE)" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.23.0+4000"}
  */
 
 /**
@@ -12,7 +13,7 @@ const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1           = edma.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -42,16 +43,21 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.MSS_UART.$assign    = "MSS_UARTA";
+debug_log.uartLog.MSS_UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.MSS_UART.TX.$assign = "PAD_DB";
+
 edma1.$name                        = "CONFIG_EDMA0";
+debug_log.uartLog.edmaConfig       = edma1;
 edma1.instance                     = "EDMA_MSS_A";
-edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmDmaCh[0].resourceType  = scripting.forceWrite("ownDmaCh");
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
-
-debug_log.enableSharedMemLog = true;
 
 mpu_armv71.$name        = "CONFIG_MPU_REGION0";
 mpu_armv71.attributes   = "Device";
@@ -80,7 +86,7 @@ general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(4);
+region1.memory_region.create(10);
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].size               = 0x40;
 region1.memory_region[0].auto               = false;
@@ -92,8 +98,34 @@ region1.memory_region[2].$name              = "R5F_TCMB";
 region1.memory_region[3].type               = "MSS_L2_R5F";
 region1.memory_region[3].$name              = "MSS_L2";
 region1.memory_region[3].auto               = false;
-region1.memory_region[3].manualStartAddress = 0x102A0000;
+region1.memory_region[3].manualStartAddress = 0x10260000;
 region1.memory_region[3].size               = 0x40000;
+region1.memory_region[4].type               = "DSS_L3_ALL";
+region1.memory_region[4].$name              = "DSS_L3";
+region1.memory_region[4].size               = 0x390000;
+region1.memory_region[5].type               = "MSS_L2_R5F";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x102E8000;
+region1.memory_region[5].size               = 0x4000;
+region1.memory_region[5].$name              = "USER_SHM_MEM";
+region1.memory_region[6].type               = "MSS_L2_R5F";
+region1.memory_region[6].$name              = "LOG_SHM_MEM";
+region1.memory_region[6].size               = 0x4000;
+region1.memory_region[7].type               = "CUSTOM_ALL";
+region1.memory_region[7].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
+region1.memory_region[7].auto               = false;
+region1.memory_region[7].manualStartAddress = 0xC5000000;
+region1.memory_region[7].size               = 0x1F40;
+region1.memory_region[8].type               = "CUSTOM_ALL";
+region1.memory_region[8].auto               = false;
+region1.memory_region[8].$name              = "MAILBOX_HSM";
+region1.memory_region[8].manualStartAddress = 0x44000000;
+region1.memory_region[8].size               = 0x3CE;
+region1.memory_region[9].type               = "CUSTOM_ALL";
+region1.memory_region[9].auto               = false;
+region1.memory_region[9].manualStartAddress = 0x44000400;
+region1.memory_region[9].size               = 0x3CE;
+region1.memory_region[9].$name              = "MAILBOX_R5F";
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;

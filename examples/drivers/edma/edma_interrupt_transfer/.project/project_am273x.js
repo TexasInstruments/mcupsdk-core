@@ -83,6 +83,13 @@ const libs_freertos_c66 = {
     ],
 };
 
+const libs_nortos_dss_m4f = {
+    common: [
+            "nortos.am273x.dss_m4f.ti-arm-clang.${ConfigName}.lib",
+            "drivers.am273x.dss_m4f.ti-arm-clang.${ConfigName}.lib",
+        ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -137,25 +144,23 @@ const templates_freertos_c66 =
     }
 ];
 
-const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos", isPartOfSystemProject: true},
+const templates_nortos_dss_m4f =
+[
+    {
+        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "edma_interrupt_transfer",
+        },
+    }
 ];
 
-const systemProject = {
-    name: "edma_interrupt_transfer",
-    tag: "freertos_nortos",
-    skipProjectSpec: false,
-    readmeDoxygenPageTag: readmeDoxygenPageTag,
-    board: "am273x-evm",
-    projects: [
-        { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos"},
-        { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
-        { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos"},
-    ],
-
-};
+const buildOptionCombos = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
+    { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos"},
+    { device: device, cpu: "m4fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
+];
 
 function getComponentProperty() {
     let property = {};
@@ -208,13 +213,17 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_nortos_c66;
         }
     }
-
+    if(buildOption.cpu.match("m4fss0-1")) {
+        build_property.libs = libs_nortos_dss_m4f
+        build_property.templates = templates_nortos_dss_m4f;
+    }
+ 
     return build_property;
 }
 
 function getSystemProjects(device)
 {
-    return [systemProject];
+    return [];
 }
 
 module.exports = {

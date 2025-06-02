@@ -99,6 +99,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_multimem_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -276,7 +280,6 @@ help:
 	@echo  System Example build targets,
 	@echo  =============================
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -610,6 +613,10 @@ BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-ar
 BUILD_COMBO_EXAMPLE_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -786,7 +793,6 @@ BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-cl
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos
@@ -867,6 +873,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile all
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile all
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1390,9 +1408,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ecap_epwm_loopback_am273x-evm_system_nortos:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile all
 
- edma_interrupt_transfer_am273x-evm_system_freertos_nortos:
-	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile all
-
  ipc_notify_echo_am273x-evm_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile all
 
@@ -1432,6 +1447,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1607,7 +1626,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_clean
@@ -1684,6 +1702,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile clean
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -2207,9 +2237,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ecap_epwm_loopback_am273x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile clean
 
- edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean:
-	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile clean
-
  ipc_notify_echo_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile clean
 
@@ -2249,6 +2276,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_multimem_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2424,7 +2455,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_scrub
@@ -2501,6 +2531,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  edma_chain_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ edma_interrupt_transfer_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ edma_interrupt_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ edma_interrupt_transfer_am273x-evm_m4fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/m4fss0-1_nortos/ti-arm-clang -f makefile scrub
 
  edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -3023,9 +3065,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ecap_epwm_loopback_am273x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile scrub
-
- edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub:
-	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile scrub
 
  ipc_notify_echo_am273x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile scrub

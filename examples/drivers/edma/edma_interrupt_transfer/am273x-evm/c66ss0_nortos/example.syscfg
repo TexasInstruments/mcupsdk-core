@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -11,6 +11,7 @@
 const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1           = edma.addInstance();
 const cache_c6x       = scripting.addModule("/kernel/dpl/cache_c6x");
+const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
@@ -34,14 +35,18 @@ const section10       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.DSS_UART.RX.$assign = "PAD_DD";
+debug_log.uartLog.DSS_UART.TX.$assign = "PAD_DC";
+
 edma1.$name                        = "CONFIG_EDMA0";
+debug_log.uartLog.edmaConfig       = edma1;
 edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
-
-debug_log.enableSharedMemLog = true;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -49,16 +54,35 @@ general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(3);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "DSP_L2_C66";
 region1.memory_region[0].$name              = "DSS_L2";
 region1.memory_region[0].size               = 0x60000;
-region1.memory_region[1].$name              = "USER_SHM_MEM";
-region1.memory_region[1].auto               = false;
-region1.memory_region[1].manualStartAddress = 0xC02E8000;
-region1.memory_region[1].size               = 0x4000;
-region1.memory_region[2].$name              = "LOG_SHM_MEM";
+region1.memory_region[1].type               = "DSS_L3_ALL";
+region1.memory_region[1].size               = 0x390000;
+region1.memory_region[1].$name              = "DSS_L3";
+region1.memory_region[2].$name              = "USER_SHM_MEM";
+region1.memory_region[2].auto               = false;
+region1.memory_region[2].manualStartAddress = 0xC02E8000;
 region1.memory_region[2].size               = 0x4000;
+region1.memory_region[3].$name              = "LOG_SHM_MEM";
+region1.memory_region[3].size               = 0x4000;
+
+region1.memory_region[4].type               = "CUSTOM_ALL";
+region1.memory_region[4].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0xC5000000;
+region1.memory_region[4].size               = 0x1F40;
+region1.memory_region[5].type               = "CUSTOM_ALL";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].$name              = "MAILBOX_HSM";
+region1.memory_region[5].manualStartAddress = 0x44000000;
+region1.memory_region[5].size               = 0x3CE;
+region1.memory_region[6].type               = "CUSTOM_ALL";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x44000400;
+region1.memory_region[6].size               = 0x3CE;
+region1.memory_region[6].$name              = "MAILBOX_R5F";
 
 section1.load_to_memory              = "Address";
 section1.group                       = false;
@@ -107,9 +131,9 @@ section4.load_memory                  = "DSS_L2";
 section4.$name                        = "Initialization and Exception Handling";
 section4.output_section.create(3);
 section4.output_section[0].$name      = ".c6xabi.exidx";
-section4.output_section[0].palignment = true;
+section4.output_section[0].palignment            = true;
 section4.output_section[1].$name      = ".init_array";
-section4.output_section[1].palignment = true;
+section4.output_section[1].palignment            = true;
 section4.output_section[2].$name      = ".fini_array";
 section4.output_section[2].palignment = true;
 
@@ -159,3 +183,10 @@ section10.load_memory                 = "MAILBOX_R5F";
 section10.output_section.create(1);
 section10.output_section[0].alignment = 0;
 section10.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.DSS_UART.$suggestSolution = "DSS_UARTA";

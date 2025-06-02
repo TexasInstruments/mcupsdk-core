@@ -1,0 +1,136 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --part "Default" --package "ZCE" --context "m4fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2732-Q1" --package "NFBGA (ZCE)" --context "m4fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.23.0+4000"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1           = edma.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+edma1.$name                        = "CONFIG_EDMA0";
+edma1.regionId                     = 3;
+edma1.instance                     = "EDMA_DSS_A";
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmDmaCh[0].resourceType  = scripting.forceWrite("ownDmaCh");
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+mpu_armv71.$name        = "REGISTERS_MEMORY";
+
+mpu_armv72.size       = 16;
+mpu_armv72.attributes = "NonCached";
+mpu_armv72.$name      = "DSS_CM4_RAM_B0_TO_B2";
+
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.stack_size   = 4096;
+general1.heap_size    = 2048;
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(4);
+region1.memory_region[0].type               = "RAM0_M4F";
+region1.memory_region[0].$name              = "M4F_VECS";
+region1.memory_region[0].size               = 0x200;
+region1.memory_region[1].type               = "RAM0_M4F";
+region1.memory_region[1].$name              = "M4F_RAM";
+region1.memory_region[1].size               = 0xFDFC;
+region1.memory_region[1].auto               = false;
+region1.memory_region[1].manualStartAddress = 0x200;
+region1.memory_region[2].type               = "MSS_L2_M4F";
+region1.memory_region[2].$name              = "MSS_L2";
+region1.memory_region[2].auto               = false;
+region1.memory_region[2].size               = 0xC8000;
+region1.memory_region[3].$name              = "DSS_L3";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x88000000;
+region1.memory_region[3].size               = 0x38FFFC;
+region1.memory_region[3].isShared           = true;
+region1.memory_region[3].shared_cores       = ["c66ss0","r5fss0-0","r5fss0-1"];
+
+section1.$name                        = "Vector Table";
+section1.group                        = false;
+section1.load_memory                  = "M4F_VECS";
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.group                        = false;
+section2.load_memory                  = "M4F_RAM";
+section2.$name                        = "Text Segment";
+section2.output_section.create(1);
+section2.output_section[0].$name      = ".text";
+section2.output_section[0].palignment = true;
+
+section3.group                                   = false;
+section3.load_memory                             = "M4F_RAM";
+section3.$name                                   = "Memory Segments";
+section3.select_multiple_regions                 = true;
+section3.output_section.create(1);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+section3.output_section[0].palignment            = true;
+section3.split_priority[0].$name                 = "Memory Region0";
+section3.split_priority[0].load_memory           = "M4F_RAM";
+
+section4.load_memory                   = "M4F_RAM";
+section4.group                         = false;
+section4.$name                         = "Data Segment";
+section4.select_multiple_regions       = true;
+section4.output_section.create(4);
+section4.output_section[0].$name       = ".data";
+section4.output_section[0].palignment  = true;
+section4.output_section[1].$name       = ".rodata";
+section4.output_section[1].palignment  = true;
+section4.output_section[2].$name       = ".sysmem";
+section4.output_section[2].palignment  = true;
+section4.output_section[3].$name       = ".stack";
+section4.output_section[3].palignment  = true;
+section4.split_priority.create(2);
+section4.split_priority[0].$name       = "Memory Region2";
+section4.split_priority[0].load_memory = "M4F_RAM";
+section4.split_priority[1].$name       = "Memory Region3";
+section4.split_priority[1].load_memory = "MSS_L2";
+
+section5.$name                        = "Initialization and Exception Handling";
+section5.load_memory                  = "M4F_RAM";
+section5.group                        = false;
+section5.output_section.create(3);
+section5.output_section[0].$name      = ".ARM.exidx";
+section5.output_section[0].palignment = true;
+section5.output_section[1].$name      = ".init_array";
+section5.output_section[1].palignment = true;
+section5.output_section[2].$name      = ".fini_array";
+section5.output_section[2].palignment = true;
