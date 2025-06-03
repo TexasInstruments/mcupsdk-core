@@ -49,6 +49,8 @@ FILES_common := \
 	ti_power_clock_config.c \
 	ti_clocktree_pll_config.c \
 	ti_enet_config.c \
+	ti_enet_dma_init.c \
+	ti_enet_init.c \
 	ti_enet_open_close.c \
 	ti_enet_soc.c \
 	ti_enet_lwipif.c \
@@ -207,6 +209,8 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 SYSCFG_GEN_FILES+=generated/ti_enet_config.c generated/ti_enet_config.h
+SYSCFG_GEN_FILES+=generated/ti_enet_dma_init.c generated/ti_enet_dma_init.h
+SYSCFG_GEN_FILES+=generated/ti_enet_init.c
 SYSCFG_GEN_FILES+=generated/ti_enet_open_close.c generated/ti_enet_open_close.h
 SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
