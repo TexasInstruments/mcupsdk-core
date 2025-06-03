@@ -46,19 +46,17 @@ typedef struct Gpmc_EdmaArgs_s
     /**< UDMA driver handle */
     void            *chHandle;
     /**< UDMA channel handle */
-}Gpmc_EdmaArgs;
+}Gpmc_DmaArgs;
 
 typedef struct GPMC_DmaConfig_s
 {
-	Gpmc_EdmaArgs *gpmcDmaArgs;
+	Gpmc_DmaArgs *gpmcDmaArgs;
 	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
 	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
 	 */
 
 } GPMC_DmaConfig;
-
-typedef struct Gpmc_EdmaArgs_s *Gpmc_DmaArgs;
 
 #ifdef __cplusplus
 }

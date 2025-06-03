@@ -673,7 +673,7 @@ typedef struct GPMC_Object_s {
     /**< Transfer Sync Semaphore object */
     GPMC_Transaction                *transaction;
     /**< Pointer to current transaction struct */
-    Gpmc_DmaArgs                    gpmcDmaHandle;
+    Gpmc_DmaArgs*                    gpmcDmaHandle;
     /**< DMA configuration handle */
 } GPMC_Object;
 

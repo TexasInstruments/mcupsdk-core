@@ -62,11 +62,11 @@ typedef struct Gpmc_UdmaArgs_s
     uint32_t        localEventID;
     /**< local Event ID for BCDMA trigger */
 
-} Gpmc_UdmaArgs;
+} Gpmc_DmaArgs;
 
 typedef struct GPMC_DmaConfig_s
 {
-	Gpmc_UdmaArgs *gpmcDmaArgs;
+	Gpmc_DmaArgs *gpmcDmaArgs;
 	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
 	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
 	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
@@ -74,11 +74,9 @@ typedef struct GPMC_DmaConfig_s
 
 } GPMC_DmaConfig;
 
-typedef struct Gpmc_UdmaArgs_s *Gpmc_DmaArgs;
-
-int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs gpmcDmaArgs);
-int32_t GpmcDma_udmaClose(Gpmc_DmaArgs gpmcDmaArgs);
-int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
+int32_t GpmcDma_udmaOpen(Gpmc_DmaArgs* gpmcDmaArgs);
+int32_t GpmcDma_udmaClose(Gpmc_DmaArgs* gpmcDmaArgs);
+int32_t GpmcDma_udmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, uint32_t *dst, uint32_t *src, uint32_t length, uint8_t fifoDrain);
 
 #ifdef __cplusplus
 }

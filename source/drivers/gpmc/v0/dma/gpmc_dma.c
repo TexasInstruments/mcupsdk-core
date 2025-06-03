@@ -60,7 +60,7 @@ extern uint32_t gGpmcDmaConfigNum;
 /*                             Function Definitions                           */
 /* ========================================================================== */
 
-Gpmc_DmaArgs GPMC_dmaOpen(int32_t index)
+Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index)
 {
 	GPMC_DmaConfig *config = NULL;
 
@@ -83,7 +83,7 @@ Gpmc_DmaArgs GPMC_dmaOpen(int32_t index)
 	return config->gpmcDmaArgs;
 }
 
-int32_t GPMC_dmaClose(Gpmc_DmaArgs gpmcDmaArgs)
+int32_t GPMC_dmaClose(Gpmc_DmaArgs *gpmcDmaArgs)
 {
 	int32_t status = SystemP_SUCCESS;
 
@@ -101,7 +101,7 @@ int32_t GPMC_dmaClose(Gpmc_DmaArgs gpmcDmaArgs)
 	return status;
 }
 
-int32_t GPMC_dmaCopy(Gpmc_DmaArgs gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain)
+int32_t GPMC_dmaCopy(Gpmc_DmaArgs *gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain)
 {
 	int32_t status = SystemP_SUCCESS;
 

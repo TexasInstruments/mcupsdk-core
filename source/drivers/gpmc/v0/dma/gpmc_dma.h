@@ -41,6 +41,7 @@
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
+#include <drivers/hw_include/soc_config.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -59,9 +60,11 @@ extern "C"
 /**
  * \brief GPMC DMA Configuration, these are filled by SysCfg based on the DMA driver that is selected
  */
-#if defined(DMA_VERSION_GPMC_UDMA)
+#if defined (DMA_VERSION_GPMC_UDMA)
 #include <drivers/gpmc/v0/dma/udma/gpmc_dma_udma.h>
-#else
+#endif
+
+#if defined(DMA_VERSION_GPMC_EDMA)
 #include <drivers/gpmc/v0/dma/edma/gpmc_dma_edma.h>
 #endif
 
@@ -75,7 +78,7 @@ extern "C"
  *
  * \return Handle to the GPMC DMA Config Object
  */
-Gpmc_DmaArgs GPMC_dmaOpen(int32_t index);
+Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index);
 
 /**
  * \brief API to close an GPMC DMA channel
@@ -86,7 +89,7 @@ Gpmc_DmaArgs GPMC_dmaOpen(int32_t index);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t GPMC_dmaClose(Gpmc_DmaArgs gpmcDmaArgs);
+int32_t GPMC_dmaClose(Gpmc_DmaArgs* gpmcDmaArgs);
 
 /**
  * \brief API to do a DMA Copy using appropriate DMA Channel opened
@@ -101,7 +104,7 @@ int32_t GPMC_dmaClose(Gpmc_DmaArgs gpmcDmaArgs);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t GPMC_dmaCopy(Gpmc_DmaArgs gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain);
+int32_t GPMC_dmaCopy(Gpmc_DmaArgs* gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain);
 
 /** @} */
 
