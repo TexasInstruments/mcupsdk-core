@@ -88,14 +88,12 @@ typedef struct {
 /**
  * \brief Max size of task object across all OS's
  */
-#ifdef INCLUDE_FREERTOS_FAT
-#define TaskP_OBJECT_SIZE_MAX       (172u) /* Minimum requirement for FreeRTOS FATFS to work */
-#elif MPU_FREERTOS
+#ifdef MPU_FREERTOS
 /** Minimum requirement for FreeRTOS MPU Port to work 
  * In this case, TCB stores the MPU settings including system mode stack as well the task context. */
 #define TaskP_OBJECT_SIZE_MAX       (4568u) 
 #else
-#define TaskP_OBJECT_SIZE_MAX       (160u)
+#define TaskP_OBJECT_SIZE_MAX       (172u) /* Minimum requirement for FreeRTOS FATFS to work */
 #endif 
 /**
  * \brief Opaque task object used with the task APIs
