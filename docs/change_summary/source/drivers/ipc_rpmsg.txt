@@ -9,7 +9,7 @@ index 95212bce53..dc254758a8 100755
   *
   *  Redistribution and use in source and binary forms, with or without
   *  modification, are permitted provided that the following conditions
-@@ -97,7 +97,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg,
+@@ -97,7 +97,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Object *obj, RPMessage_QueueElem **pMsg,
              {
                  done = 1;
              }
@@ -18,7 +18,7 @@ index 95212bce53..dc254758a8 100755
              {
                  status = SystemP_TIMEOUT;
                  done = 1;
-@@ -108,7 +108,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg,
+@@ -108,7 +108,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Object *obj, RPMessage_QueueElem **pMsg,
              status = SystemP_SUCCESS;
              done = 1;
          }
@@ -91,7 +91,7 @@ index 95212bce53..dc254758a8 100755
          {
 @@ -280,14 +281,14 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
      int32_t status = SystemP_FAILURE;
-     RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+     RPMessage_Object *obj = (RPMessage_Object *)handle;
  
 -    if( data != NULL && dataLen != NULL && remoteCoreId != NULL && remoteEndPt != NULL
 -        && obj->recvCallback == NULL /* i.e non-callback mode */
@@ -99,14 +99,14 @@ index 95212bce53..dc254758a8 100755
 +        && (obj->recvCallback == NULL) /* i.e non-callback mode */
        )
      {
-         RPMessage_LocalMsg *pMsg;
- 
-         status = RPMessage_getEndPtMsg(obj, &pMsg, timeout);
+         RPMessage_QueueElem *elem;
+
+         status = RPMessage_getEndPtMsg(obj, &elem, timeout);
 -        if(status == SystemP_SUCCESS && pMsg != NULL)
 +        if((status == SystemP_SUCCESS) && (pMsg != NULL))
          {
              uint32_t isAllocPending = 0;
-             uint16_t vringBufId = pMsg->vringBufId;
+             uint16_t vringBufId = elem->vringBufId;
 @@ -308,11 +309,11 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
                  *dataLen = header->dataLen;
              }
@@ -115,7 +115,7 @@ index 95212bce53..dc254758a8 100755
 +            memcpy((void *) data,(const void *) &vringBufAddr[sizeof(RPMessage_Header)],(size_t) *dataLen);
  
              RPMessage_vringPutEmptyRxBuf(*remoteCoreId, vringBufId);
-             isAllocPending = RPMessage_freeEndPtMsg(*remoteCoreId, pMsg);
+             isAllocPending = RPMessage_freeEndPtMsg(*remoteCoreId, elem);
 -            if(isAllocPending)
 +            if(isAllocPending!=0U)
              {   /* if any messages are pending message pointer due to free Q being empty,
@@ -139,12 +139,12 @@ index 95212bce53..dc254758a8 100755
  
  void RPMessage_unblock(RPMessage_Object *handle)
  {
--    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
-+    RPMessage_Struct *obj;
+-    RPMessage_Object *obj = (RPMessage_Object *)handle;
++    RPMessage_Object *obj;
  
 +    if(handle != NULL)
 +    {
-+    obj = (RPMessage_Struct *)handle;
++    obj = (RPMessage_Object *)handle;
      obj->doRecvUnblock = 1;
      SemaphoreP_post(&obj->newEndPtMsgSem);
 +    }
@@ -152,29 +152,29 @@ index 95212bce53..dc254758a8 100755
  
  uint16_t RPMessage_getLocalEndPt(const RPMessage_Object *handle)
  {
--    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
-+    RPMessage_Struct *obj;
+-    RPMessage_Object *obj = (RPMessage_Object *)handle;
++    RPMessage_Object *obj;
  
 +    DebugP_assert(handle != NULL);
 +
-+    obj = (RPMessage_Struct *)handle;
++    obj = (RPMessage_Object *)handle;
      return obj->localEndPt;
 +
  }
  
  int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreateParams *createParams)
  {
--    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
-+    RPMessage_Struct *obj;
+-    RPMessage_Object *obj = (RPMessage_Object *)handle;
++    RPMessage_Object *obj;
      int32_t status = SystemP_FAILURE;
  
-     DebugP_assert(sizeof(RPMessage_Object) >= sizeof(RPMessage_Struct));
+     DebugP_assert(sizeof(RPMessage_Object) >= sizeof(RPMessage_Object));
  
 -    if(createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT
 -        && gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL)
 +    if((handle != NULL) && (createParams != NULL))
 +    {
-+    obj = (RPMessage_Struct *)handle;
++    obj = (RPMessage_Object *)handle;
 +    if((createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
 +        && (gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL))
      {
@@ -190,14 +190,14 @@ index 95212bce53..dc254758a8 100755
  
  void RPMessage_destruct(RPMessage_Object *handle)
  {
--    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
-+    RPMessage_Struct *obj;
+-    RPMessage_Object *obj = (RPMessage_Object *)handle;
++    RPMessage_Object *obj;
  
 -    if(obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT &&
 -        gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL)
 +    if(handle != NULL)
 +    {
-+    obj = (RPMessage_Struct *)handle;
++    obj = (RPMessage_Object *)handle;
 +    if((obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) &&
 +        (gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL))
      {
@@ -233,7 +233,7 @@ index 95212bce53..dc254758a8 100755
  
  int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params)
 @@ -442,7 +459,7 @@ int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *param
-         RPMessage_queuePut(&coreObj->freeQ, &coreObj->localMsgObj[elemId].elem);
+         RPMessage_queuePut(&coreObj->freeQ, &coreObj->localMsgObj[elemId]);
      }
      /* Linux VRINGs we will init later inside RPMessage_waitForLinuxReady() */
 -    if(gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] && !RPMessage_isLinuxCore(remoteCoreId))
@@ -405,10 +405,10 @@ index 27334eea6c..7072652951 100755
  
 +void RPMessage_vringResetInternal(RPMessage_Vring *vringObj, uint16_t numBuf, uint16_t msgSize, uintptr_t vringBaseAddr, uint32_t offset_desc, uint32_t offset_avail, uint32_t offset_used, uint32_t offset_buf, uint32_t isTx);
 +
-+RPMessage_LocalMsg *RPMessage_allocEndPtMsg(uint32_t remoteCoreId);
-+uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_LocalMsg *pMsg);
-+void RPMessage_putEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg *pMsg);
-+int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, uint32_t timeout);
++RPMessage_QueueElem *RPMessage_allocEndPtMsg(uint32_t remoteCoreId);
++uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_QueueElem *elem);
++void RPMessage_putEndPtMsg(RPMessage_Object *obj, RPMessage_QueueElem *elem);
++int32_t RPMessage_getEndPtMsg(RPMessage_Object *obj, RPMessage_QueueElem **elem, uint32_t timeout);
 +void RPMessage_recvHandler(uint32_t remoteCoreId);
 +void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
 +int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params);

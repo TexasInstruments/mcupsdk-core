@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -198,21 +198,6 @@ typedef struct
     uint8_t            *bufBaseAddr; /* pointer to message buffer 0 in VRING shared memory */
 } RPMessage_Vring;
 
-/* structure to hold received buffer ID and sender core ID
- *
- * An instance of this structure is put into the end point specific queue.
- * On calling rpmsg recv, an element from end point queue is extracted,
- * the vring buffer processed and the vring buffer is freed.
- *
- * This prevents a copy from vring to local end point queue
- * and also reduces the memory needed for local queing
- */
-typedef struct {
-    struct RPMessage_QueueElem_s elem;  /* queue element header */
-    uint16_t remoteCoreId;  /* remote core that sent a message */
-    uint16_t vringBufId;    /* buffer ID within VRING which holds the message */
-} RPMessage_LocalMsg;
-
 /* structure to hold state of IPC rpmsg with a remote core
  */
 typedef struct
@@ -234,7 +219,7 @@ typedef struct
                                  *
                                  * ONLY used during receive.
                                  */
-    RPMessage_LocalMsg  localMsgObj[RPMESSAGE_MAX_LOCAL_MSG_OBJ]; /* RPMessage_LocalMsg messages are put
+    RPMessage_QueueElem  localMsgObj[RPMESSAGE_MAX_LOCAL_MSG_OBJ]; /* RPMessage_LocalMsg messages are put
                                                                    * in the freeQ initially
                                                                    *
                                                                    * ONLY used during receive.
@@ -242,19 +227,6 @@ typedef struct
     RPMessage_Vring vringTxObj; /* VRING used to transmit messages to this remote core */
     RPMessage_Vring vringRxObj; /* VRING used to receive messages from this remote core */
 } RPMessage_Core;
-
-/* structure to hold state of RPMessage end point */
-typedef struct
-{
-    uint16_t localEndPt;    /* local end point number, MUST be < RPMESSAGE_MAX_LOCAL_ENDPT */
-    RPMessage_RecvCallback recvCallback;    /* when not NULL, received messages are handled in callback that via RPMessage_recv */
-    void *recvCallbackArgs;     /* arguments passed to the recvCallback callback */
-    uint32_t doRecvUnblock;     /* flag to unblock RPMessage_recv, if its blocked for every waiting for messages and user wants to shutdown or exit */
-    RPMessage_Queue endPtQ;     /* end point specific queue to hold received messages pending for processing at this end point */
-    SemaphoreP_Object newEndPtMsgSem; /* semaphore to indicate that there messages pending endPtQ */
-    RPMessage_RecvNotifyCallback recvNotifyCallback;    /* when not NULL, this callback is whenever a message is received */
-    void *recvNotifyCallbackArgs;     /* arguments passed to the recvNotifyCallback callback */
-} RPMessage_Struct;
 
 /* message that is sent during annouce and received by a control end point */
 #define RPMESSAGE_ANNOUNCE_SERVICENAME_LEN  (32u)
@@ -272,7 +244,7 @@ typedef struct
     uint8_t isCoreEnable[CSL_CORE_ID_MAX]; /* 1: core is enabled for IPC RPMessage, else disabled */
     uint8_t isCoreInitialized[CSL_CORE_ID_MAX]; /* 1: core is initialized for IPC RPMessage, else not yet initialized */
     RPMessage_Core  coreObj[CSL_CORE_ID_MAX];   /* remote core objects, indexed by remote core ID */
-    RPMessage_Struct *localEndPtObj[RPMESSAGE_MAX_LOCAL_ENDPT]; /* end point objects, indexed by endpoint ID */
+    RPMessage_Object *localEndPtObj[RPMESSAGE_MAX_LOCAL_ENDPT]; /* end point objects, indexed by endpoint ID */
     RPMessage_Object controlEndPtObj; /* object/handle of end point that receives accouncement messages */
     RPMessage_ControlEndPtCallback controlEndPtCallback; /* user callback to invoke when a control message is received */
     void  *controlEndPtCallbackArgs; /* user callback args for control message */
@@ -320,10 +292,10 @@ void     RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const R
 
 void RPMessage_vringResetInternal(RPMessage_Vring *vringObj, uint16_t numBuf, uint16_t msgSize, uintptr_t vringBaseAddr, uint32_t offset_desc, uint32_t offset_avail, uint32_t offset_used, uint32_t offset_buf, uint32_t isTx);
 
-RPMessage_LocalMsg *RPMessage_allocEndPtMsg(uint32_t remoteCoreId);
-uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_LocalMsg *pMsg);
-void RPMessage_putEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg *pMsg);
-int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, uint32_t timeout);
+RPMessage_QueueElem *RPMessage_allocEndPtMsg(uint32_t remoteCoreId);
+uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_QueueElem *elem);
+void RPMessage_putEndPtMsg(RPMessage_Object *obj, RPMessage_QueueElem *elem);
+int32_t RPMessage_getEndPtMsg(RPMessage_Object *obj,  RPMessage_QueueElem **elem, uint32_t timeout);
 void RPMessage_recvHandler(uint32_t remoteCoreId);
 void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args);
 int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params);

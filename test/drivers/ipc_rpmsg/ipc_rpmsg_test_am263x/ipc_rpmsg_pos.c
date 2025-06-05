@@ -73,15 +73,13 @@ typedef struct{
 
 RPMessage_Core *Core;
 IpcRpmsg_Ctrl *msg_ctrl;
-RPMessage_Struct *structT;
 RPMessage_Object handle;
 
 /*Test for dynamic coverage of RPMessage_destruct API */
 void posTest_RPMessage_destruct(void *args)
 {
     int32_t testStatus = SystemP_SUCCESS;
-    structT->localEndPt = 65U;
-
+    handle.localEndPt = 65U;
     if (testStatus == SystemP_SUCCESS)
     {
         RPMessage_destruct(&handle);
