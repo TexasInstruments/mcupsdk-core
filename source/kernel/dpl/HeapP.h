@@ -103,10 +103,34 @@ typedef struct StaticHeap_ {
     size_t xTotalHeapSize;
 
 } StaticHeap_t;
+
 /**
  * \brief Opaque heap object used with the heap APIs
  */
-typedef StaticHeap_t HeapP_Object;
+ 
+#if defined (OS_FREERTOS) || defined (OS_FREERTOS_SMP) || defined (OS_FREERTOS_MPU)
+
+#include <FreeRTOS.h>
+#include <semphr.h>
+
+typedef struct HeapP_Object_ {
+    
+    StaticHeap_t        heapHndl;
+    StaticSemaphore_t   heapMutexObj;
+    SemaphoreHandle_t   heapMutexHndl;
+
+} HeapP_Object;
+
+#else
+
+typedef struct HeapP_Object_ {
+
+    StaticHeap_t heapHndl;
+
+} HeapP_Object;
+
+#endif
+
 
 /**
  * \brief Create a user defined heap
@@ -114,64 +138,69 @@ typedef StaticHeap_t HeapP_Object;
  * The actual heap start address and size will be adjusted to satisfy
  * \ref HeapP_BYTE_ALIGNMENT.
  *
- * \param heap      [out] Intialized heap handle to be used for subsequent API calls
+ * \param heapObj   [out] Initalized heap object to be used for subsequent API calls
  * \param heapAddr  [in] Base address of memory to be used as heap
  * \param heapSize  [in] Size of memory block that is to be used as heap
+ * 
+ * \return \ref SystemP_SUCCESS on success, \ref SystemP_FAILURE on error
  */
-void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize );
+int32_t HeapP_construct( HeapP_Object *heapObj, void *heapAddr, size_t heapSize );
 
 /**
  * \brief Delete the user defined heap
  *
- * \param heap      [in] Heap handle
+ * \param heapObj   [in] Heap object
  */
-void   HeapP_destruct( HeapP_Object *heap);
+void HeapP_destruct( HeapP_Object *heapObj);
 
 /**
  * \brief Alloc memory from user defined heap
  *
- * \param heap      [in] Heap handle
+ * \param heapObj   [in] Heap object
  * \param allocSize [in] Size of memory to allocate
  *
  * \return pointer to allcoated memory
  * \return NULL memory could not be allocated since a free block of required size could not be found
  */
-void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize );
+void* HeapP_alloc( HeapP_Object *heapObj, size_t allocSize );
 
 /**
  * \brief Free memory from user defined heap
  *
- * \param heap      [in] Heap handle
+ * \param heapObj   [in] Heap object
  * \param ptr       [in] Pointer to memory allocated using \ref HeapP_alloc
  *
+ * \return \ref SystemP_SUCCESS on success, \ref SystemP_FAILURE on error
  */
-void   HeapP_free( HeapP_Object *heap, void * ptr );
+int32_t HeapP_free( HeapP_Object *heapObj, void * ptr );
 
 /**
  * \brief Get free heap size, in bytes
  *
- * \param heap      [in] Heap handle
+ * \param heapObj   [in] Heap object
  *
  * \return Free memory size in this heap, in bytes
  */
-size_t HeapP_getFreeHeapSize( HeapP_Object *heap );
+size_t HeapP_getFreeHeapSize( HeapP_Object *heapObj );
 
 /**
  * \brief Get lowest ever free heap size, in bytes
  *
- * \param heap      [in] Heap handle
+ * \param heapObj   [in] Heap object
  *
  * \return Lowest ever free heap size, in bytes
  */
-size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heap );
+size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heapObj );
 
 /**
  * \brief Get detailed heap statistics
  *
- * \param heap      [in] Heap handle
+ * \param heapObj    [in] Heap object
  * \param pHeapStats [out] Returned heap statistics
+ * 
+ * \return \ref SystemP_SUCCESS on success, \ref SystemP_FAILURE on error
  */
-void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats );
+int32_t HeapP_getHeapStats( HeapP_Object *heapObj, HeapP_MemStats * pHeapStats );
 
 /** @} */
 

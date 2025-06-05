@@ -130,6 +130,8 @@ void SemaphoreP_destruct(SemaphoreP_Object *obj)
 {
     SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
 
+    vQueueUnregisterQueue(pSemaphore->semHndl);
+
     vSemaphoreDelete(pSemaphore->semHndl);
 }
 

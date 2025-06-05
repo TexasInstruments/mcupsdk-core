@@ -32,55 +32,117 @@
 
 
 #include <stdlib.h>
+#include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/nortos/dpl/common/HeapP_internal.h>
 #include <FreeRTOS.h>
 #include <task.h>
 
-void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
+int32_t HeapP_construct( HeapP_Object *heapObj, void *heapAddr, size_t heapSize )
 {
-    vHeapCreateStatic(heap, heapAddr, heapSize);
+    int32_t status = SystemP_FAILURE;
+
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(heapAddr != NULL);
+    DebugP_assert(heapSize > 0U);
+    
+    heapObj->heapMutexHndl = xSemaphoreCreateRecursiveMutexStatic(&heapObj->heapMutexObj);
+
+    if(heapObj->heapMutexHndl != NULL)
+    {
+        vQueueAddToRegistry(heapObj->heapMutexHndl, "HeapP Mutex");
+
+        vHeapCreateStatic(&heapObj->heapHndl, heapAddr, heapSize);
+
+        status = SystemP_SUCCESS;
+    }
+    
+    return status;
 }
 
-void   HeapP_destruct(HeapP_Object *heap)
+void HeapP_destruct(HeapP_Object *heapObj)
 {
+    DebugP_assert(heapObj != NULL);
+
     vTaskSuspendAll();
-    vHeapDelete(heap);
+
+    vHeapDelete(&heapObj->heapHndl);
+
+    vQueueUnregisterQueue(heapObj->heapMutexHndl);
+
+    vSemaphoreDelete(heapObj->heapMutexHndl);
+
     (void)xTaskResumeAll();
 }
 
-void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
+void* HeapP_alloc( HeapP_Object *heapObj, size_t allocSize )
 {
-    void *ptr;
+    void *ptr = NULL;
 
-    vTaskSuspendAll();
-    ptr = pvHeapMalloc(heap, allocSize);
-    (void)xTaskResumeAll();
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(allocSize > 0U);
+
+    if(xSemaphoreTakeRecursive(heapObj->heapMutexHndl, portMAX_DELAY) == pdTRUE) 
+    {
+        ptr = pvHeapMalloc(&heapObj->heapHndl, allocSize);
+
+        xSemaphoreGiveRecursive(heapObj->heapMutexHndl);
+    };
 
     return ptr;
 }
 
-void   HeapP_free( HeapP_Object *heap, void * ptr )
+int32_t HeapP_free( HeapP_Object *heapObj, void * ptr )
 {
-    vTaskSuspendAll();
-    vHeapFree(heap, ptr);
-    (void)xTaskResumeAll();
+    int32_t status = SystemP_FAILURE;
+
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(ptr != NULL);
+
+    if(xSemaphoreTakeRecursive(heapObj->heapMutexHndl, portMAX_DELAY) == pdTRUE) 
+    {
+        vHeapFree(&heapObj->heapHndl, ptr);
+
+        xSemaphoreGiveRecursive(heapObj->heapMutexHndl);
+
+        status = SystemP_SUCCESS;
+    };
+
+    return status;
 }
 
-size_t HeapP_getFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetFreeHeapSize(&heapObj->heapHndl);
 }
 
-size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetMinimumEverFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetMinimumEverFreeHeapSize(&heapObj->heapHndl);
 }
 
-void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats )
+int32_t HeapP_getHeapStats( HeapP_Object *heapObj, HeapP_MemStats * pHeapStats )
 {
-    vTaskSuspendAll();
-    vHeapGetHeapStats(heap, pHeapStats);
-    (void)xTaskResumeAll();
+    int32_t status = SystemP_FAILURE;
+
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(pHeapStats != NULL);
+
+    memset(pHeapStats, 0, sizeof(HeapP_MemStats));
+
+    if(xSemaphoreTakeRecursive(heapObj->heapMutexHndl, portMAX_DELAY) == pdTRUE) 
+    {
+        vHeapGetHeapStats(&heapObj->heapHndl, pHeapStats);
+
+        xSemaphoreGiveRecursive(heapObj->heapMutexHndl);
+        
+        status = SystemP_SUCCESS;
+    };
+
+    return status;
 }
 

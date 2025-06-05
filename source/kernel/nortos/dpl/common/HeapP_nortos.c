@@ -35,42 +35,67 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/nortos/dpl/common/HeapP_internal.h>
 
-void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
+int32_t HeapP_construct( HeapP_Object *heapObj, void *heapAddr, size_t heapSize )
 {
-    vHeapCreateStatic(heap, heapAddr, heapSize);
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(heapAddr != NULL);
+    DebugP_assert(heapSize > 0U);
+
+    vHeapCreateStatic(&heapObj->heapHndl, heapAddr, heapSize);
+
+    return SystemP_SUCCESS;
 }
 
-void   HeapP_destruct(HeapP_Object *heap)
+void HeapP_destruct(HeapP_Object *heapObj)
 {
-    vHeapDelete(heap);
+    DebugP_assert(heapObj != NULL);
+
+    vHeapDelete(&heapObj->heapHndl);
 }
 
-void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
+void* HeapP_alloc( HeapP_Object *heapObj, size_t allocSize )
 {
     void *ptr;
 
-    ptr = pvHeapMalloc(heap, allocSize);
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(allocSize > 0U);
+
+    ptr = pvHeapMalloc(&heapObj->heapHndl, allocSize);
 
     return ptr;
 }
 
-void   HeapP_free( HeapP_Object *heap, void * ptr )
+int32_t HeapP_free( HeapP_Object *heapObj, void * ptr )
 {
-    vHeapFree(heap, ptr);
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(ptr != NULL);
+
+    vHeapFree(&heapObj->heapHndl, ptr);
+
+    return SystemP_SUCCESS;
 }
 
-size_t HeapP_getFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetFreeHeapSize(&heapObj->heapHndl);
 }
 
-size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetMinimumEverFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetMinimumEverFreeHeapSize(&heapObj->heapHndl);
 }
 
-void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats )
+int32_t HeapP_getHeapStats( HeapP_Object *heapObj, HeapP_MemStats * pHeapStats )
 {
-    vHeapGetHeapStats(heap, pHeapStats);
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(pHeapStats != NULL);
+
+    vHeapGetHeapStats(&heapObj->heapHndl, pHeapStats);
+
+    return SystemP_SUCCESS;
 }
 

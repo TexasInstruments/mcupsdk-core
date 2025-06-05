@@ -37,50 +37,75 @@
 #include <SafeRTOS.h>
 #include <task.h>
 
-void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
+int32_t HeapP_construct( HeapP_Object *heapObj, void *heapAddr, size_t heapSize )
 {
-    vHeapCreateStatic(heap, heapAddr, heapSize);
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(heapAddr != NULL);
+    DebugP_assert(heapSize > 0U);
+
+    vHeapCreateStatic(&heapObj->heapHndl, heapAddr, heapSize);
+
+    return SystemP_SUCCESS;
 }
 
-void   HeapP_destruct(HeapP_Object *heap)
+void HeapP_destruct(HeapP_Object *heapObj)
 {
+    DebugP_assert(heapObj != NULL);
+
     vTaskSuspendScheduler();
-    vHeapDelete(heap);
+    vHeapDelete(&heapObj->heapHndl);
     xTaskResumeScheduler();
 }
 
-void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
+void* HeapP_alloc( HeapP_Object *heapObj, size_t allocSize )
 {
     void *ptr;
 
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(allocSize > 0U);
+
     vTaskSuspendScheduler();
-    ptr = pvHeapMalloc(heap, allocSize);
+    ptr = pvHeapMalloc(&heapObj->heapHndl, allocSize);
     xTaskResumeScheduler();
 
     return ptr;
 }
 
-void   HeapP_free( HeapP_Object *heap, void * ptr )
+void HeapP_free( HeapP_Object *heapObj, void * ptr )
 {
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(ptr != NULL);
+
     vTaskSuspendScheduler();
-    vHeapFree(heap, ptr);
+    vHeapFree(&heapObj->heapHndl, ptr);
     xTaskResumeScheduler();
+
+    return SystemP_SUCCESS;
 }
 
-size_t HeapP_getFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetFreeHeapSize(&heapObj->heapHndl);
 }
 
-size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heap )
+size_t HeapP_getMinimumEverFreeHeapSize( HeapP_Object *heapObj )
 {
-    return xHeapGetMinimumEverFreeHeapSize(heap);
+    DebugP_assert(heapObj != NULL);
+
+    return xHeapGetMinimumEverFreeHeapSize(&heapObj->heapHndl);
 }
 
-void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats )
+int32_t HeapP_getHeapStats( HeapP_Object *heapObj, HeapP_MemStats * pHeapStats )
 {
+    DebugP_assert(heapObj != NULL);
+    DebugP_assert(pHeapStats != NULL);
+
     vTaskSuspendScheduler();
-    vHeapGetHeapStats(heap, pHeapStats);
+    vHeapGetHeapStats(&heapObj->heapHndl, pHeapStats);
     xTaskResumeScheduler();
+
+    return SystemP_SUCCESS;
 }
 

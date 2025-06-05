@@ -65,15 +65,8 @@ for official FreeRTOS documentation.
      - `TaskP_loadGetTotalCpuLoad`
      - `TaskP_loadUpdateAll`
      - `TaskP_loadResetAll`
-     - `HeapP_alloc`*
-     - `HeapP_free`*
-     - `HeapP_getHeapStats`*
+     - `HeapP_construct`
      - `HeapP_destruct`
-     
-\note `HeapP_alloc`, `HeapP_free` & `HeapP_getHeapStats` is temporary. 
-      This is expected to be updated in future releases such that `HeapP_construct` & `HeapP_destruct` can be 
-      used only from a privileged task, whereas `HeapP_alloc`, `HeapP_free` & `HeapP_getHeapStats` will be
-      accessible even for user mode tasks.
 
 - RTI registers are read-only in user mode and can be modified only in privileged mode. 
   - Hence various SDK APIs which are impacted due to this performs temporary switch to privileged mode
