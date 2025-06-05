@@ -39,7 +39,9 @@ extern "C" {
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
+#include <kernel/dpl/SemaphoreP.h>
 #include <drivers/hw_include/cslr_soc.h>
+#include <drivers/ipc_rpmsg/ipc_rpmsg_queue.h>
 #include <drivers/ipc_rpmsg/include/ipc_rpmsg_linux_resource_table.h>
 
 /**
@@ -94,11 +96,9 @@ extern "C" {
 #define RPMESSAGE_CRC_SIZE           (2U)
 
 /**
- * \brief Opaque RPMessage object used with the RPMessage APIs
+ * \brief RPMessage object used with the RPMessage APIs
  */
-typedef struct RPMessage_Object_s {
-    uintptr_t rsv[RPMESSAGE_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
-} RPMessage_Object;
+struct RPMessage_Object_s;
 
 /**
  * \brief Callback that is invoked when a message is received from any CPU at the specified local end point
@@ -119,7 +119,7 @@ typedef struct RPMessage_Object_s {
  * \param remoteCoreId [in] Core ID of sender
  * \param remoteEndPt [in] End point of sender
  */
-typedef void (*RPMessage_RecvCallback)(RPMessage_Object *obj, void *arg,
+typedef void (*RPMessage_RecvCallback)(struct RPMessage_Object_s *obj, void *arg,
     void *data, uint16_t dataLen, int32_t crcStatus,
     uint16_t remoteCoreId, uint16_t remoteEndPt);
 
@@ -136,7 +136,7 @@ typedef void (*RPMessage_RecvCallback)(RPMessage_Object *obj, void *arg,
  * \param obj   [in] RPMessage end point object created with \ref RPMessage_construct
  * \param arg  [in] Arguments specified by user during \ref RPMessage_construct
  */
-typedef void (*RPMessage_RecvNotifyCallback)(RPMessage_Object *obj, void *arg);
+typedef void (*RPMessage_RecvNotifyCallback)(struct RPMessage_Object_s *obj, void *arg);
 
 
 /**
@@ -166,6 +166,19 @@ typedef void (*RPMessage_ControlEndPtCallback)(void *arg,
  * \param crc [out] Pointer to the calculated CRC value.
  */
 typedef int32_t (*RPMessage_CrcHookFxn)(uint8_t *data, uint16_t dataLen, uint8_t crcSize, void *crc);
+
+/* structure to hold state of RPMessage end point */
+typedef struct RPMessage_Object_s
+{
+    uint16_t localEndPt;    /* local end point number, MUST be < RPMESSAGE_MAX_LOCAL_ENDPT */
+    RPMessage_RecvCallback recvCallback;    /* when not NULL, received messages are handled in callback that via RPMessage_recv */
+    void *recvCallbackArgs;     /* arguments passed to the recvCallback callback */
+    uint32_t doRecvUnblock;     /* flag to unblock RPMessage_recv, if its blocked for every waiting for messages and user wants to shutdown or exit */
+    RPMessage_Queue endPtQ;     /* end point specific queue to hold received messages pending for processing at this end point */
+    SemaphoreP_Object newEndPtMsgSem; /* semaphore to indicate that there messages pending endPtQ */
+    RPMessage_RecvNotifyCallback recvNotifyCallback;    /* when not NULL, this callback is whenever a message is received */
+    void *recvNotifyCallbackArgs;     /* arguments passed to the recvNotifyCallback callback */
+} RPMessage_Object;
 
 /**
  * \brief Parameters passed to \ref RPMessage_construct

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,10 +48,20 @@ struct RPMessage_QueueElem_s;
 
 /* Q element structure, this MUST be the first field of a larger application
  * specific structure
+ * It is also used to hold received buffer ID and sender core ID
+ *
+ * An instance of this structure is put into the end point specific queue.
+ * On calling rpmsg recv, an element from end point queue is extracted,
+ * the vring buffer processed and the vring buffer is freed.
+ *
+ * This prevents a copy from vring to local end point queue
+ * and also reduces the memory needed for local queing
  */
 typedef struct RPMessage_QueueElem_s {
 
     struct RPMessage_QueueElem_s *next; /* pointer to next element in list */
+    uint16_t remoteCoreId;  /* remote core that sent a message */
+    uint16_t vringBufId;    /* buffer ID within VRING which holds the message */
 
 } RPMessage_QueueElem;
 

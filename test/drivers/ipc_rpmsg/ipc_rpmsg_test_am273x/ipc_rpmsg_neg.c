@@ -378,7 +378,7 @@ void negTest_RPMessage_forceRecvMsgHandlers(void *args)
 void negTest_RPMessage_destruct(void *args)
 {
     int32_t testStatus = SystemP_SUCCESS;
-    gIpcRpmsgCtrl.localEndPtObj[0U] = (RPMessage_Struct *)64U;
+    gIpcRpmsgCtrl.localEndPtObj[0U] = (RPMessage_Object *)64U;
     if (testStatus == SystemP_SUCCESS)
     {
         RPMessage_destruct(&gIpcRpmsgCtrl.controlEndPtObj);
