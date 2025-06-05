@@ -264,6 +264,7 @@ const example_file_list = [
 	// "examples/kernel/nortos/wfi_standby_demo/.project/project.js",
 	"examples/mathlib/benchmark/.project/project.js",
 	"source/networking/enet/core/examples/enet_cpsw_est/.project/project.js",
+	"source/networking/enet/core/examples/enet_cpsw_industrial_app/.project/project.js",
 	"examples/benchmarks/ocmc_benchmarking/.project/project_freertos_am261x.js",
 	"examples/real_time_debug/.project/project.js",
 	"examples/benchmarks/flsopskd_benchmark/.project/project.js",
