@@ -367,60 +367,60 @@ uint32_t Bootloader_socTranslateSectionAddr(uint32_t cslCoreId, uint32_t addr)
     return outputAddr;
 }
 
-void Bootloader_socConfigurePll(void)
-{
-    SOC_RcmPllHsDivOutConfig hsDivCfg;
-    uint32_t r5ClkSrc_restore;
+// void Bootloader_socConfigurePll(void)
+// {
+//     SOC_RcmPllHsDivOutConfig hsDivCfg;
+//     uint32_t r5ClkSrc_restore;
 
-    /* Pre Requisite Sequence to relock core pll needs to be done */
-    r5ClkSrc_restore = SOC_rcmCoreApllRelockPreRequisite();
+//     /* Pre Requisite Sequence to relock core pll needs to be done */
+//     r5ClkSrc_restore = SOC_rcmCoreApllRelockPreRequisite();
 
-    if(gR5ClockFrequency == SOC_RCM_R5_FREQ_400MHZ)
-    {
-        hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_ALL;
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(400U);
-        hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(400U);
-        hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(166U);
-        SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_2000MHZ, &hsDivCfg);
+//     if(gR5ClockFrequency == SOC_RCM_R5_FREQ_400MHZ)
+//     {
+//         hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_ALL;
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(400U);
+//         hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
+//         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(400U);
+//         hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(166U);
+//         SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_2000MHZ, &hsDivCfg);
 
-        hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
-                                 RCM_PLL_HSDIV_OUTPUT_ENABLE_2;
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(450U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(150U);
-        SOC_rcmEthApllConfig(RCM_PLL_FOUT_FREQID_CLK_900MHZ, &hsDivCfg);
+//         hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
+//                                  RCM_PLL_HSDIV_OUTPUT_ENABLE_2;
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(450U);
+//         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(150U);
+//         SOC_rcmEthApllConfig(RCM_PLL_FOUT_FREQID_CLK_900MHZ, &hsDivCfg);
 
-        hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
-                                RCM_PLL_HSDIV_OUTPUT_ENABLE_2 |
-                                RCM_PLL_HSDIV_OUTPUT_ENABLE_3);
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(192U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(160U);
-        hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(120U);
-        SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_960MHZ, &hsDivCfg);
-    }
-    else
-    {
-        hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_ALL;
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(500U);
-        hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(500U);
-        hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(166U);
-        SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_1000MHZ, &hsDivCfg);
+//         hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
+//                                 RCM_PLL_HSDIV_OUTPUT_ENABLE_2 |
+//                                 RCM_PLL_HSDIV_OUTPUT_ENABLE_3);
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(192U);
+//         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(160U);
+//         hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(120U);
+//         SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_960MHZ, &hsDivCfg);
+//     }
+//     else
+//     {
+//         hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_ALL;
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(500U);
+//         hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
+//         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(500U);
+//         hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(166U);
+//         SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_1000MHZ, &hsDivCfg);
 
-        hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_0;
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(450U);
-        SOC_rcmEthApllConfig(RCM_PLL_FOUT_FREQID_CLK_900MHZ, &hsDivCfg);
+//         hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_0;
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(450U);
+//         SOC_rcmEthApllConfig(RCM_PLL_FOUT_FREQID_CLK_900MHZ, &hsDivCfg);
 
-        hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
-                                RCM_PLL_HSDIV_OUTPUT_ENABLE_2);
-        hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(240U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(160U);
-        SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_960MHZ, &hsDivCfg);
-    }
+//         hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
+//                                 RCM_PLL_HSDIV_OUTPUT_ENABLE_2);
+//         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(240U);
+//         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(160U);
+//         SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_960MHZ, &hsDivCfg);
+//     }
 
-    /* Restore R5F source clock*/
-    SOC_rcmSetR5ClockSource(r5ClkSrc_restore);
-}
+//     /* Restore R5F source clock*/
+//     SOC_rcmSetR5ClockSource(r5ClkSrc_restore);
+// }
 
 void Bootloader_socInitL2MailBoxMemory(void)
 {

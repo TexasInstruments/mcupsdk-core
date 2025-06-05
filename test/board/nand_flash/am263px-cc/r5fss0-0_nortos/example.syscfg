@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.24.999+253"}
  */
 
 /**
@@ -13,7 +14,7 @@ const flash1     = flash.addInstance();
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
@@ -40,23 +41,20 @@ const section12  = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                            = "CONFIG_FLASH0";
-flash1.strDtr_isAddrReg                 = true;
-flash1.strDtr_cmdRegRd                  = "0x85";
-flash1.strDtr_cmdRegWr                  = "0x81";
-flash1.strDtr_mask                      = "255";
-flash1.strDtr_shift                     = 255;
-flash1.fourByteEnableSeq                = "0";
-flash1.flashType                        = "SERIAL_NAND";
-flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
-flash1.peripheralDriver.chipSelect      = "CS1";
-flash1.peripheralDriver.inputClkFreq    = 80000000;
-flash1.peripheralDriver.OSPI.D7.$suggestSolution = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution = "MCAN0_TX";
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.fourByteEnableSeq            = "0";
+flash1.flashType                    = "SERIAL_NAND";
+flash1.peripheralDriver.$name       = "CONFIG_OSPI0";
+flash1.peripheralDriver.chipSelect  = "CS1";
+flash1.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
-gpio1.$name                = "CHIP_SEL";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "RGMII1_TD0";
+const divider29       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider29.divideValue = 5;
+
+gpio1.$name          = "CHIP_SEL";
+gpio1.pinDir         = "OUTPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "RGMII1_TD0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -282,16 +280,17 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";
-flash1.peripheralDriver.OSPI.CSn1.$suggestSolution = "OSPI0_CSn1";
-gpio1.GPIO.$suggestSolution                        = "GPIO";
-debug_log.uartLog.UART.$suggestSolution            = "UART0";
+flash1.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution        = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn1.$suggestSolution       = "OSPI0_CSn1";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution        = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution         = "EPWM12_B";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution         = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution         = "EPWM12_A";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution         = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution         = "EPWM13_A";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution         = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+debug_log.uartLog.UART.$suggestSolution                  = "UART0";

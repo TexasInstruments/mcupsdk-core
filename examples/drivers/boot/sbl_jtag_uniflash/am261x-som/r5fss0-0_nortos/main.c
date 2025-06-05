@@ -35,6 +35,7 @@
 #include <kernel/dpl/DebugP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include "ti_clocktree_pll_config.h"
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
 #define FILE_MAX_SIZE   (0x140000) /* This has to match the size of MSRAM_1 section in linker.cmd */

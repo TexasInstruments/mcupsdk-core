@@ -262,7 +262,7 @@ int32_t Bootloader_socSecHandover(void);
 /**
  * \brief API to configure Core and Per PLLS
  */
-void Bootloader_socConfigurePll(void);
+// void Bootloader_socConfigurePll(void);
 
 /**
  * \brief API to Init L2,L3 Banks and Mailbox Memory

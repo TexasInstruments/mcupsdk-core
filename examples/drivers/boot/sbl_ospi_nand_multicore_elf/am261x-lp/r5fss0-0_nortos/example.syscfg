@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -51,6 +51,9 @@ ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_state = 1;
 pmic1.$name = "CONFIG_PMIC0";
 pmic1.name  = "TPS65036xx";
 
+const divider33       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider33.divideValue = 2;
+
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
 
@@ -61,7 +64,6 @@ flash1.flashType                                = "SERIAL_NAND";
 flash1.protocol                                 = "1s_1s_1s";
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
-flash1.peripheralDriver.inputClkFreq            = 83333333;
 flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
 flash1.peripheralDriver.OSPI.CSn0.$assign       = "GPIO62";
 flash1.peripheralDriver.OSPI.DQS.$assign        = "GPIO9";

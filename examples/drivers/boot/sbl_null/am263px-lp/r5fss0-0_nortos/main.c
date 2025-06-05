@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
+#include "ti_clocktree_pll_config.h"
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 

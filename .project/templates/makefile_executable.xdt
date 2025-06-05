@@ -111,6 +111,9 @@ endif
 % if (args.project.syscfgfile) {
 %     obj.common.push("ti_drivers_config.c", "ti_drivers_open_close.c", "ti_board_config.c", "ti_board_open_close.c", "ti_dpl_config.c", "ti_pinmux_config.c", "ti_power_clock_config.c");
 % }
+% if (args.project.isBootLoader){
+%	obj.common.push("ti_clocktree_pll_config.c")
+%}
 % for (prop in obj) {
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 FILES_`prop` := \
@@ -418,6 +421,9 @@ SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
 		 % }
 	% }
+% if (args.project.isBootLoader){
+SYSCFG_GEN_FILES+=generated/ti_clocktree_pll_config.c generated/ti_clocktree_pll_config.h
+%}
 % }
 % if (args.project.device == "am243x" && ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) && (args.project.lnkpreprocessor_gcc != undefined)) {
 $(LNK_FILES_common): $(LNK_FILES_PREPROCESSOR_common)

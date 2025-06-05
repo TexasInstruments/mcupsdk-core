@@ -583,7 +583,7 @@ typedef struct SOC_RcmClkSrcInfo_s
 typedef struct SOC_RcmXTALInfo_s
 {
     uint32_t Finp;
-    bool     div2flag;
+    Bool     div2flag;
 } SOC_RcmXTALInfo;
 
 typedef struct SOC_RcmADPLLJConfig_s
