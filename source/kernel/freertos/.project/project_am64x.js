@@ -318,12 +318,6 @@ const cflags_a53 = {
     ]
 };
 
-const defines_r5f_mpu = {
-    common: [
-        "MPU_FREERTOS",
-    ],
-};
-
 const defines_a53_smp = {
     common: [
         "SMP_FREERTOS",
@@ -581,7 +575,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_r5f_mpu;
         build_property.cflags = cflags_r5f_mpu;
         build_property.templates = templates_freertos_r5f_mpu;
-        build_property.defines = defines_r5f_mpu;
     }
     if(buildOption.cpu == "a53") {
         build_property.files = files_a53;

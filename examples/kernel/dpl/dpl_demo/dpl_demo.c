@@ -56,7 +56,7 @@ static HeapP_Object gMyHeapObj;
 /* user defined ISR and semaphore to signal from ISR to main thread */
 static SemaphoreP_Object gMyISRDoneSem;
 
-#if defined(MPU_FREERTOS)
+#if defined(OS_FREERTOS_MPU)
 /** Following variables are declared in this file instead of `dpl_demo_freertos_mpu.c` to place them in
  * unprivileged regions so that user threads will also be able to access them */
 
@@ -175,7 +175,7 @@ void dpl_demo_main(void *args)
 
         HeapP_destruct(&gMyHeapObj);
     }
-#if defined(MPU_FREERTOS)
+#if defined(OS_FREERTOS_MPU)
     {
         void dpl_demo_freertos_mpu_main(void *args);
 

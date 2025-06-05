@@ -118,12 +118,6 @@ const cflags_r5f_mpu = {
     ...cflags_r5f_common,
 };
 
-const defines_r5f_mpu = {
-    common: [
-        "MPU_FREERTOS",
-    ],
-};
-
 const asmfiles_r5f_common = {
     common: [
         // picked from nortos DPL
@@ -244,7 +238,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_r5f_mpu;
         build_property.cflags = cflags_r5f_mpu;
         build_property.templates = templates_freertos_r5f_mpu;
-        build_property.defines = defines_r5f_mpu;
     }
 
     return build_property;

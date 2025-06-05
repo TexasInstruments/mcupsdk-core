@@ -72,7 +72,6 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM263PX \
-	-DMPU_FREERTOS \
 	-DOS_FREERTOS_MPU \
 
 CFLAGS_common := \

@@ -30,12 +30,6 @@ for official FreeRTOS documentation.
 
         freertos.{soc}.{cpu}-mpu.{compiler}.{profile}.lib
 
-\note Following is temporary and is expected to be removed in future releases
-
-- Add below define for your application build to select FreeRTOS MPU port
-
-        MPU_FREERTOS
-
 ## Important tips for application writers
 
 - For R5F with total of 16 configurable MPU regions,

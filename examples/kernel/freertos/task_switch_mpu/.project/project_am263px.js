@@ -59,12 +59,6 @@ const lnkfiles = {
     ]
 };
 
-const defines_r5f = {
-    common: [
-        "MPU_FREERTOS"
-    ],
-};
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH_MPU";
@@ -112,7 +106,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.templates = templates_r5f;
         build_property.includes = includes_r5f;
         build_property.libs = libs_r5f;
-        build_property.defines = defines_r5f;
     }
 
     return build_property;

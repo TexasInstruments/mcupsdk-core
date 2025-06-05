@@ -90,12 +90,6 @@ const lnkfiles = {
     ]
 };
 
-const defines_freertos_r5f_mpu = {
-    common: [
-        "MPU_FREERTOS"
-    ],
-};
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_KERNEL_DPL_DEMO";
@@ -171,7 +165,6 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f_mpu;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f_mpu;
-            build_property.defines = defines_freertos_r5f_mpu;
             build_property.templates = templates_freertos_r5f_mpu;
         }
         else if (buildOption.os.match(/freertos/)) {

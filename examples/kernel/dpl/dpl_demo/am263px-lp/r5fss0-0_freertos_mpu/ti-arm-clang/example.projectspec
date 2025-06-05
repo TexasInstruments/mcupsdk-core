@@ -44,7 +44,6 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM263PX
-            -DMPU_FREERTOS
             -DOS_FREERTOS_MPU
         "
         linkerBuildOptions="

@@ -96,12 +96,6 @@ const lnkfiles = {
     ]
 };
 
-const defines_r5f_mpu = {
-    common: [
-        "MPU_FREERTOS"
-    ],
-};
-
 const syscfgfile = "../example.syscfg";
 
 const templates_r5f =
@@ -159,7 +153,6 @@ function getComponentBuildProperty(buildOption) {
             build_property.files = files_r5f_mpu;
             build_property.includes = includes_r5f_mpu;
             build_property.libs = libs_r5f_mpu;
-            build_property.defines = defines_r5f_mpu;
             build_property.templates = templates_r5f_mpu;
     } else {
             build_property.files = files_r5f;
