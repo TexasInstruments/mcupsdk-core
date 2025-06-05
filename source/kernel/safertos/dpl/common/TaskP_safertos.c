@@ -39,15 +39,8 @@
 #define TaskP_REGISTRY_MAX_ENTRIES  (16U)
 #define TaskP_STACK_SIZE_MIN        (128U)
 
-typedef struct TaskP_Struct_ {
-    xTCB taskObj;
-    portTaskHandleType taskHndl;
-    uint32_t     lastRunTime;
-    uint64_t     accRunTime;
-} TaskP_Struct;
-
 typedef struct {
-    TaskP_Struct *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
+    TaskP_Object *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
     uint32_t lastTotalTime;
     uint64_t accTotalTime;
     uint32_t idleTskLastRunTime;
@@ -56,7 +49,7 @@ typedef struct {
 
 TaskP_Ctrl gTaskP_ctrl;
 
-static void TaskP_addToRegistry(TaskP_Struct *task)
+static void TaskP_addToRegistry(TaskP_Object *task)
 {
     uint32_t i;
     portBaseType isStarted;
@@ -82,7 +75,7 @@ static void TaskP_addToRegistry(TaskP_Struct *task)
     }
 }
 
-static void TaskP_removeFromRegistry(TaskP_Struct *task)
+static void TaskP_removeFromRegistry(TaskP_Object *task)
 {
     uint32_t i;
     portBaseType isStarted;
@@ -149,14 +142,12 @@ void TaskP_Params_init(TaskP_Params *params)
     params->taskMain = NULL;
 }
 
-int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
+int32_t TaskP_construct(TaskP_Object *taskObj, TaskP_Params *params)
 {
     int32_t status = SystemP_SUCCESS;
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
     xTaskParameters xTaskPParams;
     portBaseType xCreateResult;
 
-    DebugP_assert(sizeof(TaskP_Struct) <= sizeof(TaskP_Object));
     DebugP_assert(params != NULL);
     DebugP_assert(taskObj != NULL);
     DebugP_assert(params->stackSize >= TaskP_STACK_SIZE_MIN);
@@ -165,7 +156,7 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
     DebugP_assert( ((uintptr_t)params->stack & (sizeof(portStackType) - 1)) == 0);
     DebugP_assert(params->taskMain != NULL );
 
-    /* if prority is out of range, adjust to bring it in range */
+    /* if priority is out of range, adjust to bring it in range */
     if(params->priority > TaskP_PRIORITY_HIGHEST)
     {
         params->priority = TaskP_PRIORITY_HIGHEST;
@@ -182,7 +173,7 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
 
     xTaskPParams.pvTaskCode         = params->taskMain;
     xTaskPParams.pcTaskName         = params->name;
-    xTaskPParams.pxTCB              = &taskObj->taskObj;
+    xTaskPParams.pxTCB              = &taskObj->taskTcb;
     xTaskPParams.pcStackBuffer      = (portInt8Type *) params->stack;
     xTaskPParams.uxStackDepthBytes  = params->stackSize;
     xTaskPParams.pvParameters       = params->args;
@@ -197,10 +188,8 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
     return status;
 }
 
-void TaskP_destruct(TaskP_Object *obj)
+void TaskP_destruct(TaskP_Object *taskObj)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-
     if(taskObj && taskObj->taskHndl)
     {
         xTaskDelete(taskObj->taskHndl);
@@ -212,10 +201,8 @@ void TaskP_destruct(TaskP_Object *obj)
     }
 }
 
-void* TaskP_getHndl(TaskP_Object *obj)
+void* TaskP_getHndl(TaskP_Object *taskObj)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-
     return (void*)taskObj->taskHndl;
 }
 
@@ -229,9 +216,8 @@ void TaskP_exit()
     xTaskDelete(NULL);
 }
 
-void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
+void TaskP_loadGet(TaskP_Object *taskObj, TaskP_Load *taskLoad)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
     /* Not implemented in SafeRTOS */
     //TaskStatus_t taskStatus;
 
@@ -268,7 +254,7 @@ uint32_t TaskP_loadGetTotalCpuLoad()
 
 void TaskP_loadResetAll()
 {
-    TaskP_Struct *taskObj;
+    TaskP_Object *taskObj;
     uint32_t i;
 
     vTaskSuspendScheduler();
@@ -293,7 +279,7 @@ void TaskP_loadUpdateAll()
 {
     /* Not implemented in SafeRTOS */
 #if 0
-    TaskP_Struct *taskObj;
+    TaskP_Object *taskObj;
     TaskStatus_t taskStatus;
     uint32_t i, delta, curTotalTime;
     TaskHandle_t idleTskHndl;

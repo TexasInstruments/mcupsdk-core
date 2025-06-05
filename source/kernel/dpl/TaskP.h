@@ -86,25 +86,53 @@ typedef struct {
 } TaskP_Load;
 
 /**
- * \brief Max size of task object across all OS's
- */
-#ifdef OS_FREERTOS_MPU
-/** Minimum requirement for FreeRTOS MPU Port to work 
- * In this case, TCB stores the MPU settings including system mode stack as well the task context. */
-#define TaskP_OBJECT_SIZE_MAX       (4568u) 
-#else
-#define TaskP_OBJECT_SIZE_MAX       (172u) /* Minimum requirement for FreeRTOS FATFS to work */
-#endif 
-/**
  * \brief Opaque task object used with the task APIs
+ */
+
+#if defined (OS_FREERTOS) || defined (OS_FREERTOS_SMP) || defined (OS_FREERTOS_MPU)
+
+#include <FreeRTOS.h>
+#include <task.h>
+
+typedef struct TaskP_Object_ {
+
+    StaticTask_t taskTcb;
+    TaskHandle_t taskHndl;
+    uint32_t     lastRunTime;
+    uint64_t     accRunTime;
+
+} TaskP_Object;
+
+#elif defined (OS_SAFERTOS)
+
+#include <SafeRTOS.h>
+#include <task.h>
+
+typedef struct TaskP_Object_ {
+
+    xTCB                taskTcb;
+    portTaskHandleType  taskHndl;
+    uint32_t            lastRunTime;
+    uint64_t            accRunTime;
+
+} TaskP_Object;
+
+#elif defined (OS_NORTOS)
+
+/** Add a dummy `TaskP_Object` since `TaskP.h` is included by drivers which will be built with NORTOS as well.
+ * `TaskP_yield` API is implemented for NORTOS. Usage of other APIs with NORTOS will result in linking errors.
  */
 typedef struct TaskP_Object_ {
 
-    /* uintptr_t translates to uint64_t for A53 and uint32_t for R5 and M4 */
-    /* This accounts for the 64bit pointer in A53 and 32bit pointer in R5 and M4 */
-    uintptr_t rsv[TaskP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
+    uint32_t rsv;
 
 } TaskP_Object;
+
+#else 
+
+#error "Define OS_FREERTOS or OS_FREERTOS_SMP or OS_FREERTOS_MPU or OS_SAFERTOS or OS_NORTOS"
+
+#endif
 
 /**
  * \brief Parameters passed during \ref TaskP_construct

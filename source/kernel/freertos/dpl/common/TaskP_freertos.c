@@ -42,18 +42,10 @@ void vApplicationLoadHook(void);
 #define TaskP_REGISTRY_MAX_ENTRIES  (32u)
 #define TaskP_STACK_SIZE_MIN        (128U)
 
-
-typedef struct TaskP_Struct_ {
-    StaticTask_t taskObj;
-    TaskHandle_t taskHndl;
-    uint32_t     lastRunTime;
-    uint64_t     accRunTime;
-} TaskP_Struct;
-
 #ifdef SMP_FREERTOS
 typedef struct {
 
-    TaskP_Struct *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
+    TaskP_Object *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
     uint32_t lastTotalTime;
     uint64_t accTotalTime;
     uint32_t idleTsk1LastRunTime;
@@ -65,7 +57,7 @@ typedef struct {
 #else
 typedef struct {
 
-    TaskP_Struct *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
+    TaskP_Object *taskRegistry[TaskP_REGISTRY_MAX_ENTRIES];
     uint32_t lastTotalTime;
     uint64_t accTotalTime;
     uint32_t idleTskLastRunTime;
@@ -79,7 +71,6 @@ TaskP_Ctrl gTaskP_ctrl;
 
 static void TaskP_assertParams(TaskP_Object *obj, const TaskP_Params *params, bool isStackAlignToSize)
 {
-    DebugP_assert(sizeof(TaskP_Struct) <= sizeof(TaskP_Object));
     DebugP_assert(params != NULL);
     DebugP_assert(obj != NULL);
 
@@ -111,7 +102,7 @@ static uint32_t TaskP_adjustPriority(const TaskP_Params *params)
     return priority;
 }
 
-static void TaskP_addToRegistry(TaskP_Struct *task)
+static void TaskP_addToRegistry(TaskP_Object *task)
 {
     uint32_t i;
     BaseType_t schedularState;
@@ -140,7 +131,7 @@ static void TaskP_addToRegistry(TaskP_Struct *task)
     }
 }
 
-static void TaskP_removeFromRegistry(TaskP_Struct *task)
+static void TaskP_removeFromRegistry(TaskP_Object *task)
 {
     uint32_t i;
     BaseType_t schedularState;
@@ -193,7 +184,7 @@ static uint32_t TaskP_calcCpuLoad(uint64_t taskTime, uint64_t totalTime)
     return cpuLoad;
 }
 
-static void TaskP_updateLoad(TaskP_Struct *taskObj)
+static void TaskP_updateLoad(TaskP_Object *taskObj)
 {
 #ifndef SMP_FREERTOS
 #if (configGENERATE_RUN_TIME_STATS == 1)
@@ -274,13 +265,12 @@ void TaskP_Params_init(TaskP_Params *params)
 #endif
 }
 
-int32_t TaskP_construct(TaskP_Object *obj, const TaskP_Params *params)
+int32_t TaskP_construct(TaskP_Object *taskObj, const TaskP_Params *params)
 {
     int32_t      status   = SystemP_SUCCESS;
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
     uint32_t     priority;
 
-    TaskP_assertParams(obj, params, false);
+    TaskP_assertParams(taskObj, params, false);
 
     priority = TaskP_adjustPriority(params);
 
@@ -298,7 +288,7 @@ int32_t TaskP_construct(TaskP_Object *obj, const TaskP_Params *params)
                                   params->args,       /* task specific args */
                                   priority,           /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
                                   (StackType_t*)params->stack,      /* pointer to stack base */
-                                  &taskObj->taskObj); /* pointer to statically allocated task object memory */
+                                  &taskObj->taskTcb); /* pointer to statically allocated task object memory */
     if(taskObj->taskHndl == NULL)
     {
         status = SystemP_FAILURE;
@@ -328,14 +318,13 @@ void TaskP_ParamsRestricted_init(TaskP_ParamsRestricted *params)
     }
 }
 
-int32_t TaskP_constructRestricted(TaskP_Object *obj, const TaskP_ParamsRestricted *params)
+int32_t TaskP_constructRestricted(TaskP_Object *taskObj, const TaskP_ParamsRestricted *params)
 {
     BaseType_t         xResult;
     int32_t            status      = SystemP_SUCCESS;
-    TaskP_Struct       *taskObj    = (TaskP_Struct *)obj;
     const TaskP_Params *taskParams = &params->params;
 
-    TaskP_assertParams(obj, taskParams, true);
+    TaskP_assertParams(taskObj, taskParams, true);
 
     xTaskParameters xTaskParams = {
         .pvTaskCode     = taskParams->taskMain,
@@ -344,7 +333,7 @@ int32_t TaskP_constructRestricted(TaskP_Object *obj, const TaskP_ParamsRestricte
         .pvParameters   = taskParams->args,
         .uxPriority     = TaskP_adjustPriority(taskParams),
         .puxStackBuffer = (StackType_t *)taskParams->stack,
-        .pxTaskBuffer   = &taskObj->taskObj,
+        .pxTaskBuffer   = &taskObj->taskTcb,
     };
 
     /* Convert TaskP_MpuRegionConfig to MemoryRegion_t */
@@ -370,10 +359,8 @@ int32_t TaskP_constructRestricted(TaskP_Object *obj, const TaskP_ParamsRestricte
 #endif /* #if ( portUSING_MPU_WRAPPERS == 1 ) */
 #endif /* #if defined(__ARM_ARCH_7R__) */
 
-void TaskP_destruct(TaskP_Object *obj)
+void TaskP_destruct(TaskP_Object *taskObj)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-
     if(taskObj && taskObj->taskHndl)
     {
         vTaskDelete(taskObj->taskHndl);
@@ -385,10 +372,8 @@ void TaskP_destruct(TaskP_Object *obj)
     }
 }
 
-void* TaskP_getHndl(TaskP_Object *obj)
+void* TaskP_getHndl(TaskP_Object *taskObj)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-
     return  (void*)taskObj->taskHndl;
 }
 
@@ -414,10 +399,8 @@ void TaskP_exit(void)
     }
 }
 
-void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
+void TaskP_loadGet(TaskP_Object *taskObj, TaskP_Load *taskLoad)
 {
-    TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-
     if(taskObj->taskHndl == xTaskGetCurrentTaskHandle())
     {
         /* Perform a force yield for the kernel to update the current task run time counter value. */
@@ -460,7 +443,7 @@ uint32_t TaskP_loadGetTotalCpuLoad(void)
 
 void TaskP_loadResetAll(void)
 {
-    TaskP_Struct *taskObj;
+    TaskP_Object *taskObj;
     uint32_t i;
 
     /* Perform a force yield for the kernel to update the current task run time counter value. */
@@ -496,7 +479,7 @@ void TaskP_loadResetAll(void)
 
 void TaskP_loadUpdateAll(void)
 {
-    TaskP_Struct *taskObj;
+    TaskP_Object *taskObj;
     uint32_t i;
 
     vTaskSuspendAll();
