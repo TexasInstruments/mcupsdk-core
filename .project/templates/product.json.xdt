@@ -42,7 +42,8 @@
         "/security/security",
         "/xbar/xbar",
         "/memory_configurator/components",
-        "sdl/sdl"
+        "sdl/sdl",
+        "/clockTree/clockTreeComponents.js"
 % }
 % if((args.device == "am263px")){
         "/kernel/dpl",
@@ -54,7 +55,8 @@
         "/xbar/xbar",
         "/memory_configurator/components",
         "/optiflash/optiflash",
-        "sdl/sdl"
+        "sdl/sdl",
+        "/clockTree/clockTreeComponents.js"
 % }
 % if((args.device == "am261x")){
         "/kernel/dpl",
@@ -67,7 +69,8 @@
         "/xbar/xbar",
         "/memory_configurator/components",
         "/optiflash/optiflash",
-        "sdl/sdl"
+        "sdl/sdl",
+        "/clockTree/clockTreeComponents.js"
 % }
 % if((args.device == "am273x") || (args.device == "awr294x")) {
         "/kernel/dpl",

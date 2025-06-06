@@ -15,6 +15,9 @@
         "/networking/networking",
         "/security/security",
         "/memory_configurator/components",
+        "/optiflash/optiflash",
+        "sdl/sdl",
+        "/clockTree/clockTreeComponents.js"
     ],
     "devices": [
         "AM64x",
