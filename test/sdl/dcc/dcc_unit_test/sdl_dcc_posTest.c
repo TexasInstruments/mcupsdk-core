@@ -35,6 +35,174 @@
 
 
 #include "dcc_test_main.h"
+#include <sdl/dpl/sdl_dpl.h>
+#include "ti_drivers_open_close.h"
+
+volatile SDL_DCC_Inst gCurDccInst;
+volatile uint32_t doneIsrFlag = 0U;
+
+static void test_SDL_DCCAppPrint(char * str)
+{
+    DebugP_log(str);
+}
+
+static void test_SDL_DCCAppGetClkRatio(uint32_t  refClkFreq,
+    uint32_t  testClkFreq,
+    uint32_t *refClkRatioNum,
+    uint32_t *testClkRatioNum)
+{
+    uint32_t loopCnt, hcf = 1U;
+
+    for (loopCnt = 1;
+            (loopCnt <= refClkFreq) && (loopCnt <= testClkFreq);
+            loopCnt++)
+    {
+        if ((refClkFreq % loopCnt == 0) && (testClkFreq % loopCnt == 0))
+        {
+            hcf = loopCnt;
+        }
+    }
+    *refClkRatioNum  = (refClkFreq / hcf);
+    *testClkRatioNum = (testClkFreq / hcf);
+}
+
+static void test_SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
+        uint32_t       testClkFreq,
+        uint32_t       refClkRatioNum,
+        uint32_t       testClkRatioNum,
+        uint32_t       drfitPer,
+        SDL_DCC_Config *configParams)
+{
+    uint32_t maxFreqKHz, maxCntLimit;
+    uint32_t maxRefCnt, minRefCnt;
+    uint64_t mulVar;
+
+    /* Find maximum frequency between test and reference clock */
+    if (refClkFreq > testClkFreq)
+    {
+        maxFreqKHz  = refClkFreq;
+        maxCntLimit = 0xFFFFFU;
+    }
+    else
+    {
+        maxFreqKHz  = testClkFreq;
+        maxCntLimit = 0xFFFFFU;
+    }
+    /* Calculate seed values for 0% drift */
+    if (maxFreqKHz == refClkFreq)
+    {
+        configParams->clk0Seed = maxCntLimit / refClkRatioNum;
+        configParams->clk0Seed = configParams->clk0Seed * refClkRatioNum;
+        mulVar = ((uint64_t) (configParams->clk0Seed) *
+                    (uint32_t) (testClkRatioNum));
+        configParams->clk1Seed   = (uint32_t) (mulVar / refClkRatioNum);
+        configParams->clk0ValidSeed = refClkRatioNum;
+    }
+    else
+    {
+        configParams->clk1Seed = maxCntLimit / testClkRatioNum;
+        configParams->clk1Seed = configParams->clk1Seed * testClkRatioNum;
+        mulVar = ((uint64_t) (configParams->clk1Seed) *
+                    (uint32_t) (refClkRatioNum));
+        configParams->clk0Seed   = (uint32_t) (mulVar / testClkRatioNum);
+        configParams->clk0ValidSeed = 1U;
+    }
+    /* Applying allowed drift */
+    if (((0xFFFFFU + 0x0FFFFU) <
+            (configParams->clk0Seed * (100U + drfitPer) / 100U)))
+    {
+        /* Seed values with drift exceeds maximum range */
+        test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Seed values with drift exceeds"
+                        " allowed range\r\n");
+        test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Application will run with 0% "
+                        " allowed drift\r\n");
+    }
+    else if (100U < drfitPer)
+    {
+        /* Error percentage is greater than 100 */
+        test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Warning Wrong drift %,Not applying drift\r\n");
+        test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Application will run with 0% drift\r\n");
+    }
+    else
+    {
+        maxRefCnt = (configParams->clk0Seed * (100U + drfitPer) / 100U);
+        minRefCnt = (configParams->clk0Seed * (100U - drfitPer) / 100U);
+        if (0x0FFFFU < (maxRefCnt - minRefCnt))
+        {
+            test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Warning Seed value for valid count "
+                        "exceeds allowed range.\r\n");
+            test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Application will run with 0 allowed"
+                        " drift.\r\n");
+        }
+        else
+        {
+            if (maxRefCnt == minRefCnt)
+            {
+                configParams->clk0ValidSeed = 1U;
+            }
+            else
+            {
+                configParams->clk0Seed   = minRefCnt;
+                configParams->clk0ValidSeed = (maxRefCnt - minRefCnt);
+            }
+        }
+    }
+    test_SDL_DCCAppPrint("SDL DCC UNIT TEST: Seed values calculation done.\r\n");
+}
+
+static void test_SDL_DCCAppDoneIntrISR(void *arg)
+{
+    SDL_DCC_Status dccStatus;
+
+    SDL_DCC_getStatus(gCurDccInst, &dccStatus);
+
+    if (dccStatus.doneIntr == TRUE)
+    {
+        if (gCurDccInst==SDL_DCC_INST_DCC0)
+        {
+            if (HW_RD_FIELD32(SDL_CTRL_MMR0_CFG0_BASE + CSL_MAIN_CTRL_MMR_CFG0_DCC_STAT, /*glue logic interrupt is being used here*/
+                              CSL_MAIN_CTRL_MMR_CFG0_DCC_STAT_DCC0_INTR_DONE) == 1u)
+            {
+                doneIsrFlag  = 1U;
+                SDL_DCC_clearIntr(gCurDccInst, SDL_DCC_INTERRUPT_DONE);
+            }
+            else
+            {
+                doneIsrFlag  = 0U;
+            }
+        }
+        else
+        {
+            SDL_DCC_clearIntr(gCurDccInst, SDL_DCC_INTERRUPT_DONE);
+            doneIsrFlag  = 1U;
+        }
+    }
+}
+
+static int32_t test_SDL_DCCAppRegisterIsr(uint32_t uc, pSDL_DPL_HwipHandle *handle)
+{
+    int32_t retVal = SDL_EFAIL;
+    SDL_DPL_HwipParams intrParams;
+
+    #if defined (R5F_CORE)
+    intrParams.intNum      = 108U;
+    #endif
+    #if defined (M4F_CORE)
+    intrParams.intNum      = 21U;
+    #endif
+    intrParams.callback    = &test_SDL_DCCAppDoneIntrISR;
+    intrParams.callbackArg = 0x0;
+
+    /* Register call back function for DCC Done interrupt */
+    retVal = SDL_DPL_registerInterrupt(&intrParams, handle);
+
+    return (retVal);
+}
+
+static void test_SDL_DCCAppDeRegisterIsr(pSDL_DPL_HwipHandle handle)
+{
+    SDL_DPL_deregisterInterrupt(handle);
+}
 
 SDL_DCC_ClkSrc0 gDCCTestClk0Srcs[SDL_DCC_CLK0_SRC_NUM] =
 {
@@ -397,5 +565,77 @@ int32_t SDL_DCC_posTest(void)
         }
     }
 
+/*******************************************************************************
+ *     Run DCC without any expected error
+ ******************************************************************************/
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        uint32_t clk0Freq, clk1Freq, refClkRatioNum, testClkRatioNum;
+        gCurDccInst = SDL_DCC_INST_MCU_DCC0;
+        clk0Freq = 25000;
+        clk1Freq = 200000;
+
+        /* Get clock ratio */
+        test_SDL_DCCAppGetClkRatio(clk0Freq,
+                                clk1Freq,
+                                &refClkRatioNum,
+                                &testClkRatioNum);
+
+        config.mode    = SDL_DCC_MODE_SINGLE_SHOT_2;
+        config.clk0Src = SDL_DCC_CLK0_SRC_CLOCK0_0;
+        config.clk1Src = SDL_DCC_CLK1_SRC_CLOCK1;
+
+        /* Get the seed values for given clock selections and allowed drift */
+        test_SDL_DCCAppSetSeedVals(clk0Freq,
+                                clk1Freq,
+                                refClkRatioNum,
+                                testClkRatioNum,
+                                5,
+                                &config);
+
+
+        sdlRet = SDL_DCC_configure(SDL_DCC_INST_MCU_DCC0, &config);
+
+        if (SDL_PASS == sdlRet)
+        {
+            sdlRet = SDL_DCC_verifyConfig(SDL_DCC_INST_MCU_DCC0, &config);
+        }
+        else
+        {
+            sdlRet = SDL_EFAIL;
+        }
+
+        if (sdlRet == SDL_PASS)
+        {
+            /* Enable ERROR interrupt */
+            sdlRet = SDL_DCC_enableIntr(SDL_DCC_INST_MCU_DCC0, SDL_DCC_INTERRUPT_ERR);
+
+            /*
+            * Check for single-shot mode and enable interrupt for Done notification
+            * then wait for completion.
+            */
+            pSDL_DPL_HwipHandle handle;
+
+            sdlRet = test_SDL_DCCAppRegisterIsr(i, &handle);
+
+            /* Enable DONE interrupt(only for single shot mode) */
+            sdlRet = SDL_DCC_enableIntr(SDL_DCC_INST_MCU_DCC0, SDL_DCC_INTERRUPT_DONE);
+
+            sdlRet = SDL_DCC_enable(SDL_DCC_INST_MCU_DCC0);
+
+            /* Wait for DONE interrupt */
+            while (!doneIsrFlag);
+
+            test_SDL_DCCAppDeRegisterIsr(handle);
+            sdlRet = SDL_DCC_disable(SDL_DCC_INST_MCU_DCC0);
+        }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\r\nDCC test run failed.\r\n");
+        }
+    }
+    
     return (testStatus);
 }

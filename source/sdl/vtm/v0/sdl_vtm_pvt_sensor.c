@@ -93,8 +93,7 @@ int32_t              gSDL_vtm_pvt_error[SDL_VTM_NUM_EFUSE_REGS];
 
 
 /* lut_computation done */
-bool gSDL_vtm_lut_done[SDL_VTM_NUM_OF_SENSOR_WA_COMP];
-int32_t gSDL_lut_computation_init_done = SDL_VTM_VALUES_ARE_UNINITIALIZED;
+bool gSDL_vtm_lut_done[SDL_VTM_NUM_OF_SENSOR_WA_COMP] = {(bool)false};
 
 /* Internal functions */
 static void SDL_vtmPrepLookupTable(void);
@@ -105,20 +104,15 @@ static void SDL_vtmPrepLookupTable(void)
     int32_t  i;
     int32_t *derived_array = &gSDL_pvt_poly_work_around[0][0];
 
-    if (gSDL_lut_computation_init_done == SDL_VTM_VALUES_ARE_UNINITIALIZED)
-    {
-        gSDL_vtm_lut_done[sens_id] = FALSE;
-    }
-
     if (gSDL_vtm_lut_done[sens_id] == FALSE)
     {
         for ( i = 0; i < SDL_VTM_NUM_OF_ADC_CODES; i++)
         {
             derived_array[i] = gSDL_pvt_poly_golden[i];
         }
+        gSDL_vtm_lut_done[sens_id] = (bool)true;
     }
 
-    gSDL_vtm_lut_done[sens_id] = TRUE;
     return;
 }
 

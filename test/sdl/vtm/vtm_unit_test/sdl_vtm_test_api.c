@@ -992,7 +992,7 @@ int32_t sdlVTM_apiTest(void)
 
     if(testResult == 0)
     {
-        tsConfig.high_temp_in_milli_degree_celsius    =    86844;
+        tsConfig.high_temp_in_milli_degree_celsius    =    86851;
         tsConfig.low_temp_in_milli_degree_celsius    =    64000;
         tsConfig.configTsCtrl = SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT;
         sdlResult = SDL_VTM_initTs((SDL_VTM_InstTs)SDL_VTM_INSTANCE_TS_0, &tsConfig);
