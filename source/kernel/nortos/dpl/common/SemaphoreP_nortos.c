@@ -29,7 +29,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+#include <string.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/SemaphoreP.h>
@@ -61,13 +61,6 @@ typedef struct SemaphoreP_Params_ {
 
 } SemaphoreP_Params;
 
-typedef struct SemaphoreP_Struct_ {
-    uint32_t type;
-    uint32_t maxCount;
-    volatile uint32_t count;
-    volatile uint32_t nestCount;
-} SemaphoreP_Struct;
-
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -89,15 +82,25 @@ void SemaphoreP_Params_init(SemaphoreP_Params *params)
 
 int32_t SemaphoreP_construct(SemaphoreP_Object *obj, SemaphoreP_Params *params)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
+    int32_t status = SystemP_FAILURE;
 
-    DebugP_assert(sizeof(SemaphoreP_Object) >= sizeof(SemaphoreP_Struct));
+    if(pSemaphore != NULL)
+    {
+        status = SystemP_SUCCESS;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
-    pSemaphore->type = params->type;
-    pSemaphore->count = params->initCount;
-    pSemaphore->maxCount = params->maxCount;
-    pSemaphore->nestCount = 0;
-
+    if(status == SystemP_SUCCESS)
+    {
+        pSemaphore->type = params->type;
+        pSemaphore->count = params->initCount;
+        pSemaphore->maxCount = params->maxCount;
+        pSemaphore->nestCount = 0;
+    }
     return SystemP_SUCCESS;
 }
 
@@ -155,7 +158,7 @@ void SemaphoreP_destruct(SemaphoreP_Object *obj)
 
 int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
     ClockP_Params      clockParams;
     ClockP_Object      clockObj;
     uintptr_t          key;
@@ -214,7 +217,7 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
 
 void SemaphoreP_post(SemaphoreP_Object *obj)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
     uintptr_t       key;
 
     key = HwiP_disable();

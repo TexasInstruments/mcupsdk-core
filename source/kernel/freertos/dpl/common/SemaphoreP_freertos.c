@@ -33,26 +33,19 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/SemaphoreP.h>
-#include <FreeRTOS.h>
-#include <semphr.h>
-
-typedef struct SemaphoreP_Struct_ {
-    StaticSemaphore_t semObj;
-    SemaphoreHandle_t semHndl;
-    uint32_t isRecursiveMutex;
-} SemaphoreP_Struct;
 
 int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
 {
-    SemaphoreP_Struct *pSemaphore = NULL;
+    SemaphoreP_Object *pSemaphore = obj;
     int32_t status = SystemP_FAILURE;
 
-    DebugP_assert(sizeof(SemaphoreP_Struct) <= sizeof(SemaphoreP_Object) );
-
-    if(obj != NULL)
+    if(pSemaphore != NULL)
     {
-        pSemaphore = (SemaphoreP_Struct *)obj;
         status = SystemP_SUCCESS;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
     }
 
     if (SystemP_SUCCESS == status)
@@ -81,46 +74,65 @@ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
 
 int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount, uint32_t maxCount)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
-    int32_t status;
+    SemaphoreP_Object *pSemaphore = obj;
+    int32_t status = SystemP_FAILURE;
 
-    DebugP_assert(sizeof(SemaphoreP_Struct) <= sizeof(SemaphoreP_Object) );
-
-    pSemaphore->isRecursiveMutex = 0;
-    pSemaphore->semHndl = xSemaphoreCreateCountingStatic(
-                                maxCount,
-                                initCount,
-                                &pSemaphore->semObj);
-    if( pSemaphore->semHndl == NULL )
+    if(pSemaphore != NULL)
     {
-        status = SystemP_FAILURE;
+        status = SystemP_SUCCESS;
     }
     else
     {
-        vQueueAddToRegistry(pSemaphore->semHndl, "Counting Sem (DPL)");
-        status = SystemP_SUCCESS;
+        status = SystemP_FAILURE;
     }
 
+    if(status == SystemP_SUCCESS)
+    {
+        pSemaphore->isRecursiveMutex = 0;
+        pSemaphore->semHndl = xSemaphoreCreateCountingStatic(
+                                    maxCount,
+                                    initCount,
+                                    &pSemaphore->semObj);
+        if( pSemaphore->semHndl == NULL )
+        {
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            vQueueAddToRegistry(pSemaphore->semHndl, "Counting Sem (DPL)");
+            status = SystemP_SUCCESS;
+        }
+    }
     return status;
 }
 
 int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
-    int32_t status;
+    SemaphoreP_Object *pSemaphore = obj;
+    int32_t status = SystemP_FAILURE;
 
-    DebugP_assert(sizeof(SemaphoreP_Struct) <= sizeof(SemaphoreP_Object) );
-
-    pSemaphore->isRecursiveMutex = 1;
-    pSemaphore->semHndl = xSemaphoreCreateRecursiveMutexStatic(&pSemaphore->semObj);
-    if( pSemaphore->semHndl == NULL )
+    if(pSemaphore != NULL)
     {
-        status = SystemP_FAILURE;
+        status = SystemP_SUCCESS;
     }
     else
     {
-        vQueueAddToRegistry(pSemaphore->semHndl, "Mutex (DPL)");
-        status = SystemP_SUCCESS;
+        status = SystemP_FAILURE;
+    }
+    
+    if(status == SystemP_SUCCESS)
+    {
+        pSemaphore->isRecursiveMutex = 1;
+        pSemaphore->semHndl = xSemaphoreCreateRecursiveMutexStatic(&pSemaphore->semObj);
+        if( pSemaphore->semHndl == NULL )
+        {
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            vQueueAddToRegistry(pSemaphore->semHndl, "Mutex (DPL)");
+            status = SystemP_SUCCESS;
+        }
     }
 
     return status;
@@ -128,7 +140,7 @@ int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
 
 void SemaphoreP_destruct(SemaphoreP_Object *obj)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
 
     vQueueUnregisterQueue(pSemaphore->semHndl);
 
@@ -138,52 +150,64 @@ void SemaphoreP_destruct(SemaphoreP_Object *obj)
 
 int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
     uint32_t isSemTaken = 0U;
-    int32_t status;
+    int32_t status = SystemP_FAILURE;
 
-    if(pSemaphore->isRecursiveMutex != 0U)
-    {
-        if(HwiP_inISR() == 0U )
-        {
-            isSemTaken =(uint32_t) xSemaphoreTakeRecursive(pSemaphore->semHndl, timeout);
-        }
-        else
-        {
-            /* NOT allowed to use mutex in ISR */
-            DebugP_assertNoLog(0);
-        }
-    }
-    else
-    {
-        if( HwiP_inISR() != 0U )
-        {
-            BaseType_t xHigherPriorityTaskWoken = 0;
-
-            /* timeout is ignored when in ISR mode */
-            isSemTaken = (uint32_t) xSemaphoreTakeFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
-            portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
-        }
-        else
-        {
-            isSemTaken = (uint32_t) xSemaphoreTake(pSemaphore->semHndl, timeout);
-        }
-    }
-    if(isSemTaken != 0U)
+    if(pSemaphore != NULL)
     {
         status = SystemP_SUCCESS;
     }
     else
     {
-        status = SystemP_TIMEOUT;
+        status = SystemP_FAILURE;
     }
+    
+    if(status == SystemP_SUCCESS)
+    {
+        if(pSemaphore->isRecursiveMutex != 0U)
+        {
+            if(HwiP_inISR() == 0U )
+            {
+                isSemTaken =(uint32_t) xSemaphoreTakeRecursive(pSemaphore->semHndl, timeout);
+            }
+            else
+            {
+                /* NOT allowed to use mutex in ISR */
+                DebugP_assertNoLog(0);
+            }
+        }
+        else
+        {
+            if( HwiP_inISR() != 0U )
+            {
+                BaseType_t xHigherPriorityTaskWoken = 0;
 
+                /* timeout is ignored when in ISR mode */
+                isSemTaken = (uint32_t) xSemaphoreTakeFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
+                portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
+            }
+            else
+            {
+                isSemTaken = (uint32_t) xSemaphoreTake(pSemaphore->semHndl, timeout);
+            }
+        }
+        if(isSemTaken != 0U)
+        {
+            status = SystemP_SUCCESS;
+        }
+        else
+        {
+            status = SystemP_TIMEOUT;
+        }
+    }
+    
     return status;
 }
 
 void SemaphoreP_post(SemaphoreP_Object *obj)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
 
     if(pSemaphore->isRecursiveMutex != 0U)
     {
@@ -218,7 +242,7 @@ void SemaphoreP_post(SemaphoreP_Object *obj)
  */
 int32_t SemaphoreP_getCount(SemaphoreP_Object *obj)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+    SemaphoreP_Object *pSemaphore = obj;
 
     return ((int32_t)uxSemaphoreGetCount(pSemaphore->semHndl));
 }
