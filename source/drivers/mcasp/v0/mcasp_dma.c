@@ -224,14 +224,14 @@ static void MCASP_edmaIsrFxnTx(Edma_IntrHandle intrHandle, void *args)
 
     if (object->XmtObj.loopjobEnable == true)
     {
-        if ((txn != object->curentQueueHandleTx) &&
+        if ((txn != NULL) &&
             (txn != &(object->XmtObj.txnLoopjob)))
         {
             /* This transaction is not from loopjob. */
             txn->status = SystemP_SUCCESS;
             xfrObj->cbFxn((MCASP_Handle *)args, txn);
         }
-        if (nextTxn == object->reqQueueHandleTx)
+        if (nextTxn == NULL)
         {
             /* No buffers are queued. */
             nextTxn = &object->XmtObj.txnLoopjob;
@@ -239,10 +239,10 @@ static void MCASP_edmaIsrFxnTx(Edma_IntrHandle intrHandle, void *args)
     }
     else
     {
-        if (nextTxn == object->reqQueueHandleTx)
+        if (nextTxn == NULL)
         {
             /* No buffers are queued. program the same buffer. */
-            if (txn != object->curentQueueHandleTx)
+            if (txn != NULL)
             {
                 nextTxn = txn;
             }
@@ -253,7 +253,7 @@ static void MCASP_edmaIsrFxnTx(Edma_IntrHandle intrHandle, void *args)
         }
         else
         {
-            if (txn != object->curentQueueHandleTx)
+            if (txn != NULL)
             {
                 /* Give callback for current txn */
                 txn->status = SystemP_SUCCESS;
@@ -285,14 +285,14 @@ static void MCASP_edmaIsrFxnRx(Edma_IntrHandle intrHandle, void *args)
 
     if (object->RcvObj.loopjobEnable == true)
     {
-        if ((txn != object->curentQueueHandleRx) &&
+        if ((txn != NULL) &&
             (txn != &(object->RcvObj.txnLoopjob)))
         {
             /* This transaction is not from loopjob. */
             txn->status = SystemP_SUCCESS;
             xfrObj->cbFxn((MCASP_Handle *)args, txn);
         }
-        if (nextTxn == object->reqQueueHandleRx)
+        if (nextTxn == NULL)
         {
             /* No buffers are queued. */
             nextTxn = &object->RcvObj.txnLoopjob;
@@ -300,10 +300,10 @@ static void MCASP_edmaIsrFxnRx(Edma_IntrHandle intrHandle, void *args)
     }
     else
     {
-        if (nextTxn == object->reqQueueHandleRx)
+        if (nextTxn == NULL)
         {
             /* No buffers are queued. program the same buffer. */
-            if (txn != object->curentQueueHandleRx)
+            if (txn != NULL)
             {
                 nextTxn = txn;
             }
@@ -314,7 +314,7 @@ static void MCASP_edmaIsrFxnRx(Edma_IntrHandle intrHandle, void *args)
         }
         else
         {
-            if (txn != object->curentQueueHandleRx)
+            if (txn != NULL)
             {
                 /* Give callback for current txn */
                 txn->status = SystemP_SUCCESS;
@@ -341,7 +341,7 @@ int32_t MCASP_enableDmaTx(MCASP_Config *config)
     MCASP_Object *object = config->object;
     MCASP_Transaction *txn = QueueP_get(object->reqQueueHandleTx);
 
-    if (txn == object->reqQueueHandleTx)
+    if (txn == NULL)
     {
         /* No buffers are queued. */
         if (object->XmtObj.loopjobEnable == true)
@@ -367,7 +367,7 @@ int32_t MCASP_enableDmaTx(MCASP_Config *config)
     {
         /* get the second txn and program the link param */
         txn = QueueP_get(object->reqQueueHandleTx);
-        if (txn == object->reqQueueHandleTx)
+        if (txn == NULL)
         {
             if (object->XmtObj.loopjobEnable == true)
             {
@@ -402,7 +402,7 @@ int32_t MCASP_enableDmaRx(MCASP_Config *config)
     MCASP_Object *object = config->object;
     MCASP_Transaction *txn = QueueP_get(object->reqQueueHandleRx);
 
-    if (txn == object->reqQueueHandleRx)
+    if (txn == NULL)
     {
         /* No buffers are queued. */
         if (object->RcvObj.loopjobEnable == true)
@@ -428,7 +428,7 @@ int32_t MCASP_enableDmaRx(MCASP_Config *config)
     {
         /* get the second txn and program the link param */
         txn = QueueP_get(object->reqQueueHandleRx);
-        if (txn == object->reqQueueHandleRx)
+        if (txn == NULL)
         {
             if (object->RcvObj.loopjobEnable == true)
             {

@@ -55,17 +55,10 @@ extern "C" {
  *
  *  @{
  */
+#define QueueP_OBJECT_SIZE_MAX        (8u)
 #define QueueP_NOTEMPTY               (0U)
 #define QueueP_EMPTY                  (1U)
 /** @} */
-
-/*!
- *  @brief    Opaque client reference to an instance of a QueueP
- *
- *  A QueueP_Handle returned from the ::QueueP_create represents that
- *  instance and  is used in the other instance based functions
- */
-typedef  void *QueueP_Handle;
 
 /*!
  *  @brief  Opaque QueueP element
@@ -83,19 +76,20 @@ typedef struct QueueP_Elem_s{
 } QueueP_Elem;
 
 /**
- * \brief Max size of task object across all OS's
- */
-#define QueueP_OBJECT_SIZE_MAX       (8u)
-/**
  * \brief Opaque task object used with the task APIs
  */
 typedef struct QueueP_Object_ {
-
-    /* uintptr_t translates to uint64_t for A53 and uint32_t for R5 and M4 */
-    /* This accounts for the 64bit pointer in A53 and 32bit pointer in R5 and M4 */
-    uintptr_t rsv[QueueP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
-
+    QueueP_Elem          queueHndl;
 } QueueP_Object;
+
+
+/*!
+ *  @brief    Opaque client reference to an instance of a QueueP
+ *
+ *  A QueueP_Handle returned from the ::QueueP_create represents that
+ *  instance and  is used in the other instance based functions
+ */
+typedef QueueP_Object *QueueP_Handle;
 
 /*!
  *  @brief  Function to create a queue.
@@ -124,7 +118,7 @@ int32_t QueueP_delete(QueueP_Handle handle);
  *  @param  handle  [in] A QueueP_Handle returned from QueueP_create
  *
  *  @return pointer to the element or
- *          pointer to queue itself incase of empty queue
+ *          NULL incase of empty queue
  */
 void * QueueP_get(QueueP_Handle handle);
 

@@ -35,32 +35,21 @@
 #include <kernel/dpl/HwiP.h>
 #include <drivers/hw_include/csl_types.h>
 
-/*!
- *  @brief    QueueP_nortos structure
- */
-typedef struct QueueP_nortos_s
-{
-    QueueP_Elem          queueHndl;
-} QueueP_nortos;
-
 /*
  *  ======== QueueP_create ========
  */
 QueueP_Handle QueueP_create(QueueP_Object *obj)
 {
     QueueP_Handle       ret_handle;
-    QueueP_nortos     *handle = (QueueP_nortos *) NULL;
     QueueP_Elem          *q;
 
     /* Grab the memory */
-    handle = (QueueP_nortos *) obj;
-
-    q = &handle->queueHndl;
+    q = &obj->queueHndl;
 
     q->next = q;
     q->prev = q;
 
-    ret_handle = ((QueueP_Handle)handle);
+    ret_handle = ((QueueP_Handle)obj);
 
     return ret_handle;
 }
@@ -68,11 +57,9 @@ QueueP_Handle QueueP_create(QueueP_Object *obj)
 /*
  *  ======== QueueP_delete ========
  */
-int32_t QueueP_delete(QueueP_Handle handle)
+int32_t QueueP_delete(QueueP_Handle queue)
 {
-    DebugP_assert((handle != NULL));
-
-    QueueP_nortos *queue = (QueueP_nortos *)handle;
+    DebugP_assert((queue != NULL));
     QueueP_Elem      *q;
 
     q = &queue->queueHndl;
@@ -86,16 +73,15 @@ int32_t QueueP_delete(QueueP_Handle handle)
 /*
  *  ======== QueueP_get ========
  */
-void * QueueP_get(QueueP_Handle handle)
+void * QueueP_get(QueueP_Handle queue)
 {
-    DebugP_assert((handle != NULL));
+    DebugP_assert((queue != NULL));
 
     uintptr_t       key;
-    QueueP_nortos *queue = (QueueP_nortos *)handle;
     QueueP_Elem      *pElem = NULL;
     QueueP_Elem      *q;
     
-    if(QueueP_isEmpty(handle) != QueueP_EMPTY)
+    if(QueueP_isEmpty(queue) != QueueP_EMPTY)
     {
         key = HwiP_disable();
 
@@ -114,13 +100,12 @@ void * QueueP_get(QueueP_Handle handle)
 /*
  *  ======== QueueP_put ========
  */
-int32_t QueueP_put(QueueP_Handle handle, void *elem)
+int32_t QueueP_put(QueueP_Handle queue, void *elem)
 {
-    DebugP_assert((handle != NULL));
+    DebugP_assert((queue != NULL));
 
     uintptr_t       key;
     int32_t   ret_val = SystemP_SUCCESS;
-    QueueP_nortos *queue = (QueueP_nortos *)handle;
     QueueP_Elem      *pElem = (QueueP_Elem *)elem;
     QueueP_Elem      *q;
 
@@ -148,12 +133,11 @@ int32_t QueueP_put(QueueP_Handle handle, void *elem)
 /*
  *  ======== QueueP_isEmpty ========
  */
-uint32_t QueueP_isEmpty(QueueP_Handle handle)
+uint32_t QueueP_isEmpty(QueueP_Handle queue)
 {
-    DebugP_assert((handle != NULL));
+    DebugP_assert((queue != NULL));
 
     uint32_t        ret_val;
-    QueueP_nortos *queue = (QueueP_nortos *)handle;
 
     if(queue->queueHndl.next == &(queue->queueHndl))
     {

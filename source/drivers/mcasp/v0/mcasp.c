@@ -584,7 +584,7 @@ int32_t MCASP_startTransferTx(MCASP_Handle handle)
         {
             /* Get the first buffer queued and store in XmtObj to transfer from ISR. */
             MCASP_Transaction *txn = QueueP_get(object->reqQueueHandleTx);
-            if (txn == object->reqQueueHandleTx)
+            if (txn == NULL)
             {
                 /* No buffers are queued. */
                 if (object->XmtObj.loopjobEnable == true)
@@ -703,7 +703,7 @@ int32_t MCASP_startTransferRx(MCASP_Handle handle)
         {
             /* Get the first buffer queued and store in RcvObj to transfer from ISR. */
             MCASP_Transaction *txn = QueueP_get(object->reqQueueHandleRx);
-            if (txn == object->reqQueueHandleRx)
+            if (txn == NULL)
             {
                 /* No buffers are queued. */
                 if (object->RcvObj.loopjobEnable == true)
@@ -1050,7 +1050,7 @@ static void MCASP_tx_isr(void *args)
                             /* transfer from current buffer is complete. */
                             /* get next buffer and program. */
                             MCASP_Transaction *newTxn = QueueP_get(object->reqQueueHandleTx);
-                            if (newTxn == object->reqQueueHandleTx)
+                            if (newTxn == NULL)
                             {
                                 /* No new buffers are loaded. */
                                 if (object->XmtObj.loopjobEnable == true)
@@ -1159,7 +1159,7 @@ static void MCASP_rx_isr(void *args)
                             /* transfer from current buffer is complete. */
                             /* get next buffer and program. */
                             MCASP_Transaction *newTxn = QueueP_get(object->reqQueueHandleRx);
-                            if (newTxn == object->reqQueueHandleRx)
+                            if (newTxn == NULL)
                             {
                                 /* No new buffers are loaded. */
                                 if (object->RcvObj.loopjobEnable == true)
