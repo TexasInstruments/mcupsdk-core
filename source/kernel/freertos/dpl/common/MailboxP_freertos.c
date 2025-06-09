@@ -34,24 +34,10 @@
  */
 
 
-#include <stdint.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <FreeRTOS.h>
-#include "queue.h"
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/MailboxP.h>
-
-
-/*!
- *  @brief    MailboxP_freertos structure
- */
-typedef struct MailboxP_freertos_s
-{
-    StaticQueue_t       xqueueObj;
-    QueueHandle_t       xqueueHndl;
-} MailboxP_freertos;
 
 void MailboxP_Params_init(MailboxP_Params *params)
 {
@@ -69,33 +55,30 @@ void MailboxP_Params_init(MailboxP_Params *params)
 
 MailboxP_Handle MailboxP_create(MailboxP_Object* pObj, const MailboxP_Params *params)
 {
-    DebugP_assert(sizeof(MailboxP_Object) >= sizeof(MailboxP_freertos));
-
     MailboxP_Handle     ret_handle; 
-    MailboxP_freertos   *handle = (MailboxP_freertos *) pObj;
 
     DebugP_assert((params != NULL));
     DebugP_assert((params->buf != NULL));
     DebugP_assert((params->bufsize >= (params->size * params->count)));
 
-    if (handle == NULL)
+    if (pObj == NULL)
     {
         ret_handle = NULL;
     }
     else
     {
-        handle->xqueueHndl = xQueueCreateStatic((UBaseType_t)params->count,
+        pObj->xqueueHndl = xQueueCreateStatic((UBaseType_t)params->count,
                                         (UBaseType_t)params->size, 
                                         (uint8_t*)params->buf,
-                                        &handle->xqueueObj);
-        if(handle->xqueueHndl == NULL)
+                                        &pObj->xqueueObj);
+        if(pObj->xqueueHndl == NULL)
         {
             /* If there was an error reset the mailbox object and return NULL. */
             ret_handle = NULL;
         }
         else
         {
-            ret_handle = ((MailboxP_Handle)handle);
+            ret_handle = ((MailboxP_Handle)pObj);
         }
     }
 
@@ -107,7 +90,7 @@ int32_t MailboxP_delete(MailboxP_Handle handle)
     DebugP_assert((handle != NULL));
 
     int32_t ret_val = SystemP_SUCCESS;
-    MailboxP_freertos *mailbox = (MailboxP_freertos *)handle;
+    MailboxP_Object *mailbox = (MailboxP_Object *)handle;
 
     if (mailbox != NULL)
     {
@@ -130,7 +113,7 @@ int32_t MailboxP_post(MailboxP_Handle handle,
 
     BaseType_t qStatus;
     int32_t ret_val = SystemP_SUCCESS;
-    MailboxP_freertos *mailbox = (MailboxP_freertos *)handle;
+    MailboxP_Object *mailbox = (MailboxP_Object *)handle;
 
     if (HwiP_inISR() != 0U)
     {
@@ -169,7 +152,7 @@ int32_t MailboxP_pend(MailboxP_Handle handle,
     
     BaseType_t qStatus;
     int32_t ret_val = SystemP_SUCCESS;
-    MailboxP_freertos *mailbox = (MailboxP_freertos *)handle;
+    MailboxP_Object *mailbox = (MailboxP_Object *)handle;
 
     if (HwiP_inISR() != 0U)
     {
@@ -207,7 +190,7 @@ int32_t MailboxP_getNumPendingMsgs(MailboxP_Handle handle)
     DebugP_assert((handle != NULL));
     
     BaseType_t numMsgs;
-    MailboxP_freertos *mailbox = (MailboxP_freertos *)handle;
+    MailboxP_Object *mailbox = (MailboxP_Object *)handle;
 
     if (HwiP_inISR() != 0U)
     {

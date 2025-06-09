@@ -57,19 +57,17 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-/**
- * \brief Max size of semaphore object across no-RTOS and all OS's
- */
-#define MailboxP_OBJECT_SIZE_MAX    (152U)
+#if defined (OS_FREERTOS) || defined (OS_FREERTOS_SMP) || defined (OS_FREERTOS_MPU)
+
+#include <FreeRTOS.h>
+#include "queue.h"
 /**
  * \brief Opaque semaphore object used with the semaphore APIs
  */
-typedef struct MailboxP_Object_ {
-
-    /* uintptr_t translates to uint64_t for A53 and uint32_t for R5 and M4 */
-    /* This accounts for the 64bit pointer in A53 and 32bit pointer in R5 and M4 */
-    uintptr_t rsv[MailboxP_OBJECT_SIZE_MAX/sizeof(uint32_t)]; /**< reserved, should NOT be modified by end users */
-
+typedef struct MailboxP_Object_
+{
+    StaticQueue_t xqueueObj;  /*!< Static queue object for FreeRTOS */
+    QueueHandle_t xqueueHndl; /*!< Queue handle for FreeRTOS */
 } MailboxP_Object;
 
 /*!
@@ -78,7 +76,11 @@ typedef struct MailboxP_Object_ {
  *  A MailboxP_Handle returned from the ::MailboxP_create represents that
  *  instance and  is used in the other instance based functions
  */
-typedef  void *MailboxP_Handle;
+typedef MailboxP_Object* MailboxP_Handle;
+#else
+#error "Define OS_FREERTOS, OS_FREERTOS_SMP or OS_FREERTOS_MPU"
+#endif
+
 
 /*!
  *  @brief    Basic MailboxP Parameters

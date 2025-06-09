@@ -43,7 +43,7 @@
 #include <kernel/dpl/CycleCounterP.h>
 #include <kernel/dpl/EventP.h>
 #include <kernel/dpl/QueueP.h>
-#include <kernel/dpl/MailboxP.h>
+
 #include <drivers/soc.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
@@ -67,14 +67,17 @@ int32_t gEventClearStatusFromISR;
 int32_t gEventGetBitsStatusFromISR;
 uint32_t gEventGetBitsFromISR;
 
+#define RESTRICTED_ADDRESS      (0xE0000000U)
+
+#if defined (OS_FREERTOS)
+
+#include <kernel/dpl/MailboxP.h>
 /* MailboxP Test Object and Definitions */
 #define TEST_MBOX_TASK_STACK_SIZE      (4*1024U)
 #define TEST_MBOX_TASK1_PRIO             (14U)
 #define TEST_MBOX_TASK2_PRIO             (14U)
 #define TEST_MBOX_MSG_SIZE               (10U)
 #define TEST_MBOX_BUFF_COUNT             (3U)
-
-#define RESTRICTED_ADDRESS      (0xE0000000U)
 
 struct test_mboxTaskTestParam
 {
@@ -98,7 +101,7 @@ static MailboxP_Object gMyMboxClientTx;
 static MailboxP_Object gMyMboxClientRx;
 static TaskP_Object gTestMboxTaskObj;
 static uint8_t gMailBoxBuff[TEST_MBOX_MSG_SIZE*TEST_MBOX_BUFF_COUNT];
-
+#endif
 
 /* User defined heap memory and handle */
 #define MY_HEAP_MEM_SIZE (2 * 1024u)
@@ -722,6 +725,7 @@ void myTaskMain(void *args)
     TaskP_exit();
 }
 
+#if defined(OS_FREERTOS)
 void test_MailboxTask1(void *args)
 {
     struct test_mboxTaskTestParam* pTaskArgs = (struct test_mboxTaskTestParam*) args;
@@ -865,6 +869,7 @@ void test_mailbox(void *args)
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, MailboxP_delete(mboxClientTxHandle));
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, MailboxP_delete(mboxClientRxHandle));
 }
+#endif
 
 void test_task(void *args)
 {
