@@ -73,7 +73,7 @@ extern "C" {
 #define ENET_CFG_CPDMA_CH_OVERRIDE                  (ENET_ON)
 
 /*! \brief CPSW IET support. */
-#define ENET_CFG_CPSW_IET_INCL                      (ENET_OFF)
+#define ENET_CFG_CPSW_IET_INCL                      (ENET_ON)
 
 /*! \brief ALE VLAN MASK MUX support. */
 #define ENET_CFG_ALE_VLAN_MASK_MUX                  (ENET_OFF)
@@ -143,7 +143,7 @@ extern "C" {
 #define ENET_CFG_CPSW_EST                           (ENET_ON)
 #define ENET_CFG_CPSW_MACPORT_EST                   (ENET_ON)
 
-/*! \brief Cut-thru switching support. This feature is not supported by the hardware */
+/*! \brief Cut-thru switching support. This feature is supported by the hardware */
 #define ENET_CFG_CPSW_CUTTHRU                       (ENET_ON)
 
 /*! \brief MDIO Clause-45 frame support. */
