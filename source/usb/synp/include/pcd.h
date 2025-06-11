@@ -51,6 +51,8 @@ extern "C" {
  *
  */
 
+ #include "dwc_queue.h"
+
 /** Maximum number of Tx FIFOs. Depends on the RTL configuration. No way to
  * probe the value at runtime
  */
@@ -497,7 +499,7 @@ typedef struct dwc_usb3_pcd {
 	/** @} */
 
 	/* PCD event queue */
-	DWC_SIMPLEQ_HEAD(event_queue, dwc_usb3_event_req) event_q;
+	dwc_queue_t event_q;
 } dwc_usb3_pcd_t;
 
 /** @{ */

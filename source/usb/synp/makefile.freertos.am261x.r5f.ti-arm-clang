@@ -20,6 +20,7 @@ FILES_common := \
     pcd_hiber.c \
     pcd_intr.c \
     pcd.c \
+    dwc_queue.c \
 
 FILES_PATH_common = \
     ../synp/include/ \

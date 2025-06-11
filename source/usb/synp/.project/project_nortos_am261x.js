@@ -12,6 +12,7 @@ const files = {
         "pcd_hiber.c",
         "pcd_intr.c",
         "pcd.c",
+        "dwc_queue.c",
     ],
 };
 

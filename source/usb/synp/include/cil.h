@@ -176,6 +176,7 @@ extern void dwc_usb3_enable_device_interrupts(volatile dwc_usb3_device_t *dev);
 extern int dwc_usb3_handle_event(volatile dwc_usb3_device_t *dev);
 extern int dwc_usb3_irq(volatile dwc_usb3_device_t *dev, int irq);
 extern int dwc_usb3_task(volatile dwc_usb3_device_t *dev);
+void dwc_usb3_task_init(dwc_usb3_device_t *dev);
 
 /**
  * This routine returns the current operating mode, host or device.

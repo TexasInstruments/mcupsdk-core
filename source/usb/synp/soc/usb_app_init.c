@@ -311,7 +311,7 @@ dwc_usb3_device_t *dwc_usb3_driver_init(u32 base_addr_dwc)
         g_pcd_req_bm = 0xffffffffU;
 
         /*Initilize event queue*/
-        DWC_SIMPLEQ_INIT(&usb3_dev->pcd.event_q);
+        dwc_usb3_task_init(usb3_dev);
         /*
          * Add our hook to override the default Phy register setup
          */

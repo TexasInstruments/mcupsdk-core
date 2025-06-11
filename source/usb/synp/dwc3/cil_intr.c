@@ -48,6 +48,9 @@
 #include "../include/dev.h"
 #include "../include/os_dev.h"
 #include "../include/cil.h"
+#include "dwc_queue.h"
+#include <kernel/dpl/SemaphoreP.h>
+
 
 /**********************************************************************
  *************************** Local Functions **************************
@@ -60,6 +63,8 @@ static u32 get_eventbuf_event(volatile dwc_usb3_device_t *dev, int bufno, int si
 
 /* counter to track excess events */
 int msg_cnt __attribute__((section(".usbCxtRam")));;
+
+SemaphoreP_Object eventQueueSem;
 
 /**
  * This routine enables the Event Buffer interrupt.
@@ -206,6 +211,16 @@ void dwc_usb3_enable_device_interrupts(volatile dwc_usb3_device_t *dev)
 }
 
 /**
+ * This routine initializes the USB 3_0 task by creating an required queue
+ *
+ **/
+void dwc_usb3_task_init(dwc_usb3_device_t *dev)
+{
+	dwc_queueInit(&dev->pcd.event_q);
+	SemaphoreP_constructCounting(&eventQueueSem, 0, DWC_QUEUE_SIZE);
+}
+
+/**
  * This routine handles all interrupt events. It is called by the
  * dwc_usb3_irq() interrupt handler routine, and by the enter_hibernation()
  * routine after clearing the Run/Stop bit and waiting for the Halted bit to
@@ -216,11 +231,10 @@ void dwc_usb3_enable_device_interrupts(volatile dwc_usb3_device_t *dev)
  */
 int dwc_usb3_handle_event(volatile dwc_usb3_device_t *dev)
 {
-    volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
+	dwc_usb3_pcd_t *pcd = (dwc_usb3_pcd_t*)&dev->pcd;
     u32 event;
     u32 count, i;
     int ret = 0;
-    dwc_usb3_event_req_t *event_entry;
 
     count = get_eventbuf_count(dev, 0);
     if (count > 0U) {
@@ -265,16 +279,14 @@ int dwc_usb3_handle_event(volatile dwc_usb3_device_t *dev)
             /* Ignore null events */
             continue;
         }
-        event_entry = (dwc_usb3_event_req_t *)malloc(sizeof(dwc_usb3_event_req_t));
-		if(event_entry==NULL)
+
+		if(dwc_queuePut(&pcd->event_q, event) == true)
 		{
-			/* memory allocation for new event entry failed */
-			ret = 0;
+			SemaphoreP_post(&eventQueueSem);
 		}
 		else
 		{
-        	event_entry->event = event;
-        	DWC_SIMPLEQ_INSERT_TAIL(&pcd->event_q, event_entry, entry);
+			ret = 0;
 		}
     }
 
@@ -288,55 +300,53 @@ out:
 
 int dwc_usb3_task(volatile dwc_usb3_device_t *dev)
 {
-    volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
+    dwc_usb3_pcd_t *pcd = (dwc_usb3_pcd_t*)&dev->pcd;
     u32 event;
     u32 intr, physep;
     int ret = 0;
-    dwc_usb3_event_req_t *event_entry;
+	int32_t status = 0;
 
-    if(!DWC_SIMPLEQ_EMPTY(&pcd->event_q))
-    {
-        event_entry = DWC_SIMPLEQ_FIRST(&pcd->event_q);
-        event = event_entry->event;
+	status = SemaphoreP_pend(&eventQueueSem, SystemP_WAIT_FOREVER);
+	if(status == SystemP_SUCCESS) 
+	{
+		if(dwc_queueGet(&pcd->event_q, &event))
+		{
+			//dwc_debug1(dev, "Interrupt event 0x%08x\n", event);
+			if ((event & DWC_EVENT_NON_EP_BIT) > 0U) {
+				//dwc_debug0(dev, "Non-EP interrupt event\n");
+				intr = event & DWC_EVENT_INTTYPE_BITS;
 
-        //dwc_debug1(dev, "Interrupt event 0x%08x\n", event);
-        if ((event & DWC_EVENT_NON_EP_BIT) > 0U) {
-            //dwc_debug0(dev, "Non-EP interrupt event\n");
-            intr = event & DWC_EVENT_INTTYPE_BITS;
+				if (intr ==
+					DWC_EVENT_DEV_INT << DWC_EVENT_INTTYPE_SHIFT) {
+					dwc_debug1(dev,
+						"## Device interrupt 0x%08x ##\n",
+						event);
+					ret = dwc_usb3_handle_dev_intr(pcd, event);
+					if (ret != 0) {
+						ret = 2;
+						goto out;
+					}
+					ret = 1;
+				} else {
+					dwc_debug1(dev, "## Core interrupt 0x%08x ##\n",
+						event);
 
-            if (intr ==
-                DWC_EVENT_DEV_INT << DWC_EVENT_INTTYPE_SHIFT) {
-                dwc_debug1(dev,
-                       "## Device interrupt 0x%08x ##\n",
-                       event);
-                ret = dwc_usb3_handle_dev_intr(pcd, event);
-                if (ret != 0) {
-                    ret = 2;
-                    goto out;
-                }
-                ret = 1;
-            } else {
-                dwc_debug1(dev, "## Core interrupt 0x%08x ##\n",
-                       event);
-
-                /* @todo Handle non-Device interrupts
-                 * (OTG, CarKit, I2C)
-                 */
-            }
-        } else {
-            physep = event >> DWC_DEPEVT_EPNUM_SHIFT &
-                DWC_DEPEVT_EPNUM_BITS >> DWC_DEPEVT_EPNUM_SHIFT;
-            dwc_debug2(dev,
-                   "## Physical EP%d interrupt 0x%08x ##\n",
-                   physep, event);
-            dwc_debug2(dev, "[EP%d] %s\n", physep >> 1 & 0xf,
-                   physep & 1 ? "IN" : "OUT");
-            dwc_usb3_handle_ep_intr(pcd, physep, event);
-        }
-
-        DWC_SIMPLEQ_REMOVE_HEAD(&pcd->event_q, entry);
-        free(event_entry);
-    }
+					/* @todo Handle non-Device interrupts
+					* (OTG, CarKit, I2C)
+					*/
+				}
+			} else {
+				physep = event >> DWC_DEPEVT_EPNUM_SHIFT &
+					DWC_DEPEVT_EPNUM_BITS >> DWC_DEPEVT_EPNUM_SHIFT;
+				dwc_debug2(dev,
+					"## Physical EP%d interrupt 0x%08x ##\n",
+					physep, event);
+				dwc_debug2(dev, "[EP%d] %s\n", physep >> 1 & 0xf,
+					physep & 1 ? "IN" : "OUT");
+				dwc_usb3_handle_ep_intr(pcd, physep, event);
+			}
+		}
+	}
 out:
 	return ret;
 }
