@@ -131,6 +131,21 @@ int32_t TOG_appTest(uint32_t testId)
             }
             break;
 
+        #if defined (M4F_CORE) && (defined (SOC_AM64X) || defined (SOC_AM243X))
+        case TOG_RUN_TEST_ID:
+            testResult = TOG_runTest();
+            DebugP_log("\r\n TOG Full Run Test");
+            if (testResult == SDL_PASS)
+            {
+                DebugP_log(" Run test Passed.\r\n");
+            }
+            else
+            {
+                DebugP_log(" Run test Failed.\r\n");
+            }
+            break;
+        #endif
+
         default:
             DebugP_log("\n [Error] Invalid TOG test ID.\r\n");
             testResult = SDL_EFAIL;

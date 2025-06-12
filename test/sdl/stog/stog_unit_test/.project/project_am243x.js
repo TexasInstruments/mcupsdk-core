@@ -7,9 +7,34 @@ const files = {
         "tog_test_main.c",
         "tog_test_api.c",
         "tog_test_err.c",
+        "tog_test_run.c",
         "dpl_interface.c",
         "main.c",
     ],
+};
+
+const files_r5f = {
+    common: [
+        "tog_test_main.c",
+        "tog_test_api.c",
+        "tog_test_err.c",
+        "dpl_interface.c",
+        "main.c",
+    ],
+};
+
+const r5_macro = {
+    common: [
+        "R5F_CORE",
+    ],
+
+};
+
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
 };
 
 /* Relative to where the makefile will be generated
@@ -108,7 +133,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
@@ -117,12 +141,16 @@ function getComponentBuildProperty(buildOption) {
 
 
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.files = files_r5f;
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
+        build_property.defines = r5_macro;
     }
     if(buildOption.cpu.match(/m4f*/)) {
+        build_property.files = files;
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;
+        build_property.defines = m4_macro;
     }
 
     return build_property;

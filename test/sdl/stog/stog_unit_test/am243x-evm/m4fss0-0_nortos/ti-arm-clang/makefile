@@ -40,6 +40,7 @@ FILES_common := \
 	tog_test_main.c \
 	tog_test_api.c \
 	tog_test_err.c \
+	tog_test_run.c \
 	dpl_interface.c \
 	main.c \
 	ti_drivers_config.c \
@@ -65,6 +66,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DM4F_CORE \
 	-DOS_NORTOS \
 
 CFLAGS_common := \

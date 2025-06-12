@@ -65,6 +65,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DR5F_CORE \
 	-DOS_NORTOS \
 
 CFLAGS_common := \
