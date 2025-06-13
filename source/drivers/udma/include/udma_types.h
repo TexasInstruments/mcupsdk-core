@@ -81,15 +81,15 @@ typedef struct Udma_RingMonObj *        Udma_RingMonHandle;
 #endif
 
 /** \brief UDMA driver handle */
-typedef struct Udma_DrvObjectInt_t     *Udma_DrvHandle;
+typedef struct Udma_DrvObjectInt       *Udma_DrvHandle;
 /** \brief UDMA channel handle */
-typedef struct Udma_ChObjectInt_t      *Udma_ChHandle;
-/** \brief UDMA event handle */
-typedef struct Udma_EventObjectInt_t   *Udma_EventHandle;
+typedef struct Udma_ChObjectInt        *Udma_ChHandle;
+/** \brief UDMA event handle */ 
+typedef struct Udma_EventObjectInt     *Udma_EventHandle;
 /** \brief UDMA ring handle */
-typedef struct Udma_RingObjectInt_t    *Udma_RingHandle;
+typedef struct Udma_RingObjectInt      *Udma_RingHandle;
 /** \brief UDMA flow handle */
-typedef struct Udma_FlowObjectInt_t    *Udma_FlowHandle;
+typedef struct Udma_FlowObjectInt      *Udma_FlowHandle;
 
 /**
  *  \brief UDMA ring parameters.
@@ -758,7 +758,7 @@ typedef struct
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_RingObjectInt_t
+typedef struct Udma_RingObjectInt
 {
     Udma_DrvHandle           drvHandle;
     /**< Pointer to global driver handle. */
@@ -800,7 +800,7 @@ typedef struct Udma_RingObjectInt_t
      *
      *   For unmapped case, this will be #UDMA_DMA_CH_INVALID.
      */
-} Udma_RingObjectInt;
+} Udma_RingObject;
 
 /**
  *  \brief UDMA flow object.
@@ -808,7 +808,7 @@ typedef struct Udma_RingObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_FlowObjectInt_t
+typedef struct Udma_FlowObjectInt
 {
     Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
@@ -848,7 +848,7 @@ typedef struct Udma_FlowObjectInt_t
      *
      *   For unmapped case, this will be #UDMA_DMA_CH_INVALID.
      */
-} Udma_FlowObjectInt;
+} Udma_FlowObject;
 
 /**
  *  \brief UDMA event object.
@@ -856,7 +856,7 @@ typedef struct Udma_FlowObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_EventObjectInt_t
+typedef struct Udma_EventObjectInt
 {
     Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
@@ -900,7 +900,7 @@ typedef struct Udma_EventObjectInt_t
 
     uint32_t                eventInitDone;
     /**< Flag to set the event object is init. */
-} Udma_EventObjectInt;
+} Udma_EventObject;
 
 /**
  *  \brief UDMA channel object.
@@ -908,7 +908,7 @@ typedef struct Udma_EventObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_ChObjectInt_t
+typedef struct Udma_ChObjectInt
 {
     uint32_t                chType;
     /**< UDMA channel type. Refer \ref Udma_ChType. */
@@ -945,20 +945,20 @@ typedef struct Udma_ChObjectInt_t
     Udma_RingHandle      tdCqRing;
     /**< Teardown completion queue ring handle */
 
-    Udma_RingObjectInt      fqRingObj;
+    Udma_RingObject         fqRingObj;
     /**< Free queue ring object */
-    Udma_RingObjectInt      cqRingObj;
+    Udma_RingObject         cqRingObj;
     /**< Completion queue ring object
     *    Not used for AM64x kind of devices, where there is no seperate Completion queue.
     */
-    Udma_RingObjectInt      tdCqRingObj;
+    Udma_RingObject         tdCqRingObj;
     /**< Teardown completion queue ring object
     *    Not used for AM64x kind of devices, where teardown function is not present.
     */
 
     Udma_FlowHandle      defaultFlow;
     /**< Default flow handle */
-    Udma_FlowObjectInt      defaultFlowObj;
+    Udma_FlowObject      defaultFlowObj;
     /**< Default flow object - Flow ID equal to the RX channel is reserved
      *   as the default flow for the channel. This object is used for
      *   providing handle to the caller to re-program the default flow using
@@ -1011,7 +1011,7 @@ typedef struct Udma_ChObjectInt_t
     uint32_t                trigger;
     /**< Channel trigger used when chaining channels - needed at the time of
      *   breaking the chaining */
-} Udma_ChObjectInt;
+} Udma_ChObject;
 
 /**
  *  \brief UDMA resource manager init parameters.
@@ -1141,7 +1141,7 @@ typedef struct
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_DrvObjectInt_t
+typedef struct Udma_DrvObjectInt
 {
     uint32_t                instType;
     /**< Udma Instance Type */
@@ -1238,7 +1238,7 @@ typedef struct Udma_DrvObjectInt_t
     /**< UDMAP trigger global event map offset to differentiate between main
      *   and MCU NAVSS */
 
-    Udma_EventObjectInt     globalEventObj;
+    Udma_EventObject     globalEventObj;
     /**< Object to store global event. */
     Udma_EventHandle     globalEventHandle;
     /**< Global event handle. */
@@ -1304,7 +1304,7 @@ typedef struct Udma_DrvObjectInt_t
     /**< Mutex to protect RM allocation. */
     SemaphoreP_Object       rmLockObj;
     /**< Mutex object. */
-} Udma_DrvObjectInt;
+} Udma_DrvObject;
 #else
 /**
  *  \brief UDMA resource manager init parameters.
@@ -1440,7 +1440,7 @@ typedef struct
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_RingObjectInt_t
+typedef struct Udma_RingObjectInt
 {
     Udma_DrvHandle           drvHandle;
     /**< Pointer to global driver handle. */
@@ -1482,7 +1482,7 @@ typedef struct Udma_RingObjectInt_t
      *
      *   For unmapped case, this will be #UDMA_DMA_CH_INVALID.
      */
-} Udma_RingObjectInt;
+} Udma_RingObject;
 
 /**
  *  \brief UDMA flow object.
@@ -1490,7 +1490,7 @@ typedef struct Udma_RingObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_FlowObjectInt_t
+typedef struct Udma_FlowObjectInt
 {
     Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
@@ -1530,7 +1530,7 @@ typedef struct Udma_FlowObjectInt_t
      *
      *   For unmapped case, this will be #UDMA_DMA_CH_INVALID.
      */
-} Udma_FlowObjectInt;
+} Udma_FlowObject;
 
 /**
  *  \brief UDMA event object.
@@ -1538,7 +1538,7 @@ typedef struct Udma_FlowObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_EventObjectInt_t
+typedef struct Udma_EventObjectInt
 {
     Udma_DrvHandle       drvHandle;
     /**< Pointer to global driver handle. */
@@ -1582,7 +1582,7 @@ typedef struct Udma_EventObjectInt_t
 
     uint32_t                eventInitDone;
     /**< Flag to set the event object is init. */
-} Udma_EventObjectInt;
+} Udma_EventObject;
 
 /**
  *  \brief UDMA channel object.
@@ -1590,7 +1590,7 @@ typedef struct Udma_EventObjectInt_t
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_ChObjectInt_t
+typedef struct Udma_ChObjectInt
 {
     uint32_t                chType;
     /**< UDMA channel type. Refer \ref Udma_ChType. */
@@ -1626,20 +1626,20 @@ typedef struct Udma_ChObjectInt_t
     Udma_RingHandle      tdCqRing;
     /**< Teardown completion queue ring handle */
 
-    Udma_RingObjectInt      fqRingObj;
+    Udma_RingObject         fqRingObj;
     /**< Free queue ring object */
-    Udma_RingObjectInt      cqRingObj;
+    Udma_RingObject        cqRingObj;
     /**< Completion queue ring object
     *    Not used for AM64x kind of devices, where there is no seperate Completion queue.
     */
-    Udma_RingObjectInt      tdCqRingObj;
+    Udma_RingObject        tdCqRingObj;
     /**< Teardown completion queue ring object
     *    Not used for AM64x kind of devices, where teardown function is not present.
     */
 
     Udma_FlowHandle      defaultFlow;
     /**< Default flow handle */
-    Udma_FlowObjectInt      defaultFlowObj;
+    Udma_FlowObject      defaultFlowObj;
     /**< Default flow object - Flow ID equal to the RX channel is reserved
      *   as the default flow for the channel. This object is used for
      *   providing handle to the caller to re-program the default flow using
@@ -1674,14 +1674,14 @@ typedef struct Udma_ChObjectInt_t
     uint32_t                trigger;
     /**< Channel trigger used when chaining channels - needed at the time of
      *   breaking the chaining */
-} Udma_ChObjectInt;
+} Udma_ChObject;
 /**
  *  \brief UDMA driver object.
  *
  *  Note: This is an internal/private driver structure and should not be
  *  used or modified by caller.
  */
-typedef struct Udma_DrvObjectInt_t
+typedef struct Udma_DrvObjectInt
 {
     uint32_t                instType;
     /**< Udma Instance Type */
@@ -1785,7 +1785,7 @@ typedef struct Udma_DrvObjectInt_t
     /**< UDMAP trigger global event map offset to differentiate between main
      *   and MCU NAVSS */
 
-    Udma_EventObjectInt     globalEventObj;
+    Udma_EventObject     globalEventObj;
     /**< Object to store global event. */
     Udma_EventHandle     globalEventHandle;
     /**< Global event handle. */
@@ -1838,7 +1838,7 @@ typedef struct Udma_DrvObjectInt_t
     /**< Mutex to protect RM allocation. */
     SemaphoreP_Object       rmLockObj;
     /**< Mutex object. */
-} Udma_DrvObjectInt;
+} Udma_DrvObject;
 #endif
 
 

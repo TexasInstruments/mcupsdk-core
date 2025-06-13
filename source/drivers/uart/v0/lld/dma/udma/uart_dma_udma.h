@@ -34,6 +34,7 @@
 #define UART_DMA_UDMA_H_
 
 #include <stdint.h>
+#include <drivers/udma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -42,15 +43,15 @@ extern "C"
 
 typedef struct UART_UdmaChConfig_s
 {
-    void            *drvHandle;
+    Udma_DrvHandle   drvHandle;
     /**< UDMA driver handle */
-    void            *txChHandle;
+    Udma_ChHandle    txChHandle;
     /**< UDMA channel tx handle */
-    void            *rxChHandle;
+    Udma_ChHandle    rxChHandle;
     /**< UDMA channel rx handle */
-    void            *cqTxEvtHandle;
+    Udma_EventHandle cqTxEvtHandle;
     /**< UDMA cq tx event handle */
-    void            *cqRxEvtHandle;
+    Udma_EventHandle cqRxEvtHandle;
     /**< UDMA cq rx event handle */
     void            *txHpdMem;
     /**< UDMA TX HPD memory pointers */

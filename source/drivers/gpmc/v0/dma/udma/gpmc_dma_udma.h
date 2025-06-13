@@ -34,6 +34,7 @@
 #define GPMC_UDMA_H_
 
 #include <stdint.h>
+#include <drivers/udma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -45,9 +46,9 @@ extern "C"
 
 typedef struct Gpmc_UdmaArgs_s
 {
-    void            *drvHandle;
+    Udma_DrvHandle  drvHandle;
     /**< UDMA driver handle */
-    void            *chHandle;
+    Udma_ChHandle   chHandle;
     /**< UDMA channel handle */
     uint8_t         *trpdMem;
     /**< UDMA TR PD memory pointers */

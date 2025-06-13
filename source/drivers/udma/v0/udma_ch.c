@@ -121,7 +121,7 @@ int32_t Udma_chOpen(Udma_DrvHandle drvHandle,
     int32_t             retVal = UDMA_SOK, tempRetVal;
     uint32_t            allocDone = (uint32_t) FALSE;
     Udma_ChHandle    chHandleInt;
-    Udma_DrvHandle   drvHandleInt = (Udma_DrvHandle) drvHandle;
+    Udma_DrvHandle   drvHandleInt = drvHandle;
 
     /* Error check */
     if((drvHandleInt == NULL_PTR) || (NULL_PTR == chHandle) || (NULL_PTR == chPrms))
@@ -144,7 +144,7 @@ int32_t Udma_chOpen(Udma_DrvHandle drvHandle,
     if(UDMA_SOK == retVal)
     {
         /* Copy and init parameters */
-        chHandleInt = (Udma_ChHandle) chHandle;
+        chHandleInt = chHandle;
         (void) memset(chHandleInt, 0, sizeof(Udma_ChObject));
         (void) memcpy(&chHandleInt->chPrms, chPrms, sizeof(Udma_ChPrms));
         chHandleInt->chType            = chType;
@@ -212,7 +212,7 @@ int32_t Udma_chClose(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -263,7 +263,7 @@ int32_t Udma_chConfigTx(Udma_ChHandle chHandle, const Udma_ChTxPrms *txPrms)
 {
     int32_t                 retVal = UDMA_SOK;
     Udma_DrvHandle       drvHandle;
-    Udma_ChHandle        chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle        chHandleInt =  chHandle;
     struct tisci_msg_rm_udmap_tx_ch_cfg_req     rmUdmaTxReq;
     struct tisci_msg_rm_udmap_tx_ch_cfg_resp    rmUdmaTxResp;
 
@@ -366,7 +366,7 @@ int32_t Udma_chConfigRx(Udma_ChHandle chHandle, const Udma_ChRxPrms *rxPrms)
 {
     int32_t                 retVal = UDMA_SOK;
     Udma_DrvHandle       drvHandle;
-    Udma_ChHandle        chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle        chHandleInt =  chHandle;
     struct tisci_msg_rm_udmap_rx_ch_cfg_req     rmUdmaRxReq;
     struct tisci_msg_rm_udmap_rx_ch_cfg_resp    rmUdmaRxResp;
     Udma_FlowPrms           flowPrms;
@@ -517,7 +517,7 @@ int32_t Udma_chConfigPdma(Udma_ChHandle chHandle,
     int32_t             retVal = UDMA_SOK;
     volatile uint32_t  *PEER8=NULL, *PEER0=NULL, *PEER1=NULL;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) ||
@@ -590,7 +590,7 @@ int32_t Udma_chEnable(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -619,7 +619,7 @@ int32_t Udma_chDisable(Udma_ChHandle chHandle, uint32_t timeout)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -662,7 +662,7 @@ int32_t Udma_chPause(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -709,7 +709,7 @@ int32_t Udma_chResume(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -756,7 +756,7 @@ uint32_t Udma_chGetNum(Udma_ChHandle chHandle)
     int32_t             retVal = UDMA_SOK;
     uint32_t            chNum = UDMA_DMA_CH_INVALID;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -794,7 +794,7 @@ Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle)
     int32_t             retVal = UDMA_SOK;
     Udma_RingHandle     fqRing = (Udma_RingHandle) NULL_PTR;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -812,7 +812,7 @@ Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle)
 
     if(UDMA_SOK == retVal)
     {
-        fqRing = (Udma_RingHandle) chHandleInt->fqRing;
+        fqRing =  chHandleInt->fqRing;
     }
 
     return (fqRing);
@@ -821,9 +821,9 @@ Udma_RingHandle Udma_chGetFqRingHandle(Udma_ChHandle chHandle)
 Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_RingHandle     cqRing = (Udma_RingHandle) NULL_PTR;
+    Udma_RingHandle     cqRing = (Udma_RingHandle)  NULL_PTR;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -841,7 +841,7 @@ Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle)
 
     if(UDMA_SOK == retVal)
     {
-        cqRing = (Udma_RingHandle) chHandleInt->cqRing;
+        cqRing =  chHandleInt->cqRing;
     }
 
     return (cqRing);
@@ -850,9 +850,9 @@ Udma_RingHandle Udma_chGetCqRingHandle(Udma_ChHandle chHandle)
 Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandle chHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_RingHandle     tdCqRing = (Udma_RingHandle) NULL_PTR;
+    Udma_RingHandle     tdCqRing = (Udma_RingHandle)  NULL_PTR;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -870,7 +870,7 @@ Udma_RingHandle Udma_chGetTdCqRingHandle(Udma_ChHandle chHandle)
 
     if(UDMA_SOK == retVal)
     {
-        tdCqRing = (Udma_RingHandle) chHandleInt->tdCqRing;
+        tdCqRing =  chHandleInt->tdCqRing;
     }
 
     return (tdCqRing);
@@ -909,7 +909,7 @@ Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandle chHandle)
     int32_t             retVal = UDMA_SOK;
     Udma_FlowHandle     defaultFlow = (Udma_FlowHandle) NULL_PTR;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -927,7 +927,7 @@ Udma_FlowHandle Udma_chGetDefaultFlowHandle(Udma_ChHandle chHandle)
 
     if(UDMA_SOK == retVal)
     {
-        defaultFlow = (Udma_FlowHandle) chHandleInt->defaultFlow;
+        defaultFlow =  chHandleInt->defaultFlow;
     }
 
     return (defaultFlow);
@@ -938,7 +938,7 @@ uint32_t Udma_chGetTriggerEvent(Udma_ChHandle chHandle, uint32_t trigger)
     int32_t             retVal = UDMA_SOK;
     uint32_t            triggerEvent = UDMA_EVENT_INVALID;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) || (chHandleInt->chInitDone != UDMA_INIT_DONE))
@@ -1010,7 +1010,7 @@ uint32_t *Udma_chGetSwTriggerRegister(Udma_ChHandle chHandle)
 {
     int32_t                 retVal = UDMA_SOK;
     Udma_DrvHandle       drvHandle;
-    Udma_ChHandle        chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle        chHandleInt =  chHandle;
     uint32_t                *pSwTriggerReg = NULL;
 
     /* Error check */
@@ -1112,8 +1112,8 @@ int32_t Udma_chSetChaining(Udma_ChHandle triggerChHandle,
 {
     int32_t                             retVal = UDMA_SOK;
     Udma_DrvHandle                   drvHandle;
-    Udma_ChHandle                    triggerChHandleInt = (Udma_ChHandle) triggerChHandle;
-    Udma_ChHandle                    chainedChHandleInt = (Udma_ChHandle) chainedChHandle;
+    Udma_ChHandle                    triggerChHandleInt =  triggerChHandle;
+    Udma_ChHandle                    chainedChHandleInt =  chainedChHandle;
     uint32_t                            triggerEvent;
     struct tisci_msg_rm_irq_set_req     rmIrqReq;
     struct tisci_msg_rm_irq_set_resp    rmIrqResp;
@@ -1235,8 +1235,8 @@ int32_t Udma_chBreakChaining(Udma_ChHandle triggerChHandle,
 {
     int32_t                             retVal = UDMA_SOK;
     Udma_DrvHandle                   drvHandle;
-    Udma_ChHandle                    triggerChHandleInt = (Udma_ChHandle) triggerChHandle;
-    Udma_ChHandle                    chainedChHandleInt = (Udma_ChHandle) chainedChHandle;
+    Udma_ChHandle                    triggerChHandleInt =  triggerChHandle;
+    Udma_ChHandle                    chainedChHandleInt =  chainedChHandle;
     uint32_t                            triggerEvent;
     struct tisci_msg_rm_irq_release_req rmIrqReq;
 
@@ -1468,7 +1468,7 @@ int32_t Udma_chGetStats(Udma_ChHandle chHandle, Udma_ChStats *chStats)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
     uint32_t            chNum;
 #if (UDMA_SOC_CFG_LCDMA_PRESENT == 1)
     CSL_BcdmaChanStats  bcdmaChanStats = {0};
@@ -1561,7 +1561,7 @@ int32_t Udma_getPeerData(Udma_ChHandle chHandle, uint32_t *peerData)
     int32_t             retVal = UDMA_SOK;
     volatile uint32_t  *PEER4=NULL;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) ||
@@ -1609,7 +1609,7 @@ int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData)
     int32_t             retVal = UDMA_SOK;
     volatile uint32_t  *PEER4=NULL;
     Udma_DrvHandle   drvHandle;
-    Udma_ChHandle    chHandleInt = (Udma_ChHandle) chHandle;
+    Udma_ChHandle    chHandleInt =  chHandle;
 
     /* Error check */
     if((NULL_PTR == chHandleInt) ||

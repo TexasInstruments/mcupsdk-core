@@ -106,7 +106,7 @@ void Udma_ringSetCfgNormal(Udma_DrvHandle drvHandle,
         addrLo = CSL_REG32_FEXT(&ringHandle->pCfgRegs->BA_LO, RINGACC_CFG_RING_BA_LO_ADDR_LO);
         ringCfg->physBase    = (uint64_t)((((uint64_t) addrHi) << 32UL) |
                                             ((uint64_t) addrLo));
-        ringCfg->virtBase    = Udma_phyToVirtFxn(ringCfg->physBase, drvHandle, (Udma_ChHandle) NULL_PTR);
+        ringCfg->virtBase    = Udma_phyToVirtFxn(ringCfg->physBase, drvHandle,  NULL_PTR);
         ringCfg->mode        = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_QMODE);
         ringCfg->elCnt       = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_ELCNT);
         elemSize             = CSL_REG32_FEXT(&ringHandle->pCfgRegs->SIZE, RINGACC_CFG_RING_SIZE_ELSIZE);
@@ -297,7 +297,7 @@ void Udma_ringSetDoorBellNormal(Udma_RingHandle ringHandle, int32_t count)
 
 uint8_t *Udma_ringGetMemPtrNormal(Udma_RingHandle ringHandle)
 {
-    uint8_t   *ringMem = NULL_PTR;
+    uint8_t   *ringMem = (uint8_t*) NULL_PTR;
 
     if((NULL_PTR != ringHandle) && (UDMA_INIT_DONE == ringHandle->ringInitDone))
     {

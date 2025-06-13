@@ -45,11 +45,13 @@ extern "C"
 #define OSPI_DMA_UDMA_MAX_L0_XFER_SIZE (65536U)
 #define OSPI_DMA_UDMA_XFER_SIZE        (64512U)
 
+#if defined(DRV_VERSION_UDMA_V0) || defined(DRV_VERSION_UDMA_V1)
+#include <drivers/udma.h>
 typedef struct OspiDma_UdmaArgs_s
 {
-    void            *drvHandle;
+    Udma_DrvHandle  drvHandle;
     /**< UDMA driver handle */
-    void            *chHandle;
+    Udma_ChHandle   chHandle;
     /**< UDMA channel handle */
     void            *trpdMem;
     /**< UDMA TR PD memory pointers */
@@ -70,6 +72,7 @@ typedef struct OspiDma_UdmaArgs_s
     /**< This is only used for AM65x */
 
 } OSPI_UdmaParams;
+#endif
 
 extern OSPI_DmaFxns gOspiDmaUdmaFxns;
 

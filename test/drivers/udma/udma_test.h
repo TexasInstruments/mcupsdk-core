@@ -680,7 +680,7 @@ void udmaTestResetTestResult(void);
 void udmaTestCalcPerformance(UdmaTestTaskObj *taskObj, uint32_t durationMs);
 void udmaTestCalcTotalPerformance(UdmaTestObj *testObj, uint32_t durationMs);
 int32_t udmaTestCompareRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t cnt, uint32_t direction);
-uint32_t udmaTestGetRingHwOccDriver(Udma_RingObjectInt *ringHandle, uint32_t direction);
+uint32_t udmaTestGetRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t direction);
 int32_t udmaTestBlkCpyRingPrimeLcdmaTest(UdmaTestTaskObj *taskObj);
 
 char AppUtils_getChar(void);

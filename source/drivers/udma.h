@@ -213,14 +213,7 @@ void *Udma_defaultPhyToVirtFxn(uint64_t phyAddr,
 /*                  Internal/Private Structure Declarations                   */
 /* ========================================================================== */
 
-/**
- *  \brief Opaque UDMA driver object.
- */
-typedef struct Udma_DrvObject_t
-{
-    uintptr_t rsv[635U];
-    /**< reserved, should NOT be modified by end users */
-} Udma_DrvObject;
+/* None */
 
 #ifdef __cplusplus
 }

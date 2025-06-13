@@ -64,8 +64,8 @@ index 5b31c3d924..5c988d3bcc 100755
 +    if(drvHandle != NULL && chHandle != NULL)
 +    {
 +        /*Map l2g event for DMA*/
-+        Udma_ChObjectInt    *chHandleInt = (Udma_ChObjectInt*)chHandle;
-+        Udma_DrvObjectInt   *drvHandleInt = (Udma_DrvObjectInt*)drvHandle;
++        Udma_ChObject    *chHandleInt = chHandle;
++        Udma_DrvObject   *drvHandleInt = drvHandle;
 +        CSL_intaggrMapEventToLocalEvent(&drvHandleInt->iaRegs,
 +                                        CSL_DMSS_GEM_BCDMA_TRIGGER_OFFSET + chHandleInt->txChNum * 2 ,
 +                                        localeventID ,eventMode);

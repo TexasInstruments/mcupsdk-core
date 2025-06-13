@@ -86,7 +86,7 @@ int32_t udmaTestInitDriver(UdmaTestObj *testObj)
     for(instId = UDMA_INST_ID_START; instId <= UDMA_INST_ID_MAX; instId++)
     {
         /* UDMA driver init */
-        drvHandle = (Udma_DrvHandle) &testObj->drvObj[instId];
+        drvHandle = &testObj->drvObj[instId];
         UdmaInitPrms_init(instId, &initPrms);
         retVal += Udma_init(drvHandle, &initPrms);
         if(UDMA_SOK != retVal)
@@ -108,7 +108,7 @@ int32_t udmaTestDeinitDriver(UdmaTestObj *testObj)
     for(instId = UDMA_INST_ID_START; instId <= UDMA_INST_ID_MAX; instId++)
     {
         /* UDMA driver deinit */
-        drvHandle = (Udma_DrvHandle) &testObj->drvObj[instId];
+        drvHandle = &testObj->drvObj[instId];
         retVal += Udma_deinit(drvHandle);
         if(UDMA_SOK != retVal)
         {
@@ -360,7 +360,7 @@ int32_t udmaTestCompareRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t cnt,
     return (retVal);
 }
 
-uint32_t udmaTestGetRingHwOccDriver(Udma_RingObjectInt *ringHandle, uint32_t direction)
+uint32_t udmaTestGetRingHwOccDriver(Udma_RingHandle ringHandle, uint32_t direction)
 {
     uint32_t            occ = 0U;
 #if (UDMA_SOC_CFG_LCDMA_PRESENT == 1U)

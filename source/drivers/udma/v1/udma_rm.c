@@ -1099,7 +1099,7 @@ uint32_t Udma_rmAllocVintrBit(Udma_EventHandle eventHandle)
     if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        controllerEventHandle = (Udma_EventHandle) eventPrms->controllerEventHandle;
+        controllerEventHandle =  eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
@@ -1133,7 +1133,7 @@ void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
     if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        controllerEventHandle = (Udma_EventHandle) eventPrms->controllerEventHandle;
+        controllerEventHandle =  eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);

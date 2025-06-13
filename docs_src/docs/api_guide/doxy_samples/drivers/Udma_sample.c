@@ -6,14 +6,14 @@
 
 Udma_DrvObject      gUdmaDrvObj;
 Udma_ChObject       gUdmaChObj;
-Udma_DrvHandle      drvHandle = (Udma_DrvHandle) &gUdmaDrvObj;
+Udma_DrvHandle      drvHandle = &gUdmaDrvObj;
 static uint8_t      gTxRingMem[UDMA_CACHELINE_ALIGNMENT] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
 
 void ch_open(void)
 {
 //! [ch_open]
     int32_t         retVal;
-    Udma_ChHandle   chHandle = (Udma_ChHandle) &gUdmaChObj;
+    Udma_ChHandle   chHandle = &gUdmaChObj;
     uint32_t        chType;
     Udma_ChPrms     chPrms;
     Udma_ChTxPrms   txPrms;
@@ -60,7 +60,7 @@ void ch_close(void)
 {
 //! [ch_close]
     int32_t         retVal;
-    Udma_ChHandle   chHandle = (Udma_ChHandle) &gUdmaChObj;
+    Udma_ChHandle   chHandle = &gUdmaChObj;
 
     retVal = Udma_chDisable(chHandle, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
     if(UDMA_SOK != retVal)

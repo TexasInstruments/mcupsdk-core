@@ -320,7 +320,7 @@ void Udma_ringSetDoorBellLcdma(Udma_RingHandle ringHandle, int32_t count)
 
 uint8_t *Udma_ringGetMemPtrLcdma(Udma_RingHandle ringHandle)
 {
-    uint8_t   *ringMem = NULL_PTR;
+    uint8_t   *ringMem = (uint8_t*) NULL_PTR;
 
     if((NULL_PTR != ringHandle) && (UDMA_INIT_DONE == ringHandle->ringInitDone))
     {

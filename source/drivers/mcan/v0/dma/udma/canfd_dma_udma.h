@@ -34,6 +34,7 @@
 #define CANFD__DMA_UDMA_H_
 
 #include <stdint.h>
+#include <drivers/udma.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -42,19 +43,19 @@ extern "C"
 
 typedef struct CANFD_UdmaArgs_s
 {
-    void            *drvHandle;
+    Udma_DrvHandle       drvHandle;
     /**< UDMA driver handle */
 } CANFD_UdmaArgs;
 
 typedef struct CANFD_UdmaChConfig_s
 {
-    void            *txChHandle[MCAN_MAX_TX_DMA_BUFFERS];
+    Udma_ChHandle         txChHandle[MCAN_MAX_TX_DMA_BUFFERS];
     /**< UDMA channel tx handle */
-    void            *rxChHandle[MCAN_MAX_RX_DMA_BUFFERS];
+    Udma_ChHandle         rxChHandle[MCAN_MAX_RX_DMA_BUFFERS];
     /**< UDMA channel rx handle */
-    void            *cqTxEvtHandle[MCAN_MAX_TX_DMA_BUFFERS];
+    Udma_EventHandle      cqTxEvtHandle[MCAN_MAX_TX_DMA_BUFFERS];
     /**< UDMA cq tx event handle */
-    void            *cqRxEvtHandle[MCAN_MAX_RX_DMA_BUFFERS];
+    Udma_EventHandle      cqRxEvtHandle[MCAN_MAX_RX_DMA_BUFFERS];
     /**< UDMA cq rx event handle */
     void            *txHpdMem[MCAN_MAX_TX_DMA_BUFFERS];
     /**< UDMA TX HPD memory pointers */
