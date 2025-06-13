@@ -763,7 +763,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
             chPrms.tdCqRingPrms.elemCnt = chObj->qdepth;
 
             /* Open channel for block copy */
-            retVal = Udma_chOpen(chObj->drvHandle, (Udma_ChHandle) &chObj->drvChObj, chType, &chPrms);
+            retVal = Udma_chOpen(chObj->drvHandle,  &chObj->drvChObj, chType, &chPrms);
             if(UDMA_SOK != retVal)
             {
                 GT_0trace(taskObj->traceMask, GT_ERR,
@@ -771,7 +771,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
             }
             else
             {
-                chObj->chHandle = (Udma_ChHandle) &chObj->drvChObj;
+                chObj->chHandle =  &chObj->drvChObj;
                 GT_3trace(taskObj->traceMask, GT_INFO1,
                           " |TEST INFO|:: Task:%d: CH:%d: Allocated Ch   : %d ::\r\n",
                           taskObj->taskId, chObj->chIdx, Udma_chGetNum(chObj->chHandle));
@@ -818,7 +818,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
             {
                 /* Register ring completion callback */
                 /* In case of chaining test, register ring completion only for last channel. */
-                eventHandle = (Udma_EventHandle) &chObj->cqEventObj;
+                eventHandle =  &chObj->cqEventObj;
                 UdmaEventPrms_init(&eventPrms);
                 eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
                 eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -851,7 +851,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
         if((UDMA_SOK == retVal) && (CSL_UDMAP_TR_FLAGS_EVENT_SIZE_COMPLETION != chObj->chPrms->eventSize))
         {
             /* Register TR event */
-            eventHandle = (Udma_EventHandle) &chObj->trEventObj;
+            eventHandle =  &chObj->trEventObj;
             UdmaEventPrms_init(&chObj->trEventPrms);
             chObj->trEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
             chObj->trEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;

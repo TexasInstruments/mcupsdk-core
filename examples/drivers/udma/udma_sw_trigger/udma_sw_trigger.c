@@ -219,7 +219,7 @@ void *udma_sw_trigger_main(void *args)
 static void App_udmaTriggerInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Handle)
 {
     int32_t         retVal;
-    Udma_DrvHandle  drvHandle = (Udma_DrvHandle) &gUdmaDrvObj[CONFIG_UDMA0];
+    Udma_DrvHandle  drvHandle = &gUdmaDrvObj[CONFIG_UDMA0];
 
     /* Init buffers */
     App_udmaInitSrcBuf(&gUdmaTestSrcBuf[0U], UDMA_TEST_NUM_BYTES);
@@ -232,7 +232,7 @@ static void App_udmaTriggerInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Handle
     App_udmaTrpdInit(ch1Handle, 1U, &gUdmaTestTrpdMem[1U][0U], &gUdmaTestDestBuf[0U], &gUdmaTestIndBuf[0U]);
 
     /* Register TR event - CH 0 */
-    gCh0TrEventHandle = (Udma_EventHandle) &gCh0TrEventObj;
+    gCh0TrEventHandle =  &gCh0TrEventObj;
     UdmaEventPrms_init(&gCh0TrEventPrms);
     gCh0TrEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
     gCh0TrEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -247,7 +247,7 @@ static void App_udmaTriggerInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Handle
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register TR event - CH 1 */
-    gCh1TrEventHandle = (Udma_EventHandle) &gCh1TrEventObj;
+    gCh1TrEventHandle =  &gCh1TrEventObj;
     UdmaEventPrms_init(&gCh1TrEventPrms);
     gCh1TrEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
     gCh1TrEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;

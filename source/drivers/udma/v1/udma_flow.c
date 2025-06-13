@@ -73,7 +73,7 @@ int32_t Udma_flowFree(Udma_FlowHandle flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
     uint32_t            i, j, offset, bitPos, bitMask;
     Udma_RmInitPrms    *rmInitPrms;
     uint32_t            freeFlowOffset = 0U;
@@ -126,7 +126,7 @@ int32_t Udma_flowFree(Udma_FlowHandle flowHandle)
             SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
         }
 
-        flowHandleInt->drvHandle    = (Udma_DrvHandle) NULL_PTR;
+        flowHandleInt->drvHandle    = NULL_PTR;
         flowHandleInt->flowStart    = UDMA_FLOW_INVALID;
         flowHandleInt->flowCnt      = 0U;
         flowHandleInt->flowInitDone = UDMA_DEINIT_DONE;
@@ -143,8 +143,8 @@ int32_t Udma_flowAttach(Udma_DrvHandle drvHandle,
                         uint32_t flowCnt)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_DrvHandle   drvHandleInt = (Udma_DrvHandle) drvHandle;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_DrvHandle   drvHandleInt = drvHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
 
     /* Error check */
     if((NULL_PTR == drvHandleInt) ||
@@ -178,7 +178,7 @@ int32_t Udma_flowAttach(Udma_DrvHandle drvHandle,
 int32_t Udma_flowDetach(Udma_FlowHandle flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
 
     /* Error check */
     if(NULL_PTR == flowHandleInt)
@@ -195,7 +195,7 @@ int32_t Udma_flowDetach(Udma_FlowHandle flowHandle)
 
     if(UDMA_SOK == retVal)
     {
-        flowHandleInt->drvHandle    = (Udma_DrvHandle) NULL_PTR;
+        flowHandleInt->drvHandle    = NULL_PTR;
         flowHandleInt->flowStart    = UDMA_FLOW_INVALID;
         flowHandleInt->flowCnt      = 0U;
         flowHandleInt->flowInitDone = UDMA_DEINIT_DONE;
@@ -212,7 +212,7 @@ int32_t Udma_flowConfig(Udma_FlowHandle flowHandle,
 {
     int32_t             retVal = UDMA_SOK;
     Udma_DrvHandle   drvHandle;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
     struct tisci_msg_rm_udmap_flow_cfg_req              rmFlowReq;
     struct tisci_msg_rm_udmap_flow_cfg_resp             rmFlowResp;
     struct tisci_msg_rm_udmap_flow_size_thresh_cfg_req  rmOptFlowReq;
@@ -332,7 +332,7 @@ uint32_t Udma_flowGetNum(Udma_FlowHandle flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            flowNum = UDMA_FLOW_INVALID;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
 
     /* Error check */
     if((NULL_PTR == flowHandleInt) ||
@@ -353,7 +353,7 @@ uint32_t Udma_flowGetCount(Udma_FlowHandle flowHandle)
 {
     int32_t             retVal = UDMA_SOK;
     uint32_t            flowCnt = UDMA_FLOW_INVALID;
-    Udma_FlowHandle  flowHandleInt = (Udma_FlowHandle) flowHandle;
+    Udma_FlowHandle  flowHandleInt =  flowHandle;
 
     /* Error check */
     if((NULL_PTR == flowHandleInt) ||
@@ -375,7 +375,7 @@ void UdmaFlowPrms_init(Udma_FlowPrms *flowPrms, uint32_t chType)
     (void) chType;  /* MISRAC fix: could be used for future. So not removed */
     if(NULL_PTR != flowPrms)
     {
-        flowPrms->rxChHandle    = (Udma_ChHandle) NULL_PTR;
+        flowPrms->rxChHandle    =  NULL_PTR;
         flowPrms->einfoPresent  = TISCI_MSG_VALUE_RM_UDMAP_RX_FLOW_EINFO_NOT_PRESENT;
         flowPrms->psInfoPresent = TISCI_MSG_VALUE_RM_UDMAP_RX_FLOW_PSINFO_NOT_PRESENT;
         flowPrms->errorHandling = TISCI_MSG_VALUE_RM_UDMAP_RX_FLOW_ERR_RETRY;

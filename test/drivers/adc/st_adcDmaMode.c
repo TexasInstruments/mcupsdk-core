@@ -115,8 +115,8 @@ static SemaphoreP_Object gUdmaAppDoneSem;
 int32_t st_adcDmaMode_main(st_ADCTestcaseParams_t *testParams)
 {
     int32_t         status;
-    Udma_ChHandle   rxChHandle = (Udma_ChHandle) &gUdmaRxChObj;
-    Udma_DrvHandle  drvHandle = (Udma_DrvHandle) &gUdmaDrvObj[CONFIG_UDMA0];
+    Udma_ChHandle   rxChHandle = &gUdmaRxChObj;
+    Udma_DrvHandle  drvHandle = &gUdmaDrvObj[CONFIG_UDMA0];
 
     gAdcModule = testParams->adcConfigParams.adcModule;
     st_adcModuleInit(gAdcModule);
@@ -243,7 +243,7 @@ static int32_t App_create(Udma_DrvHandle drvHandle, Udma_ChHandle rxChHandle, st
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = (Udma_EventHandle) &gUdmaCqEventObj;
+    eventHandle =  &gUdmaCqEventObj;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -276,7 +276,7 @@ static int32_t App_delete(Udma_DrvHandle drvHandle, Udma_ChHandle rxChHandle)
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Unregister all events */
-    eventHandle = (Udma_EventHandle) &gUdmaCqEventObj;
+    eventHandle =  &gUdmaCqEventObj;
     retVal = Udma_eventUnRegister(eventHandle);
     DebugP_assert(UDMA_SOK == retVal);
 

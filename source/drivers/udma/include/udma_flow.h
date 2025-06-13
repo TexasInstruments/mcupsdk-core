@@ -298,14 +298,7 @@ void UdmaFlowPrms_init(Udma_FlowPrms *flowPrms, uint32_t chType);
 /*                  Internal/Private Structure Declarations                   */
 /* ========================================================================== */
 
-/**
- *  \brief Opaque UDMA flow object.
- */
-typedef struct Udma_FlowObject_t
-{
-    uintptr_t rsv[6U];
-    /**< reserved, should NOT be modified by end users */
-} Udma_FlowObject;
+/* None */
 
 #ifdef __cplusplus
 }

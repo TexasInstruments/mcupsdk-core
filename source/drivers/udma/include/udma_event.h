@@ -353,14 +353,7 @@ void UdmaEventPrms_init(Udma_EventPrms *eventPrms);
 /*                  Internal/Private Structure Declarations                   */
 /* ========================================================================== */
 
-/**
- *  \brief Opaque UDMA event object.
- */
-typedef struct Udma_EventObject_t
-{
-    uintptr_t rsv[40U];
-    /**< reserved, should NOT be modified by end users */
-} Udma_EventObject;
+/* None */
 
 #ifdef __cplusplus
 }

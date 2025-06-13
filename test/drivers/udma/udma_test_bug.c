@@ -77,7 +77,7 @@ int32_t udmaTestBugTcPDK_4654(UdmaTestTaskObj *taskObj)
     uint32_t                instId;
     Udma_DrvHandle          drvHandle;
     Udma_EventObject        eventObj;
-    Udma_EventHandle     eventHandle = (Udma_EventHandle) &eventObj;
+    Udma_EventHandle     eventHandle =  &eventObj;
     Udma_EventPrms          eventPrms;
 
     GT_1trace(taskObj->traceMask, GT_INFO1,
@@ -103,7 +103,7 @@ int32_t udmaTestBugTcPDK_4654(UdmaTestTaskObj *taskObj)
         {
             for(instId = UDMA_INST_ID_START; instId <= UDMA_INST_ID_MAX; instId++)
             {
-                drvHandle = (Udma_DrvHandle) &taskObj->testObj->drvObj[instId];
+                drvHandle = &taskObj->testObj->drvObj[instId];
 
                 /* Alloc VINTR - By registering Master event in Shared mode */
                 UdmaEventPrms_init(&eventPrms);

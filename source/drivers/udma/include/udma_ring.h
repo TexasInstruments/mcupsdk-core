@@ -526,14 +526,7 @@ void UdmaRingPrms_init(Udma_RingPrms *ringPrms);
 /*                  Internal/Private Structure Declarations                   */
 /* ========================================================================== */
 
-/**
- *  \brief Opaque UDMA ring object.
- */
-typedef struct Udma_RingObject_t
-{
-    uintptr_t rsv[30U];
-    /**< reserved, should NOT be modified by end users */
-} Udma_RingObject;
+/* None */
 
 #ifdef __cplusplus
 }

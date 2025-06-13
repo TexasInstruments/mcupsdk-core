@@ -138,12 +138,12 @@ static int32_t udmaTestChPktdmaParamCheckTestLoop(UdmaTestTaskObj *taskObj)
     Udma_DrvHandle      drvHandle;
     uint32_t            chType;
     Udma_ChObject       chObj;
-    Udma_ChHandle    chHandle = (Udma_ChHandle) &chObj;
+    Udma_ChHandle    chHandle =  &chObj;
     Udma_ChPrms         chPrms;
     void               *ringMem = NULL;
-    Udma_ChObjectInt   *chObjInt = (Udma_ChObjectInt *) chHandle;
+    Udma_ChObject   *chObjInt = (Udma_ChObject *) chHandle;
 
-    drvHandle = (Udma_DrvHandle) &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
+    drvHandle = &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
     ringMemSize = elemCnt * sizeof (uint64_t);
     ringMem = Utils_memAlloc(heapId, ringMemSize, UDMA_CACHELINE_ALIGNMENT);
     if(NULL == ringMem)
@@ -166,7 +166,7 @@ static int32_t udmaTestChPktdmaParamCheckTestLoop(UdmaTestTaskObj *taskObj)
     }
     if(UDMA_SOK == retVal)
     {
-        if(chObjInt->fqRing != (Udma_RingHandle) NULL_PTR)
+        if(chObjInt->fqRing !=  NULL_PTR)
         {
             GT_0trace(taskObj->traceMask, GT_ERR,
                     " Ring allocated even when no ring memory was provided!!\n");
@@ -224,7 +224,7 @@ static int32_t udmaTestChPktdmaChApiTestLoop(UdmaTestTaskObj *taskObj)
     Udma_DrvHandle      drvHandle;
     uint32_t            chType;
     Udma_ChObject       chObj;
-    Udma_ChHandle    chHandle = (Udma_ChHandle) &chObj;
+    Udma_ChHandle    chHandle =  &chObj;
     Udma_ChPrms         chPrms;
     Udma_ChTxPrms       txPrms;
     Udma_ChRxPrms       rxPrms;
@@ -234,10 +234,10 @@ static int32_t udmaTestChPktdmaChApiTestLoop(UdmaTestTaskObj *taskObj)
     char *pktdmaChGrpStr[] = { "Unmapped TX", "CPSW TX", "SAUL TX", "ICSSG_0 TX", "ICSSG_1_TX",
                                "Unmapped RX", "CPSW RX", "SAUL RX", "ICSSG_0 RX", "ICSSG_1_RX"};
     const UdmaTestPktdmaChPrm  *pktdmaChPrms = NULL;
-    Udma_DrvObjectInt  *drvObj;
+    Udma_DrvObject  *drvObj;
 
-    drvHandle = (Udma_DrvHandle) &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
-    drvObj = (Udma_DrvObjectInt *) drvHandle;
+    drvHandle = &taskObj->testObj->drvObj[UDMA_TEST_INST_ID_PKTDMA_0];
+    drvObj = (Udma_DrvObject *) drvHandle;
     rmInitPrms = &drvObj->rmInitPrms;
     ringMemSize = elemCnt * sizeof (uint64_t);
     ringMem = Utils_memAlloc(heapId, ringMemSize, UDMA_CACHELINE_ALIGNMENT);

@@ -663,18 +663,7 @@ int32_t Udma_chDequeueTdResponse(Udma_ChHandle chHandle,
 /*                  Internal/Private Structure Declarations                   */
 /* ========================================================================== */
 
-/**
- *  \brief Opaque UDMA channel object.
- */
-typedef struct Udma_ChObject_t
-{
-    #if defined (SOC_AM65X)
-        uintptr_t rsv[200U];
-    #else
-        uintptr_t rsv[150U];
-    #endif
-    /**< reserved, should NOT be modified by end users */
-} Udma_ChObject;
+/* None */
 
 #ifdef __cplusplus
 }

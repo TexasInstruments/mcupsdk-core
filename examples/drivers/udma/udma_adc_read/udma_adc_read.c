@@ -133,8 +133,8 @@ static SemaphoreP_Object gUdmaTestDoneSem;
 
 void *udma_adc_read_main(void *args)
 {
-    Udma_DrvHandle  drvHandle = (Udma_DrvHandle) &gUdmaDrvObj[CONFIG_UDMA0];
-    Udma_ChHandle   rxChHandle = (Udma_ChHandle) &gUdmaRxChObj;
+    Udma_DrvHandle  drvHandle = &gUdmaDrvObj[CONFIG_UDMA0];
+    Udma_ChHandle   rxChHandle =  &gUdmaRxChObj;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -280,7 +280,7 @@ static void App_create(Udma_DrvHandle drvHandle, Udma_ChHandle rxChHandle)
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Register ring completion callback */
-    eventHandle = (Udma_EventHandle) &gUdmaCqEventObj;
+    eventHandle =  &gUdmaCqEventObj;
     UdmaEventPrms_init(&eventPrms);
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
@@ -313,7 +313,7 @@ static void App_delete(Udma_DrvHandle drvHandle, Udma_ChHandle rxChHandle)
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Unregister all events */
-    eventHandle = (Udma_EventHandle) &gUdmaCqEventObj;
+    eventHandle =  &gUdmaCqEventObj;
     retVal = Udma_eventUnRegister(eventHandle);
     DebugP_assert(UDMA_SOK == retVal);
 
