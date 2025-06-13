@@ -699,7 +699,9 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
@@ -1777,7 +1779,9 @@ BUILD_COMBO_EXAMPLE_ALL += usb_dfu_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos
@@ -3592,8 +3596,14 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -4237,7 +4247,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_dfu_am261x-som_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am261x-lp_system_freertos_nortos_clean
@@ -6047,8 +6059,14 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -6692,7 +6710,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_dfu_am261x-som_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_dfu_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_dfu_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am261x-lp_system_freertos_nortos_scrub
@@ -8502,8 +8522,14 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  cdc_echo_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ cdc_echo_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ cdc_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

@@ -21135,6 +21135,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A USB Device CDC example CPU is R5FSS0-0 running FREERTOS.",
+        "name": "cdc_echo",
+        "location": "../../examples/usb/device/cdc_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A USB Device CDC example CPU is R5FSS0-0 running NORTOS.",
         "name": "cdc_echo",
         "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -21152,6 +21185,39 @@
             "device",
             "cdc_echo",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC example CPU is R5FSS0-0 running FREERTOS.",
+        "name": "cdc_echo",
+        "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-0_freertos"
         ],
         "mainCategories": [
             [

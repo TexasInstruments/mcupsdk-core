@@ -37,16 +37,20 @@
 #include <string.h>
 #include <ctype.h>
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #include <usb/cdn/include/usb_init.h>
+#endif
+
 #include "tusb.h"
 
 #include "FreeRTOS.h"
-#include "TaskP.h"
+#include <kernel/dpl/TaskP.h>
 
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #ifdef TINYUSB_INTEGRATION
 
 #define DSR_TASK_PRI  (TaskP_PRIORITY_HIGHEST-2)
@@ -78,12 +82,26 @@ void dsr_task_loop(void *args);
 void tud_task_loop(void *args);
 void cdc_task_loop(void *args);
 
+#else /* AM261X */
+
+#define USB_TASK_PRI  (TaskP_PRIORITY_HIGHEST-2)
+#define USB_TASK_SIZE (1024U)
+uint8_t gUsbTaskStack[USB_TASK_SIZE] __attribute__((aligned(32)));
+TaskP_Object gUsbTaskObj;
+TaskP_Params gUsbTaskParams;
+
+void usb_task_loop(void *args);
+
+#endif
+
 int cdc_echo_main(void)
 {
     int32_t status;
 
     Drivers_open();
     Board_driversOpen();
+	
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 
 #ifdef TINYUSB_INTEGRATION
 
@@ -129,6 +147,20 @@ int cdc_echo_main(void)
     status = TaskP_construct(&gCdcTaskObj, &gCdcTaskParams);
     DebugP_assert(status == SystemP_SUCCESS);
 
+#else /* AM261X */
+
+    TaskP_Params_init(&gUsbTaskParams);
+    gUsbTaskParams.name = "usb_task";                /**< Pointer to task name */
+    gUsbTaskParams.stackSize = USB_TASK_SIZE;        /**< Size of stack in units of bytes */
+    gUsbTaskParams.stack = gUsbTaskStack;            /**< Pointer to stack memory, MUST be aligned based on CPU architecture, typically atleast 32b on 32b systems */
+    gUsbTaskParams.priority = USB_TASK_PRI;          /**< Task priority, MUST be between \ref TaskP_PRIORITY_LOWEST and TaskP_PRIORITY_HIGHEST */
+    gUsbTaskParams.args = NULL;                      /**< User arguments that are passed back as parater to task main */
+    gUsbTaskParams.taskMain = usb_task_loop;         /**< Entry point function to the task */
+    /* create the task */
+    status = TaskP_construct(&gUsbTaskObj, &gUsbTaskParams);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+#endif
     return 0;
 }
 
@@ -182,6 +214,9 @@ static void cdc_task(void)
         }
     }
 }
+
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+
 void dsr_task_loop(void *args)
 {
     while (1)
@@ -204,3 +239,18 @@ void cdc_task_loop(void *args)
         cdc_task();
     }
 }
+
+#else /* AM261X */
+
+void usb_task_loop(void *args)
+{
+    while (1)
+    {
+        USB_dwcTask(); /* Synopsis DWC task */
+
+        tud_task();
+
+        cdc_task();
+    }
+}
+#endif
