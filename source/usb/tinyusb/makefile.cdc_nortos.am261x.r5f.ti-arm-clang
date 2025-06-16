@@ -74,10 +74,6 @@ CFLAGS_common := \
     -Wno-unused-function \
     -Wno-address-of-packed-member \
 
-CFLAGS_release := \
-    -Os \
-    -O0 \
-
 CFLAGS_cpp_common := \
     -Wno-c99-designator \
     -Wno-extern-c-compat \
@@ -93,6 +89,9 @@ CFLAGS_cpp_common := \
 
 CFLAGS_debug := \
     -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -Os \
 
 ARFLAGS_common := \
     rc \

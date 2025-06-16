@@ -72,10 +72,6 @@ DEFINES_common := \
 	-DTINYUSB_INTEGRATION \
 	-DOS_NORTOS \
 
-CFLAGS_release := \
-	-Os \
-	-O0 \
-
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
 	-mfloat-abi=hard \
@@ -102,6 +98,9 @@ CFLAGS_cpp_common := \
 
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
+
+CFLAGS_release := \
+	-Os \
 
 LNK_FILES_common = \
 	generated/linker.cmd \

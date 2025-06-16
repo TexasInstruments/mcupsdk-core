@@ -57,9 +57,6 @@ const cflags = {
     common: [
         "-Wno-address-of-packed-member",
     ],
-    release: [
-        "-O0", /* [MCUSDK-14055]: USB applications fail with optimization, Workaround - force the compiler to use '-O0' instead of '-Os' in release build */
-    ],
 };
 
 const buildOptionCombos = [
