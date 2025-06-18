@@ -14,6 +14,20 @@ This example performs the following operations.
 
 Once the example starts running it displays a following menu.
 
+\if (SOC_AM263PX || SOC_AM261X)
+\code
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice:
+\endcode
+
+\else
 \code
  1: Erase Complete Flash
  2: Write File to Flash and Verify
@@ -23,6 +37,7 @@ Once the example starts running it displays a following menu.
 
  Enter Choice:
 \endcode
+\endif
 
 After the file is written, verified or flash is erased, an acknowledgment is sent back to the console and the loop continues.
 This example is more or less like a flashing server, and will terminate until user does not enter 'x'.
@@ -99,6 +114,94 @@ This example is more or less like a flashing server, and will terminate until us
 
 # Sample Output
 
+\if (SOC_AM263PX || SOC_AM261X)
+\code
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 1
+ [FLASH WRITER] Erasing complete flash ...
+ [FLASH WRITER] This can take few minutes, so please wait ...
+ [FLASH WRITER] Erasing complete flash ... SUCCESS !!!
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 2
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...
+
+ loadRaw(0x700c0020, 0, "C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage", 32, false);
+1
+ [FLASH WRITER] Flashing success!!...
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 3
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...
+
+ loadRaw(0x700c0020, 0, "C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage", 32, false);
+1
+ [FLASH WRITER] Verifying success!!...
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: x
+
+ [FLASH WRITER] Application exited !!!
+All tests have passed!!
+
+\endcode
+
+\else
 \code
 
  ==================
@@ -177,3 +280,4 @@ This example is more or less like a flashing server, and will terminate until us
 All tests have passed!!
 
 \endcode
+\endif

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-24 Texas Instruments Incorporated
+ *  Copyright (C) 2021-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,8 +61,10 @@ char gMainMenu[] = {
     " ==================\r\n"
     " \r\n"
     " 1: Erase Complete Flash\r\n"
-    " 2: Write File to Flash and Verify\r\n"
-    " 3: Verify file in Flash\r\n"
+    " 2: Write Application File to Flash and Verify\r\n"
+    " 3: Write XIP File to Flash and Verify\r\n"
+    " 4: Verify Application file in Flash\r\n"
+    " 5: Verify XIP file in Flash\r\n"
     " \r\n"
     " x: Exit\r\n"
     " \r\n"
@@ -72,7 +74,7 @@ char gMainMenu[] = {
 int32_t sbl_jtag_uniflash_load_file(char optype)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t offset;
+    uint32_t offset = 0U;
     uint32_t fileSize;
     uint32_t eraseSctSize;
     uint32_t flashSize;
@@ -102,7 +104,7 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
             status = SystemP_FAILURE;
         }
     }
-    if(status==SystemP_SUCCESS)
+    if(status==SystemP_SUCCESS && (optype != '3' && optype != '5'))
     {
         DebugP_log(" Enter flash offset (in hex format) : ");
         gets(inputStr);
@@ -168,7 +170,17 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         else if(optype == '3')
         {
             /* Operation is FLASH VERIFY */
+            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP;
+        }
+        else if(optype == '4')
+        {
+            /* Operation is FLASH VERIFY */
             uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY;
+        }
+        else if(optype == '5')
+        {
+            /* Operation is FLASH VERIFY */
+            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP;
         }
         else
         {
@@ -218,7 +230,15 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
                 }
                 else if(optype == '3')
                 {
+                    DebugP_log(" [FLASH WRITER] XIP Flashing success!!... \r\n");
+                }
+                else if(optype == '4')
+                {
                     DebugP_log(" [FLASH WRITER] Verifying success!!... \r\n");
+                }
+                else if(optype == '5')
+                {
+                    DebugP_log(" [FLASH WRITER] XIP Verifying success!!... \r\n");
                 }
                 status = SystemP_SUCCESS;
             }
@@ -286,16 +306,26 @@ int main(void)
                     break;
                 case '2':
                 case '3':
+                case '4':
+                case '5':
                     status = sbl_jtag_uniflash_load_file(ch[0]);
                     if(status != SystemP_SUCCESS)
                     {
                         if (ch[0] == '2')
                         {
-                            DebugP_log(" [FLASH WRITER] Write Failed !!!\r\n");
+                            DebugP_log(" [FLASH WRITER] Application Write Failed !!!\r\n");
                         }
                         else if (ch[0] == '3')
                         {
-                            DebugP_log(" [FLASH WRITER] Verify Failed !!!\r\n");
+                            DebugP_log(" [FLASH WRITER] XIP Write Failed !!!\r\n");
+                        }
+                        else if (ch[0] == '4')
+                        {
+                            DebugP_log(" [FLASH WRITER] Application Verify Failed !!!\r\n");
+                        }
+                        else if (ch[0] == '5')
+                        {
+                            DebugP_log(" [FLASH WRITER] XIP Verify Failed !!!\r\n");
                         }
                     }
                     break;
