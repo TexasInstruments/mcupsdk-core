@@ -187,7 +187,7 @@ const utils = {
     },
 
     getCCSVersionProjectSpec: () => {
-        return "1281";
+        return "2020";
     },
 
     getTiClangVersionProjectSpec: () => {

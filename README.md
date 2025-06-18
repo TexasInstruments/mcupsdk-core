@@ -237,7 +237,7 @@ and so on. For a complete list of arguments you can pass to the script, please r
 
 **In windows the dependencies has to be manually installed. Given below are the steps**:
 
-1. Download and install Code Composer Studio v12.8.1 from [here](https://www.ti.com/tool/download/CCSTUDIO "Code Composer Studio")
+1. Download and install Code Composer Studio v20.2.0 from [here](https://www.ti.com/tool/download/CCSTUDIO "Code Composer Studio")
    - Install at default folder, C:\ti
 
 2. Download and install SysConfig 1.23.0 from [here](https://www.ti.com/tool/download/SYSCONFIG "SYSCONFIG 1.23.0")
