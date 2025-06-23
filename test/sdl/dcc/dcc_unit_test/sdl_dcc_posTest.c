@@ -37,6 +37,12 @@
 #include "dcc_test_main.h"
 #include <sdl/dpl/sdl_dpl.h>
 #include "ti_drivers_open_close.h"
+#if defined (R5F_CORE)
+#include <sdl/include/am64x_am243x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (M4F_CORE)
+#include <sdl/include/am64x_am243x/sdlr_intr_mcu_m4fss0_core0.h>
+#endif
 
 volatile SDL_DCC_Inst gCurDccInst;
 volatile uint32_t doneIsrFlag = 0U;
@@ -185,10 +191,10 @@ static int32_t test_SDL_DCCAppRegisterIsr(uint32_t uc, pSDL_DPL_HwipHandle *hand
     SDL_DPL_HwipParams intrParams;
 
     #if defined (R5F_CORE)
-    intrParams.intNum      = 108U;
+    intrParams.intNum      = SDLR_R5FSS0_CORE0_INTR_MCU_DCC0_INTR_DONE_LEVEL_0;
     #endif
     #if defined (M4F_CORE)
-    intrParams.intNum      = 21U;
+    intrParams.intNum      = SDLR_MCU_M4FSS0_CORE0_NVIC_MCU_DCC0_INTR_DONE_LEVEL_0;
     #endif
     intrParams.callback    = &test_SDL_DCCAppDoneIntrISR;
     intrParams.callbackArg = 0x0;
