@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-24 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -195,9 +195,6 @@ MMCSD_Handle MMCSD_open(uint32_t index, const MMCSD_Params *openParams)
         mmcsdLldHandle->initHandle->pllEnableSD = attrs->pllEnableSD;
         mmcsdLldHandle->initHandle->deviceData = openParams->deviceData;
         mmcsdLldHandle->initHandle->dataBuf = openParams->dataBuf;
-
-        mmcsdLldHandle->initHandle->Clock_getTicks = ClockP_getTicks;
-        mmcsdLldHandle->initHandle->Clock_uSleep = ClockP_usleep;
 
         object->cardType = attrs->cardType;
 

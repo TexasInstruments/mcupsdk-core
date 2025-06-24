@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,6 +44,7 @@
 
 #include <drivers/mmcsd/v1/lld/mmcsd_lld.h>
 #include <drivers/mmcsd/v1/lld/internal/mmcsd_parse.h>
+#include <kernel/dpl/ClockP.h>
 #include <drivers/soc.h>
 
 /* ========================================================================== */
@@ -2051,7 +2052,7 @@ static int32_t MMCSD_lld_initSD(MMCSDLLD_Handle handle)
                         MMCSD_setBusVolt(object->initHandle->baseAddr,
                                          MMCSD_BUS_VOLT_1_8V);
                         /* Wait 5ms */
-                        object->initHandle->Clock_uSleep(5000);
+                        ClockP_usleep(5000);
                     }
                 }
                 currState = MMCSD_SD_INIT_STATE_GET_CID;

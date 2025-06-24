@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Texas Instruments Incorporated
+ * Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -249,35 +249,6 @@ extern "C" {
 /* ========================================================================== */
 
 /**
- *  \brief  The definition of a get System Tick function used by
- *  the MMCSD driver to keep track of time
- *
- *  \return Returns system ticks in 32-bit unsigned int format
- *
- */
-typedef uint32_t (*MMCSD_Clock_getTicks) (void);
-
-/**
- *  \brief  The definition of a micro seconds to ticks function used by
- *  the MMCSD driver to get ticks from microseconds
- *
- *  \param usecs                        Micro Seconds
- *
- *  \return Returns system ticks in 32-bit unsigned int format
- *
- */
-typedef uint32_t (*MMCSD_Clock_usecToTicks) (uint64_t usecs);
-
-/**
- *  \brief  The definition of a sleep function used by
- *  the MMCSD driver for delay
- *
- *  \param usec                         Micro Seconds
- *
- */
-typedef void (*MMCSD_Clock_uSleep) (uint32_t usec);
-
-/**
  *  \brief  The definition of a transfer completion callback function used by
  *  the MMCSD driver when used in Callback Mode
  *
@@ -431,10 +402,6 @@ typedef struct {
  * transactions internal to driver like ECSD read, tuning etc.
  * This data is allocated by syscfg */
     uint8_t                 *dataBuf;
-/** Clock_getTicks Function Pointer used by driver */
-    MMCSD_Clock_getTicks    Clock_getTicks;
-/** Clock_uSleep Function Pointer used by driver */
-    MMCSD_Clock_uSleep      Clock_uSleep;
 
 } MMCSDLLD_InitObject, *MMCSDLLD_InitHandle;
 

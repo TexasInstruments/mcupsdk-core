@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Texas Instruments Incorporated
+ * Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -41,6 +41,7 @@
 /* ========================================================================== */
 #include <drivers/mmcsd/v0/lld/mmcsd_lld.h>
 #include <kernel/dpl/CacheP.h>
+#include <kernel/dpl/ClockP.h>
 #include <drivers/mmcsd/v0/lld/internal/mmcsd_parse.h>
 #include <drivers/soc.h>
 
@@ -575,7 +576,7 @@ int32_t MMCSD_lld_deInit(MMCSDLLD_Handle handle)
             trans.arg = 0U;
             status = MMCSD_lld_transferPoll(handle, &trans);
 
-            object->initHandle->Clock_uSleep(5000);
+            ClockP_usleep(5000);
         }
         else
         {
@@ -1433,7 +1434,7 @@ int32_t MMCSD_lld_enableBootPartition(MMCSDLLD_Handle handle,
             status = MMCSD_lld_transferPoll(handle, &trans);
 
             /* Delay for 3 ms for the change to take effect in the device */
-            object->initHandle->Clock_uSleep(3000);
+            ClockP_usleep(3000);
 
             if(status == SystemP_SUCCESS)
             {
@@ -1449,7 +1450,7 @@ int32_t MMCSD_lld_enableBootPartition(MMCSDLLD_Handle handle,
             }
 
             /* Delay for 3 ms for the change to take effect in the device */
-            object->initHandle->Clock_uSleep(3000);
+            ClockP_usleep(3000);
         }
         else
         {
@@ -1485,7 +1486,7 @@ int32_t MMCSD_lld_disableBootPartition(MMCSDLLD_Handle handle)
         status = MMCSD_lld_transferPoll(handle, &trans);
 
         /* Delay for 5 ms for the change to take effect in the device */
-        object->initHandle->Clock_uSleep(3000);
+        ClockP_usleep(3000);
     }
     else
     {
@@ -3690,7 +3691,7 @@ static int32_t MMCSD_lld_initSD(MMCSDLLD_Handle handle)
                     MMCSD_1P8VsignalCtrl(object->initHandle->ctrlBaseAddr,
                                          true);
                     /* Wait 5ms */
-                    object->initHandle->Clock_uSleep(5000);
+                    ClockP_usleep(5000);
                     /* Check 1.8V signal Enable */
                     if(MMCSD_get1P8VsignalStat(
                                             object->initHandle->ctrlBaseAddr))
@@ -3699,7 +3700,7 @@ static int32_t MMCSD_lld_initSD(MMCSDLLD_Handle handle)
                         MMCSD_sdClockCtrl(object->initHandle->ctrlBaseAddr,
                                           true);
                         /* Wait 1ms */
-                        object->initHandle->Clock_uSleep(1000);
+                        ClockP_usleep(1000);
                         /* Check DAT lines to go high */
                         if(!MMCSD_getDAT0(object->initHandle->ctrlBaseAddr))
                         {
@@ -4355,7 +4356,7 @@ static int32_t MMCSD_lld_initMMC(MMCSDLLD_Handle handle)
                 /* Sleep for 5ms for input clock frequency, as mentioned
                 * in JEDEC standard JESD84-B51 section 10.1
                 */
-                object->initHandle->Clock_uSleep(5000);
+                ClockP_usleep(5000);
 
                 if(status == MMCSD_STS_SUCCESS)
                 {
