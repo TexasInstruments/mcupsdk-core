@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -188,7 +188,9 @@ extern "C" {
 #define MMCSD_UHS_MODE_HS400                 (5U)
 #define MMCSD_UHS_MODE_UHS2                  (7U)
 
-typedef void* MMCSD_Handle;
+struct MMCSD_Config_s;
+
+typedef struct MMCSD_Config_s* MMCSD_Handle;
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -525,7 +527,7 @@ typedef struct
 
 } MMCSD_Object;
 
-typedef struct
+typedef struct MMCSD_Config_s
 {
     const MMCSD_Attrs *attrs;
     /**< Pointer to driver specific hardware attributes */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-24 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,7 +89,9 @@ extern "C" {
 
 /** @} */
 
-typedef void* MMCSD_Handle;
+struct MMCSD_Config_s;
+
+typedef struct MMCSD_Config_s* MMCSD_Handle;
 
 /* ========================================================================== */
 /*                      Function Pointers Declarations                        */
@@ -210,7 +212,7 @@ typedef struct
  *  the MMCSD driver implementation.
  *
  */
-typedef struct
+typedef struct MMCSD_Config_s
 {
     const MMCSD_Attrs       *attrs;
     /**< Pointer to driver specific hardware attributes */
