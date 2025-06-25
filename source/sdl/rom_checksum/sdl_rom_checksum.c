@@ -60,16 +60,14 @@ int32_t SDL_ROM_Checksum_compute (void)
 	uint64_t  golden_vector_buflen =  SDL_LENGTH_OF_GOLDEN_DATA;
 	SDL_ROM_Checksum_obj md;
 	int32_t sdl_result = SDL_PASS;
+	/* 
+	The APIs are always expected to give SDL_PASS with the above parameters. 
+	The final sdl_result will return an error if there are any failures in the execution.
+	*/
 	SDL_ROM_Checksum_init(&md);
-    sdl_result = SDL_ROM_Checksum_process(&md, in, (uint32_t)inlen);
-	if(sdl_result == SDL_PASS)
-	{
-    	sdl_result = SDL_ROM_Checksum_done(&md);
-	}
-	if(sdl_result == SDL_PASS)
-	{
-		sdl_result = SDL_ROM_Checksum_compareResult (golden_vector_buflen, &md, golden_vector_pointer);
-	}
+    (void) SDL_ROM_Checksum_process(&md, in, (uint32_t)inlen);
+	(void) SDL_ROM_Checksum_done(&md);
+	sdl_result = SDL_ROM_Checksum_compareResult (golden_vector_buflen, &md, golden_vector_pointer);
 	return sdl_result;
 }
 

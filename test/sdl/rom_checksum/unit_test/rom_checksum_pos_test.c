@@ -45,12 +45,30 @@
 int32_t ROM_Checksum_posTest()
 {
     int testResult = SDL_PASS;
+    SDL_ROM_Checksum_obj md;
+    md.length = 0;
+    uint8_t *in = SDL_DATA_TO_BE_HASHED_POINTER;
+    int32_t inlen = SDL_LENGTH_OF_DATA_TO_BE_HASHED;
 
     testResult = SDL_ROM_Checksum_compute();
     if (testResult != SDL_PASS)
     {
         testResult = SDL_EFAIL;
         DebugP_log("\n  SDL_ROM_CHECKSUM: positive test failed on line no: %d \n", __LINE__);
+    }
+
+/***************************************************************************************************
+*     Call SDL API SDL_ROM_Checksum_process with a Message Digest current length (md.curlen)
+****************************************************************************************************/
+
+    if(testResult == SDL_PASS)
+    {
+        md.curlen = 64;
+        testResult = SDL_ROM_Checksum_process (&md, (unsigned char *)in, (int32_t)inlen);
+        if(testResult != SDL_PASS){
+            testResult = SDL_EFAIL;
+            DebugP_log("SDL_ROM_Checksum_Process: failure on line no. %d \r\n", __LINE__);
+        }
     }
     return testResult;
 }
