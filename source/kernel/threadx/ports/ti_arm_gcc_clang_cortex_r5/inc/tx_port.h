@@ -91,18 +91,9 @@
 #ifndef TX_PORT_H
 #define TX_PORT_H
 
-
-/* Determine if the optional ThreadX user define file should be used.  */
-
-#ifdef TX_INCLUDE_USER_DEFINE_FILE
-
-
-/* Yes, include the user defines in tx_user.h. The defines in this file may 
-   alternately be defined on the command line.  */
+/* Always include tx_user.h in the TI SDK. */
 
 #include "tx_user.h"
-#endif
-
 
 /* Define compiler library include files.  */
 
