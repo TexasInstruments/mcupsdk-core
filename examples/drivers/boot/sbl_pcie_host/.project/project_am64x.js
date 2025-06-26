@@ -41,7 +41,7 @@ const libs_r5f = {
         "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

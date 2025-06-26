@@ -100,7 +100,7 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:drivers.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
-	-l:freertos_fat.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
+	-l:freeRTOS_fat-freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	-l:freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	-l:unity.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 
@@ -117,7 +117,7 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	drivers.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
-	freertos_fat.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
+	freeRTOS_fat-freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	unity.am64x.a53.gcc-aarch64.freertos.${ConfigName}.lib \
 

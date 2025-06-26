@@ -59,7 +59,7 @@ const libs_nortos_r5f = {
     common: [
         "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -67,7 +67,7 @@ const libs_nortos_r5f_gcc = {
     common: [
         "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
-        "freertos_fat.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
 };
 
@@ -75,7 +75,7 @@ const libs_freertos_r5f = {
     common: [
         "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -83,7 +83,7 @@ const libs_freertos_r5f_gcc = {
     common: [
         "freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
         "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
-        "freertos_fat.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "freeRTOS_fat-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
     ],
 };
 

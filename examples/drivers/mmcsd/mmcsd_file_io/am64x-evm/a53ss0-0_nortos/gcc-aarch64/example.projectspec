@@ -83,7 +83,7 @@
             linkerBuildOptions="
                 -lnortos.am64x.a53.gcc-aarch64.debug.lib
                 -ldrivers.am64x.a53.gcc-aarch64.nortos.debug.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.nortos.debug.lib
+                -lfreeRTOS_fat-nortos.am64x.a53.gcc-aarch64.debug.lib
             "
         ></configuration>
         <configuration name="Release"
@@ -93,7 +93,7 @@
             linkerBuildOptions="
                 -lnortos.am64x.a53.gcc-aarch64.release.lib
                 -ldrivers.am64x.a53.gcc-aarch64.nortos.release.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.nortos.release.lib
+                -lfreeRTOS_fat-nortos.am64x.a53.gcc-aarch64.release.lib
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />

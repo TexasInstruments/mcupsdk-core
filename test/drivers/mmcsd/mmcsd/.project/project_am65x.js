@@ -43,7 +43,7 @@ const libs_r5f = {
     common: [
         "nortos.am65x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am65x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am65x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am65x.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am65x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };

@@ -110,7 +110,7 @@ LIBS_PATH_common = \
 LIBS_common = \
 	-lnortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	-lfreertos_fat.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lfreeRTOS_fat-nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lunity.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -125,7 +125,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	freertos_fat.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	freeRTOS_fat-nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	unity.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \

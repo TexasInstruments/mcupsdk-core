@@ -119,7 +119,7 @@ LIBS_common = \
 	-lfreertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-ldrivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
-	-lfreertos_fat.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lfreeRTOS_fat-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -134,7 +134,7 @@ LIBS_NAME = \
 	freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	drivers.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
-	freertos_fat.am263x.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	freeRTOS_fat-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

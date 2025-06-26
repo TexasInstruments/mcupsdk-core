@@ -1,7 +1,5 @@
 let path = require('path');
 
-let device = "am263x";
-
 const files = {
     common: [
         "ff_crc.c",
@@ -33,7 +31,6 @@ const includes_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
-        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
     ],
 };
 
@@ -47,7 +44,7 @@ const cflags = {
 };
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang",os: "freertos_mpu"},
 ];
 
 function getComponentProperty() {
@@ -55,9 +52,18 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "freertos_fat";
+    property.name = "freeRTOS_fat-freertos-mpu";
+    property.tag = "freeRTOS_fat-freertos-mpu";
     property.isInternal = false;
-    property.buildOptionCombos = buildOptionCombos;
+    deviceBuildCombos = []
+    for (buildCombo of buildOptionCombos)
+    {
+        if (buildCombo.device === device)
+        {
+            deviceBuildCombos.push(buildCombo)
+        }
+    }
+    property.buildOptionCombos = deviceBuildCombos;
 
     return property;
 }

@@ -355,7 +355,7 @@ static void MIBSPI_edmaRegUpdateRxParams(const MIBSPI_Object            *ptrMibS
 {
     Bool dummyRxXfer;
     
-    if (xferAddrInfo->daddr == NULL)
+    if (xferAddrInfo->daddr == 0U)
     {
         dummyRxXfer = TRUE;
     }
@@ -430,7 +430,7 @@ static void MIBSPI_edmaRegUpdateTxParams(const MIBSPI_Object            *ptrMibS
 {
     Bool dummyTxXfer;
     
-    if(xferAddrInfo->saddr == NULL)
+    if(xferAddrInfo->saddr == 0U)
     {
         dummyTxXfer = TRUE;
     }
@@ -504,7 +504,7 @@ static void MIBSPI_edmaRamUpdateRxParams(const MIBSPI_Object            *ptrMibS
 {
     Bool dummyRxXfer;
     
-    if(xferAddrInfo->daddr == NULL)
+    if(xferAddrInfo->daddr == 0U)
     {
         dummyRxXfer = TRUE;
     }
@@ -575,7 +575,7 @@ static void MIBSPI_edmaRamUpdateTxParams(const MIBSPI_Object            *ptrMibS
     
 
     
-    if(xferAddrInfo->saddr == NULL)
+    if(xferAddrInfo->saddr == 0U)
     {
         dummyTxXfer = TRUE;
     }

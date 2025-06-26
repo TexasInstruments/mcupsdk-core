@@ -10,7 +10,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=freertos_fat.am64x.r5f.ti-arm-clang.freertos.$(PROFILE).lib
+LIBNAME:=freeRTOS_fat-freertos.am263px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     ff_crc.c \
@@ -38,13 +38,12 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
 
 DEFINES_common := \
-    -DSOC_AM64X \
+    -DSOC_AM263PX \
     -DOS_FREERTOS \
 
 CFLAGS_common := \
@@ -99,7 +98,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/freertos_fat/freertos/
+OBJDIR := obj/am263px/ti-arm-clang/$(PROFILE)/r5f/freeRTOS_fat-freertos/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

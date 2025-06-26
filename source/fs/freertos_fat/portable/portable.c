@@ -72,9 +72,8 @@ __attribute__((weak)) void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTas
 	return 0U;
 }
 
-__attribute__((weak)) void *vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue)
+__attribute__((weak)) void vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue)
 {
-	return 0U;
 }
 
 __attribute__((weak)) void vTaskSuspendAll(void)
@@ -82,9 +81,9 @@ __attribute__((weak)) void vTaskSuspendAll(void)
 
 }
 
-__attribute__((weak)) void xTaskResumeAll(void)
+__attribute__((weak)) BaseType_t xTaskResumeAll(void)
 {
-
+    return 0U;
 }
 
 BaseType_t FF_TrySemaphore( void * pxSemaphore, uint32_t ulTime_ms )

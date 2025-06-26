@@ -44,7 +44,7 @@ const libs_nortos_r5f = {
         "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "security.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],

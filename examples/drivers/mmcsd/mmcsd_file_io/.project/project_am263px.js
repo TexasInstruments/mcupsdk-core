@@ -63,7 +63,7 @@ const libs_nortos_r5f = {
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
@@ -78,7 +78,7 @@ const libs_freertos_r5f = {
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freeRTOS_fat-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "pmic_blackbird.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };

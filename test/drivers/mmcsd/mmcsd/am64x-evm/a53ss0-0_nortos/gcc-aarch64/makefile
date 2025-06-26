@@ -98,7 +98,7 @@ LIBS_PATH_common = \
 LIBS_common = \
 	-l:nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	-l:drivers.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
-	-l:freertos_fat.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
+	-l:freeRTOS_fat-nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	-l:unity.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
 
 LFLAGS_common = \
@@ -115,7 +115,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	drivers.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
-	freertos_fat.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
+	freeRTOS_fat-nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	unity.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \

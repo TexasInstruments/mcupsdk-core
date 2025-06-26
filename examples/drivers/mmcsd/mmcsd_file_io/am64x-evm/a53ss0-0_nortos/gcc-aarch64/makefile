@@ -95,7 +95,7 @@ LIBS_PATH_common = \
 LIBS_common = \
 	-l:nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	-l:drivers.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
-	-l:freertos_fat.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
+	-l:freeRTOS_fat-nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-Wl,-static \
@@ -111,7 +111,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 	drivers.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
-	freertos_fat.am64x.a53.gcc-aarch64.nortos.${ConfigName}.lib \
+	freeRTOS_fat-nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \

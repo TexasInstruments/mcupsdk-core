@@ -34,18 +34,13 @@
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/SemaphoreP.h>
 
-int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
+int32_t SemaphoreP_constructBinary(SemaphoreP_Object *pSemaphore, uint32_t initCount)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     int32_t status = SystemP_FAILURE;
 
     if(pSemaphore != NULL)
     {
         status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
     }
 
     if (SystemP_SUCCESS == status)
@@ -72,18 +67,13 @@ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
     return status;
 }
 
-int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount, uint32_t maxCount)
+int32_t SemaphoreP_constructCounting(SemaphoreP_Object *pSemaphore, uint32_t initCount, uint32_t maxCount)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     int32_t status = SystemP_FAILURE;
 
     if(pSemaphore != NULL)
     {
         status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
     }
 
     if(status == SystemP_SUCCESS)
@@ -106,18 +96,13 @@ int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount,
     return status;
 }
 
-int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
+int32_t SemaphoreP_constructMutex(SemaphoreP_Object *pSemaphore)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     int32_t status = SystemP_FAILURE;
 
     if(pSemaphore != NULL)
     {
         status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
     }
     
     if(status == SystemP_SUCCESS)
@@ -138,32 +123,22 @@ int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
     return status;
 }
 
-void SemaphoreP_destruct(SemaphoreP_Object *obj)
+void SemaphoreP_destruct(SemaphoreP_Object *pSemaphore)
 {
-    SemaphoreP_Object *pSemaphore = obj;
-
-    vQueueUnregisterQueue(pSemaphore->semHndl);
-
-    vSemaphoreDelete(pSemaphore->semHndl);
+    if(pSemaphore != NULL)
+    {
+        vQueueUnregisterQueue(pSemaphore->semHndl);
+        vSemaphoreDelete(pSemaphore->semHndl);
+    }
+    return;
 }
 
 
-int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
+int32_t SemaphoreP_pend(SemaphoreP_Object *pSemaphore, uint32_t timeout)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     uint32_t isSemTaken = 0U;
     int32_t status = SystemP_FAILURE;
-
     if(pSemaphore != NULL)
-    {
-        status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
-    }
-    
-    if(status == SystemP_SUCCESS)
     {
         if(pSemaphore->isRecursiveMutex != 0U)
         {
@@ -173,7 +148,6 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
             }
             else
             {
-                /* NOT allowed to use mutex in ISR */
                 DebugP_assertNoLog(0);
             }
         }
@@ -182,8 +156,6 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
             if( HwiP_inISR() != 0U )
             {
                 BaseType_t xHigherPriorityTaskWoken = 0;
-
-                /* timeout is ignored when in ISR mode */
                 isSemTaken = (uint32_t) xSemaphoreTakeFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
                 portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
             }
@@ -201,50 +173,52 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
             status = SystemP_TIMEOUT;
         }
     }
-    
     return status;
 }
 
-void SemaphoreP_post(SemaphoreP_Object *obj)
+void SemaphoreP_post(SemaphoreP_Object *pSemaphore)
 {
-    SemaphoreP_Object *pSemaphore = obj;
-
-    if(pSemaphore->isRecursiveMutex != 0U)
+    if(pSemaphore != NULL)
     {
-        if( HwiP_inISR() == 0U)
+        if(pSemaphore->isRecursiveMutex != 0U)
         {
-            (void)xSemaphoreGiveRecursive(pSemaphore->semHndl);
+            if( HwiP_inISR() == 0U)
+            {
+                (void)xSemaphoreGiveRecursive(pSemaphore->semHndl);
+            }
+            else
+            {
+                DebugP_assertNoLog(0);
+            }
         }
         else
         {
-            /* NOT allowed to use mutex in ISR */
-            DebugP_assertNoLog(0);
+            if( HwiP_inISR() != 0U)
+            {
+                BaseType_t xHigherPriorityTaskWoken = 0;
+                (void)xSemaphoreGiveFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
+                portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
+            }
+            else
+            {
+                (void)xSemaphoreGive(pSemaphore->semHndl);
+            }
         }
     }
-    else
-    {
-        if( HwiP_inISR() != 0U)
-        {
-            BaseType_t xHigherPriorityTaskWoken = 0;
-
-            (void)xSemaphoreGiveFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
-            portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
-        }
-        else
-        {
-            (void)xSemaphoreGive(pSemaphore->semHndl);
-        }
-    }
+    return;
 }
 
 /*
  *  ======== SemaphoreP_getCount ========
  */
-int32_t SemaphoreP_getCount(SemaphoreP_Object *obj)
+int32_t SemaphoreP_getCount(SemaphoreP_Object *pSemaphore)
 {
-    SemaphoreP_Object *pSemaphore = obj;
-
-    return ((int32_t)uxSemaphoreGetCount(pSemaphore->semHndl));
+    int32_t count = 0;
+    if(pSemaphore != NULL)
+    {
+        count = ((int32_t)uxSemaphoreGetCount(pSemaphore->semHndl));
+    }
+    return count;
 }
 
 /* IMPORTANT:

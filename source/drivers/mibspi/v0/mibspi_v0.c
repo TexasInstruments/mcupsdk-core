@@ -1621,7 +1621,7 @@ static void MIBSPI_dataTransfer(MIBSPI_Object       *ptrMibSpiDriver,
         }
         else
         {
-            dmaXferInfo.tx.saddr = NULL;
+            dmaXferInfo.tx.saddr = 0U;
         }
         dmaXferInfo.tx.daddr = SOC_virtToPhy((void*)txRAMAddr);
         dmaXferInfo.rx.saddr = SOC_virtToPhy((void*)rxRAMAddr);
@@ -1631,7 +1631,7 @@ static void MIBSPI_dataTransfer(MIBSPI_Object       *ptrMibSpiDriver,
         }
         else
         {
-            dmaXferInfo.rx.daddr = NULL;
+            dmaXferInfo.rx.daddr = 0U;
         }
         if(ptrMibSpiDriver->params.dataSize == 8U)
         {

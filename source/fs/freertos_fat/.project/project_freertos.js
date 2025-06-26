@@ -1,7 +1,5 @@
 let path = require('path');
 
-let device = "am64x";
-
 const files = {
     common: [
         "ff_crc.c",
@@ -16,7 +14,7 @@ const files = {
         "ff_sys.c",
         "ff_format.c",
         "ff_mmcsd.c",
-        "portable.c"
+        "portable.c",
     ],
 };
 
@@ -33,7 +31,6 @@ const includes_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
-        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
     ],
 };
 
@@ -42,7 +39,6 @@ const includes_a53 = {
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
-        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
     ],
 };
 
@@ -51,7 +47,6 @@ const cflags = {
         "-Wno-extra",
         "-Wno-uninitialized",
         "-Wno-unused-but-set-variable",
-
     ],
 };
 const cflags_a53 = {
@@ -65,8 +60,14 @@ const cflags_a53 = {
 };
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: device, cpu: "a53", cgt: "gcc-aarch64"},
+    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7", os: "freertos"},
+    { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: "am64x",  cpu: "a53", cgt: "gcc-aarch64", os: "freertos"},
+    { device: "am65x", cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -74,9 +75,19 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "freertos_fat";
+    property.name = "freeRTOS_fat-freertos";
+    property.tag = "freeRTOS_fat-freertos"; 
     property.isInternal = false;
-    property.buildOptionCombos = buildOptionCombos;
+
+    deviceBuildCombos = []
+    for (buildCombo of buildOptionCombos)
+    {
+        if (buildCombo.device === device)
+        {
+            deviceBuildCombos.push(buildCombo)
+        }
+    }
+    property.buildOptionCombos = deviceBuildCombos;
 
     return property;
 }
@@ -88,13 +99,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.includes = includes_r5f;
-        build_property.cflags = cflags;
+        if(buildOption.cgt.match(/ti-arm-clang*/)) {
+            build_property.cflags = cflags;
+        }
     }
     if(buildOption.cpu.match(/a53*/)) {
         build_property.includes = includes_a53;
         build_property.cflags = cflags_a53;
     }
-
     return build_property;
 }
 

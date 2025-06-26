@@ -10,7 +10,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=freertos_fat.am65x.r5f.ti-arm-clang.freertos.$(PROFILE).lib
+LIBNAME:=freeRTOS_fat-nortos.am261x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     ff_crc.c \
@@ -39,13 +39,10 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
-    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
-    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am65x/r5f \
 
 DEFINES_common := \
-    -DSOC_AM65X \
-    -DOS_FREERTOS \
+    -DSOC_AM261X \
+    -DOS_NORTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -99,7 +96,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am65x/ti-arm-clang/$(PROFILE)/r5f/freertos_fat/
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/freeRTOS_fat-nortos/nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

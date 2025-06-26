@@ -108,7 +108,7 @@ LIBS_common = \
 	-lnortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lboard.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	-lfreertos_fat.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lfreeRTOS_fat-nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -123,7 +123,7 @@ LIBS_NAME = \
 	nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	board.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	freertos_fat.am243x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	freeRTOS_fat-nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

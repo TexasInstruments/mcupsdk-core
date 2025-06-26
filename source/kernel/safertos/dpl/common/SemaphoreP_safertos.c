@@ -35,19 +35,14 @@
  #include <kernel/dpl/ClockP.h>
  #include <kernel/dpl/SemaphoreP.h>
  
- int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
- {
-     SemaphoreP_Object *pSemaphore = obj;
+ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *pSemaphore, uint32_t initCount)
+ { 
      int32_t status = SystemP_FAILURE;
      portBaseType xResult;
  
      if(pSemaphore != NULL)
      {
          status = SystemP_SUCCESS;
-     }
-     else
-     {
-         status = SystemP_FAILURE;
      }
      
      if(status == SystemP_SUCCESS)
@@ -79,9 +74,8 @@
      return status;
  }
  
- int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount, uint32_t maxCount)
- {
-     SemaphoreP_Object *pSemaphore = obj;
+ int32_t SemaphoreP_constructCounting(SemaphoreP_Object *pSemaphore, uint32_t initCount, uint32_t maxCount)
+ {  
      int32_t status = SystemP_FAILURE;
      portBaseType xResult;
  
@@ -89,11 +83,7 @@
      {
          status = SystemP_SUCCESS;
      }
-     else
-     {
-         status = SystemP_FAILURE;
-     }
- 
+
      if(status == SystemP_SUCCESS)
      {
          pSemaphore->isRecursiveMutex = 0;
@@ -117,19 +107,14 @@
      return status;
  }
  
- int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
+ int32_t SemaphoreP_constructMutex(SemaphoreP_Object *pSemaphore)
  {
-     SemaphoreP_Object *pSemaphore = obj;
      int32_t status = SystemP_FAILURE;
      portBaseType xResult;
  
      if(pSemaphore != NULL)
      {
          status = SystemP_SUCCESS;
-     }
-     else
-     {
-         status = SystemP_FAILURE;
      }
  
      if(status == SystemP_SUCCESS)
@@ -150,14 +135,13 @@
      return status;
  }
  
- void SemaphoreP_destruct(SemaphoreP_Object *obj)
+ void SemaphoreP_destruct(SemaphoreP_Object *pSemaphore)
  {
      /* Not implemented in SafeRTOS */
  }
  
- int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
- {
-     SemaphoreP_Object *pSemaphore = obj;
+ int32_t SemaphoreP_pend(SemaphoreP_Object *pSemaphore, uint32_t timeout)
+ {  
      uint32_t isSemTaken = 0;
      int32_t status = SystemP_FAILURE;
  
@@ -165,11 +149,6 @@
      {
          status = SystemP_SUCCESS;
      }
-     else
-     {
-         status = SystemP_FAILURE;
-     }
-     
      if(status == SystemP_SUCCESS)
      {
          if(pSemaphore->isRecursiveMutex)
@@ -210,33 +189,36 @@
      return status;
  }
  
- void SemaphoreP_post(SemaphoreP_Object *obj)
+ void SemaphoreP_post(SemaphoreP_Object *pSemaphore)
  {
-     SemaphoreP_Object *pSemaphore = obj;
- 
-     if(pSemaphore->isRecursiveMutex)
-     {
-         if( ! HwiP_inISR() )
-         {
-             xMutexGive(pSemaphore->semHndl);
-         }
-         else
-         {
-             /* NOT allowed to use mutex in ISR */
-             DebugP_assertNoLog(0);
-         }
-     }
-     else
-     {
-         if( HwiP_inISR() )
-         {
-             xSemaphoreGiveFromISR(pSemaphore->semHndl);
-             safertosapiYIELD_FROM_ISR();
-         }
-         else
-         {
-             xSemaphoreGive(pSemaphore->semHndl);
-         }
-     }
+    if(pSemaphore != NULL)
+    {
+        if(pSemaphore->isRecursiveMutex)
+        {
+            if( ! HwiP_inISR() )
+            {
+                xMutexGive(pSemaphore->semHndl);
+            }
+            else
+            {
+                /* NOT allowed to use mutex in ISR */
+                DebugP_assertNoLog(0);
+            }
+        }
+        else
+        {
+            if( HwiP_inISR() )
+            {
+                xSemaphoreGiveFromISR(pSemaphore->semHndl);
+                safertosapiYIELD_FROM_ISR();
+            }
+            else
+            {
+                xSemaphoreGive(pSemaphore->semHndl);
+            }
+        }
+    }
+
+    return;
  }
  

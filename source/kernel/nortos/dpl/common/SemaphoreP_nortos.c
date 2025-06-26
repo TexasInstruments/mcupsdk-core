@@ -67,7 +67,7 @@ typedef struct SemaphoreP_Params_ {
 
 void SemaphoreP_Params_init(SemaphoreP_Params *params);
 
-int32_t SemaphoreP_construct(SemaphoreP_Object *obj,SemaphoreP_Params *params);
+int32_t SemaphoreP_construct(SemaphoreP_Object *pSemaphore,SemaphoreP_Params *params);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -80,18 +80,13 @@ void SemaphoreP_Params_init(SemaphoreP_Params *params)
     params->maxCount = 1;
 }
 
-int32_t SemaphoreP_construct(SemaphoreP_Object *obj, SemaphoreP_Params *params)
+int32_t SemaphoreP_construct(SemaphoreP_Object *pSemaphore, SemaphoreP_Params *params)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     int32_t status = SystemP_FAILURE;
 
     if(pSemaphore != NULL)
     {
         status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
     }
 
     if(status == SystemP_SUCCESS)
@@ -104,7 +99,7 @@ int32_t SemaphoreP_construct(SemaphoreP_Object *obj, SemaphoreP_Params *params)
     return SystemP_SUCCESS;
 }
 
-int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
+int32_t SemaphoreP_constructBinary(SemaphoreP_Object *pSemaphore, uint32_t initCount)
 {
     SemaphoreP_Params params;
 
@@ -113,10 +108,10 @@ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
     params.initCount = (initCount & 0x1U);
     params.maxCount = 1;
 
-    return (SemaphoreP_construct(obj, &params));
+    return (SemaphoreP_construct(pSemaphore, &params));
 }
 
-int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount, uint32_t maxCount)
+int32_t SemaphoreP_constructCounting(SemaphoreP_Object *pSemaphore, uint32_t initCount, uint32_t maxCount)
 {
     uint32_t initialCount = initCount;
     uint32_t maximumCount = maxCount;
@@ -135,10 +130,10 @@ int32_t SemaphoreP_constructCounting(SemaphoreP_Object *obj, uint32_t initCount,
     params.initCount = initialCount;
     params.maxCount = maximumCount;
 
-    return (SemaphoreP_construct(obj, &params));
+    return (SemaphoreP_construct(pSemaphore, &params));
 }
 
-int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
+int32_t SemaphoreP_constructMutex(SemaphoreP_Object *pSemaphore)
 {
     SemaphoreP_Params params;
 
@@ -147,96 +142,86 @@ int32_t SemaphoreP_constructMutex(SemaphoreP_Object *obj)
     params.initCount = 1;
     params.maxCount = 1;
 
-    return (SemaphoreP_construct(obj, &params));
+    return (SemaphoreP_construct(pSemaphore, &params));
 }
 
-void SemaphoreP_destruct(SemaphoreP_Object *obj)
+void SemaphoreP_destruct(SemaphoreP_Object *pSemaphore)
 {
-    /* nothing to do */
+        /* nothing to do */
 }
 
 
-int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
+int32_t SemaphoreP_pend(SemaphoreP_Object *pSemaphore, uint32_t timeout)
 {
-    SemaphoreP_Object *pSemaphore = obj;
     ClockP_Params      clockParams;
     ClockP_Object      clockObj;
     uintptr_t          key;
-    int32_t            status = SystemP_SUCCESS;
+    int32_t            status = SystemP_FAILURE;
 
-    /*
-     * Always add Clock (but don't start) so that ClockP_isActive() below
-     * is valid.  It's OK to add a Clock even when timeout is 0 or forever
-     * (but it is not OK to start it).
-     */
-    ClockP_Params_init(&clockParams);
-    clockParams.timeout = timeout;
-    (void)ClockP_construct(&clockObj, &clockParams);
-
-    if ((timeout != 0U) && (timeout !=(uint32_t)SystemP_WAIT_FOREVER)) {
-        ClockP_start(&clockObj);
-    }
-
-    key = HwiP_disable();
-
-    while ((pSemaphore->count == 0U) && (pSemaphore->nestCount == 0U) &&
-           ((timeout == SystemP_WAIT_FOREVER) ||
-            (ClockP_isActive(&clockObj)!=0U))) {
-
-        HwiP_restore(key);
-
-        key = HwiP_disable();
-    }
-
-    if (pSemaphore->count > 0U) {
-        (pSemaphore->count)=(pSemaphore->count) - 1U;
-        if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
-        {
-            pSemaphore->nestCount = pSemaphore->nestCount + 1U;
-        }
+    if(pSemaphore != NULL)
+    {
         status = SystemP_SUCCESS;
-    }
-    else {
-        if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
-        {
-            pSemaphore->nestCount = pSemaphore->nestCount + 1U;
+        ClockP_Params_init(&clockParams);
+        clockParams.timeout = timeout;
+        (void)ClockP_construct(&clockObj, &clockParams);
+        if ((timeout != 0U) && (timeout !=(uint32_t)SystemP_WAIT_FOREVER)) {
+            ClockP_start(&clockObj);
+        }
+        key = HwiP_disable();
+        while ((pSemaphore->count == 0U) && (pSemaphore->nestCount == 0U) &&
+               ((timeout == SystemP_WAIT_FOREVER) ||
+                (ClockP_isActive(&clockObj)!=0U))) {
+            HwiP_restore(key);
+            key = HwiP_disable();
+        }
+        if (pSemaphore->count > 0U) {
+            (pSemaphore->count)=(pSemaphore->count) - 1U;
+            if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
+            {
+                pSemaphore->nestCount = pSemaphore->nestCount + 1U;
+            }
             status = SystemP_SUCCESS;
         }
-        else
-        {
-            status = SystemP_TIMEOUT;
+        else {
+            if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
+            {
+                pSemaphore->nestCount = pSemaphore->nestCount + 1U;
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_TIMEOUT;
+            }
         }
+        HwiP_restore(key);
+        ClockP_destruct(&clockObj);
     }
 
-    HwiP_restore(key);
-
-    ClockP_destruct(&clockObj);
-
-    return (status);
+    return status;
 }
 
-void SemaphoreP_post(SemaphoreP_Object *obj)
+void SemaphoreP_post(SemaphoreP_Object *pSemaphore)
 {
-    SemaphoreP_Object *pSemaphore = obj;
-    uintptr_t       key;
-
-    key = HwiP_disable();
-
-    if (pSemaphore->count < pSemaphore->maxCount) {
-
-        if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
-        {
-            if(pSemaphore->nestCount>0U)
-			{
-                pSemaphore->nestCount = pSemaphore->nestCount - 1U;
-			}
+    if(pSemaphore != NULL)
+    {
+        uintptr_t       key;
+        key = HwiP_disable();
+        if (pSemaphore->count < pSemaphore->maxCount) {
+            if(pSemaphore->type==(uint32_t)SemaphoreP_TYPE_MUTEX)
+            {
+                if(pSemaphore->nestCount>0U)
+                {
+                    pSemaphore->nestCount = pSemaphore->nestCount - 1U;
+                }
+            }
+            if(pSemaphore->nestCount==0U)
+            {
+                pSemaphore->count = pSemaphore->count + 1U;
+            }
         }
-        if(pSemaphore->nestCount==0U)
-        {
-            pSemaphore->count = pSemaphore->count + 1U;
-        }
+        HwiP_restore(key);
     }
 
-    HwiP_restore(key);
+    return;
 }
 

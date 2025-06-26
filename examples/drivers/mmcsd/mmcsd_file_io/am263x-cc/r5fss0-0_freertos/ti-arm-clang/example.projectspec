@@ -80,7 +80,7 @@
                 -lfreertos.am263x.r5f.ti-arm-clang.debug.lib
                 -lboard.am263x.r5f.ti-arm-clang.freertos.debug.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.freertos.debug.lib
-                -lfreertos_fat.am263x.r5f.ti-arm-clang.freertos.debug.lib
+                -lfreeRTOS_fat-freertos.am263x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -93,7 +93,7 @@
                 -lfreertos.am263x.r5f.ti-arm-clang.release.lib
                 -lboard.am263x.r5f.ti-arm-clang.freertos.release.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.freertos.release.lib
-                -lfreertos_fat.am263x.r5f.ti-arm-clang.freertos.release.lib
+                -lfreeRTOS_fat-freertos.am263x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

@@ -85,7 +85,7 @@
             "
             linkerBuildOptions="
                 -ldrivers.am64x.a53.gcc-aarch64.freertos.debug.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.freertos.debug.lib
+                -lfreeRTOS_fat-freertos.am64x.a53.gcc-aarch64.debug.lib
                 -lfreertos.am64x.a53.gcc-aarch64.debug.lib
             "
         ></configuration>
@@ -95,7 +95,7 @@
             "
             linkerBuildOptions="
                 -ldrivers.am64x.a53.gcc-aarch64.freertos.release.lib
-                -lfreertos_fat.am64x.a53.gcc-aarch64.freertos.release.lib
+                -lfreeRTOS_fat-freertos.am64x.a53.gcc-aarch64.release.lib
                 -lfreertos.am64x.a53.gcc-aarch64.release.lib
             "
         ></configuration>

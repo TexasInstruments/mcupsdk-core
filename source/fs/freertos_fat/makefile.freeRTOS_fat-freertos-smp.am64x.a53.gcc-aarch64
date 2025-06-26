@@ -2,15 +2,15 @@
 export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
-CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+CG_TOOL_ROOT=$(CGT_GCC_AARCH64_PATH)
 
-CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
-AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+CC=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-gcc
+AR=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-gcc-ar
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=freertos_fat.am65x.r5f.ti-arm-clang.nortos.$(PROFILE).lib
+LIBNAME:=freeRTOS_fat-freertos-smp.am64x.a53.gcc-aarch64.$(PROFILE).lib
 
 FILES_common := \
     ff_crc.c \
@@ -33,61 +33,53 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 
 INCLUDES_common := \
-    -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
     -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel-smp/include \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable_smp/GCC/ARM_CA53 \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53-smp \
 
 DEFINES_common := \
-    -DSOC_AM65X \
-    -DOS_NORTOS \
+    -DSOC_AM64X \
+    -DOS_FREERTOS_SMP \
 
 CFLAGS_common := \
-    -mcpu=cortex-r5 \
-    -mfloat-abi=hard \
-    -mfpu=vfpv3-d16 \
-    -mthumb \
+    -mcpu=cortex-a53+fp+simd \
+    -mabi=lp64 \
+    -mcmodel=large \
+    -mstrict-align \
+    -mfix-cortex-a53-835769 \
+    -mfix-cortex-a53-843419 \
     -Wall \
     -Werror \
     -g \
-    -Wno-gnu-variable-sized-type-not-at-end \
-    -Wno-unused-function \
+    -Wno-int-to-pointer-cast \
+    -Wno-pointer-to-int-cast \
+    -Wno-unused-but-set-variable \
+    -fdata-sections \
+    -ffunction-sections \
     -Wno-extra \
     -Wno-uninitialized \
     -Wno-unused-but-set-variable \
-
-CFLAGS_cpp_common := \
-    -Wno-c99-designator \
-    -Wno-extern-c-compat \
-    -Wno-c++11-narrowing \
-    -Wno-reorder-init-list \
-    -Wno-register \
-    -Wno-writable-strings \
-    -Wno-enum-compare \
-    -Wno-reserved-user-defined-literal \
-    -Wno-unused-const-variable \
-    -Wno-vla-cxx-extension \
-    -x c++ \
+    -Wno-stringop-truncation \
+    -Wno-overflow \
 
 CFLAGS_debug := \
     -D_DEBUG_=1 \
 
 CFLAGS_release := \
-    -Os \
+    -O2 \
 
 ARFLAGS_common := \
-    rc \
+    cr \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
-ifeq ($(INSTRUMENTATION_MODE), yes)
-CFLAGS += -fprofile-instr-generate -fcoverage-mapping
-endif
 ifeq ($(CPLUSPLUS_BUILD), yes)
 CFLAGS += $(CFLAGS_cpp_common)
 endif
@@ -96,7 +88,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am65x/ti-arm-clang/$(PROFILE)/r5f/freertos_fat/
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/freeRTOS_fat-freertos-smp/freertos-smp/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)
@@ -107,11 +99,11 @@ vpath %.S $(FILES_PATH)
 
 $(OBJDIR)/%.obj %.obj: %.c
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) -c $(ASMFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
+	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
 
 all: $(LIBDIR)/$(LIBNAME)
 

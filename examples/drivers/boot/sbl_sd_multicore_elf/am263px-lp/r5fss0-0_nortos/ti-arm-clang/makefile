@@ -113,7 +113,7 @@ LIBS_common = \
 	-ldrivers.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lboard.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lpmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	-lfreertos_fat.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lfreeRTOS_fat-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsecurity.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -130,7 +130,7 @@ LIBS_NAME = \
 	drivers.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	board.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	pmic_blackbird.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
-	freertos_fat.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	freeRTOS_fat-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	security.am263px.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \

@@ -120,7 +120,7 @@ LIBS_common = \
 	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
-	-lfreertos_fat.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	-lfreeRTOS_fat-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lpmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -136,7 +136,7 @@ LIBS_NAME = \
 	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
-	freertos_fat.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
+	freeRTOS_fat-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	pmic_blackbird.am263px.r5f.ti-arm-clang.freertos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
