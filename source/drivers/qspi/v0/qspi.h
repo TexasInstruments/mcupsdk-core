@@ -280,7 +280,7 @@ extern QSPI_Config gQspiConfig[];
 /** \brief Externally defined driver configuration array size */
 extern uint32_t    gQspiConfigNum;
 /** \brief EDMA Paramter for QSPI Transaction */
-QSPI_EdmaParams    gqspiEdmaParam;
+extern QSPI_EdmaParams    gqspiEdmaParam;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
