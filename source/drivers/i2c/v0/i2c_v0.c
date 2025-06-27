@@ -249,7 +249,7 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
         object->i2cLldHandle = &object->i2cLldObject;
         i2cLldHandle = object->i2cLldHandle;
 
-        i2cLldHandle->baseAddr = handle->hwAttrs->baseAddr;
+        i2cLldHandle->baseAddr = (uint32_t)AddrTranslateP_getLocalAddr(handle->hwAttrs->baseAddr); 
         i2cLldHandle->intrNum = handle->hwAttrs->intNum;
         i2cLldHandle->bitRate = object->i2cParams.bitRate;
         i2cLldHandle->funcClk = handle->hwAttrs->funcClk;
