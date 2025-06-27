@@ -220,6 +220,18 @@ typedef void *OSPI_DrvHandle;
 #define OSPI_CHIP_SELECT(x)   ((~((1U) << (x))) & 0xFU)
 /** @} */
 
+/**
+*  \anchor OSPI_ReadModes
+*  \name Read Mode
+*
+*  Read Mode
+*
+*  @{
+*/
+#define OSPI_READ_MODE_DAC  (0U)
+#define OSPI_READ_MODE_INDAC  (1U)
+/** @} */
+
 #define OSPI_RESETPIN_DQ3       (0U)
 #define OSPI_RESETPIN_DEDICATED (1U)
 

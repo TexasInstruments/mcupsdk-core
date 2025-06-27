@@ -120,6 +120,8 @@ typedef struct
     /**< Ospi Chip select number */
     uint32_t                decChipSelect;
     /**< Decoder Chip select number */
+    uint32_t                readMode;
+    /**< Select read mode DAC/INDAC*/
     uint32_t                baudRateDiv;
     /**< Baud-rate divisor to derive DQS and other output clks */
     const OSPI_AddrRegion *dmaRestrictedRegions;

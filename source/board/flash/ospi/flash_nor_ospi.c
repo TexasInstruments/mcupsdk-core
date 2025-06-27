@@ -917,6 +917,7 @@ static int32_t Flash_norOspiRead(Flash_Config *config, uint32_t offset, uint8_t 
     int32_t status = SystemP_SUCCESS;
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
     Flash_Attrs *attrs = config->attrs;
+    const OSPI_Attrs *ospiAttrs = ((OSPI_Config *)obj->ospiHandle)->attrs;
 
     if(obj->phyEnable)
     {
@@ -936,12 +937,24 @@ static int32_t Flash_norOspiRead(Flash_Config *config, uint32_t offset, uint8_t 
         transaction.addrOffset = offset;
         transaction.buf = (void *)buf;
         transaction.count = len;
-        status = OSPI_readDirect(obj->ospiHandle, &transaction);
-    }
+        if(ospiAttrs->readMode == OSPI_READ_MODE_DAC)
+        {
+            status = OSPI_readDirect(obj->ospiHandle, &transaction);
 
-    if(obj->phyEnable)
-    {
-        OSPI_disablePhy(obj->ospiHandle);
+            if(obj->phyEnable)
+            {
+                OSPI_disablePhy(obj->ospiHandle);
+            }
+        }
+        else
+        {
+            if(obj->phyEnable)
+            {
+                OSPI_disablePhy(obj->ospiHandle);
+            }
+            
+            status = OSPI_readIndirect(obj->ospiHandle, &transaction);
+        }
     }
 
     return status;

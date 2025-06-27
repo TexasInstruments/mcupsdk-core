@@ -90,13 +90,23 @@ int32_t OSPI_norFlashWrite(OSPI_Handle handle, uint32_t offset, uint8_t *buf, ui
 int32_t OSPI_norFlashRead(OSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
-
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
     OSPILLD_Handle hOspi;
+    uint32_t readMode;
+
     if(NULL != handle)
     {
         OSPI_Object *obj = ((OSPI_Config *)handle)->object;
         hOspi = &obj->ospilldObject;
-        status = OSPI_lld_norFlashRead(hOspi,offset,buf,len);
+        readMode = attrs->readMode;
+        if(readMode ==  OSPI_READ_MODE_DAC)
+        {
+            status = OSPI_lld_norFlashRead(hOspi,offset,buf,len);
+        }
+        else
+        {
+            status = OSPI_lld_norFlashReadIndirect(hOspi,offset,buf,len);
+        }
     }
    
     return status;
