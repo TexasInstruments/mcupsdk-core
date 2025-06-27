@@ -2054,15 +2054,15 @@ static uint32_t I2CBufferStatus(uint32_t baseAddr, uint32_t flag)
     switch (flag)
     {
         case I2C_TX_BUFFER_STATUS:
-            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_TXSTAT_MASK));
+            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_TXSTAT_MASK)) >> CSL_I2C_BUFSTAT_TXSTAT_SHIFT;
             break;
 
         case I2C_RX_BUFFER_STATUS:
-            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_RXSTAT_MASK));
+            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_RXSTAT_MASK)) >> CSL_I2C_BUFSTAT_RXSTAT_SHIFT;
             break;
 
         case I2C_FIFO_DEPTH:
-            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_FIFODEPTH_MASK));
+            status = ((i2cRegs->BUFSTAT) & (CSL_I2C_BUFSTAT_FIFODEPTH_MASK)) >> CSL_I2C_BUFSTAT_FIFODEPTH_SHIFT;
             break;
 
         default:
