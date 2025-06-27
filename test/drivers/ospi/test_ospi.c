@@ -48,7 +48,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define TEST_OSPI_FLASH_OFFSET_BASE        (0x40000U)
+#define TEST_OSPI_FLASH_OFFSET_BASE        (0x200000U)
 #define TEST_OSPI_FLASH_PHY_TUNING_OFFSET  (0x300000U)
 #define TEST_OSPI_DATA_SIZE                (256U) /* has to be 256 B aligned */
 #define TEST_OSPI_DATA_REPEAT_COUNT        (8U)
@@ -118,6 +118,7 @@ typedef struct TestData_SizesAttr_t
 
 /* Test cases */
 static void test_ospi_read_write_1s1s1s_config(void *args);
+static void test_ospi_read_write_indirect(void *args);
 static void test_ospi_read_write_max_config(void *args);
 static void test_ospi_phy_tuning(void *args);
 static void test_ospi_read_write_interrupt(void *args);
@@ -391,7 +392,12 @@ void test_main(void *args)
 #endif
     UNITY_BEGIN();
     RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
-    Drivers_ospiClose();   
+    Drivers_ospiClose(); 
+#if defined(SOC_AM243X) || defined(SOC_AM64X)
+    Drivers_ospiOpen();
+    RUN_TEST(test_ospi_read_write_indirect, 0, NULL);
+    Drivers_ospiClose();
+#endif
     Drivers_ospiOpen();
 #if defined(SOC_AM261X)
     board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
@@ -462,6 +468,43 @@ static void test_ospi_read_write_1s1s1s_config(void *args)
             break;
         }
     }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+}
+
+static void test_ospi_read_write_indirect(void *args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t i;
+    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
+    extern OSPI_Config gOspiConfig[CONFIG_OSPI_NUM_INSTANCES];
+
+    /* Initialize the flash device in 1s1s1s mode */
+    OSPI_norFlashInit1s1s1s(ospiHandle);
+
+    /* Block erase at the test offset */
+    OSPI_norFlashErase(ospiHandle, offset);
+
+    for(i = 0; i < TEST_OSPI_DATA_REPEAT_COUNT; i++)
+    {
+        OSPI_norFlashWrite(ospiHandle, offset + i*TEST_OSPI_DATA_SIZE, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+    }
+
+    *(uint32_t*)&gOspiConfig[CONFIG_OSPI0].attrs->readMode = OSPI_READ_MODE_INDAC;
+
+    OSPI_norFlashRead(ospiHandle, offset, gOspiTestRxBuf, TEST_OSPI_RX_BUF_SIZE);
+
+    for(i = 0; i < TEST_OSPI_RX_BUF_SIZE; i++)
+    {
+        if(gOspiTestRxBuf[i] != gOspiTestTxBuf[(i%256)])
+        {
+            retVal = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    *(uint32_t*)&gOspiConfig[CONFIG_OSPI0].attrs->readMode = OSPI_READ_MODE_DAC;
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 }
