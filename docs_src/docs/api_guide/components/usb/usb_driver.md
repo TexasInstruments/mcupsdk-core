@@ -220,16 +220,16 @@ and does the below,
 \cond SOC_AM243X || SOC_AM64X
 <tr><td colspan="1" bgcolor=#F0F0F0> USB Device Driver </td></tr>
 <tr>
-    <td> <a href="../../source/usb/cdn/doc/usb_ss_drd_driver_quick_start_guide.pdf">USB Device Driver Quick Start Guide</a>
+    <td> <a href="../usb_cdn/usb_ss_drd_driver_quick_start_guide.pdf">USB Device Driver Quick Start Guide</a>
 </tr>
 <tr>
-    <td> <a href="../../source/usb/cdn/doc/api_usage_guide.pdf">USB Device Driver APIs</a>
+    <td> <a href="../usb_cdn/api_usage_guide.pdf">USB Device Driver APIs</a>
 </tr>
 <tr>
-    <td> <a href="../../source/usb/cdn/doc/core_driver/usb_ss_drd_driver_guide.pdf">USB Device Driver User's Guide</a>
+    <td> <a href="../usb_cdn/core_driver/usb_ss_drd_driver_guide.pdf">USB Device Driver User's Guide</a>
 </tr>
 <tr>
-    <td> <a href="../../source/usb/cdn/doc/porting/porting_guide.pdf">USB Device Driver Porting Guide</a>
+    <td> <a href="../usb_cdn/porting/porting_guide.pdf">USB Device Driver Porting Guide</a>
 </tr>
 
 - Constants defining module Ids for all modules in USB Device driver. 
