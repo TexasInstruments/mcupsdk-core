@@ -248,6 +248,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/tsn/aafpcmtalker_app/.project/project.js",
     "source/networking/enet/core/examples/ether_ring/.project/project.js",
     "source/networking/enet/core/examples/etherring_trafficgen/.project/project.js",
+    "source/networking/enet/core/examples/etherring_can/.project/project.js",
     "examples/pru_io/sent/encoder/firmware/.project/project.js",
     "examples/pru_io/sent/encoder/example/.project/project.js",
     "examples/pru_io/sent/decoder/example/.project/project.js",
