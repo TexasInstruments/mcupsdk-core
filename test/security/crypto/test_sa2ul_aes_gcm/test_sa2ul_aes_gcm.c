@@ -182,22 +182,22 @@ void test_main(void *args)
     DebugP_assert(aesHandle != NULL);
 
     DebugP_log("[CRYPTO] AES GCM-128 Hw tests started ...\r\n");
-    RUN_TEST(test_aes_gcm128_32kBuf,  2303, NULL);
-    RUN_TEST(test_aes_gcm128_16kBuf,  2304, NULL);
-    RUN_TEST(test_aes_gcm128_8kBuf,   2305, NULL);
-    RUN_TEST(test_aes_gcm128_4kBuf,   2306, NULL);
-    RUN_TEST(test_aes_gcm128_2kBuf,   2307, NULL);
-    RUN_TEST(test_aes_gcm128_1kBuf,   2308, NULL);
-    RUN_TEST(test_aes_gcm128_512bBuf, 2309, NULL);
+    RUN_TEST(test_aes_gcm128_32kBuf,  14715, NULL);
+    RUN_TEST(test_aes_gcm128_16kBuf,  14727, NULL);
+    RUN_TEST(test_aes_gcm128_8kBuf,   14726, NULL);
+    RUN_TEST(test_aes_gcm128_4kBuf,   14723, NULL);
+    RUN_TEST(test_aes_gcm128_2kBuf,   14728, NULL);
+    RUN_TEST(test_aes_gcm128_1kBuf,   14724, NULL);
+    RUN_TEST(test_aes_gcm128_512bBuf, 14722, NULL);
 
     DebugP_log("[CRYPTO] AES GCM-256 Hw tests started ...\r\n");
-    RUN_TEST(test_aes_gcm256_32kBuf,  2310, NULL);
-    RUN_TEST(test_aes_gcm256_16kBuf,  2311, NULL);
-    RUN_TEST(test_aes_gcm256_8kBuf,   2312, NULL);
-    RUN_TEST(test_aes_gcm256_4kBuf,   2313, NULL);
-    RUN_TEST(test_aes_gcm256_2kBuf,   2314, NULL);
-    RUN_TEST(test_aes_gcm256_1kBuf,   2315, NULL);
-    RUN_TEST(test_aes_gcm256_512bBuf, 2316, NULL);
+    RUN_TEST(test_aes_gcm256_32kBuf,  14725, NULL);
+    RUN_TEST(test_aes_gcm256_16kBuf,  14717, NULL);
+    RUN_TEST(test_aes_gcm256_8kBuf,   14716, NULL);
+    RUN_TEST(test_aes_gcm256_4kBuf,   14719, NULL);
+    RUN_TEST(test_aes_gcm256_2kBuf,   14718, NULL);
+    RUN_TEST(test_aes_gcm256_1kBuf,   14721, NULL);
+    RUN_TEST(test_aes_gcm256_512bBuf, 14720, NULL);
 
     App_printPerformanceLogs();
     /* Close AES instance */
