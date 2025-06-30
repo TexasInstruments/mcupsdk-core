@@ -49,7 +49,7 @@ extern "C"
  *  Used to store the EDMA parameters allocated for QSPI transfer.
  *
  */
-typedef struct
+typedef struct QSPI_EdmaParams_s
 {
     uint32_t edmaTcc;
     /**< EDMA TCC used for QSPI transfer */

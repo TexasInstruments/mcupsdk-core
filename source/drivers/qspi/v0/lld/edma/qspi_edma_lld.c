@@ -91,9 +91,9 @@ int32_t QSPI_edmaChannelConfig(QSPILLD_Handle hQspi)
     uint32_t            edmaStatus;
     uint32_t            isEdmaInterruptEnabled;
     QSPILLD_InitHandle  hQspiInit = hQspi->hQspiInit;
-    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspiInit->qspiDmaChConfig;
+    QSPI_EdmaParams     *edmaParams = hQspiInit->qspiDmaChConfig;
     Edma_IntrObject     *edmaIntrObject = &edmaParams->edmaIntrObj;
-    EDMA_Handle         qspiEdmaHandle = (EDMA_Handle *)hQspiInit->qspiDmaHandle;
+    EDMA_Handle         qspiEdmaHandle = hQspiInit->qspiDmaHandle;
 
     if (qspiEdmaHandle != NULL)
     {
@@ -205,7 +205,7 @@ void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
                        QSPILLD_Handle hQspi, uint32_t timeout)
 {
     uint32_t            baseAddr, regionId, dmaCh, tcc, param, chainParam, chainOptions,dmaChainCh;
-    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspi->hQspiInit->qspiDmaChConfig;
+    QSPI_EdmaParams     *edmaParams = hQspi->hQspiInit->qspiDmaChConfig;
     EDMACCPaRAMEntry   edmaParam;
     uint32_t            edmaStatus;
     uint32_t startTicks, elapsedTicks = 0;
@@ -338,7 +338,7 @@ int32_t QSPI_edmaChannelFree(QSPILLD_Handle hQspi)
     uint32_t            edmaStatus;
     uint32_t            baseAddr, regionId, dmaCh, tcc, param;
     QSPILLD_InitHandle  hQspiInit = hQspi->hQspiInit;
-    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspiInit->qspiDmaChConfig;
+    QSPI_EdmaParams     *edmaParams = hQspiInit->qspiDmaChConfig;
 
     /* Fetch the EDMA paramters */
     baseAddr = edmaParams->edmaBaseAddr;

@@ -72,7 +72,7 @@ extern "C" {
 /* ========================================================================== */
 
 /** \brief A handle that is returned from a #QSPI_open() call */
-typedef void *QSPI_Handle;
+typedef struct QSPI_Config_s *QSPI_Handle;
 
 /**
 *  \anchor QSPI_CmdMacros
@@ -267,7 +267,7 @@ typedef struct
 
 } QSPI_Attrs;
 
-typedef struct
+typedef struct QSPI_Config_s
 {
     const QSPI_Attrs        *attrs;
     /**< Pointer to driver specific hardware attributes */

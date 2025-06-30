@@ -55,6 +55,7 @@
 /* ========================================================================== */
 
 #include <drivers/hw_include/cslr_qspi.h>
+#include <drivers/edma.h>
 #include <stdbool.h>
 
 #ifdef __cplusplus
@@ -66,10 +67,10 @@ extern "C" {
 /* ========================================================================== */
 
 /** \brief The handle for DMA instance used with QSPI */
-typedef void *QSPI_DmaHandle;
+typedef EDMA_Handle QSPI_DmaHandle;
 
 /** \brief A handle that holds DMA configuration parameters for QSPI */
-typedef void *QSPI_DmaChConfig;
+typedef struct QSPI_EdmaParams_s *QSPI_DmaChConfig;
 
 /**
 *  \anchor QSPI_ChipSelect
