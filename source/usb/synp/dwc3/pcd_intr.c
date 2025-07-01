@@ -164,6 +164,16 @@ static void handle_usb_reset_intr(volatile dwc_usb3_pcd_t *pcd)
 		dwc_usb3_clr_eps_enabled(pcd);
 		dwc_usb3_pcd_stop(pcd);
 		dwc_usb3_close_all_ep(dev);
+		
+		/**
+		 * Ensure EP0 transfer is started, If the endpoint 0 (EP0) state is not idle, 
+		 * reset the state to idle and initiate the EP0 OUT transfer.
+		 */
+		if (pcd->ep0state != EP0_IDLE)
+		{
+			pcd->ep0state = EP0_IDLE;
+			dwc_usb3_pcd_ep0_out_start(pcd);
+		}
 	} else
 #endif
 	{

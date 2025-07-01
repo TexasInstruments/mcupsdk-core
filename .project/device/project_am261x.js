@@ -37,6 +37,8 @@ const component_file_list = [
     "source/usb/tinyusb/.project/.cdc/project_freertos.js",
     "source/usb/tinyusb/.project/.dfu/project_nortos.js",
     "source/usb/tinyusb/.project/.dfu/project_freertos.js",
+	"source/usb/tinyusb/.project/.ncm/project_nortos.js",
+	"source/usb/tinyusb/.project/.ncm/project_freertos.js",
     "test/unity/.project/project.js",
 	"docs_src/docs/api_guide/doxy_samples/.project/project.js",
 ];
@@ -336,6 +338,7 @@ const example_file_list = [
 	"examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
 	"examples/usb/device/dfu/.project/project.js",
 	"examples/usb/device/cdc_echo/.project/project.js",
+	"examples/usb/device/ncm/.project/project.js",
 	"examples/pru_io/empty/.project/project.js",
 	"examples/pru_io/empty/firmware/.project/project.js",
 	"test/board/eeprom/.project/project.js",

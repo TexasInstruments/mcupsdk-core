@@ -35,12 +35,12 @@
 #include <ctype.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/DebugP.h>
-#include <kernel/nortos/dpl/common/printf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <usb/cdn/include/cdn_print.h>
-#include <usb/cdn/include/usb_init.h>
+
+#include "FreeRTOS.h"
+#include <kernel/dpl/TaskP.h>
 
 #include "dhserver.h"
 #include "dnserver.h"
@@ -53,6 +53,23 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "tusb.h"
+
+
+#define USB_TASK_PRI  (TaskP_PRIORITY_HIGHEST-2)
+#define USB_TASK_SIZE (1024U)
+uint8_t gUsbTaskStack[USB_TASK_SIZE] __attribute__((aligned(32)));
+TaskP_Object gUsbTaskObj;
+TaskP_Params gUsbTaskParams;
+
+#define NETWORK_SERVICE_TASK_PRI  (TaskP_PRIORITY_HIGHEST-3)
+#define NETWORK_SERVICE_TASK_SIZE (1024U)
+uint8_t gNetworkTaskStack[NETWORK_SERVICE_TASK_SIZE] __attribute__((aligned(32)));
+TaskP_Object gNetworkTaskObj;
+TaskP_Params gNetworkTaskParams;
+
+void usb_task_loop(void *args);
+void network_service_task_loop(void *args);
+
 
 #if LWIP_TCP
 static void lwiperf_report(void *arg, enum lwiperf_report_type report_type,
@@ -289,30 +306,34 @@ void httpd_post_finished(void *connection, char *response_uri,
     return;
 }
 
+
 int ncm_main(void) {
+    int32_t status;
+
     Drivers_open();
     Board_driversOpen();
+    
+    TaskP_Params_init(&gUsbTaskParams);
+    gUsbTaskParams.name = "usb_task";                /**< Pointer to task name */
+    gUsbTaskParams.stackSize = USB_TASK_SIZE;        /**< Size of stack in units of bytes */
+    gUsbTaskParams.stack = gUsbTaskStack;            /**< Pointer to stack memory, MUST be aligned based on CPU architecture, typically atleast 32b on 32b systems */
+    gUsbTaskParams.priority = USB_TASK_PRI;          /**< Task priority, MUST be between \ref TaskP_PRIORITY_LOWEST and TaskP_PRIORITY_HIGHEST */
+    gUsbTaskParams.args = NULL;                      /**< User arguments that are passed back as parater to task main */
+    gUsbTaskParams.taskMain = usb_task_loop;         /**< Entry point function to the task */
+    /* create the task */
+    status = TaskP_construct(&gUsbTaskObj, &gUsbTaskParams);
+    DebugP_assert(status == SystemP_SUCCESS);
 
-    /* initialize lwip, dhcp-server, dns-server, and http */
-    init_lwip();
-    while (!netif_is_up(&netif_data))
-        ;
-    while (dhserv_init(&dhcp_config) != ERR_OK)
-        ;
-    while (dnserv_init(IP_ADDR_ANY, 53, dns_query_proc) != ERR_OK)
-        ;
-    httpd_init();
-    /* lwiperf_example_init(); */
-
-    while (1) {
-        #if defined(SOC_AM64X) || defined (SOC_AM243X)
-        cusbd_dsr();   /* Cadence DSR task */
-        #else
-        USB_dwcTask(); /* Synopsis DWC task */
-        #endif
-        tud_task();
-        service_traffic();
-    }
+    TaskP_Params_init(&gNetworkTaskParams);
+    gNetworkTaskParams.name = "network_task";                /**< Pointer to task name */
+    gNetworkTaskParams.stackSize = NETWORK_SERVICE_TASK_SIZE;            /**< Size of stack in units of bytes */
+    gNetworkTaskParams.stack = gNetworkTaskStack;                /**< Pointer to stack memory, MUST be aligned based on CPU architecture, typically atleast 32b on 32b systems */
+    gNetworkTaskParams.priority = NETWORK_SERVICE_TASK_PRI;              /**< Task priority, MUST be between \ref TaskP_PRIORITY_LOWEST and TaskP_PRIORITY_HIGHEST */
+    gNetworkTaskParams.args = NULL;                           /**< User arguments that are passed back as parater to task main */
+    gNetworkTaskParams.taskMain = network_service_task_loop;  /**< Entry point function to the task */
+    /* create the task */
+    status = TaskP_construct(&gNetworkTaskObj, &gNetworkTaskParams);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     return 0;
 }
@@ -324,3 +345,33 @@ void sys_arch_unprotect(sys_prot_t pval) { (void)pval; }
 /* lwip needs a millisecond time source, and the TinyUSB board support code has
  * one available */
 uint32_t sys_now(void) { return (ClockP_getTimeUsec() / 1000); }
+
+
+void usb_task_loop(void *args)
+{
+    while (1)
+    {
+        USB_dwcTask(); /* Synopsis DWC task */
+
+        tud_task();
+    }
+}
+
+void network_service_task_loop(void *args)
+{
+    (void)args;
+
+    init_lwip();
+    while (!netif_is_up(&netif_data))
+        ;
+    while (dhserv_init(&dhcp_config) != ERR_OK)
+        ;
+    while (dnserv_init(IP_ADDR_ANY, 53, dns_query_proc) != ERR_OK)
+        ;
+    httpd_init();
+
+    while (1)
+    {
+        service_traffic();
+    }
+}

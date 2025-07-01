@@ -51,6 +51,11 @@
 #include "dwc_queue.h"
 #include <kernel/dpl/SemaphoreP.h>
 
+#if defined (OS_NORTOS)
+	#define SEMAPHORE_WAIT SystemP_NO_WAIT
+#else
+	#define SEMAPHORE_WAIT SystemP_WAIT_FOREVER
+#endif
 
 /**********************************************************************
  *************************** Local Functions **************************
@@ -306,7 +311,7 @@ int dwc_usb3_task(volatile dwc_usb3_device_t *dev)
     int ret = 0;
 	int32_t status = 0;
 
-	status = SemaphoreP_pend(&eventQueueSem, SystemP_WAIT_FOREVER);
+	status = SemaphoreP_pend(&eventQueueSem, SEMAPHORE_WAIT);
 	if(status == SystemP_SUCCESS) 
 	{
 		if(dwc_queueGet(&pcd->event_q, &event))

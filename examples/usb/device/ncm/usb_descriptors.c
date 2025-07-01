@@ -218,7 +218,11 @@ static char const* string_desc_arr [] =
 {
   [STRID_LANGID]       = (const char[]) { 0x09, 0x04 }, // supported language is English (0x0409)
   [STRID_MANUFACTURER] = "Texas Instruments, Inc.",                     // Manufacturer
-  [STRID_PRODUCT]      = "AM64x-AM243x NCM",              // Product
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+  [STRID_PRODUCT]      = "AM64x-AM243x NCM",  // Product
+#else
+  [STRID_PRODUCT]      = "AM261x NCM",
+#endif
   [STRID_SERIAL]       = "01.00.00.00",                      // Serial
   [STRID_INTERFACE]    = "TI NCM Network Interface"    // Interface Description
 
