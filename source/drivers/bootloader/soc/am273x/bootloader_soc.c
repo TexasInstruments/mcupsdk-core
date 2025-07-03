@@ -354,7 +354,7 @@ void Bootloader_socConfigurePll(void)
         case BOOTLOADER_SOC_DSP_PART_550MHZ:
             gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_550MHZ;
             hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
-            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_1650MHZ, &hsDivCfg);
+            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_1100MHZ, &hsDivCfg);
             break;
 
         case BOOTLOADER_SOC_DSP_PART_450MHZ:
