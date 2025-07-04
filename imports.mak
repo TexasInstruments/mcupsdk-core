@@ -52,7 +52,7 @@ ifeq ($(wildcard $(CGT_TI_C6000_PATH)),)
 endif
 DSPLIB_PATH=$(MCU_PLUS_SDK_PATH)/source/dsplib_c66x_3_4_0_0
 CCS_NODE = $(CCS_PATH)/tools/node/node
-SYSCFG_PATH ?= $(TOOLS_PATH)/sysconfig_1.23.0
+SYSCFG_PATH ?= $(TOOLS_PATH)/sysconfig_1.24.1
 SYSCFG_CLI_PATH ?= $(SYSCFG_PATH)
 SYSCFG_NODE = $(SYSCFG_PATH)/nodejs/node
 SYSCFG_NWJS = $(SYSCFG_PATH)/nw/nw

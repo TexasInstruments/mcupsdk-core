@@ -14,11 +14,7 @@
         "/fs/fs",
         "/networking/networking",
         "/security/security",
-        "/usb/usb",
-        "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash",
-        "sdl/sdl"
     ],
     "devices": [
         "AM64x",
@@ -308,5 +304,5 @@
         "showSignals": true,
         "showUsed": true
     },
-    "minToolVersion" : "1.23.0"
+    "minToolVersion" : "1.24.1"
 }
