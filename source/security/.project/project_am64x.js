@@ -16,6 +16,7 @@ const files = {
 
 const filedirs = {
     common: [
+        "security_common/drivers/crypto/pka/soc/am64x_am243x",
         "security_common/drivers/crypto",
         "security_common/drivers/crypto/sa2ul",
         "security_common/drivers/crypto/pka",

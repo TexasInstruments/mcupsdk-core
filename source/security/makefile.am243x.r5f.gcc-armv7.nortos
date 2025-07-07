@@ -21,6 +21,7 @@ FILES_common := \
     rng.c \
 
 FILES_PATH_common = \
+    security_common/drivers/crypto/pka/soc/am64x_am243x \
     security_common/drivers/crypto \
     security_common/drivers/crypto/sa2ul \
     security_common/drivers/crypto/pka \
