@@ -189,7 +189,6 @@ For CPSW performance refer \ref enetlld_performance
 -------------------------|--------------------------------|--------------
  TCP RX                  | 93.2                           | 52.1
  TCP TX                  | 92.9                           | 87.57
- TCP Biderectional       | TX = 66.4 + RX = 66.5          | 99.24
 
 #### TCP Performance(am243x-lp):
 
@@ -197,7 +196,6 @@ For CPSW performance refer \ref enetlld_performance
 -------------------------|--------------------------------|--------------
  TCP RX                  | 93.20                          | 36.82
  TCP TX                  | 93.30                          | 52.54
- TCP Biderectional       | TX = 88.8 +  RX = 88.9         | 85.58
 
 #### UDP Test
 - Software/Application used : enet_lwip_icssg
@@ -249,13 +247,13 @@ For CPSW performance refer \ref enetlld_performance
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 16.84                          | 0                     | -
  50 Mbps                 | 28.93                          | 0                     | -
- 100 Mbps                | 53.16                          | 0.06                  | -
- Max(180 Mbps)           | 73.83                          | 0.29                  | -
+ 90 Mbps                 | 39                             | 0.7                  | -
+ 
 
 #### UDP RX Performance(am243x-lp):
 - For Packet Size: 256 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 37.35                          | 0.12                  | -
  50 Mbps                 | 48                             | 36                    | -
@@ -263,7 +261,7 @@ For CPSW performance refer \ref enetlld_performance
 
 - For Packet Size: 512 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 21.83                          | 0                     | -
  50 Mbps                 | 40                             | 0.12                  | -
@@ -271,11 +269,11 @@ For CPSW performance refer \ref enetlld_performance
 
 - For Packet Size: 1500 B
 
- Tx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
+ Rx Side BW/Packet Size  | CPU load(%)                    | Packet loss(%)        | Latency
 -------------------------|--------------------------------|-----------------------|-----------
  25 Mbps                 | 15                             | 0                     | -
  50 Mbps                 | 26.5                           | 0.08                  | -
- 100 Mbps                | 38                             | 0.1                   | -
+ 89 Mbps                 | 33                             | 0.1                   | -
 
 ### IPC performance
 
@@ -466,4 +464,3 @@ using standard **lwip-perf** application.
 |  8  | 8.0- 9.0 sec | 4.25 MBytes | 35.7 Mbits/sec |
 |  9  | 9.0-10.0 sec | 4.12 MBytes | 34.6 Mbits/sec |
 | 10  | 0.0-10.0 sec | 41.5 MBytes | 34.8 Mbits/sec |
-
