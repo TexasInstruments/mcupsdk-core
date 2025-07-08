@@ -3057,31 +3057,29 @@ static int32_t CANFD_readDma(CANFD_MsgObjHandle txMsgHandle,
 
 int32_t CANFD_isDataSizeValid(uint32_t dataSize)
 {
-    uint32_t canfdDataSize[CANFD_MAX_DLC_MAPPING] = 
-                    {0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
-                     12U, 16U, 20U, 24U, 32U, 48U, 64U};
-
-    if((canfdDataSize[dataSize] == 0U) || 
-       (canfdDataSize[dataSize] == 1U) ||
-       (canfdDataSize[dataSize] == 2U) ||
-       (canfdDataSize[dataSize] == 3U) ||
-       (canfdDataSize[dataSize] == 4U) ||
-       (canfdDataSize[dataSize] == 5U) ||
-       (canfdDataSize[dataSize] == 6U) ||
-       (canfdDataSize[dataSize] == 7U) ||
-       (canfdDataSize[dataSize] == 8U) ||
-       (canfdDataSize[dataSize] == 12U) ||
-       (canfdDataSize[dataSize] == 16U) ||
-       (canfdDataSize[dataSize] == 20U) ||
-       (canfdDataSize[dataSize] == 24U) ||
-       (canfdDataSize[dataSize] == 32U) ||
-       (canfdDataSize[dataSize] == 48U) ||
-       (canfdDataSize[dataSize] == 64U))
+    switch (dataSize)
     {
-        return SystemP_SUCCESS;
+        case 0U:
+        case 1U:
+        case 2U:
+        case 3U:
+        case 4U:
+        case 5U:
+        case 6U:
+        case 7U:
+        case 8U:
+        case 12U:
+        case 16U:
+        case 20U:
+        case 24U:
+        case 32U:
+        case 48U:
+        case 64U:
+            return SystemP_SUCCESS;
+        
+        default:
+            return SystemP_FAILURE;
     }
-
-    return SystemP_FAILURE;
 }
 
 void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, 
