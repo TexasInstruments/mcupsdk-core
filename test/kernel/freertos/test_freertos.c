@@ -45,6 +45,7 @@
 #include <semphr.h>
 #include <event_groups.h>
 #include <unity.h>
+#include "test_critical_section.h"
 #include "ti_drivers_open_close.h"
 #if defined(__ARM_ARCH_7R__)
 #include <stdatomic.h>
@@ -77,18 +78,31 @@
 #define PING_TASK_PRI (2u)
 #define PONG_TASK_PRI (3u)
 
-#define HIGH_PRI_INT_NUM    (20u)
-#define HIGH_INT_PRI        (3u)
-
-#define LOW_PRI_INT_NUM    (21u)
-#define LOW_INT_PRI        (10u)
-
 /* bit mask upto 24 bits */
 #define EVENT_PING    (0x000001u)
 #define EVENT_PONG    (0x000002u)
 
+/**
+ * Interrupt priorities for PING and PONG ISRs based on FreeRTOS configuration.
+ *
+ * ISR safe FreeRTOS API functions must only be called from interrupts that have been assigned
+ * a priority at or below configMAX_SYSCALL_INTERRUPT_PRIORITY.
+ *
+ * Numerically low interrupt priority numbers represent logically high interrupt priorities, therefore
+ * the priority of the interrupt must be set to a value equal to or numerically higher than
+ * configMAX_SYSCALL_INTERRUPT_PRIORITY. If configMAX_SYSCALL_INTERRUPT_PRIORITY is not defined,
+ * default priorities are assigned.
+ *
+ * Else there will be assertion failures that occur when an ISR with a priority above
+ * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API function.
+ */
+#ifdef configMAX_SYSCALL_INTERRUPT_PRIORITY
+#define PING_INT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY)
+#define PONG_INT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY + 1u)
+#else
 #define PING_INT_PRIORITY   (3u)
 #define PONG_INT_PRIORITY   (4u)
+#endif
 
 #define PING_TASK_SIZE (1024*4u)
 uint8_t gPingTaskStack[PING_TASK_SIZE] __attribute__((aligned(PING_TASK_SIZE)));
@@ -112,21 +126,6 @@ SemaphoreHandle_t gPongSem;
 
 HwiP_Object gPingHwiObj;
 HwiP_Object gPongHwiObj;
-HwiP_Object gHighPriHwiObj;
-HwiP_Object gLowPriHwiObj;
-
-/* Delay in seconds, to allow execution of ISRs */
-#define APP_DELAY_SEC           (1)
-
-/* Counter to simulate delay inside critical section */
-#define LOOP_COUNT          (1000 * 1000)
-
-/* Loop variables used in critical section to simulate delay */
-volatile int32_t gDelayCnt = 0;
-
-/* Variables used to track isr trigger count*/
-volatile int32_t gHighPriTriggerCnt = 0;
-volatile int32_t gLowPriTriggerCnt = 0;
 
 float floatLoadAndMultiply(float f1, float f2);
 float floatMultiply();
@@ -210,108 +209,6 @@ static void pong_isr_4(void *arg)
 
     vTaskNotifyGiveFromISR( TaskP_getHndl(&gPingTaskObj), &doTaskSwitch); /* wake up ping task */
     portYIELD_FROM_ISR(doTaskSwitch);
-}
-
-/* High Priority ISR */
-static void high_pri_isr(void *arg)
-{
-    /* Increment the count variable */
-    gHighPriTriggerCnt++;
-}
-
-/* Low Priority ISR */
-static void low_pri_isr(void *arg)
-{
-    /* Increment the count variable */
-    gLowPriTriggerCnt++;
-}
-
-/* Enable & Trigger high priority interrupts during critical section
- *  Interrupts with priority greater than configMAX_SYSCALL_INTERRUPT_PRIORITY are enabled during critical section
- */
-void test_isrEnableWithCriticalSection (void *args)
-{
-    int32_t  status = SystemP_SUCCESS;
-    HwiP_Params hwiParams;
-
-    int32_t oldHighPriTriggerCnt    = 0;
-    int32_t oldLowPriTriggerCnt     = 0;
-
-    /* Configure high priority interrupt, enabled during freertos critical section */
-    HwiP_Params_init(&hwiParams);
-    hwiParams.intNum = HIGH_PRI_INT_NUM;
-    hwiParams.callback = high_pri_isr;
-    hwiParams.priority = HIGH_INT_PRI;
-    HwiP_construct(&gHighPriHwiObj, &hwiParams);
-
-    /* Configure low priority interrupt, disabled during freertos critical section */
-    HwiP_Params_init(&hwiParams);
-    hwiParams.intNum = LOW_PRI_INT_NUM;
-    hwiParams.callback = low_pri_isr;
-    hwiParams.priority = LOW_INT_PRI;
-    HwiP_construct(&gLowPriHwiObj, &hwiParams);
-
-    DebugP_log("Entering critical section.\r\n");
-    /* Enter freertos critical section */
-    portENTER_CRITICAL();
-
-    HwiP_post(HIGH_PRI_INT_NUM);
-    HwiP_post(LOW_PRI_INT_NUM);
-
-    /* Wait for isr execution */
-    while (gDelayCnt < LOOP_COUNT)
-    {
-        gDelayCnt++;
-    }
-
-    /* Check execution counts for both interrupts */
-    if(gHighPriTriggerCnt  != 1)
-    {
-        status = SystemP_FAILURE;
-    }
-
-    if(gLowPriTriggerCnt != 0)
-    {
-        status = SystemP_FAILURE;
-    }
-
-    oldHighPriTriggerCnt = gHighPriTriggerCnt;
-    oldLowPriTriggerCnt = gLowPriTriggerCnt;
-
-    /* Exit freertos critical section */
-    portEXIT_CRITICAL();
-
-    DebugP_log("Exited critical section.\r\n");
-    DebugP_log("High priority interrupt count inside critical section: %d\r\n",oldHighPriTriggerCnt);
-    DebugP_log("Low priority interrupt count inside critical section:  %d\r\n",oldLowPriTriggerCnt);
-
-    if(status == SystemP_SUCCESS)
-    {
-        HwiP_post(HIGH_PRI_INT_NUM);
-        HwiP_post(LOW_PRI_INT_NUM);
-
-        /* Wait for isr execution */
-        ClockP_sleep(APP_DELAY_SEC);
-
-        /* Check execution counts for both interrupts */
-        if(gHighPriTriggerCnt  != 2)
-        {
-            status = SystemP_FAILURE;
-        }
-
-        if(gLowPriTriggerCnt != 2)
-        {
-            status = SystemP_FAILURE;
-        }
-    }
-
-    DebugP_log("\r\nHigh priority interrupt count outside critical section: %d\r\n",gHighPriTriggerCnt);
-    DebugP_log("Low priority interrupt count outside critical section:  %d\r\n",gLowPriTriggerCnt);
-
-    HwiP_destruct(&gHighPriHwiObj);
-    HwiP_destruct(&gLowPriHwiObj);
-
-    TEST_ASSERT_INT32_WITHIN(0,0,status);
 }
 
 /* switch between ping and pong tasks using semaphores */
@@ -889,17 +786,9 @@ void ping_main(void *args)
     RUN_TEST(test_taskDelay, 280, NULL);
     RUN_TEST(test_timer, 281, NULL);
 #if defined(__ARM_ARCH_7R__)
-    #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-    /** Interrupts inside critical section supported in R5F only. Not supported in am273x.
-     *  EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION  defined in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h
-     * MUST be uncommented for this test to pass.
-    */
-    RUN_TEST(test_isrEnableWithCriticalSection, 12219, NULL);
-    #endif
-
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     /** floating point operations in FIQ ISR supported in R5F only.
-     *  Make sure the macro EN_SAVE_RESTORE_FPU_CONTEXT is uncommented in source/kernel/dpl/HwiP.h, otherwise the test will fail.
+     *  Make sure the macro HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE is uncommented in source/kernel/dpl/HwiP.h to run this test.
     */
     RUN_TEST(test_taskToFiqIsrWithFloatOperations, 12213, NULL);
     #endif
@@ -1045,6 +934,11 @@ void test_freertos_run()
     /** Run atomics test for R5F 
      * Creating multiple tasks and semaphore for atomics test can be done only from privileged task */
     RUN_TEST(test_atomics, 1371, NULL);
+#if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1)
+    /** Run freertos critical section specific tests for R5F
+     * `taskENTER_CRITICAL` and `taskEXIT_CRITICAL` APIs can be used only from privileged task */
+    test_freertos_critical_section_run();
+#endif
 #endif
 #if (configGENERATE_RUN_TIME_STATS == 1)
     /** Run Load Test

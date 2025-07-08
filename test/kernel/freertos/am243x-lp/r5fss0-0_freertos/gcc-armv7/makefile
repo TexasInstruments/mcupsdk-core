@@ -35,6 +35,8 @@ TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	test_freertos.c \
+	test_critical_section.c \
+	test_critical_section_deep_nested.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

@@ -73,9 +73,6 @@ volatile uint32_t GET_LR(void);
 }
 #endif
 
-/* compile flag to enable or disable interrupt nesting */
-#define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
-
 /* Save FPU context, used in FIQ Handler */
 static inline  void Hwip_save_fpu_context(void)
 {
@@ -101,7 +98,7 @@ static inline  void Hwip_restore_fpu_context(void)
 void TEXT_HWI HwiP_irq_handler_c(void)
 {
     int32_t status;
-    uint32_t intNum;
+    uint32_t intNum, priority;
 
     #ifndef HWIP_VIM_VIC_ENABLE
 
@@ -109,12 +106,20 @@ void TEXT_HWI HwiP_irq_handler_c(void)
     HwiP_getIRQVecAddr();
     #endif
 
-    status = HwiP_getIRQ(&intNum);
+    status = HwiP_getIRQ(&intNum, &priority);
     if(status==SystemP_SUCCESS)
     {
+        /* Store the current active interrupt priority in software for any later use.
+         * `oldPriority` will be used to restore upon exiting from this handler. */
+        uint32_t oldPriority = HwiP_updateActivePrioritySW(priority);
+
         uint32_t isPulse = HwiP_isPulse(intNum);
         HwiP_FxnCallback isr;
         void *args;
+
+        #ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+        uint32_t priMaskKey;
+        #endif
 
         if(isPulse!=0U)
         {
@@ -123,6 +128,10 @@ void TEXT_HWI HwiP_irq_handler_c(void)
 
         isr = gHwiCtrl.isr[intNum];
         args = gHwiCtrl.isrArgs[intNum];
+
+        #ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+        priMaskKey = HwiP_setVimIrqPriMaskAtomic(priority);
+        #endif
 
         #ifdef HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
         /* allow nesting of interrupts */
@@ -141,7 +150,16 @@ void TEXT_HWI HwiP_irq_handler_c(void)
         {
             HwiP_clearInt(intNum);
         }
+        
+        #ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+        /* Note: Restore the priority mask only after clearing the interrupt. 
+         *       Else VIM would fire this again. */
+        HwiP_restoreVimIrqPriMask(priMaskKey);
+        #endif
+
         HwiP_ackIRQ(intNum);
+
+        HwiP_restoreActivePrioritySW(oldPriority);
     }
     else
     {
@@ -157,7 +175,7 @@ void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
     uint32_t intNum;
     volatile uint32_t dummy;
 
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     Hwip_save_fpu_context();
     #endif
 
@@ -206,7 +224,7 @@ void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
         HwiP_ackFIQ(0);
     }
 
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     Hwip_restore_fpu_context();
     #endif
 }

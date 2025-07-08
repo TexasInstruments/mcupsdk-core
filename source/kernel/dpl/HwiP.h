@@ -40,8 +40,6 @@ extern "C" {
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
 
-// #define EN_SAVE_RESTORE_FPU_CONTEXT
-
 /**
  * \defgroup KERNEL_DPL_HWI APIs for HW Interrupts
  * \ingroup KERNEL_DPL
@@ -50,6 +48,61 @@ extern "C" {
  *
  * @{
  */
+
+#if defined(__ARM_ARCH_7R__)
+
+  /* compile flag to enable or disable save/restore of FPU context in FIQ */
+  // #define HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
+  
+  /* compile flag to enable or disable interrupt nesting */
+  #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
+  
+  #if defined (OS_NORTOS)
+  
+    /* compile flag to enable or disable interrupt priority mask based critical sections */
+    // #define HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+
+    /** Note: For FreeRTOS this is controlled using 'configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS' 
+     *        defined in `FreeRTOSConfig.h`
+     * 
+     * Also refer 'taskENTER_CRITICAL' and 'taskEXIT_CRITICAL' macros in FreeRTOS.
+     */
+
+    #if defined (HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS)
+
+      /** \brief Interrupt priority threshold for critical sections 
+       * 
+       * All IRQs with higher priority will be enabled in critical section. 
+       * For R5F VIM, lower the value higher the priority.
+       * i.e, Value 'x' means all IRQs with priority value '0' to 'x-1' are enabled in critical section.
+       * 
+       * Valid values are 1 to 15.
+       * - 1 means IRQs with priority 0 is only enabled in critical section.
+       * - 15 means all IRQs with priority other than 15 are enabled in critical section.
+       * Note: 0 means all IRQs gets disabled in critical section (effectively masking all interrupts) 
+       *       For this case instead disable 'HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS'
+       */
+      #define HWIP_CRITICAL_SECTION_INTERRUPT_PRIORITY_THRESHOLD    (4U)
+
+      /** \brief Enter critical section
+       * 
+       * Returns a key(old interrupt priority mask value) to use with \ref HWIP_EXIT_CRITICAL_SECTION 
+       * to restore the state later.
+       * 
+       * \note Interrupts of priority higher than \ref HWIP_CRITICAL_SECTION_INTERRUPT_PRIORITY_THRESHOLD
+       *       shouldn't use this macro. This will result in unexpected behavior.
+       */
+      #define HWIP_ENTER_CRITICAL_SECTION()      HwiP_setVimIrqPriMaskAtomic(HWIP_CRITICAL_SECTION_INTERRUPT_PRIORITY_THRESHOLD)
+
+      /** \brief Exit critical section
+       */
+      #define HWIP_EXIT_CRITICAL_SECTION(key)    HwiP_restoreVimIrqPriMask(key)
+
+    #endif /* HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS */
+
+  #endif /* OS_NORTOS */  
+
+#endif /* __ARM_ARCH_7R__ */
 
 /**
  * \brief Callback that is called when a HW interrupt is received

@@ -5,6 +5,8 @@ let device = "am261x";
 const files_r5f = {
     common: [
         "test_freertos.c",
+        "test_critical_section.c",
+        "test_critical_section_deep_nested.c",
         "main.c",
     ],
 };

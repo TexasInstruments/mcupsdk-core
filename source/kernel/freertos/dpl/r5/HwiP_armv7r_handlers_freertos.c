@@ -35,14 +35,12 @@
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/soc_config.h>
 #include <drivers/pmu.h>
+#include <FreeRTOSConfig.h>
 
 #define TEXT_HWI    __attribute__((section(".text.hwi")))
 #define WEAK        __attribute__((weak))
 
 static volatile uint32_t gdummy;
-
-/* compile flag to enable or disable interrupt nesting */
-#define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
 
 /* Save FPU context, used in FIQ Handler */
 static inline  void Hwip_save_fpu_context(void)
@@ -137,7 +135,7 @@ void TEXT_HWI HwiP_irq_profile_c(uint32_t intNum)
 void TEXT_HWI HwiP_irq_handler_c(void)
 {
     int32_t status;
-    uint32_t intNum;
+    uint32_t intNum, priority;
 
     #ifndef HWIP_VIM_VIC_ENABLE
 
@@ -145,9 +143,18 @@ void TEXT_HWI HwiP_irq_handler_c(void)
     HwiP_getIRQVecAddr();
     #endif
 
-    status = HwiP_getIRQ(&intNum);
+    status = HwiP_getIRQ(&intNum, &priority);
     if(status==SystemP_SUCCESS)
     {
+        /* Store the current active interrupt priority in software,
+        *  This is required for usecases like `vPortValidateInterruptPriority`.
+         * `oldPriority` will be used to restore upon exiting from this handler. */
+        uint32_t oldPriority = HwiP_updateActivePrioritySW(priority);
+        
+        #if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1)
+        uint32_t priMaskKey;
+        #endif
+
         #ifdef INTR_PROF
         if(gHwiCtrlProf.profileIntr == 1)
         {
@@ -167,6 +174,10 @@ void TEXT_HWI HwiP_irq_handler_c(void)
         isr = gHwiCtrl.isr[intNum];
         args = gHwiCtrl.isrArgs[intNum];
 
+        #if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1)
+        priMaskKey = HwiP_setVimIrqPriMaskAtomic(priority);
+        #endif
+
         #ifdef HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
         /* allow nesting of interrupts */
         HwiP_enable();
@@ -184,6 +195,13 @@ void TEXT_HWI HwiP_irq_handler_c(void)
         {
             HwiP_clearInt(intNum);
         }
+
+        #if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1)
+        /* Note: Restore the priority mask only after clearing the interrupt. 
+         *       Else VIM would fire this again. */
+        HwiP_restoreVimIrqPriMask(priMaskKey);
+        #endif
+        
         HwiP_ackIRQ(intNum);
 
         #ifdef INTR_PROF
@@ -192,6 +210,8 @@ void TEXT_HWI HwiP_irq_handler_c(void)
             HwiP_irq_profile_c(intNum);
         }
         #endif
+
+        HwiP_restoreActivePrioritySW(oldPriority);
     }
     else
     {
@@ -206,7 +226,7 @@ void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
     int32_t status;
     uint32_t intNum;
 
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     Hwip_save_fpu_context();
     #endif
 
@@ -254,7 +274,7 @@ void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
         HwiP_ackFIQ(0);
     }
 
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     Hwip_restore_fpu_context();
     #endif
 }

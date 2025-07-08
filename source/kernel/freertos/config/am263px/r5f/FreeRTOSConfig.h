@@ -141,12 +141,31 @@ uint32_t uiPortGetRunTimeCounterValue();
 #define configTIMER_QUEUE_LENGTH                (16)
 #define configTIMER_TASK_STACK_DEPTH            (256)
 
-/* used in M4F & R5F, not applicable in C66x, A53 */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (0x4U)
+/* Keep below as 1 to disable/enable interrupts in critical sections based on 
+ * "interrupt priority mask" for max syscall interrupt priority. 
+ * Else interrupts are disabled/enabled globally.
+ *
+ * This is not a FreeRTOS defined config and is defined by TI to quickly switch
+ * between priority mask based control and global interrupt control.
+ *
+ * Note: Interrupt priority based critical section have some overheads in taking critical section, 
+ *       so unless this feature is really needed, keep it as 0.
+ * 
+ * Used in R5F, not applicable in M4F, C66x, A53 */
+#define configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS    (0)
 
-/* used in M4F, not applicable in R5F, C66x, A53 */
-#define configKERNEL_INTERRUPT_PRIORITY         (configMAX_SYSCALL_INTERRUPT_PRIORITY)
-#define configMAX_API_CALL_INTERRUPT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY)
+#if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1)
+/* All IRQs with higher priority will be enabled in critical section. 
+ * For R5F VIM, lower the value higher the priority.
+ * i.e, Value 'x' means all IRQs with priority value '0' to 'x-1' are enabled in critical section.
+ * 
+ * Valid values on R5F for VIM are 1 to 15.
+ * - 1 means IRQs with priority 0 is only enabled in critical section.
+ * - 15 means all IRQs with priority other than 15 are enabled in critical section.
+ * Note: 0 means all IRQs gets disabled in critical section (effectively masking all interrupts) 
+ *       For this case instead set 'configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS' to '0'. */
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (0x4U)
+#endif
 
 #if (configOPTIMIZE_FOR_LATENCY==0)
 #define configASSERT(x)                        DebugP_assert( (uint32_t)(x))

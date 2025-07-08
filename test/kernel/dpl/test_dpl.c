@@ -119,6 +119,12 @@ static HeapP_Object gMyHeap;
 static uint8_t gMyTaskStack[MY_TASK_STACK_SIZE] __attribute__((aligned(32)));
 static TaskP_Object gMyTask;
 
+#if defined(__ARM_ARCH_7R__)
+#ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+void test_r5f_critical_section(void);
+#endif
+#endif
+
 #if defined(_TMS320C6X)
 void test_c66x(void);
 #endif
@@ -1554,14 +1560,22 @@ void test_main(void *args)
     /* floating point operations in ISR supported in R5F only */
     RUN_TEST(test_mainToIsrWithFloatOperations, 1571, NULL);
 
-    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    #ifdef HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE
     /** floating point operations in FIQ supported in R5F only
-     *  Make sure the macro EN_SAVE_RESTORE_FPU_CONTEXT is uncommented in source/kernel/dpl/HwiP.h, otherwise the test will fail.
+     *  Make sure the macro HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE is uncommented in source/kernel/dpl/HwiP.h to run this test.
     */
     RUN_TEST(test_mainToFiqWithFloatOperations, 12213, NULL);
     #endif
 
     RUN_TEST(test_exceptionUserHandlers, 14420, NULL);
+
+    #ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
+    /** Test critical sections for R5F. 
+     * This is run only for NoRTOS. 
+     * Make sure the macro HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS is uncommented in source/kernel/dpl/HwiP.h to run this test.
+     * For FreeRTOS, this is tested extensively by the freertos unit tests for critical sections */
+    test_r5f_critical_section();
+    #endif
     #endif
 
     /* disabled by default since otherwise the application wait for user input */

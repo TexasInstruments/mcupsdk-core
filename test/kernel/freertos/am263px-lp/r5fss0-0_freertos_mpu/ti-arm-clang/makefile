@@ -45,6 +45,8 @@ endif
 
 FILES_common := \
 	test_freertos.c \
+	test_critical_section.c \
+	test_critical_section_deep_nested.c \
 	main.c \
 	test_freertos_mpu.c \
 	ti_drivers_config.c \

@@ -77,6 +77,9 @@ extern "C" {
 #include <stdint.h>
 
 #include <kernel/dpl/HwiP.h>
+#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
+
+#include <FreeRTOSConfig.h>
 
 /* ------------------------------ FreeRTOS Config Check ------------------------------ */
 //MPU_ONLY_START
@@ -213,13 +216,31 @@ extern void vTaskExitCritical( void );
 
 #define portEXIT_CRITICAL() vTaskExitCritical()
 
-#define portDISABLE_INTERRUPTS()                  __asm__ volatile ( "CPSID	i" ::: "memory" )
+#if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1)
 
-#define portENABLE_INTERRUPTS()                   __asm__ volatile ( "CPSIE	i" ::: "memory" )
+    #define portDISABLE_INTERRUPTS()                \
+                (void)HwiP_setVimIrqPriMaskAtomic( configMAX_SYSCALL_INTERRUPT_PRIORITY )
 
-#define portSET_INTERRUPT_MASK_FROM_ISR()         HwiP_disable()
+    #define portENABLE_INTERRUPTS()                 \
+                (void)HwiP_setVimIrqPriMaskNonAtomic( HwiP_MAX_PRIORITY )
 
-#define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    HwiP_restore( x )
+    #define portSET_INTERRUPT_MASK_FROM_ISR()       \
+                HwiP_setVimIrqPriMaskAtomic( configMAX_SYSCALL_INTERRUPT_PRIORITY )
+
+    #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )  \
+                HwiP_restoreVimIrqPriMask( x )
+
+#else /* #if configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1 */
+
+    #define portDISABLE_INTERRUPTS()                  __asm__ volatile ( "CPSID	i" ::: "cc" )
+
+    #define portENABLE_INTERRUPTS()                   __asm__ volatile ( "CPSIE	i" ::: "cc" )
+
+    #define portSET_INTERRUPT_MASK_FROM_ISR()         HwiP_disable()
+
+    #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    HwiP_restore( x )
+
+#endif /* #else configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1 */
 
 /* Run time stats utilities. */
 void vPortConfigTimerForRunTimeStats();
@@ -231,6 +252,15 @@ uint32_t uiPortGetRunTimeCounterValue();
 #define portGET_RUN_TIME_COUNTER_VALUE() uiPortGetRunTimeCounterValue()
 
 void vPortStartFirstTask( void );
+
+/* Architecture specific optimisations. */
+#ifdef configASSERT
+
+    void vPortValidateInterruptPriority( void );
+
+    #define portASSERT_IF_INTERRUPT_PRIORITY_INVALID()    vPortValidateInterruptPriority()
+
+#endif /* configASSERT */
 
 //MPU_ONLY_START
 /* Exit from a FreeRTOS System Call.*/

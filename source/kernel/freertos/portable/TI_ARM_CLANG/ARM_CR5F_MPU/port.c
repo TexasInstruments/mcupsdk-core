@@ -79,6 +79,8 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/MpuP_armv7.h>
 #include <kernel/dpl/CycleCounterP.h>
+#include <kernel/dpl/HwiP.h>
+#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
@@ -447,7 +449,10 @@ BaseType_t xPortStartScheduler( void )
      * automatically turned back on in the CPU when the first task starts
      * executing.
      */
-    portDISABLE_INTERRUPTS();
+    __asm__ volatile ( "CPSID	i" ::: "cc" );
+    /* Set a initial PRI mask for max priority, so that when the first task starts it will enable IRQ and
+     * the primask is setup to enable all interrupts */
+    (void)HwiP_setVimIrqPriMaskAtomic( HwiP_MAX_PRIORITY );
 
     /* MPU is already enabled with static regions by the DPL config */
 
@@ -482,8 +487,8 @@ void vPortYeildFromISR( uint32_t xSwitchRequired )
 
 void vPortTimerTickHandler()
 {
-    /* Disable Interrupts to prevent preeumption */
-    portDISABLE_INTERRUPTS();
+    /* Enter critical section from ISR */
+    uint32_t key = taskENTER_CRITICAL_FROM_ISR();
 
     if( prvPortSchedulerRunning == pdTRUE )
     {
@@ -493,8 +498,7 @@ void vPortTimerTickHandler()
             ulPortYieldRequired = pdTRUE;
         }
     }
-    /* Enable Interrupts */
-    portENABLE_INTERRUPTS();
+    taskEXIT_CRITICAL_FROM_ISR( key );
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -521,6 +525,32 @@ uint32_t uiPortGetRunTimeCounterValue()
      * The implementation of vApplicationLoadHook() is in source\kernel\freertos\dpl\common\TaskP_freertos.c
      */
     return (uint32_t)(timeInUsecs);
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/* This is used to make sure we are using the FreeRTOS API from within a valid interrupt priority level */
+void vPortValidateInterruptPriority()
+{
+    #if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1)
+    /*
+     * The following assertion will fail if a service routine (ISR) for
+     * an interrupt that has been assigned a priority above
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API
+     * function.  ISR safe FreeRTOS API functions must *only* be called
+     * from interrupts that have been assigned a priority at or below
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+     *
+     * Numerically low interrupt priority numbers represent logically high
+     * interrupt priorities, therefore the priority of the interrupt must
+     * be set to a value equal to or numerically *higher* than
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+     *
+     * FreeRTOS maintains separate thread and ISR API functions to ensure
+     * interrupt entry is as fast and simple as possible.
+     */
+    configASSERT( HwiP_getActivePriority() >= ( uint32_t ) configMAX_SYSCALL_INTERRUPT_PRIORITY );
+    #endif /* (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1) */
 }
 
 /* ----------------------------------------------------------------------------------- */

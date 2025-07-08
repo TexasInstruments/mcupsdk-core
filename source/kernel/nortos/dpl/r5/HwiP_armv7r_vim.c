@@ -35,6 +35,20 @@
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/soc_config.h>
 
+/** Each bit in the IRQPRIMSK corresponds to the priority level. 
+ *  - bit = 1 -> Interrupts of this priority are enabled.
+ *  - bit = 0 -> Interrupts of this priority are disabled.
+ *
+ * This macro computes the priority mask such that all interrupts of higher priority are only enabled.
+ * i.e, all interrupts of priority value < `pri` are enabled (since lower the value higher the priority)
+ * and all interrupts of priority value >= `pri` are disabled(masked).
+ */
+#define GET_PRIMSK_FROM_PRIORITY(pri)   ((uint32_t)((0x1U << (pri)) - 1U))
+
+#define NOP1()  do { __asm__ __volatile__("NOP");            } while(0)
+#define NOP5()  do { NOP1(); NOP1(); NOP1(); NOP1(); NOP1(); } while(0)
+#define NOP10() do { NOP5(); NOP5();                         } while(0)
+
 static volatile uint32_t gdummy;
 
 static void Hwip_dataAndInstructionBarrier(void)
@@ -214,8 +228,9 @@ void HWI_SECTION HwiP_init(void)
 
     DebugP_assertNoLog(gHwiConfig.intcBaseAddr != 0U);
 
-    gHwiCtrl.spuriousIRQCount = 0;
-    gHwiCtrl.spuriousFIQCount = 0;
+    gHwiCtrl.spuriousIRQCount  = 0U;
+    gHwiCtrl.spuriousFIQCount  = 0U;
+    gHwiCtrl.activeIntPriority = HwiP_MAX_PRIORITY;
 
     /* initalize local data structure, and set all interrupts to lowest priority
      * and set ISR address as IRQ handler
@@ -293,4 +308,57 @@ uint32_t HWI_SECTION HwiP_inISR(void)
          result= 1;
     }
     return result;
+}
+
+static inline uint32_t HWI_SECTION HwiP_setVimIrqPriMaskRawNonAtomic(uint32_t priMask)
+{
+    volatile uint32_t *addr;
+    volatile uint32_t oldPriMask;
+
+    /* Store the current priority mask and set to new value */
+    addr       = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_IRQPRIMASK);
+    oldPriMask = *addr;
+    *addr      = priMask;
+
+    return oldPriMask;
+}
+
+static uint32_t HWI_SECTION HwiP_setVimIrqPriMaskRawAtomic(uint32_t priMask)
+{
+    volatile uint32_t *addr;
+    volatile uint32_t oldPriMask;
+    uintptr_t oldIntrState;
+
+    /* Disable the interrupts globally before modifying priority mask */
+    oldIntrState = HwiP_disable();
+
+    oldPriMask = HwiP_setVimIrqPriMaskRawNonAtomic(priMask);
+
+    /* Wait for priority mask update to take effect */
+    NOP10();
+
+    /* Read & Write IRQVEC to force re-evaluation */
+    addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_IRQVEC);
+    __asm__ __volatile__("LDR r2,[%0]"::"r"(addr):"r2");
+    __asm__ __volatile__("STR r2,[%0]"::"r"(addr):"r2");
+
+    /* Restore the interrupts globally */
+    HwiP_restore(oldIntrState);
+
+    return oldPriMask;
+}
+
+uint32_t HWI_SECTION HwiP_setVimIrqPriMaskNonAtomic(uint32_t priority)
+{
+    return HwiP_setVimIrqPriMaskRawNonAtomic(GET_PRIMSK_FROM_PRIORITY(priority));
+}
+
+uint32_t HWI_SECTION HwiP_setVimIrqPriMaskAtomic(uint32_t priority)
+{
+    return HwiP_setVimIrqPriMaskRawAtomic(GET_PRIMSK_FROM_PRIORITY(priority));
+}
+
+void HWI_SECTION HwiP_restoreVimIrqPriMask(uint32_t key)
+{
+    (void)HwiP_setVimIrqPriMaskRawNonAtomic(key);
 }

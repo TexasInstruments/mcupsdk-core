@@ -81,8 +81,27 @@
 #define INT1_NUM    (16U)
 #define INT2_NUM    (17U)
 
-#define INT1_PRIORITY       (3U)
-#define INT2_PRIORITY       (4U)
+/**
+ * Set Interrupt priorities based on FreeRTOS configuration.
+ *
+ * ISR safe FreeRTOS API functions must only be called from interrupts that have been assigned
+ * a priority at or below configMAX_SYSCALL_INTERRUPT_PRIORITY.
+ *
+ * Numerically low interrupt priority numbers represent logically high interrupt priorities, therefore
+ * the priority of the interrupt must be set to a value equal to or numerically higher than
+ * configMAX_SYSCALL_INTERRUPT_PRIORITY. If configMAX_SYSCALL_INTERRUPT_PRIORITY is not defined,
+ * default priorities are assigned.
+ *
+ * Else there will be assertion failures that occur when an ISR with a priority above
+ * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API function.
+ */
+#ifdef configMAX_SYSCALL_INTERRUPT_PRIORITY
+#define INT1_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY)
+#define INT2_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY + 1u)
+#else
+#define INT1_PRIORITY   (3u)
+#define INT2_PRIORITY   (4u)
+#endif
 
 /** 
  * Defines for shared memory 

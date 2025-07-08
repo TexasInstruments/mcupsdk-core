@@ -5,6 +5,7 @@ let device = "am273x";
 const files = {
     common: [
         "test_dpl.c",
+        "test_r5f_critical_section.c",
         "main.c",
     ],
 };

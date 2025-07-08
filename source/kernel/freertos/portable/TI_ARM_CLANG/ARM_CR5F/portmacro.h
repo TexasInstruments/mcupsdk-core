@@ -66,6 +66,8 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
+#include <FreeRTOSConfig.h>
+
 /*-----------------------------------------------------------
  * Port specific definitions.
  *
@@ -75,16 +77,6 @@
  * These settings should not be altered.
  *-----------------------------------------------------------
  */
-
-/* Macro to enable priority based interrupt masking using
-   configMAX_SYSCALL_INTERRUPT_PRIORITY in critical section.
-   This feature is NOT supported on AM273x & must be disabled */
-// #define EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-
-#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-#define PRIO_MASK       ((((uint32_t)0x1<<(configMAX_SYSCALL_INTERRUPT_PRIORITY))-1))
-#define MAX_PRIO_MASK   ((((uint32_t)0x1<<(HwiP_MAX_PRIORITY))-1))
-#endif
 
 /* Type definitions. */
     #define portCHAR         char
@@ -124,10 +116,22 @@
     extern void vTaskExitCritical( void );
     #define portENTER_CRITICAL()		vTaskEnterCritical()
     #define portEXIT_CRITICAL()			vTaskExitCritical()
-    #define portDISABLE_INTERRUPTS()                  vDisableInterruptPriority()
-    #define portENABLE_INTERRUPTS()                   vEnableInterruptPriority()
+
+#if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1)
+
+    #define portDISABLE_INTERRUPTS()                (void)HwiP_setVimIrqPriMaskAtomic( configMAX_SYSCALL_INTERRUPT_PRIORITY )
+    #define portENABLE_INTERRUPTS()                 (void)HwiP_setVimIrqPriMaskNonAtomic( HwiP_MAX_PRIORITY )
+    #define portSET_INTERRUPT_MASK_FROM_ISR()       HwiP_setVimIrqPriMaskAtomic( configMAX_SYSCALL_INTERRUPT_PRIORITY )
+    #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )  HwiP_restoreVimIrqPriMask( x )
+
+#else /* #if configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1 */
+
+    #define portDISABLE_INTERRUPTS()                  __asm__ volatile ( "CPSID	i" ::: "cc" )
+    #define portENABLE_INTERRUPTS()                   __asm__ volatile ( "CPSIE	i" ::: "cc" )
     #define portSET_INTERRUPT_MASK_FROM_ISR()         HwiP_disable()
     #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    HwiP_restore( x )
+
+#endif /* #else configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1 */
 
 /* Task function macros as described on the FreeRTOS.org WEB site.  These are
  * not required for this port but included in case common demo code that uses these
@@ -169,31 +173,5 @@
 #ifndef portFORCE_INLINE
     #define portFORCE_INLINE    inline __attribute__( ( always_inline ) )
 #endif
-
-/* Disable all IRQ interrupts or upto certain priority  if EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION is enabled */
-portFORCE_INLINE static void vDisableInterruptPriority( void )
-{
-#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-
-    uint32_t*   ptrVimIrqPrimask    = (uint32_t* )(gHwiConfig.intcBaseAddr + VIM_IRQPRIMASK);
-
-    *(ptrVimIrqPrimask) = (uint32_t)PRIO_MASK;
-#else
-    __asm__ volatile ( "CPSID	i" ::: "cc" );
-#endif
-}
-
-/* Enable all IRQ interrupts  */
-portFORCE_INLINE static void vEnableInterruptPriority( void )
-{
-#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-
-    uint32_t*   ptrVimIrqPrimask    = (uint32_t* )(gHwiConfig.intcBaseAddr + VIM_IRQPRIMASK);
-
-    *(ptrVimIrqPrimask) = (uint32_t)MAX_PRIO_MASK;
-#else
-    __asm__ volatile ( "CPSIE	i" ::: "cc" );
-#endif
-}
 
 #endif /* PORTMACRO_H */

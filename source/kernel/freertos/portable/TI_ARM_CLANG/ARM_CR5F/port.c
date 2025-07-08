@@ -58,9 +58,10 @@
 #include <stdint.h>
 #include <FreeRTOS.h>
 #include <task.h>
-#include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/HwiP.h>
+#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 /* Let the user override the pre-loading of the initial LR with the address of
  * prvTaskExitError() in case is messes up unwinding of the stack in the
@@ -221,7 +222,10 @@ BaseType_t xPortStartScheduler(void)
      * automatically turned back on in the CPU when the first task starts
      * executing.
      */
-    portDISABLE_INTERRUPTS();
+    __asm__ volatile ( "CPSID	i" ::: "cc" );
+    /* Set a initial PRI mask for max priority, so that when the first task starts it will enable IRQ and
+     * the primask is setup to enable all interrupts */
+    (void)HwiP_setVimIrqPriMaskAtomic( HwiP_MAX_PRIORITY );
 
     /* Start the ISR handling of the timer that generates the tick ISR. */
     ulPortSchedularRunning = pdTRUE;
@@ -249,8 +253,8 @@ void vPortYeildFromISR( uint32_t xSwitchRequired )
 
 void vPortTimerTickHandler()
 {
-    /* Disable Interrupts to prevent preeumption */
-    portDISABLE_INTERRUPTS();
+    /* Set interrupt priority mask from ISR for critical section */
+    uint32_t key = taskENTER_CRITICAL_FROM_ISR();
 
     if( ulPortSchedularRunning == pdTRUE )
     {
@@ -260,8 +264,8 @@ void vPortTimerTickHandler()
             ulPortYieldRequired = pdTRUE;
         }
     }
-    /* Enable Interrupts */
-    portENABLE_INTERRUPTS();
+    
+    taskEXIT_CRITICAL_FROM_ISR( key );
 }
 
 void vPortTaskUsesFPU( void )
@@ -274,64 +278,6 @@ void vPortTaskUsesFPU( void )
 
     /* Initialise the floating point status register. */
     __asm__ volatile ( "FMXR 	FPSCR, %0" ::"r" ( ulInitialFPSCR ) : "memory" );
-}
-
-void vPortEnterCritical( void )
-{
-    /* Mask interrupts up to the max syscall interrupt priority. */
-    __asm__ __volatile__ ("dsb  sy"   "\n\t": : : "memory");
-    __asm__ __volatile__ ("isb  sy" "\n\t": : : "memory");
-    __asm__ volatile ( "CPSID	i" ::: "cc" );
-    __asm__ __volatile__ ("dsb sy"   "\n\t": : : "memory");
-    __asm__ __volatile__ ("isb sy" "\n\t": : : "memory");
-
-    /* Now interrupts are disabled ulCriticalNesting can be accessed
-     * directly.  Increment ulCriticalNesting to keep a count of how many times
-     * portENTER_CRITICAL() has been called. */
-    ulCriticalNesting++;
-    __asm__ __volatile__ ("dsb sy"   "\n\t": : : "memory");
-    __asm__ __volatile__ ("isb sy" "\n\t": : : "memory");
-
-    #if (configOPTIMIZE_FOR_LATENCY==0)
-    /* This API should NOT be called from within ISR context. Below logic checks for this.
-     * Commenting this reduces task switch latency a bit, however if this API is by mistale
-     * called in a ISR by user, it could have unexpected side effects.
-     */
-    /* This is not the interrupt safe version of the enter critical function so
-     * assert() if it is being called from an interrupt context.  Only API
-     * functions that end in "FromISR" can be used in an interrupt.  Only assert if
-     * the critical nesting count is 1 to protect against recursive calls if the
-     * assert function also uses a critical section. */
-    if( ulCriticalNesting == 1 )
-    {
-        DebugP_assertNoLog( ulPortInterruptNesting == 0);
-    }
-    #endif
-}
-
-void vPortExitCritical( void )
-{
-    /* if( ulCriticalNesting > portNO_CRITICAL_NESTING ) */
-    {
-        /* Decrement the nesting count as the critical section is being
-         * exited. */
-        __asm__ __volatile__ (" dsb sy"   "\n\t": : : "memory");
-        __asm__ __volatile__ (" isb sy"   "\n\t": : : "memory");
-        ulCriticalNesting--;
-        __asm__ __volatile__ (" dsb sy"   "\n\t": : : "memory");
-        __asm__ __volatile__ (" isb sy"   "\n\t": : : "memory");
-
-        /* If the nesting level has reached zero then all interrupt
-         * priorities must be re-enabled. */
-        if( ulCriticalNesting == portNO_CRITICAL_NESTING )
-        {
-            /* Critical nesting has reached zero so all interrupt priorities
-             * should be unmasked. */
-            __asm__ volatile ( "CPSIE	i" ::: "cc" );
-            __asm__ __volatile__ (" dsb sy"   "\n\t": : : "memory");
-            __asm__ __volatile__ (" isb sy"   "\n\t": : : "memory");
-        }
-    }
 }
 
 /* initialize high resolution timer for CPU and task load calculation */
@@ -356,13 +302,28 @@ uint32_t uiPortGetRunTimeCounterValue()
     return (uint32_t)(timeInUsecs);
 }
 
-/* This is used to make sure we are using the FreeRTOS API from within a valid interrupt priority level
- * In our R%F port this means IRQ.
- * i.e FreeRTOS API should not be called from FIQ, however right now we dont enforce it by checking
- * if we are in FIQ when this API is called.
- */
+/* This is used to make sure we are using the FreeRTOS API from within a valid interrupt priority level */
 void vPortValidateInterruptPriority()
 {
+    #if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1)
+    /*
+     * The following assertion will fail if a service routine (ISR) for
+     * an interrupt that has been assigned a priority above
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API
+     * function.  ISR safe FreeRTOS API functions must *only* be called
+     * from interrupts that have been assigned a priority at or below
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+     *
+     * Numerically low interrupt priority numbers represent logically high
+     * interrupt priorities, therefore the priority of the interrupt must
+     * be set to a value equal to or numerically *higher* than
+     * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+     *
+     * FreeRTOS maintains separate thread and ISR API functions to ensure
+     * interrupt entry is as fast and simple as possible.
+     */
+    configASSERT( HwiP_getActivePriority() >= ( uint32_t ) configMAX_SYSCALL_INTERRUPT_PRIORITY );
+    #endif /* (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS == 1) */
 }
 
 /* This is called as part of vTaskEndScheduler(), in our port, there is nothing to do here.

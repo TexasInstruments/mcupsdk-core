@@ -38,7 +38,7 @@ extern "C"
 {
 #endif
 
-
+#include <stdint.h>
 #include <kernel/dpl/HwiP.h>
 #include <drivers/hw_include/soc_config.h>
 #include <drivers/hw_include/cslr_soc.h>
@@ -82,6 +82,9 @@ extern "C"
 
 #define INTERRUPT_VALUE        (32U)
 
+#define VIM_ACTIRQ_PRI_OFS     (16U)
+#define VIM_ACTIRQ_PRI_MASK    (0x000F0000U)
+
 typedef struct HwiP_Ctrl_s {
 
     HwiP_FxnCallback isr[HwiP_MAX_INTERRUPTS];
@@ -89,6 +92,8 @@ typedef struct HwiP_Ctrl_s {
 
     uint32_t spuriousIRQCount;
     uint32_t spuriousFIQCount;
+
+    uint32_t activeIntPriority;
 } HwiP_Ctrl;
 
 #ifdef INTR_PROF
@@ -121,6 +126,10 @@ void HwiP_undefined_handler(void);
 void HwiP_prefetch_abort_handler(void);
 void HwiP_data_abort_handler(void);
 void HwiP_irq_handler_c(void);
+
+uint32_t HwiP_setVimIrqPriMaskNonAtomic(uint32_t priority);
+uint32_t HwiP_setVimIrqPriMaskAtomic(uint32_t priority);
+void     HwiP_restoreVimIrqPriMask(uint32_t key);
 
 static inline void  HWI_SECTION HwiP_setAsFIQ(uint32_t intNum, uint32_t isFIQ)
 {
@@ -206,21 +215,23 @@ static inline uint32_t HWI_SECTION HwiP_getFIQVecAddr(void)
     return *addr;
 }
 
-static inline int32_t HWI_SECTION HwiP_getIRQ(uint32_t *intNum)
+static inline int32_t HWI_SECTION HwiP_getIRQ(uint32_t *intNum, uint32_t* priority)
 {
     volatile uint32_t *addr;
     int32_t status = SystemP_FAILURE;
     uint32_t value;
 
-    *intNum = 0;
+    *intNum   = 0;
+    *priority = 0;
 
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_ACTIRQ);
     value = *addr;
 
     if((value & 0x80000000U) != 0U)
     {
-        *intNum = (value & (HwiP_MAX_INTERRUPTS-1U));
-        status = SystemP_SUCCESS;
+        *intNum   = (value & (HwiP_MAX_INTERRUPTS-1U));
+        *priority = ((value & VIM_ACTIRQ_PRI_MASK) >> VIM_ACTIRQ_PRI_OFS);
+        status    = SystemP_SUCCESS;
     }
     return status;
 }
@@ -260,6 +271,24 @@ static inline void HWI_SECTION HwiP_ackFIQ(uint32_t intNum)
     *addr= intNum;
 }
 
+static inline uint32_t HWI_SECTION HwiP_updateActivePrioritySW(uint32_t priority)
+{
+    uint32_t currentPriority = gHwiCtrl.activeIntPriority;
+
+    gHwiCtrl.activeIntPriority = priority;
+
+    return currentPriority;
+}
+
+static inline void HWI_SECTION HwiP_restoreActivePrioritySW(uint32_t priority)
+{
+    gHwiCtrl.activeIntPriority = priority;
+}
+
+static inline uint32_t HWI_SECTION HwiP_getActivePriority()
+{
+    return gHwiCtrl.activeIntPriority;
+}
 
 #define ISR_CALL_LEVEL_NONFLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask, vim_addr)                 \
     __asm__ volatile(                  \

@@ -35,6 +35,7 @@ TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	test_dpl.c \
+	test_r5f_critical_section.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

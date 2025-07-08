@@ -5,6 +5,8 @@ let device = "am263px";
 const files_r5f_common = {
     common: [
         "test_freertos.c",
+        "test_critical_section.c",
+        "test_critical_section_deep_nested.c",
         "main.c",
     ],
 };
