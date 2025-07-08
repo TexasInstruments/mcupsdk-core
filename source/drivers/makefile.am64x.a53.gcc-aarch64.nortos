@@ -58,6 +58,7 @@ FILES_common := \
     ospi_nor_flash_lld.c \
     ospi_lld_dma.c \
     ospi_udma_lld.c \
+    ospi_phy_new_tuning.c \
     pinmux.c \
     sciclient.c \
     sciclient_pm.c \
@@ -124,6 +125,7 @@ FILES_PATH_common = \
     ospi/v0/lld \
     ospi/v0/lld/dma \
     ospi/v0/lld/dma/udma \
+    ospi/v0/lld/ospi_tuning/ospi_tuning_algo/v1 \
     qos \
     qos/v0 \
     pinmux/am64x_am243x \
@@ -150,6 +152,7 @@ INCLUDES_common := \
 DEFINES_common := \
     -DSOC_AM64X \
     -DAMP_FREERTOS_A53 \
+    -DENABLE_PHY_TUNING_SOC_BUILD \
     -DOS_NORTOS \
 
 # Remove later with combined boot

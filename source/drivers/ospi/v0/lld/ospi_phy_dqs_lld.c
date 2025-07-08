@@ -34,6 +34,7 @@
 #include <drivers/ospi.h>
 #include <drivers/ospi/v0/lld/ospi_lld.h>
 #include <drivers/hw_include/cslr.h>
+#include "ospi_tuning/ospi_tuning_algo/v1/ospi_phy_new_tuning.h"
 
 # ifndef MIN
 # define MIN(x,y) \
@@ -49,8 +50,8 @@
     })
 # endif
 
-#define OSPI_PHY_INIT_RD_DELAY      (1U)
-#define OSPI_PHY_MAX_RD_DELAY       (4U)
+/* Radius of circle to check passing points */
+#define OSPI_PHY_TUNING_CHECK_RADIUS    (10U)
 #define OSPI_DLL_LOCK_TIMEOUT       (82U)
 #define OSPI_DDR_SEARCH_STEP        (4U)
 
@@ -320,15 +321,6 @@ static uint8_t gOspiFlashAttackVector[OSPI_FLASH_ATTACK_VECTOR_SIZE] =
 
 static uint32_t gReadBuf[OSPI_FLASH_ATTACK_VECTOR_SIZE/sizeof(uint32_t)] = { 0U };
 
-typedef struct
-{
-    int32_t txDLL;
-    int32_t rxDLL;
-    int32_t rdDelay;
-
-} OSPI_PhyConfig;
-
-
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -338,8 +330,18 @@ typedef struct
 void OSPI_lld_phyFindRxHigh(OSPILLD_Handle hOspi, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result);
 void OSPI_lld_phyFindRxLow(OSPILLD_Handle hOspi, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result);
 static void OSPI_lld_phySetRdDelayTxRxDLL(OSPILLD_Handle hOspi, OSPI_PhyConfig *configPoint);
+int32_t OSPI_phySetAndRead(void* handle, uint32_t offset, OSPI_PhyConfig *result);
 
+/* Api to set and validate rxdll, txdll and readDelay values */
+int32_t OSPI_phySetAndRead(void* handle, uint32_t offset, OSPI_PhyConfig *result)
+{
+    int32_t rdAttackStatus = OSPI_SYSTEM_SUCCESS;
 
+    OSPI_lld_phySetRdDelayTxRxDLL((OSPILLD_Handle)handle, result);
+    rdAttackStatus = OSPI_lld_phyReadAttackVector((OSPILLD_Handle)handle, offset);
+
+    return rdAttackStatus;
+}
 
 void OSPI_phyBasicConfig(OSPILLD_Handle hOspi)
 {    
@@ -522,9 +524,10 @@ int32_t OSPI_lld_phyReadAttackVector(OSPILLD_Handle hOspi, uint32_t offset)
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
     uint32_t flashDataBaseAddr = OSPI_lld_getFlashDataBaseAddr(hOspi);
-    uint8_t *src = (uint8_t *)(flashDataBaseAddr + offset);
-    uint8_t *dst = (uint8_t *)gReadBuf;
-    uint32_t count = OSPI_FLASH_ATTACK_VECTOR_SIZE;
+    volatile uint32_t *src = (volatile uint32_t *)(flashDataBaseAddr + offset);
+    volatile uint32_t *dst = (volatile uint32_t *)gReadBuf;
+    uint32_t count = 0U;
+    uint32_t *compBuf = (uint32_t *)gOspiFlashAttackVector;
     uint32_t dacState;
 
     /* Check if the handle is NULL */
@@ -536,14 +539,14 @@ int32_t OSPI_lld_phyReadAttackVector(OSPILLD_Handle hOspi, uint32_t offset)
             OSPI_lld_enableDacMode(hOspi);
         }
 
-        while(count--)
+        for(count = 0U; count < OSPI_FLASH_ATTACK_VECTOR_SIZE/sizeof(uint32_t); count++)
         {
-            *dst++ = *src++;
-        }
-
-        if(memcmp(gReadBuf, gOspiFlashAttackVector, OSPI_FLASH_ATTACK_VECTOR_SIZE)!=0)
-        {
-            status = OSPI_SYSTEM_FAILURE;
+            dst[count] = src[count];
+            if(dst[count] != compBuf[count])
+            {
+                status  = SystemP_FAILURE;
+                break;
+            }
         }
 
         /* Switch to INDAC mode if DAC was initially in disabled state */
@@ -777,9 +780,9 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     uint32_t rdDelay;
     uint8_t rxDll, txDll;
 
-    OSPI_enablePhy(hOspi);
+    OSPI_lld_enablePhy(hOspi);
     /* keep phy pipeline disabled */
-    OSPI_disablePhyPipeline(hOspi);
+    OSPI_lld_disablePhyPipeline(hOspi);
 
     /* Perform the Basic PHY configuration for the OSPI controller */
     OSPI_phyBasicConfig(hOspi);
@@ -812,7 +815,7 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     }
 
     /* Disable PHY */
-    OSPI_disablePhy(hOspi);
+    OSPI_lld_disablePhy(hOspi);
 
     return OSPI_SYSTEM_SUCCESS;
 }
@@ -1905,6 +1908,8 @@ int32_t OSPI_lld_phyTuneDDR(OSPILLD_Handle hOspi, uint32_t flashOffset)
     int32_t status = OSPI_SYSTEM_SUCCESS;
     OSPI_PhyConfig otp;
     uint8_t isDtrEn;
+    uint32_t radius = OSPI_PHY_TUNING_CHECK_RADIUS;
+    OSPI_phyOps ops = {OSPI_phySetAndRead};
 
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)hOspi->baseAddr;
 
@@ -1922,7 +1927,7 @@ int32_t OSPI_lld_phyTuneDDR(OSPILLD_Handle hOspi, uint32_t flashOffset)
         gPhyTuneWindowParams = &gPhyTuneWindowParamsFixedOtp1;
 
         /* Use the normal algorithm */
-        status = OSPI_lld_phyFindOTP1(hOspi, flashOffset, &otp);
+        status = OSPI_phyFindOTP4(hOspi, flashOffset, &ops, radius, &otp);
     }
     else
     {

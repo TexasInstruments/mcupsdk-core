@@ -117,6 +117,7 @@ FILES_PATH_common = \
     ospi/v0/lld \
     ospi/v0/lld/dma \
     ospi/v0/lld/dma/udma \
+    ospi/v0/lld/ospi_tuning/ospi_tuning_algo/v1 \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \
