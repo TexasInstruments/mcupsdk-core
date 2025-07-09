@@ -28,3 +28,6 @@
 \cond SOC_AM263PX || SOC_AM263X
 - \subpage ETHERRING_OVERVIEW
 \endcond
+\cond SOC_AM243X || SOC_AM64X
+- \subpage ICSSG_ETH_TOP
+\endcond
