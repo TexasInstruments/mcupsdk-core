@@ -45,7 +45,6 @@ endif
 
 FILES_common := \
 	dfu_nortos.c \
-	dfu_descriptors.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -54,6 +53,7 @@ FILES_common := \
 	ti_dpl_config.c \
 	ti_pinmux_config.c \
 	ti_power_clock_config.c \
+	ti_usb_descriptor.c \
 
 FILES_PATH_common = \
 	.. \
@@ -188,6 +188,7 @@ SYSCFG_GEN_FILES+=generated/ti_dpl_config.c generated/ti_dpl_config.h
 SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
+SYSCFG_GEN_FILES+=generated/ti_usb_descriptor.c generated/ti_usb_config.h
 
 SYSTEM_FLAG ?= false
 

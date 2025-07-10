@@ -227,7 +227,11 @@ section6.$name                   = "Non Cache Memory";
 section6.output_section.create(1);
 section6.output_section[0].$name = ".bss.nocache";
 
-tinyusb1.$name = "CONFIG_TINYUSB0";
+tinyusb1.$name              = "CONFIG_TINYUSB0";
+tinyusb1.usbClass           = "DFU";
+tinyusb1.PID                = "0x6164";
+tinyusb1.productName        = "AM261x DFU";
+tinyusb1.alternateSettings0 = "FLASH";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

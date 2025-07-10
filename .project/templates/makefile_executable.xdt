@@ -127,6 +127,9 @@ FILES_`prop` := \
 	ti_enet_soc.c \
 	ti_enet_lwipif.c \
 			 % }
+			 % if ((args.project.device == "am261x") && (val.includes("tusb"))){
+	ti_usb_descriptor.c \
+			 %}
 		% }
 
 	% }
@@ -420,6 +423,9 @@ SYSCFG_GEN_FILES+=generated/ti_enet_open_close.c generated/ti_enet_open_close.h
 SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
 		 % }
+		% if ((args.project.device == "am261x") && (val.includes("tusb"))){
+SYSCFG_GEN_FILES+=generated/ti_usb_descriptor.c generated/ti_usb_config.h
+		% }
 	% }
 % if (args.project.isBootLoader  && ( (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x"))){
 SYSCFG_GEN_FILES+=generated/ti_clocktree_pll_config.c generated/ti_clocktree_pll_config.h

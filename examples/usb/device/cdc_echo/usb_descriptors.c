@@ -57,6 +57,9 @@
 /* Adapted by TI for running on its platform and SDK */
 
 #include "tusb.h"
+#include "ti_drivers_open_close.h"
+
+#if !defined(SOC_AM261X)
 
 #define DEV_MANUFACUTURER   "Texas Instruments, Inc."
 #define DEV_VERSION         "01.00.00.01"
@@ -117,7 +120,7 @@ uint8_t const * tud_descriptor_device_cb(void)
 {
   return (uint8_t const *) &desc_device;
 }
-
+#endif 
 /*
 --------------------------------------------------------------------+
  Configuration Descriptor
@@ -164,7 +167,9 @@ uint8_t const desc_hs_configuration[] =
   /* 2nd CDC: Interface number, string index, EP notification address and size, EP data address (out, in) and size. */
   TUD_CDC_DESCRIPTOR(ITF_NUM_CDC_1, 4, EPNUM_CDC_1_NOTIF, 8, EPNUM_CDC_1_DATA, 0x80 | EPNUM_CDC_1_DATA, 512),
 };
+#endif
 
+#if !defined(SOC_AM261X)
 /* device qualifier is mostly similar to device descriptor since we don't change configuration based on speed */
 tusb_desc_device_qualifier_t const desc_device_qualifier =
 {
@@ -189,6 +194,7 @@ uint8_t const* tud_descriptor_device_qualifier_cb(void)
 {
   return (uint8_t const*) &desc_device_qualifier;
 }
+#endif
 
 /* Invoked when received GET OTHER SEED CONFIGURATION DESCRIPTOR request */
 /* Application return pointer to descriptor, whose contents must exist long enough for transfer to complete */
@@ -201,7 +207,6 @@ uint8_t const* tud_descriptor_other_speed_configuration_cb(uint8_t index)
   return (tud_speed_get() == TUSB_SPEED_HIGH) ?  desc_fs_configuration : desc_hs_configuration;
 }
 
-#endif
 
 /* Invoked when received GET CONFIGURATION DESCRIPTOR */
 /* Application return pointer to descriptor */
@@ -223,6 +228,7 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
  String Descriptors
 --------------------------------------------------------------------+
 */
+#if !defined(SOC_AM261X)
 
 /* array of pointer to string descriptors */
 char const* string_desc_arr [] =
@@ -273,3 +279,4 @@ uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid)
 
   return _desc_str;
 }
+#endif

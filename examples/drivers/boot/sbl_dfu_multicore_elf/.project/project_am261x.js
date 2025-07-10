@@ -4,7 +4,6 @@ let device = "am261x";
 
 const files = {
     common: [
-        "dfu_descriptors.c",
         "main.c",
     ],
 };
