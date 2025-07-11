@@ -50,6 +50,14 @@
 #define R5FSS0_1_MBOX_READ_REQ_INTR ( 79U)
 #define C66SS0_MBOX_READ_REQ_INTR   ( 94U)
 
+/* A delay of 60-70 clock cycles is recommended before clear pending read request from remote core
+ * This delay is implemented as a loop and is profiled to be approximately 80 clock cycles
+ */
+ #define IPC_NOTIFY_WAIT_CYCLES           (5U)
+
+ /* A counter that restricts the loop to pend in isr forever and also avoid any race around condtion between the cores */
+ #define IPC_NOTIFY_LOOP_COUNTER_MAX           (1000U)
+
 /* shift to apply in mailbox addr to get to core specific status */
 uint32_t gIpcNotifyCoreIntrBitPos[] =
 {
@@ -133,6 +141,8 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
     },
 };
 
+extern void IpcNotify_isr(void *args);
+
 /* Interrupt config for R5FSS0-0 */
 #define IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_0_NUM   (1u)
 IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_0_NUM] = {
@@ -143,7 +153,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_1,
             CSL_CORE_ID_C66SS0,
-            CSL_CORE_ID_MAX,
+			CSL_CORE_ID_MAX,
         },
 	.clearIntOnInit = 0,
     }
@@ -160,7 +170,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_0,
             CSL_CORE_ID_C66SS0,
-            CSL_CORE_ID_MAX,
+		    CSL_CORE_ID_MAX,
         },
 	.clearIntOnInit = 0,
     }
@@ -177,21 +187,49 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_c66ss0[IPC_NOFTIY_INTERRUPT_
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_0,
             CSL_CORE_ID_R5FSS0_1,
-            CSL_CORE_ID_MAX,
+			CSL_CORE_ID_MAX,
         },
 	.clearIntOnInit = 1,
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_c66ss0 = IPC_NOFTIY_INTERRUPT_CONFIG_C66SS0_NUM;
 
-void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
-{
+int32_t IpcNotify_trigInterrupt(uint32_t selfCoreId, uint32_t remoteCoreId, uint32_t mailboxBaseAddr, uint32_t intrBitPos)
+ {
+    uint32_t pendingIntr, counter = 0;
+    int32_t status = SystemP_SUCCESS;
     volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
-
-    /* trigger interrupt to other core */
-    *addr = (1U << intrBitPos);
+    /* Keep polling for READ_REQ register bit of Receiver */
+    IpcNotify_MailboxConfig *pReceiverMailboxConfig;
+    pReceiverMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][selfCoreId];
+    do
+    {
+        counter++;
+        /* trigger interrupt to other core */
+        *addr = ((uint32_t)1U << intrBitPos);
+        pendingIntr = IpcNotify_mailboxGetPendingIntr(pReceiverMailboxConfig->readReqMailboxBaseAddr);
+        pendingIntr = (pendingIntr >> (pReceiverMailboxConfig->intrBitPos)) & (0x1U); /* Get the READ_REQ reg. value w.r.t Core bit pos. */
+    }while ((pendingIntr!=1U) && counter < IPC_NOTIFY_LOOP_COUNTER_MAX);
+    if(counter >= IPC_NOTIFY_LOOP_COUNTER_MAX)
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
 }
+
 
 void IpcNotify_wait(void)
 {
+    volatile uint32_t loopCounter = 0U;
+
+    /* Processor sending will trigger read request multiple times and ensure
+    * that read request is reached to receiving processor. The delay implemented
+    * here is not to clear the interrupt while sending processor is reading back
+    * and verifying the interrupt is triggered at receving Processor
+    */
+    for(loopCounter = 0; loopCounter < IPC_NOTIFY_WAIT_CYCLES; loopCounter+=1U)
+	{
+		;
+	}
+    return;
 }

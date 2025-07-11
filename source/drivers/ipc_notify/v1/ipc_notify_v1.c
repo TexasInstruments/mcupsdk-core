@@ -266,7 +266,11 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
         oldIntState = HwiP_disable();
         do
         {
+#if !(defined(SOC_AM273X))
             status = IpcNotify_mailboxWrite(mailboxBaseAddr, intrBitPos, swQ, value);
+#else
+            status = IpcNotify_mailboxWrite(gIpcNotifyCtrl.selfCoreId, remoteCoreId, mailboxBaseAddr, intrBitPos, swQ, value);
+#endif
             if((status != SystemP_SUCCESS) && (waitForFifoNotFull != 0U))
             {
                 /* allow interrupt enable and check again */
