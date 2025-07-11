@@ -21,14 +21,14 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
-ECC example for R5F cache                                                                       | SDL
+ECC Functional Test example for single bit errors is added                                      | SDL
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
-ECC example for R5F cache                                                                       | SDL
+ECC Functional Test example for single bit errors is added                                      | SDL
 \endcond
 
 ## Device and Validation Information
