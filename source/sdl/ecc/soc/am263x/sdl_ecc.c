@@ -1035,7 +1035,7 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
                               SDL_ECC_InjectErrorType errorType,
                               const SDL_ECC_InjectErrorConfig_t *pECCErrorConfig)
 {
-    uint32_t regValue;
+    uint32_t regValue = 0U;
     volatile uint32_t regValue2;
     uint32_t firstBitLocation, secondBitLocation;
     uint32_t errAddrOffset;
