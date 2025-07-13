@@ -52,7 +52,7 @@ Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
 Code Composer Studio    | R5F, M4F, A53  | 12.8.1
 SysConfig               | R5F, M4F, A53  | 1.22.0, build 3893
-TI ARM CLANG            | R5F, M4F       | 4.1.0.LTS
+TI ARM CLANG            | R5F, M4F       | 4.0.1.LTS
 GCC AARCH64             | A53            | 9.2-2019.12
 GCC ARM                 | R5F            | 7-2017-q4-major (AM64x only)
 FreeRTOS Kernel         | R5F, M4F, A53  | 11.1.0
@@ -82,7 +82,7 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES}
+### Experimental Features {#EXPERIMENTAL_FEATURES_11_00_00}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
