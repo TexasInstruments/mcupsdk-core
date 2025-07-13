@@ -21,6 +21,7 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
+OSPI INDAC read support                                                                         | OSPI
 ECC example for R5F cache                                                                       | SDL
 \endcond
 
@@ -28,6 +29,7 @@ ECC example for R5F cache                                                       
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
+OSPI INDAC read support                                                                         | OSPI
 ECC example for R5F cache                                                                       | SDL
 \endcond
 
@@ -50,9 +52,9 @@ AM243x | R5F, M4F        | AM243x GP EVM (referred to as am243x-evm in code), \n
 
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, M4F, A53  | 12.8.1
-SysConfig               | R5F, M4F, A53  | 1.22.0, build 3893
-TI ARM CLANG            | R5F, M4F       | 4.1.0.LTS
+Code Composer Studio    | R5F, M4F, A53  | 20.2.0
+SysConfig               | R5F, M4F, A53  | 1.23.0, build 4000
+TI ARM CLANG            | R5F, M4F       | 4.0.1.LTS
 GCC AARCH64             | A53            | 9.2-2019.12
 GCC ARM                 | R5F            | 7-2017-q4-major (AM64x only)
 FreeRTOS Kernel         | R5F, M4F, A53  | 11.1.0
@@ -300,7 +302,42 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12271, EXT_EP-12271}
     <td> AM64x: AM243x: ECC: SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR aggregator is failing
     <td> SDL
-    <td> 11.01.00 onwards
+    <td> 11.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-77, EXT_SITMPUSW-77}
+    <td> Modify Read capture delay logic for Tap Mode
+    <td> OSPI
+    <td> 11.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-100, EXT_SITMPUSW-100}
+    <td> UART ISR is blocking for long time
+    <td> UART
+    <td> 11.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-102, EXT_SITMPUSW-102}
+    <td> M4F MCU_I2C not working
+    <td> I2C
+    <td> 11.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-106, EXT_SITMPUSW-106}
+    <td> OSPI Phy Tuning Data is not written correctly in Flash_norOspiOpen()
+    <td> OSPI
+    <td> 11.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-129, EXT_SITMPUSW-129}
+    <td> I2C Isr is using all CPU during transfer
+    <td> I2C
+    <td> 11.00.00 onwards
     <td> AM64x, AM243x
 </tr>
 </table>
@@ -374,14 +411,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> None.
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-77, EXT_SITMPUSW-77}
-    <td> Modify Read capture delay logic for Tap Mode
-    <td> SDL
-    <td> 10.1.0 onwards
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-81, EXT_SITMPUSW-81}
     <td> MCU+ SDK: EPWM_tbTimebaseClkCfg does not choose the optimal pre-scaler combination
     <td> EPWM
@@ -409,6 +438,62 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-86, EXT_SITMPUSW-86}
     <td> The configurations of GPIO interrupt routers are based on banks rather than individual pins.
     <td> GPIO
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-109, EXT_SITMPUSW-109}
+    <td> Wrong comments on HwiP_inISR() API
+    <td> DPL
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-111, EXT_SITMPUSW-111}
+    <td> UART DMA LLD Build issue
+    <td> UART
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-116, EXT_SITMPUSW-116}
+    <td> AM64X : Application gets stuck with Multiple UARTS with DMA enabled
+    <td> UART
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-117, EXT_SITMPUSW-117}
+    <td> Linux Kernel IPC Examples are broken
+    <td> IPC
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-118, EXT_SITMPUSW-118}
+    <td> OSPI tuning algorithm finds points in noisy region on rare scenarios
+    <td> OSPI
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Adjust the tuning window to not cover the noisy region
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-119, EXT_SITMPUSW-119}
+    <td> UART LLD SysConfig fails to generate the correct files
+    <td> UART
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-121, EXT_SITMPUSW-121}
+    <td> FORCE bit not book keeped properly for MCSPI DMA mode of operation
+    <td> MCSPI
     <td> 7.3.0 onwards
     <td> AM64x, AM243x
     <td> None
@@ -534,63 +619,10 @@ Read this carefully to see if you need to do any changes in your existing applic
 previous SDK version. Also refer to older SDK version release notes to see changes in
 earlier SDKs.
 
-### Compiler Options
+The below table captures the list of migration document sections when migrating from one version to another.
+The migration for a partcluar module will be applicable, if you are migrating from older version listed to
+newer version listed on the table below.
 
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
-
-### Examples
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-<tr>
-    <td> Ethernet
-    <td> -
-    <td> Path for Ethernet examples has been changed from ${MCU_PLUS_SDK_PATH}/examples/networking to ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/examples
-    <td> Refer \ref enet_mcupsdk_10_00_update
-</tr>
-</table>
-
-### OS Kernel
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
-
-### SOC Device Drivers
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
-
-### Networking
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
+Module       | Migration guide                              | Older version  | Newer version
+-------------|----------------------------------------------|----------------| -----------------
+Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >= 11.01.00
