@@ -541,6 +541,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> None
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-131, EXT_SITMPUSW-131}
+    <td> AM64X/AM243X: ENET: TCP/IP bidirectional throughput drops during iperf testing
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-132, EXT_SITMPUSW-132}
+    <td> AM64X/AM243X: ENET: Enet VLAN ICSSG Example throws assert during channel open
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
 </table>
 
 ## Errata
@@ -661,3 +677,4 @@ newer version listed on the table below.
 Module       | Migration guide                              | Older version  | Newer version
 -------------|----------------------------------------------|----------------| -----------------
 Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >= 11.01.00
+Networking   | \ref enet_mcupsdk_10_00_update   &zwj;       |   <= 11.00.00  | >= 11.01.00
