@@ -340,6 +340,41 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 11.00.00 onwards
     <td> AM64x, AM243x
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12336, EXT_EP-12336}
+    <td> Last 1B of payload missing in forwarding scenario
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12715, EXT_EP-12715}
+    <td> Local injection (TX) - Transmission failure due "TX Pkt not available"
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12716, EXT_EP-12716}
+    <td> PRU - Task Manager disable during firmware init
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12717, EXT_EP-12717}
+    <td> Packets reception failure: 10Mbps speed
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12718, EXT_EP-12718}
+    <td> Non-recoverable TX underflow with Bidirectional traffic in 100M MII mode
+    <td> Ethernet (ICSSG)
+    <td> 11.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
 </table>
 
 ## Known Issues
@@ -499,12 +534,12 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> None
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12336, EXT_EP-12336}
-    <td> Last 1B of payload missing in forwarding scenario
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12719, EXT_EP-12719}
+    <td> Throughput drops to 95.5% with bidirectional mixed traffic
     <td> Ethernet (ICSSG)
-    <td> 10.1.0 onwards
+    <td> 11.01.00 onwards
     <td> AM64x, AM243x
-    <td> No known workaround
+    <td> None
 </tr>
 </table>
 
