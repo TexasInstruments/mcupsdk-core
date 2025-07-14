@@ -92,7 +92,7 @@ Refer \ref EXAMPLES_ENET_CPSW_TSN_GPTP to build the lldp example.
 Refer \ref EXAMPLES_ENET_CPSW_TSN_GPTP for HW Setup.
 
 ## Create a network between EVM and host PC
-EVM and PC has to connected directly as shown below using CAT6 or CAT5 cable
+EVM and PC has to be connected directly as shown below using CAT6 or CAT5 cable
   \imageStyle{gptp_topology_evm_pc.png,width:30%}
   \image html gptp_topology_evm_pc.png Local network between PC and EVM
 

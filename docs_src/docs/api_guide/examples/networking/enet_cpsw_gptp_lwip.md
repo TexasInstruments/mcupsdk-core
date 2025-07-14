@@ -9,7 +9,7 @@ On the gPTP front, the application used here supports all the below modes:
     - gPTP End-Point time_receiver mode (i.e. slave mode)
     - gPTP Bridge mode
 
-In this example, We use two Rx and two Tx DMA channel, one Rx and one Tx channel specific to gPTP traffic and one Rx and one Tx channel specific to non-gPTP traffic, this is handled by LwIP stack.
+In this example, two Rx and two Tx DMA channels are used, one Rx and one Tx channel specific to gPTP traffic and one Rx and one Tx channel specific to non-gPTP traffic, this is handled by LwIP stack.
 
   \imageStyle{gPTPwithLwIP.png,width:20%}
   \image html gPTPwithLwIP.png 
@@ -142,7 +142,7 @@ Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -155,7 +155,7 @@ Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below.
+- Connect an Ethernet cable to the EVM from host PC as shown below.
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -166,7 +166,7 @@ Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 #### For CPSW based examples
 
-- Connect a ethernet cable to the EVM from host PC as shown below.
+- Connect an Ethernet cable to the EVM from host PC as shown below.
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -200,7 +200,7 @@ One sample signal captured using oscilloscope. Blue from gPTP TT (master) and pu
     \image html gptp_pps_out_scope_capture.jpg **Figure**: Signal captured on oscilloscope
 
 ## Create a network between EVM and host PC
-EVM and PC has to connected directly as shown below using CAT6 or CAT5 cable. If there is ethernet switch placed in between, make sure the switch is gPTP capable. Connect both EVM and PC to a DHCP server to get the IP addressess. 
+EVM and PC has to be connected directly as shown below using CAT6 or CAT5 cable. If there is an ethernet switch placed in between, make sure the switch is gPTP capable. Connect both EVM and PC to a DHCP server to get the IP addresses.
   \imageStyle{Lwip-gPTP-setup.png,width:30%}
   \image html Lwip-gPTP-setup.png Local network between PC and EVM
  

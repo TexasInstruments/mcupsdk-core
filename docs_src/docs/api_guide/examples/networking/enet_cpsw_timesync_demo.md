@@ -2,7 +2,7 @@
 
 [TOC]
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
-\warning This example obsolete and will be removed in future releases. Please refer to \ref EXAMPLES_ENET_CPSW_TSN_GPTP for time synchonization demos.
+\warning This example is obsolete and will be removed in future releases. Please refer to \ref EXAMPLES_ENET_CPSW_TSN_GPTP for time synchonization demos.
 \endcond
 # Terms and Abbreviations
 

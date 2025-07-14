@@ -13,8 +13,8 @@ However, the application used here supports all the below modes:
 In this example, ptp4l on connected Host PC is configured to force gPTP time_receiver mode, so that the DUT becomes time_transmitter (i.e. gPTP master) mode.
 Yang based configuration is also supported. Currently File System is not supported, will be added in future releases.
 
-In this example, We use dedicated Rx and Tx DMA channels for gPTP traffic.This example is supported in both ICSSG Switch and Dual Mac modes.
-In ICSSG Dual Mac mode, Currently only Mac Port 1 is supported for gPTP.
+In this example, We use dedicated Rx and Tx DMA channels for gPTP traffic.This example is supported in both ICSSG Switch and Dual MAC modes.
+In ICSSG Dual MAC mode, Currently only Mac Port 1 is supported for gPTP.
 
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are echoed back by the application.
 
@@ -108,7 +108,7 @@ delay_mechanism         P2P
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -121,7 +121,7 @@ delay_mechanism         P2P
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -132,7 +132,7 @@ delay_mechanism         P2P
 
 #### For ICSS based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for ICSS based ethernet

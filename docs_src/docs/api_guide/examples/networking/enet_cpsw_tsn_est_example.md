@@ -10,16 +10,16 @@
   The yang interface in the TSN is governed by a module called uniconf which runs as a daemon. Any application which interacts with the uniconf is called as a uniconf client. The uniconf client configures 802.1 Qbv by
   opening yang database (DB), write config yang parameters to DB and triggers the uniconf for reading parameters from DB and writing to HW. The uniconf reads or writes parameters from or to HW by calling Enet LLD driver.
 
-  Please note that the file system support is not yet integrated to ethernet examples.
+  Please note that the file system support is not yet integrated in ethernet examples.
 
-  In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listner DUT or device can verify the time-slots of the received packets.
+  In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listener DUT or device can verify the time-slots of the received packets.
 
 \cond SOC_AM263X
 Please note, The receive packet time stamping of non-ptp traffic is currently not supported on AM263x. User needs to use other time-stamping device to capture the receive time-stamps. The receive packet time-stamping support is available on AM243x and AM64x. If AM243x or AM64x is available, you can connect to them and configure them as listener.
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X
-  \note Host based receive packet time-stamping is enabled to estimate the packet reception timing accuracy, on the listener side.However, note we have a HW errata i2401 regarding this feature and hence host based rx packet timestamping feature should be disabled in production code.
+  \note Host based receive packet time-stamping is enabled to estimate the packet reception timing accuracy, on the listener side.\n However, there is a **HW errata i2401** regarding this feature and hence host based rx packet timestamping feature should be disabled in production code.
 \endcond
 
 See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
@@ -65,20 +65,20 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 # Constraints
 
 - This application only enables one MAC port which has the interface name *tilld0*.
-  This interface is mapped to Mac port 1 for all MCU devices.
-  To change default Mac port for this example, please change the macro
+  This interface is mapped MAC port 1 for all MCU devices.
+  To change the default MAC port for this example, please change the macro
   *DEFAULT_INTERFACE_INDEX* from *qosapp_misc.h* from 0 another value (1, 2, 3).
 
 \cond SOC_AM263X
-- The application can be only run as talker. Please input character "t" from UART terminal.
+- The application can only be run as talker. Please input character "t" from the UART terminal.
 \endcond
 \cond SOC_AM64X || SOC_AM243X
 - The application can be only run as talker, listener or bridge mode depending on  
   input characters from UART terminal. (t: talker, l: listener; b: bridge mode)
 \endcond
 
-- Num of streams on talker is 2 with traffic priorities 0 and 2 mapped to HW queue 0
-  and 2 respectively. Num of streams and priority can be changed by modifying the
+- Number of streams on talker is 2 with traffic priorities 0 and 2 mapped to HW queue 0
+  and 2 respectively. Number of streams and priority can be changed by modifying the
   *gEnetEstAppTestLists* from the est_init.c.
 
 \cond SOC_AM64X || SOC_AM243X
@@ -97,7 +97,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 # Configuration Parameters
 
- - Default mac port can be changed by modifying the `DEFAULT_INTERFACE_INDEX`
+ - Default MAC port can be changed by modifying the `DEFAULT_INTERFACE_INDEX`
    from the `qosapp_misc.h`.
 
  - EST Schedule (Input parameters)
@@ -139,20 +139,20 @@ Each of the 8 gates (one per priority) can be in one of two states:
 
    **Where**
 
-   + `baseTime`: PTP time round-off to the `delayOffset` to have the same both
-     `baseTime` on talker and listener to apply the EST schedule that the same
+   + `baseTime`: PTP time rounded-off to the `delayOffset` to have the same
+     `baseTime` on both talker and listener to apply the EST schedule that the same
      time in the future.
 
    + `delayOffset`: added time to current PTP time for `baseTime` to apply the
      schedule in the future. It should be a multiple of the `cycleTime` and
      large enough so that user can have enough time to start talker and listener
-     by entering a character to UART terminal.
-     The current `delayOffset` is `100000*cycleTime` = 24800000us (24.8 seconds).
+     by entering a character to UART terminal. \n
+     The current `delayOffset` is `100000*cycleTime` = 24800000us (24.8 seconds).\n
      The factor '100000' is chosen to have `delayOffset` above 20secs.
 
 # Expected Behavior
 \cond SOC_AM263X
-- The below is the expected behavior on listener side, If you have AM243x or AM64x, you can configure them to perform this verification process.
+- Below is the expected behavior on the listener side. If you have AM243x or AM64x, you can configure them to perform this verification process.
 \endcond
 
 -  With the schedule configured above, the expectation is that
@@ -167,9 +167,9 @@ Each of the 8 gates (one per priority) can be in one of two states:
    <tr><td> 62us--124us <td> 186us--248us
    </table>
 
-   + To check whether packets received inside a time window, the rx timestamp,
-     called rxts (PTP time) of each received packet is captured by host port on
-     the listener's side.
+   + To check whether packets are received within a time window, the rx timestamp,
+     called rxts (PTP time) of each received packet, is captured by host port on
+     the listener's side.\n
      Then the `timeSlot` of each packet is calculated using the following formula:
 
      \code
@@ -177,7 +177,7 @@ Each of the 8 gates (one per priority) can be in one of two states:
      \endcode
 
      The *timeSlot* is compared with the time windows above for each packet
-     to check whether the packet received inside or outside the expected time windows.
+     to check whether the packet received inside or outside the expected time windows.\n
      The EST works when percentage of packets received outside of expected time
      windows less than or equal 1%.
 
@@ -207,7 +207,7 @@ Then the EST application will be started when the `EnetApp_startTsn` is called.
   and `standard/ieee/draft/802.1/Qcw/ieee802-dot1q-sched.yang`
   from the https://github.com/YangModels/yang.git
 
-- Enet-lld supports to configure the `admin-control-list`,
+- Enet-lld supports configuration of the `admin-control-list`,
   `baseTime` (`admin-base-time`) and cycleTime (`admin-cycle-time`),
   this section describes the parameters of the `admin-control-list`
   Here are parameters of the `admin-control-list` after converting
@@ -274,9 +274,8 @@ Then the EST application will be started when the `EnetApp_startTsn` is called.
    so that the uniconf writes parameters to HW. See `EnetEstApp_setAdminControlList` of the `est_init.c`
    for yang configuration.
 
-   Note
-   The network interface `tilld0` is default network interface name, name of network interface
-   can be changed by changing default Mac port configured for the example.
+   \note The network interface `tilld0` is the default network interface name, name of network interface
+   can be changed by changing the default MAC port configured for the example.
 
 # Build Enet TSN EST Example
 
@@ -312,11 +311,11 @@ In addition, follow the steps in the next section.
 - The talker or listener can be run on GM or Slave, whichever devices you choose.
   However, we recommend running the talker on the Slave device and listener on the GM.
   The reason for that is the slave device needs to be adjusted PTP time to sync
-  with the GM.
+  with the GM.\n
   Hence, there is a higher possibility that EST use case will fail due to PTP
   synchronization issue than running the talker on the GM.
   After running both devices, the PTP slave device is the one which shows the
-  following debug log on UART
+  following debug log on UART.
 \endcond
 
 \code
@@ -375,7 +374,8 @@ In addition, follow the steps in the next section.
   effect (around 20 seconds).
 
 \cond SOC_AM243X || SOC_AM64X
-- Observe test result
+- Observe test result.
+
   The number of packets received inside expected time windows are called good packets
   and outside the expected time windows are bad packets.
   Press *d* on the UART terminal of the listener to display number of good/bad packets

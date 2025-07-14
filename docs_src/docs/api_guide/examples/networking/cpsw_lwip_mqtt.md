@@ -25,7 +25,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechan
 
 \endcond
 
-The example does below
+The example does the following:
 - Initializes the ethernet driver for the underlying HW
 - Initializes the LwIP stack for TCP/UDP IP.
 - Client gets a static IP address and launches the MQTT client connection request.
@@ -56,7 +56,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 # Configuring Syscfg
 
-- Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Number of DMA descriptors and buffering.
+- Following Syscfg option allows flexibility to configure memory footprint based on the required use case like: Number of DMA descriptors and buffering.
 
 - Supported Options with default configuration
 
@@ -70,39 +70,39 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 <tr>
     <td>Mdio Manual Mode Enable
-    <td>TI Networking / Enet (CPSW)
-    <td>Flag to enable MDIO manual mode in example. Driver support for Manual mode is enabled, so this parameter configures manual mode in the example.
-    <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
+    <td>TI Networking / Enet (CPSW) / MDIO Config
+    <td>Flag to enable MDIO manual mode in example.\n Driver support for Manual mode is enabled, so this parameter configures manual mode in the example.
+    <td>Default is true.\n If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
-    <td>TI Networking / Enet (CPSW)
-    <td>Select which port to Disable
-    <td>Default is Port1 enabled. If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
+    <td>TI Networking / Enet (CPSW) / MAC Port Config
+    <td>Select which port to Disable.
+    <td>Default is Port1 enabled.\n If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
 </tr>
 \endcond
 
 <tr>
     <td>Enable Packet Pool Allocation
-    <td>TI Networking / Enet (CPSW)
-    <td>Flag to enable packet allocation from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
-    <td>Default is true. It is disabled for lwip based examples. If enabled size of pkt pool size depends on 'Large Pool Packet Size', 'Large Pool Packet Count', 'Medium Pool Packet Size', 'Medium Pool Packet Count', 'Small Pool Packet Size' and 'Small Pool Packet Count'.
+    <td>TI Networking / Enet (CPSW) / Packet Pool Config
+    <td>Flag to enable packet allocation from enet utils library.\n It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
+    <td>Default is true. It is disabled for lwip based examples.\n If enabled, size of pkt pool size depends on 'Large Pool Packet Size', 'Large Pool Packet Count', 'Medium Pool Packet Size', 'Medium Pool Packet Count', 'Small Pool Packet Size' and 'Small Pool Packet Count'.
 </tr>
 
 <tr>
     <td>Number of Tx Packet
     <td>TI Networking / Enet (CPSW) / DMA channel config
     <td>No of Tx packets required for DMA channel
-    <td>Default is 16. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
+    <td>Default is 16.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
 </tr>
 
 <tr>
     <td>Number of Rx Packet
     <td>TI Networking / Enet (CPSW) / DMA channel config
     <td>No of Rx packets required for DMA channel
-    <td>Default is 40. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
+    <td>Default is 40.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
 </tr>
 </table>
 
@@ -117,14 +117,14 @@ Mbed TLS is a C library that implements cryptographic primitives, X.509 certific
 
 # TLS certificates
 
-Here we use self signed openSSL generated certificates for TLS handshake. The steps for generation of certificate are shown below.
+Here we use self-signed openSSL generated certificates for TLS handshake. The steps for generation of certificates are shown below.
 The mosquitto broker accepts certificates in PEM (.crt extension) format. The format for client certificates used in the SDK code is DER format in the form of binary data.
 
 The certificates needed here are:
 1. Server certificates
-2. CA certificartes
+2. CA certificates
 
-The client certificates can be shared across multiple clients. For simplicity we use "1234" as passwords for all the certificates and broker configuration.
+The client certificates can be shared across multiple clients. For simplicity, we use "1234" as passwords for all the certificates and broker configuration.
 
 \note In this implementation of MQTT client, we have not enabled the file system support. We directly use the certificate's and key's data in binary form. The client_info.h file has both the Certificate, the private key, the CA details and the password. The variables are required by mqtt.c to perform a 2way authentication.
 
@@ -289,7 +289,7 @@ a0503581@a0503581:~/mosquitto$ diff mosquitto.conf my_mosquitto.conf
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -300,7 +300,7 @@ a0503581@a0503581:~/mosquitto$ diff mosquitto.conf my_mosquitto.conf
 
 #### For CPSW based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -315,7 +315,7 @@ to a linux PC (192.168.1.2) running the mosquitto broker.
   \imageStyle{mqtt_connections.png,width:45%}
   \image html mqtt_connections.png Local network between PC and EVM
 
-- To check the router connection with host PC, recommend to disconnect all other networking conenctions
+- To check the router connection with host PC, recommend to disconnect all other networking connections
   on the PC, sometimes you may need to disable firewall SW, and make sure the IP address of the linux PC is correct.
 
 
@@ -391,9 +391,9 @@ MQTT client "test" data received: helloworld, data len: 10 bytes
 
 \cond SOC_AM64X || SOC_AM243X
 - If you see MAC address as `00:00:00:00:00:00`, likely you are using a very early Si sample which does not
-  have MAC address "fused" in, in this case do below steps
+  have MAC address "fused" in. In this case, do the below steps
 
-   - Open file `source/networking/.meta/enet_cpsw/templates/am64x_am243x/enet_soc_cfg.c.xdt`
+   - Open file `source/networking/enet/core/sysconfig/networking/.meta/enet_cpsw/templates/am64x_am243x/enet_soc_cfg.c.xdt`
    - Uncomment below line
         \code
         #define ENET_MAC_ADDR_HACK (TRUE)
@@ -407,7 +407,7 @@ MQTT client "test" data received: helloworld, data len: 10 bytes
   EVM as "E1" version.
 \endcond
 
-- If you see a valid, non-zero MAC address and continuosly seieing "Waiting for network UP..." prints in UART terminal
+- If you see a valid, non-zero MAC address and continuously see "Waiting for network UP..." prints on the UART terminal
    - Make sure you see `Enet IF UP Event.` message, if not check the ethernet cable
 
 - If the TLS handshake fails:

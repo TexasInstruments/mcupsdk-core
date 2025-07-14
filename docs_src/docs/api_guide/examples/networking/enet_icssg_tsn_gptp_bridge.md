@@ -10,7 +10,9 @@ However, the application used here supports all the below modes:
     - gPTP End-Point time_receiver mode (i.e. slave mode)
     - gPTP Bridge mode
 
-Please note that only ICSSG switch mode supports gPTP bridge. In this example, there are two PCs connected to EVM (DUT). One of the PC is configured as PTP master and another as PTP slave.
+Please note that only ICSSG switch mode supports gPTP bridge. 
+
+In this example, there are two PCs connected to EVM (DUT). One of the PC is configured as PTP master and another as PTP slave.
 
 Yang based configuration is also supported. Currently File System is not supported, will be added in future releases.
 
@@ -133,7 +135,7 @@ delay_mechanism         P2P
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -146,7 +148,7 @@ delay_mechanism         P2P
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -157,7 +159,7 @@ delay_mechanism         P2P
 
 #### For ICSS based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for ICSS based ethernet

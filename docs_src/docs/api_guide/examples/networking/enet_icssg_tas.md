@@ -16,9 +16,9 @@ On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG HW Mechanis
 
 \endcond
 
-This example do below:
+This example does the following:
 - Target-side application running on a Cortex R5F core.
-    - One TX channel and one RX flow are opened for each available MAC port.
+    - One TX channel and one RX flow is opened for each available MAC port.
     - The application has a menu to start the TAS test and to Print or Reset the Statistics. This menu along with application logs are implemented via UART.
 - Host-side functionality
 	- Wireshark can be used to receive and verify packet contents.
@@ -42,7 +42,7 @@ Below shows the configuration used for the Time Aware Shaper which is used to co
 
 - The default cycle time is set to be 250us and each window is equally divided in the cycle as shown above.
 - The startTasTest test case configures each of the MAC ports with the above-mentioned configuration and transmits 2 packets each with traffic class values varying from 0 to 7.
-- As per the TAS configuration the packets with traffic class of 0 and 1 will only be transmitted within the time duration of window index 0, traffic class 2 and 3 will be transmitted in window index 1 and so on.
+- As per the TAS configuration, the packets with traffic class of 0 and 1 will only be transmitted within the time duration of window index 0, traffic class 2 and 3 will be transmitted in window index 1 and so on.
 - The startTasTest test case verifies if all the packets transmitted have their tx timestamp within their corresponding windows. If this condition is satisfied then test is marked as passed.
 - The test is repeated for all ports with link up.
 

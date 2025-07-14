@@ -111,7 +111,7 @@ The main software components in the block diagram are described below
 <tr>
     <td>TI Resource Explorer (TIREX)
     <td>\ref TIREX_INTRO_PAGE
-    <td>Web broswer based tool to explore the SDK, select, import and run the examples
+    <td>Web browser based tool to explore the SDK, select, import and run the examples
 </tr>
 <tr>
     <td>SDK Tools and Utilities

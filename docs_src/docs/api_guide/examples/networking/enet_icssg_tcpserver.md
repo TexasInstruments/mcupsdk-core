@@ -6,7 +6,7 @@
 
 \note lwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
-This example is a TCP/UDP IP application using the LwIP networking stack, coupled with ethernet driver (ENET-LLD)
+This example is a TCP/UDP IP application using the LwIP networking stack, coupled with an Ethernet driver (ENET-LLD).
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -16,25 +16,25 @@ On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG Hardware pe
   - This HW can be used with industrial communication protocols as well
   - In this example we use ICSS as a standard ethernet port
 
-It uses ENET ethernet driver underneath with LwIP TCP/IP networking stack
+It uses ENET ethernet driver underneath with LwIP TCP/IP networking stack.
 
 \endcond
 
-This example shows about how to implement a simple TCP Server on LwIP networking stack using netconn API coupled with ethernet driver (ENET).
+This example shows how to implement a simple TCP Server on LwIP networking stack using netconn API coupled with an Ethernet driver (ENET).
 On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG as HW mechanism
-  - NOTE: Dual MAC mode doesn't imply both ports being used.
-  - To enable dual MAC/Dual Netif mode, two instances of the ICSSG peripheral have to be initialised in the syscfg
-  - The default configuration for this example is set to Dual Netif mode.
+  - NOTE: Dual MAC mode doesn't imply that both ports are being used
+  - To enable dual MAC/Dual Netif mode, two instances of the ICSSG peripheral have to be initialised in syscfg
+  - The default configuration for this example is set to Dual Netif mode
   - ICSSG is a standard ethernet switch + port HW
-  - It uses ethernet driver underneath with LwIP TCP/IP networking stack
+  - It uses an Ethernet driver underneath with LwIP TCP/IP networking stack
   - ICSSG can be configured in two modes: Switch or MAC.
   - Using Dual LwIP Netif with two ICSSG instances
 
-The example does below
+The example does the following:
 - Initializes the ethernet driver for both the ICSSG MAC instances.
-- Initializes the LwIP stack for TCP/UDP IP and Starts TCP Server task.
-- TCP Server task waits for connection from client on port 8888. When connection is established, it waits for any message from client.
-- TCP Server task sends back "Greetings from Texas Instruments!" message back to client and closes the connection.
+- Initializes the LwIP stack for TCP/UDP IP and starts the TCP Server task.
+- TCP Server task waits for connection from client on port 8888. When connection is established, it waits for any message from the client.
+- TCP Server task sends back "Greetings from Texas Instruments!" message back to the client and closes the connection.
 
 # Supported Combinations
 
@@ -62,13 +62,7 @@ The example does below
 
 # Configuring Syscfg
 
-- Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Number of DMA descriptors and buffering.
-
-- Supported Options with default configuration
-
-# Configuring Syscfg
-
-- Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Gigabit Ethernet Support Enable, premption support, McM Support and QoS level required.
+- Following Syscfg option allows flexibility to configure memory footprint based on the required use case like: Gigabit Ethernet Support Enable, preemption support, McM Support and QoS level required.
 
 - Supported Options with default configuration
 
@@ -81,20 +75,20 @@ The example does below
 
 <tr>
     <td>Pkt Pool Enable Flag
-    <td>Flag to enable packet allocation from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
-    <td>Default is true. It is disabled for lwip based examples. If enabled size of pkt pool size depends on Number of Tx Packet and Number of Rx Packet.
+    <td>Flag to enable packet allocation from enet utils library.\n It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
+    <td>Default is true. It is disabled for lwip based examples.\n If enabled, size of pkt pool size depends on Number of Tx Packet and Number of Rx Packet.
 </tr>
 
 <tr>
     <td>Number of Tx Packet
     <td>No of Tx packets required for DMA channel
-    <td>Default is 16. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
+    <td>Default is 16.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
 </tr>
 
 <tr>
     <td>Number of Rx Packet
     <td>No of Rx packets required for DMA channel
-    <td>Default is 32. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
+    <td>Default is 32.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
 
 <tr>
     <td>QoS Level
@@ -105,20 +99,19 @@ The example does below
 <tr>
     <td>Premption Enable
     <td>Flag to enable premption
-    <td>Default is false. If enabled will add premption buffer to service the feature.
+    <td>Default is false.\n If enabled, it will add premption buffer to service the feature.
 </tr>
 
 <tr>
     <td>Gigabit Support
     <td>Decides buffer pool allocation based on interface speed selected
-    <td>Default is true. Enabling this option will increase buffer requirement as more buffering required at gigabit speed.
+    <td>Default is true.\n Enabling this option will increase buffer requirement as more buffering required at gigabit speed.
 </tr>
 
 <tr>
     <td>Netif instance
     <td>TI Networking / Enet (ICSSG) / LWIP Interface config
-    <td>No of netifs allocated by the example
-    <td>Only one netif should be set to default when more than one netif is allocated.
+    <td>Number of netifs allocated by the example.\n Only one netif should be set to default when more than one netif is allocated.
 </tr>
 </table>
 
@@ -127,10 +120,10 @@ Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 ## Configuring ICSSG Switch and DUAL MAC modes
 
-- ICSSG Switch mode requires Two RX DMA channels whereas MAC mode requires only One RX DMA channels. Out of box, the example is configured to be in Switch mode.
-- When switching between these two modes, user needs to take care of removing or adding RX DMA channels and adjusting Number of RX packets accordingly in Packet Pool Config.
+- ICSSG Switch mode requires two RX DMA channels whereas MAC mode requires only one RX DMA channel. Out-of-box, the example is configured to be in Switch mode.
+- When switching between these two modes, user needs to take care of removing or adding RX DMA channels and adjusting the number of RX packets accordingly in Packet Pool Config.
 - Syscfg checks are in place to throw a warning for an incorrect configuration.
-- Configurations for RX DMA channels and corresponding Packet Pool config is shown below:
+- Configurations for RX DMA channels and corresponding Packet Pool config are shown below:
 
 ### ICSSG SWITCH
 - Configurations for RX DMA channel can be located in Syscfg Tool under path: "TI Networking"→"Enet (ICSS)"→ "DMA channel config"→ "ENET rx dma channel"
@@ -143,9 +136,9 @@ Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 ### ICSSG DMAC
 
-- DMAC doesn't imply both MAC PORTs being used. It used only one MAC at a time.
-- To enable DMAC, two ICSSG peripheral modules have to created in SYSConfig.
-- Configurations for RX DMA channel can be located in Syscfg Tool under path: "TI Networking"→"Enet (ICSS)"→ "DMA channel config"→ "ENET rx dma channel"
+- DMAC doesn't imply that both MAC PORTs are being used. It uses only one MAC at a time.
+- To enable DMAC, two ICSSG peripheral modules have to created in SysConfig.
+- Configurations for RX DMA channel are located in the Syscfg Tool under the path: "TI Networking"→"Enet (ICSS)"→ "DMA channel config"→ "ENET rx dma channel"
   \imageStyle{icssg_dmac_rx_channel_config.png,width:30%}
   \image html icssg_dmac_rx_channel_config.png ICSSG DMAC RX channel configuration
   
@@ -179,7 +172,7 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 
 #### For ICSSG based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for ICSSG based ethernet
@@ -192,18 +185,18 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 
 #### For ICSSG based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for ICSSG based ethernet
 
 ### AM243X-LP
 
-\note AM243X-LP has two ethernet Ports which can be configured as both ICSSG ports.
+\note AM243X-LP has two ethernet ports which can be configured as both ICSSG ports.
 
 #### For ICSSG based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for ICSSG based ethernet
@@ -215,14 +208,14 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 - The EVM will get an IP address using DHCP, so make sure to connect the other end of the cable
 to a network which has a DHCP server running.
 
-- To get started one can create a simple local network
+- To get started, one can create a simple local network
   between the EVM and the host PC by using a home broadband/wifi router as shown below.
   Most such routers run a DHCP server
 
   \imageStyle{lwip_example_01.png,width:30%}
   \image html lwip_example_01.png Local network between PC and EVM
 
-- To check the router connection with host PC, recommend to disconnect all other networking conenctions
+- To check the router connection with host PC, recommend to disconnect all other networking connections
   on the PC, sometimes you may need to disable firewall SW, and make sure the router is able
   to assign a IP address to your host PC
 
@@ -297,7 +290,7 @@ accepted new connection 70128D20
     \endcode
     "192.168.1.10" should be replaced with IP of EVM.
 
-3. Start TCP client using 'ncat' cmds as shown below. Below steps have been tried with a Linux Ubuntu 18.04 host PC running bash shell
+3. Start TCP client using 'ncat' cmds as shown below. Below steps have been tried with a Linux Ubuntu 18.04 host PC running a bash shell
 
    Install 'ncat' if not installed by doing below
     \code
@@ -319,9 +312,9 @@ accepted new connection 70128D20
 
 \cond SOC_AM64X || SOC_AM243X
 - If you see MAC address as `00:00:00:00:00:00`, likely you are using a very early Si sample which does not
-  have MAC address "fused" in, in this case do below steps
+  have MAC address "fused" in. In this case, do the below steps
 
-   - Open file `source/networking/.meta/enet_icss/templates/enet_soc_cfg_am64x_am243x.c.xdt
+   - Open file `source/networking/enet/core/sysconfig/networking/.meta/enet_icss/templates/enet_soc_cfg_am64x_am243x.c.xdt`
    - Uncomment below line
         \code
         #define ENET_MAC_ADDR_HACK (TRUE)
@@ -329,7 +322,7 @@ accepted new connection 70128D20
    - Rebuild the libraries and examples (\htmllink{@VAR_MCU_SDK_DOCS_PATH/MAKEFILE_BUILD_PAGE.html, Using SDK with Makefiles})
 \endcond
 
-- If you see a valid, non-zero MAC address and continuosly seieing "Waiting for network UP..." prints in UART terminal
+- If you see a valid, non-zero MAC address and continuously see "Waiting for network UP..." prints on the UART terminal
    - Make sure you see `Enet IF UP Event.` message, if not check the ethernet cable
    - Check the local network and check if the DHCP server is indeed running as expected
    - When using a home broadband/wifi router, its possible to check the clients connected to the DHCP server via a web
