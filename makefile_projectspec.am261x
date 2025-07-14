@@ -571,6 +571,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_ecb_256_am261x-som_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_ecb_256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
@@ -2343,6 +2345,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -3073,6 +3081,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_ecb_256_am261x-som_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_ecb_256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4845,6 +4855,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -5575,6 +5591,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_ecb_256_am261x-som
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_ecb_256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_stream_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha256_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha512_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
@@ -7347,6 +7365,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_dthe_aes_stream_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_aes_gcm_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_aes_gcm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  dthe_hmac_sha256_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -8093,6 +8117,8 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_gcm/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
