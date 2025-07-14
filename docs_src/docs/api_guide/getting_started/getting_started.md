@@ -6,7 +6,7 @@
       However the steps in Linux would remain the same, unless mentioned otherwise.
 
 \note ${SDK_INSTALL_PATH} refers to the path where the SDK is installed. Recommend to install in
-      `C:/ti` in Windows, and `${HOME}/ti` in Linux. To install to other locations, refer \ref INSTALL_NON_DEFAULT
+      `C:/ti` in Windows, and `${HOME}/ti` in Linux. 
 
 \note `{some text}` refers to a variable string that should be replaced by user and `{some text}` should not be typed verbatim
       on the command prompt.

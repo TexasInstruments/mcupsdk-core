@@ -6,7 +6,6 @@ Refer below pages for additional useful information for developers to efficientl
 SDK features and tools.
 
 \cond SOC_AM64X || SOC_AM243X
-- \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
 - \subpage LLD_GUIDE
 - \subpage MEMORY_MAP

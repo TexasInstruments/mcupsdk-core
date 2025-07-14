@@ -69,12 +69,12 @@ A quick recap of the steps that need to have been done before you proceed
 
 ## Launch CCS {#CCS_LAUNCH}
 
-- Launch the target configuration created with \ref CCS_NEW_TARGET_CONFIG
+- Start Project-less Debug with the target configuration created with \ref CCS_NEW_TARGET_CONFIG
 
     \imageStyle{ccs_launch_00.png,width:40%}
-    \image html ccs_launch_00.png "Launch Target Configuration"
+    \image html ccs_launch_00.png "Start Project-less Debug"
 
-- You will see the @VAR_SOC_NAME target configuration in the "Debug" window as shown below
+- You will see the @VAR_SOC_NAME target configuration in the "Threads" tab of "Debug" window as shown below
 
     \imageStyle{ccs_launch_01.png,width:40%}
     \image html ccs_launch_01.png "Target Configuration After Launch"
@@ -158,12 +158,12 @@ continue debugging or reload application of interest on the cores.
 \endcond
 - Reset the CPU
 
-    \imageStyle{ccs_load_run_01.png,width:50%}
+    \imageStyle{ccs_load_run_01.png,width:60%}
     \image html ccs_load_run_01.png "Reset CPU"
 
 - Load program on the CPU
 
-    \imageStyle{ccs_load_run_02.png,width:50%}
+    \imageStyle{ccs_load_run_02.png,width:60%}
     \image html ccs_load_run_02.png "Load Program"
 
 - **When using makefiles to build**,
@@ -183,22 +183,22 @@ continue debugging or reload application of interest on the cores.
 
 - After the program is loaded, you will see the program is halted at "main" as shown below
 
-    \imageStyle{ccs_load_run_06.png,width:40%}
+    \imageStyle{ccs_load_run_06.png,width:60%}
     \image html ccs_load_run_06.png "Program at main()"
 
 - Depending on the example you are running, you may need to load more programs on other CPUs
   for the example to work as expected. Typically, this is needed for multi-core interprocessor
   communication (IPC) examples. For the "hello world" program shown above, no more programs need to be loaded.
 
-- Select "Resume" to run the program and debug using the various CCS debug options
+- Select "Continue" to run the program and debug using the various CCS debug options
 
-    \imageStyle{ccs_load_run_07.png,width:30%}
+    \imageStyle{ccs_load_run_07.png,width:70%}
     \image html ccs_load_run_07.png "Run the Program"
 
 - The program output will be seen on CCS console, and/or UART terminal, if enabled.
   Below shows a sample output on both CCS console and UART console, after running the "hello world" program.
 
-    \imageStyle{ccs_load_run_08.png,width:50%}
+    \imageStyle{ccs_load_run_08.png,width:80%}
     \image html ccs_load_run_08.png "Run the Program"
 
 \cond SOC_AM273X

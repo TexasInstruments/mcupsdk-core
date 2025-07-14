@@ -32,7 +32,7 @@
     \image html select_components_sitara.png "CCS Select Components"
 \endcond
 \cond SOC_AM64X || SOC_AM65X
-- Follow the steps and at below screen, select the component as "Sitara AM3x, AM4x, AM5x and AM6x MPUs" to install @VAR_SOC_NAME related emulation and GELs
+- Follow the steps and at below screen, select the component as "ARM-based Processors" to install @VAR_SOC_NAME related emulation and GELs
 
     \imageStyle{select_components_sitara_am6x.png,width:50%}
     \image html select_components_sitara_am6x.png "CCS Select Components"
@@ -53,10 +53,7 @@
 
 - If using Linux, additionally go through the instructions given at [CCS Linux Host Support](https://software-dl.ti.com/ccs/esd/documents/ccsv11_linux_host_support.html)
 
-- Launch CCS and select the workspace.
-
-    \imageStyle{first_launch.png,width:50%}
-    \image html first_launch.png "CCS Select Workspace"
+- Launch CCS.
 
 \cond SOC_AM261X
 ## Enabling AM261x Device Support in Code Composer Studio (CCS)
@@ -85,39 +82,35 @@
 
 - Launch CCS
 
-- Goto "Window > Preferences"
+- Goto "Window > Preferences > Code Composer Studio Settings"
 
-    \imageStyle{ccs_setup_00.png,width:20%}
+    \imageStyle{ccs_setup_00.png,width:40%}
     \image html ccs_setup_00.png "CCS Preferences"
 
-- Goto "Code Composer Studio > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION listed here.
+- Goto "General > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION listed here.
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
-    \imageStyle{ccs_setup_01.png,width:50%}
+    \imageStyle{ccs_setup_01.png,width:60%}
     \image html ccs_setup_01.png "CCS Products"
 
-- Goto "Code Composer Studio > Build > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
+- Goto "General > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
-    \imageStyle{ccs_setup_02.png,width:50%}
+    \imageStyle{ccs_setup_02.png,width:60%}
     \image html ccs_setup_02.png "CCS Compilers"
 
 \cond SOC_AM64X
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
 ### AM64X-EVM
-- Goto "View > Target Configuration"
 
-    \imageStyle{new_target_config_00.png,width:20%}
-    \image html new_target_config_00.png "Target Configuration Menu"
+- Create a new target configuration from the debug menu
 
-- Create a new target configuration
-
-    \imageStyle{new_target_config_01.png,width:25%}
+    \imageStyle{new_target_config_01.png,width:45%}
     \image html new_target_config_01.png "New Target Configuration"
 
 - Give a nice name to the new target configuration, typically {soc name}_{JTAG type}
 
-    \imageStyle{target_config_name.png,width:50%}
+    \imageStyle{target_config_name.png,width:40%}
     \image html target_config_name.png "Target Configuration Name"
 
 - Select connection as XDS110 USB Debug Probe
@@ -133,7 +126,7 @@
 - Bypass not used CPUs: Go to "Advanced" tab and enable the "Bypass" option as shown in the below image. typically, ICSS_Gx are not used by most developers, so these can be bypassed. Note, you can always
   undo this change later, by editing the target configuration, should you need these CPUs.
 
-    \imageStyle{ccs_target_config_01.png,width:50%}
+    \imageStyle{ccs_target_config_01.png,width:60%}
     \image html ccs_target_config_01.png "Bypass unused targets"
 
 - Click "Save" to save the newly created target configuration.
@@ -146,10 +139,6 @@
 - Now you can move on to \ref EVM_SETUP_PAGE to prepare your EVM for running programs.
 
 ### AM64X-SK
-- Goto "View > Target Configuration"
-
-    \imageStyle{new_target_config_00.png,width:20%}
-    \image html new_target_config_00.png "Target Configuration Menu"
 
 - Create a new target configuration
 
@@ -158,7 +147,7 @@
 
 - Give a nice name to the new target configuration, typically {soc name}_{JTAG type}
 
-    \imageStyle{target_config_name.png,width:50%}
+    \imageStyle{target_config_name.png,width:40%}
     \image html target_config_name.png "Target Configuration Name"
 
 - Select connection as XDS110 USB Debug Probe
@@ -174,7 +163,7 @@
 - Bypass not used CPUs: Go to "Advanced" tab and enable the "Bypass" option as shown in the below image. typically, ICSS_Gx are not used by most developers, so these can be bypassed. Note, you can always
   undo this change later, by editing the target configuration, should you need these CPUs.
 
-    \imageStyle{ccs_target_config_01.png,width:50%}
+    \imageStyle{ccs_target_config_01.png,width:60%}
     \image html ccs_target_config_01.png "Bypass unused targets"
 
 - Click "Save" to save the newly created target configuration.
@@ -247,7 +236,7 @@
 
 - Give a nice name to the new target configuration, typically {soc name}_{JTAG type}
 
-    \imageStyle{target_config_name.png,width:50%}
+    \imageStyle{target_config_name.png,width:40%}
     \image html target_config_name.png "Target Configuration Name"
 
 - Select connection as XDS110 USB Debug Probe
@@ -288,7 +277,7 @@
 
 - Give a nice name to the new target configuration, typically {soc name}_{JTAG type}
 
-    \imageStyle{target_config_name.png,width:50%}
+    \imageStyle{target_config_name.png,width:40%}
     \image html target_config_name.png "Target Configuration Name"
 
 - Select connection as XDS110 USB Debug Probe
