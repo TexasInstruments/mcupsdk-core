@@ -6,13 +6,13 @@
 
 \note lwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
-This example is ICSS-EMAC application using the LwIP networking stack.
+This example is an ICSS-EMAC application using the LwIP networking stack.
 
-The examples do below
+The examples does the following:
 - Initializes the ICSS-EMAC driver for the underlying HW
 - Initializes the LwIP stack
-- Allows user to run and test basic networking features like ping, iperf with TCP/UDP.
-- Allows user to configure between ICSS_EMAC Switch and MAC modes.
+- Allows users to run and test basic networking features like ping, iperf with TCP/UDP.
+- Allows users to configure between ICSS_EMAC Switch and MAC modes.
 \cond SOC_AM263PX || SOC_AM263X
 - Example is configured to run in Switch mode.
 \endcond
@@ -53,7 +53,7 @@ The examples do below
 \endcond
 # Configuring Syscfg
 
-- The following Syscfg parameters in ICSS-EMAC instance is to be changed to swap between Switch and EMAC examples.
+- The following Syscfg parameters in the ICSS-EMAC instance should be changed to swap between Switch and EMAC examples.
 
 <table>
 <tr>
@@ -74,7 +74,7 @@ The examples do below
     <td>RT/NRT Priority Separation Queue
     <td>QUEUE1
     <td>QUEUE4
-    <td>If packets are in Queue <= RT/NRT Priority seperation queue, they will be forwarded to RT callback and others to NRT callback.
+    <td>If packets are in Queue <= RT/NRT Priority separation queue, they will be forwarded to RT callback and others to NRT callback.
     <td>Default is QUEUE4.
 </tr>
 <tr>
@@ -128,16 +128,15 @@ The examples do below
 ## Create a network between EVM and host PC
 
 - The EVM will get an IP address of 192.168.0.200. Make sure to connect the other end of the cable
-to a network which is in the same sub-network..
+to a network which is in the same sub-network.
 
-- To get started, create a simple local network
-  between the EVM and the host PC as shown below.
+- To get started, create a simple local network between the EVM and the host PC as shown below.
 
   \imageStyle{icss_emac_lwip_example_01.png,width:30%}
   \image html icss_emac_lwip_example_01.png Local network between PC and EVM
 
-- After we run the example on the EVM (next step), the EVM will be assigned the IP address, and then host
-  can communicate with the EVM using the assigned IP address.
+- After we run the example on the EVM (in the next step), it will be assigned an IP address using which the host
+  can communicate with the EVM.
 
 ## Run the example
 
@@ -188,7 +187,7 @@ link_callback==UP
 
 ## Measuring the throughput using Iperf:
 
-- Once we get the ip after running the example, we can use following iperf command on windows to get the throughput.
+- Once we get the IP after running the example, we can use following iperf command on windows to get the throughput.
 	- iperf.exe -c 192.168.0.200 -r
 
 ## Sample output for iperf command

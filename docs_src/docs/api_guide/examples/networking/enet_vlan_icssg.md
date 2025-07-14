@@ -4,7 +4,7 @@
 
 # Introduction
 
-This Enet VLAN icssg example demonstrates UNH-IOL VLAN conformance and FDB conformance using Enet with ICSSG peripheral.
+This Enet VLAN ICSSG example demonstrates UNH-IOL VLAN conformance and FDB conformance using Enet with ICSSG peripheral.
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -15,14 +15,14 @@ On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG HW Mechanis
 
 \endcond
 
-This example do below:
+This example does the following:
 - Target-side application running on a Cortex R5F core.
 	- Application receives the packet, copies the payload into a new packet which is then sent back.
 	- The application has a menu to select main test cases or sub test cases which are under main test cases.
 	- VLAN test, FDB test, UTILS test, VLAN Aware/Unaware mode and Unit test default settings are in main test cases in the menu and there are many sub test cases under VLAN and FDB tests which are available at UNH-IOL conformance tests to verify the standard conformance criteria.
-	- UTILS test is to print/reset the statistics, packet receive count, generate Unicast traffic and etc. This menu along with application logs are implemented via UART.
+	- UTILS test is to print/reset the statistics, packet receive count, generate Unicast traffic, etc. This menu along with application logs are implemented via UART.
 - Host-side functionality
-	- Software applications like Colasoft Pkt Builder or packETH tool could be used to generate and send packets, Wireshark can be used to receive and verify packet contents
+	- Software applications like Colasoft Pkt Builder or packETH tool could be used to generate and send packets. Wireshark can be used to receive and verify packet contents.
 
 - The data path enabled in this example is as follows:
 	- Host side (PC) application sends a packet to MAC port.
@@ -35,7 +35,7 @@ This example do below:
         - If packet is Non directed unicast(UC) packet it will be dropped.
         - If packet is directed unicast(UC) or multicast(MC) or broadcast(BC) packet, it will be sent to target application.
         - Currently to test both MAC ports simultaneously in Dual-MAC mode it requires additional enet lld(UDMA channel allocation) changes.
-    - Based on test case selction and Filtering options DUT will decide to forward the packet or to drop the packet.
+    - Based on test case selection and Filtering options DUT will decide to forward the packet or to drop the packet.
 	- Target side application receives the packet, updates the MAC addresses in the Layer-2 header and sends the packet back.
 	- Application like Wireshark (PC) receives the packet and can be seen in the capture window.
 

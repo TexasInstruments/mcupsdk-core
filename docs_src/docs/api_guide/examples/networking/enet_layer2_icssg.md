@@ -4,35 +4,35 @@
 
 # Introduction
 
-This layer 2 icssg example demonstrates usage of Enet with ICSSG peripheral operation.
+This layer 2 icssg example demonstrates the usage of Enet with ICSSG peripheral operation.
 
 \cond SOC_AM64X || SOC_AM243X
 
-On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG HW Mechanism
+On @VAR_SOC_NAME, we can do Ethernet based communication using ICSSG HW Mechanism
 
   - PRU firmware based Ethernet Switch and Dual MAC implementation
   - This HW can be used with industrial communication protocols as well
 
 \endcond
 
-This example do below:
+This example does the following:
 - Target-side application running on a Cortex R5F core.
 	- Application receives the packet, copies the payload into a new packet which is then sent back.
 	- The application has a menu to enable/disable features, such as getting mac address and stats. This menu along with application logs are implemented via UART.
 - Host-side functionality
-	- Software applications like Colasoft Pkt Builder or packETH tool could be used to generate and send packets, Wireshark can be used to receive and verify packet contents
+	- Software applications like Colasoft Pkt Builder or packETH tool can be used to generate and send packets. Wireshark can be used to receive and verify packet contents.
 
 - The data path enabled in this example is as follows:
 	- Host side (PC) application sends a packet to MAC port.
     - Based on Switch mode or Dual-EMAC mode the data flow will differ.
     - In Switch mode:
-        - If packet is non directed unicast(UC) packet, it will be only forwarded.
+        - If packet is non-directed unicast(UC) packet, it will be only forwarded.
         - If packet is directed unicast(UC) packet, it will be sent only to target application.
         - If packet is multicast(MC) or broadcast(BC) packet, it will be forwarded as well as sent to target application.
     - In Dual-mac mode:
-        - If packet is Non directed unicast(UC) packet it will be dropped.
+        - If packet is non-directed unicast(UC) packet, it will be dropped.
         - If packet is directed unicast(UC) or multicast(MC) or broadcast(BC) packet, it will be sent to target application.
-        - Currently to test both MAC ports simultaneously in Dual-MAC mode it requires additional enet lld(UDMA channel allocation) changes.
+        - Currently to test both MAC ports simultaneously in Dual-MAC mode, it requires additional Enet-lld (UDMA channel allocation) changes.
 	- Target side application receives the packet, updates the MAC addresses in the Layer-2 header and sends the packet back.
 	- Application like Wireshark (PC) receives the packet and can be seen in the capture window.
 
@@ -68,13 +68,13 @@ This example do below:
 - Selecting DUAL MAC mode in ICSSG does not imply both the MAC ports being functional.
 - To setup Dual MAC configuration, two instances of ICSSG have to be opened.
 - Both of the instances have to be setup as shown above in the MAC configuration.
-- Unlike shown in the image, set the QoS level to 3 for layer 2 use cases.
-- Dual MAC mode Port of the first instance has to be set to MAC_PORT_1.
+- Unlike what is shown in the image, set the QoS level to 3 for layer 2 use cases.
+- Dual MAC mode port of the first instance has to be set to MAC_PORT_1.
   \imageStyle{icssg_dmac_sysconfig_1.png,width:30%}
   \image html icssg_dmac_sysconfig_1.png ICSSG DUAL MAC PORT-1 configuration.
   
-- Dual MAC mode Port of the second instance has to be set to MAC_PORT_2.
-- Uncheck the option "Enable MDIO MDC Config" in secode ICSSG isntance.
+- Dual MAC mode port of the second instance has to be set to MAC_PORT_2.
+- Uncheck the option "Enable MDIO MDC Config" in the second ICSSG instance.
 - Set the QoS level to 3, same as the first instance.
   \imageStyle{icssg_dmac_sysconfig_2.png,width:30%}
   \image html icssg_dmac_sysconfig_2.png ICSSG DUAL MAC PORT-2 configuration.
@@ -83,9 +83,9 @@ This example do below:
 
 - Open the ICSSG instance in the sysconfig, and select the ICSSG instance as ICSSG1.
 - Both of the instances have to be setup as shown above in the MAC configuration.
-- Unlike shown in the image, set the QoS level to 3 for layer 2 use cases.
+- Unlike what is shown in the image, set the QoS level to 3 for layer 2 use cases.
 - Ensure to check the option "Enable MDIO MDC Config".
-- The system configuration of the ICSSG instance have to be configured as shown below.
+- The system configuration of the ICSSG instance has to be configured as shown below.
   \imageStyle{icssg_switch_sysconfig.png,width:35%}
   \image html icssg_switch_sysconfig.png ICSSG SWITCH MODE configuration.
   
@@ -93,7 +93,7 @@ This example do below:
 - In the DMA channel config module, allocate required number of packets for Tx Channels and Rx flows.
 - Set both the Rx flows as default flows.
 - Set only one Rx flow with 'Number of MAC Address' field as 1. Set remaining flows to 0.
-- Only the Rx flow with 'Number of MAC Address' and corresponding Rx channel will be allocated MAC address. Set accordingly.
+- Only the Rx flow with 'Number of MAC Address' and corresponding Rx channel will be allocated a MAC address, so set accordingly.
 - Set the field 'Rx Ch Id' as 0 for half of the Rx flows, and 1 for the remaining half.
 - The final configuration should look similar to the following.
   \imageStyle{icssg_switch_rxdmacfg_1.png, width:35%}
@@ -110,7 +110,7 @@ This example do below:
 - When using makefiles to build, note the required combination and build using
   make command (see \htmllink{@VAR_MCU_SDK_DOCS_PATH/MAKEFILE_BUILD_PAGE.html, Using SDK with Makefiles})
 
-\note Enable the ENET_TEST_MII_MODE macro in test application and change the mode to MII from RGMII in SysConfig and rebuid the application to test the ICSSG ports in MII mode.
+\note Enable the ENET_TEST_MII_MODE macro in test application and change the mode to MII from RGMII in SysConfig and rebuild the application to test the ICSSG ports in MII mode.
 
 ## HW Setup
 
@@ -143,7 +143,7 @@ This example do below:
 
 ### AM243X-LP
 
-\note AM243X-LP has two ethernet Ports which can be configured as both CPSW/ICSS ports.
+\note AM243X-LP has two ethernet ports which can be configured as both CPSW/ICSS ports.
 
 #### For ICSSG based examples
 

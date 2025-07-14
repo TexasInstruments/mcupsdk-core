@@ -192,7 +192,7 @@ delay_mechanism         P2P
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -203,7 +203,7 @@ delay_mechanism         P2P
 
 ### AM243X-EVM
 
-- Connect a ethernet cable to the EVM from host PC as shown below.
+- Connect an Ethernet cable to the EVM from host PC as shown below.
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -212,7 +212,7 @@ delay_mechanism         P2P
 
 \note AM243X-LP has two ethernet Ports which can be configured as both CPSW/ICSS ports.
 
-- Connect a ethernet cable to the EVM from host PC as shown below.
+- Connect an Ethernet cable to the EVM from host PC as shown below.
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -246,7 +246,7 @@ One sample signal captured using oscilloscope. Blue from gPTP TT (master) and pu
     \image html gptp_pps_out_scope_capture.jpg **Figure**: Signal captured on oscilloscope
 
 ## Create a network between EVM and host PC
-EVM and PC has to connected directly as shown below using CAT6 or CAT5 cable. If there is ethernet switch placed in between, make sure the switch is gPTP capable.
+EVM and PC has to be connected directly as shown below using CAT6 or CAT5 cable. If there is ethernet switch placed in between, make sure the switch is gPTP capable.
   \imageStyle{gptp_topology_pc_evm_pc.png,width:30%}
   \image html gptp_topology_pc_evm_pc.png Local network between PC and EVM
  

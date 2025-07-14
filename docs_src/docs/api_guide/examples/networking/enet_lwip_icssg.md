@@ -6,7 +6,7 @@
 
 \note lwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
-This example is a TCP/UDP IP application using the LwIP networking stack, coupled with ethernet driver (ENET-LLD)
+This example is a TCP/UDP IP application using the LwIP networking stack, coupled with an Ethernet driver (ENET-LLD).
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -14,13 +14,13 @@ On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG Hardware pe
 - ICSS
   - This is a firmware enabled ethernet switch + port HW
   - This HW can be used with industrial communication protocols as well
-  - In this example we use ICSS as a standard ethernet port
+  - In this example, we use ICSS as a standard ethernet port
 
 It uses ENET ethernet driver underneath with LwIP TCP/IP networking stack
 
 \endcond
 
-The examples do below
+The examples does the following:
 - Initializes the ethernet driver for the underlying HW
 - Initializes the LwIP stack for TCP/UDP IP
 - Allows user to run and test basic networking features like DHCP, ping, iperf with TCP/UDP.
@@ -51,7 +51,7 @@ The examples do below
 
 # Configuring Syscfg
 
-- Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Gigabit Ethernet Support Enable, premption support, McM Support and QoS level required.
+- Following Syscfg option allows flexibility to configure memory footprint based on the required use case like: Gigabit Ethernet Support Enable, premption support, McM Support and QoS level required.
 
 - Supported Options with default configuration
 
@@ -64,20 +64,20 @@ The examples do below
 
 <tr>
     <td>Pkt Pool Enable Flag
-    <td>Flag to enable packet allocation from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
-    <td>Default is true. It is disabled for lwip based examples. If enabled size of pkt pool size depends on Number of Tx Packet and Number of Rx Packet.
+    <td>Flag to enable packet allocation from enet utils library.\n It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)
+    <td>Default is true. It is disabled for lwip based examples.\n If enabled, size of pkt pool size depends on Number of Tx Packet and Number of Rx Packet.
 </tr>
 
 <tr>
     <td>Number of Tx Packet
     <td>No of Tx packets required for DMA channel
-    <td>Default is 16. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
+    <td>Default is 16.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories.
 </tr>
 
 <tr>
     <td>Number of Rx Packet
     <td>No of Rx packets required for DMA channel
-    <td>Default is 32. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
+    <td>Default is 32.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size.
 
 <tr>
     <td>QoS Level
@@ -88,20 +88,19 @@ The examples do below
 <tr>
     <td>Premption Enable
     <td>Flag to enable premption
-    <td>Default is false. If enabled will add premption buffer to service the feature.
+    <td>Default is false.\n If enabled, it will add premption buffer to service the feature.
 </tr>
 
 <tr>
     <td>Gigabit Support
     <td>Decides buffer pool allocation based on interface speed selected
-    <td>Default is true. Enabling this option will increase buffer requirement as more buffering required at gigabit speed.
+    <td>Default is true.\n Enabling this option will increase buffer requirement as more buffering required at gigabit speed.
 </tr>
 
 <tr>
     <td>Netif instance
     <td>TI Networking / Enet (ICSSG) / LWIP Interface config
-    <td>No of netifs allocated by the example
-    <td>Only one netif should be set to default when more than one netif is allocated.
+    <td>No of netifs allocated by the example.\n Only one netif should be set to default when more than one netif is allocated.
 </tr>
 </table>
 
@@ -208,7 +207,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -221,7 +220,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For ICSS based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_01.png,width:30%}
   \image html am64x_evm_lwip_example_01.png Ethernet cable for ICSS based ethernet
@@ -232,7 +231,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For ICSS based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for ICSS based ethernet
@@ -244,14 +243,14 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 - The EVM will get an IP address using DHCP, so make sure to connect the other end of the cable
 to a network which has a DHCP server running.
 
-- To get started one can create a simple local network
+- To get started, one can create a simple local network
   between the EVM and the host PC by using a home broadband/wifi router as shown below.
   Most such routers run a DHCP server
 
   \imageStyle{lwip_example_01.png,width:30%}
   \image html lwip_example_01.png Local network between PC and EVM
 
-- To check the router connection with host PC, recommend to disconnect all other networking conenctions
+- To check the router connection with host PC, recommend to disconnect all other networking connections
   on the PC, sometimes you may need to disable firewall SW, and make sure the router is able
   to assign a IP address to your host PC
 
@@ -310,7 +309,7 @@ status_callback==UP, local interface IP is 192.168.0.172
 
 ## Measuring the throughput using Iperf:
 
-- Once we get the ip after running the example, we can use following iperf command on windows to get the throughput.
+- Once we get the IP after running the example, we can use following iperf command on windows to get the throughput.
 	- iperf.exe -c 192.168.1.200 -r
 
 ## Sample output for iperf command
@@ -370,9 +369,9 @@ TCP window size: 208 KByte (default)
 
 \cond SOC_AM64X || SOC_AM243X
 - If you see MAC address as `00:00:00:00:00:00`, likely you are using a very early Si sample which does not
-  have MAC address "fused" in, in this case do below steps
+  have MAC address "fused" in. In this case, do the below steps
 
-   - Open file `source\networking\enet\soc\j7x\am64x_am243x\enet_soc.c`
+   - Open file `source/networking/enet/core/sysconfig/networking/.meta/enet_icss/templates/enet_soc_cfg_am64x_am243x.c.xdt`
    - Uncomment below line
         \code
         #define ENET_MAC_ADDR_HACK (TRUE)

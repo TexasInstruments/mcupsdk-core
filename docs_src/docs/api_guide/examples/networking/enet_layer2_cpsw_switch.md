@@ -14,13 +14,13 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 
 \endcond
 
-This example do below:
+This example does the following:
 - Target-side application running on a Cortex R5F core.
 	- Target-side application running on a Cortex R5F core.
 	- Application receives the broadcast packet for switch operation, copies the payload into a new packet which is then sent back out to the source port as well as to all the other ports on the device.
 	- The application has a menu to enable/disable features, such as getting mac address and stats. This menu along with application logs are implemented via UART.
 - Host-side functionality
-	- Software applications like Colasoft Pkt Builder or packETH tool could be used to generate and send packets, Wireshark can be used to receive and verify packet contents
+	- Software applications like Colasoft Pkt Builder or packETH tool could be used to generate and send packets. Wireshark can be used to receive and verify packet contents.
 
 - The data path enabled in this example is as follows:
 	- Host side (PC) application sends a broadcast packet to MAC port.
@@ -144,7 +144,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -166,7 +166,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -177,7 +177,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 #### For CPSW based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet

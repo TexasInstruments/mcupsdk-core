@@ -12,7 +12,7 @@ ports available in CPSW3G on SoC.
   
 
 The example application opens one DMA TX channel and one DMA RX channel.  The TX
-channel will be used to inject test packets into CPSW host port.  The RX channel
+channel will be used to inject test packets into the CPSW host port.  The RX channel
 receives packets and just drops them as this example doesn't focus on RX data path.
 
 The application will also open the MAC port and will wait until the port gets
@@ -33,10 +33,10 @@ CPTS internal clock might be off with respect to the external device's clock.
 
 Typically, the application's parameters that a developer may want to change are:
 
-- **Number of MAC ports**.  By default the example application enables only MAC
+- **Number of MAC ports**.  By default, the example application enables only MAC
   port 1, but the user can choose to enable MAC port 2 as well by setting
   `testParams.macPortNum = 1` in `enet_cpsw_est_main.c`.  Some users may prefer
-  to enable both MAC ports due to the flexibility to easily inject different
+  to enable both MAC ports for the flexibility to easily inject different
   kinds of test packets from the external ports, as opposed to just from the
   internal host port.
 - **MAC port number**.  When a single port is enabled, user can select the
@@ -45,10 +45,10 @@ Typically, the application's parameters that a developer may want to change are:
 - **EST schedule**.  User can set different EST schedule by setting a new cycle
   time in `testParams.portTestParams[0].tasControlList.cycleTime` and/or new
   gate control list in `testParams.portTestParams[n].tasControlList.gateCmdList`
-  and `testParams.portTestParams[n].tasControlList.listLength`.  Note that the
+  and `testParams.portTestParams[n].tasControlList.listLength`.\n Note: The
   EST schedule can be different for each MAC port.
 - **CPTS event pool size**. User can increase the pool size to 32 or larger via
-  `ENET_CFG_CPSW_CPTS_EVENTS_POOL_SIZE` in enet_cfg.h if interested on
+  `ENET_CFG_CPSW_CPTS_EVENTS_POOL_SIZE` in enet_cfg.h if interested in
    verifying all timestamps generated for all TX test packets.
 
 
@@ -406,6 +406,7 @@ In addition, follow the steps in the next section.
 \note Ethernet cable must be connected and link must be up in order for the example
       application to continue execution.
 
+\cond SOC_AM263X
 ### AM263X-CC
 
 - If using MAC port 1 (default), connect an Ethernet cable to the RJ-45 jack labeled
@@ -417,7 +418,7 @@ In addition, follow the steps in the next section.
 - If using MAC port 1 (default), connect an Ethernet cable to the RJ-45 jack labeled
   as `J7`.
 - If using MAC port 2, connect an Ethernet cable to the RJ-45 jack labeled as `J8`.
-
+\endcond
 
 ## Run the example
 

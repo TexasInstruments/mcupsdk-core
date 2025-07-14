@@ -19,7 +19,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechan
   - CPSW can be configured in MAC mode only.
 \endcond
 
-The examples do below
+The examples does the following:
 - Initializes the ethernet driver for the underlying HW
 - Initializes the LwIP stack for TCP/UDP IP
 - Allows user to run and test basic networking features like DHCP, ping, iperf with TCP/UDP.
@@ -128,7 +128,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 # Configuring Syscfg
 
-- Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Number of DMA descriptors and buffering.
+- Following Syscfg option allows flexibility to configure memory footprint based on the required use case like: Number of DMA descriptors and buffering.
 
 - Supported Options with default configuration
 
@@ -142,24 +142,24 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 <tr>
     <td>Mdio Manual Mode Enable
-    <td>TI Networking / Enet (CPSW)
-    <td>Flag to enable MDIO manual mode in example. Driver support for Manual mode is enabled, so this parameter configures manual mode in the example.
-    <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
+    <td>TI Networking / Enet (CPSW) / MDIO Config
+    <td>Flag to enable MDIO manual mode in example.\n Driver support for Manual mode is enabled, so this parameter configures manual mode in the example.
+    <td>Default is true.\n If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
-    <td>TI Networking / Enet (CPSW)
+    <td>TI Networking / Enet (CPSW) / MAC Port Config
     <td>Select which port to disable.
-    <td>Default is Port1 enabled. If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
+    <td>Default is Port1 enabled.\n If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
 </tr>
 \endcond
 
 \cond SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
-    <td>TI Networking / Enet (CPSW)
+    <td>TI Networking / Enet (CPSW) / MAC Port Config
     <td>Select which port to disable.
     <td>Default is Port2 enabled.
 </tr>
@@ -167,37 +167,36 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 <tr>
     <td>Enable Packet Pool Allocation
-    <td>TI Networking / Enet (CPSW)
+    <td>TI Networking / Enet (CPSW) / Packet Pool Config
     <td>Flag to enable packet buffer memory allocation from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism.
-    <td>Default is true. If enabled size of pkt pool size depends on 'Large Pool Packet Size', 'Large Pool Packet Count', 'Medium Pool Packet Size', 'Medium Pool Packet Count', 'Small Pool Packet Size' and 'Small Pool Packet Count'. EnetMem_allocEthPkt API uses this memory to allocate the DMA Ethernet packet.
+    <td>Default is true.\n If enabled, size of pkt pool size depends on 'Large Pool Packet Size', 'Large Pool Packet Count', 'Medium Pool Packet Size', 'Medium Pool Packet Count', 'Small Pool Packet Size' and 'Small Pool Packet Count'. EnetMem_allocEthPkt API uses this memory to allocate the DMA Ethernet packet.
 </tr>
 
 <tr>
     <td>Only Enable Packet Info Allocation
     <td>TI Networking / Enet (CPSW)
     <td>Flag to allocate only the DMA Packet Info structures, this does not include the buffer memory. This is useful when the buffer memory is internally allocated by the application. (Ex- Lwip pools)
-    <td>Default is true. If enabled "PktInfoMem Only Count" determines the number of additional DMA Packet Info structures allocated. EnetMem_allocEthPktInfoMem uses this memory to allocate empty DMA Packet Info structures.
+    <td>Default is true.\n If enabled, "PktInfoMem Only Count" determines the number of additional DMA Packet Info structures allocated. EnetMem_allocEthPktInfoMem uses this memory to allocate empty DMA Packet Info structures.
 </tr>
 
 <tr>
     <td>Number of Tx Packet
     <td>TI Networking / Enet (CPSW) / DMA channel config
     <td>No of Tx packets required for DMA channel
-    <td>Default is 16. For LwIP example, the Tx packet buffer memory is internally allocated in lwippools.h. Only the DMA Pkt Info structures are allocated via sysCfg, so this number should match the "PktInfoMem Only Count" described in the above item. To increase the Tx packet count, user needs to update the number correspondingly at "PktInfoMem Only Count" and lwippools.h and build the libs.
+    <td>Default is 16.\n For LwIP example, the Tx packet buffer memory is internally allocated in lwippools.h. Only the DMA Pkt Info structures are allocated via sysCfg, so this number should match the "PktInfoMem Only Count" described in the above item. To increase the Tx packet count, user needs to update the number correspondingly at "PktInfoMem Only Count" and lwippools.h and build the libs.
 </tr>
 
 <tr>
     <td>Number of Rx Packet
     <td>TI Networking / Enet (CPSW) / DMA channel config
     <td>No of Rx packets required for DMA channel
-    <td>Default is 32. It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size. Rx packet buffer memory is completely mananged with application sysCfg, this is done by using Rx custom Pbuf in LwIP.
+    <td>Default is 32.\n It contributes to the size of Pkt Mem Pool, DMA ring buffer and accessories size. Rx packet buffer memory is completely mananged with application sysCfg, this is done by using Rx custom Pbuf in LwIP.
 </tr>
 
 <tr>
     <td>Netif instance
     <td>TI Networking / Enet (CPSW) / LWIP Interface config
-    <td>No of netifs allocated by the example
-    <td>Only one netif should be set to default when more than one netif is allocated.
+    <td>No of netifs allocated by the example.\n Only one netif should be set to default when more than one netif is allocated.
 </tr>
 </table>
 
@@ -261,7 +260,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -274,7 +273,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -285,7 +284,7 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 
 #### For CPSW based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -297,14 +296,14 @@ Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as
 - The EVM will get an IP address using DHCP, so make sure to connect the other end of the cable
 to a network which has a DHCP server running.
 
-- To get started one can create a simple local network
+- To get started, one can create a simple local network
   between the EVM and the host PC by using a home broadband/wifi router as shown below.
   Most such routers run a DHCP server
 
   \imageStyle{lwip_example_01.png,width:30%}
   \image html lwip_example_01.png Local network between PC and EVM
 
-- To check the router connection with host PC, recommend to disconnect all other networking conenctions
+- To check the router connection with host PC, recommend to disconnect all other networking connections
   on the PC, sometimes you may need to disable firewall SW, and make sure the router is able
   to assign a IP address to your host PC
 
@@ -433,7 +432,7 @@ status_callback==UP, local interface IP is 192.168.1.10
 
 ## Measuring the throughput using Iperf:
 
-- Once we get the ip after running the example, we can use following iperf command on windows to get the throughput.
+- Once we get the IP after running the example, we can use following iperf command on windows to get the throughput.
 	- iperf.exe -c 192.168.1.200 -r
 
 ## Sample output for iperf command
@@ -498,9 +497,9 @@ TCP window size: 208 KByte (default)
 
 \cond SOC_AM64X || SOC_AM243X
 - If you see MAC address as `00:00:00:00:00:00`, likely you are using a very early Si sample which does not
-  have MAC address "fused" in, in this case do below steps
+  have MAC address "fused" in. In this case, do the below steps
 
-   - Open file `source\networking\enet\soc\j7x\am64x_am243x\enet_soc.c`
+   - Open file `source/networking/enet/core/sysconfig/networking/.meta/enet_icss/templates/enet_soc_cfg_am64x_am243x.c.xdt`
    - Uncomment below line
         \code
         #define ENET_MAC_ADDR_HACK (TRUE)

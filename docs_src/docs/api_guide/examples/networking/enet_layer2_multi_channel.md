@@ -21,7 +21,7 @@ The source generator for packets must send packets with 802.1Q VLAN tag enabled 
 
 \cond SOC_AM64X || SOC_AM243X
 
-The Multi-channel example illustrates the usage of multiple channels of UDMA. The application creates two independent TX and RX channels each, one for L2 echo server and the second for TimeSync PTP stack.
+The Multi-channel example illustrates the usage of multiple channels of UDMA. The application creates two independent TX and RX channels, one for L2 echo server and the second for TimeSync PTP stack.
 
 \endcond
 
@@ -46,17 +46,17 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 
 # Configuration Parameters
 
-1.	Opening TX 0 and TX 1 channels using EnetAppUtils_openTxCh () api by passing channel number as a parameter to this api.
-2.	Opening RX channels 0 and 1 using EnetAppUtils_openRxCh () api by passing channel number as a parameter to this api.
-3.	Separate RX task and RX packet callback need to be implemented for each channel creation. Existing flows for channels can be referred.
-4.	Set the vlanLType1 field of macport stats in EnetApp_setPortTsEventPrms () api to 0x8100, to make CPTS aware of VLAN tagging enabled for packets.
-5.  The CPDMA supports upto 8 TX/RX channels, but by default applications has only create 3 TX/RX channels and this can be changed by modifying the macros ENET_CFG_CPDMA_CPSW_MAX_TX_CH/ENET_CFG_CPDMA_CPSW_MAX_RX_CH in enet_cfg.h file.
+1.	Opening TX 0 and TX 1 channels using EnetAppUtils_openTxCh () API by passing channel number as a parameter to this API.
+2.	Opening RX channels 0 and 1 using EnetAppUtils_openRxCh () API by passing channel number as a parameter to this API.
+3.	Separate RX task and RX packet callback needs to be implemented for each channel creation. Existing flows for channels can be referred to.
+4.	Set the vlanLType1 field of macport stats in EnetApp_setPortTsEventPrms () API to 0x8100, to make CPTS aware of VLAN tagging enabled for packets.
+5.  CPDMA supports upto 8 TX/RX channels. By default, applications has only 3 TX/RX channels and this can be changed by modifying the macros ENET_CFG_CPDMA_CPSW_MAX_TX_CH/ENET_CFG_CPDMA_CPSW_MAX_RX_CH in enet_cfg.h file.
 \cond SOC_AM273X || SOC_AWR294X
-6.  On @VAR_SOC_NAME, Multiple CPDMA channels open is necessary to receive packets with different VLAN priority. Else, CPDMA cannot forward any packet with priority non-zero to R5F core.
+6.  On @VAR_SOC_NAME, multiple CPDMA channels are necessary to receive packets with different VLAN priority. Else, CPDMA cannot forward any packet with non-zero priority to R5F core.
 \endcond
 ## Configuring the Packeth tool to send vlan tagged packets
 
-In packeth tool select the 802.1q field to configure vlan parameters(priority).
+In packETH tool, select the 802.1q field to configure vlan parameters(priority).
 
   \imageStyle{packeth_setup.png,width:40%}
   \image html packeth_setup.png Packeth tool configuration for 802.1q vlan tag
@@ -66,19 +66,19 @@ In packeth tool select the 802.1q field to configure vlan parameters(priority).
   \imageStyle{multi_channel_app_functionality.png,width:40%}
   \image html multi_channel_app_functionality.png Application Functionality
 
-We configure Packeth tool with 802.1Q (PCP) field with 0 or 1 to send either L2 packets or PTP packets. CPSW peripheral maps the value of PCP field to appropriate DMA channel queue for the receiving packets.
+Packeth tool is configured with the 802.1Q (PCP) field set to either 0 or 1 to send either L2 packets or PTP packets. CPSW peripheral maps the value of the PCP field to appropriate DMA channel queue for the receiving packets.
 
 # Application Flow
 
   \imageStyle{multi_channel_app_flow.png,width:40%}
   \image html multi_channel_app_flow.png Application Flow
 
-The Multichannel channel App on start of its main task initializes Enet driver, memory and queues initialization. Followed by this, the app opens the CPSW peripheral and creates two pairs of TX and RX channels:
+The Multi-channel app on starting its main task initializes the Enet driver, memory and queues. Followed by this, the app opens the CPSW peripheral and creates two pairs of TX and RX channels:
 1. L2 echo server
 2. PTP Timestamping
 
 Each RX channel will have a separate OS task to process each traffic type separately. Additionally, the test enables timestamping of PTP packets.
-The Multichannel App continues to run until user decides to terminate the app by pressing ‘x’ from the App menu.
+The Multi-channel App continues to run until user decides to terminate the app by pressing ‘x’ from the App menu.
 
 \endcond
 
@@ -86,11 +86,11 @@ The Multichannel App continues to run until user decides to terminate the app by
 
 # Channel Overriding
 To override the channel mapping, we can use ALE classifier along with CPDMA_CONTROL.
-	- The example shows the usage of ALE clasfier where we are creating a classfier based on Ethertype and routing the matched traffic to RX channel 1.
-	- CPDMA provides channel override feature using the the thost_ch_override bit in CPDMA_CONTROL register.
-	- When set, the RX channel is overridden with the ALE classfication match value. This value is what we set in ALE Classfier as threadId.
-	- We need to set the default channel when we are doing overriding which will handle unclassified traffic, this is passed as a parameter to EnetApp_setCpswAleClassifier() api. The application sets RX channel 0 to be the default channel for handling unclassified traffic.
-	- We need to set the enChOverrideFlag Flag in the application if we want to use the channel overriding feature. This is done in EnetApp_open() api.
+	- The example shows the usage of ALE classifier where we create a classifier based on Ethertype and route the matched traffic to the corresponding RX channel.
+	- CPDMA provides channel override feature using the thost_ch_override bit in CPDMA_CONTROL register.
+	- When set, the RX channel is overridden with the ALE classification match value. This value is what we set in the ALE Classifier as threadId.
+	- We need to set the default channel when we are overriding, this will handle the unclassified traffic and is passed as a parameter to EnetApp_setCpswAleClassifier() API. The application sets RX channel 0 to be the default channel for handling unclassified traffic.
+	- We need to set the enChOverrideFlag Flag in the application if we want to use the channel overriding feature. This is done in EnetApp_open() API.
 
 \endcond
 
@@ -163,7 +163,7 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
@@ -176,18 +176,18 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 #### For CPSW based example
 
-- Connect a ethernet cable to the EVM from host PC as shown below
+- Connect an Ethernet cable to the EVM from host PC as shown below
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
 
 ### AM243X-LP
 
-\note AM243X-LP has two ethernet Ports which can be configured as both CPSW/ICSS ports.
+\note AM243X-LP has two ethernet ports which can be configured as both CPSW/ICSS ports.
 
 #### For CPSW based examples
 
-- Connect a ethernet cable to the AM243X-LP from host PC as shown below
+- Connect an Ethernet cable to the AM243X-LP from host PC as shown below
 
   \imageStyle{am243x_lp_lwip_example_00.png,width:30%}
   \image html am243x_lp_lwip_example_00.png Ethernet cable for CPSW based ethernet

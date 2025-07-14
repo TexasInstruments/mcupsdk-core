@@ -45,7 +45,7 @@ Not support in this device
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | mcu-r5fss0-0_freertos
+ CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/tsn/aafpcmlistener_app, aafpcmtalker_app
@@ -60,7 +60,6 @@ Not support in this device
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/tsn/aafpcmlistener_app, aafpcmtalker_app, dolbyec3talker_app, dolbyec3listener_app
- Example folder | source/networking/enet/core/examples/tsn/acf_app, aafpcmlistener_app, aafpcmtalker_app
 
 \endcond
 # Prerequisites
@@ -206,7 +205,7 @@ Refer \ref EXAMPLES_ENET_CPSW_TSN_GPTP to build the avtp examples.
 Refer \ref EXAMPLES_ENET_CPSW_TSN_GPTP for HW Setup.
 
 ## Create a network between EVM and host PC
-EVM and PC has to connected directly as shown below using CAT6 or CAT5 cable
+EVM and PC has to be connected directly as shown below using CAT6 or CAT5 cable
   \imageStyle{gptp_topology_evm_pc.png,width:30%}
   \image html gptp_topology_evm_pc.png Local network between PC and EVM
 
@@ -241,7 +240,7 @@ Flash binary in aafpcm_listener and start it.
 
 On the PC side, configure avbrun as conl2 talker(pcm) and start `avbrun -r talker`.
 
-On DUT side should print correct pcm info include bitdepth, channels, format and data rate
+On the DUT side, correct pcm info including bitdepth, channels, format and data rate should be printed.
 
 \code
 [RX 00:01:02:03:04:05:00:02] Rp#8 Mbps(1.536034, 1.536804) Delay(-23487, -11303894, -17810) Pkt(2413, 0, 0)
