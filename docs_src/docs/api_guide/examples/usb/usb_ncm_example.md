@@ -35,6 +35,11 @@ interface driver on the Host side will convert pass the ethernet traffic Via USB
 interface driver on the Host side will convert and transfer the ethernet traffic Via USB bus as per NCM protocol specification. 
 \endcond
 
+\cond SOC_AM261X
+- Once NCM device enumearation is successful, AM261x-LP will be recognised as a separate network interface. The Network 
+interface driver on the Host side will convert and transfer the ethernet traffic Via USB bus as per NCM protocol specification. 
+\endcond
+
 - To enable USB Logging for this example refer \ref EXAMPLES_USB_CDC_ECHO
 
 # Supported Combinations {#EXAMPLES_USB_NCM_EXAMPLE_COMBOS}
@@ -58,6 +63,19 @@ interface driver on the Host side will convert and transfer the ethernet traffic
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/usb/device/ncm
+
+\endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_nortos
+  ^             | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/usb/device/ncm
+
 
 \endcond
 
@@ -107,6 +125,23 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 
 \endcond
 
+
+\cond SOC_AM261X
+
+### AM261x-LP
+- To test the application, one can use a Windows/Linux PC as a USB host.
+- Connect the J10 on AM261x-LP to the USB host.
+
+  \imageStyle{am261x_lp_j10.png,width:30%}
+  \image html am261x_lp_j10.png USB Type-C Device Connector
+
+
+### AM261X-SOM
+- To test the application, one can use a Windows/Linux PC as a USB host
+- Connect the J& on AM261x SOM to the USB host
+
+\endcond
+
 ## Run the example
 
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
@@ -129,8 +164,15 @@ and install the NCM host class driver for windows.
 
 - Open terminal and execute **dmesg** command. User should see a new network interface over USB detected. 
 
+\cond SOC_AM243X || SOC_AM64X
   \imageStyle{ncm_enum_log.png,width:60%}
   \image html ncm_enum_log.png NCM Device Enumeration log. 
+\endcond
+
+\cond SOC_AM261X
+  \imageStyle{ncm_enum_log_am261x.png,width:60%}
+  \image html ncm_enum_log_am261x.png NCM Device Enumeration log. 
+\endcond
 
 #### NCM Download 
 

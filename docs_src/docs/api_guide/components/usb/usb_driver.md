@@ -41,8 +41,8 @@ Below features are supported in the SDK
 - USB device
 - USB CDC Class
 - USB DFU Class 
-\cond SOC_AM243X || SOC_AM64X
 - USB NCM Class 
+\cond SOC_AM243X || SOC_AM64X
 - USB RNDIS Class 
 \endcond
 
@@ -87,7 +87,7 @@ and does the below,
 \endcond
 
 \cond SOC_AM261X
-- TinyUSB Class Drivers Other Than CDC & DFU.
+- TinyUSB Class Drivers Other Than CDC, DFU & NCM.
 \endcond
 
 - TinyUSB Host Core Driver and Class Drivers
@@ -205,10 +205,10 @@ and does the below,
 <tr>
     <td>\ref EXAMPLES_USB_DFU
 </tr>
-\cond SOC_AM243X || SOC_AM64X
 <tr>
     <td>\ref EXAMPLES_USB_NCM
 </tr>
+\cond SOC_AM243X || SOC_AM64X
 <tr>
     <td>\ref EXAMPLES_USB_RNDIS
 </tr>
