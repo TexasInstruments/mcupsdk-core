@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_flsopskd.$(PROFILE).out
-COREOUTNAME:=test_flsopskd.$(PROFILE).optishare.out
+OUTNAME:=flsopskd_benchmark.$(PROFILE).out
+COREOUTNAME:=flsopskd_benchmark.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_flsopskd.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_flsopskd.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_flsopskd.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=flsopskd_benchmark.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=flsopskd_benchmark.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=flsopskd_benchmark.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=test_flsopskd.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=test_flsopskd.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_flsopskd.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_flsopskd.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_flsopskd.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_flsopskd.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_flsopskd.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=flsopskd_benchmark.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=flsopskd_benchmark.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=flsopskd_benchmark.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=flsopskd_benchmark.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=flsopskd_benchmark.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=flsopskd_benchmark.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=flsopskd_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,10 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	test_flsopskd.c \
 	main.c \
-	appprofile.c \
-	test_main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -57,12 +54,11 @@ FILES_common := \
 	ti_power_clock_config.c \
 
 ASMFILES_common := \
-	csl_arm_r5_pmu.S \
 
 FILES_PATH_common = \
 	.. \
-	../../.. \
 	../.. \
+	../../.. \
 	generated \
 
 INCLUDES_common := \
@@ -73,13 +69,12 @@ INCLUDES_common := \
 	-I../../.. \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
-	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
-	-DSOC_AM263PX \
+	-DSOC_AM261X \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -115,15 +110,15 @@ LNK_FILES_common = \
 	generated/linker.cmd \
 
 LIBS_PATH_common = \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -135,16 +130,16 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
-	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
+	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -174,11 +169,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -200,21 +195,21 @@ endif
 
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ ...
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 coreout: $(COREOUTNAME)
 $(COREOUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Relinking Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ with OptiShare SSO..
+	@echo  Relinking Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ with OptiShare SSO..
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
-	@echo  Relinking with optishare: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  Relinking with optishare: am261x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -226,7 +221,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:freertos:ti-arm-clang test_flsopskd ...
+	@echo  Scrubing: am261x:r5fss0-1:nortos:ti-arm-clang flsopskd_benchmark ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -271,11 +266,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ_S --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ_S --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-1 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -315,13 +310,13 @@ endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
-	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
-	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -333,9 +328,9 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max-segment-size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-1):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max-segment-size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
@@ -367,8 +362,8 @@ else
 	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 endif
 
@@ -376,12 +371,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_flsopskd.$(PROFILE) ...
+	@echo Creating Coverage Report for flsopskd_benchmark.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_flsopskd.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_flsopskd.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_flsopskd.$(PROFILE).profdata > coverage/test_flsopskd.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_flsopskd.$(PROFILE).profdata.json --output-json=coverage/test_flsopskd.$(PROFILE).analysis.json --output=../test_flsopskd.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o flsopskd_benchmark.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=flsopskd_benchmark.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=flsopskd_benchmark.$(PROFILE).profdata > coverage/flsopskd_benchmark.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/flsopskd_benchmark.$(PROFILE).profdata.json --output-json=coverage/flsopskd_benchmark.$(PROFILE).analysis.json --output=../flsopskd_benchmark.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
