@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.23.0+4000"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -274,7 +274,8 @@ section13.load_memory             = "NON_CACHE_MEM";
 section13.output_section.create(1);
 section13.output_section[0].$name = ".bss.nocache";
 
-tinyusb1.$name = "CONFIG_TINYUSB0";
+tinyusb1.$name    = "CONFIG_TINYUSB0";
+tinyusb1.usbClass = "NCM";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

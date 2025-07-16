@@ -5,7 +5,6 @@ let device = "am261x";
 const nortos_files = {
     common: [
         "ncm_main.c",
-        "usb_descriptors.c",
         "main.c",
     ],
 };
@@ -13,7 +12,6 @@ const nortos_files = {
 const freertos_files = {
     common: [
         "ncm_main_freertos.c",
-        "usb_descriptors.c",
         "main.c",
     ],
 };

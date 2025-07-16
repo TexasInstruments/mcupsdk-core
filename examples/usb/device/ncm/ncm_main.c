@@ -91,8 +91,9 @@ static struct pbuf *received_frame;
  * available) */
 /* it is suggested that the first byte is 0x02 to indicate a link-local address
  */
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 const uint8_t tud_network_mac_address[6] = {0x02, 0x02, 0x84, 0x6A, 0x96, 0x00};
-
+#endif
 /* network parameters of this MCU */
 static const ip4_addr_t ipaddr = INIT_IP4(192, 168, 7, 1);
 static const ip4_addr_t netmask = INIT_IP4(255, 255, 255, 0);
