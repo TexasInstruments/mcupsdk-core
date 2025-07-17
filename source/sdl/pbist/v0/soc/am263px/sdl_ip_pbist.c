@@ -75,7 +75,10 @@ static void SDL_MSS_disableTopPbist (void)
 {
     /* Disable the Top PBIST Self-Test Key and assert reset
      * to PBIST controller and MDP logic
-     */
+     */ 
+    HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_TOP_PBIST_KEY_RST, \
+      SDL_MSS_CTRL_TOP_PBIST_KEY_RST_PBIST_ST_KEY, \
+      0U);
     HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_TOP_PBIST_KEY_RST, \
       SDL_MSS_CTRL_TOP_PBIST_KEY_RST_PBIST_ST_RST, \
       0U);
