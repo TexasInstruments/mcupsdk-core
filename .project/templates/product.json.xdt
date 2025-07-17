@@ -125,6 +125,9 @@
         "AM65xx_SR2.0_beta",
 % }
     ],
+% if((args.device == "am263x") || (args.device == "am263px") || (args.device == "am261x")) {
+    "boardPath": "/board/",
+% }
     "contexts": {
 % if((args.device == "am65x") || (isDevelopmentMode)) {
         "AM65xx_SR2.0_beta": [{
