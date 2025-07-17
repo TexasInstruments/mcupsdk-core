@@ -124,6 +124,8 @@ typedef struct
      *  internal to driver like ECSD read, tuning etc.
      *  To be allocated by application */
     uint8_t                 *dataBuf;
+    /**< EDMA instance used for MMCSD transfer */
+    uint32_t                edmaInst;
     /** Blocking or Callback mode */
     uint8_t                 transferMode;
     /** MMCSD Callback function pointer */

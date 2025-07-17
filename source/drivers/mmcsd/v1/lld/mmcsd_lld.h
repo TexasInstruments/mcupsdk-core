@@ -65,6 +65,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <drivers/edma/v0/edma.h>
 #include <drivers/mmcsd/v1/cslr_mmcsd.h>
 
 /* ========================================================================== */
@@ -76,6 +77,10 @@ extern "C" {
  * @name Return status
  */
 /**@{*/
+
+typedef EDMA_Handle MMCSD_DmaHandle;
+
+typedef struct MMCSD_EdmaChConfig_s *MMCSD_DmaChConfig;
 
 /** \brief Return status when the API execution was successful */
 #define MMCSD_STS_SUCCESS                       ((int32_t) 0)
@@ -182,6 +187,40 @@ extern "C" {
 /** @} */
 
 /**
+ * \anchor MMCSD_ECSD_BusWidth
+ * @name ECSD Bus Width Macros
+ * @brief Macros for Extended CSD (ECSD) bus width configuration in eMMC devices.
+ * These macros are used to set or interpret the bus width field in the ECSD register.
+ * @{*/
+
+/** \brief ECSD register index for bus width configuration */
+#define MMCSD_ECSD_BUS_WIDTH_INDEX           (183U)
+/** \brief ECSD value for 1-bit bus width */
+#define MMCSD_ECSD_BUS_WIDTH_1BIT            (0U)
+/** \brief ECSD value for 4-bit bus width */
+#define MMCSD_ECSD_BUS_WIDTH_4BIT            (1U)
+/** \brief ECSD value for 8-bit bus width */
+#define MMCSD_ECSD_BUS_WIDTH_8BIT            (2U)
+/** \brief ECSD value for 4-bit DDR bus width */
+#define MMCSD_ECSD_BUS_WIDTH_4BIT_DDR        (5U)
+/** \brief ECSD value for 8-bit DDR bus width */
+#define MMCSD_ECSD_BUS_WIDTH_8BIT_DDR        (6U)
+
+/** \brief Mask for extracting bus width bits from ECSD value */
+#define MMCSD_ECSD_BUS_WIDTH_BUSWIDTH_MASK   (0x0FU)
+/** \brief Bit shift for bus width bits in ECSD value */
+#define MMCSD_ECSD_BUS_WIDTH_BUSWIDTH_SHIFT  (0U)
+
+/** \brief Enable Enhanced Strobe in ECSD bus width field */
+#define MMCSD_ECSD_BUS_WIDTH_ES_ENABLE       (0x80U)
+/** \brief Mask for Enhanced Strobe bit in ECSD bus width field */
+#define MMCSD_ECSD_BUS_WIDTH_ES_MASK         (0x80U)
+/** \brief Bit shift for Enhanced Strobe bit in ECSD bus width field */
+#define MMCSD_ECSD_BUS_WIDTH_ES_SHIFT        (7U)
+
+/** @} */
+
+/**
  *  \anchor MMCSDSpeedModesSD
  *  \name MACROS used to select one of the possible Speed Modes for SD Device.
  *  @{
@@ -243,6 +282,8 @@ typedef struct {
     uint8_t                 eStrobeSupport;
 /** Drive strength of the device */
     uint8_t                 driveStrength;
+/** eMMC specific data */
+    uint8_t                 extCsd[512];
 /** Card whether high Capacity or not */
     bool                    isHC;
 
@@ -329,8 +370,12 @@ typedef struct {
     uint32_t                busWidth;
 /** DMA enable */
     bool                    enableDma;
-/** Pointer to device Data Structure, allocated and assigned by Syscfg */
-    void                    *deviceData;
+/** Pointer to device Data Structure, allocated and assigned by Syscfg */    
+    void                    *deviceData; 
+/** DMA Handle */
+    MMCSD_DmaHandle         mmcsdDmaHandle;
+/** DMA Configuration for this instance. */
+    MMCSD_DmaChConfig       mmcsdDmaChConfig;
 /** Pointer to a 512 byte dataBuffer used for temporary data
  * transactions internal to driver like ECSD read, tuning etc.
  * This data is allocated by syscfg */
@@ -391,6 +436,15 @@ typedef struct {
 int32_t MMCSD_lld_init(MMCSDLLD_Handle handle);
 
 /**
+ *  \brief This API Initializes the MMCSD instance for DMA transfers.
+ *
+ *  \param  handle      [IN] Handle to the MMCSD instance used.
+ *
+ *  \return \ref MMCSD_StatusCode
+ */
+int32_t MMCSD_lld_InitDma(MMCSDLLD_Handle handle);
+
+/**
  *  \brief This API De-Initializes the MMCSD instance.
  *
  *  \param  handle      [IN] Handle to the MMCSD instance used.
@@ -398,6 +452,15 @@ int32_t MMCSD_lld_init(MMCSDLLD_Handle handle);
  *  \return \ref MMCSD_StatusCode
  */
 int32_t MMCSD_lld_deInit(MMCSDLLD_Handle handle);
+
+/**
+ *  \brief This API De-Initializes the MMCSD instance with DMA transfers.
+ *
+ *  \param  handle      [IN] Handle to the MMCSD instance used.
+ *
+ *  \return \ref MMCSD_StatusCode
+ */
+int32_t MMCSD_lld_deInitDma(MMCSDLLD_Handle handle);
 
 /**
  *  \brief  Function to perform block writes to the SD media in Polling Mode.
@@ -452,6 +515,123 @@ int32_t MMCSD_lld_read_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
                                uint32_t startBlk, uint32_t numBlks);
 
 /**
+ *  \brief  Function to perform block writes to the SD media in DMA Mode.
+ *
+ *  \param  handle      [IN] Handle to the MMCSD instance used.
+ *  \param  buf         [IN] Pointer to buffer from which data is to be written from.
+ *  \param  startBlk    [IN] Block to start Writing data from.
+ *  \param  numBlks     [IN] Number of blocks to write.
+ *
+ *  \return \ref MMCSD_StatusCode
+ */                              
+int32_t MMCSD_lld_write_SD_Dma(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks);
+
+/**
+ *  \brief  Function to perform block reads from the SD media in DMA Mode.
+ *
+ *  \param  handle      [IN] Handle to the MMCSD instance used.
+ *  \param  buf         [IN] Pointer to buffer to which data is to be read into.
+ *  \param  startBlk    [IN] Block to start reading data from.
+ *  \param  numBlks     [IN] Number of blocks to read.
+ *
+ *  \return \ref MMCSD_StatusCode
+ */
+int32_t MMCSD_lld_read_SD_Dma(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks);
+
+
+/**
+ * @brief Writes data to the MMC card using polling method.
+ *
+ * This function writes data to the specified blocks on the MMC card using
+ * a polling-based approach.
+ *
+ * @param handle    Handle to the MMCSD driver instance.
+ * @param buf       Pointer to the buffer containing the data to be written.
+ * @param startBlk  Starting block number where the data will be written.
+ * @param numBlks   Number of blocks to write.
+ *
+ * @return int32_t  Returns 0 on success, or an error code on failure.
+ */
+int32_t MMCSD_lld_write_MMC_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks);
+
+/**
+ * @brief Reads data from the MMC card using polling method.
+ *
+ * This function reads data from the specified blocks on the MMC card using
+ * a polling-based approach.
+ *
+ * @param handle    Handle to the MMCSD driver instance.
+ * @param buf       Pointer to the buffer where the read data will be stored.
+ * @param startBlk  Starting block number from where the data will be read.
+ * @param numBlks   Number of blocks to read.
+ *
+ * @return int32_t  Returns 0 on success, or an error code on failure.
+ */
+int32_t MMCSD_lld_read_MMC_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
+                               uint32_t startBlk, uint32_t numBlks);
+
+/**
+ * @brief Writes data to the MMC card using interrupt method.
+ *
+ * This function writes data to the specified blocks on the MMC card using
+ * an interrupt-based approach.
+ *
+ * @param handle    Handle to the MMCSD driver instance.
+ * @param buf       Pointer to the buffer containing the data to be written.
+ * @param startBlk  Starting block number where the data will be written.
+ * @param numBlks   Number of blocks to write.
+ *
+ * @return int32_t  Returns 0 on success, or an error code on failure.
+ */
+int32_t MMCSD_lld_write_MMC_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks);
+
+/**
+ * @brief Reads data from the MMC card using interrupt method.
+ *
+ * This function reads data from the specified blocks on the MMC card using
+ * an interrupt-based approach.
+ *
+ * @param handle    Handle to the MMCSD driver instance.
+ * @param buf       Pointer to the buffer where the read data will be stored.
+ * @param startBlk  Starting block number from where the data will be read.
+ * @param numBlks   Number of blocks to read.
+ *
+ * @return int32_t  Returns 0 on success, or an error code on failure.
+ */
+int32_t MMCSD_lld_read_MMC_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
+                               uint32_t startBlk, uint32_t numBlks);
+
+/**
+ *  \brief  Function to perform block writes to the MMC media in DMA Mode.
+ *
+ *  \param  handle      [IN] Handle to the MMCSD instance used.
+ *  \param  buf         [IN] Pointer to buffer from which data is to be written from.
+ *  \param  startBlk    [IN] Block to start Writing data from.
+ *  \param  numBlks     [IN] Number of blocks to write.
+ *
+ *  \return \ref MMCSD_StatusCode
+ */                              
+int32_t MMCSD_lld_write_MMC_Dma(MMCSDLLD_Handle handle, uint8_t *buf,
+    uint32_t startBlk, uint32_t numBlks);
+
+/**
+*  \brief  Function to perform block reads from the MMC media in DMA Mode.
+*
+*  \param  handle      [IN] Handle to the MMCSD instance used.
+*  \param  buf         [IN] Pointer to buffer to which data is to be read into.
+*  \param  startBlk    [IN] Block to start reading data from.
+*  \param  numBlks     [IN] Number of blocks to read.
+*
+*  \return \ref MMCSD_StatusCode
+*/
+int32_t MMCSD_lld_read_MMC_Dma(MMCSDLLD_Handle handle, uint8_t *buf,
+    uint32_t startBlk, uint32_t numBlks);
+
+/**
  *  \brief  This function returns the block size of the MMC/SD media
  *          connected to the MMCSD controller.
  *
@@ -465,6 +645,9 @@ int32_t MMCSD_lld_read_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
  */
 uint32_t MMCSD_lld_getBlockSize(MMCSDLLD_Handle handle);
 
+
+void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
+    int32_t xferStatus);
 
 /* ========================================================================== */
 /*                        ISR Function Declarations                           */

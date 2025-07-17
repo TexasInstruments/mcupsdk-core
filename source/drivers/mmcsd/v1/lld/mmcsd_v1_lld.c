@@ -1,4 +1,3 @@
-
 /*
  *  Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
@@ -43,6 +42,7 @@
 /* ========================================================================== */
 
 #include <drivers/mmcsd/v1/lld/mmcsd_lld.h>
+#include <drivers/mmcsd/v1/lld/dma/edma/mmcsd_edma_lld.h>
 #include <drivers/mmcsd/v1/lld/internal/mmcsd_parse.h>
 #include <kernel/dpl/ClockP.h>
 #include <drivers/soc.h>
@@ -169,6 +169,11 @@
 #define MMCSD_INTR_MASK_CMDCOMP         CSL_MMC_IE_CC_ENABLE_MASK
     /**< Command completed signal interrupt. */
 
+#define MMCSD_PSTATE_MASK_CMD_INHIBIT   (CSL_MMC_PSTATE_CMDI_MASK)
+    /**< Command inhibit mask. */
+#define MMCSD_PSTATE_MASK_DATA_INHIBIT  (CSL_MMC_PSTATE_DATI_MASK)
+    /**< Data inhibit mask. */
+
 #define MMCSD_ALL_INTS          (   MMCSD_INTR_MASK_BADACCESS       |   \
                                     MMCSD_INTR_MASK_CARDERROR       |   \
                                     MMCSD_INTR_MASK_ADMAERROR       |   \
@@ -253,6 +258,16 @@
 #define MMCSD_SD_DS_FREQUENCY_HZ                            ((uint32_t) 25000000U)
 #define MMCSD_SD_HS_FREQUENCY_HZ                            ((uint32_t) 50000000U)
 
+/** \brief Frequencies for EMMC Card's Different Speed Modes */
+#define MMCSD_EMMC_DS_FREQUENCY_HZ                           ((uint32_t) 25000000U)
+#define MMCSD_EMMC_HS_FREQUENCY_HZ                           ((uint32_t) 50000000U)
+
+/** \brief Card bus frequency configuration for 25 Mbps. */
+#define MMCSD_TRANSPEED_25MBPS      (0x32U)
+
+/** \brief Card bus frequency configuration for 50 Mbps. */
+#define MMCSD_TRANSPEED_50MBPS      (0x5AU)
+
 /** \brief MACROS used to select one of the possible Bus Voltages. */
 #define MMCSD_BUS_VOLT_1_8V                                 (0x5U)
 #define MMCSD_BUS_VOLT_3_0V                                 (0x6U)
@@ -300,6 +315,19 @@
 // #define MMCSD_SD_INIT_STATE_SWITCH_BUS_SPEED_MODE           (15U)
 #define MMCSD_SD_INIT_STATE_TUNING                          (16U)
 
+#define MMCSD_ID_MODE_FREQUENCY_HZ                      ((uint32_t) 400000U)
+/** \brief Macros for States Used during the Initialization of EMMC Device */
+#define EMMC_INIT_STATE_CONTROLLER_INIT  0
+#define EMMC_INIT_STATE_CHECK_VOLTAGE    1
+#define EMMC_INIT_STATE_CARD_IDENTIFICATION 2
+#define EMMC_INIT_STATE_GET_CID          3
+#define EMMC_INIT_STATE_GET_RCA          4
+#define EMMC_INIT_STATE_GET_CSD          5
+#define EMMC_INIT_STATE_SELECT_CARD      6
+#define EMMC_INIT_STATE_READ_EXT_CSD     7
+#define EMMC_INIT_STATE_SET_BUS_WIDTH    8
+#define EMMC_INIT_STATE_SET_SPEED        9
+#define EMMC_INIT_STATE_DONE             10
 
 #define MMCSD_CMD6_GRP4_200mA                               (0x0U)
 #define MMCSD_CMD6_GRP4_400mA                               (0x1U)
@@ -325,7 +353,7 @@
  * After every write, the CMD13 is sent this many times and wait for
  * the card to go to transfer state
  * */
-#define MMCSD_MEDIA_STATE_THRESHOLD                         (30000U)
+#define MMCSD_MEDIA_STATE_THRESHOLD                         (100000U)
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -445,6 +473,7 @@ static void MMCSD_enableSigIntr(uint32_t baseAddr, uint32_t intrMask);
 static void MMCSD_disableSigIntr(uint32_t baseAddr, uint32_t intrMask);
 static uint32_t MMCSD_getIntrSigEnable(uint32_t baseAddr);
 static uint32_t MMCSD_getIntrStat(uint32_t baseAddr);
+static uint32_t MMCSD_getPstateStat(uint32_t baseAddr);
 static void MMCSD_clearIntrStat(uint32_t baseAddr, uint32_t intrMask);
 
 static void MMCSD_setPADEN(uint32_t baseAddr, uint32_t val);
@@ -468,14 +497,18 @@ static int32_t MMCSD_lld_transferPoll(MMCSDLLD_Handle handle,
                                       MMCSDLLD_Transaction *trans);
 static int32_t MMCSD_lld_transferIntr(MMCSDLLD_Handle handle,
                                       MMCSDLLD_Transaction *trans);
+static int32_t MMCSD_lld_transferDma(MMCSDLLD_Handle handle, 
+                                     MMCSDLLD_Transaction *trans);
 static void MMCSD_lld_cmdCompleteStatusPoll(MMCSDLLD_Handle handle);
 static void MMCSD_lld_xferCompleteStatusPoll(MMCSDLLD_Handle handle);
 static void MMCSD_lld_xferCompleteStatusPollCMD19(MMCSDLLD_Handle handle);
 static int32_t MMCSD_switchCardCurrLimit(MMCSDLLD_Handle handle,
                                          uint32_t cmd16GrpFunc);
 static int32_t MMCSD_isCardReadyForTransferSD(MMCSDLLD_Handle handle);
-static void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
+static int32_t MMCSD_isCardReadyForTransferMMC(MMCSDLLD_Handle handle);
+void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
                                            int32_t xferStatus);
+static int32_t MMCSD_lld_sendCmd23MMC(MMCSDLLD_Handle handle, uint32_t numBlks);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -566,9 +599,110 @@ int32_t MMCSD_lld_init(MMCSDLLD_Handle handle)
     return status;
 }
 
+int32_t MMCSD_lld_InitDma(MMCSDLLD_Handle handle)
+{
+    int32_t             status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object     *object = NULL;
+
+    if(handle != NULL)
+    {
+        /* Get pointer to driver Object */
+        object = (MMCSDLLD_Object *)handle;
+        /* State should be reset before initialization */
+        if(object->state != MMCSD_STATE_RESET)
+        {
+            status = MMCSD_STS_ERR;
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR_INVALID_PARAM;
+    }
+
+    if(status == MMCSD_STS_SUCCESS)
+    {
+        /* Enable DMA channel for data transfer */
+        status = MMCSD_edmaChInit(handle);
+    }
+
+    if(status == MMCSD_STS_SUCCESS)
+    {
+        /* Check if the MMCSD base address is valid or not */
+        status = MMCSD_lld_isBaseAddrValid(object->initHandle->baseAddr);
+    }
+
+    if(status == MMCSD_STS_SUCCESS)
+    {
+        /* Transfer State Idle */
+        object->xferState = MMCSD_XFER_IDLE_STATE;
+        /* Driver State to IDLE */
+        object->state = MMCSD_STATE_IDLE;
+
+        if(object->initHandle->cardType == MMCSD_CARD_TYPE_SD)
+        {
+            status = MMCSD_lld_initSD(handle);
+        }
+        else if(object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+        {
+            status = MMCSD_lld_initMMC(handle);
+        }
+        else if(object->initHandle->cardType == MMCSD_CARD_TYPE_NO_DEVICE)
+        {
+            /* Nothing to be initialized */
+            status = MMCSD_STS_SUCCESS;
+        }
+        else
+        {
+            status = MMCSD_STS_ERR;
+        }
+    }
+
+    if  (   (status == MMCSD_STS_SUCCESS) &&
+            (object->initHandle->cardType != MMCSD_CARD_TYPE_NO_DEVICE))
+    {
+        /* Card initialization successful, Change the object state to IDLE */
+        object->state = MMCSD_STATE_IDLE;
+    }
+    else if((status == MMCSD_STS_SUCCESS) &&
+            (object->initHandle->cardType == MMCSD_CARD_TYPE_NO_DEVICE))
+    {
+        /* No Card to initialize, Change the object state to RESET */
+        object->state = MMCSD_STATE_RESET;
+    }
+    else
+    {
+        /* Fail Condition, return status */
+    }
+
+    return status;
+}
 int32_t MMCSD_lld_deInit(MMCSDLLD_Handle handle)
 {
     return MMCSD_STS_SUCCESS;
+}
+
+int32_t MMCSD_lld_deInitDma(MMCSDLLD_Handle handle)
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+
+    if (handle != NULL)
+    {
+        MMCSDLLD_Object *object = (MMCSDLLD_Object *)handle;
+
+        /* Deinitialize EDMA channels */
+        status = MMCSD_edmaChDeinit(handle);
+
+        if (status == MMCSD_STS_SUCCESS)
+        {
+            object->state = MMCSD_STATE_RESET;
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR_INVALID_PARAM;
+    }
+
+    return status;
 }
 
 uint32_t MMCSD_lld_getBlockSize(MMCSDLLD_Handle handle)
@@ -849,6 +983,432 @@ int32_t MMCSD_lld_read_SD_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
         }
 
         status = MMCSD_lld_transferIntr(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_write_SD_Dma(MMCSDLLD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object *object = (MMCSDLLD_Object *)handle;
+    MMCSD_SdDeviceData *deviceData = (MMCSD_SdDeviceData *)NULL;
+    uint32_t addr = 0U;
+    uint32_t blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_SdDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_SD)
+    {
+        status = MMCSD_isCardReadyForTransferSD(handle);
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        addr = deviceData->isHC ? startBlk : startBlk * blockSize;
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags = MMCSD_CMDRSP_WRITE | MMCSD_CMDRSP_DATA | MMCSD_CMDREQ_WR_RD ;
+        if(numBlks>1)
+        {
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+
+        object->mmcsdTxn.cmd = (numBlks > 1U) ? MMCSD_CMD(25U) : MMCSD_CMD(24U);
+
+        status = MMCSD_lld_transferDma(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_read_SD_Dma(MMCSDLLD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object *object = (MMCSDLLD_Object *)handle;
+    MMCSD_SdDeviceData *deviceData = (MMCSD_SdDeviceData *)NULL;
+    uint32_t addr = 0U;
+    uint32_t blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_SdDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_SD)
+    {
+        status = MMCSD_isCardReadyForTransferSD(handle);
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        addr = deviceData->isHC ? startBlk : startBlk * blockSize;
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags = MMCSD_CMDRSP_READ | MMCSD_CMDRSP_DATA | MMCSD_CMDREQ_WR_RD;
+        if(numBlks>1)
+        {
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+
+        object->mmcsdTxn.cmd = (numBlks > 1U) ? MMCSD_CMD(18U) : MMCSD_CMD(17U);
+
+        status = MMCSD_lld_transferDma(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+int32_t MMCSD_lld_write_MMC_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
+                                 uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    MMCSDLLD_Transaction    trans;
+    uint32_t                addr = 0U;
+    uint32_t                blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (MMCSD_STS_SUCCESS == status)
+    {
+        if (deviceData->isHC)
+        {
+            /* Addressing in Blocks */
+            addr = startBlk;
+        }
+        else
+        {
+            /* Addressing is in Bytes */
+            addr = startBlk * blockSize;
+        }
+
+        MMCSD_lld_initTransaction(&trans);
+        trans.arg = addr;
+        trans.flags =   MMCSD_CMDRSP_WRITE | MMCSD_CMDRSP_DATA |
+                        MMCSD_CMDREQ_WR_RD;
+        trans.blockCount = numBlks;
+        trans.blockSize = blockSize;
+        trans.dataBuf = buf;
+
+        if (numBlks > 1U)
+        {
+            trans.cmd = MMCSD_CMD(25U);
+            trans.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        else
+        {
+            trans.cmd = MMCSD_CMD(24U);
+        }
+
+        status = MMCSD_lld_transferPoll(handle, &trans);
+
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_read_MMC_Poll(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    MMCSDLLD_Transaction    trans;
+    uint32_t                addr = 0U;
+    uint32_t                blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        if (deviceData->isHC)
+        {
+            addr = startBlk;
+        }
+        else
+        {
+            addr = startBlk * blockSize;
+        }
+
+        MMCSD_lld_initTransaction(&trans);
+        trans.arg = addr;
+        trans.flags =   MMCSD_CMDRSP_READ | MMCSD_CMDRSP_DATA |
+                        MMCSD_CMDREQ_WR_RD;
+        trans.blockCount = numBlks;
+        trans.blockSize = blockSize;
+        trans.dataBuf = buf;
+        if (numBlks > 1U)
+        {
+            trans.cmd = MMCSD_CMD(18U);
+            trans.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        else
+        {
+            trans.cmd = MMCSD_CMD(17U);
+        }
+
+        status = MMCSD_lld_transferPoll(handle, &trans);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_write_MMC_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
+                                 uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    uint32_t                addr = 0U;
+    uint32_t                blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (MMCSD_STS_SUCCESS == status)
+    {
+        if (deviceData->isHC)
+        {
+            /* Addressing in Blocks */
+            addr = startBlk;
+        }
+        else
+        {
+            /* Addressing is in Bytes */
+            addr = startBlk * blockSize;
+        }
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags =   MMCSD_CMDRSP_WRITE | MMCSD_CMDRSP_DATA |
+                                   MMCSD_CMDREQ_WR_RD;
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+
+        if (numBlks > 1U)
+        {
+            object->mmcsdTxn.cmd = MMCSD_CMD(25U);
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        else
+        {
+            object->mmcsdTxn.cmd = MMCSD_CMD(24U);
+        }
+
+        status = MMCSD_lld_transferIntr(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_read_MMC_Intr(MMCSDLLD_Handle handle, uint8_t *buf,
+                                uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    uint32_t                addr = 0U;
+    uint32_t                blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        if (deviceData->isHC)
+        {
+            addr = startBlk;
+        }
+        else
+        {
+            addr = startBlk * blockSize;
+        }
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags =   MMCSD_CMDRSP_READ | MMCSD_CMDRSP_DATA |
+                                   MMCSD_CMDREQ_WR_RD;
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+        if (numBlks > 1U)
+        {
+            object->mmcsdTxn.cmd = MMCSD_CMD(18U);
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        else
+        {
+            object->mmcsdTxn.cmd = MMCSD_CMD(17U);
+        }
+
+        status = MMCSD_lld_transferIntr(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_write_MMC_Dma(MMCSDLLD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    uint32_t addr = 0U;
+    uint32_t blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    while (MMCSD_getPstateStat(object->initHandle->baseAddr) & MMCSD_PSTATE_MASK_DATA_INHIBIT);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        addr = deviceData->isHC ? startBlk : startBlk * blockSize;
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags = MMCSD_CMDRSP_WRITE | MMCSD_CMDRSP_DATA | MMCSD_CMDREQ_WR_RD;
+        if(numBlks>1)
+        {
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+        object->mmcsdTxn.cmd = (numBlks > 1U) ? MMCSD_CMD(25U) : MMCSD_CMD(24U);
+
+        status = MMCSD_lld_transferDma(handle, &object->mmcsdTxn);
+    }
+
+    return status;
+}
+
+int32_t MMCSD_lld_read_MMC_Dma(MMCSDLLD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_t numBlks)
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData *deviceData = (MMCSD_EmmcDeviceData *)NULL;
+    uint32_t addr = 0U;
+    uint32_t blockSize = MMCSD_lld_getBlockSize(handle);
+
+    deviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    while (MMCSD_getPstateStat(object->initHandle->baseAddr) & MMCSD_PSTATE_MASK_DATA_INHIBIT);
+
+    if (object->initHandle->cardType == MMCSD_CARD_TYPE_EMMC)
+    {
+        status = MMCSD_isCardReadyForTransferMMC(handle);
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            status = MMCSD_lld_sendCmd23MMC(handle, numBlks);
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if (status == MMCSD_STS_SUCCESS)
+    {
+        addr = deviceData->isHC ? startBlk : startBlk * blockSize;
+
+        MMCSD_lld_initTransaction(&object->mmcsdTxn);
+        object->mmcsdTxn.arg = addr;
+        object->mmcsdTxn.flags = MMCSD_CMDRSP_READ | MMCSD_CMDRSP_DATA | MMCSD_CMDREQ_WR_RD;
+        if(numBlks>1)
+        {
+            object->mmcsdTxn.flags |= MMCSD_CMDRSP_ABORT;
+        }
+        object->mmcsdTxn.blockCount = numBlks;
+        object->mmcsdTxn.blockSize = blockSize;
+        object->mmcsdTxn.dataBuf = buf;
+        object->mmcsdTxn.cmd = (numBlks > 1U) ? MMCSD_CMD(18U) : MMCSD_CMD(17U);
+
+        status = MMCSD_lld_transferDma(handle, &object->mmcsdTxn);
     }
 
     return status;
@@ -1652,6 +2212,11 @@ static uint32_t MMCSD_getIntrStat(uint32_t baseAddr)
     return HW_RD_REG32(baseAddr + CSL_MMC_STAT);
 }
 
+static uint32_t MMCSD_getPstateStat(uint32_t baseAddr)
+{
+    return HW_RD_REG32(baseAddr + CSL_MMC_PSTATE);
+}
+
 static void MMCSD_clearIntrStat(uint32_t baseAddr, uint32_t intrMask)
 {
     HW_WR_REG32((baseAddr + CSL_MMC_STAT), intrMask);
@@ -1710,7 +2275,6 @@ static int32_t MMCSD_initStreamSend(uint32_t baseAddr)
 
     HW_WR_FIELD32((baseAddr + CSL_MMC_CON), CSL_MMC_CON_INIT,
         CSL_MMC_CON_INIT_NOINIT);
-
     /* Clear all status */
     MMCSD_clearIntrStat(baseAddr, 0xFFFFFFFFU);
 
@@ -1949,7 +2513,7 @@ static int32_t MMCSD_lld_initSD(MMCSDLLD_Handle handle)
                     }
 
                     status = MMCSD_lld_transferPoll(handle, &trans);
-                }
+                               }
 
                 if(status == MMCSD_STS_SUCCESS)
                 {
@@ -2324,7 +2888,309 @@ static int32_t MMCSD_lld_initSD(MMCSDLLD_Handle handle)
 
 static int32_t MMCSD_lld_initMMC(MMCSDLLD_Handle handle)
 {
-    return MMCSD_STS_ERR;
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *emmcDeviceData = (MMCSD_EmmcDeviceData *)NULL;
+    MMCSDLLD_Transaction    trans;
+    uint32_t                retry = 0xFFFFU;
+    uint32_t                currState = 0;
+    bool                    initDone = false;
+
+    MMCSD_sysCfg sysCfg = { MMCSD_CLK_ACT_ICLK_FCLK_OFF,
+                            MMCSD_STANDBY_MODE_FORCE,
+                            MMCSD_IDLE_MODE_FORCE,
+                            FALSE,
+                            TRUE};
+
+
+    emmcDeviceData = (MMCSD_EmmcDeviceData *)object->initHandle->deviceData;
+
+    while((initDone == false) && (status == MMCSD_STS_SUCCESS))
+    {
+        switch(currState)
+        {
+            case EMMC_INIT_STATE_CONTROLLER_INIT:
+            {
+                // Soft Reset
+                status = MMCSD_softReset(object->initHandle->baseAddr, MMCSD_WAIT_FOREVER);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    // Reset Lines
+                    MMCSD_linesResetAll(object->initHandle->baseAddr, MMCSD_WAIT_FOREVER);
+
+                    // Set supported voltage list
+                    MMCSD_setSupportedVoltage(object->initHandle->baseAddr, (MMCSD_SUPP_VOLT_1P8 | MMCSD_SUPP_VOLT_3P0));
+                    MMCSD_systemConfig(object->initHandle->baseAddr, &sysCfg);
+
+                    // Set bus width to 1-bit
+                    MMCSD_setBusWidth(object->initHandle->baseAddr, MMCSD_BUS_WIDTH_1BIT);
+
+                    MMCSD_setBusVolt(object->initHandle->baseAddr,
+                        MMCSD_BUS_VOLT_3_0V);
+
+                    // Power on
+                    status = MMCSD_busPowerOnCtrl(object->initHandle->baseAddr, MMCSD_PWR_CTRL_ON, MMCSD_WAIT_FOREVER);
+                }
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    // Set initialization frequency (400kHz)
+                    status = MMCSD_setBusFreq(object->initHandle->baseAddr, object->initHandle->inputClkFreq, MMCSD_ID_MODE_FREQUENCY_HZ);
+                }
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    // Send init stream
+                    status = MMCSD_initStreamSend(object->initHandle->baseAddr);
+                }
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    currState = EMMC_INIT_STATE_CHECK_VOLTAGE;
+                }
+            }
+            break;
+            
+            case EMMC_INIT_STATE_CHECK_VOLTAGE:
+            {
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    currState = EMMC_INIT_STATE_CARD_IDENTIFICATION;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_CARD_IDENTIFICATION:
+            {
+                // Send CMD0 (reset)
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(0U);
+                trans.flags = MMCSD_CMDRSP_NONE;
+                trans.arg = 0U;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                ClockP_usleep(5000);
+
+                // Poll for card ready (CMD1)
+                retry = 0xFFFFU;
+                do
+                {
+                    MMCSD_lld_initTransaction(&trans);
+                    trans.cmd = MMCSD_CMD(1U);
+                    trans.flags = 0U;
+                    trans.arg = 0xC0FF8080U;
+                    status = MMCSD_lld_transferPoll(handle, &trans);
+                    retry--;
+                } while (((trans.response[0U] & ((uint32_t)BIT(31U))) == 0U) && (retry != 0) && (status == MMCSD_STS_SUCCESS));
+
+                if((retry == 0U) || (status != MMCSD_STS_SUCCESS))
+                {
+                    status = MMCSD_STS_ERR;
+                }
+                else
+                {
+                    emmcDeviceData->ocr = trans.response[0U];
+                    if((emmcDeviceData->ocr & MMCSD_OCR_HIGH_CAPACITY) != 0U)
+                    {
+                        emmcDeviceData->isHC = true;
+                    }
+                    currState = EMMC_INIT_STATE_GET_CID;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_GET_CID:
+            {
+                // Send CMD2 (get CID)
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(2U);
+                trans.flags = MMCSD_CMDRSP_136BITS;
+                trans.arg = 0U;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    status = MMCSD_parseCIDEmmc(emmcDeviceData, trans.response);
+                    currState = EMMC_INIT_STATE_GET_RCA;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_GET_RCA:
+            {
+
+                MMCSD_lld_initTransaction(&trans);
+                emmcDeviceData->rca = 2;
+                trans.cmd = MMCSD_CMD(3U);
+                trans.flags = 0U;
+                trans.arg = emmcDeviceData->rca << 16U;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+                
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    currState = EMMC_INIT_STATE_GET_CSD;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_GET_CSD:
+            {
+                // Send CMD9 (get CSD)
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(9U);
+                trans.flags = MMCSD_CMDRSP_136BITS;
+                trans.arg = emmcDeviceData->rca << 16U;
+
+                status = MMCSD_lld_transferPoll(handle,&trans);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    status = MMCSD_parseCSDEmmc(emmcDeviceData, trans.response);
+                    currState = EMMC_INIT_STATE_SELECT_CARD;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_SELECT_CARD:
+            {
+                // Send CMD7 (select card)
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(7U);
+                trans.flags = MMCSD_CMDRSP_BUSY;
+                trans.arg = emmcDeviceData->rca << 16U;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    currState = EMMC_INIT_STATE_READ_EXT_CSD;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_READ_EXT_CSD:
+            {
+                // Send CMD8 (read EXT_CSD)
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(8U);
+                trans.flags = MMCSD_CMDRSP_READ | MMCSD_CMDRSP_DATA;
+                trans.arg = emmcDeviceData->rca << 16U;
+                trans.blockCount = 1U;
+                trans.blockSize = 512U;
+                trans.dataBuf = emmcDeviceData->extCsd;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                ClockP_usleep(5000*20);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    status = MMCSD_parseECSDEmmc(emmcDeviceData, emmcDeviceData->extCsd);
+                    currState = EMMC_INIT_STATE_SET_SPEED;
+                }
+            }
+            break;
+
+            case EMMC_INIT_STATE_SET_SPEED:
+            {
+                // Set high speed mode if supported
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(6U);
+                trans.arg = 0x03B90100;
+                trans.flags = MMCSD_CMDRSP_BUSY;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    if(object->initHandle->autoAssignMaxSpeed == true)
+                    {
+
+                        status = MMCSD_setBusFreq(  object->initHandle->baseAddr,
+                                                    object->initHandle->inputClkFreq,
+                                                    MMCSD_EMMC_HS_FREQUENCY_HZ);
+                    }
+                    else
+                    {
+                        if(emmcDeviceData->transferSpeed == MMCSD_TRANSPEED_50MBPS)
+                        {
+                            status = MMCSD_setBusFreq(  object->initHandle->baseAddr,
+                                                        object->initHandle->inputClkFreq,
+                                                        MMCSD_EMMC_HS_FREQUENCY_HZ);
+                        }
+                        else
+                        {
+                            status = MMCSD_setBusFreq(  object->initHandle->baseAddr,
+                                                        object->initHandle->inputClkFreq,
+                                                        MMCSD_EMMC_DS_FREQUENCY_HZ);
+                        }
+                    }
+                }
+                ClockP_usleep(5000*20);
+                
+                currState = EMMC_INIT_STATE_SET_BUS_WIDTH;
+            }
+            break;
+
+            case EMMC_INIT_STATE_SET_BUS_WIDTH:
+            {
+                // Set bus width (default to 4-bit if supported)
+                uint32_t controllerBuswidth = MMCSD_BUS_WIDTH_1BIT;
+                uint8_t ecsdBusWidth = MMCSD_ECSD_BUS_WIDTH_1BIT;
+
+                if(object->initHandle->busWidth & MMCSD_BUS_WIDTH_4BIT)
+                {
+                    controllerBuswidth = MMCSD_BUS_WIDTH_4BIT;
+                    ecsdBusWidth = MMCSD_ECSD_BUS_WIDTH_4BIT;
+                }
+
+                // Send CMD6 to set bus width in EXT_CSD
+                MMCSD_lld_initTransaction(&trans);
+                trans.cmd = MMCSD_CMD(6U);
+                trans.arg = 0x03000000 | (MMCSD_ECSD_BUS_WIDTH_INDEX << 16) |
+                            (((0 << MMCSD_ECSD_BUS_WIDTH_ES_SHIFT) | ecsdBusWidth) << 8);
+                trans.flags = MMCSD_CMDRSP_BUSY;
+                status = MMCSD_lld_transferPoll(handle, &trans);
+
+                ClockP_usleep(5000*20);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    MMCSD_setBusWidth(object->initHandle->baseAddr, controllerBuswidth);
+                }
+
+                ClockP_usleep(5000*20);
+
+                if(status == MMCSD_STS_SUCCESS)
+                {
+                    MMCSD_lld_initTransaction(&trans);
+                    trans.cmd = MMCSD_CMD(6U);
+                    trans.arg = 0x03A20100;
+                    trans.flags = MMCSD_CMDRSP_BUSY;
+                    status = MMCSD_lld_transferPoll(handle, &trans);
+                    currState = EMMC_INIT_STATE_DONE;
+                }
+
+                ClockP_usleep(5000*20);
+            }
+            break;
+
+            case EMMC_INIT_STATE_DONE:
+            default:
+                initDone = true;
+                break;
+        }
+    }
+
+    if(status == MMCSD_STS_SUCCESS)
+    {
+        object->state = MMCSD_STATE_IDLE;
+    }
+    else
+    {
+        object->state = MMCSD_STATE_RESET;
+    }
+
+    return status;
 }
 
 static int32_t MMCSD_lld_transferPoll(MMCSDLLD_Handle handle,
@@ -2457,6 +3323,8 @@ static int32_t MMCSD_lld_transferPoll(MMCSDLLD_Handle handle,
                                         MMCSD_INTR_MASK_BUFRDRDY);
             }
 
+            MMCSD_clearIntrStat(object->initHandle->baseAddr, MMCSD_INTR_MASK_TRNFCOMP);
+            MMCSD_setDataTimeout(object->initHandle->baseAddr, 27U);
             /* Enable necessary interrupts */
             MMCSD_enableIntrStatus(object->initHandle->baseAddr,
                             (
@@ -2752,6 +3620,158 @@ static int32_t MMCSD_lld_transferIntr(MMCSDLLD_Handle handle,
     return status;
 }
 
+static int32_t MMCSD_lld_transferDma(MMCSDLLD_Handle handle,
+                                      MMCSDLLD_Transaction *trans)
+{
+    int32_t             status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Object     *object = (MMCSDLLD_Object *)handle;
+    MMCSD_cmdObj        cmdObj = {{0U, 0U, 0U, 0U}, 0U, 0U, 0U, 0U};
+
+    if(object->state == MMCSD_STATE_IDLE)
+    {
+        /* Set driver state to BUSY */
+        object->state = MMCSD_STATE_BUSY;
+        /* Set current Transaction */
+        object->currentTxn = trans;
+        /* Reset interrupt configuration */
+        MMCSD_intrConfigReset(handle);
+
+        if((object->cmdErrorStat != 0U) || (object->xferErrorStat != 0U))
+        {
+            /* Some Error Happened in previous Transaction */
+            (void)MMCSD_linesResetCmd(object->initHandle->baseAddr,
+                                        MMCSD_WAIT_FOREVER);
+            (void)MMCSD_linesResetDat(object->initHandle->baseAddr,
+                                        MMCSD_WAIT_FOREVER);
+        }
+
+        /* Clear stored Error interrupt statuses */
+        object->cmdErrorStat = (uint32_t)0U;
+        object->xferErrorStat = (uint32_t)0U;
+
+        /* Configure the cmd object */
+        /* Configure the command type to be executed from the command flags */
+        if(trans->flags & MMCSD_CMDRSP_STOP)
+        {
+            cmdObj.cmd.cmdType = MMCSD_CMD_TYPE_BUS_SUSPEND;
+        }
+        else if(trans->flags & MMCSD_CMDRSP_FS)
+        {
+            cmdObj.cmd.cmdType = MMCSD_CMD_TYPE_FUNC_SEL;
+        }
+        else if(trans->flags & MMCSD_CMDRSP_ABORT)
+        {
+            cmdObj.cmd.cmdType = MMCSD_CMD_TYPE_IO_ABORT;
+        }
+        else
+        {
+            cmdObj.cmd.cmdType = 0U; /*dummy statement for misra warning*/
+        }
+
+        /* Configure the response type from the command flags */
+        if(trans->flags & MMCSD_CMDRSP_NONE)
+        {
+            cmdObj.cmd.rspType = MMCSD_RSP_TYPE_NONE;
+        }
+        else if(trans->flags & MMCSD_CMDRSP_136BITS)
+        {
+            cmdObj.cmd.rspType = MMCSD_RSP_TYPE_LEN_136;
+        }
+        else if(trans->flags & MMCSD_CMDRSP_BUSY)
+        {
+            cmdObj.cmd.rspType = MMCSD_RSP_TYPE_LEN_48_BUSY;
+        }
+        else
+        {
+            cmdObj.cmd.rspType = MMCSD_RSP_TYPE_LEN_48;
+        }
+
+        /* Configure the transfer type */
+        if(trans->flags & MMCSD_CMDRSP_DATA)
+        {
+            cmdObj.enableData = (uint32_t)TRUE;
+        }
+        else
+        {
+            cmdObj.enableData = (uint32_t)FALSE;
+        }
+
+        if(0U != cmdObj.enableData)
+        {
+            /* Command with data treansfer */
+            /* Store all the transaction data in driver object */
+            object->dataBufIdx = (uint8_t*)trans->dataBuf;
+            object->dataBlockCount = trans->blockCount;
+            object->dataBlockSize = trans->blockSize;
+
+            if(trans->flags & MMCSD_CMDRSP_READ)
+            {
+                cmdObj.cmd.xferType = MMCSD_XFER_TYPE_RX;
+            }
+            else
+            {
+                cmdObj.cmd.xferType = MMCSD_XFER_TYPE_TX;
+            }
+
+            cmdObj.numBlks = object->dataBlockCount;
+
+            /* Set the remaining block count as it will be used for
+                keeping count */
+            object->remainingBlockCount = object->dataBlockCount;
+
+            /* Set Block Length */
+            MMCSD_setBlkLength(object->initHandle->baseAddr, trans->blockSize);
+            /* Set Data Timeout */
+            MMCSD_setDataTimeout(object->initHandle->baseAddr, 27U);
+
+            /* Set command ID */
+            cmdObj.cmd.cmdId = trans->cmd;
+            /* Command Argument */
+            cmdObj.cmdArg = trans->arg;
+            /* DMA Enable */
+            cmdObj.enableDma = 1U;
+
+            /* Enable necessary interrupts */
+            MMCSD_enableIntrStatus(object->initHandle->baseAddr,
+                            (
+                                MMCSD_INTR_MASK_CMDCOMP     |
+                                MMCSD_INTR_MASK_CMDTIMEOUT  
+                            ) );
+
+            MMCSD_edmaTransfer(handle,&object->mmcsdTxn);
+
+            /* Send out the command object */
+            MMCSD_commandSend(object->initHandle->baseAddr, &cmdObj);
+            /* Wait for command completion */
+        }
+
+        else
+        {
+            /* Command without data transfer */
+            cmdObj.cmd.cmdId = trans->cmd;
+            cmdObj.cmdArg = trans->arg;
+            cmdObj.enableDma = 0;
+
+            /* Enable the necessary interrupts */
+
+            MMCSD_enableIntrStatus(object->initHandle->baseAddr,
+                            (
+                                MMCSD_INTR_MASK_CMDCOMP     |
+                                MMCSD_INTR_MASK_CMDTIMEOUT
+                            ) );
+
+            /* Send out the command object */
+            MMCSD_commandSend(object->initHandle->baseAddr, &cmdObj);
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR_BUSY;
+    }
+
+    return status;
+}
+
 static void MMCSD_intrConfigReset(MMCSDLLD_Handle handle)
 {
     MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
@@ -2889,6 +3909,12 @@ static void MMCSD_lld_xferCompleteStatusPoll(MMCSDLLD_Handle handle)
             object->xferErrorStat = (intrStatus & 0xFFFF0000U);
             /* Set Flag */
             xferError = true;
+
+            if((intrStatus & MMCSD_INTR_MASK_DATATIMEOUT) != 0U)
+            {
+                MMCSD_clearIntrStat(object->initHandle->baseAddr,
+                                    MMCSD_INTR_MASK_DATATIMEOUT);
+            }
         }
     }
 }
@@ -2942,12 +3968,6 @@ static void MMCSD_lld_xferCompleteStatusPollCMD19(MMCSDLLD_Handle handle)
             object->xferErrorStat = (intrStatus & 0xFFFF0000U);
             /* Set Flag */
             xferError = true;
-
-            if((intrStatus & MMCSD_INTR_MASK_DATATIMEOUT) != 0U)
-            {
-                MMCSD_clearIntrStat(object->initHandle->baseAddr,
-                                    MMCSD_INTR_MASK_DATATIMEOUT);
-            }
         }
     }
 }
@@ -3032,8 +4052,58 @@ static int32_t MMCSD_isCardReadyForTransferSD(MMCSDLLD_Handle handle)
     return status;
 }
 
-static void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
-                                           int32_t xferStatus)
+static int32_t MMCSD_isCardReadyForTransferMMC(MMCSDLLD_Handle handle)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    uint32_t                readyCheckTryCount = 0U;
+    MMCSDLLD_Object         *object = (MMCSDLLD_Object *)handle;
+    MMCSD_EmmcDeviceData    *mmcDeviceData = (MMCSD_EmmcDeviceData *)NULL;
+    MMCSDLLD_Transaction    trans;
+    uint32_t                mediaCurrentState = 0U;
+
+    mmcDeviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
+
+    while(  (mediaCurrentState != MMCSD_MEDIA_STATE_TRAN) &&
+            (readyCheckTryCount < MMCSD_MEDIA_STATE_THRESHOLD))
+    {
+
+        if(mediaCurrentState == MMCSD_MEDIA_STATE_RCV)
+        {
+            MMCSD_lld_initTransaction(&trans);
+            trans.cmd = MMCSD_CMD(12U);
+            trans.arg = (0U);
+            status = MMCSD_lld_transferPoll(handle, &trans);
+        }
+
+        if(status == MMCSD_STS_SUCCESS)
+        {
+            MMCSD_lld_initTransaction(&trans);
+            trans.cmd = MMCSD_CMD(13U);
+            trans.flags = MMCSD_CMDRSP_48BITS;
+            trans.arg = (mmcDeviceData->rca << 16U);
+            status = MMCSD_lld_transferPoll(handle, &trans);
+            readyCheckTryCount++;
+            mediaCurrentState = ((trans.response[0] >> 9U) & 0x0FU);
+        }
+
+        
+    }
+
+    if(mediaCurrentState != MMCSD_MEDIA_STATE_TRAN)
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    if(readyCheckTryCount >= MMCSD_MEDIA_STATE_THRESHOLD)
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    return status;
+}
+
+void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
+                                    int32_t xferStatus)
 {
     MMCSDLLD_Object     *object = (MMCSDLLD_Object*)handle;
 
@@ -3045,4 +4115,17 @@ static void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
     object->xferState = MMCSD_XFER_IDLE_STATE;
     /*Change Driver State back to IDLE */
     object->state = MMCSD_STATE_IDLE;
+}
+
+static int32_t MMCSD_lld_sendCmd23MMC(MMCSDLLD_Handle handle, uint32_t numBlks)
+{
+    int32_t                 status = MMCSD_STS_SUCCESS;
+    MMCSDLLD_Transaction    trans;
+
+    MMCSD_lld_initTransaction(&trans);
+    trans.cmd = MMCSD_CMD(23U);
+    trans.arg = numBlks;
+    status = MMCSD_lld_transferPoll(handle, &trans);
+
+    return status;
 }

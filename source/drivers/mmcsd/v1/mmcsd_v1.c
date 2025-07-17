@@ -48,6 +48,7 @@
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/ClockP.h>
 #include <drivers/hw_include/cslr.h>
+#include <drivers/mmcsd/v1/lld/dma/edma/mmcsd_edma_lld.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -88,6 +89,7 @@ static MMCSD_DrvObj gMmcsdDrvObj =
     .openLock      = NULL,
 };
 
+extern MMCSD_DmaChConfig   gMmcsdDmaChConfig[];
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -192,6 +194,12 @@ MMCSD_Handle MMCSD_open(uint32_t index, const MMCSD_Params *openParams)
 
         object->cardType = attrs->cardType;
 
+        if(mmcsdLldHandle->initHandle->enableDma == true){
+            mmcsdLldHandle->initHandle->mmcsdDmaHandle = (MMCSD_DmaHandle)EDMA_getHandle(openParams->edmaInst);
+            mmcsdLldHandle->initHandle->mmcsdDmaChConfig = gMmcsdDmaChConfig[index];
+            mmcsdLldHandle->transferCompleteCallback =
+                                            MMCSD_LLD_transferCompleteCallback;
+        }
         /* Register interrupt */
         if(true == attrs->intrEnable)
         {
@@ -240,17 +248,32 @@ MMCSD_Handle MMCSD_open(uint32_t index, const MMCSD_Params *openParams)
             }
         }
 
-        /* Initialize LLD driver */
-        if(MMCSD_lld_init(mmcsdLldHandle) == MMCSD_STS_SUCCESS)
+        if(attrs->enableDma == true)
         {
-            status = SystemP_SUCCESS;
-            mmcsdLldHandle->args = config;
+            status = SemaphoreP_constructBinary(&object->xferCompleteSemObj,
+                                                    0U);
+            DebugP_assert(status == SystemP_SUCCESS);
+            /* Store internal callback function */
+            object->txnCallbackFxn = &MMCSD_transferCallback;
+        }
+        if(attrs->enableDma == true)
+        {
+            /* Initialize the DMA */
+            status = MMCSD_lld_InitDma(mmcsdLldHandle);
+            DebugP_assert(status == SystemP_SUCCESS);
         }
         else
         {
-            status = SystemP_FAILURE;
+            /* Initialize the LLD */
+            status = MMCSD_lld_init(mmcsdLldHandle);
+            DebugP_assert(status == SystemP_SUCCESS);
         }
-        DebugP_assert(status == SystemP_SUCCESS);
+        /* Initialize LLD driver */
+        if(status == SystemP_SUCCESS)
+        {
+            mmcsdLldHandle->args = config;
+        }
+
     }
 
     if(SystemP_SUCCESS == status)
@@ -337,14 +360,17 @@ void MMCSD_close(MMCSD_Handle handle)
         DebugP_assert(NULL != gMmcsdDrvObj.openLock);
         (void)SemaphoreP_pend(&gMmcsdDrvObj.lockObj, SystemP_WAIT_FOREVER);
 
-        if(MMCSD_lld_deInit(object->mmcsdLldHandle) == MMCSD_STS_SUCCESS)
+        if(attrs->enableDma == true)
         {
-            status = SystemP_SUCCESS;
+            /* Deinit the DMA */
+            status = MMCSD_lld_deInitDma(object->mmcsdLldHandle);
         }
         else
         {
-            status = SystemP_FAILURE;
+            /* Deinit the LLD */
+            status = MMCSD_lld_deInit(object->mmcsdLldHandle);
         }
+    
         DebugP_assert(status == SystemP_SUCCESS);
 
         if (true == attrs->intrEnable)
@@ -393,7 +419,14 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
 
             if(attrs->cardType == MMCSD_CARD_TYPE_SD)
             {
-                if(attrs->intrEnable)
+
+                if(attrs->enableDma == true)
+                {
+                    status = MMCSD_lld_read_SD_Dma(mmcsdLldHandle, buf,
+                                                   startBlk, numBlks);
+                    CacheP_inv(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
+                }
+                else if(attrs->intrEnable)
                 {
                     status = MMCSD_lld_read_SD_Intr(mmcsdLldHandle, buf,
                                                     startBlk, numBlks);
@@ -411,16 +444,27 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
             }
             else if(attrs->cardType == MMCSD_CARD_TYPE_EMMC)
             {
-                if(attrs->intrEnable)
+                if(attrs->enableDma == true)
                 {
-                    /* TODO */
+                    status = MMCSD_lld_read_MMC_Dma(mmcsdLldHandle, buf,
+                                                    startBlk, numBlks);
+                    CacheP_inv(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
+                }
+                else if(attrs->intrEnable)
+                {
+                    status = MMCSD_lld_read_MMC_Intr(mmcsdLldHandle, buf,
+                                                     startBlk, numBlks);
                 }
                 else
                 {
-                    /* TODO */
+                    status = MMCSD_lld_read_MMC_Poll(mmcsdLldHandle, buf,
+                                                     startBlk, numBlks);
                 }
 
-                status = SystemP_FAILURE;
+                if(status != MMCSD_STS_SUCCESS)
+                {
+                    status = SystemP_FAILURE;
+                }
             }
             else
             {
@@ -471,7 +515,15 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
 
             if(attrs->cardType == MMCSD_CARD_TYPE_SD)
             {
-                if(attrs->intrEnable)
+
+                if(attrs->enableDma == true)
+                {
+                    CacheP_wb(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
+
+                    status = MMCSD_lld_write_SD_Dma(mmcsdLldHandle, buf,
+                                                    startBlk, numBlks);
+                }
+                else if(attrs->intrEnable)
                 {
                     status = MMCSD_lld_write_SD_Intr(mmcsdLldHandle, buf,
                                                      startBlk, numBlks);
@@ -489,16 +541,28 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
             }
             else if(attrs->cardType == MMCSD_CARD_TYPE_EMMC)
             {
-                if(attrs->intrEnable)
+                if(attrs->enableDma == true)
                 {
-                    /* TODO */
+                    CacheP_wb(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
+                    
+                    status = MMCSD_lld_write_MMC_Dma(mmcsdLldHandle, buf,
+                                                     startBlk, numBlks);
+                }
+                else if(attrs->intrEnable)
+                {
+                    status = MMCSD_lld_write_MMC_Intr(mmcsdLldHandle, buf,
+                                                  startBlk, numBlks);
                 }
                 else
                 {
-                    /* TODO */
+                    status = MMCSD_lld_write_MMC_Poll(mmcsdLldHandle, buf,
+                                                  startBlk, numBlks);
                 }
 
-                status = SystemP_FAILURE;
+                if(status != MMCSD_STS_SUCCESS)
+                {
+                    status = SystemP_FAILURE;
+                }
             }
             else
             {

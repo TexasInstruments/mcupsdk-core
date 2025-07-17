@@ -52,6 +52,131 @@ uint32_t MMCSD_CMD(uint32_t x)
     return x;
 }
 
+int32_t MMCSD_parseCIDEmmc(MMCSD_EmmcDeviceData *data, uint32_t resp[4])
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+
+    if((data != NULL) && (resp != NULL))
+    {
+        /* Shift the responses left by 1 byte */
+        uint32_t tempResp[4];
+        tempResp[3] = (resp[3] << 8) | (resp[2] >> 24);
+        tempResp[2] = (resp[2] << 8) | (resp[1] >> 24);
+        tempResp[1] = (resp[1] << 8) | (resp[0] >> 24);
+        tempResp[0] = (resp[0] << 8);
+
+        /* Manufacturer ID - 8 bits 31:24 of last DWORD*/
+        data->manuID = (uint8_t)MMCSD_GET_BITFIELD(tempResp[3], 24U, 31U);
+
+        /* Product name */
+        data->productName[6] = '\0';
+
+        /* Product name is bits 56:103 (48 bits, 6 bytes), to extract we can use a byte pointer and do memcpy */
+        uint8_t *pTempResp = (uint8_t *)&tempResp[0];
+
+        (void)memcpy(data->productName, pTempResp + 7U, 6U);
+
+        /* Manufacturing date */
+        uint16_t monthCode = (uint16_t)MMCSD_GET_BITFIELD(tempResp[0], 12U, 15U);
+        uint16_t yearCode  = (uint16_t)MMCSD_GET_BITFIELD(tempResp[0], 8U, 11U);
+
+        if((monthCode < 1U) || (monthCode > 12U))
+        {
+            monthCode = 1U;
+        }
+        else
+        {
+            /* monthCode in limits, [1, 12] */
+        }
+
+        if(yearCode <= 12U)
+        {
+            yearCode += 2013U;
+        }
+        else
+        {
+            yearCode += 1997U;
+        }
+
+        (void)snprintf(data->manuDate, 8, "%s%04u", gMonths[monthCode-(uint16_t)1U], yearCode);
+        data->manuDate[8] = '\0';
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    return status;
+}
+
+int32_t MMCSD_parseCSDEmmc(MMCSD_EmmcDeviceData *data, uint32_t resp[4])
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+
+    if((data != NULL) && (resp != NULL))
+    {
+
+        data->maxWriteBlockLen = (((uint32_t)2U)<<(((resp[0] & 0x03C00000U) >> 22)-1U));
+        data->transferSpeed = (resp[3] & 0x000000FFU);
+
+        if(((resp[3] & 0x3C000000U) >> 26) != 0x04U)
+        {
+            status = MMCSD_STS_ERR;
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    return status;
+}
+
+int32_t MMCSD_parseECSDEmmc(MMCSD_EmmcDeviceData *data, uint8_t ecsdData[512])
+{
+    int32_t status = MMCSD_STS_SUCCESS;
+
+    if((data != NULL) && (ecsdData != NULL))
+    {
+        data->driveStrength = (uint8_t)(ecsdData[185] >> 4);
+        data->blockCount = (((uint32_t)(ecsdData[215])) << 24) +
+                           (((uint32_t)(ecsdData[214])) << 16) +
+                           (((uint32_t)(ecsdData[213])) << 8) +
+                           (((uint32_t)(ecsdData[212])));
+        data->eStrobeSupport = ecsdData[184];
+        /*  7.4.59 DEVICE_TYPE [196] (JESD84-B51)
+            This field defines the type of the Device. */
+        data->supportedModes = ecsdData[196];
+
+        /* Manufacturing year corrections */
+        uint32_t sdRev = (uint32_t)ecsdData[192];
+        if(sdRev <= 4U)
+        {
+            int16_t year = (((int16_t)(data->manuDate[3]-'0') * (int16_t)1000) +
+                            ((int16_t)(data->manuDate[4]-'0') * (int16_t)100) +
+                            ((int16_t)(data->manuDate[5]-'0') * (int16_t)10) +
+                            (int16_t)(data->manuDate[6]-'0'));
+            year += 16;
+            uint32_t i = 4U;
+            while(i-- != 0U)
+            {
+                data->manuDate[3U + i] = (year % 10) + '0';
+                year /= 10;
+            }
+        }
+        else
+        {
+            /* do nothing */
+        }
+    }
+    else
+    {
+        status = MMCSD_STS_ERR;
+    }
+
+    return status;
+}
+
 int32_t MMCSD_parseCIDSd(MMCSD_SdDeviceData *data, uint32_t resp[4])
 {
     int32_t status = MMCSD_STS_SUCCESS;

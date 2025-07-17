@@ -66,6 +66,7 @@ FILES_common := \
     mdio_v0.c \
     mmcsd_v1.c \
     mmcsd_v1_lld.c \
+    mmcsd_edma_lld.c \
     mmcsd_parse.c \
     mpu_firewall.c \
     mpu_firewall_v0_cfg.c \
@@ -126,6 +127,7 @@ FILES_PATH_common = \
     mdio/v0 \
     mmcsd/v1 \
     mmcsd/v1/lld \
+    mmcsd/v1/lld/dma/edma \
     mmcsd/v1/lld/internal \
     mpu_firewall/v0 \
     mpu_firewall/v0/soc/am263x \
