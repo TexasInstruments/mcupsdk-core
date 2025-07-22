@@ -51,49 +51,6 @@ const includes = {
     ],
 };
 
-const template_options_cc = {
-    bootformat: "MCELF",
-    supportFotaSwap: true,
-    enableFastBoot: false,
-    board: "am261x-som"
-}
-
-const template_options_lp = {
-    bootformat: "MCELF",
-    supportFotaSwap: true,
-    enableFastBoot: false,
-    board: "am261x-lp"
-}
-
-const templates_cc =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_ospi/main.c.xdt",
-        output: "../main.c",
-        options: template_options_cc
-    },
-    {
-        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-som/board.c.xdt",
-        output: "../board.c",
-        options: template_options_cc
-    }
-];
-
-
-const templates_lp =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_ospi/main.c.xdt",
-        output: "../main.c",
-        options: template_options_lp
-    },
-    {
-        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-lp/board.c.xdt",
-        output: "../board.c",
-        options: template_options_lp
-    }
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
@@ -125,14 +82,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    if(buildOption.board === "am261x-som")
-    {
-        build_property.templates = templates_cc;
-    }
-    else if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {

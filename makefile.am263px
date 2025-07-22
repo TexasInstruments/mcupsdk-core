@@ -157,32 +157,22 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_software_sync/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_sw_interleaved_averaging/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_sw_interleaved_averaging/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_fastboot/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_swap/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1939,23 +1929,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  adc_sw_interleaved_averaging_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_sw_interleaved_averaging/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_can_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_can_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  sbl_can_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_can_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_can_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_can_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_can_uniflash_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1975,12 +1953,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sbl_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_ospi_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_ospi_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  sbl_ospi_fastboot_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1999,23 +1971,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sbl_ospi_swap_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sbl_sd_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_sd_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  sbl_sd_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_sd_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_uart_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -4415,23 +4375,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  adc_sw_interleaved_averaging_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_sw_interleaved_averaging/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_can_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_can_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  sbl_can_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_can_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_can_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_can_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_can_uniflash_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4451,12 +4399,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_ospi_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_ospi_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  sbl_ospi_fastboot_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4475,23 +4417,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_ospi_swap_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sbl_sd_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_sd_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  sbl_sd_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_sd_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sbl_uart_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6891,23 +6821,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  adc_sw_interleaved_averaging_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_sw_interleaved_averaging/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_can_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_can_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  sbl_can_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_can_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_can_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_can_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_can_uniflash_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -6927,12 +6845,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_ospi_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_ospi_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  sbl_ospi_fastboot_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -6951,23 +6863,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_ospi_swap_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sbl_sd_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_sd_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  sbl_sd_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_sd_multicore_elf_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_uart_multicore_elf_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -8588,96 +8488,66 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_can_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_can_uniflash_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_fastboot/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_swap/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_sd/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_sd_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart_multicore_elf/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

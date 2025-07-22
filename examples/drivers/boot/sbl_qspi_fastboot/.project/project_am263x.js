@@ -57,20 +57,6 @@ const includes = {
     ],
 };
 
-const template_options = {
-    bootformat: "MCELF",
-    enableFastBoot: true,
-}
-
-const templates =
-[
-    {
-        input: ".project/templates/am263x/sbl/sbl_qspi/main_fastboot.c.xdt",
-        output: "../main.c",
-        options: template_options
-    }
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_QSPI";
@@ -102,7 +88,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    build_property.templates = templates;
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;

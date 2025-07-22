@@ -62,35 +62,6 @@ const lnkfiles = {
     ]
 };
 
-const template_options_lp = {
-    bootformat: "MCELF",
-    board: "am261x-lp"
-}
-
-const template_options_som = {
-    bootformat: "MCELF",
-    board: "am261x-som"
-}
-
-const templates_lp =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_dfu/main.c.xdt",
-        output: "../main.c",
-        options: template_options_lp
-    },
-];
-
-
-const templates_som =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_dfu/main.c.xdt",
-        output: "../main.c",
-        options: template_options_som
-    },
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_DFU";
@@ -123,15 +94,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.defines = defines;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-
-    if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
-    else if(buildOption.board === "am261x-som")
-    {
-        build_property.templates = templates_som;
-    }
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.includes = includes_nortos_r5f;

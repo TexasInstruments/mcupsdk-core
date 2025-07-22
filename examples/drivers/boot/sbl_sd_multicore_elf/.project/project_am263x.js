@@ -63,18 +63,6 @@ const r5f0_macro = {
 
 };
 
-const templates =
-[
-    {
-        input: ".project/templates/am263x/sbl/sbl_sd/main.c.xdt",
-        output: "../main.c",
-        options: {
-            bootformat: "MCELF",
-            enableFastBoot: false,
-        }
-    }
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_SD";
@@ -106,7 +94,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    build_property.templates = templates;
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;

@@ -58,45 +58,6 @@ const includes = {
     ],
 };
 
-const template_options_cc = {
-    bootformat: "MCELF",
-    board: "am263x-cc"
-}
-
-const template_options_lp = {
-    bootformat: "MCELF",
-    board: "am263x-lp"
-}
-
-const templates_cc =
-[
-    {
-        input: ".project/templates/am263x/sbl/sbl_can/main.c.xdt",
-        output: "../main.c",
-        options: template_options_cc
-    },
-    {
-        input: ".project/templates/am263x/sbl/sbl_can/am263x-cc/board.c.xdt",
-        output: "../board.c",
-        options: template_options_cc
-    }
-];
-
-
-const templates_lp =
-[
-    {
-        input: ".project/templates/am263x/sbl/sbl_can/main.c.xdt",
-        output: "../main.c",
-        options: template_options_lp
-    },
-    {
-        input: ".project/templates/am263x/sbl/sbl_can/am263x-lp/board.c.xdt",
-        output: "../board.c",
-        options: template_options_cc
-    }
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_CAN";
@@ -127,14 +88,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    if(buildOption.board === "am263x-cc")
-    {
-        build_property.templates = templates_cc;
-    }
-    else if(buildOption.board === "am263x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {

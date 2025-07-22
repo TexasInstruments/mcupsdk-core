@@ -55,18 +55,6 @@ const lnkfiles = {
         "linker.cmd",
     ]
 };
-const templates =
-[
-    {
-        input: ".project/templates/am263px/sbl/sbl_sd/main.c.xdt",
-        output: "../main.c",
-        options: {
-            bootformat: "MCELF",
-            supportFotaSwap: false,
-            enableFastBoot: false,
-        }
-    }
-];
 
 const syscfgfile = "../example.syscfg";
 
@@ -95,7 +83,6 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.templates = templates;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;

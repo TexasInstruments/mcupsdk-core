@@ -48,23 +48,6 @@ const includes = {
     ],
 };
 
-const templates_cc =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_uart_uniflash/main.c.xdt",
-        output: "../main.c",
-    },
-];
-
-
-const templates_lp =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_uart_uniflash/main.c.xdt",
-        output: "../main.c",
-    },
-];
-
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH";
@@ -95,14 +78,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    if(buildOption.board === "am261x-som")
-    {
-        build_property.templates = templates_cc;
-    }
-    else if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.includes = includes;
     
