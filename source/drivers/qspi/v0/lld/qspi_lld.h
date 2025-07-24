@@ -276,6 +276,14 @@ typedef struct QSPI_EdmaParams_s *QSPI_DmaChConfig;
  * \brief This transaction state  indicates Don't Block for read completion
  */
 #define QSPI_STATE_NON_BLOCK            (5U)
+/**
+ * \brief Maximum frame length for QSPI transfer
+ */
+#define QSPI_MAX_FRAME_LENGTH           (4096U)
+/**
+ * \brief Size of CMD, Address and Dummy bytes in SPI words for quad read 
+ */
+#define QSPI_CMD_ADDR_DUMMY_BYTES_LEN   (5U)
 
 /**@}*/
 

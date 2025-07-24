@@ -378,6 +378,19 @@ uint32_t QSPI_getInputClk(QSPI_Handle handle);
 int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans);
 
 /**
+ *  \brief  Function to perform reads from the flash in configuration
+ *          mode.
+ *
+ *  \param  handle      #QSPI_Handle returned from #QSPI_open()
+ *  \param  trans       Pointer to a #QSPI_Transaction
+ *
+ *  \return #SystemP_SUCCESS on successful read; else error on failure
+ *
+ *  \sa     #QSPI_open
+ */
+int32_t QSPI_readConfigMode(QSPI_Handle handle, QSPI_Transaction *trans);
+
+/**
  *  \brief  Function to send specific commands and related data to flash
  *
  *  \param  handle      #QSPI_Handle returned from #QSPI_open()

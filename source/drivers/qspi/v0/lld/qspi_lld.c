@@ -55,6 +55,10 @@
 #define QSPI_CMD_LEN             (1U)
 /** \brief    QSPI Address default Length in SPI words */
 #define QSPI_ADDR_LEN            (1U)
+/** \brief    QSPI Address Length in Bytes */
+#define QSPI_ADDR_LEN_IN_BYTES   (3U)
+/** \brief    QSPI dummy byte Length in SPI words */
+#define QSPI_DUMMY_BYTES_LEN     (1U)
 /** \brief    QSPI idle timeout in micro seconds. */
 #define QSPI_IDLE_TIMEOUT_IN_US   ((uint32_t)1000000)
 /** \brief    Word Length in bits */
@@ -134,12 +138,17 @@ static void    QSPI_writeDataIntrInit(QSPILLD_Handle hQspi);
 static void    QSPI_writeCommandIntrInit(QSPILLD_Handle hQspi);
 static void    QSPI_writeCommandIntr(QSPILLD_Handle hQspi);
 static int32_t QSPI_readInterrupt(QSPILLD_Handle hQspi);
+static int32_t QSPI_lld_configDummybits(QSPILLD_Handle hQspi);
+static int32_t QSPI_lld_XferDummy(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess);
 
 /* Config Mode Read and Write Initialization*/
 static void QSPI_writeCommandInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess, QSPILLD_WriteCmdParams *msg);
 static void QSPI_writeAddressInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess, QSPILLD_WriteCmdParams *msg);
 static void QSPI_writeDataInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess, const QSPILLD_WriteCmdParams *msg);
 static void QSPI_readDataInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess, const QSPILLD_WriteCmdParams *msg);
+static void QSPI_writeCommandInitForRead(QSPILLD_Handle hQspi,
+                                         QSPI_ConfigAccess *cfgAccess,
+                                         QSPILLD_WriteCmdParams *msg);
 
 /* QSPI Bool Expression Checker*/
 static int32_t QSPI_lld_param_check(bool result);
@@ -327,7 +336,7 @@ int32_t QSPI_lld_readCmd(QSPILLD_Handle hQspi,  QSPILLD_WriteCmdParams *writeMsg
 
         if(QSPI_SYSTEM_SUCCESS == status)
         {
-            QSPI_writeCommandInit(hQspi, &cfgAccess,msg);
+            QSPI_writeCommandInitForRead(hQspi, &cfgAccess, msg);
             status = QSPI_spiConfigWrite(hQspi, &cfgAccess);
 
             /* Send address associated with command, if any */
@@ -340,6 +349,14 @@ int32_t QSPI_lld_readCmd(QSPILLD_Handle hQspi,  QSPILLD_WriteCmdParams *writeMsg
             /* Send data associated with command, if any */
             if( msg->dataLen != 0U)
             {
+                if(msg->cmd == (uint8_t)0x6B)
+                {
+                    /* Configure Dummy bits for quad read. */
+                    status += QSPI_lld_configDummybits(hQspi);
+                    /* Transfer Dummy bits */
+                    status = QSPI_lld_XferDummy(hQspi, &cfgAccess);
+                }
+
                 QSPI_readDataInit(hQspi, &cfgAccess,msg);
                 status += QSPI_spiConfigRead(hQspi, &cfgAccess);
             }
@@ -471,11 +488,10 @@ int32_t QSPI_lld_readCmdIntr(QSPILLD_Handle hQspi, const QSPILLD_WriteCmdParams 
 int32_t QSPI_lld_read(QSPILLD_Handle hQspi, uint32_t count, void* rxBuf, uint32_t addrOffset, uint32_t timeout)
 {
     int32_t status = QSPI_SYSTEM_SUCCESS;
-
     /* Check if handle is Null */
-    (void)QSPI_lld_setMemAddrSpace(hQspi, QSPI_MEM_MAP_PORT_SEL_MEM_MAP_PORT);
     if((hQspi != NULL))
     {
+        (void)QSPI_lld_setMemAddrSpace(hQspi, QSPI_MEM_MAP_PORT_SEL_MEM_MAP_PORT);
         /* Read the QSPI memory mapped region */
         status = QSPI_spiMemMapRead(hQspi, rxBuf, addrOffset, count, timeout);
     }
@@ -958,6 +974,90 @@ static int32_t QSPI_programInstance(QSPILLD_Handle hQspi)
     /* Enable memory mapped port by default */
     status += QSPI_lld_setMemAddrSpace(hQspi, QSPI_MEM_MAP_PORT_SEL_MEM_MAP_PORT);
 
+    return status;
+}
+
+int32_t QSPI_lld_configDummybits(QSPILLD_Handle hQspi)
+{
+    int32_t status = SystemP_SUCCESS;
+    QSPILLD_InitHandle hQspiInit;
+    const CSL_QspiRegs *pReg;
+    uint32_t dummyBytes, dummyBits;
+
+    /* Check if handle is Null */
+    if(hQspi != NULL)
+    {
+        hQspiInit = hQspi->hQspiInit;
+        pReg = (const CSL_QspiRegs *)hQspi->baseAddr;
+
+        if(hQspiInit->rxLines == QSPI_RX_LINES_QUAD)
+        {
+            /* Put the QSPI in configuration mode */
+            status = QSPI_lld_setMemAddrSpace(hQspi, QSPI_MEM_MAP_PORT_SEL_CFG_PORT);
+            /* Extract config mode read command */
+            uint32_t cfgReadCmd = (uint32_t)0x6B;
+            uint32_t cfgWrCmd = (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_FOUR_PIN_WRITE_SINGLE;
+
+            /* Set the number of address bytes  */
+            CSL_REG32_FINS((&pReg->SPI_SETUP0_REG)+(hQspiInit->chipSelect * 0x4U),
+                        QSPI_SPI_SETUP0_REG_NUM_A_BYTES, 2U);
+
+            dummyBytes = hQspi->numDummyBits / (uint32_t)8U;
+            if(dummyBytes == 0U)
+            {
+                /* Number of dummy bits to use if NUM_D_BYTES = 0x0 */
+                dummyBits = hQspi->numDummyBits % (uint32_t)8U;
+                CSL_REG32_FINS((((&pReg->SPI_SETUP0_REG)+(hQspiInit->chipSelect * (uint32_t)0x4U))),
+                                QSPI_SPI_SETUP0_REG_NUM_D_BITS, dummyBits);
+            }
+            else
+            {
+                CSL_REG32_FINS((&pReg->SPI_SETUP0_REG)+(hQspiInit->chipSelect * 0x4U),
+                                QSPI_SPI_SETUP0_REG_NUM_D_BYTES, dummyBytes);
+            }
+            CSL_REG32_FINS((&pReg->SPI_SETUP0_REG)+(hQspiInit->chipSelect * 0x4U),
+                            QSPI_SPI_SETUP0_REG_WCMD, cfgWrCmd);
+            CSL_REG32_FINS((&pReg->SPI_SETUP0_REG)+(hQspiInit->chipSelect * 0x4U),
+                            QSPI_SPI_SETUP0_REG_RCMD, cfgReadCmd);
+        }
+        else
+        {
+            /* Dummy bits are not needed for other read mode. */
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    return status;
+}
+
+/* This function will transfer the dummy bits only in Quad read mode. */
+static int32_t QSPI_lld_XferDummy(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint8_t  dummyBuff[1] = {0};
+
+    /* Check if handle is Null */
+    if(hQspi != NULL)
+    {
+        cfgAccess->buf = (uint8_t *)&dummyBuff[0];
+        /* Number of Dummy Bytes to bits. */
+        cfgAccess->wlen = (uint32_t)(1 << (uint8_t)3);
+        /* Dummy bytes will in 1 bytes*/
+        cfgAccess->count = (uint32_t) (QSPI_DUMMY_BYTES_LEN);
+
+        /* Update the command register value. */
+        CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_WLEN, (cfgAccess->wlen - 1U));
+        CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CMD,
+                        (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_FOUR_PIN_WRITE_SINGLE);
+
+        QSPI_spiConfigWrite(hQspi, cfgAccess);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
     return status;
 }
 
@@ -1575,6 +1675,48 @@ static void QSPI_writeCommandInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAc
     CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_WLEN, (cfgAccess->wlen - 1U));
 }
 
+static void QSPI_writeCommandInitForRead(QSPILLD_Handle hQspi, 
+                                         QSPI_ConfigAccess *cfgAccess, 
+                                         QSPILLD_WriteCmdParams *msg)
+{
+    QSPILLD_InitHandle hQspiInit;
+    hQspiInit = hQspi->hQspiInit;
+    uint32_t frmLength = 0;
+    /* Framelength will be based on cmd. 
+     * Check if the read command is Quad.
+     */
+    if((msg->cmdAddr != QSPI_LLD_CMD_INVALID_ADDR) && (msg->cmd == (uint8_t)0x6BU))
+    {
+        /* Total transaction frame length in words (bytes) */
+        frmLength = QSPI_CMD_LEN + QSPI_ADDR_LEN_IN_BYTES + QSPI_DUMMY_BYTES_LEN +
+                            (msg->dataLen / (hQspiInit->wrdLen >> 3U));
+    }
+    /* Check for single read command. */
+    else if ((msg->cmdAddr != QSPI_LLD_CMD_INVALID_ADDR) && (msg->cmd == (uint8_t)0x03U))
+    {
+        /* Total transaction frame length in words (bytes) */
+        frmLength = QSPI_CMD_LEN + QSPI_ADDR_LEN_IN_BYTES + 
+                        (msg->dataLen / (hQspiInit->wrdLen >> 3U));
+    }
+    else
+    {
+        /* Total transaction frame length in words (bytes) */
+        frmLength = QSPI_CMD_LEN + (msg->dataLen / (hQspiInit->wrdLen >> 3U));
+    }
+
+    /* Send the command */
+    cfgAccess->buf = (uint8_t *)&msg->cmd;
+    cfgAccess->count = (int32_t)QSPI_CMD_LEN;
+    cfgAccess->wlen = 8;
+
+    /* formulate the command */
+    CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_FLEN, (frmLength - 1U));
+    CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CSNUM, hQspiInit->chipSelect);
+    CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CMD,
+                        (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_FOUR_PIN_WRITE_SINGLE);
+    CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_WLEN, (cfgAccess->wlen - 1U));
+}
+
 static void QSPI_writeAddressInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess, QSPILLD_WriteCmdParams *msg)
 {
     cfgAccess->buf = (uint8_t *)&msg->cmdAddr;
@@ -1605,13 +1747,21 @@ static void QSPI_readDataInit(QSPILLD_Handle hQspi, QSPI_ConfigAccess *cfgAccess
     QSPILLD_InitHandle hQspiInit;
     hQspiInit = hQspi->hQspiInit;
     cfgAccess->buf = (uint8_t *)msg->dataBuf;
-    // cfgAccess->count = (msg->dataLen / (hQspiInit->wrdLen >> 3U));
     cfgAccess->count = msg->dataLen;
     cfgAccess->wlen = hQspiInit->wrdLen;
     /* Update the command register value. */
     CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_WLEN, (cfgAccess->wlen - 1U));
-    CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CMD,
-                                    (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_FOUR_PIN_READ_SINGLE);
+
+    if(msg->cmd != (uint8_t)0x6B)
+    {
+        CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CMD,
+                        (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_FOUR_PIN_READ_SINGLE); 
+    }
+    else
+    {
+        CSL_FINS(cfgAccess->cmdRegVal, QSPI_SPI_CMD_REG_CMD,
+                        (uint32_t)CSL_QSPI_SPI_CMD_REG_CMD_SIX_PIN_READ_QUAD);
+    }
 }
 
 static void QSPI_writeCommandIntrInit(QSPILLD_Handle hQspi)

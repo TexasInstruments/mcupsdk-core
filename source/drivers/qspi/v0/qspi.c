@@ -602,6 +602,34 @@ int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans)
     return status;
 }
 
+int32_t QSPI_readConfigMode(QSPI_Handle handle, QSPI_Transaction *trans)
+{
+    int32_t status = SystemP_SUCCESS;
+    QSPI_ReadCmdParams  rdParams;
+    QSPILLD_Handle      qspilldHandle;
+
+    /* QSPI LLD Handle */
+    if((NULL != handle) && (NULL != trans))
+    {
+        QSPI_Object *obj = ((QSPI_Config *)handle)->object;
+        qspilldHandle    = obj->qspilldHandle;
+
+        rdParams.cmd          = qspilldHandle->readCmd;
+        rdParams.cmdAddr      = trans->addrOffset;
+        rdParams.numAddrBytes = (uint8_t)qspilldHandle->numAddrBytes;
+        rdParams.rxDataBuf    = trans->buf;
+        rdParams.rxDataLen    = trans->count;
+
+        status = QSPI_readCmd(handle, &rdParams);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
 int32_t QSPI_readCmd(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams)
 {
     int32_t status = SystemP_SUCCESS;

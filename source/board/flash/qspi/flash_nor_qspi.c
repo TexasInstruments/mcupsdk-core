@@ -545,23 +545,70 @@ static void Flash_norQspiClose(Flash_Config *config)
 static int32_t Flash_norQspiRead(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
-    Flash_NorQspiObject *obj = (Flash_NorQspiObject *)(config->object);
-    Flash_Attrs *attrs = config->attrs;
+    Flash_NorQspiObject *obj = NULL;
+    Flash_DevConfig *devCfg = NULL;
+    Flash_Attrs *attrs = NULL;
+    uint32_t  flashSize = 0U;
+    QSPI_Transaction transaction;
+    uint32_t chunkLen, actual;
 
-    /* Validate address input */
-    if ((offset + len) > (attrs->flashSize))
+    if ((config != NULL) && (buf != NULL) && (config->object != NULL) &&
+        (config->devConfig != NULL) && (config->attrs != NULL))
+    {
+        obj = (Flash_NorQspiObject *)(config->object);
+        devCfg = config->devConfig;
+        attrs = config->attrs;
+
+        if ((attrs != NULL) && (devCfg!= NULL) && (obj != NULL) &&
+            (offset + len) > (attrs->flashSize))
+        {
+            /* Validate pointers and address input */
+            status = SystemP_FAILURE;
+        }
+        if (status == SystemP_SUCCESS)
+        {
+            /* Set chunk length to 4091 bytes */
+            chunkLen = (QSPI_MAX_FRAME_LENGTH - QSPI_CMD_ADDR_DUMMY_BYTES_LEN);
+            flashSize = (attrs->flashSize / (1024*1024));
+            for (actual = 0; actual < len; actual += chunkLen)
+            {
+                if((len - actual) < chunkLen)
+                {
+                    chunkLen = (len - actual);
+                }
+
+                QSPI_transaction_init(&transaction);
+                transaction.addrOffset = offset + actual;
+                transaction.buf = (void *)(buf + actual);
+                transaction.count = chunkLen;
+                if (flashSize > 8U)
+                {
+                   /* If flash size is more than 8MB, read transfer will be done
+                    * in config mode.
+                    */
+                    status = QSPI_readConfigMode(obj->qspiHandle, &transaction);
+                }
+                else
+                {
+                    status = QSPI_readMemMapMode(obj->qspiHandle, &transaction);
+                }
+
+                if(status == SystemP_SUCCESS)
+                {
+                    status = Flash_norQspiWaitReady(config,
+                                                    devCfg->flashBusyTimeout);
+                }
+
+                if(status != SystemP_SUCCESS)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    else
     {
         status = SystemP_FAILURE;
-    }
-    if (status == SystemP_SUCCESS)
-    {
-        QSPI_Transaction transaction;
-
-        QSPI_transaction_init(&transaction);
-        transaction.addrOffset = offset;
-        transaction.buf = (void *)buf;
-        transaction.count = len;
-        status = QSPI_readMemMapMode(obj->qspiHandle, &transaction);
     }
     return status;
 }
