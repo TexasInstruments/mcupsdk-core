@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.0.0+dev"}
  */
 
 /**
@@ -13,7 +14,7 @@ const edma1           = edma.addInstance();
 const lin             = scripting.addModule("/drivers/lin/lin", {}, false);
 const lin1            = lin.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -45,20 +46,25 @@ const dma_trig_xbar2  = dma_trig_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+const divider55       = system.clockTree["UART1_CLK_GCM_CLKDIV"];
+divider55.divideValue = 1;
+
 edma1.$name                 = "CONFIG_EDMA0";
 edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
-lin1.$name          = "CONFIG_LIN1";
-lin1.enableLoopback = true;
-lin1.LIN.$assign    = "LIN1";
+lin1.$name           = "CONFIG_LIN1";
+lin1.enableLoopback  = true;
+lin1.LIN.$assign     = "LIN1";
+lin1.LIN_child.$name = "drivers_lin_v0_lin_v0_template_lld0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

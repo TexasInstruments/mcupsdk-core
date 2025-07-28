@@ -68,7 +68,6 @@ flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
 flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.baudRateDiv       = 8;
-flash1.peripheralDriver.inputClkFreq      = 166666666;
 flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";

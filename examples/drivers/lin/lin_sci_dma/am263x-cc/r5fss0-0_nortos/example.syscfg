@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @versions {"tool":"1.24.1+4175"}
  */
 
 /**
@@ -46,6 +46,9 @@ const dma_trig_xbar2  = dma_trig_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+const divider49       = system.clockTree["UART1_CLK_GCM_CLKDIV"];
+divider49.divideValue = 1;
+
 edma1.$name                 = "CONFIG_EDMA0";
 edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
