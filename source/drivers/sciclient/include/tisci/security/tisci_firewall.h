@@ -108,12 +108,11 @@ struct tisci_msg_fwl_change_owner_info_resp {
  *
  * \param fwl_id firewall ID in question. fwl_id is defined in the TRM.
  *
- * \param region Region or channel number to set config info
- *   This field is unused in case of a simple firewall  and must be initialized
- *   to zero.  In case of a region based firewall, this field indicates the
- *   region in question. (index starting from 0) In case of a channel based
- *   firewall, this field indicates the channel in question (index starting
- *   from 0)
+ * \param region Region or channel number to set config info. This field is 
+ * unused in case of a simple firewall  and must be initialized
+ * to zero.  In case of a region based firewall, this field indicates the
+ * region in question. (index starting from 0) In case of a channel based
+ * firewall, this field indicates the channel in question (index starting from 0)
  *
  * \param n_permission_regs Number of permission registers to set
  *
@@ -157,13 +156,12 @@ struct tisci_msg_fwl_set_firewall_region_resp {
  *
  * \param fwl_id firewall ID in question. fwl_id is defined in the TRM.
  *
- * \param region Region or channel number to set config info
- *
- *   This field is unused in case of a simple firewall  and must be initialized
- *   to zero.  In case of a region based firewall, this field indicates the
- *   region in question (index starting from 0). In case of a channel based
- *   firewall, this field indicates the channel in question (index starting
- *   from 0).
+ * \param region Region or channel number to get config info. This field is 
+ * unused in case of a simple firewall  and must be initialized
+ * to zero.  In case of a region based firewall, this field indicates the
+ * region in question (index starting from 0). In case of a channel based
+ * firewall, this field indicates the channel in question (index starting
+ * from 0).
  *
  * \param n_permission_regs Number of permission registers to retrieve
  */
@@ -178,23 +176,26 @@ struct tisci_msg_fwl_get_firewall_region_req {
  * \brief Response for retrieving the firewall permissions.
  *
  * \param hdr Generic TISCI message header.
- *      A ACK response in the hdr indicates that the message was processed.
- *      successfully.
- *     A NACK response indicates failure to retrieve firewall permissions.
+ * An ACK response in the hdr indicates that the message was processed 
+ * successfully.
+ * A NACK response indicates failure to retrieve firewall permissions.
  *
- * \param fwl_id firewall ID in question. fwl_id is defined in the TRM.
+ * \param fwl_id firewall ID requested in the request message. fwl_id is defined in the TRM.
  *
- * \param region Region or channel number to set config info This field is
+ * \param region Region or channel number to get config info. This field is
  * unused in case of a simple firewall  and must be initialized to zero.  In
  * case of a region based firewall, this field indicates the region in
  * question. (index starting from 0) In case of a channel based firewall, this
  * field indicates the channel in question (index starting from 0)
  *
- * \param n_permission_regs Number of permission registers retrieved
+ * \param n_permission_regs Number of permission registers retrieved. n_permission_regs is 
+ * overwritten with number of priv-id slots. If priv-id slots is greater than n_permission_regs
+ * then it returns the correct value.
  *
  * \param control Contents of the firewall CONTROL register
  *
- * \param permissions Contents of the firewall PERMISSION registers
+ * \param permissions Contents of the firewall PERMISSION registers. Valid values match the n_permission_regs 
+ * returned values.
  *
  * \param start_address Contents of the firewall START_ADDRESS register
  * This is not applicable for channelized firewalls. The returned address is

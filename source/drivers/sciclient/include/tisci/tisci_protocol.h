@@ -168,7 +168,7 @@ struct tisci_sec_header {
 #define TISCI_MSG_SYNC_RESUME                   (0x0302U)
 #define TISCI_MSG_CONTINUE_RESUME               (0x0303U)
 #define TISCI_MSG_CORE_RESUME                   (0x0304U)
-#define TISCI_MSG_ABORT_ENTER_SLEEP             (0x0305U)
+#define TISCI_MSG_DM_ABORT_SLEEP                (0x0305U)
 #define TISCI_MSG_LPM_WAKE_REASON               (0x0306U)
 #define TISCI_MSG_SET_IO_ISOLATION              (0x0307U)
 #define TISCI_MSG_MIN_CONTEXT_RESTORE           (0x0308U)
@@ -361,6 +361,9 @@ struct tisci_sec_header {
 
 /** Message to program boot mode */
 #define TISCI_MSG_SET_OTP_BOOT_MODE             (0x9044U)
+
+/* Keywriter lite TISCI message to write keys from a buffer  */
+#define TISCI_MSG_KEY_WRITER_LITE               (0x9045U)
 
 /* Processor Control APIs */
 

@@ -84,6 +84,7 @@ extern "C"
 #define TISCI_BOARDCFG_PROC_ACL_MAGIC_NUM                             (0xF1EAU)
 #define TISCI_BOARDCFG_HOST_HIERARCHY_MAGIC_NUM                       (0x8D27U)
 #define TISCI_BOARDCFG_DBG_CFG_MAGIC_NUM                              (0x020CU)
+#define TISCI_BOARDCFG_BOOT_MODE_CFG_MAGIC_NUM                        (0x7D8AU)
 #define TISCI_BOARDCFG_PMIC_CFG_MAGIC_NUM                             (0x3172U)
 #define TISCI_BOARDCFG_OTP_CFG_MAGIC_NUM                              (0x4081U)
 #define TISCI_BOARDCFG_DKEK_CFG_MAGIC_NUM                             (0x5170U)
