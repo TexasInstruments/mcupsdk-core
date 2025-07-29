@@ -53,7 +53,7 @@
 /* ========================================================================== */
 
 #define PMIC_WDG_WINDOW_DELAY       (71U)
-#define PMIC_WDG_TIMEOUT_DELAY      (2000U)
+#define PMIC_WDG_TIMEOUT_DELAY      (3000U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
