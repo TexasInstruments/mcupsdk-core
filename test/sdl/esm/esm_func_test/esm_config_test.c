@@ -267,7 +267,7 @@ int32_t sdl_config_test(void)
 
     if (retVal == 0)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\n All sdl_config_tests have passed. \n");
     }
     else
     {
@@ -325,7 +325,7 @@ int32_t sdl_config_pwm_test(void)
 
     if (retVal == 0)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\n All config_pwm_tests have passed. \n");
     }
     else
     {
