@@ -53,7 +53,7 @@
 /* ========================================================================== */
 
 #define PMIC_WDG_WINDOW_DELAY       (71U)
-#define PMIC_WDG_TIMEOUT_DELAY      (2000U)
+#define PMIC_WDG_TIMEOUT_DELAY      (3000U)
 #define PMIC_REG_STATE_LOCK         (1U)
 
 /* ========================================================================== */
@@ -200,6 +200,7 @@ static int32_t PMICApp_wdogQAModeReset(Pmic_CoreHandle_t* pmicHandle)
              PMIC_CFG_WDG_QA_LFSR_VALID_SHIFT | PMIC_CFG_WDG_QA_QUES_SEED_VALID_SHIFT),
         .longWinCode = 0xFFU,
         .mode = PMIC_WDG_QA_MODE,
+        .timeBase = PMIC_WDG_TIME_BASE_550_US,
         .win1Code = 0x7FU,
         .win2Code = 0x7FU,
         .threshold1 = PMIC_WDG_THRESHOLD_COUNT_MAX,
