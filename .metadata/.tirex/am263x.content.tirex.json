@@ -10660,6 +10660,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mmcsd Raw Io Emmc Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mmcsd_raw_io_emmc",
+        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mmcsd",
+            "mmcsd_raw_io_emmc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mmcsd Raw Io Sd Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mmcsd_raw_io_sd_lld",
         "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10709,6 +10742,39 @@
             "drivers",
             "mmcsd",
             "mmcsd_raw_io_sd_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mmcsd Raw Io Emmc Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mmcsd_raw_io_emmc_dma_lld",
+        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mmcsd",
+            "mmcsd_raw_io_emmc_dma_lld",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

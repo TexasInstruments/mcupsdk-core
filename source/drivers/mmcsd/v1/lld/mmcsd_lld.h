@@ -646,8 +646,20 @@ int32_t MMCSD_lld_read_MMC_Dma(MMCSDLLD_Handle handle, uint8_t *buf,
 uint32_t MMCSD_lld_getBlockSize(MMCSDLLD_Handle handle);
 
 
-void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,
-    int32_t xferStatus);
+/**
+ * @brief Completes the current MMC/SD data transfer operation.
+ *
+ * This function should be called when a data transfer (read or write)
+ * operation is finished, either successfully or with an error. It handles
+ * any necessary cleanup and notifies the higher layers of the transfer
+ * completion status.
+ *
+ * @param handle      Handle to the MMCSD LLD (Low Level Driver) instance.
+ * @param xferStatus  Status of the completed transfer. Typically, a value of
+ *                    0 indicates success, while a negative value indicates
+ *                    an error.
+ */
+void MMCSD_lld_completeCurrTransfer(MMCSDLLD_Handle handle,int32_t xferStatus);
 
 /* ========================================================================== */
 /*                        ISR Function Declarations                           */

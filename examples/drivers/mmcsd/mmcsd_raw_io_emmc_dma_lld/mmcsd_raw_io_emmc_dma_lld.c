@@ -38,48 +38,27 @@
  #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
  
  #define APP_MMCSD_START_BLK             (0x300000U) /* @1.5GB */
- #define APP_MMCSD_DATA_SIZE             (4096)
+ #define APP_MMCSD_DATA_SIZE             (512*10U)
  
  uint8_t gMmcsdTxBuf[APP_MMCSD_DATA_SIZE] __attribute__((aligned(128U)));
  uint8_t gMmcsdRxBuf[APP_MMCSD_DATA_SIZE] __attribute__((aligned(128U)));
  
- uint32_t writeTicks = 0U, readTicks = 0U;
- uint32_t startTicks = 0;
- 
  void mmcsd_io_fill_buffers(void);
  
- /* MMCSD interrupt Priority */
- #define MMCSD_INTERRUPT_PRIORITY        (4U)
- 
  MMCSDLLD_Handle gMmcsdLldHandle0;
- uint32_t gMmcsdVimStsAddr, intrNum, gMmcsdVimStsClrMask, intcBaseAddr;
- uint32_t gMMCSDTransferMutex = MUTEX_ARM_UNLOCKED;
- 
- extern HwiP_Config gHwiConfig;
- 
+ volatile uint32_t gMMCSDTransferMutex = MUTEX_ARM_UNLOCKED;
+  
  /* Transfer Complete Callback Function Declaration */
- void MMCSD_lld_transferCompleteCallback_implementation (void * args, int32_t transferStatus);
+ void MMCSD_lld_transferCompleteCallbackImplementation (void * args, int32_t transferStatus);
  
- static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void App_MMCSD_ISR(void);
- 
- void mmcsd_raw_io_sd_intr_lld_main(void *args)
+ void mmcsd_raw_io_emmc_dma_lld_main(void *args)
  {
      Drivers_open();
      Board_driversOpen();
  
      gMmcsdLldHandle0 = (MMCSDLLD_Handle)(gMmcsdLldHandle[0]);
-     intrNum = gMmcsdLldHandle0->initHandle->intrNum;
-     intcBaseAddr = gHwiConfig.intcBaseAddr;
-     gMmcsdVimStsAddr = intcBaseAddr + (0x404u + (((intrNum)>> 5) & 0xFu)*0x20u);
-     gMmcsdVimStsClrMask = 0x1u << ((intrNum) & 0x1Fu);
- 
      /* Assign Transfer Complete Callback Function */
-     gMmcsdLldHandle0->transferCompleteCallback = MMCSD_lld_transferCompleteCallback_implementation;
- 
-     /* Register Interrupt */
-     HwiP_setVecAddr(intrNum, (uintptr_t)&App_MMCSD_ISR);
-     HwiP_setPri(intrNum, MMCSD_INTERRUPT_PRIORITY);
-     HwiP_enableInt(intrNum);
+     gMmcsdLldHandle0->transferCompleteCallback = MMCSD_lld_transferCompleteCallbackImplementation;
  
      int32_t     status = MMCSD_STS_SUCCESS;
      uint32_t    blockSize = MMCSD_lld_getBlockSize(gMmcsdLldHandle[0]);
@@ -98,20 +77,22 @@
      /* Lock Mutex */
      gMMCSDTransferMutex = MUTEX_ARM_LOCKED;
      /* Initiate Transfer */
-     status = MMCSD_lld_write_SD_Intr(gMmcsdLldHandle[0], gMmcsdTxBuf,
+     CacheP_wbInv(gMmcsdTxBuf, APP_MMCSD_DATA_SIZE, CacheP_TYPE_ALL);
+     status = MMCSD_lld_write_MMC_Dma(gMmcsdLldHandle[0], gMmcsdTxBuf,
                                       APP_MMCSD_START_BLK, numBlocks);
      /* Wait for Mutex to unlock */
-     while(try_lock_mutex(&gMMCSDTransferMutex) == MUTEX_ARM_LOCKED);
- 
+     while(try_lock_mutex((void *)&gMMCSDTransferMutex) == MUTEX_ARM_LOCKED);
+
      if(status == MMCSD_STS_SUCCESS)
      {
          /* Lock Mutex */
          gMMCSDTransferMutex = MUTEX_ARM_LOCKED;
          /* Initiate Transfer */
-         status = MMCSD_lld_read_SD_Intr(gMmcsdLldHandle[0], gMmcsdRxBuf,
+         status = MMCSD_lld_read_MMC_Dma(gMmcsdLldHandle[0], gMmcsdRxBuf,
                                          APP_MMCSD_START_BLK, numBlocks);
+         CacheP_inv(gMmcsdRxBuf, APP_MMCSD_DATA_SIZE, CacheP_TYPE_ALL);
          /* Wait for Mutex to unlock */
-         while(try_lock_mutex(&gMMCSDTransferMutex) == MUTEX_ARM_LOCKED);
+         while(try_lock_mutex((void *)&gMMCSDTransferMutex) == MUTEX_ARM_LOCKED);
      }
  
      if(status == MMCSD_STS_SUCCESS)
@@ -136,21 +117,12 @@
      return;
  }
  
- static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void App_MMCSD_ISR(void)
- {
-     ISR_CALL_LEVEL_NONFLOAT_REENTRANT(MMCSD_lld_Isr, \
-                                     gMmcsdLldHandle0, \
-                                     intrNum, \
-                                     gMmcsdVimStsAddr, \
-                                     gMmcsdVimStsClrMask,
-                                     intcBaseAddr);
- }
  
- void MMCSD_lld_transferCompleteCallback_implementation (void * args,
-                                                         int32_t transferStatus)
+ void MMCSD_lld_transferCompleteCallbackImplementation (void * args,
+                                            int32_t transferStatus)
  {
      /* Unlock Mutex */
-     unlock_mutex(&gMMCSDTransferMutex);
+     unlock_mutex((void *)&gMMCSDTransferMutex);
  }
  
  void mmcsd_io_fill_buffers(void)
@@ -160,6 +132,7 @@
      for(i = 0U; i < APP_MMCSD_DATA_SIZE; i++)
      {
          gMmcsdTxBuf[i] = i % 256;
-         gMmcsdRxBuf[i] = 0U;
+         gMmcsdRxBuf[i] = 0xff;
      }
  }
+ 

@@ -40,6 +40,9 @@
 #include <string.h> /* For memcpy */
 #include <drivers/mmcsd/v1/lld/internal/mmcsd_parse.h>
 
+#define YEAR_1997       (1997U)
+#define YEAR_2013       (2013U)
+
 static const char* gMonths[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 uint32_t MMCSD_GET_BITFIELD(uint32_t val, uint32_t start, uint32_t end)
@@ -91,11 +94,11 @@ int32_t MMCSD_parseCIDEmmc(MMCSD_EmmcDeviceData *data, uint32_t resp[4])
 
         if(yearCode <= 12U)
         {
-            yearCode += 2013U;
+            yearCode += YEAR_2013;
         }
         else
         {
-            yearCode += 1997U;
+            yearCode += YEAR_1997;
         }
 
         (void)snprintf(data->manuDate, 8, "%s%04u", gMonths[monthCode-(uint16_t)1U], yearCode);

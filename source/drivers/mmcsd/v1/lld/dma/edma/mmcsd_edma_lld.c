@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,10 +49,10 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* Value for A count*/
-#define EDMA_MMCSD_A_COUNT           (4U)
-/* Max Value for EDMA count - 31KB */
-#define MAX_EDMA_COUNT              (31744U)
+/* Value for A count                                                  */
+#define EDMA_MMCSD_A_COUNT                          (4U)
+/* Max Value for EDMA count - 31KB                                    */
+#define MAX_EDMA_COUNT                              (31744U)
 /* Transmit EDMA channel event queue number                           */
 #define EDMA_MMCSD_TX_EVT_QUEUE_NO                  (0U)
 /* Receive EDMA channel event queue number                            */
@@ -61,7 +61,6 @@
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
-
 
 static void MMCSD_edmaIsrRx(Edma_IntrHandle intrHandle, void *args);
 static void MMCSD_edmaIsrTx(Edma_IntrHandle intrHandle, void *args);
