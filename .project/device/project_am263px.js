@@ -78,6 +78,7 @@ const example_file_list = [
     "examples/drivers/boot/sbl_can_uniflash_multicore_elf/.project/project.js",
 	"examples/drivers/boot/sbl_null/.project/project.js",
     "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",
+	"examples/drivers/boot/sbl_ospi_enet/.project/project.js",
     "examples/drivers/boot/sbl_ospi_fastboot/.project/project.js",
     "examples/drivers/boot/sbl_ospi_multicore_elf/.project/project.js",
     "examples/drivers/boot/sbl_ospi_swap/.project/project.js",

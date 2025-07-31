@@ -41,6 +41,9 @@ BOOTLOADER_UNIFLASH_OPTYPE_FLASH_TUNING_DATA         = bytearray([0xF4, 0x00, 0x
 BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE               = bytearray([0xFE, 0x00, 0x00, 0x00])
 BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH                = bytearray([0xF5, 0x00, 0x00, 0x00])
 BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY               = bytearray([0xF6, 0x00, 0x00, 0x00])
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR               = bytearray([0xF7, 0x00, 0x00, 0x00])
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP               = bytearray([0xF8, 0x00, 0x00, 0x00])
+BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP               = bytearray([0xF9, 0x00, 0x00, 0x00])
 
 BOOTLOADER_UNIFLASH_IMAGE_TYPE_MULTICORE             = bytearray([0x4D, 0x43, 0x00, 0x00]) # MC
 BOOTLOADER_UNIFLASH_IMAGE_TYPE_UBOOT                 = bytearray([0x55, 0x42, 0x00, 0x00]) # UB
@@ -66,6 +69,9 @@ optypewords = {
     "erase" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_ERASE,
     "flash-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_FLASH,
     "flashverify-emmc":BOOTLOADER_UNIFLASH_OPTYPE_EMMC_VERIFY,
+    "flash-sector-write":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR,
+    "flash-mcelf-xip":BOOTLOADER_UNIFLASH_OPTYPE_FLASH_MCELF_XIP,
+    "flashverify-mcelf-xip" : BOOTLOADER_UNIFLASH_OPTYPE_FLASH_VERIFY_MCELF_XIP
 }
 
 statuscodes = {
@@ -116,7 +122,7 @@ class LineCfg():
     # Validate the configuration
     def validate(self):
         status = 0
-        optypes = ["flash", "flashverify", "erase", "flash-xip", "flashverify-xip", "flash-phy-tuning-data", "flash-emmc", "flashverify-emmc"]
+        optypes = list(optypewords.keys())
         if(self.line!=None):
             config_dict = self.parse_to_dict(self.line)
             if not config_dict:
@@ -130,14 +136,14 @@ class LineCfg():
                     else:
                         self.optype = config_dict["--operation"]
 
-                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flash-emmc" or self.optype == "flashverify-emmc"):
+                    if(self.optype == "flash" or self.optype == "flash-sector-write" or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flash-emmc" or self.optype == "flashverify-emmc"):
                         if "--flash-offset" not in config_dict.keys():
                             status = "[ERROR] Operation selected was {}, but no offset provided !!!".format(self.optype)
                             return status
                         else:
                             self.offset = config_dict["--flash-offset"]
 
-                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or self.optype == "flash-emmc" or self.optype == "flashverify-emmc"):
+                    if(self.optype == "flash" or self.optype == "flash-sector-write"  or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or self.optype == "flash-emmc" or self.optype == "flashverify-emmc"):
                         if "--file" not in config_dict.keys():
                             status = "[ERROR] Operation selected was {}, but no filename provided !!!".format(self.optype)
                             return status
@@ -397,7 +403,7 @@ def transceive(sock: socket.SocketType, payloads: list, num_packets: int, transm
                 pkt_timeout_count += 1
                 if debug:
                     print("[TRANSFER] (TIMEOUT) ACK timed out for packet {}".format(i))
-                if pkt_timeout_count == 5:
+                if pkt_timeout_count == 50:
                     print("[ERROR] Connection timed out too many times for same packet. Check connection to EVM.")
                     print("        Power cycle EVM and run this script again !!!")
                     bar.close()
