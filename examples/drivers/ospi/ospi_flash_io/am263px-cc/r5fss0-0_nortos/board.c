@@ -125,16 +125,7 @@ void board_flash_reset(OSPI_Handle oHandle)
 
         if(status == SystemP_SUCCESS)
         {
-            if(boardVer[0] == 'A' && boardVer[1] == '\0')
-            {
-                /* boardVer is REV A */
-                /* OSPI RESET signal does not come via IO expander */
-                /* Toggle the reset pin directly */
-                
-                OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-                OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
-            }
-            else if(boardVer[1] == '2' && boardVer[0] == 'E')
+            if(boardVer[1] == '2' && boardVer[0] == 'E')
             {
                 /* boardVer is E2 */
                 status = TCA6424_Flash_reset();
@@ -146,8 +137,12 @@ void board_flash_reset(OSPI_Handle oHandle)
             }
             else
             {
-                /* boardVer is invalid */
-                /* Do nothing */
+                /* boardVer is REV A or REV B*/
+                /* OSPI RESET signal does not come via IO expander */
+                /* Toggle the reset pin directly */
+
+                OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+                OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
             }
         }
     }
