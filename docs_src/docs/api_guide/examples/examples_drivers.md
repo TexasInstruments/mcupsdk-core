@@ -123,6 +123,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_DMA
+\cond SOC_AM64X
+   -# \subpage EXAMPLES_DRIVERS_UART_ECHO_DMA_MULTI_INSTANCES
+\endcond
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_CALLBACK
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING

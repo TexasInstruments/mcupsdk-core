@@ -11264,6 +11264,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echodma Multiinstance Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "UART_echoDma_multiInstance",
+        "location": "../../examples/drivers/uart/uart_echo_dma_multi_instance/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS64EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_multi_instance",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

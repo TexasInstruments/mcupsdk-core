@@ -161,6 +161,7 @@ const example_file_list = [
     "examples/drivers/uart/uart_echo_callback/.project/project.js",
     "examples/drivers/uart/uart_echo_dma/.project/project.js",
     "examples/drivers/uart/uart_echo_dma_lld/.project/project.js",
+    "examples/drivers/uart/uart_echo_dma_multi_instance/.project/project.js",
     "examples/drivers/uart/uart_echo_interrupt_lld/.project/project.js",
     "examples/drivers/uart/uart_echo_low_latency_interrupt/.project/project.js",
     "examples/drivers/uart/uart_echo_low_latency_polling/.project/project.js",
