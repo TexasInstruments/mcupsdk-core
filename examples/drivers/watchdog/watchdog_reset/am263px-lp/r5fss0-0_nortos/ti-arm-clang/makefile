@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=watchdog_reset_mode.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=watchdog_reset_mode.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=watchdog_reset_mode.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=watchdog_reset_mode.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=watchdog_reset_mode.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=watchdog_reset_mode.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=watchdog_reset_mode.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

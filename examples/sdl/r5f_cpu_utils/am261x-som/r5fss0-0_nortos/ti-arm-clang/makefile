@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=r5f_cpu_utils.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=r5f_cpu_utils.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=r5f_cpu_utils.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=r5f_cpu_utils.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=r5f_cpu_utils.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=r5f_cpu_utils.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=r5f_cpu_utils.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

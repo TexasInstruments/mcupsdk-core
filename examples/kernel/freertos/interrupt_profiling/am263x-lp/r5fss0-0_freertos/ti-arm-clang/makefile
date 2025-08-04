@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=interrupt_profiling.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=interrupt_profiling.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=interrupt_profiling.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=interrupt_profiling.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=interrupt_profiling.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=interrupt_profiling.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=interrupt_profiling.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

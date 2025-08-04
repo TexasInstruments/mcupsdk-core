@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=resolver_diagnostics.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=resolver_diagnostics.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=resolver_diagnostics.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=resolver_diagnostics.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=resolver_diagnostics.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=resolver_diagnostics.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=resolver_diagnostics.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

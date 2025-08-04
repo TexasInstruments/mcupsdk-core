@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sram_overlay.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sram_overlay.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sram_overlay.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sram_overlay.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sram_overlay.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sram_overlay.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sram_overlay.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

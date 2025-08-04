@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=gpio_multi_led_blink.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=gpio_multi_led_blink.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=gpio_multi_led_blink.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=gpio_multi_led_blink.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=gpio_multi_led_blink.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=gpio_multi_led_blink.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=gpio_multi_led_blink.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

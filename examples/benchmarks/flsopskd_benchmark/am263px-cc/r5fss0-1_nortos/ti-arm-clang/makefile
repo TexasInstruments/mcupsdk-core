@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=flsopskd_benchmark.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=flsopskd_benchmark.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=flsopskd_benchmark.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=flsopskd_benchmark.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=flsopskd_benchmark.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=flsopskd_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=flsopskd_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

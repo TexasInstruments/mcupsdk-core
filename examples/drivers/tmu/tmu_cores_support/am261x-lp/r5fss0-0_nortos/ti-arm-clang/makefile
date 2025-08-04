@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=tmu_cores_support.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=tmu_cores_support.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=tmu_cores_support.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tmu_cores_support.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tmu_cores_support.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tmu_cores_support.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tmu_cores_support.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

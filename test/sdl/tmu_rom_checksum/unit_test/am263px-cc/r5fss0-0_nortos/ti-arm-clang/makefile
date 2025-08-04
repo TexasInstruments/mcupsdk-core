@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=tmu_rom_checksum_unittest_app.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=tmu_rom_checksum_unittest_app.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

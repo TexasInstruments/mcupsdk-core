@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=pmu_multievent.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=pmu_multievent.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=pmu_multievent.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=pmu_multievent.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=pmu_multievent.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=pmu_multievent.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=pmu_multievent.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dthe_sha_512.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dthe_sha_512.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dthe_sha_512.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dthe_sha_512.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dthe_sha_512.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dthe_sha_512.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dthe_sha_512.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

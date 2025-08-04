@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=adc_sw_interleaved_averaging.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=adc_sw_interleaved_averaging.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=adc_sw_interleaved_averaging.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc_sw_interleaved_averaging.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc_sw_interleaved_averaging.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc_sw_interleaved_averaging.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc_sw_interleaved_averaging.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

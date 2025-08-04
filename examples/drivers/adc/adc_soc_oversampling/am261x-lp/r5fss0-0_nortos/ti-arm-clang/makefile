@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=adc_soc_oversampling.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=adc_soc_oversampling.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=adc_soc_oversampling.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc_soc_oversampling.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc_soc_oversampling.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc_soc_oversampling.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc_soc_oversampling.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=epwm_trip_zone.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=epwm_trip_zone.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_trip_zone.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_trip_zone.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_trip_zone.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_trip_zone.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_trip_zone.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

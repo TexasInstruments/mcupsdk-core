@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=test_dthe_aes_cmac.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=test_dthe_aes_cmac.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_dthe_aes_cmac.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_dthe_aes_cmac.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_dthe_aes_cmac.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_dthe_aes_cmac.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_dthe_aes_cmac.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

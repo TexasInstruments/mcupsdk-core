@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=hrpwm_phase_shift_sfo.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=hrpwm_phase_shift_sfo.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=hrpwm_phase_shift_sfo.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hrpwm_phase_shift_sfo.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hrpwm_phase_shift_sfo.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=hrpwm_phase_shift_sfo.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hrpwm_phase_shift_sfo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

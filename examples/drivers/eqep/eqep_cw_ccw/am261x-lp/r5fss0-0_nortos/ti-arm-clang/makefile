@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=eqep_cw_ccw.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=eqep_cw_ccw.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=eqep_cw_ccw.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=eqep_cw_ccw.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=eqep_cw_ccw.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=eqep_cw_ccw.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=eqep_cw_ccw.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

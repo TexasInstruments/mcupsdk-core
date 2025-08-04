@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dhrystone_benchmark.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dhrystone_benchmark.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dhrystone_benchmark.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dhrystone_benchmark.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dhrystone_benchmark.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dhrystone_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dhrystone_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

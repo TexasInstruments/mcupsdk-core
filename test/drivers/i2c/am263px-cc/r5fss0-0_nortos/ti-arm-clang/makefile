@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=test_i2c.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=test_i2c.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_i2c.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_i2c.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_i2c.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_i2c.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_i2c.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

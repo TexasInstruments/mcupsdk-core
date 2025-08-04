@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=stog_func_test.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=stog_func_test.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=stog_func_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=stog_func_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=stog_func_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=stog_func_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=stog_func_test.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

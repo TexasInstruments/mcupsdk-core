@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=cmpss_diode_emulation.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=cmpss_diode_emulation.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=cmpss_diode_emulation.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=cmpss_diode_emulation.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=cmpss_diode_emulation.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=cmpss_diode_emulation.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cmpss_diode_emulation.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=test_gpmc_v1.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=test_gpmc_v1.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_gpmc_v1.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_gpmc_v1.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_gpmc_v1.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_gpmc_v1.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_gpmc_v1.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

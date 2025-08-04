@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sdl_rti_example_uc2.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sdl_rti_example_uc2.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdl_rti_example_uc2.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_rti_example_uc2.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_rti_example_uc2.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_rti_example_uc2.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_rti_example_uc2.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

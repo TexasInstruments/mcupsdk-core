@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=usb_ncm.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=usb_ncm.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=usb_ncm.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=usb_ncm.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=usb_ncm.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=usb_ncm.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=usb_ncm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

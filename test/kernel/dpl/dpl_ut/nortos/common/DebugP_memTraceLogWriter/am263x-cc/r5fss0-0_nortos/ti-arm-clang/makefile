@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=DebugP_memTraceLogWriter_test.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=DebugP_memTraceLogWriter_test.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=DebugP_memTraceLogWriter_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=DebugP_memTraceLogWriter_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=DebugP_memTraceLogWriter_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=DebugP_memTraceLogWriter_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=DebugP_memTraceLogWriter_test.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

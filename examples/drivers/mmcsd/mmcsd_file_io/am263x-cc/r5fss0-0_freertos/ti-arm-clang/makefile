@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mmcsd_file_io.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mmcsd_file_io.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mmcsd_file_io.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mmcsd_file_io.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mmcsd_file_io.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mmcsd_file_io.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mmcsd_file_io.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=eqep_speed_direction.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=eqep_speed_direction.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=eqep_speed_direction.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=eqep_speed_direction.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=eqep_speed_direction.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=eqep_speed_direction.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=eqep_speed_direction.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

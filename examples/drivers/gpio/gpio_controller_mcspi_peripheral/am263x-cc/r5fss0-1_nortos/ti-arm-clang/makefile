@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=gpio_controller_mcspi_peripheral.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=gpio_controller_mcspi_peripheral.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=gpio_controller_mcspi_peripheral.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=gpio_controller_mcspi_peripheral.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=gpio_controller_mcspi_peripheral.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=gpio_controller_mcspi_peripheral.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=gpio_controller_mcspi_peripheral.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=optiflash_ocram_benchmark.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=optiflash_ocram_benchmark.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=optiflash_ocram_benchmark.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=optiflash_ocram_benchmark.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=optiflash_ocram_benchmark.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=optiflash_ocram_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=optiflash_ocram_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

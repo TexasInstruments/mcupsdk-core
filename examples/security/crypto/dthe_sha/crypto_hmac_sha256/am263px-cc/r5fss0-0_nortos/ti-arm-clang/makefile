@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dthe_hmac_sha256.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dthe_hmac_sha256.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dthe_hmac_sha256.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dthe_hmac_sha256.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dthe_hmac_sha256.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dthe_hmac_sha256.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dthe_hmac_sha256.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

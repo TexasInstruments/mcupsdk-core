@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=gpio_input_interrupt.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=gpio_input_interrupt.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=gpio_input_interrupt.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=gpio_input_interrupt.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=gpio_input_interrupt.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=gpio_input_interrupt.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=gpio_input_interrupt.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

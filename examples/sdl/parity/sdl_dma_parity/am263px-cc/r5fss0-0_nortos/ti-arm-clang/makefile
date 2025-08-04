@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sdl_dma_parity.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sdl_dma_parity.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdl_dma_parity.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_dma_parity.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_dma_parity.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_dma_parity.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_dma_parity.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

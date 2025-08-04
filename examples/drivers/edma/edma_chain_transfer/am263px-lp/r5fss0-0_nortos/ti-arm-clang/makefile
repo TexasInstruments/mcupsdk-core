@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=edma_chain_transfer.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=edma_chain_transfer.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=edma_chain_transfer.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=edma_chain_transfer.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=edma_chain_transfer.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=edma_chain_transfer.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=edma_chain_transfer.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

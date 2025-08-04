@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=cmpss_digital_filter_trip.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=cmpss_digital_filter_trip.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=cmpss_digital_filter_trip.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=cmpss_digital_filter_trip.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=cmpss_digital_filter_trip.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=cmpss_digital_filter_trip.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cmpss_digital_filter_trip.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

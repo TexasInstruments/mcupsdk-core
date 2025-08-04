@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=cdc_echo.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=cdc_echo.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=cdc_echo.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=cdc_echo.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=cdc_echo.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=cdc_echo.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cdc_echo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dac_epwm_sync.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dac_epwm_sync.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dac_epwm_sync.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dac_epwm_sync.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dac_epwm_sync.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dac_epwm_sync.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dac_epwm_sync.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=epwm_illegal_combo_logic.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=epwm_illegal_combo_logic.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_illegal_combo_logic.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_illegal_combo_logic.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_illegal_combo_logic.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_illegal_combo_logic.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_illegal_combo_logic.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

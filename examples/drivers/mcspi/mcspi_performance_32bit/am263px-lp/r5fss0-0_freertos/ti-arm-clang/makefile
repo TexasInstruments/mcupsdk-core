@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mcspi_performance_32bit.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mcspi_performance_32bit.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mcspi_performance_32bit.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mcspi_performance_32bit.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mcspi_performance_32bit.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mcspi_performance_32bit.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcspi_performance_32bit.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

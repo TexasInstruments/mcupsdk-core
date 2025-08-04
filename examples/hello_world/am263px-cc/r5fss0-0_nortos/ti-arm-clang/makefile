@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=hello_world.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=hello_world.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=hello_world.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hello_world.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hello_world.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=hello_world.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hello_world.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

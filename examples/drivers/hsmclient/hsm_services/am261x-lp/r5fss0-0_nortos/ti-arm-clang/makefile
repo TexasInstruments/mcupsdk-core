@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=hsm_services.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=hsm_services.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=hsm_services.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hsm_services.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hsm_services.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=hsm_services.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hsm_services.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mcan_loopback_dma.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mcan_loopback_dma.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mcan_loopback_dma.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mcan_loopback_dma.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mcan_loopback_dma.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mcan_loopback_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcan_loopback_dma.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

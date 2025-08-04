@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=tmu_context_save.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=tmu_context_save.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=tmu_context_save.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tmu_context_save.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tmu_context_save.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tmu_context_save.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tmu_context_save.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

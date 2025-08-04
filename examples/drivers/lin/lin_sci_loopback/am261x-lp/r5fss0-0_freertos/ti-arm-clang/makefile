@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=lin_sci_loopback.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=lin_sci_loopback.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=lin_sci_loopback.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=lin_sci_loopback.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=lin_sci_loopback.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=lin_sci_loopback.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=lin_sci_loopback.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

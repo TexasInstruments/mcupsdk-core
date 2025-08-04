@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=real_time_debug.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=real_time_debug.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=real_time_debug.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=real_time_debug.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=real_time_debug.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=real_time_debug.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=real_time_debug.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

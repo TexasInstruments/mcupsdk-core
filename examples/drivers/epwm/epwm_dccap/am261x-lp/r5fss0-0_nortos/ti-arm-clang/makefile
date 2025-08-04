@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=epwm_dccap.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=epwm_dccap.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_dccap.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_dccap.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_dccap.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_dccap.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_dccap.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=test_freertos.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=test_freertos.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_freertos.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_freertos.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_freertos.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_freertos.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_freertos.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

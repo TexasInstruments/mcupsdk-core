@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=pmic_trigger_watchdog_reset.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=pmic_trigger_watchdog_reset.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=pmic_trigger_watchdog_reset.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=pmic_trigger_watchdog_reset.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=pmic_trigger_watchdog_reset.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=pmic_trigger_watchdog_reset.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=pmic_trigger_watchdog_reset.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

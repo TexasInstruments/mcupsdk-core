@@ -16,7 +16,6 @@ SYSTEM_PROJECT_NAME:=test_syscfg_combo_1_system
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
 MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
 MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
-MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
 CORE_1=--script ../r5fss0-1_nortos/example.syscfg --context r5fss0-1 --output ../r5fss0-1_nortos/ti-arm-clang/generated
@@ -144,7 +143,7 @@ $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
-$(MULTI_CORE_BOOTIMAGE_NAME_HS): $(MULTI_CORE_BOOTIMAGE_NAME)
+$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS): $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED), no)

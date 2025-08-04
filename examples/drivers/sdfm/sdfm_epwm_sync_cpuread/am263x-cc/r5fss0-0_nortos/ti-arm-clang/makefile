@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sdfm_epwm_sync_cpuread.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sdfm_epwm_sync_cpuread.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdfm_epwm_sync_cpuread.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdfm_epwm_sync_cpuread.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdfm_epwm_sync_cpuread.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdfm_epwm_sync_cpuread.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdfm_epwm_sync_cpuread.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

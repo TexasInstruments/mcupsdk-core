@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sent_decoder_r5f_example.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sent_decoder_r5f_example.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sent_decoder_r5f_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sent_decoder_r5f_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sent_decoder_r5f_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sent_decoder_r5f_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sent_decoder_r5f_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

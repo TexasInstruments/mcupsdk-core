@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mcan_external_read_write.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mcan_external_read_write.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mcan_external_read_write.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mcan_external_read_write.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mcan_external_read_write.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mcan_external_read_write.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcan_external_read_write.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

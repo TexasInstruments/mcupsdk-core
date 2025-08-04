@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=uart_echo_dma_lld.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=uart_echo_dma_lld.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=uart_echo_dma_lld.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=uart_echo_dma_lld.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=uart_echo_dma_lld.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=uart_echo_dma_lld.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=uart_echo_dma_lld.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

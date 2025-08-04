@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=epwm_deadband.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=epwm_deadband.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=epwm_deadband.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_deadband.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_deadband.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_deadband.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_deadband.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

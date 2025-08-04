@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dpl_HwiP_armv7r_handlers_nortos_test_pos.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

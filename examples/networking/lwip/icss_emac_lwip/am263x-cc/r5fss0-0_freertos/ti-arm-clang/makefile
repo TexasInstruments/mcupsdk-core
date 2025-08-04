@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=icss_emac_lwip.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=icss_emac_lwip.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=icss_emac_lwip.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=icss_emac_lwip.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=icss_emac_lwip.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=icss_emac_lwip.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=icss_emac_lwip.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

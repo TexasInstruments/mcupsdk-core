@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dpl_ut_DebugP_shmLogReader.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dpl_ut_DebugP_shmLogReader.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dpl_ut_DebugP_shmLogReader.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_DebugP_shmLogReader.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_DebugP_shmLogReader.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dpl_ut_DebugP_shmLogReader.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dpl_ut_DebugP_shmLogReader.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

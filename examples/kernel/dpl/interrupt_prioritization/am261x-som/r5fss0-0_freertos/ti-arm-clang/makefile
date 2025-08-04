@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=interrupt_prioritization.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=interrupt_prioritization.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=interrupt_prioritization.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=interrupt_prioritization.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=interrupt_prioritization.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=interrupt_prioritization.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=interrupt_prioritization.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mcspi_loopback_turbo_mode.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mcspi_loopback_turbo_mode.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mcspi_loopback_turbo_mode.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mcspi_loopback_turbo_mode.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mcspi_loopback_turbo_mode.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mcspi_loopback_turbo_mode.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcspi_loopback_turbo_mode.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

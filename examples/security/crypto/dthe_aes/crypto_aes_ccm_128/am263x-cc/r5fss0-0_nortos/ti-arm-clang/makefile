@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=crypto_dthe_aes_ccm_128.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=crypto_dthe_aes_ccm_128.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=crypto_dthe_aes_ccm_128.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=crypto_dthe_aes_ccm_128.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=crypto_dthe_aes_ccm_128.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=crypto_dthe_aes_ccm_128.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=crypto_dthe_aes_ccm_128.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=fsi_loopback_polling.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=fsi_loopback_polling.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=fsi_loopback_polling.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=fsi_loopback_polling.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=fsi_loopback_polling.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=fsi_loopback_polling.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=fsi_loopback_polling.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

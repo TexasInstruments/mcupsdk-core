@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=mathlib_benchmark.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=mathlib_benchmark.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=mathlib_benchmark.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mathlib_benchmark.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mathlib_benchmark.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mathlib_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mathlib_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

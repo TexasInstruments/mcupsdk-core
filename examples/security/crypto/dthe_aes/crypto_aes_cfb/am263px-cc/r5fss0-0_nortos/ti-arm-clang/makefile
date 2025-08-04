@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=crypto_aes_cfb.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=crypto_aes_cfb.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=crypto_aes_cfb.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=crypto_aes_cfb.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=crypto_aes_cfb.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=crypto_aes_cfb.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=crypto_aes_cfb.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

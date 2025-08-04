@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=ocmc_benchmarking.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=ocmc_benchmarking.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=ocmc_benchmarking.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ocmc_benchmarking.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ocmc_benchmarking.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ocmc_benchmarking.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ocmc_benchmarking.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=canfd_loopback_interrupt_std_exd.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=canfd_loopback_interrupt_std_exd.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=canfd_loopback_interrupt_std_exd.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=canfd_loopback_interrupt_std_exd.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=canfd_loopback_interrupt_std_exd.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=canfd_loopback_interrupt_std_exd.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=canfd_loopback_interrupt_std_exd.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

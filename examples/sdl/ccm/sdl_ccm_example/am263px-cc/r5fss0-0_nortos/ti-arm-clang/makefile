@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sdl_ccm_example.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sdl_ccm_example.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdl_ccm_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_ccm_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_ccm_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_ccm_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_ccm_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

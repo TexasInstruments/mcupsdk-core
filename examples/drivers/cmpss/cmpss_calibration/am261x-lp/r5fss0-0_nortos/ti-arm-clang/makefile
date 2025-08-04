@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=cmpss_calibration.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=cmpss_calibration.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=cmpss_calibration.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=cmpss_calibration.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=cmpss_calibration.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=cmpss_calibration.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cmpss_calibration.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

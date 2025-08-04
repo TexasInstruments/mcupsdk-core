@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=task_switch.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=task_switch.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=task_switch.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=task_switch.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=task_switch.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=task_switch.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=task_switch.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

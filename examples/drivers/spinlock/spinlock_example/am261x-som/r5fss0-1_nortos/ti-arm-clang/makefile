@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=spinlock_example.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=spinlock_example.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=spinlock_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=spinlock_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=spinlock_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=spinlock_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=spinlock_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

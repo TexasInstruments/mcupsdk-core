@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=ecap_capture_pwm.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=ecap_capture_pwm.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=ecap_capture_pwm.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ecap_capture_pwm.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ecap_capture_pwm.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ecap_capture_pwm.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ecap_capture_pwm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

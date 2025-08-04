@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=dac_square_wave.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=dac_square_wave.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dac_square_wave.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dac_square_wave.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dac_square_wave.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dac_square_wave.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dac_square_wave.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

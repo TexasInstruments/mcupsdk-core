@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=adc_alternate_dma_trigger.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=adc_alternate_dma_trigger.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=adc_alternate_dma_trigger.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc_alternate_dma_trigger.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc_alternate_dma_trigger.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc_alternate_dma_trigger.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc_alternate_dma_trigger.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

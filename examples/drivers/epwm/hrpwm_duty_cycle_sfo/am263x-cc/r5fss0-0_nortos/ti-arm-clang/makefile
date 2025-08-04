@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=hrpwm_duty_cycle_sfo.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=hrpwm_duty_cycle_sfo.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=hrpwm_duty_cycle_sfo.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hrpwm_duty_cycle_sfo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

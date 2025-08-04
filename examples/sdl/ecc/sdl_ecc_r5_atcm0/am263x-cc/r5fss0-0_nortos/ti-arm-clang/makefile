@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=sdl_ecc_r5_atcm0.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=sdl_ecc_r5_atcm0.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=sdl_ecc_r5_atcm0.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_ecc_r5_atcm0.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_ecc_r5_atcm0.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_ecc_r5_atcm0.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_ecc_r5_atcm0.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

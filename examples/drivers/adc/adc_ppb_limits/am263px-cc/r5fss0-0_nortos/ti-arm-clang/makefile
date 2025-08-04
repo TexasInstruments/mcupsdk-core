@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=adc_ppb_limits.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=adc_ppb_limits.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=adc_ppb_limits.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc_ppb_limits.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc_ppb_limits.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc_ppb_limits.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc_ppb_limits.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

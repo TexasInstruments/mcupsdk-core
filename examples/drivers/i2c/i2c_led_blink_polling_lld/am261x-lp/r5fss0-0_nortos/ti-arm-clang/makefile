@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=i2c_led_blink_polling_lld.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=i2c_led_blink_polling_lld.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=i2c_led_blink_polling_lld.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=i2c_led_blink_polling_lld.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=i2c_led_blink_polling_lld.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=i2c_led_blink_polling_lld.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=i2c_led_blink_polling_lld.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

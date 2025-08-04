@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=edma_error_interrupt.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=edma_error_interrupt.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=edma_error_interrupt.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=edma_error_interrupt.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=edma_error_interrupt.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=edma_error_interrupt.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=edma_error_interrupt.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

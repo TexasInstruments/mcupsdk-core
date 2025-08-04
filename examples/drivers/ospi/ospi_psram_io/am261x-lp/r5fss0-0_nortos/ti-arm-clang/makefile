@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=ospi_psram_io.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=ospi_psram_io.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=ospi_psram_io.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ospi_psram_io.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ospi_psram_io.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ospi_psram_io.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ospi_psram_io.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)

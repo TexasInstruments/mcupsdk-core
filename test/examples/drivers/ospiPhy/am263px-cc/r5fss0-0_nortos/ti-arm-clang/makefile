@@ -29,11 +29,6 @@ oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=ospi_phy_test.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=ospi_phy_test.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=ospi_phy_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ospi_phy_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ospi_phy_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ospi_phy_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ospi_phy_test.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)
