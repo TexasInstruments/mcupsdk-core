@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -21,6 +21,7 @@ const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, fals
 const hsmclient1  = hsmclient.addInstance();
 const mcan        = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1       = mcan.addInstance();
+const clock       = scripting.addModule("/kernel/dpl/clock");
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -55,7 +56,7 @@ bootloader1.appImageOffset = "0x00081000";
 
 flash1.$name                                    = "CONFIG_FLASH0";
 bootloader1.flashDriver                         = flash1;
-
+flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
 flash1.peripheralDriver.phyEnable               = true;

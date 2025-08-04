@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.23.0+4000"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -64,14 +64,28 @@ i2c1.I2C.SCL.$assign    = "GPIO135";
 i2c1.I2C.SDA.$assign    = "GPIO134";
 i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
 
-littlefs1.$name                                         = "CONFIG_LITTLEFS0";
-littlefs1.flashOffset                                   = "0x400000";
-littlefs1.peripheralDriver.$name                        = "CONFIG_FLASH0";
-littlefs1.peripheralDriver.protocol                     = "1s_1s_1s";
-littlefs1.peripheralDriver.addressByteSupport           = "1";
-littlefs1.peripheralDriver.enable4BAddr                 = false;
-littlefs1.peripheralDriver.peripheralDriver.$name       = "CONFIG_OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am261x_template0";
+littlefs1.$name                                                     = "CONFIG_LITTLEFS0";
+littlefs1.flashOffset                                               = "0x400000";
+littlefs1.peripheralDriver.$name                                    = "CONFIG_FLASH0";
+littlefs1.peripheralDriver.protocol                                 = "1s_1s_1s";
+littlefs1.peripheralDriver.addressByteSupport                       = "1";
+littlefs1.peripheralDriver.enable4BAddr                             = false;
+littlefs1.peripheralDriver.enableFlashReset                         = true;
+littlefs1.peripheralDriver.peripheralDriver.$name                   = "CONFIG_OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.$assign            = "OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$assign       = "GPIO62";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$assign        = "GPIO9";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$assign         = "GPIO68";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$assign         = "GPIO8";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$assign         = "GPIO67";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$assign         = "GPIO76";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$assign         = "GPIO69";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$assign         = "GPIO7";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$assign         = "GPIO70";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$assign         = "GPIO2";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO61";
+littlefs1.peripheralDriver.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
@@ -292,22 +306,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-littlefs1.peripheralDriver.peripheralDriver.OSPI.$assign            = "OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$assign       = "GPIO62";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$assign        = "GPIO9";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$assign         = "GPIO68";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$assign         = "GPIO8";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$assign         = "GPIO67";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$assign         = "GPIO76";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$assign         = "GPIO69";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$assign         = "GPIO7";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$assign         = "GPIO70";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$assign         = "GPIO2";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO61";

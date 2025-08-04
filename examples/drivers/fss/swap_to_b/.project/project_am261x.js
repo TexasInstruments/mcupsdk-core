@@ -9,7 +9,6 @@ const files = {
         [
             "swap_to_b.c",
             "main.c",
-            "board.c"
         ],
     }
 }
@@ -18,7 +17,6 @@ const projectSpecFiles = {
     {
         common:
         [
-            "board.h"
         ]
     }
 };

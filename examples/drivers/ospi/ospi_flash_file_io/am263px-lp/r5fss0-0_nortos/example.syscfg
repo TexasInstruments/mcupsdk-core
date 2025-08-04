@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.0.0+dev"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -49,6 +49,7 @@ divider30.divideValue = 5;
 littlefs1.$name                                                     = "CONFIG_LITTLEFS0";
 littlefs1.peripheralDriver.$name                                    = "CONFIG_FLASH0";
 littlefs1.peripheralDriver.protocol                                 = "1s_1s_1s";
+littlefs1.peripheralDriver.enableFlashReset                         = true;
 littlefs1.peripheralDriver.peripheralDriver.$name                   = "CONFIG_OSPI0";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "OSPI0_CLK";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$assign       = "OSPI0_CSn0";

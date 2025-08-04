@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.0.0+dev"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -73,6 +73,7 @@ littlefs1.peripheralDriver.$name                                    = "CONFIG_FL
 littlefs1.peripheralDriver.protocol                                 = "1s_1s_1s";
 littlefs1.peripheralDriver.addressByteSupport                       = "1";
 littlefs1.peripheralDriver.enable4BAddr                             = false;
+littlefs1.peripheralDriver.enableFlashReset                         = true;
 littlefs1.peripheralDriver.peripheralDriver.$name                   = "CONFIG_OSPI0";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.$assign            = "OSPI0";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";

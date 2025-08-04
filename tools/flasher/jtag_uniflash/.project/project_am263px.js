@@ -5,7 +5,6 @@ let device = "am263px";
 const files = {
     common: [
         "main.c",
-        "board.c",
     ],
 };
 

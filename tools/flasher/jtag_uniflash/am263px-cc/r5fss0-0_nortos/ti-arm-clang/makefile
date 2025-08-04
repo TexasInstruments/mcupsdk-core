@@ -38,7 +38,6 @@ endif
 
 FILES_common := \
 	main.c \
-	board.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \

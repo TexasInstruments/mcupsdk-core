@@ -3,16 +3,16 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.0.0+dev"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const flash           = scripting.addModule("/board/flash/flash", {}, false);
+const flash1          = flash.addInstance();
 const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
 const ioexp1          = ioexp.addInstance();
-const ospi            = scripting.addModule("/drivers/ospi/ospi", {}, false);
-const ospi1           = ospi.addInstance();
 const watchdog        = scripting.addModule("/drivers/watchdog/watchdog", {}, false);
 const watchdog1       = watchdog.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
@@ -45,6 +45,14 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.enableFlashReset             = true;
+flash1.peripheralDriver.$name       = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable   = true;
+flash1.peripheralDriver.phyEnable   = true;
+flash1.peripheralDriver.protocol    = "8d_8d_8d";
+flash1.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am261x_template1";
+
 ioexp1.$name = "CONFIG_IOEXP0";
 
 const divider56       = system.clockTree["WDT0_CLK_GCM_CLKDIV"];
@@ -60,32 +68,14 @@ ioexp1.peripheralDriver = i2c1;
 i2c1.I2C.$assign        = "I2C0";
 i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
 
-ospi1.$name                   = "CONFIG_OSPI0";
-ospi1.dmaEnable               = true;
-ospi1.phyEnable               = true;
-ospi1.protocol                = "8d_8d_8d";
-ospi1.OSPI.CLK.$assign        = "GPIO10";
-ospi1.OSPI.CSn0.$assign       = "GPIO62";
-ospi1.OSPI.DQS.$assign        = "GPIO9";
-ospi1.OSPI.D7.$assign         = "GPIO68";
-ospi1.OSPI.D6.$assign         = "GPIO8";
-ospi1.OSPI.D5.$assign         = "GPIO67";
-ospi1.OSPI.D4.$assign         = "GPIO76";
-ospi1.OSPI.D3.$assign         = "GPIO69";
-ospi1.OSPI.D2.$assign         = "GPIO7";
-ospi1.OSPI.D1.$assign         = "GPIO70";
-ospi1.OSPI.D0.$assign         = "GPIO2";
-ospi1.OSPI.RESET_OUT0.$assign = "GPIO61";
-ospi1.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-ospi1.edmaDriver            = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+const edma                          = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                         = edma.addInstance({}, false);
+edma1.$name                         = "CONFIG_EDMA0";
+flash1.peripheralDriver.edmaDriver            = edma1;
+edma1.edmaRmDmaCh[0].$name          = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name         = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name            = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name          = "CONFIG_EDMA_RM3";
 
 watchdog1.$name          = "CONFIG_WDT0";
 watchdog1.expirationTime = 2000;
@@ -311,6 +301,18 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution = "GPIO135";
-i2c1.I2C.SDA.$suggestSolution = "GPIO134";
-ospi1.OSPI.$suggestSolution   = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
+flash1.peripheralDriver.OSPI.CSn0.$assign       = "GPIO62";
+flash1.peripheralDriver.OSPI.DQS.$assign        = "GPIO9";
+flash1.peripheralDriver.OSPI.D7.$assign         = "GPIO68";
+flash1.peripheralDriver.OSPI.D6.$assign         = "GPIO8";
+flash1.peripheralDriver.OSPI.D5.$assign         = "GPIO67";
+flash1.peripheralDriver.OSPI.D4.$assign         = "GPIO76";
+flash1.peripheralDriver.OSPI.D3.$assign         = "GPIO69";
+flash1.peripheralDriver.OSPI.D2.$assign         = "GPIO7";
+flash1.peripheralDriver.OSPI.D1.$assign         = "GPIO70";
+flash1.peripheralDriver.OSPI.D0.$assign         = "GPIO2";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO61";
+i2c1.I2C.SCL.$suggestSolution                            = "GPIO135";
+i2c1.I2C.SDA.$suggestSolution                            = "GPIO134";
+flash1.peripheralDriver.OSPI.$suggestSolution                              = "OSPI0";

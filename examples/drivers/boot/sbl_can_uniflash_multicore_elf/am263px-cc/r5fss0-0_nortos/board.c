@@ -72,65 +72,6 @@ static TCA6424_Config  gTCA6424_Config;
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t TCA6424_Flash_reset()
-{
-    static TCA6424_Config  gTCA6424_Config;
-    int32_t             status = SystemP_SUCCESS;
-    TCA6424_Params      TCA6424Params;
-
-    TCA6424_Params_init(&TCA6424Params);
-    status = TCA6424_open(&gTCA6424_Config, &TCA6424Params);
-
-    /* Configure as output  */
-    status += TCA6424_config(&gTCA6424_Config,
-                    IO_MUX_OSPI_RST_SEL_PORT_LINE,
-                    TCA6424_MODE_OUTPUT);
-
-    status = TCA6424_setOutput(&gTCA6424_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6424_OUT_STATE_LOW);
-
-    status = TCA6424_setOutput(&gTCA6424_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6424_OUT_STATE_HIGH);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Failure to reset the Flash!! %d\r\n");
-        TCA6424_close(&gTCA6424_Config);
-    }
-
-    TCA6424_close(&gTCA6424_Config);
-
-    return status;
-}
-
-
-int32_t TCA6416_Flash_reset()
-{
-    static TCA6416_Config  gTCA6416_Config;
-    int32_t             status = SystemP_SUCCESS;
-    TCA6416_Params      tca6416Params;
-
-    TCA6416_Params_init(&tca6416Params);
-    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
-
-    /* Configure as output  */
-    status += TCA6416_config(&gTCA6416_Config,
-                    IO_MUX_OSPI_RST_SEL_PORT_LINE,
-                    TCA6416_MODE_OUTPUT);
-
-    status = TCA6416_setOutput(&gTCA6416_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6416_OUT_STATE_LOW);
-
-    status = TCA6416_setOutput(&gTCA6416_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6416_OUT_STATE_HIGH);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Failure to reset the Flash!! %d\r\n");
-        TCA6416_close(&gTCA6416_Config);
-    }
-
-    TCA6416_close(&gTCA6416_Config);
-
-    return status;
-}
-
 int32_t TCA6424_Mcan_Transceiver(void)
 {
     int32_t             status = SystemP_SUCCESS;
@@ -161,58 +102,6 @@ int32_t TCA6424_Mcan_Transceiver(void)
 
     TCA6424_close(&gTCA6424_Config);
     return status;
-}
-
-void board_flash_reset(OSPI_Handle oHandle)
-{
-    int32_t status = SystemP_SUCCESS;
-    CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
-
-    Board_eepromOpen();
-
-    /* Check if part type is SIP (internal flash) or non-SIP (external flash)
-     * If SIP part, directly reset the flash using driver API irrespective of board revision.
-     * There is no IO expander involved in this case.
-     */
-    uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) & 
-            CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >> 
-                    CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT);
-
-    if(!(sipVal == SIP_FLASH_CFG_VALUE))
-    {
-        status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, gBoardVer, EEPROM_READ_PCB_REV_DATA_LEN);
-
-        if(status == SystemP_SUCCESS)
-        {
-            if(gBoardVer[1] == '2' && gBoardVer[0] == 'E')
-            {
-                /* boardVer is E2 */
-                status = TCA6424_Flash_reset();
-            }
-            else if(gBoardVer[1] == '1' && gBoardVer[0] == 'E')
-            {
-                /* boardVer is E1 */
-                status = TCA6416_Flash_reset();
-            }
-            else
-            {
-                /* boardVer is REV A or REV B */
-                /* OSPI RESET signal does not come via IO expander */
-                /* Toggle the reset pin directly */
-                
-                OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-                OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
-            }
-        }
-    }
-    else
-    {
-        OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-        OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
-    }
-
-    DebugP_assert(status == SystemP_SUCCESS);
-    Board_eepromClose();
 }
 
 void mcanEnableTransceiver(void)

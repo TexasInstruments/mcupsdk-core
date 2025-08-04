@@ -12,7 +12,6 @@ const files = {
         [
             "ospi_flash_io.c",
             "main.c",
-            "board.c"
         ],
     },
     "am261x-lp":
@@ -21,7 +20,6 @@ const files = {
         [
             "ospi_flash_io.c",
             "main.c",
-            "board.c"
         ],
     }
 }
@@ -30,7 +28,6 @@ const projectSpecFiles = {
     {
         common:
         [
-            "board.h"
         ]
     },
     "am261x-lp":

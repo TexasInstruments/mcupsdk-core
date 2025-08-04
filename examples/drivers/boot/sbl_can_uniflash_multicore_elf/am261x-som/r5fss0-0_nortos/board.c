@@ -47,22 +47,9 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void board_flash_reset(OSPI_Handle oHandle)
-{
-    /* Toggle the reset pin directly */
-    
-    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
-}
-
 /* Dummy functions for am261x-som board as it uses external transceiver */
 
 void mcanEnableTransceiver(void)
 {
     
-}
-
-int32_t enableOspiResetSignal(uint16_t enable)
-{
-    return SystemP_SUCCESS;
 }

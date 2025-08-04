@@ -37,10 +37,6 @@
 #include <drivers/optiflash.h>
 #include <kernel/dpl/DebugP.h>
 
-#ifdef SOC_AM261X
-#include "board.h"
-#endif 
-
 #define APP_OSPI_FLASH_OFFSET_BASE  (0x200000U)
 
 #define BUFFER_DATA_SIZE (4096)

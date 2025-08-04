@@ -7,7 +7,6 @@ const files = {
             [
                 "ospi_flash_file_io.c",
                 "main.c",
-                "board.c"
             ],
     }
 

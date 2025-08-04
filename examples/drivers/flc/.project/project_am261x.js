@@ -6,7 +6,6 @@ const files = {
     common: [
         "flc.c",
         "main.c",
-        "board.c"
     ],
 };
 
@@ -23,7 +22,6 @@ const filedirs = {
 
 const projectspecfiles = {
     common: [
-        "board.h"
     ]
 }
 

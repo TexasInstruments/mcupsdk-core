@@ -35,7 +35,6 @@
 #include "ti_board_config.h"
 
 void ospi_flash_io_main(void *args);
-void board_flash_reset(void);
 
 int main(void)
 {

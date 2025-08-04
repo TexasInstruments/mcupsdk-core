@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.0.0+dev"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -64,6 +64,7 @@ flash1.dummy_bitP                               = 16;
 flash1.proto_bitP                               = 231;
 flash1.fname                                    = "IS25LX064";
 flash1.flashDeviceId                            = "0x5B17";
+flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.OSPI.$assign            = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";

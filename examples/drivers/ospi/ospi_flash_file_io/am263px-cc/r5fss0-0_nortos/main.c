@@ -34,7 +34,6 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 #include "ti_drivers_open_close.h"
-#include "board.h"
 
 void ospi_flash_file_io_main(void *args);
 

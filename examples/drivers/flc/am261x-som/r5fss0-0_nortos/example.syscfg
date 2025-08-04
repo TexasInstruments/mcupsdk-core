@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.23.0+4000"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -51,6 +51,7 @@ const FLC1            = FLC.addInstance();
 flash1.$name                                    = "CONFIG_FLASH0";
 flash1.strDtr_mask                              = "255";
 flash1.fname                                    = "IS25LX064";
+flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
 flash1.peripheralDriver.phyEnable               = true;
@@ -324,4 +325,4 @@ FLC1.sourceStartAddress = 0x60200000;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.$suggestSolution            = "UART0";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

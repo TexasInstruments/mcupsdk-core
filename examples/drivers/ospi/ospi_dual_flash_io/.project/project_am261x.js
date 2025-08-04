@@ -12,7 +12,6 @@ const files = {
         [
             "ospi_dual_flash_io.c",
             "main.c",
-            "board.c"
         ],
     },
     "am261x-lp":
@@ -21,7 +20,6 @@ const files = {
         [
             "ospi_dual_flash_io.c",
             "main.c",
-            "board.c"
         ],
     }
 }

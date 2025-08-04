@@ -91,12 +91,3 @@ void mcanEnableTransceiver(void)
 
     TCA6416_close(&gTCA6416_Config);
 }
-
-
-void board_flash_reset(OSPI_Handle oHandle)
-{
-    /* Toggle the reset pin directly */
-    
-    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
-}

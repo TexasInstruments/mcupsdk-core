@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -54,8 +54,9 @@ bootloader1.appImageOffset   = "0x00081000";
 bootloader1.hsmrtImageOffset = "0x40000";
 bootloader1.hsmrtDecoupling  = true;
 
+flash1.$name                                    = "CONFIG_FLASH0";
 bootloader1.flashDriver                         = flash1;
-
+flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
 flash1.peripheralDriver.phyEnable               = true;

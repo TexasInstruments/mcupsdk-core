@@ -37,7 +37,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "ti_drivers_open_close.h"
-#include "board.h"
 
 #define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
 

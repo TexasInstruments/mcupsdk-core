@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.23.0+4000"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -47,7 +47,7 @@ const section12       = section.addInstance();
  */
 flash1.$name                                    = "CONFIG_FLASH0";
 flash1.fname                                    = "IS25LX064";
-flash1.protocol                                 = "8d_8d_8d";
+flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
 flash1.peripheralDriver.phyEnable               = true;

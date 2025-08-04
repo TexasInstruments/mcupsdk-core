@@ -6,7 +6,6 @@ const files = {
     common: [
         "ospi_flash_interrupt.c",
         "main.c",
-        "board.c"
     ],
 };
 
@@ -15,7 +14,6 @@ const projectSpecFiles = {
     {
         common:
         [
-            "board.h"
         ]
     },
     "am261x-lp":

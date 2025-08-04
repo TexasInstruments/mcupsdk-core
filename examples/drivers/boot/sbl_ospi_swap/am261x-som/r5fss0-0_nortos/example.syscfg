@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -42,6 +42,7 @@ const section7    = section.addInstance();
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00081000";
 
+
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
 flash1.proto_isAddrReg                    = true;
@@ -60,23 +61,23 @@ flash1.strDtr_shift                       = 255;
 flash1.proto_cfgReg                       = "0";
 flash1.dummy_mask                         = "0xFF";
 flash1.protocol                           = "8d_8d_8d";
-flash1.fname                              = "IS25LX064";
-flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
-flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
-flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
-flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
-flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO66";
-flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
+flash1.fname                              = "IS25LX064";flash1.enableFlashReset                         = true;
+flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable               = true;
+flash1.peripheralDriver.OSPI.$assign            = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$assign       = "GPIO0";
+flash1.peripheralDriver.OSPI.DQS.$assign        = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign         = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign         = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign         = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign         = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign         = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign         = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign         = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign         = "GPIO3";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO66";
+flash1.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);

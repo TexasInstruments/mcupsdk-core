@@ -6,7 +6,6 @@ const files = {
     common: [
         "test_flash.c",
         "main.c",
-        "board.c",
     ],
 };
 

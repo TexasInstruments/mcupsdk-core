@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.24.999+253"}
+ * @versions {"tool":"1.24.1+4189"}
  */
 
 /**
@@ -11,11 +11,11 @@
  */
 const eeprom          = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1         = eeprom.addInstance();
+const flash           = scripting.addModule("/board/flash/flash", {}, false);
+const flash1          = flash.addInstance();
 const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const i2c2            = i2c.addInstance();
-const ospi            = scripting.addModule("/drivers/ospi/ospi", {}, false);
-const ospi1           = ospi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -51,8 +51,14 @@ const section12       = section.addInstance();
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
-const divider29       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
-divider29.divideValue = 5;
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.enableFlashReset             = true;
+flash1.protocol                     = "1s_1s_1s";
+flash1.peripheralDriver.$name       = "CONFIG_OSPI0";
+flash1.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am263px_template1";
+
+const divider30       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
+divider30.divideValue = 5;
 
 i2c1.$name           = "CONFIG_I2C0";
 i2c1.I2C.$assign     = "I2C2";
@@ -64,9 +70,6 @@ i2c2.$name               = "CONFIG_I2C1";
 eeprom1.peripheralDriver = i2c2;
 i2c2.I2C.$assign         = "I2C0";
 i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template2";
-
-ospi1.$name       = "CONFIG_OSPI0";
-ospi1.child.$name = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.enableSharedMemLog       = true;
@@ -308,19 +311,19 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c2.I2C.SCL.$suggestSolution           = "I2C0_SCL";
-i2c2.I2C.SDA.$suggestSolution           = "I2C0_SDA";
-ospi1.OSPI.$suggestSolution             = "OSPI0";
-ospi1.OSPI.CLK.$suggestSolution         = "OSPI0_CLK";
-ospi1.OSPI.CSn0.$suggestSolution        = "EPWM11_A";
-ospi1.OSPI.DQS.$suggestSolution         = "UART1_TXD";
-ospi1.OSPI.D7.$suggestSolution          = "EPWM12_B";
-ospi1.OSPI.D6.$suggestSolution          = "MCAN1_RX";
-ospi1.OSPI.D5.$suggestSolution          = "EPWM12_A";
-ospi1.OSPI.D4.$suggestSolution          = "MCAN0_RX";
-ospi1.OSPI.D3.$suggestSolution          = "EPWM13_A";
-ospi1.OSPI.D2.$suggestSolution          = "MCAN0_TX";
-ospi1.OSPI.D1.$suggestSolution          = "EPWM11_B";
-ospi1.OSPI.D0.$suggestSolution          = "OSPI0_CSn0";
-ospi1.OSPI.RESET_OUT0.$suggestSolution  = "EPWM10_B";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+flash1.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution        = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution       = "EPWM11_A";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution        = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution         = "EPWM12_B";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution         = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution         = "EPWM12_A";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution         = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution         = "EPWM13_A";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution         = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+i2c2.I2C.SCL.$suggestSolution                            = "I2C0_SCL";
+i2c2.I2C.SDA.$suggestSolution                            = "I2C0_SDA";
+debug_log.uartLog.UART.$suggestSolution                  = "UART0";

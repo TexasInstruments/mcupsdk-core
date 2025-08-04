@@ -6,7 +6,6 @@ const files = {
     common: [
         "test_ospi.c",
         "main.c",
-        "board.c",
     ],
 };
 
