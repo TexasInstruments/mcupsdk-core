@@ -424,6 +424,11 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
                 {
                     status = MMCSD_lld_read_SD_Dma(mmcsdLldHandle, buf,
                                                    startBlk, numBlks);
+                    if(status == MMCSD_STS_SUCCESS)
+                    {
+                        (void)SemaphoreP_pend(  &object->xferCompleteSemObj,
+                                                SystemP_WAIT_FOREVER);
+                    }
                     CacheP_inv(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
                 }
                 else if(attrs->intrEnable)
@@ -448,7 +453,14 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
                 {
                     status = MMCSD_lld_read_MMC_Dma(mmcsdLldHandle, buf,
                                                     startBlk, numBlks);
+
+                    if(status == MMCSD_STS_SUCCESS)
+                    {
+                        (void)SemaphoreP_pend(  &object->xferCompleteSemObj,
+                                                SystemP_WAIT_FOREVER);
+                    }
                     CacheP_inv(buf, numBlks * mmcsdLldHandle->dataBlockSize, CacheP_TYPE_ALL);
+
                 }
                 else if(attrs->intrEnable)
                 {
@@ -522,6 +534,12 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
 
                     status = MMCSD_lld_write_SD_Dma(mmcsdLldHandle, buf,
                                                     startBlk, numBlks);
+
+                    if(status == MMCSD_STS_SUCCESS)
+                    {
+                        (void)SemaphoreP_pend(  &object->xferCompleteSemObj,
+                                                SystemP_WAIT_FOREVER);
+                    }
                 }
                 else if(attrs->intrEnable)
                 {
@@ -547,6 +565,12 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
                     
                     status = MMCSD_lld_write_MMC_Dma(mmcsdLldHandle, buf,
                                                      startBlk, numBlks);
+
+                    if(status == MMCSD_STS_SUCCESS)
+                    {
+                        (void)SemaphoreP_pend(  &object->xferCompleteSemObj,
+                                                SystemP_WAIT_FOREVER);
+                    }
                 }
                 else if(attrs->intrEnable)
                 {

@@ -287,9 +287,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_sd_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_sd_intr_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -1438,6 +1441,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1446,6 +1455,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2577,9 +2589,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_sd_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_sd_intr_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3728,6 +3743,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3736,6 +3757,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4867,9 +4891,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_sd_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_sd_intr_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -6018,6 +6045,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mmcsd_raw_io_emmc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ mmcsd_raw_io_emmc_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_raw_io_emmc_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  mmcsd_raw_io_sd_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -6026,6 +6059,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  mmcsd_raw_io_emmc_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_raw_io_emmc_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  mmcsd_raw_io_sd_intr_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -7173,9 +7209,12 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_sd_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_emmc_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io_sd_intr_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
