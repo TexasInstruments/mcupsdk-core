@@ -63,7 +63,7 @@ void HsmRngApp_start(HsmClient_t *client)
     getRNG.DRBGMode = 0x5A;
     getRNG.seedSizeInDWords = SEED_SIZE_IN_DWORDS;
     getRNG.seedValue = (uint32_t *)&RngDrbgSeed;
-    getRNG.resultLengthPtr = &length;
+    getRNG.resultLength = length;
     getRNG.resultPtr = (uint8_t *)val;
 
     CycleCounterP_reset();
