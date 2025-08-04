@@ -96,7 +96,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SA2UL_AES_gcm_256";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SA2UL_AES_GCM_256";
 
 const templates_nortos_r5f =
 [
