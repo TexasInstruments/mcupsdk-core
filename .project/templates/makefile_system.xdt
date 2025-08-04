@@ -31,7 +31,7 @@ MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_qspi
 MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS:=$(MULTI_CORE_BOOTIMAGE_NAME_QSPI).hs
 % }
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 % }
 
@@ -101,12 +101,12 @@ postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % }
 % if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
-ifeq ($(DEVICE_TYPE), HS)
-	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
-% } else {
+% if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
+% } else {
+ifeq ($(DEVICE_TYPE), HS)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 % }
 % if (args.project.device == "awr294x") {
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
@@ -410,7 +410,11 @@ endif
 endif
 % }
 % if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  ||  (args.project.device == "am273x")) {
+% if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
+$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS): $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
+% } else {
 $(MULTI_CORE_BOOTIMAGE_NAME_HS): $(MULTI_CORE_BOOTIMAGE_NAME)
+% }
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED), no)

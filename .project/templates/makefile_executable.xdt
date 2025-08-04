@@ -53,7 +53,11 @@ BOOTIMAGE_BIN_NAME:=`args.project.name`.$(PROFILE).bin
 
 % if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x") ||(args.project.device == "awr294x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(DEVICE_TYPE),HS)
+% if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_MCELF_HS)
+% } else {
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+% }
 else
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS_FS)
@@ -77,15 +81,19 @@ oeconfig?=None
 BOOTIMAGE_NAME_MCELF:=`args.project.name`.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=`args.project.name`.$(PROFILE).mcelf.hs
 % }
+% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
 BOOTIMAGE_RPRC_NAME:=`args.project.name`.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=`args.project.name`.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=`args.project.name`.$(PROFILE).rprc_tmp
+% }
 % if (((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")||(args.project.device == "awr294x") ||(args.project.device == "am263px") || (args.project.device == "am261x"))) {
+% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).appimage.hs
+% }
 % if(args.project.device == "awr294x"){
 BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
 % }
-% if (args.project.device != "am65x") {
+% if (!["am263x", "am263px", "am261x", "am65x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).appimage.hs_fs
 % }
 % if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
