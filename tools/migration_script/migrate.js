@@ -167,6 +167,69 @@ function read_exclude_list() {
     return content.getExcludeList();
 }
 
+//function to handle OSPI pin assignments for migration
+function prepareOspiPinAssignmentsForMigration(syscfgContent, filePath) {
+
+    if (sourceDevice !== 'AM263Px') {
+        return syscfgContent;
+    }
+    // Check if file contains OSPI module
+    if ((syscfgContent.includes('const flash') && syscfgContent.includes('peripheralDriver.OSPI')) || 
+        (syscfgContent.includes('const ospi') || syscfgContent.includes('drivers_ospi'))) 
+    {
+        const lines = syscfgContent.split('\n');
+        const ospiAssignmentLines = [];
+        const ospiAssignments = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            // Updated regex to capture pins with underscores like RESET_OUT0
+            if (lines[i].match(/(flash\d+\.peripheralDriver\.OSPI|ospi\d+\.OSPI)\.[A-Za-z0-9_]+\.\$assign\s*=/)) {
+                ospiAssignmentLines.push(i);
+
+                // Extract the assignment, convert to suggestSolution, and store
+                const line = lines[i].trim();
+                const cleanedAssignment = line.replace(/\s*;?\s*$/, ''); // Remove trailing semicolon and whitespace
+                ospiAssignments.push(cleanedAssignment.replace('$assign', '$suggestSolution'));
+            }
+        }
+        
+        if (ospiAssignments.length === 0) {
+            return syscfgContent;
+        }
+
+        for (let i = ospiAssignmentLines.length - 1; i >= 0; i--) {
+            const lineIndex = ospiAssignmentLines[i];
+            lines.splice(lineIndex, 1);
+        }
+
+        let newContent = lines.join('\n');
+
+        const pinmuxSectionRegex = /\/\*\*[\s\S]*?Pinmux solution[\s\S]*?\*\/\s*\n/;
+        const pinmuxMatch = pinmuxSectionRegex.exec(newContent);
+
+        if (pinmuxMatch) {
+
+            const formattedAssignments = ospiAssignments.map(a => a + ';').join('\n');
+
+            const beforeSection = newContent.substring(0, pinmuxMatch.index + pinmuxMatch[0].length);
+            const afterSection = newContent.substring(pinmuxMatch.index + pinmuxMatch[0].length);
+
+            newContent = beforeSection + formattedAssignments + '\n' + afterSection;
+        } else {
+
+            const formattedAssignments = ospiAssignments.map(a => a + ';').join('\n');
+
+            newContent += '\n\n/**\n * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future\n * version of the tool will not impact the pinmux you originally saw.\n */\n' + formattedAssignments + '\n';
+        }
+        
+        fs.writeFileSync(filePath, newContent);
+        
+        return newContent;
+    }
+    
+    return syscfgContent;
+}
+
 //function to recursively travel all folders inside given path and perform migration
 const get_all_files = async function (dirPath, arrayOfFiles) {
 
@@ -189,7 +252,6 @@ const get_all_files = async function (dirPath, arrayOfFiles) {
 
                     //read example.syscfg
                     let data = fs.readFileSync(filePath, "utf-8");
-
                     //check if the file needs to be migrated using a regex match of given sourcePackage/sourcePart
                     let pkgRegex = null, partRegex = null
                     if (null != sourcePackage) {
@@ -201,6 +263,7 @@ const get_all_files = async function (dirPath, arrayOfFiles) {
 
                     if ((null != data.match(pkgRegex)) || (null != data.match(partRegex))) {
                         try {
+                            data = prepareOspiPinAssignmentsForMigration(data, filePath);
                             let { internals } = await sysConfig.asyncCreateEnv([
                                 "--product",
                                 product,
@@ -208,12 +271,10 @@ const get_all_files = async function (dirPath, arrayOfFiles) {
                                 sourceDevice,
                                 "--package",
                                 sourcePackage,
-                                "--part",
-                                sourcePart,
                                 "--script",
                                 filePath,
                             ]);
-
+                            
                             internals = (
                                 await internals.asyncMigrate({ device: destinationDevice, package: destinationPackage, part: destinationPart }, false, undefined, true)
                             ).internals;
