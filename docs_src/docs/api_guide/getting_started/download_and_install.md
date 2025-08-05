@@ -319,8 +319,8 @@ To download, install and setup CCS, follow instructions on this page, \ref CCS_S
 ### TI CLANG Compiler Toolchain {#INSTALL_TIARMCLANG}
 
 - Download TI CLANG compiler toolchain @VAR_TI_ARM_CLANG_VERSION from below link
-  - Windows, \htmllink{https://dr-download.ti.com/software-development/ide-configuration-compiler-or-debugger/MD-ayxs93eZNN/4.0.1.LTS/ti_cgt_armllvm_4.0.1.LTS_windows-x64_installer.exe, WINDOWS INSTALLER}
-  - Linux, \htmllink{https://dr-download.ti.com/software-development/ide-configuration-compiler-or-debugger/MD-ayxs93eZNN/4.0.1.LTS/ti_cgt_armllvm_4.0.1.LTS_linux-x64_installer.bin, LINUX INSTALLER}
+  - Windows, \htmllink{https://dr-download.ti.com/software-development/ide-configuration-compiler-or-debugger/MD-ayxs93eZNN/4.0.3.LTS/ti_cgt_armllvm_4.0.3.LTS_windows-x64_installer.exe, WINDOWS INSTALLER}
+  - Linux, \htmllink{https://dr-download.ti.com/software-development/ide-configuration-compiler-or-debugger/MD-ayxs93eZNN/4.0.3.LTS/ti_cgt_armllvm_4.0.3.LTS_linux-x64_installer.bin, LINUX INSTALLER}
 - Install at below path,
   - Windows, C:/ti
   - Linux, ${HOME}/ti
