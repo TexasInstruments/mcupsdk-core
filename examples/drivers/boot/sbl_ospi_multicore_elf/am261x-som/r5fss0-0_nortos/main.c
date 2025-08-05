@@ -46,6 +46,8 @@
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
+extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
+
 extern HsmClient_t gHSMClient;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
@@ -206,15 +208,17 @@ int main(void)
                                 FSS_configECCMRegion(&regionConfig);
                             }
                         }
-
-                        otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(BOOTLOADER_DEVTYPE_HSSE == ptrTopCtrlRegs->EFUSE_DEVICE_TYPE)
+                        {
+                            otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                            if(otfaConfigStatus == SystemP_SUCCESS)
+                            {
+                                DebugP_log("\r\n configuration of OTFA, successfully done.\n");
+                            }
+                        }
                         if(doEnableECC == TRUE)
                         {
                             FSS_enableECC();
-                        }
-                        if(otfaConfigStatus == SystemP_SUCCESS)
-                        {
-                            DebugP_log("\r\n configuration of OTFA successfully done.\n");
                         }
                     }
                 }

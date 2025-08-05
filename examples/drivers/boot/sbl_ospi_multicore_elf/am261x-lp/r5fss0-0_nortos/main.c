@@ -46,6 +46,8 @@
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
+extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
+
 extern HsmClient_t gHSMClient;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
@@ -153,7 +155,6 @@ int main(void)
                     /* OTFA configuration is in NOTE section. */
                     if(TRUE == otfaConfig.isOTFAECCMEnabled)
                     {
-                        int32_t otfaConfigStatus;
                         OTFA_Config_t otfaConfigInfo;
                         uint8_t doEnableECC = FALSE;
                         uint32_t dataBaseAddress = OSPI_getFlashDataBaseAddr(ospiHandle);
@@ -207,14 +208,20 @@ int main(void)
                             }
                         }
 
-                        otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(BOOTLOADER_DEVTYPE_HSSE == ptrTopCtrlRegs->EFUSE_DEVICE_TYPE)
+                        {
+                            int32_t otfaConfigStatus;
+                            
+                            otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                            if(otfaConfigStatus == SystemP_SUCCESS)
+                            {
+                                DebugP_log("\r\n configuration of OTFA, successfully done.\n");
+                            }
+                        }
+
                         if(doEnableECC == TRUE)
                         {
                             FSS_enableECC();
-                        }
-                        if(otfaConfigStatus == SystemP_SUCCESS)
-                        {
-                            DebugP_log("\r\n configuration of OTFA successfully done.\n");
                         }
                     }
                 }
