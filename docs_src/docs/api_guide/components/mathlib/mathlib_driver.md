@@ -155,7 +155,7 @@ Here, x is the address of the TMU specific operation registers and y is the addr
 
 ### Features Not Supported:
 
-- div, sqrt and quad operations
+- div and sqrt operations
 - Underflow and Overflow interrupts to show mathematical operation errors
 
 \cond SOC_AM263PX

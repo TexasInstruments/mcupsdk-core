@@ -13,7 +13,7 @@
         device="Cortex R.AM261x"
         outputType="system"
         toolChain="TICLANG"
-        cgtVersion="4.0.1.LTS"
+        cgtVersion="4.0.3.LTS"
         >
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_EMPTY.html"
