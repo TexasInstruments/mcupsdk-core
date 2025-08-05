@@ -258,7 +258,7 @@ int32_t OSPI_lld_initDma(OSPILLD_Handle hOspi)
         status += OSPI_lld_isDecoderChipSelectValid(hOspiInit->decChipSelect);
 
         // status = OSPI_udmaInit(hOspi);
-        status = OSPI_dmaOpen(hOspi->openParams->ospiDmaChIndex);
+        status += OSPI_dmaOpen(hOspi->openParams->ospiDmaChIndex);
 
         /* Program OSPI instance according the user config */
         status += OSPI_programInstance(hOspi);
