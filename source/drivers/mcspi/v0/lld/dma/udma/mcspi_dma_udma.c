@@ -83,9 +83,9 @@ int32_t MCSPI_lld_dmaChInit(MCSPILLD_Handle hMcspi, uint32_t chCnt)
     MCSPI_UdmaChConfig  *dmaChConfig;
 
     chObj           = &hMcspi->hMcspiInit->chObj[chCnt];
-    dmaChConfig     = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig     = chObj->dmaChCfg;
     dmaChConfig     = &(dmaChConfig[chObj->dmaChConfigNum]);
-    chObj->dmaChCfg = (MCSPI_DmaChConfig)dmaChConfig;
+    chObj->dmaChCfg = dmaChConfig;
 
     if(MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode)
     {
@@ -131,7 +131,7 @@ int32_t MCSPI_lld_dmaDeInit(MCSPILLD_Handle hMcspi, const MCSPI_ChConfig *chCfg,
     if(MCSPI_STATUS_SUCCESS == status)
     {
         chObj            = &hMcspi->hMcspiInit->chObj[chCnt];
-        dmaChConfig      = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+        dmaChConfig      = chObj->dmaChCfg;
 
         if (dmaChConfig->isOpen != FALSE)
         {
@@ -168,7 +168,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
                               const MCSPI_Transaction *transaction)
 {
     int32_t              status = MCSPI_STATUS_SUCCESS;
-    MCSPI_UdmaChConfig  *dmaChConfig = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    MCSPI_UdmaChConfig  *dmaChConfig = chObj->dmaChCfg;
 
     if(MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode)
     {
@@ -258,7 +258,7 @@ static int32_t MCSPI_udmaInitRxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     Udma_ChHandle       rxChHandle;
     MCSPI_UdmaChConfig  *dmaChConfig;
 
-    dmaChConfig = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig = chObj->dmaChCfg;
     mcspiUdmaHandle  = (Udma_DrvHandle) (hMcspi->hMcspiInit->mcspiDmaHandle);
 
     /* Init RX channel parameters */
@@ -320,7 +320,7 @@ static int32_t MCSPI_udmaInitTxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     Udma_ChHandle       txChHandle;
     MCSPI_UdmaChConfig  *dmaChConfig;
 
-    dmaChConfig = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig = chObj->dmaChCfg;
     mcspiUdmaHandle  = (Udma_DrvHandle) (hMcspi->hMcspiInit->mcspiDmaHandle);
 
     /* Init TX channel parameters */
@@ -430,7 +430,7 @@ static int32_t MCSPI_udmaConfigPdmaTx(const MCSPI_ChObject *chObj,
     Udma_ChHandle       txChHandle;
     MCSPI_UdmaChConfig  *dmaChConfig;
 
-    dmaChConfig = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig = chObj->dmaChCfg;
     txChHandle  = dmaChConfig->txChHandle;
 
     /* Config PDMA channel */
@@ -487,7 +487,7 @@ static int32_t MCSPI_udmaConfigPdmaRx(const MCSPI_ChObject *chObj,
     Udma_ChHandle       rxChHandle;
     MCSPI_UdmaChConfig  *dmaChConfig;
 
-    dmaChConfig = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig = chObj->dmaChCfg;
     rxChHandle  = dmaChConfig->rxChHandle;
 
     /* Config PDMA channel */
@@ -657,7 +657,7 @@ static void MCSPI_udmaIsrTx(Udma_EventHandle eventHandle,
         transaction  = &hMcspi->transaction;
         chNum        = transaction->channel;
         chObj        = &hMcspi->hMcspiInit->chObj[chNum];
-        dmaChConfig  = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+        dmaChConfig  = chObj->dmaChCfg;
         txChHandle   = dmaChConfig->txChHandle;
         effByteCnt   = transaction->count << chObj->bufWidthShift;
         baseAddr     = hMcspi->baseAddr;
@@ -758,7 +758,7 @@ static void MCSPI_udmaIsrRx(Udma_EventHandle eventHandle,
         transaction  = &hMcspi->transaction;
         chNum        = transaction->channel;
         chObj        = &hMcspi->hMcspiInit->chObj[chNum];
-        dmaChConfig  = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
+        dmaChConfig  = chObj->dmaChCfg;
         rxChHandle   = dmaChConfig->rxChHandle;
         effByteCnt   = transaction->count << chObj->bufWidthShift;
 

@@ -58,6 +58,7 @@
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_mcspi.h>
 #include <drivers/hw_include/cslr.h>
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -67,10 +68,6 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/*  pointer for DMA Handle  */
-typedef void *MCSPI_DmaHandle;
-/*  pointer for DMA Channel Config */
-typedef void *MCSPI_DmaChConfig;
 
 /* function pointer to get clock ticks */
 typedef uint32_t (*MCSPI_clockGet) (void);
@@ -1303,6 +1300,80 @@ static inline uint32_t MCSPI_readRxDataReg(uint32_t baseAddr,
  **/
 static inline void MCSPI_setDataWidth(uint32_t baseAddr, uint32_t chNum,
                                       uint32_t dataWidth);
+
+/**
+ *  \defgroup MCSPI_DMA_LLD APIs for MCSPI DMA mode
+ *  \ingroup DRV_MCSPI_LLD_MODULE
+ *
+ *  This module contains APIs to program and use DMA drivers available in the SoC with MCSPI.
+ *
+ *  @{
+ */
+
+/**
+ * \brief API to open an MCSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *
+ * \param mcspiDmaHandle    [in] #MCSPILLD_Handle returned from #MCSPI_open()
+ *
+ * \return Handle to the MCSPI DMA Config Object
+ */
+int32_t MCSPI_lld_dmaInit(MCSPI_DmaHandle mcspiDmaHandle);
+
+/**
+ * \brief API to close an MCSPI DMA channel
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param hMcspi    [in] #MCSPILLD_Handle returned from #MCSPI_open()
+ * \param chCnt         [in] Channel number
+ * \param chCfg     [in] Pointer to #MCSPI_ChConfig. This parameter can't be NULL
+ *
+ * \return MCSPI_STATUS_SUCCESS on success, else failure
+ */
+int32_t MCSPI_lld_dmaDeInit(MCSPILLD_Handle hMcspi, const MCSPI_ChConfig *chCfg, uint32_t chCnt);
+
+/**
+ * \brief API to init a DMA Channel opened
+ *
+ * This API will open a DMA Channel using the appropriate DMA driver callbacks registered via Sysconfig
+ *
+ * \param hMcspi    [in] #MCSPILLD_Handle returned from #MCSPI_open()
+ * \param chCnt         [in] Channel number
+ *
+ * \return MCSPI_STATUS_SUCCESS on success, else failure
+ */
+int32_t MCSPI_lld_dmaChInit(MCSPILLD_Handle hMcspi, uint32_t chCnt);
+
+/**
+ * \brief API to do a DMA transfer using a specific DMA driver - UDMA, EDMA etc
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new DMA driver needs to be supported.
+ *
+ * \param hMcspi    [in] #MCSPILLD_Handle returned from #MCSPI_open()
+ * \param chObj         [in] Pointer to #MCSPI_ChObject. This parameter can't be NULL
+ * \param transaction   [in] Pointer to #MCSPI_Transaction. This parameter can't be NULL
+ *
+ * \return MCSPI_STATUS_SUCCESS on success, else failure
+ */
+int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi, MCSPI_ChObject *chObj, const MCSPI_Transaction *transaction);
+
+/**
+ * \brief API to Stop DMA using a specific DMA driver - UDMA, EDMA etc
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new DMA driver needs to be supported.
+ *
+ * \param hMcspi    [in] #MCSPILLD_Handle returned from #MCSPI_open()
+ * \param chObj         [in] Pointer to #MCSPI_ChObject. This parameter can't be NULL
+ * \param chNum         [in] Channel number
+ *
+ */
+void MCSPI_lld_dmaStop(MCSPILLD_Handle hMcspi, MCSPI_ChObject *chObj, uint32_t chNum);
+
+/**@}*/
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

@@ -37,12 +37,13 @@
  *         to avoid linking issue, as their is no UDMA support for m4 core.
  */
 
-#ifndef MCSPI_DMA_UDMA_H_
-#define MCSPI_DMA_UDMA_H_
+#ifndef MCSPI_DMA_DUMMY_H_
+#define MCSPI_DMA_DUMMY_H_
 
 #include <stdint.h>
 #include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
-#include <drivers/mcspi.h>
+#include <drivers/mcspi/v0/lld/dma/udma/mcspi_dma_udma.h>
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -80,4 +81,4 @@ void MCSPI_lld_dmaStop(MCSPILLD_Handle hMcspi, MCSPI_ChObject *chObj, uint32_t c
 }
 #endif
 
-#endif /* MCSPI_DMA_UDMA_H_ */
+#endif /* MCSPI_DMA_DUMMY_H_ */

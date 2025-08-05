@@ -119,9 +119,9 @@ int32_t MCSPI_lld_dmaChInit(MCSPILLD_Handle hMcspi, uint32_t chCnt)
     uint32_t            retVal = (uint32_t)FALSE;
 
     chObj             = &hMcspiInit->chObj[chCnt];
-    dmaChConfig       = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig       = chObj->dmaChCfg;
     dmaChConfig       = &(dmaChConfig[chObj->dmaChConfigNum]);
-    mcspiEdmaHandle   = (EDMA_Handle) (hMcspiInit->mcspiDmaHandle);
+    mcspiEdmaHandle   = (hMcspiInit->mcspiDmaHandle);
     edmaIntrObjectRx  = &dmaChConfig->edmaIntrObjRx;
     edmaIntrObjectTx  = &dmaChConfig->edmaIntrObjTx;
 
@@ -284,8 +284,8 @@ int32_t MCSPI_lld_dmaDeInit(MCSPILLD_Handle hMcspi,
     {
         hMcspiInit       = hMcspi->hMcspiInit;
         chObj            = &hMcspiInit->chObj[chCnt];
-        dmaChConfig      = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
-        mcspiEdmaHandle  = (EDMA_Handle) (hMcspiInit->mcspiDmaHandle);
+        dmaChConfig      = chObj->dmaChCfg;
+        mcspiEdmaHandle  = (hMcspiInit->mcspiDmaHandle);
 
         /* Fetch the EDMA paramters */
         baseAddr         = dmaChConfig->edmaBaseAddr;
@@ -396,7 +396,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
 
     if ((hMcspi != NULL) && (transaction != NULL))
     {
-        dmaChConfig = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
+        dmaChConfig = chObj->dmaChCfg;
         /* Fetch the EDMA paramters for McSPI transfer */
         baseAddr  = dmaChConfig->edmaBaseAddr;
         regionId  = dmaChConfig->edmaRegionId;

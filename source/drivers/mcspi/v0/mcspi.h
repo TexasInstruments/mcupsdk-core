@@ -68,7 +68,7 @@ extern "C" {
 /* ========================================================================== */
 
 /** \brief A handle that is returned from a #MCSPI_open() call */
-typedef void *MCSPI_Handle;
+typedef struct MCSPI_Config_s *MCSPI_Handle;
 
 /**
  *  \anchor MCSPI_TransferMode
@@ -225,7 +225,7 @@ typedef struct
  *  The last entry of the array should be a NULL entry which demarks the end
  *  of the array.
  */
-typedef struct
+typedef struct MCSPI_Config_s
 {
     const MCSPI_Attrs      *attrs;
     /**< Pointer to driver specific attributes */

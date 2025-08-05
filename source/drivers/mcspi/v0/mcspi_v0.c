@@ -90,7 +90,7 @@ static MCSPI_DrvObj     gMcspiDrvObj =
 
 extern uint32_t              gMcspiNumCh[];
 extern MCSPI_DmaHandle       gMcspiDmaHandle[];
-extern MCSPI_DmaChConfig    *gMcspiDmaChConfig[];
+extern MCSPI_DmaChConfig    gMcspiDmaChConfig[];
 extern MCSPI_ChConfig       *gConfigMcspiChCfg[];
 
 /* ========================================================================== */
@@ -632,7 +632,7 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
 
             if((obj->openPrms.transferMode) == MCSPI_TRANSFER_MODE_CALLBACK)
             {
-                obj->openPrms.transferCallbackFxn(hMcspi, obj->transaction);
+                obj->openPrms.transferCallbackFxn(handle, obj->transaction);
             }
             else
             {
@@ -659,7 +659,7 @@ void MCSPI_errorCallback (void *args, uint32_t transferStatus)
             obj    = config->object;
             if((obj->openPrms.transferMode) == MCSPI_TRANSFER_MODE_CALLBACK)
             {
-                obj->openPrms.transferCallbackFxn(hMcspi, &hMcspi->transaction);
+                obj->openPrms.transferCallbackFxn(handle, &hMcspi->transaction);
             }
             else
             {

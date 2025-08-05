@@ -90,6 +90,11 @@ typedef struct MCSPI_DmaChConfig_s
     /**< This is only used for AM65x */
 }MCSPI_UdmaChConfig;
 
+/**< Pointer to DMA channel configuration */
+typedef struct MCSPI_DmaChConfig_s *MCSPI_DmaChConfig;
+/**< Pointer to UDMA configuration */   
+typedef struct Udma_DrvObjectInt_t *MCSPI_DmaHandle;
+
 #ifdef __cplusplus
 }
 #endif

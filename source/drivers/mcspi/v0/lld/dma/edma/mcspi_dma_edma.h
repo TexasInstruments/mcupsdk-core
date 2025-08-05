@@ -42,7 +42,7 @@ extern "C"
 
 typedef struct McspiDma_EdmaArgs_s
 {
-    void                *drvHandle;
+    EDMA_Handle             drvHandle;
     /**< EDMA driver handle */
 } McspiDma_EdmaArgs;
 
@@ -73,6 +73,11 @@ typedef struct MCSPI_DmaChConfig_s
     uint32_t        isOpen;
     /**< Flag to indicate whether the DMA instance is opened already */
 }MCSPI_EdmaChConfig;
+
+/**< Pointer to DMA channel configuration */
+typedef struct MCSPI_DmaChConfig_s *MCSPI_DmaChConfig;
+/**< Pointer to EDMA configuration */
+typedef EDMA_Config *MCSPI_DmaHandle;
 
 #ifdef __cplusplus
 }
