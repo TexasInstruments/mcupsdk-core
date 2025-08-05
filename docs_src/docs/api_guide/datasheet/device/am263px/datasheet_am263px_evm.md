@@ -892,3 +892,7 @@ atan2 		|0.0000007150	| 117			| 104.612000 		| 591			| 479.394012		|
 
 For Ethernet performance refer \ref enetlld_performance
 
+### XIP Benchmark
+
+Comparing data from \ref EXAMPLES_OPTIFLASH_XIP_BENCHMARK and \ref EXAMPLES_OPTIFLASH_OCRAM_BENCHMARK, execution time of a code which throws ~3 Million I-Cache Miss per seconds is 2.2 times slower when it runs from OCRAM. 
+
