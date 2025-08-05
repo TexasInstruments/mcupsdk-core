@@ -101,9 +101,10 @@ extern "C" {
 #include <drivers/hw_include/cslr_soc.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/HwiP.h>
+#include <drivers/mcan/v0/dma/canfd_dma.h>
 
 /** \brief A handle that is returned from a #CANFD_open() call */
-typedef void *CANFD_Handle;
+typedef struct CANFD_Config_s *CANFD_Handle;
 
 /** \brief Externally defined driver configuration array size */
 extern uint32_t             gCANFDConfigNum;
@@ -607,10 +608,6 @@ typedef enum CANFD_Option_t
      */
     CANFD_Option_MCAN_POWER_DOWN
 } CANFD_Option;
-
-typedef void *CANFD_DmaHandle;
-
-typedef void *CANFD_DmaChConfig;
 
 /**
  *  \anchor CANFD_MCANLoopbackCfgParams
@@ -1675,16 +1672,7 @@ typedef struct CANFD_MCANMsgObjectStats_t
  * \brief CANFD DMA Configuration, these are filled by SysCfg based on the
  *        DMA driver(EDMA/UDMA) that is selected
  */
-typedef struct CANFD_DmaConfig_s
-{
-	void          *canfdDmaArgs;
-	/* Arguments specific to a DMA driver. This will be typecasted to the  
-	 * specific DMA driver args structwhen used by the appropriate callback. 
-	 * This struct will be defined in the specific DMA driver header file. 
-     * Allocation of this struct will be done statically using Sysconfig 
-     * code generation in the example code
-	 */
-} CANFD_DmaConfig;
+
 
 
 /**

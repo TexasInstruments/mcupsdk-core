@@ -80,8 +80,13 @@ typedef struct CANFD_UdmaChConfig_s
     /**< Flag to indicate whether the DMA instance is opened already */
 }CANFD_UdmaChConfig;
 
+/** <Opaque handle to a CAN FD DMA channel configuration structure. */
+typedef struct CANFD_UdmaChConfig_s *CANFD_DmaChConfig;
+/** <Opaque handle to a CAN FD DMA configuration structure. */
+typedef struct Udma_DrvObjectInt_t  *CANFD_DmaHandle;
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* CANFD__DMA_EDMA_H_ */
+#endif /* CANFD__DMA_UDMA_H_ */

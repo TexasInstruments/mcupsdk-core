@@ -43,7 +43,7 @@ extern "C"
 
 typedef struct CANFD_EdmaArgs_s
 {
-    void                *drvHandle;
+    EDMA_Handle               drvHandle;
     /**< EDMA driver handle */
 } CANFD_EdmaArgs;
 
@@ -83,6 +83,11 @@ typedef struct CANFD_EdmaChConfig_s
     Edma_IntrObject edmaIntrObjTx[MCAN_MAX_TX_DMA_BUFFERS];
     /**< EDMA MCAN TX Interrupt object */
 }CANFD_EdmaChConfig;
+
+/** <Opaque handle to a CAN FD DMA channel configuration structure. */
+typedef struct CANFD_EdmaChConfig_s *CANFD_DmaChConfig;
+/** <Opaque handle to a CAN FD DMA configuration structure. */
+typedef EDMA_Config  *CANFD_DmaHandle;
 
 #ifdef __cplusplus
 }

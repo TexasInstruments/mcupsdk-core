@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-22 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,61 +28,32 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
+
+/**
+ *  \file canfd_dma.h
+ *
+ *  \brief CANFD DMA header file.
+ */
+
+#ifndef CANFD_DMA_H_
+#define CANFD_DMA_H_
+
+#include <stdint.h>
+
+#if defined(DMA_VERSION_CANFD_EDMA)
+#include <drivers/mcan/v0/dma/edma/canfd_dma_edma.h>
+#else
+#include <drivers/mcan/v0/dma/udma/canfd_dma_udma.h>
+#endif
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-/* IP versions */
-#define IP_VERSION_CBUFF_V1
-#define IP_VERSION_CRC_V1
-#define IP_VERSION_CSIRX_V0
-#define IP_VERSION_ECAP_V2
-#define IP_VERSION_EDMA_V0
-#define IP_VERSION_EPWM_V2
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_GPIO_V1
-#define IP_VERSION_HWA_V0
-#define IP_VERSION_I2C_V1
-#define IP_VERSION_MCASP_V0
-#define IP_VERSION_MCAN_V0
-#define IP_VERSION_MIBSPI_V0
-#define IP_VERSION_QSPI_V0
-#define IP_VERSION_RTI_V0
-#define IP_VERSION_UART_V1
-// #define INTR_PROF
-
-/* Driver versions */
-#define DRV_VERSION_CBUFF_V1
-#define DRV_VERSION_CRC_V1
-#define DRV_VERSION_CSIRX_V0
-#define DRV_VERSION_ECAP_V2
-#define DRV_VERSION_EDMA_V0
-#define DRV_VERSION_EPWM_V2
-#define DRV_VERSION_ESM_V0
-#define DRV_VERSION_FLASH_V1
-#define DRV_VERSION_GPIO_V1
-#define DRV_VERSION_HWA_V0
-#define DRV_VERSION_I2C_V1
-#define DRV_VERSION_MCASP_V0
-#define DRV_VERSION_MCAN_V0
-#define DRV_VERSION_MIBSPI_V0
-#define DRV_VERSION_QSPI_V0
-#define DRV_VERSION_RTI_V0
-#define DRV_VERSION_UART_V1
-#define DRV_VERSION_WATCHDOG_V0
-#define DRV_VERSION_GPADC_V0
-
-/* Driver DMA Integration */
-#define DMA_VERSION_CANFD_EDMA
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* CANFD_DMA_H_ */

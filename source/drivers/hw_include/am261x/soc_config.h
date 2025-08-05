@@ -96,6 +96,7 @@ extern "C"
 #define DMA_VERSION_MCSPI_EDMA
 #define DMA_VERSION_UART_EDMA
 #define DMA_VERSION_GPMC_EDMA
+#define DMA_VERSION_CANFD_EDMA
 
 #ifdef __cplusplus
 }

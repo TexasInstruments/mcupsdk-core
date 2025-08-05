@@ -78,7 +78,7 @@ int32_t CANFD_dmaOpen(CANFD_Handle canfdHandle, CANFD_DmaChConfig dmaChCfg)
     if((NULL != canfdHandle) && (NULL != dmaChCfg))
     {
         edmaChCfg = (CANFD_EdmaChConfig *)dmaChCfg;
-        object = (CANFD_Object *) canfdHandle;
+        object = canfdHandle->object;
         canfdEdmaHandle = (EDMA_Handle) object->canfdDmaHandle;
 
         if(canfdEdmaHandle != NULL)

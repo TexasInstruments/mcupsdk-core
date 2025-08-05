@@ -963,7 +963,7 @@ static int32_t CANFD_configInstance(CANFD_Handle handle)
             {
                 if (ptrCanFdObj->canfdDmaHandle != NULL)
                 {
-                    status  = CANFD_dmaOpen(ptrCanFdObj, ptrCanFdObj->canfdDmaChCfg);
+                    status  = CANFD_dmaOpen(handle, ptrCanFdObj->canfdDmaChCfg);
                 }
             }
 
@@ -1636,7 +1636,7 @@ int32_t CANFD_write(CANFD_MsgObjHandle txMsgHandle, uint32_t id,
                             retVal = SemaphoreP_pend(&ptrCanFdObj->writeTransferSemObj, SystemP_WAIT_FOREVER);
                             if (retVal != SystemP_SUCCESS)
                             {
-                                retVal = CANFD_deConfigInstance(ptrCanFdObj);
+                                retVal = CANFD_deConfigInstance((CANFD_Handle)config);
                             }
                         }
                     }
@@ -1773,7 +1773,7 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* da
                             retVal += SemaphoreP_pend(&ptrCanFdObj->readTransferSemObj, SystemP_WAIT_FOREVER);
                             if (retVal != SystemP_SUCCESS)
                             {
-                                retVal = CANFD_deConfigInstance(ptrCanFdObj);
+                                retVal = CANFD_deConfigInstance((CANFD_Handle)config);
                             }
                         }
                     }
