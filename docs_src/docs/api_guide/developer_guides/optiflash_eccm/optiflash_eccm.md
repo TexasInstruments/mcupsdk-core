@@ -38,7 +38,7 @@ The example \ref BENCHMARK_SMART_PLACEMENT uses XIP and for the sake of demostra
 
 While compiling the application, pass in the argument `oeconfig=conf.json`. 
 
-For example, if current working directory is `$(MCU_PLUS_SDK_PATH)`, the following command will process the flash contents for ECC.
+For example, if current working directory is `MCU_PLUS_SDK_PATH`, the following command will process the flash contents for ECC.
 
 \code
 gmake -C .\examples\benchmarks\ocmc_benchmarking\am263px-cc\system_tri_core\ oeconfig=conf.json
@@ -82,6 +82,8 @@ If computed ECC and saved ECC matches, ECCM forwards the data to the requestor, 
 To see if the processing has been done correctly, use the command 
 
 `tiarmreadelf --headers app_name.mcelf_xip`
+
+\note `tiarmreadelf` is part of tiarmclang toolchain. Make sure toolchain bin path is added in the environment path. 
 
 For the processed code, output will be the following:
 
