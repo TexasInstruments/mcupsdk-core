@@ -183,7 +183,7 @@ const utils = {
     },
 
     getSysCfgVersionProjectSpec: () => {
-        return "1.24.1";
+        return "1.24.2";
     },
 
     getCCSVersionProjectSpec: () => {

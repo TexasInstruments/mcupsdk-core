@@ -240,7 +240,7 @@ and so on. For a complete list of arguments you can pass to the script, please r
 1. Download and install Code Composer Studio v20.2.0 from [here](https://www.ti.com/tool/download/CCSTUDIO "Code Composer Studio")
    - Install at default folder, C:\ti
 
-2. Download and install SysConfig 1.23.0 from [here](https://www.ti.com/tool/download/SYSCONFIG "SYSCONFIG 1.23.0")
+2. Download and install SysConfig 1.24.2 from [here](https://www.ti.com/tool/download/SYSCONFIG "SYSCONFIG 1.24.2")
    - Install at default folder, C:/ti
 
 3. Download and install TI ARM Clang 4.0.1 LTS from [here](https://www.ti.com/tool/download/ARM-CGT-CLANG "TI ARM CLANG")
