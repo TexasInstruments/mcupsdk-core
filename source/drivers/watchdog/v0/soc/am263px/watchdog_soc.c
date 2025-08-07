@@ -41,6 +41,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#include <drivers/soc.h>
 #include <drivers/watchdog.h>
 #include <drivers/hw_include/cslr_soc.h>
 
@@ -119,24 +120,48 @@ void Watchdog_configureWarmReset(Watchdog_Handle handle)
     switch (wdtInstance)
     {
         case WATCHDOG_INST_ID_0:
+            /* Unlock TOP_RCM registers */
+            SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
+
             CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
              TOP_RCM_WARM_RESET_CONFIG_WDOG0_RST_EN,
              0x7U);
+
+            /* Lock TOP_RCM registers */
+            SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
             break;
         case WATCHDOG_INST_ID_1:
+            /* Unlock TOP_RCM registers */
+            SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
+
             CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
              TOP_RCM_WARM_RESET_CONFIG_WDOG1_RST_EN,
              0x7U);
+            
+            /* Lock TOP_RCM registers */
+            SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
             break;
         case WATCHDOG_INST_ID_2:
+            /* Unlock TOP_RCM registers */
+            SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
+
             CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
              TOP_RCM_WARM_RESET_CONFIG_WDOG2_RST_EN,
              0x7U);
+            
+            /* Lock TOP_RCM registers */
+            SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
             break;
         case WATCHDOG_INST_ID_3:
+            /* Unlock TOP_RCM registers */
+            SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
+
             CSL_FINS(ptrTopRCMRegs->WARM_RESET_CONFIG,
              TOP_RCM_WARM_RESET_CONFIG_WDOG3_RST_EN,
              0x7U);
+            
+            /* Lock TOP_RCM registers */
+            SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
             break;
     }
 
