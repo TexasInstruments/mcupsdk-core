@@ -164,7 +164,7 @@
 
 /** @} */
 
-#define I2C_MODULE_INTERNAL_CLK_4MHZ        (4000000U)
+#define I2C_MODULE_INTERNAL_CLK_8MHZ        (8000000U)
 #define I2C_MODULE_INTERNAL_CLK_12MHZ       (12000000U)
 
 #define I2C_DELAY_MED                       ((uint32_t) 10000U)
@@ -284,7 +284,7 @@ int32_t I2C_lld_init(I2CLLD_Handle handle)
             case I2C_100KHZ:
             {
                 outputClk = 100000U;
-                internalClk = I2C_MODULE_INTERNAL_CLK_4MHZ;
+                internalClk = I2C_MODULE_INTERNAL_CLK_8MHZ;
                 break;
             }
 
@@ -299,7 +299,7 @@ int32_t I2C_lld_init(I2CLLD_Handle handle)
             {
                 /* Default case force it to 100 KHZ bit rate */
                 outputClk = 100000U;
-                internalClk = I2C_MODULE_INTERNAL_CLK_4MHZ;
+                internalClk = I2C_MODULE_INTERNAL_CLK_8MHZ;
                 break;
             }
         }
@@ -1301,7 +1301,7 @@ int32_t I2C_lld_setBusFrequency(I2CLLD_Handle handle, uint32_t busFrequency)
                 case (uint32_t)I2C_100KHZ:
                 {
                     outputClk = 100000U;
-                    internalClk = I2C_MODULE_INTERNAL_CLK_4MHZ;
+                    internalClk = I2C_MODULE_INTERNAL_CLK_8MHZ;
                     break;
                 }
                 case (uint32_t)I2C_400KHZ:
@@ -1313,7 +1313,7 @@ int32_t I2C_lld_setBusFrequency(I2CLLD_Handle handle, uint32_t busFrequency)
                 default:
                 {
                     outputClk = 100000U;
-                    internalClk = I2C_MODULE_INTERNAL_CLK_4MHZ;
+                    internalClk = I2C_MODULE_INTERNAL_CLK_8MHZ;
                     break;
                 }
             }
