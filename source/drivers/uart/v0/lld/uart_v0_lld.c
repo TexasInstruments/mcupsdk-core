@@ -2375,6 +2375,13 @@ void UART_lld_controllerIsr(void* args)
                     {
                         /* Disable Interrupt first, to avoid further RX timeout */
                         UART_intrDisable(hUart->baseAddr, UART_INTR_RHR_CTI | UART_INTR_LINE_STAT);
+
+                        /* Work around for errata i2310 */
+                        if (FALSE == UART_checkCharsAvailInFifo(hUart->baseAddr))
+                        {
+                            UART_i2310WA(hUart->baseAddr);
+                        }
+
                         /* RX timeout, log the RX timeout errors */
                         hUart->rxTimeoutCnt++;
                     }
@@ -2447,14 +2454,6 @@ void UART_lld_controllerIsr(void* args)
                     UART_intrDisable(hUart->baseAddr, UART_INTR_THR);
                 }
             }
-            else if ((intType & UART_INTID_CHAR_TIMEOUT) == UART_INTID_CHAR_TIMEOUT)
-            {
-                /* Work around for errata i2310 */
-                if (FALSE == UART_checkCharsAvailInFifo(hUart->baseAddr))
-                {
-                    UART_i2310WA(hUart->baseAddr);
-                }
-            }
             else
             {
                 retVal = FALSE;
@@ -2485,6 +2484,8 @@ static void UART_i2310WA(uint32_t baseAddr)
     HW_WR_REG32(baseAddr + UART_TIMEOUTH, 0xFF);
 
     HW_WR_FIELD32(baseAddr + UART_EFR2, UART_EFR2_TIMEOUT_BEHAVE, 1);
+
+    HW_RD_REG32(baseAddr + UART_IIR);
 
     HW_WR_FIELD32(baseAddr + UART_EFR2, UART_EFR2_TIMEOUT_BEHAVE, 0);
 }
