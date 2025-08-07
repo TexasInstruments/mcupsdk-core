@@ -126,3 +126,18 @@ static void Pinmux_unlockMMR(uint32_t domainId)
 
     return;
 }
+
+void Pinmux_qualPeriodConfig(uint32_t qualGroupIndex, uint8_t qualPeriod)
+{
+    volatile uint32_t  *regAddr;
+
+    if(qualGroupIndex <= PIN_QUAL_GRP_MAX_INDEX)
+    {
+        Pinmux_unlockMMR(PINMUX_DOMAIN_ID_MAIN);
+        regAddr = (volatile uint32_t *)((uint32_t)CSL_IOMUX_U_BASE + 
+                   PIN_QUAL_GROUP_CFG_START + ((uint32_t)(qualGroupIndex * 4U)));
+        CSL_REG32_WR(regAddr, (uint32_t)qualPeriod);
+        Pinmux_lockMMR(PINMUX_DOMAIN_ID_MAIN);
+    }
+    return;
+}

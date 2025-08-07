@@ -120,6 +120,11 @@ extern "C" {
 /** \brief GPIO Pin CPU ownership - R5SS1_1 */
 #define PIN_GPIO_R5SS1_1                (((uint32_t) 0x3U) << 16U)
 
+/** \brief Maximum possible index for GPIO Qual group */
+#define PIN_QUAL_GRP_MAX_INDEX          (17U)                              
+/** \brief Qual Group config register offset in control module */
+#define PIN_QUAL_GROUP_CFG_START        (CSL_IOMUX_QUAL_GRP_0_CFG_REG)  
+
 /** \brief Pin Qualifier - SYNC */
 #define PIN_QUAL_SYNC                   (((uint32_t) 0x0U) << 18U)
 /** \brief Pin Qualifier - 3 SAMPLE */
@@ -365,6 +370,16 @@ typedef struct Pinmux_PerCfg
  *                      Refer \ref Pinmux_DomainId_t
  */
 void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId);
+
+/**
+ *  \brief  This API configures the Qualification period for a specific GPIO Pin group.
+ *
+ *  \param  qualGroupIndex   Index of GPIO Pin group for which the Period is being configured.
+ *                           Range is from 0-17. 
+
+ *  \param  qualPeriod       Qual Period value for the Pin group.
+ */
+void Pinmux_qualPeriodConfig(uint32_t qualGroupIndex, uint8_t qualPeriod);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
