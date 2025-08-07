@@ -154,7 +154,7 @@ MEM0 and MEM1, both 32B regions of the same type, are arranged as depicted. Howe
     \image html memory_region_start_address_alignment.png "Memory Region Start Address Alignment"
 
 An MPU setting will be generated with parameters (such as start address and size) mirroring those of its associated memory region. Please note that these parameters will be locked and cannot be altered by the user.
-Other parameters, such as Access Permissions, Region Attributes, Allow Code Execution, and Sub-Region Disable Mark, can be customized by the user.
+Other parameters, such as Access Permissions, Region Attributes, Allow Code Execution, and Sub-Region Disable Mask, can be customized by the user.
 
 \imageStyle{memory_region_mpu.png,width:90%}
     \image html memory_region_mpu.png "Sysconfig view of Memory Region with Automate MPU Setting"
