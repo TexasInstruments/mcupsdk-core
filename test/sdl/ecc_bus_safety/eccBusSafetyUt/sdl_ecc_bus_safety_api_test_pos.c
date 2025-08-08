@@ -43,9 +43,7 @@
 int32_t sdl_ecc_bus_safety_posTest(void)
 {
     int32_t  testStatus = SDL_APP_TEST_PASS;
-#if !defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ECC_BUS_SAFETY_staticRegs regs;
-#endif
     uint32_t writeData = 0x1234567U;
 
 #if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
@@ -2030,6 +2028,15 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if(SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(SDL_ECC_BUS_SAFETY_MSS_GPMC,&regs ) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    #else
+    /* Test cases for SDL_ECC_BUS_SAFETY_MSS_readStaticRegs */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if(SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(SDL_ECC_BUS_SAFETY_MSS_MBOX,&regs ) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

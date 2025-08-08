@@ -94,6 +94,13 @@ void tearDown(void)
 }
 #endif
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_PBIST_checkDone(SDL_pbistInstInfo *pInfo)
+{
+    /* Do nothing */
+}
+#endif
+
 int32_t PBIST_dplInit(void)
 {
     SDL_ErrType_t ret = SDL_PASS;

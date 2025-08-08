@@ -81,6 +81,7 @@ const libs_r5fss1 = {
 const r5f0_macro = {
     common: [
         "R5F0_INPUTS",
+        "R5F_INPUTS",
     ],
 
 };
@@ -88,6 +89,7 @@ const r5f0_macro = {
 const r5fss1_macro = {
     common: [
         "R5F1_INPUTS",
+        "R5F_INPUTS",
     ],
 
 };

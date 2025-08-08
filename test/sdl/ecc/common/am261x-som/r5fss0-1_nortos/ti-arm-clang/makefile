@@ -78,6 +78,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM261X \
 	-DR5F0_1_INPUTS \
+	-DR5F_INPUTS \
 	-DOS_NORTOS \
 
 CFLAGS_common := \
