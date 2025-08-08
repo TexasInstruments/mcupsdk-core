@@ -12,7 +12,7 @@
 \cond !SOC_AM261X
 - \subpage enet_mcupsdk_10_00_update
 \endcond
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM64X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM64X || SOC_AM261X
 - \subpage enetlld_performance
 \endcond
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM273X || SOC_AM261X
