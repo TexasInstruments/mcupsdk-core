@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Texas Instruments Incorporated
+ * Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -74,6 +74,9 @@
 #define UART_FIFO_CONFIG_RXCLR          ((uint32_t) 0x1U << 4)
 #define UART_FIFO_CONFIG_DMAENPATH      ((uint32_t) 0x1U << 3)
 #define UART_FIFO_CONFIG_DMAMODE        ((uint32_t) 0x7U << 0)
+
+#define UART_MAX_FIFO_TRIGGER_LVL_IN_GRAN1  (63U)
+#define UART_MIN_FIFO_TRIGGER_LVL_IN_GRAN1  (1U)
 
 #define UART_TRIG_LVL_GRANULARITY_4     ((uint32_t) 0x0000U)
 #define UART_TRIG_LVL_GRANULARITY_1     ((uint32_t) 0x0001U)
@@ -276,28 +279,26 @@ static inline int32_t UART_OperModeValid(uint32_t operMode)
 static inline int32_t UART_IsRxTrigLvlValid(uint32_t rxTrigLvl)
 {
     int32_t status = UART_INVALID_PARAM;
-    if(((rxTrigLvl == UART_RXTRIGLVL_1)  ||
-        (rxTrigLvl == UART_RXTRIGLVL_8)  ||
-        (rxTrigLvl == UART_RXTRIGLVL_16) ||
-        (rxTrigLvl == UART_RXTRIGLVL_56) ||
-        (rxTrigLvl == UART_RXTRIGLVL_60)))
+
+    if((rxTrigLvl >= UART_MIN_FIFO_TRIGGER_LVL_IN_GRAN1) &&
+        (rxTrigLvl <= UART_MAX_FIFO_TRIGGER_LVL_IN_GRAN1))
     {
         status = UART_STATUS_SUCCESS;
     }
+
     return status;
 }
 
 static inline int32_t UART_IsTxTrigLvlValid(uint32_t txTrigLvl)
 {
     int32_t status = UART_INVALID_PARAM;
-    if(((txTrigLvl == UART_TXTRIGLVL_1)  ||
-        (txTrigLvl == UART_TXTRIGLVL_8)  ||
-        (txTrigLvl == UART_TXTRIGLVL_16) ||
-        (txTrigLvl == UART_TXTRIGLVL_32) ||
-        (txTrigLvl == UART_TXTRIGLVL_56)))
+
+    if((txTrigLvl >= UART_MIN_FIFO_TRIGGER_LVL_IN_GRAN1) &&
+        (txTrigLvl <= UART_MAX_FIFO_TRIGGER_LVL_IN_GRAN1))
     {
         status = UART_STATUS_SUCCESS;
     }
+
     return status;
 }
 

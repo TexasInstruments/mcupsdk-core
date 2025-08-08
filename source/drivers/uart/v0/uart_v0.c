@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Texas Instruments Incorporated
+ * Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -294,7 +294,6 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
         uartLld_handle->state              = UART_STATE_RESET;
 
         uartLldInit_handle->inputClkFreq      = attrs->inputClkFreq;
-        uartLldInit_handle->baudRate          = object->prms.baudRate;
         uartLldInit_handle->baudRate          = object->prms.baudRate;
         uartLldInit_handle->dataLength        = object->prms.dataLength;
         uartLldInit_handle->stopBits          = object->prms.stopBits;
@@ -939,8 +938,8 @@ void UART_Params_init(UART_Params *prms)
         prms->skipIntrReg        = FALSE;
         prms->uartDmaIndex       = -1;
         prms->operMode           = UART_OPER_MODE_16X;
-        prms->rxTrigLvl          = UART_RXTRIGLVL_8;
-        prms->txTrigLvl          = UART_TXTRIGLVL_32;
+        prms->rxTrigLvl          = 8U;
+        prms->txTrigLvl          = 32U;
     }
 }
 
