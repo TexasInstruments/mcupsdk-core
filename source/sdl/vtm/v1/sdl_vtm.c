@@ -380,8 +380,8 @@ int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal)
 /**
  * Design: PROC_SDL-7529, PROC_SDL-7530
  */
-int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alertThHot,
-                             int32_t alertThCold)
+int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alert_th_hot,
+                             int32_t alert_th_cold)
 {
     SDL_VTM_adc_code  	tsAlertHotadcCode=0xFF;
     SDL_VTM_adc_code  	tsAlertColdadcCode=0xFF;
@@ -393,11 +393,11 @@ int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alertThHot,
     }
     else
     {
-        sdlResult = SDL_VTM_tsConvTempToAdc(alertThHot,
+        sdlResult = SDL_VTM_tsConvTempToAdc(alert_th_hot,
                                             &tsAlertHotadcCode);
         if(sdlResult == SDL_PASS)
         {
-            sdlResult = SDL_VTM_tsConvTempToAdc(alertThCold,
+            sdlResult = SDL_VTM_tsConvTempToAdc(alert_th_cold,
                                                 &tsAlertColdadcCode);
         }
         if(sdlResult == SDL_PASS)
@@ -435,7 +435,7 @@ int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alertThHot,
  * Design: PROC_SDL-7531, PROC_SDL-7532
  */
 int32_t SDL_VTM_setTShutTemp(SDL_VTM_InstTs instance,
-                             int32_t tshutThHot, int32_t tshutThCold)
+                             int32_t tshut_th_hot, int32_t tshut_th_cold)
 {
     SDL_VTM_adc_code  	tsTshutHotadcCode=0xFF;
     SDL_VTM_adc_code  	tsTshutColdadcCode=0xFF;
@@ -447,11 +447,11 @@ int32_t SDL_VTM_setTShutTemp(SDL_VTM_InstTs instance,
     }
     else
     {
-        sdlResult = SDL_VTM_tsConvTempToAdc(tshutThHot,
+        sdlResult = SDL_VTM_tsConvTempToAdc(tshut_th_hot,
                                             &tsTshutHotadcCode);
         if(sdlResult == SDL_PASS)
         {
-            sdlResult = SDL_VTM_tsConvTempToAdc(tshutThCold,
+            sdlResult = SDL_VTM_tsConvTempToAdc(tshut_th_cold,
                                                 &tsTshutColdadcCode);
         }
         if(sdlResult == SDL_PASS)
