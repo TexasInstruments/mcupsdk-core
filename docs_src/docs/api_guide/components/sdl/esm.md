@@ -35,7 +35,7 @@ The ESM Handler is responsible for handling the errors at runtime and notifying 
 
 ## Important Usage Guidelines
 
-- None
+The mapping of interrupts 0 to 63 is level event and 64 to rest is pulse event.
 
 ## Example Usage
 
