@@ -13094,6 +13094,72 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Ospi Graph Plotter Example. This example is used to plot the OSPI PHY sweep data in a graph CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_graph_plotter",
+        "location": "../../examples/drivers/ospi/ospi_graph_plotter/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_graph_plotter",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Ospi Graph Plotter Example. This example is used to plot the OSPI PHY sweep data in a graph CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_graph_plotter",
+        "location": "../../examples/drivers/ospi/ospi_graph_plotter/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_graph_plotter",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "An example to show PMIC ESM operation in level mode set interrupt and reset when pmic esm_in pin is low CPU is R5FSS0-0 running NORTOS.",
