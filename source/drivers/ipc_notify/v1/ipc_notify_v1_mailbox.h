@@ -160,13 +160,11 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t selfCoreId, uint32_t remot
             /* trigger interrupt to other core */
 #if !(defined(SOC_AM273X))
             IpcNotify_trigInterrupt(mailboxBaseAddr, intrBitPos);
+            
+            status = SystemP_SUCCESS;
 #else
             status = IpcNotify_trigInterrupt(selfCoreId, remoteCoreId, mailboxBaseAddr, intrBitPos);
 #endif
-            if (status != SystemP_SUCCESS) {
-                return status;
-            }
-            status = SystemP_SUCCESS;
         }
     }
     return status;
