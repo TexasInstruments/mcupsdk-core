@@ -53,18 +53,15 @@ mcan1.MSS_MCAN.RX.$assign = "PAD_AF";
 mcan1.MSS_MCAN.TX.$assign = "PAD_AG";
 
 mcan2.$name               = "CONFIG_MCAN1";
+mcan2.sdkInfra            = "HLD";
 mcan2.MSS_MCAN.RX.$assign = "PAD_AD";
 mcan2.MSS_MCAN.TX.$assign = "PAD_AE";
-
-const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
-const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
-mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
-mcan2.child             = mcan_v1_template1;
 
 const mcan_v1_template_hld  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template_hld", {}, false);
 const mcan_v1_template_hld1 = mcan_v1_template_hld.addInstance({}, false);
 mcan_v1_template_hld1.$name = "drivers_mcan_v1_mcan_v1_template_hld0";
 mcan1.child                 = mcan_v1_template_hld1;
+mcan2.child                 = mcan_v1_template_hld1;
 
 debug_log.enableUartLog               = true;
 debug_log.uartLog.$name               = "CONFIG_UART_CONSOLE";
@@ -76,6 +73,7 @@ edma1.$name                        = "CONFIG_EDMA0";
 mcan1.edmaDriver                   = edma1;
 debug_log.uartLog.edmaConfig       = edma1;
 edma1.instance                     = "EDMA_MSS_A";
+mcan2.edmaDriver                   = edma1;
 edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmDmaCh[0].resourceType  = scripting.forceWrite("ownDmaCh");
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
