@@ -92,7 +92,7 @@ typedef struct UART_DmaConfig_s
 } UART_DmaConfig;
 
 typedef struct UART_UdmaChConfig_s *UART_DmaChConfig;
-typedef struct Udma_DrvObjectInt_t  *UART_DmaHandle;
+typedef Udma_DrvObject *UART_DmaHandle;
 
 #ifdef __cplusplus
 }
