@@ -206,8 +206,10 @@ Out of box configuration for PPS signal output of this example is as follow:
 | am64x-EVM | PRG0_PRU0_GPO17 | U1 | 3.814 KHz | Pin B8 on J2 (i.e PIN8 on J2B) connector |
 | am243x-EVM | PRG0_PRU0_GPO17 | U1 | 3.814 KHz | Pin B8 on J2 (i.e PIN8 on J2B) connector |
 | am243x-LP | MMC1_DAT2 | K20 | 3.814 KHz | Pin3 on J6 connector |
-| am263x-CC | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J6 connector | 
-| am263x-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J6 connector |
+| am263x-CC | SFDM0_CLK1 | A16 | 3.814 KHz | Pin1 on J9 connector | 
+| am263x-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J8 connector |
+| am263px-CC | SFDM0_CLK1 | A16 | 3.814 KHz | Pin1 on J18 connector |
+| am263px-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J8 connector |
 
 To set/modify configuration of PPS signal , you may follow the below steps:
 
