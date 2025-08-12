@@ -40,6 +40,7 @@ source/board/ethphy/enet
 source/board/pmic/pmic_lld/
 source/cmsis
 source/commercial
+source/drivers/ospi/v0/lld/ospi_tuning/
 source/dsplib_c66x_3_4_0_0/
 source/fs/freertos_fat/FreeRTOS-FAT
 source/fs/littlefs/LittleFS
