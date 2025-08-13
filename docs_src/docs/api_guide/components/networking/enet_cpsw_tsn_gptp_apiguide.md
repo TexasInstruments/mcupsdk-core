@@ -9,6 +9,7 @@ Reader are expected to have basic knowledge on below IEEE specifications
 - Forwarding and Queuing Enhancements for Time-Sensitive Streams (IEEE 802.1Qav)
 - Enhancements for Scheduled Traffic (IEEE 802.1Qbv)
 - Frame Preemption (IEEE 802.1Qbu)
+- YANG Data Modeling Language (rfc7950)
 
 
 # Introduction
@@ -16,7 +17,9 @@ This guide is intended to enhance user's understanding of the TSN stack and prov
 
 # Demo and Examples
 \ref EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+
 \ref EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+
 \ref EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 
 # TSN Stack
@@ -102,38 +105,6 @@ This function will start the uniconf and gPTP tasks.
 ## TSN Deinitialization  {#ENET_CPSW_TSN_STACK_DEINITIALIZATION}
 
 To deinitialize the TSN modules, you can invoke the ``EnetApp_stopTsn();`` and ``EnetApp_deInitTsn();`` functions.
-
-## gPTP Multiple Domains
-
-At the moment, our system supports two domains, but this feature is turned off by default. 
-To turn on multiple domains, follow these steps:
-
-- Set ``#define GPTP_MAX_DOMAINS 2`` in the ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_buildconf/sitara_buildconf.h`` file
-- In the file ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/gptp_init.c``, you will see the following settings are set:
-```
-#if GPTP_MAX_DOMAINS == 2
-    {"CMLDS_MODE", XL4_EXTMOD_XL4GPTP_CMLDS_MODE, 1},
-    {"SECOND_DOMAIN_THIS_CLOCK", XL4_EXTMOD_XL4GPTP_SECOND_DOMAIN_THIS_CLOCK, 1}
-#endif
-```
-This will activate the second domain in the gPTP system.
-
-## gPTP Shorter Sync Interval
-
-By default, the gPTP Sync interval is set to 125 milliseconds. 
-If you need a shorter Sync interval, you can adjust it by setting a specific value in the ``sitara_buildconf.h`` file:
-
-```
-/* Interval timeout in nanoseconds used to generate timers in GPTP. 
- * Supported values are 125, 62.5, 31.25, 15.625 and 7.8125 milliseconds. */
-#define GPTPNET_INTERVAL_TIMEOUT_NSEC 15625000u
-```
-
-``GPTPNET_INTERVAL_TIMEOUT_NSEC`` must be equal to or less than the desired Sync interval time. 
-For instance, if you want a Sync interval time of 31.25 milliseconds, set ``GPTPNET_INTERVAL_TIMEOUT_NSEC`` to 31.25, 15.625, or 7.8125 milliseconds.
-Be aware that decreasing ``GPTPNET_INTERVAL_TIMEOUT_NSEC`` will increase CPU load. 
-Additionally, adjust the ``log-sync-interval`` in the standard yang config by referring to the ``gptp_init.c`` file.
-For example, to set the Sync interval to 31.25 milliseconds, set ``log-sync-interval`` to -5.
 
 # Integration
 ## Source integration {#ENET_CPSW_TSN_SOURCE_INTEGRATION}
@@ -245,25 +216,119 @@ side writes the database and ask it for an update.
 ## gPTP Yang Config Parameters {#ENET_CPSW_TSN_YANG_CONFIG_PARAMS}
 
 This section describes the standard Yang parameters utilized for gPTP.
-To access the list of these parameters along with their default values for gPTP, please refer to the file located at:
-``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf/gptp-yangconfig.xml``.
 
-For detailed descriptions of each parameter, please refer to the following Yang files:
-https://github.com/YangModels/yang/blob/main/standard/ieee/draft/1588/ieee1588-ptp.yang
-https://github.com/YangModels/yang/blob/main/standard/ieee/draft/802.1/ASdn/ieee802-dot1as-ptp.yang
+This implementation assumes user familiarity with the IEEE 1588 and 802.1AS YANG standards, and the mapping of these standards to our key-based enumeration. The gptp stack is developed based on below YANG standard:
 
-To modify the default value of the Yang parameters, please refer to the ``gptp_yang_config()``
-function in the ``tsninit.c`` file. This function will demonstrate how to update the parameter values at runtime.
+- ieee1588: https://github.com/YangModels/yang/blob/main/standard/ieee/published/1588/ieee1588-ptp-tt.yang
+- 802.1AS: https://github.com/YangModels/yang/blob/main/standard/ieee/published/802.1/ieee802-dot1as-gptp.yang
+
+### gPTP string-based to key-based mapping
+First of all, the key-based (uint8_t) enums which are used to map with YANG (string-based) are generated during initialization.
+For example, the corresponding ptp generated enum are defined in ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cores/generated/ieee1588-ptp-tt.h``
+
+This section will explain on how to map between generated key-based and string-based.
+
+Consider priority1 (assuming 248) in ieee1588-ptp-tt.yang, which should have string-based like below:
+
+``/ieee1588-ptp-tt/ptp/instances/instance|instance-index:0|/default-ds/priority1``
+
+The corresponding key-based array for priority1 will be:
+```
+k[0]=IEEE1588_PTP_TT_RW
+k[1]=IEEE1588_PTP_TT_PTP
+k[2]=IEEE1588_PTP_TT_INSTANCES
+k[3]=IEEE1588_PTP_TT_INSTANCE
+k[4]=IEEE1588_PTP_TT_DEFAULT_DS
+k[5]=IEEE1588_PTP_TT_PRIORITY1
+```
+
+- RW/RO entry: The `k[0]` is IEEE1588_PTP_TT_RW to indicate the entry is configurable, similar with YANG model ``config true;``.
+
+User must take note and understand the YANG standard, to understand the entry is configurable or not.
+
+In our example, the setting 'true' in ``EnetApp_DbKeyVal_IntItem_t`` is to indicate whether the entry is RW or RO.
+
+- The list's key ``|instance-index:0|``: will be described in next section, together with ``ieee1588-ptp-tt_access.*``
+
+### ieee1588-ptp-tt_access.c/h
+Beside of generated files eg:ieee1588-ptp-tt.h, there is APIs helper for each YANG generated file, named *access.h/c. Eg: for ieee1588-ptp-tt.yang, the corresponding helper will be ieee1588-ptp-tt_access.c/h.
+
+The ``ieee1588-ptp-tt_access`` provide wrapper APIs for quicker access ``ieee1588-ptp-tt`` entries. Consider below set of APIs:
+
+```
+int ydbi_get_item_ptk3vk0(yang_db_item_access_t *ydbia, void **rval, uint32_t instIndex,
+			  uint8_t k1, uint8_t k2, uint8_t k3, bool status);
+
+int ydbi_rel_item_ptk3vk0(yang_db_item_access_t *ydbia, uint8_t instIndex,
+			  uint8_t k1, uint8_t k2, uint8_t k3, bool status);
+
+int ydbi_set_item_ptk3vk0(yang_db_item_access_t *ydbia, uint8_t instIndex,
+			  uint8_t k1, uint8_t k2, uint8_t k3,
+			  bool status, void *value, uint32_t vsize, uint8_t notice);
+int ydbi_del_item_ptk3vk0(yang_db_item_access_t *ydbia, uint8_t instIndex,
+			  uint8_t k1, uint8_t k2, uint8_t k3,
+			  bool status);
+```
+
+The suffix of `ptk3vk0` can be extracted into 3 parts:
+- `pt` is for ieee1588-ptp-tt
+- `k3` means the input will have 3 keys and
+- `vk0` no value key after `instance-index`
+
+The `uint32_t instIndex` is used to get corresponding `|instance-index:0|` which we need in previous section. Please refer to ``set_dpara_k4vk1`` for more detail of using instIndex.
+
+The higher level DB API wrapper, which is using specificly for gptp, is defined in ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf/gptpgcfg.h``.
+
+
+### Default example configurations
+Let's walk-through all of yang configuration those are using in ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/gptp_init.c``.
+
+| KEY | Refer YANG's items | Short Explain |
+|---------:|:--------:|----------|
+| IEEE1588_PTP_TT_LOG_ANNOUNCE_INTERVAL    | ieee1588-ptp-tt:log-announce-interval | Logarithm to the base 2 (log2(x)) of Announce Interval     |
+| IEEE1588_PTP_TT_ANNOUNCE_RECEIPT_TIMEOUT      |   ieee1588-ptp-tt:announce-receipt-timeout    | same with GPTP Cap timeout, apply for Announce packets   |
+| IEEE1588_PTP_TT_INITIAL_LOG_ANNOUNCE_INTERVAL      |   ieee1588-ptp-tt:log-announce-interval    | Default Init log2(x) of Announce Interval    |
+| IEEE1588_PTP_TT_INITIAL_LOG_SYNC_INTERVAL      |   ieee802-dot1as-gptp:initial-log-sync-interval    | Default Init log2(x) of Sync Interval    |
+| IEEE1588_PTP_TT_LOG_SYNC_INTERVAL      |   ieee1588-ptp-tt:log-sync-interval    | log2(x) of Sync Interval    |
+| IEEE1588_PTP_TT_SYNC_RECEIPT_TIMEOUT      |   ieee802-dot1as-gptp:sync-receipt-timeout    | same with GPTP Cap timeout, apply for Sync packets    |
+| IEEE1588_PTP_TT_CURRENT_LOG_SYNC_INTERVAL      |   ieee802-dot1as-gptp:current-log-sync-interval    | Current value of log-sync-interval      |
+| IEEE1588_PTP_TT_INITIAL_LOG_PDELAY_REQ_INTERVAL      |   ieee802-dot1as-gptp:initial-log-pdelay-req-interval    | Default Init log2(x) of PdelayReq Interval    |
+| IEEE1588_PTP_TT_CURRENT_LOG_PDELAY_REQ_INTERVAL      |   ieee802-dot1as-gptp:current-log-pdelay-req-interval    | Current value of log-pdelay-req-interval    |
+| IEEE1588_PTP_TT_INITIAL_LOG_GPTP_CAP_INTERVAL      |   ieee802-dot1as-gptp:initial-log-gptp-cap-interval    |  Default Init log2(x) of GptpCapable Interval    |
+| IEEE1588_PTP_TT_USE_MGT_LOG_GPTP_CAP_INTERVAL      |   ieee802-dot1as-gptp:use-mgt-log-gptp-cap-interval    | False: Allow gptp-cap-interval can be changed by message Interval Request Signaling and True: Not allow, use default mgt-log-gptp-cap-interval  |
+| IEEE1588_PTP_TT_MGT_LOG_GPTP_CAP_INTERVAL      |   ieee802-dot1as-gptp:mgt-log-gptp-cap-interval    | Default value in case of use-mgt-log-gptp-cap-interval is False    |
+| IEEE1588_PTP_TT_GPTP_CAP_RECEIPT_TIMEOUT      |   ieee802-dot1as-gptp:gptp-cap-receipt-timeout    | GPTP Capable timeout time =  Cap Interval * gptp-cap-receipt-timeout   |
+| IEEE1588_PTP_TT_CURRENT_LOG_GPTP_CAP_INTERVAL      |   ieee802-dot1as-gptp:current-log-gptp-cap-interval    | Current gptp-cap-interval value   |
+| IEEE1588_PTP_TT_ALLOWED_LOST_RESPONSES      |   ieee802-dot1as-gptp:allowed-lost-responses    | Maximum number of lost Pdelay_Respond/Follow_up of a PdelayRequest    |
+| IEEE1588_PTP_TT_ALLOWED_FAULTS      |   ieee802-dot1as-gptp:allowed-faults    | Number of faults above which asCapable is set to false    |
+| IEEE1588_PTP_TT_MEAN_LINK_DELAY_THRESH      |   ieee802-dot1as-gptp:mean-link-delay-thresh    | Threshold of a pdelay calculated. If it's higher than this threshold, port is not consider capable    |
+| IEEE1588_PTP_TT_PORT_ENABLE      |   ieee1588-ptp-tt:port-enable    | Must be True    |
+| IEEE1588_PTP_TT_MINOR_VERSION_NUMBER      |   ieee1588-ptp-tt:minor-version-number    | Minor PTP version number    |
+| IEEE1588_PTP_TT_INITIAL_ONE_STEP_TX_OPER      |   ieee802-dot1as-gptp:initial-one-step-tx-oper    | Init value of using one-step-tx, in our stack, we ONLY apply two-step-tx, so the value must be False   |
+| IEEE1588_PTP_TT_CURRENT_ONE_STEP_TX_OPER      |   ieee802-dot1as-gptp:current-one-step-tx-oper    | Current value of one-step-tx    |
+| IEEE1588_PTP_TT_MGT_ONE_STEP_TX_OPER      |   ieee802-dot1as-gptp:mgt-one-step-tx-oper    | Default case one-step-tx if use-mgt-one-step-tx-oper  is true      |
+| IEEE1588_PTP_TT_USE_MGT_ONE_STEP_TX_OPER      |   ieee802-dot1as-gptp:use-mgt-one-step-tx-oper    | Must be False as we do not support one-step-tx    |
+| IEEE1588_PTP_TT_PRIORITY1      |   ieee1588-ptp-tt:priority1    | Use to configure ptp priority1    |
+| IEEE1588_PTP_TT_PRIORITY2      |   ieee1588-ptp-tt:priority2    | Use to configure ptp priority2    |
+| IEEE1588_PTP_TT_EXTERNAL_PORT_CONFIG_ENABLE      |   ieee1588-ptp-tt:external-port-config-enable    |  We are not allow external-port-config-enable, so it should be False   |
+| IEEE1588_PTP_TT_TIME_SOURCE      |   ieee1588-ptp-tt:time-source    | Config time-source, refer YANG for possible value    |
+| IEEE1588_PTP_TT_PTP_TIMESCALE      |   ieee1588-ptp-tt:ptp-timescale    | Config ptp-timescale, refer YANG for possible value    |
+| IEEE1588_PTP_TT_CLOCK_CLASS      |   ieee1588-ptp-tt:clock-class    | Config clock-class, refer YANG for possible value    |
+| IEEE1588_PTP_TT_CLOCK_ACCURACY      |   ieee1588-ptp-tt:clock-accuracy    | Config clock-accuracy, refer YANG for possible value    |
+| IEEE1588_PTP_TT_OFFSET_SCALED_LOG_VARIANCE      |   ieee1588-ptp-tt:offset-scaled-log-variance    | Config offset-scaled-log-variance, refer YANG for possible value    |
+| IEEE1588_PTP_TT_INGRESS_LATENCY      |   ieee1588-ptp-tt:ingress-latency    | Config this if you know the internal ingress-latency of a rx ptp packets. Currently the value is 0    |
+| IEEE1588_PTP_TT_EGRESS_LATENCY      |   ieee1588-ptp-tt:egress-latency    | Config this if you know the internal egress-latency of a tx ptp packets. Currently the value is 0    |
+
+For more accessible parameters along with the default values in gPTP example, please refer to the file located at:
+-``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf/gptp-yangconfig.xml``.
 
 ## gPTP Non-Yang Config Parameters
 
-In addition to the standard Yang parameters, gPTP also includes a set of non-Yang configuration parameters
-that are specific to its implementation. To access the list of these parameters, along with their descriptions
- and default values for gPTP, please refer to the file located at:
-``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf/gptp_nonyangconfig.xml``.
+In addition to the standard Yang parameters, gPTP also includes a set of non-Yang  configuration parameters that are specific to its implementation. 
 
+### gptpgcfg wrapper APIs to modify Non-Yang parameter
 To modify the default value of the Non-Yang parameters, please refer to the ``gptp_nonyang_config()`` function
-in the ``tsninit.c`` file. This function will invokes ``gptpgcfg_set_item()`` to configure each params:
+in the ``gptp_init.c`` file. This function will invokes ``gptpgcfg_set_item()`` to configure each params:
 
 \code
 int gptpgcfg_set_item(uint8_t gptpInstanceIndex, uint8_t confitem,
@@ -285,11 +350,73 @@ for persistence.
 Example usage:
 ``gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_USE_HW_PHASE_ADJUSTMENT,
   YDBI_CONFIG, &use_hwphase, sizeof(use_hwphase));``
-- As a reference, please consult the ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/tsninit.c``
+- As a reference, please consult the ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/gptp_init.c``
 file.
 
 - The configuration must be done before calling the ``gptpman_run()`` function
-  inside the ``tsninit.c`` file, and it should follow the the gptpgcfg_init function call.
+  inside the ``gptp_init.c`` file, and it should follow the the gptpgcfg_init function call.
+
+### Default example configurations
+
+| KEY | Short Explain |
+|:---------:|:----------|
+|SINGLE_CLOCK_MODE| Set 1 for single clock with multiple ports|
+|USE_HW_PHASE_ADJUSTMENT| Set 1 to make the adjustment apply on HW clock|
+|FREQ_OFFSET_IIR_ALPHA_START_VALUE| ptp clock offset and freq adjustment IIR filter coefficients reciprocal number is used at the beginning|
+|FREQ_OFFSET_IIR_ALPHA_STABLE_VALUE| ptp clock offset and freq adjustment IIR filter coefficients reciprocal number is used after stable time|
+|PHASE_OFFSET_IIR_ALPHA_START_VALUE| ptp clock offset and freq adjustment IIR filter coefficients reciprocal number is used at the beginning|
+|PHASE_OFFSET_IIR_ALPHA_STABLE_VALUE| ptp clock offset and freq adjustment IIR filter coefficients reciprocal number is used after stable time|
+|MAX_DOMAIN_NUMBER| Support up to 2 domains|
+|QUICK_SYNC_ALGO| Enables the slave clock to match the master's rate before applying phase offset adjustments.|
+|SKIP_FREQADJ_COUNT_MAX| Number of Sync message cycle in which freq adjustment will be skipped after offset has just been adjusted.|
+|PHASE_OFFSET_ADJUST_BY_FREQ| Sets the phase offset adjustment threshold in nanoseconds.|
+|FREQ_OFFSET_STABLE_PPB| Stable adjustment determination and thresholds freq. adjustment is considered stable if delta of adj rate is less then this threshold|
+|FREQ_OFFSET_UPDATE_MRATE_PPB| update freq offset only when the abs of diff to the new rate is bigger than this|
+|STATIC_PORT_STATE_SLAVE_PORT| -1: Enable BMCA mode, 0: Disable BMCA and all ports are GM, >0: Disable BMCA, the selected port is Slave port, and other ports are master port|
+|SUPPORT_RUNTIME_NOTICE_CHECK| Enable this flag, then gptp stack will listener for event to trigger Message Interval Request signaling to the other side|
+|CLOCK_COMPUTE_INTERVAL_MSEC| compute phase and freq every this time|
+|CMLDS_MODE| In case of number of domain is 2, CMLDS_MODE must be True to apply common link delay|
+|SECOND_DOMAIN_THIS_CLOCK| In case of number of domain is 2, this flag also need to be set to one to indicate software clock mode|
+
+To access the list of these parameters, along with their descriptions and default values for gPTP, please refer to the file located at:
+``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf/gptp_nonyangconfig.xml``.
+
+### gPTP Multiple Domains
+
+At the moment, our system supports two domains, but this feature is turned off by default. 
+To turn on multiple domains, follow these steps:
+
+- Set ``#define GPTP_MAX_DOMAINS 2`` in the ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_buildconf/sitara_buildconf.h`` file
+- In the file ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/gptp_init.c``, you will see the following settings are set:
+```
+#if GPTP_MAX_DOMAINS == 2
+    {"CMLDS_MODE", XL4_EXTMOD_XL4GPTP_CMLDS_MODE, 1},
+    {"SECOND_DOMAIN_THIS_CLOCK", XL4_EXTMOD_XL4GPTP_SECOND_DOMAIN_THIS_CLOCK, 1}
+#endif
+```
+This will activate the second domain in the gPTP system.
+
+### gPTP Shorter Sync Interval
+
+By default, the gPTP Sync interval is set to 125 milliseconds (log2(0.125)=-3) which is corresponding to the default SYNC_LOG value is -3 (refer ``gptp_init.c``)
+
+``#define SYNC_LOG -3 // Default: 125ms``
+
+If you need a shorter Sync interval (eg: apply for Quick SYNC), you can adjust it by setting a specific value in the ``gptp_init.c`` file:
+
+```
+#define SYNC_LOG -4 // 62.5ms
+#define SYNC_LOG -5 // 31.25ms
+#define SYNC_LOG -6 // 15.625ms
+#define SYNC_LOG -7 // 7.8125ms <- Minimum time gptp stack can support
+```
+
+As explained in previous section, the SYNC_LOG will be applied to ``ieee802-dot1as-gptp:log-sync-interval``, and the gptp stack will base on the setting to have proper SYNC interval.
+
+This SYNC_LOG understanding is also applicable for:
+- LOG_ANNOUNCE: Default 0 which mean Announce will be sent every 1s
+- LOG_PDELAY: Default 0 which mean PDelay Request will be sent every 1s
+- LOG_GPTP_CAPABLE: Default 3 which mean GPTP CAPABLE Signaling will be send every 8s 
 
 ### gPTP Performance optimization
 
