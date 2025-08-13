@@ -69,7 +69,7 @@
          numBlocks += 1;
      }
  
-     DebugP_log("[MMCSD] SD Interrupt LLD Starting...\r\n");
+     DebugP_log("[MMCSD] EMMC DMA LLD Starting...\r\n");
  
      /* Fill Write and Read Buffer */
      mmcsd_io_fill_buffers();

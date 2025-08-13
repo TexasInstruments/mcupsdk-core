@@ -41,7 +41,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_MMCSD_RAW_IO_MMC_INTR_LLD";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_MMCSD_RAW_IO_EMMC_INTR_LLD";
 
 const templates_nortos_r5f =
 [

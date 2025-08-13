@@ -92,7 +92,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_MMCSD_RAW_IO_MMC_INTR_LLD.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_MMCSD_RAW_IO_EMMC_INTR_LLD.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -4064,7 +4064,8 @@ static int32_t MMCSD_isCardReadyForTransferMMC(MMCSDLLD_Handle handle)
     mmcDeviceData = (MMCSD_EmmcDeviceData *)(object->initHandle->deviceData);
 
     while(  (mediaCurrentState != MMCSD_MEDIA_STATE_TRAN) &&
-            (readyCheckTryCount < MMCSD_MEDIA_STATE_THRESHOLD))
+            (readyCheckTryCount < MMCSD_MEDIA_STATE_THRESHOLD) &&
+            (status == MMCSD_STS_SUCCESS) )
     {
 
         if(mediaCurrentState == MMCSD_MEDIA_STATE_RCV)
@@ -4073,19 +4074,22 @@ static int32_t MMCSD_isCardReadyForTransferMMC(MMCSDLLD_Handle handle)
             trans.cmd = MMCSD_CMD(12U);
             trans.arg = (0U);
             status = MMCSD_lld_transferPoll(handle, &trans);
+            if(status != MMCSD_STS_SUCCESS)
+            {
+                break;
+            }
         }
 
+        MMCSD_lld_initTransaction(&trans);
+        trans.cmd = MMCSD_CMD(13U);
+        trans.flags = MMCSD_CMDRSP_48BITS;
+        trans.arg = (mmcDeviceData->rca << 16U);
+        status = MMCSD_lld_transferPoll(handle, &trans);
         if(status == MMCSD_STS_SUCCESS)
         {
-            MMCSD_lld_initTransaction(&trans);
-            trans.cmd = MMCSD_CMD(13U);
-            trans.flags = MMCSD_CMDRSP_48BITS;
-            trans.arg = (mmcDeviceData->rca << 16U);
-            status = MMCSD_lld_transferPoll(handle, &trans);
             readyCheckTryCount++;
             mediaCurrentState = ((trans.response[0] >> 9U) & 0x0FU);
         }
-
         
     }
 
