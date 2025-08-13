@@ -1239,14 +1239,15 @@ static void test_canfd_loopback_multi_instances(void *args)
         txData[i]  = txMsgParams0->data[i];
         txData1[i]  = txMsgParams1->data[i] + 1U;
     }
-#if defined (SOC_AM273X)
     attrs1->baseAddr = CONFIG_MCAN1_BASE_ADDR;
     attrs1->operMode = CANFD_OPER_MODE_INTERRUPT;
+#if defined (SOC_AM273X) 
     attrs1->intrNum0 = CSL_MSS_INTR_MSS_MCANB_INT0;
     attrs1->intrNum1 = CSL_MSS_INTR_MSS_MCANB_INT1;
+#elif defined (SOC_AM64X) || defined (SOC_AM243X)
+    attrs1->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0;
+    attrs1->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1;
 #else
-    attrs1->baseAddr = CONFIG_MCAN1_BASE_ADDR;
-    attrs1->operMode = CANFD_OPER_MODE_INTERRUPT;
     attrs1->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_0;
     attrs1->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_1;
 #endif
@@ -1797,6 +1798,9 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
 #if defined (SOC_AM273X)
     attrs->intrNum0 = CSL_MSS_INTR_MSS_MCANA_INT0;
     attrs->intrNum1 = CSL_MSS_INTR_MSS_MCANA_INT1;
+#elif defined (SOC_AM64X) || defined (SOC_AM243X)
+    attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN0_MCANSS_MCAN_LVL_INT_0;
+    attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN0_MCANSS_MCAN_LVL_INT_1;
 #else
     attrs->intrNum0                       = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_0,
     attrs->intrNum1                       = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_1,
@@ -1930,7 +1934,7 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->baseAddr = CONFIG_MCAN0_BASE_ADDR,
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN0_MCAN_LVL_INT_1,
-#elif (SOC_AM273X)
+#elif defined (SOC_AM273X)
             testParams->canfdInstance = CONFIG_MCAN1;
             config = &gCanfdConfig[CONFIG_MCAN1];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1938,6 +1942,14 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
             attrs->intrNum0 = CSL_MSS_INTR_MSS_MCANA_INT0,
             attrs->intrNum1 = CSL_MSS_INTR_MSS_MCANA_INT1,
+#elif defined (SOC_AM64X) || defined (SOC_AM243X)
+            testParams->canfdInstance = CONFIG_MCAN1;
+            config = &gCanfdConfig[CONFIG_MCAN1];
+            attrs  = (CANFD_Attrs *)config->attrs;
+            attrs->operMode = CANFD_OPER_MODE_INTERRUPT;
+            attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
+            attrs->intrNum0 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_0;
+            attrs->intrNum1 = CSLR_GICSS0_SPI_MCAN1_MCANSS_MCAN_LVL_INT_1;
 #else
             testParams->canfdInstance = CONFIG_MCAN2;
             config = &gCanfdConfig[CONFIG_MCAN2];
