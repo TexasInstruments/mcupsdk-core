@@ -1,5 +1,8 @@
 
 export `args.sdkPath`?=$(abspath `args.relPath`)
+% if (args.project.device == "am273x" && args.project.isBootLoader) {
+export DEVICE ?= am273x
+%}
 include $(`args.sdkPath`)/imports.mak
 %if (args.tifsR5Core == "TRUE") {
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
@@ -205,6 +208,14 @@ DEFINES_`prop` := \
 		% }
 
 	% }
+% }
+% if (args.project.device == "am273x" && args.project.isBootLoader) {
+ifeq ($(KEY_VERSION), 1.1)
+DEFINES_common += -DKEY_VERSION_1_1
+endif
+ifeq ($(KEY_VERSION), 1.2)
+DEFINES_common += -DKEY_VERSION_1_2
+endif
 % }
 % obj = args.project.cflags;
 % for (prop in obj) {

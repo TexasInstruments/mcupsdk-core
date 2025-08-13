@@ -35,7 +35,11 @@
 #include "ti_drivers_open_close.h"
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
-#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
+#if defined KEY_VERSION_1_2
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg_1_2.h> /* hsmRt1.2 bin header file */
+#else
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin header file */
+#endif
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;

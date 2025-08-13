@@ -40,7 +40,11 @@
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
-#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
+#if defined KEY_VERSION_1_2
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg_1_2.h> /* hsmRt1.2 bin header file */
+#else
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin header file */
+#endif
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x200000) /* This has to match the size of DDR section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.dss_l3")));

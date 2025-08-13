@@ -1,5 +1,6 @@
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
+export DEVICE ?= am273x
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -61,6 +62,12 @@ DEFINES_common := \
 	-DSOC_AM273X \
 	-DOS_NORTOS \
 
+ifeq ($(KEY_VERSION), 1.1)
+DEFINES_common += -DKEY_VERSION_1_1
+endif
+ifeq ($(KEY_VERSION), 1.2)
+DEFINES_common += -DKEY_VERSION_1_2
+endif
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
 	-mfloat-abi=hard \

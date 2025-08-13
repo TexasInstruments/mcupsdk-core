@@ -99,3 +99,8 @@ MCELF_ADDR_TRANSLATION_PATH?=none
 #Maximum size of a loadable elf segment. 
 #MCELF_MERGE_SEGMENTS_FLAG should be set to false to achieve this effect.
 MCELF_MAX_SEGMENT_SIZE?=8192
+
+ifeq ($(DEVICE),am273x)
+# Key version can be 1.1 or 1.2
+        KEY_VERSION=1.1
+endif

@@ -39,7 +39,11 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
-#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
+#if defined KEY_VERSION_1_2
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg_1_2.h> /* hsmRt1.2 bin header file */
+#else
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin header file */
+#endif
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
