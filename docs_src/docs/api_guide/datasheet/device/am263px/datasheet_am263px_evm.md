@@ -896,3 +896,38 @@ For Ethernet performance refer \ref enetlld_performance
 
 Comparing data from \ref EXAMPLES_OPTIFLASH_XIP_BENCHMARK and \ref EXAMPLES_OPTIFLASH_OCRAM_BENCHMARK, execution time of a code which throws ~3 Million I-Cache Miss per seconds is 2.2 times slower when it runs from OCRAM. 
 
+### Flash performance Benchmark
+
+#### CPU Read
+
+CPU with operating speed  : R5F with 400MHZ 
+
+| Size (KB) | Time (us) | Throughput (Mbps) |
+|-----------|-----------|-------------------|
+| 1         | 545       | 14.678899         |
+| 2         | 1084      | 14.760148         |
+| 4         | 2163      | 14.794267         |
+| 8         | 4325      | 14.797688         |
+| 16        | 8646      | 14.804534         |
+| 32        | 17285     | 14.810529         |
+| 64        | 34573     | 14.809244         |
+| 128       | 69151     | 14.808173         |
+| 256       | 138283    | 14.810208         |
+| 512       | 276590    | 14.808923         |
+
+#### DMA Read
+
+CPU with operating speed  : R5F with 400MHZ 
+
+| Size (KB) | Time (us) | Throughput (Mbps) |
+|-----------|-----------|-------------------|
+| 1         | 545       | 14.678899         |
+| 2         | 31        | 516.129032        |
+| 4         | 45        | 711.111111        |
+| 8         | 77        | 831.168831        |
+| 16        | 142       | 901.408451        |
+| 32        | 275       | 930.909091        |
+| 64        | 531       | 964.218456        |
+| 128       | 1049      | 976.167779        |
+| 256       | 2086      | 981.783317        |
+| 512       | 4161      | 984.378755        |

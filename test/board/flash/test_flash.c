@@ -54,12 +54,27 @@
 #define TEST_FLASH_OFFSET_BASE      (0x200000U)
 #endif
 #define TEST_FLASH_DATA_SIZE        (256U)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#define TEST_FLASH_DATA_REPEAT_COUNT (2048U)
+#define TEST_FLASH_RX_BUF_SIZE      ((TEST_FLASH_DATA_SIZE * TEST_FLASH_DATA_REPEAT_COUNT))
+#else
 #define TEST_FLASH_RX_BUF_SIZE      (2048U)
+#endif
 #define TEST_FLASH_BUF_LEN_ODD      (15U)
 #define TEST_FLASH_BYTE_OFFSET_ODD  (7U)
 #define TEST_FLASH_TEMP_BUF_SIZE    (32U)
 #define TEST_FLASH_BUF_LEN_ODD_DMA  (2021U)
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#define TESTCASES_COUNT (10)
+typedef struct
+{
+    uint32_t dataSize;
+    uint64_t operation_time;
+}App_benchmark;
+
+App_benchmark results[TESTCASES_COUNT];
+#endif
 /* ========================================================================== */
 /*                             Global Variables                               */
 /* ========================================================================== */
@@ -85,14 +100,25 @@ uint8_t gFlashTestTxBuf[TEST_FLASH_DATA_SIZE] =
 };
 
 uint8_t gFlashTestRxBuf[TEST_FLASH_RX_BUF_SIZE] __attribute__((aligned(128U)));
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+uint16_t gCount;
+uint64_t gsizecount;
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
+void App_fillPerformanceResults(uint32_t time_taken);
+int32_t flash_diag_test_compare_buffers(void);
+void App_printPerformanceLogs(void);
+static void flash_read_performance(void);
 /* Testcases */
+static void test_flash_read_performance_cpu(void *args);
+static void test_flash_read_performance_dma(void *args);
+#endif
 static void test_flash_readwrite(void *args);
 static void test_flash_read_multiple();
+
 
 #if defined (SOC_AM263PX) || (SOC_AM261X)
 void board_flash_reset(OSPI_Handle oHandle);
@@ -128,7 +154,32 @@ void test_main(void *args)
 #endif
 
     RUN_TEST(test_flash_read_multiple, 247, NULL);
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X)
+    Drivers_qspiClose();
+    Drivers_qspiOpen();
+#else
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+#if defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif   
+#endif
 
+    RUN_TEST(test_flash_read_performance_cpu, 14854, NULL);
+    
+#if defined (SOC_AM263X)
+    Drivers_qspiClose();
+    Drivers_qspiOpen();
+#else
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+#if defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+#endif
+    RUN_TEST(test_flash_read_performance_dma, 14855, NULL);
+#endif
     UNITY_END();
 
     /* Close OSPI and other drivers */
@@ -355,3 +406,147 @@ static void test_flash_read_multiple()
 
     Board_driversClose();
 }
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+static void test_flash_read_performance_cpu(void *args)
+{
+    Board_driversOpen();
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
+    OSPI_Handle ospiHandle = gOspiHandle[CONFIG_OSPI0];
+    OSPILLD_Handle hOspi;
+    OSPI_Object *obj = ((OSPI_Config *)ospiHandle)->object;
+    hOspi = &obj->ospilldObject;
+    hOspi->hOspiInit->dmaEnable = FALSE;
+#endif
+#if defined(SOC_AM263X)
+    QSPI_Handle qspiHandle = gQspiHandle[CONFIG_QSPI0];
+    QSPILLD_Handle hQspi;
+    QSPI_Object *obj = ((QSPI_Config *)qspiHandle)->object;
+    hQspi = &obj->qspilldObject;
+    hQspi->hQspiInit->dmaEnable = FALSE;
+#endif
+    flash_read_performance();
+    Board_driversClose();
+}
+
+static void test_flash_read_performance_dma(void *args)
+{
+    Board_driversOpen();
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
+    OSPI_Handle ospiHandle = gOspiHandle[CONFIG_OSPI0];
+    OSPILLD_Handle hOspi;
+    OSPI_Object *obj = ((OSPI_Config *)ospiHandle)->object;
+    hOspi = &obj->ospilldObject;
+    hOspi->hOspiInit->dmaEnable = TRUE;
+#endif
+#if defined(SOC_AM263X)
+    QSPI_Handle qspiHandle = gQspiHandle[CONFIG_QSPI0];
+    QSPILLD_Handle hQspi;
+    QSPI_Object *obj = ((QSPI_Config *)qspiHandle)->object;
+    hQspi = &obj->qspilldObject;
+    hQspi->hQspiInit->dmaEnable = TRUE;
+#endif
+    flash_read_performance();
+    Board_driversClose();
+}
+static void flash_read_performance(void)
+{    
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t offset;
+    uint32_t blk, page;
+    uint32_t i = 0, cleari = 0;
+    gCount = 0;
+    gsizecount=1;
+
+    Flash_getAttrs(CONFIG_FLASH0);
+
+    DebugP_log("[Flash Transfer Test] Starting ...\r\n");
+    offset = TEST_FLASH_OFFSET_BASE;
+
+    DebugP_log("[Flash Transfer Test] Executing Flash Erase on first block...\r\n");
+    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+    retVal |= Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+    uint32_t currBlock = blk;
+    for(i = 0; i < 2048; i++)
+    {
+        uint32_t write_offset = offset + i * TEST_FLASH_DATA_SIZE;
+        uint32_t write_blk, write_page;
+        Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], write_offset, &write_blk, &write_page);
+        if(currBlock != write_blk)
+        {
+            retVal |= Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], write_blk);
+            TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+            currBlock = write_blk;
+        }
+        retVal |= Flash_write(gFlashHandle[CONFIG_FLASH0], write_offset, gFlashTestTxBuf, TEST_FLASH_DATA_SIZE);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+    }
+    uint64_t start_time, end_time, cur_size;
+    uint64_t size_avail[] = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288};
+    uint32_t j;
+    for(j = 0U; j < TESTCASES_COUNT; j++)
+    {
+        for(cleari = 0U; cleari < TEST_FLASH_RX_BUF_SIZE; cleari++)
+        {
+            gFlashTestRxBuf[cleari] = 0U;
+        }
+        cur_size = size_avail[j];
+        start_time = ClockP_getTimeUsec();
+        retVal |= Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gFlashTestRxBuf, cur_size);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        end_time = ClockP_getTimeUsec() - start_time;
+        App_fillPerformanceResults(end_time);
+    }
+
+    retVal |= flash_diag_test_compare_buffers();
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    App_printPerformanceLogs();
+}
+
+int32_t flash_diag_test_compare_buffers(void)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t i;
+    for(i = 0U; i < TEST_FLASH_RX_BUF_SIZE; i++)
+    {
+        if(gFlashTestTxBuf[i % TEST_FLASH_DATA_SIZE] != gFlashTestRxBuf[i])
+        {
+            status = SystemP_FAILURE;
+            DebugP_logError("Flash read data mismatch %d!!!\r\n", i);
+            break;
+        }
+    }
+    return status;
+}
+
+void App_fillPerformanceResults(uint32_t time_taken)
+{
+    App_benchmark *table = &results[gCount++];
+
+    table->dataSize = gsizecount;
+    table->operation_time = time_taken;
+    gsizecount = gsizecount * 2;
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk() / 1000000;
+    double Throughput;
+    DebugP_log("BENCHMARK START - FLASH - READ PERFORMANCE  \r\n");
+    DebugP_log("- Measurement is provided for FLASH read operation \r\n");
+    DebugP_log("- Input Data sizes          :  1KB, 2KB, 4KB, 8KB, 16KB, 32KB, 64KB, 128KB, 256KB, 512KB\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("| Size(KB) | Time(us) | Throughput(Mbps) |\r\n");
+    DebugP_log("|----------|----------|------------------|\r\n");
+    for(uint32_t i = 0; i < TESTCASES_COUNT; i++)
+    {
+        Throughput = (results[i].dataSize * 8000);
+        Throughput = Throughput / results[i].operation_time;
+        DebugP_log("| %8d | %8" PRId64 " | %16f |\r\n", results[i].dataSize, results[i].operation_time, Throughput);
+    }
+    DebugP_log("BENCHMARK END\r\n");
+}
+
+#endif
