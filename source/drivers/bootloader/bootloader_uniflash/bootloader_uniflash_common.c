@@ -42,6 +42,8 @@ int32_t Bootloader_uniflashFlashFile(uint32_t flashIndex, uint8_t *buf, uint32_t
 	Flash_Attrs *flashAttrs;
 	Flash_Handle flashHandle;
 	uint32_t eraseBlockSize;
+	uint32_t eraseSectorSize;
+	uint8_t isSectorAligned = 0;
 
 	flashAttrs = Flash_getAttrs(flashIndex);
 	flashHandle = Flash_getHandle(flashIndex);
@@ -53,43 +55,76 @@ int32_t Bootloader_uniflashFlashFile(uint32_t flashIndex, uint8_t *buf, uint32_t
 	else
 	{
 	    eraseBlockSize = flashAttrs->pageCount * flashAttrs->pageSize;
+	    eraseSectorSize = flashAttrs->sectorSize;
 	}
 
-	if((status == SystemP_SUCCESS) && ((flashOffset % eraseBlockSize) != 0))
+	if(status == SystemP_SUCCESS)
 	{
-		/* Only flash to offsets which are a multiple of blockSize */
-		status=SystemP_FAILURE;
+		/* Check if flash offset is block aligned */
+		if((flashOffset % eraseBlockSize) == 0)
+		{
+			isSectorAligned = 0;
+		}
+		/* Check if flash offset is sector aligned */
+		else if((flashOffset % eraseSectorSize) == 0)
+		{
+			isSectorAligned = 1;
+		}
+		else
+		{
+			/* Neither sector nor block aligned */
+			status = SystemP_FAILURE;
+		}
 	}
 
 	if(status==SystemP_SUCCESS)
 	{
-	    uint32_t curOffset, totalChunks, curChunk, chunkSize, remainSize, blockNum, pageNum;
+	    uint32_t curOffset, totalChunks, curChunk, chunkSize, remainSize;
+	    uint32_t blockNum, pageNum, sectorNum;
 	    uint8_t *srcAddr;
 
 	    /* start writing from buffer to flash */
-	    chunkSize = eraseBlockSize;
+	    if(isSectorAligned)
+	    {
+	        chunkSize = eraseSectorSize;
+	    }
+	    else
+	    {
+	        chunkSize = eraseBlockSize;
+	    }
 
 	    srcAddr = buf;
 	    remainSize = fileSize;
 	    curOffset = flashOffset;
 	    curChunk = 1;
 	    totalChunks = (fileSize + (chunkSize-1))/chunkSize;
-	    while(curChunk <= totalChunks)
+	    while(curChunk <= totalChunks && status == SystemP_SUCCESS)
 	    {
 	        if(remainSize < chunkSize)
 	        {
 	            chunkSize = remainSize;
 	        }
 
-	        status = Flash_offsetToBlkPage(flashHandle, curOffset, &blockNum, &pageNum);
-	        if(status == SystemP_SUCCESS)
+	        if(isSectorAligned)
 	        {
-	            status = Flash_eraseBlk(flashHandle, blockNum);
+	            status = Flash_offsetToSectorPage(flashHandle, curOffset, &sectorNum, &pageNum);
 	            if(status == SystemP_SUCCESS)
 	            {
-	                status = Flash_write(flashHandle, curOffset, srcAddr, chunkSize);
+	                status = Flash_eraseSector(flashHandle, sectorNum);
 	            }
 	        }
+	        else
+	        {
+	            status = Flash_offsetToBlkPage(flashHandle, curOffset, &blockNum, &pageNum);
+	            if(status == SystemP_SUCCESS)
+	            {
+	                status = Flash_eraseBlk(flashHandle, blockNum);
+	            }
+	        }
+			if(status == SystemP_SUCCESS)
+			{
+				status = Flash_write(flashHandle, curOffset, srcAddr, chunkSize);
+			}
 	        curOffset += chunkSize;
 	        srcAddr += chunkSize;
 	        remainSize -= chunkSize;
@@ -232,60 +267,93 @@ int32_t Bootloader_uniflashFlashErase(uint32_t flashIndex, uint32_t flashOffset,
 
 	Flash_Attrs *flashAttrs;
 	Flash_Handle flashHandle;
-	uint32_t eraseBlockSize;
+	uint32_t eraseBlockSize, eraseSectorSize;
 	uint32_t flashSize;
+	uint8_t isSectorAligned = 0;
 
 	flashAttrs = Flash_getAttrs(flashIndex);
 	flashHandle = Flash_getHandle(flashIndex);
 
 	if(flashAttrs == NULL || flashHandle == NULL)
 	{
-	   status=SystemP_FAILURE;
+	   status = SystemP_FAILURE;
 	}
 	else
 	{
-	    eraseBlockSize = flashAttrs->pageCount * flashAttrs->pageSize;
-	    flashSize = eraseBlockSize * flashAttrs->blockCount;
-	}
-
-	if((status == SystemP_SUCCESS) && ((flashOffset % eraseBlockSize) != 0))
-	{
-		/* Only flash to offsets which are a multiple of blockSize */
-		status=SystemP_FAILURE;
+		eraseBlockSize = flashAttrs->pageCount * flashAttrs->pageSize;
+		eraseSectorSize = flashAttrs->sectorSize;
+		flashSize = eraseBlockSize * flashAttrs->blockCount;
 	}
 
 	if((status == SystemP_SUCCESS) && (eraseSize > flashSize))
 	{
-		status=SystemP_FAILURE;
+		status = SystemP_FAILURE;
 	}
 
-	if(status==SystemP_SUCCESS)
+	if(status == SystemP_SUCCESS)
 	{
-	    uint32_t curOffset, totalChunks, curChunk, chunkSize, remainSize, blockNum, pageNum;
+		/* Check if flash offset is block aligned */
+		if((flashOffset % eraseBlockSize) == 0)
+		{
+			isSectorAligned = 0;
+		}
+		/* Check if flash offset is sector aligned */
+		else if((flashOffset % eraseSectorSize) == 0)
+		{
+			isSectorAligned = 1;
+		}
+		else
+		{
+			/* Neither sector nor block aligned */
+			status = SystemP_FAILURE;
+		}
+	}
 
-	    /* start writing from buffer to flash */
-	    chunkSize = eraseBlockSize;
+	if(status == SystemP_SUCCESS)
+	{
+		uint32_t curOffset, totalChunks, curChunk, chunkSize, remainSize;
+		uint32_t blockNum, pageNum, sectorNum;
 
-	    remainSize = eraseSize;
-	    curOffset = flashOffset;
-	    curChunk = 1;
-	    totalChunks = (eraseSize + (chunkSize-1))/chunkSize;
-	    while(curChunk <= totalChunks)
-	    {
-	        if(remainSize < chunkSize)
-	        {
-	            chunkSize = remainSize;
-	        }
+		if(isSectorAligned)
+		{
+			chunkSize = eraseSectorSize;
+		}
+		else
+		{
+			chunkSize = eraseBlockSize;
+		}
 
-	        status = Flash_offsetToBlkPage(flashHandle, curOffset, &blockNum, &pageNum);
-	        if(status == SystemP_SUCCESS)
-	        {
-	            status = Flash_eraseBlk(flashHandle, blockNum);
-	        }
-	        curOffset += chunkSize;
-	        remainSize -= chunkSize;
-	        curChunk++;
-	    }
+		remainSize = eraseSize;
+		curOffset = flashOffset;
+		curChunk = 1;
+		totalChunks = (eraseSize + (chunkSize-1))/chunkSize;
+		while(curChunk <= totalChunks && status == SystemP_SUCCESS)
+		{
+			if(remainSize < chunkSize)
+			{
+				chunkSize = remainSize;
+			}
+
+			if(isSectorAligned)
+			{
+				status = Flash_offsetToSectorPage(flashHandle, curOffset, &sectorNum, &pageNum);
+				if(status == SystemP_SUCCESS)
+				{
+					status = Flash_eraseSector(flashHandle, sectorNum);
+				}
+			}
+			else
+			{
+				status = Flash_offsetToBlkPage(flashHandle, curOffset, &blockNum, &pageNum);
+				if(status == SystemP_SUCCESS)
+				{
+					status = Flash_eraseBlk(flashHandle, blockNum);
+				}
+			}
+			curOffset += chunkSize;
+			remainSize -= chunkSize;
+			curChunk++;
+		}
 	}
 	return status;
 }
