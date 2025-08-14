@@ -9,6 +9,7 @@
 - \subpage enet_mac2mac_top
 - \subpage enet_integration_guide_top
 - \subpage enetmdio_manualmode
+- \subpage enet_mdio_clause45_support
 \cond !SOC_AM261X
 - \subpage enet_mcupsdk_10_00_update
 \endcond

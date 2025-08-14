@@ -3,7 +3,7 @@ MDIO Manual Mode Enablement {#enetmdio_manualmode}
 
 [TOC]
 
-\note If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO Manual mode as software workaround mentioned below
+\note If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, please refer to Release notes for the information [ \ref RELEASE_NOTES_PAGE ], then TI suggests to use MDIO Manual mode as software workaround mentioned below
 
 
 # Workaround for details errata i2329-MDIO interface corruption and its impact:
