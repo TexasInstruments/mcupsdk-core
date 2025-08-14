@@ -95,6 +95,7 @@ FILES_common := \
     ospi_nor_flash_lld.c \
     ospi_lld_dma.c \
     ospi_udma_lld.c \
+    ospi_phy_tuning.c \
     pcie.c \
     pcie_v0.c \
     pcie_serdes.c \
@@ -198,6 +199,7 @@ FILES_PATH_common = \
     ospi/v0/lld \
     ospi/v0/lld/dma \
     ospi/v0/lld/dma/udma \
+    ospi/v0/lld/ospi_tuning/ospi_tuning_algo/algo_v1 \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \

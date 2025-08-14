@@ -122,6 +122,7 @@ FILES_PATH_common = \
     ospi/v0/lld \
     ospi/v0/lld/dma \
     ospi/v0/lld/dma/udma \
+    ospi/v0/lld/ospi_tuning/ospi_tuning_algo/algo_v1 \
     qos \
     qos/v0 \
     pcie \
