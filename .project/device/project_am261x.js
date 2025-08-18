@@ -171,6 +171,7 @@ const example_file_list = [
 	"examples/drivers/ipc/ipc_notify_echo/.project/project.js",
 	"examples/drivers/ipc/ipc_notify_echo_optishare/.project/project.js",
 	"examples/drivers/ipc/ipc_rpmsg_echo/.project/project.js",
+	"examples/drivers/ipc/ipc_rpmsg_echo_callback/.project/project.js",
 	"examples/drivers/ipc/ipc_spinlock_sharedmem/.project/project.js",
 	"examples/drivers/ipc/ipc_safeipc_echo/.project/project.js",
 	"examples/drivers/lin/lin_external/.project/project.js",
