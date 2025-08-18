@@ -725,6 +725,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am261x-som/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_cores_support/am261x-som/system_nortos [all clean syscfg-gui syscfg]
@@ -1840,6 +1842,8 @@ BUILD_COMBO_EXAMPLE_ALL += ipc_spinlock_sharedmem_am261x-som_system_freertos_nor
 BUILD_COMBO_EXAMPLE_ALL += ipc_spinlock_sharedmem_am261x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_echo_am261x-som_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_echo_am261x-lp_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += mcspi_external_loopback_am261x-som_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += mcspi_external_loopback_am261x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am261x-som_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am261x-lp_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += tmu_cores_support_am261x-som_system_nortos
@@ -3690,6 +3694,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ipc_safeipc_echo_am261x-lp_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos -f makefile all
 
+ mcspi_external_loopback_am261x-som_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos -f makefile all
+
+ mcspi_external_loopback_am261x-lp_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos -f makefile all
+
  spinlock_example_am261x-som_system_nortos:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile all
 
@@ -4298,6 +4308,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_spinlock_sharedmem_am261x-som_system_freert
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_spinlock_sharedmem_am261x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_echo_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_echo_am261x-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_external_loopback_am261x-som_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_external_loopback_am261x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am261x-som_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am261x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_cores_support_am261x-som_system_nortos_clean
@@ -6144,6 +6156,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ipc_safeipc_echo_am261x-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos -f makefile clean
 
+ mcspi_external_loopback_am261x-som_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos -f makefile clean
+
+ mcspi_external_loopback_am261x-lp_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos -f makefile clean
+
  spinlock_example_am261x-som_system_nortos_clean:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile clean
 
@@ -6752,6 +6770,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_spinlock_sharedmem_am261x-som_system_freert
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_spinlock_sharedmem_am261x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_echo_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_echo_am261x-lp_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_external_loopback_am261x-som_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_external_loopback_am261x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am261x-som_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am261x-lp_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_cores_support_am261x-som_system_nortos_scrub
@@ -8597,6 +8617,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ipc_safeipc_echo_am261x-lp_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos -f makefile scrub
+
+ mcspi_external_loopback_am261x-som_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos -f makefile scrub
+
+ mcspi_external_loopback_am261x-lp_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos -f makefile scrub
 
  spinlock_example_am261x-som_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos -f makefile scrub

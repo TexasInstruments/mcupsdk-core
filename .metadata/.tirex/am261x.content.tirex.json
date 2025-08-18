@@ -9965,6 +9965,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi External Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi External Loopback Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi External Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi External Loopback Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -21442,6 +21574,66 @@
             "drivers",
             "ipc",
             "ipc_safeipc_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi External Loopback System Example.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi External Loopback System Example.",
+        "name": "mcspi_external_loopback",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_external_loopback",
             "system_freertos_nortos"
         ],
         "mainCategories": [

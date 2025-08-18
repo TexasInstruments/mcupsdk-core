@@ -402,6 +402,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_CANFD_LOOPBACK_INTERRUPT_STANDARD_EXTENDED_EXAMPLE
 \endcond
 -# MCSPI
+   -# \subpage EXAMPLES_DRIVERS_MCSPI_EXTERNAL_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_MCSPI_PERFORMANCE_8BIT
