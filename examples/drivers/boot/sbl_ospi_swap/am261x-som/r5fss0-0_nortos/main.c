@@ -118,6 +118,7 @@ int32_t enable_flash_dac_phy()
 int main(void)
 {
     int32_t status;
+    
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
     Bootloader_socSetAutoClock();

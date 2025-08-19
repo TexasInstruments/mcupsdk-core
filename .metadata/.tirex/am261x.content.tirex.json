@@ -15314,6 +15314,37 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A \"Hello, World\" Example that with XIP enabled on FSS1 interface CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world_xip_fss1",
+        "location": "../../examples/hello_world_xip_fss1/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_xip_fss1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

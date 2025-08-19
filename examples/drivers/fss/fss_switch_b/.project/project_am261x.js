@@ -11,10 +11,26 @@ const files = {
             "main.c",
             "new_application_images.c"
         ],
+    },
+    "am261x-som":
+    {
+        common:
+        [
+            "fss_switch_b_img.c",
+            "main.c",
+            "new_application_images.c"
+        ],
     }
 }
 const projectSpecFiles = {
     "am261x-lp":
+    {
+        common:
+        [
+            "board.h"
+        ]
+    },
+    "am261x-som":
     {
         common:
         [
@@ -64,6 +80,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SWAP_TO_B";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty() {
