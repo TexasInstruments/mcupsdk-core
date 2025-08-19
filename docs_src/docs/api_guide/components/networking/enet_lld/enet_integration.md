@@ -213,6 +213,8 @@ Application should follow the next steps:
    to the Enet driver.  It's worth noting that there will be a unique Enet handle
    (\ref Enet_Handle) for each peripheral opened.
 
+-# Configure the DSCP to priority mapping for all the mac ports and host port using \ref ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP and \ref ENET_HOSTPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP commands. CPSW supports IPV4 and IPV6 DSCP priority mapping. By default, out-of-box examples maps DSCP values 0-7 to priority 0, 8-15 to priority 1, and so on for both host and mac ports. Configure default thread ID for host interface using \ref CPSW_ALE_IOCTL_SET_DEFAULT_THREADCFG when no classifer is matched.
+
 -# Attach the core with the Resource Manager (RM) using \ref ENET_PER_IOCTL_ATTACH_CORE.
    IOCTL. To use IOCTLs, the application must have the following:
 
