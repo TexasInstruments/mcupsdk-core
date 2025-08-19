@@ -426,6 +426,10 @@ Echo pkt completed
   EVM as "E1" version.
 \endcond
 
+\cond SOC_AM263PX
+- To ensure compatibility with CPSW RGMII2 port on @VAR_BOARD_NAME_LOWER board, make sure that SW-15(switch) should be set to `LOW` for board versions(E2/A/B versions). This configuration ensures seamless out-of-box support and functionality with the CPSW RGMII2 port on the specified versions.
+\endcond
+
 - If you see a valid, non-zero MAC address and continuously see "Waiting for network UP..." prints on the UART terminal
    - Make sure you see `Enet IF UP Event.` message, if not check the ethernet cable
    - Check the local network and check if the DHCP server is indeed running as expected

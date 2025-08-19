@@ -203,6 +203,12 @@ Capture wireshark and verify the tx interval flow for:
 
 Repeat verification #1 -> #4 (The LLDP opensource is using Nearest bridge 01-80-C2-00-00-0E as destination MAC address) and confirm only Nearest bridge Dest MAC address in DUT takes effect.
 
+## Troubleshooting issues
+
+\cond SOC_AM263PX
+- To ensure compatibility with CPSW RGMII2 port on @VAR_BOARD_NAME_LOWER board, make sure that SW-15(switch) should be set to `LOW` for board versions(E2/A/B versions). This configuration ensures seamless out-of-box support and functionality with the CPSW RGMII2 port on the specified versions.
+\endcond
+
 # See Also
 
 \ref NETWORKING |

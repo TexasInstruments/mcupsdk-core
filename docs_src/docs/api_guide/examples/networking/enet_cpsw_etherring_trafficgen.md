@@ -194,6 +194,12 @@ Average Latency: 44 us
 Maximum Latency: 94 us
 \endcode
 
+## Troubleshooting issues
+
+\cond SOC_AM263PX
+- To ensure compatibility with CPSW RGMII2 port on @VAR_BOARD_NAME_LOWER board, make sure that SW-15(switch) should be set to `LOW` for board versions(E2/A/B versions). This configuration ensures seamless out-of-box support and functionality with the CPSW RGMII2 port on the specified versions.
+\endcond
+
 # See Also
 
 \ref NETWORKING
