@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,7 +56,7 @@
  */
 
 /* number of iterations of message exchange to do */
-uint32_t gMsgEchoCount = 1u;
+uint32_t gMsgEchoCount = 100000u;
 
 typedef struct
 {
@@ -66,7 +66,7 @@ typedef struct
     uint16_t remoteEndPt;
 } Ipc_RecvData;
 
-Ipc_RecvData gRecvDataMain, gRecvDataRemote;
+Ipc_RecvData gRecvDataMain[CSL_CORE_ID_MAX], gRecvDataRemote;
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 /* main core that starts the message exchange */
@@ -121,10 +121,10 @@ void ipc_rpmsg_msg_handler_main_core(RPMessage_Object *obj, void *arg, void *dat
 {
     uint32_t msgValue = *((uint32_t *)data);
 
-    gRecvDataMain.data = msgValue++;
-    gRecvDataMain.dataLen = dataLen;
-    gRecvDataMain.remoteCoreId = remoteCoreId;
-    gRecvDataMain.remoteEndPt = remoteEndPt;
+    gRecvDataMain[remoteCoreId].data = msgValue + 1U;
+    gRecvDataMain[remoteCoreId].dataLen = dataLen;
+    gRecvDataMain[remoteCoreId].remoteCoreId = remoteCoreId;
+    gRecvDataMain[remoteCoreId].remoteEndPt = remoteEndPt;
 
     /* there is one semaphore for each core ID, so post the semaphore for the remote core that
         * has finished all message exchange iterations
@@ -147,7 +147,7 @@ void ipc_rpmsg_msg_handler_remote_core(RPMessage_Object *obj, void *arg, void *d
 void ipc_rpmsg_echo_main_core_start(void)
 {
     RPMessage_CreateParams createParams;
-    uint32_t i, numRemoteCores;
+    uint32_t msg, i, numRemoteCores;
     uint64_t curTime;
     int32_t status;
 
@@ -179,13 +179,13 @@ void ipc_rpmsg_echo_main_core_start(void)
 
     curTime = ClockP_getTimeUsec();
 
-    while(gRecvDataMain.data != gMsgEchoCount)
+    for(msg = 0; msg < gMsgEchoCount; msg++)
     {
         /* send the same messages to all cores */
         for(i=0; gRemoteCoreId[i]!=CSL_CORE_ID_MAX; i++ )
         {
             status = RPMessage_send(
-                &gRecvDataMain.data, sizeof(gRecvDataMain.data),
+                &gRecvDataMain[gRemoteCoreId[i]].data, sizeof(gRecvDataMain[gRemoteCoreId[i]].data),
                 gRemoteCoreId[i], gRemoteServiceEndPt,
                 RPMessage_getLocalEndPt(&gAckReplyMsgObject),
                 SystemP_WAIT_FOREVER);
@@ -194,7 +194,7 @@ void ipc_rpmsg_echo_main_core_start(void)
         /* wait for response from all cores */
         for(i=0; gRemoteCoreId[i]!=CSL_CORE_ID_MAX; i++ )
         {
-            SemaphoreP_pend(&gMainDoneSem[ gRemoteCoreId[i] ], SystemP_WAIT_FOREVER);
+            SemaphoreP_pend(&gMainDoneSem[gRemoteCoreId[i]], SystemP_WAIT_FOREVER);
         }
     }
 
@@ -240,8 +240,7 @@ void ipc_rpmsg_echo_remote_core_start(void)
         /* wait for message */
         SemaphoreP_pend(&gRemoteDoneSem, SystemP_WAIT_FOREVER);
 
-        /* echo the same message string as reply */
-
+        /* echo the same message as reply */
         /* send ack to sender CPU at the sender end point */
         status = RPMessage_send(
             &gRecvDataRemote.data, gRecvDataRemote.dataLen,
