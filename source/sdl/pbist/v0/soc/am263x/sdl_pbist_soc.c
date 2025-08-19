@@ -78,7 +78,7 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
          * not to be utilized can be run.
          */
         #if defined (SUBSYS_R5SS0)
-            .numPBISTRuns        = 19u,
+            .numPBISTRuns        = PBIST_MAX_NUM_RUNS,
             .PBISTConfigRun = {
             {
                 .override           = 0x0u,
@@ -173,7 +173,15 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
                 /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
                .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-               .memoryGroupsBitMap = 15u,  /* Choose VIM1 RAM*/
+               .memoryGroupsBitMap = 14u,  /* Choose VIM0 R5SS0 RAM*/
+               .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+               .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
+               .memoryGroupsBitMap = 15u,  /* Choose VIM1 R5SS0 RAM*/
                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
@@ -235,14 +243,38 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
      },
         #endif
         #if defined (SUBSYS_R5SS1)
-        .numPBISTRuns        = 11u,
+        .numPBISTRuns        = PBIST_MAX_NUM_RUNS,
         .PBISTConfigRun = {
           {
               .override           = 0x0u,
               /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
              /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
              .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-             .memoryGroupsBitMap = 14u,  /* Choose VIM0 RAM*/
+             .memoryGroupsBitMap = 14u,  /* Choose R5SS0 VIM0 RAM*/
+             .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {
+              .override           = 0x0u,
+              /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+             /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+             .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
+             .memoryGroupsBitMap = 15u,  /* Choose R5SS0 VIM1 RAM*/
+             .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {
+              .override           = 0x0u,
+              /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+             /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+             .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
+             .memoryGroupsBitMap = 16u,  /* Choose R5SS1 VIM0 RAM*/
+             .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {
+              .override           = 0x0u,
+              /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+             /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+             .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
+             .memoryGroupsBitMap = 17u,  /* Choose R5SS1 VIM1 RAM*/
              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
           },
           {
@@ -323,54 +355,6 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
               /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
               .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
               .memoryGroupsBitMap = 22u,  /* Choose MSS CR5A BTCM1*/
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {    /* Dummy Initializer*/
-              .override           = 0x0u,
-              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
-              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
               .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
           },
       },

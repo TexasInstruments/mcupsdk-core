@@ -56,11 +56,18 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
                                      pSDL_DPL_HwipHandle *PBIST_intrHandle)
 {
     int32_t ret = SDL_PASS;
+
+    /* PBIST test is done by ISR in below SoCs and Polling method */
+    /* is used for AM26xx SoCs due to Covering VIM Memory Group   */
+    /* as it cannot tested by ISR                                 */
+#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
     SDL_DPL_HwipParams intrParams;
+#endif
     void *localAddr = NULL;
     #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_PBIST_Instance(instance);
     #endif
+#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
     /* Disable interrupt */
     if (pInfo->interruptNumber != SDL_PBIST_INTERRUPT_INVALID)
     {
@@ -81,6 +88,7 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
             ret = SDL_EFAIL;
         }
     }
+#endif
 
     /* Get PBIST register space Pointer */
     if (ret == SDL_PASS)
@@ -169,8 +177,14 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
         {
             timeoutCount = timeout;
             /* Timeout if exceeds time */
+
+#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
             while ((pInfo->doneFlag == PBIST_NOT_DONE)
                    && (timeoutCount > (uint32_t)0))
+#else
+            while ((SDL_PASS != SDL_PBIST_getResult(testType, pRegs, pResult))
+                   && (timeoutCount > (uint32_t)0))
+#endif
             {
                 #ifndef SDL_SOC_MCU_R5F
                 SDL_PBIST_checkDone(pInfo);
@@ -178,11 +192,19 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
                 timeoutCount--;
             }
 
+#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
             if (pInfo->doneFlag == PBIST_NOT_DONE)
             {
                 ret = SDL_EFAIL;
             }
             else
+#else
+            if ((uint32_t)0 == timeoutCount)
+            {
+                ret = SDL_EFAIL;
+            }
+            else
+#endif
             {
                 ret = SDL_PBIST_getResult(testType, pRegs, pResult);
 
@@ -252,7 +274,9 @@ int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
         }
     }
 
+#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
     (void)SDL_PBIST_cleanupTest(PBIST_intrHandle);
+#endif
 
     return ret;
 }

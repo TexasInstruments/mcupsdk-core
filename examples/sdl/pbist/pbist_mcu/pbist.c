@@ -421,6 +421,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS_L2_1\r\n");
             DebugP_log(" PBIST complete for MSS_L2_2\r\n");
             DebugP_log(" PBIST complete for MSS_L2_3\r\n");
+            DebugP_log(" PBIST complete for VIM0 R5SS0\r\n");
             DebugP_log(" PBIST complete for VIM1 R5SS0\r\n");
             DebugP_log(" PBIST complete for VIM0 R5SS1\r\n");
             DebugP_log(" PBIST complete for VIM1 R5SS1\r\n");
@@ -444,6 +445,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         {
             DebugP_log(" PBIST complete for  VIM0 R5SS0\r\n");
+            DebugP_log(" PBIST complete for  VIM1 R5SS0\r\n");
+            DebugP_log(" PBIST complete for  VIM0 R5SS1\r\n");
+            DebugP_log(" PBIST complete for  VIM1 R5SS1\r\n");
             DebugP_log(" PBIST complete for MSS_L2_0\r\n");
             DebugP_log(" PBIST complete for R5SS0 RAM\r\n");
             DebugP_log(" PBIST complete for CR5A ROM0\r\n");
@@ -514,10 +518,10 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS CR5B R5FSS1 ATCM0\r\n");
             DebugP_log(" PBIST complete for MSS CR5B R5FSS0 BTCM0\r\n");
             DebugP_log(" PBIST complete for MSS CR5B R5FSS1 BTCM0\r\n");
-        #if defined (R5F0_INPUTS)
-            DebugP_log(" PBIST complete for MSS R5FSS1 VIM0\r\n");
-        #endif
-            DebugP_log(" PBIST complete for MSS R5FSS1 VIM1\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 VIM0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 VIM1\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS1 VIM0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS1 VIM1\r\n");
         }
         if (testResult == SDL_PASS)
         {
@@ -562,6 +566,8 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS_L2_2\r\n");
             DebugP_log(" PBIST complete for MSS MMCH0\r\n");
             DebugP_log(" PBIST complete for MSS MMCH1\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 VIM0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 VIM1\r\n");
         }
         if (testResult == SDL_PASS)
         {

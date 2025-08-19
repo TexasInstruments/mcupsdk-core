@@ -61,7 +61,12 @@ extern "C" {
 #include <stdbool.h>
 #include <sdl/pbist/v0/sdlr_pbist.h>
 #include <sdl/pbist/v0/soc/sdl_soc_pbist.h>
-#define PBIST_MAX_NUM_RUNS    19
+#ifdef SUBSYS_R5SS0
+    #define PBIST_MAX_NUM_RUNS    20U
+#endif
+#ifdef SUBSYS_R5SS1
+    #define PBIST_MAX_NUM_RUNS    14U
+#endif
 /** ---------------------------------------------------------------------------
  * @brief   This structure contains the different configuration used for PBIST
  *
