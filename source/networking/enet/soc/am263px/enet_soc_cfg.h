@@ -79,7 +79,7 @@ extern "C" {
 #define ENET_CFG_ALE_VLAN_MASK_MUX                  (ENET_OFF)
 
 /*! \brief CPSW MII support. */
-#define ENET_CFG_CPSW_MACPORT_MII                   (ENET_OFF)
+#define ENET_CFG_CPSW_MACPORT_MII                   (ENET_ON)
 
 /*! \brief CPSW XGMII support. */
 #define ENET_CFG_CPSW_XGMII                         (ENET_OFF)
