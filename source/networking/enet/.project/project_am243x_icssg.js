@@ -47,7 +47,6 @@ const files = {
 
         /* Enet utils */
         "enetphy.c",
-        "generic_phy.c",
 
         /* Enet utils */
         "enet_apputils.c",

@@ -7,6 +7,7 @@ const files_r5f = {
         "eeprom.c",
         "eeprom_cav24c.c",
         "phy_common_priv.c",
+        "generic_phy.c",
         "dp83tc812.c",
         "dp83tg720.c",
         "dp83869.c",

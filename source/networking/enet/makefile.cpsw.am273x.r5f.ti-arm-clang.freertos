@@ -69,7 +69,6 @@ FILES_common := \
     csl_mdio.c \
     csl_cpdma.c \
     enetphy.c \
-    generic_phy.c \
     enet_apputils.c \
     enet_appmemutils.c \
     enet_appethpatterns.c \

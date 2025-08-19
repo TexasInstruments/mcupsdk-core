@@ -10,6 +10,7 @@ const files_r5f = {
         "ethphy_dp83869.c",
         "ethphy_dp83826e.c",
         "phy_common_priv.c",
+        "generic_phy.c",
         "dp83tc812.c",
         "dp83tg720.c",
         "dp83869.c",

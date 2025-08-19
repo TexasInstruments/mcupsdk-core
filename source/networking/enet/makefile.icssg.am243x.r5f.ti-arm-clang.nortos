@@ -45,7 +45,6 @@ FILES_common := \
     icssg_stats_ioctl_register.c \
     k3_soc.c \
     enetphy.c \
-    generic_phy.c \
     enet_apputils.c \
     enet_appmemutils.c \
     enet_appethpatterns.c \
