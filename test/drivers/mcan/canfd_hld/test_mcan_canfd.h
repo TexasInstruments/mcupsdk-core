@@ -183,7 +183,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 0 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -212,7 +212,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 1 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0x6U,    /* Data Length Code */
+        0x6U,    /* Data Length */
         { /* Data */
                 0x12, 0x34, 0xAB, 0xCD,
                 0xDE, 0xAD,
@@ -227,7 +227,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 2 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -256,7 +256,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 3 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0x8U,    /* Data Length Code */
+        8U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -271,7 +271,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 4 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0x8U,    /* Data Length Code */
+        8U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -286,7 +286,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 5 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -316,7 +316,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 6 */
     {  
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */    
+        64U,    /* Data Length */    
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -345,7 +345,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 7 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -374,7 +374,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 8 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -403,7 +403,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 9 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -432,7 +432,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 10 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -461,7 +461,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 11 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -490,7 +490,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 12 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -519,7 +519,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 13 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -548,7 +548,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 14 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -577,7 +577,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 15 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,
@@ -606,7 +606,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 16 */
     { 
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0x8U,    /* Data Length Code */  
+        0x8U,    /* Data Length */  
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -622,7 +622,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 17 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0x7U,    /* Data Length Code */
+        0x7U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00,
@@ -637,7 +637,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 18 */
     {
         0U,      /* Message ID type. 11 bit or 29 bits  */
-        0x8U,    /* Data Length Code */
+        0x8U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -652,7 +652,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 19 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -681,7 +681,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 20 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -710,7 +710,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
     /* Message 21 */
     {
         0U,      /* Message ID type. 11 bit or 29 bits  */ /* classic CAN*/
-        0x8U,    /* Data Length Code */
+        0x8U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0xDE, 0xAD, 0xBA, 0xBE,
@@ -718,14 +718,14 @@ App_CANFD_TxMsgParams canTxMsg[] =
         MCAN_MEM_TYPE_FIFO, /* Storage Identifier */
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
-        0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
+        2U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
         MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
         MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 22 */
     {
         1U,      /* Message ID type. 11 bit or 29 bits  */
-        0xFU,    /* Data Length Code */
+        64U,    /* Data Length */
         { /* Data */
             0x12, 0x34, 0xAB, 0xCD,
             0x00, 0x00, 0x00, 0x00,

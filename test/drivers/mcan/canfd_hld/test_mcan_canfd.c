@@ -72,7 +72,8 @@ uint8_t txData1[MCAN_APP_TEST_DATA_SIZE];
 uint32_t  gFlagInstance1 = 0U;
 int32_t   gCancelTestStatus = SystemP_SUCCESS;
 CANFD_Config *config;
-CANFD_Attrs  *attrs;   
+CANFD_Attrs  *attrs;
+CANFD_TestParams  testParams;
 CANFD_Handle  canfdHandle = NULL;
 CANFD_Handle  canfdHandle1 = NULL;
 CANFD_MsgObjHandle  gTxMsgObjHandle, gRxMsgObjHandle;
@@ -113,8 +114,6 @@ void App_delayFunc(uint32_t timeout);
 
 void test_main(void *args)
 {
-    CANFD_TestParams  testParams;
-
     Drivers_open();
     Board_driversOpen();
 
@@ -126,6 +125,8 @@ void test_main(void *args)
     RUN_TEST(test_canfd_loopback, 13921, (void*)&testParams);
     test_canfd_set_params(&testParams, 13922);
     RUN_TEST(test_canfd_loopback, 13922, (void*)&testParams);
+    test_canfd_set_params(&testParams, 13931);
+    RUN_TEST(test_canfd_loopback, 13931, (void*)&testParams);
     test_canfd_set_params(&testParams, 13923);
     RUN_TEST(test_canfd_loopback, 13923, (void*)&testParams);
     test_canfd_set_params(&testParams, 13924);
@@ -135,15 +136,13 @@ void test_main(void *args)
     test_canfd_set_params(&testParams, 13926);
     RUN_TEST(test_canfd_loopback, 13926, (void*)&testParams);
     test_canfd_set_params(&testParams, 13927);
-    //RUN_TEST(test_canfd_loopback, 13927, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback, 13927, (void*)&testParams);
     test_canfd_set_params(&testParams, 13928);
-    //RUN_TEST(test_canfd_loopback, 13928, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback, 13928, (void*)&testParams);
     test_canfd_set_params(&testParams, 13929);
     RUN_TEST(test_canfd_loopback, 13929, (void*)&testParams);
     test_canfd_set_params(&testParams, 13930);
-   // RUN_TEST(test_canfd_loopback,  13930, (void*)&testParams);
-    test_canfd_set_params(&testParams, 13931);
-    RUN_TEST(test_canfd_loopback, 13931, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback,  13930, (void*)&testParams);
     test_canfd_set_params(&testParams, 13933);
     RUN_TEST(test_canfd_loopback, 13933, (void*)&testParams);
     test_canfd_set_params(&testParams, 13934);
@@ -165,7 +164,7 @@ void test_main(void *args)
     test_canfd_set_params(&testParams, 13942);
     RUN_TEST(test_canfd_loopback, 13942, (void*)&testParams);
     test_canfd_set_params(&testParams, 13943);
-  // RUN_TEST(test_canfd_loopback, 13943, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback, 13943, (void*)&testParams);
     test_canfd_set_params(&testParams, 13944);
     RUN_TEST(test_canfd_get_revId, 13944, (void*)&testParams);
     test_canfd_set_params(&testParams, 13945);
@@ -214,17 +213,12 @@ static void test_canfd_loopback(void *args)
     CANFD_OpenParams      *canfdOpenParams = &(testParams->openParams);
     CANFD_MessageObject   *txMsgObject = &(testParams->txMsgObject);
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
 
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
 
     canfdHandle = CANFD_open(testParams->canfdInstance, canfdOpenParams);
     TEST_ASSERT_NOT_NULL(canfdHandle);
@@ -289,7 +283,7 @@ static void test_canfd_loopback(void *args)
                         testParams->txMsgObject.startMsgId,
                         CANFD_MCANFrameType_FD,
                         0,
-                        &txData[0]);
+                        txDataPtr);
 
     if (status != SystemP_SUCCESS)
     {
@@ -305,13 +299,16 @@ static void test_canfd_loopback(void *args)
     /* Compare data */
     for(int32_t i = 0U; i < txMsgParams->dataLength; i++)
     {
-        if(txData[i] != rxData[i])
+        if(txDataPtr[i] != rxData[i])
         {
             status += SystemP_FAILURE;   /* Data mismatch */
             DebugP_log("Data Mismatch at offset %d\r\n", i);
             break;
         }
     }
+
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, txMsgParams->dataLength);
 
     SemaphoreP_destruct(&gMcanTxDoneSem);
     SemaphoreP_destruct(&gMcanRxDoneSem);
@@ -354,17 +351,11 @@ static void test_canfd_loopback_msg_lost(void *args)
     CANFD_OpenParams      *canfdOpenParams = &(testParams->openParams);
     CANFD_MessageObject   *txMsgObject = &(testParams->txMsgObject);
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
-
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
 
     canfdHandle = CANFD_open(testParams->canfdInstance, canfdOpenParams);
     TEST_ASSERT_NOT_NULL(canfdHandle);
@@ -403,55 +394,66 @@ static void test_canfd_loopback_msg_lost(void *args)
     rxMsgObject->dataLength = txMsgParams->dataLength;
     rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
-    /* FIFO Block mode Test - Start */
-    DebugP_log("\nFIFO 0/1 Message Lost Test:\r\n");
-    /* Accept non-matching messages into FIFO */
-    /* Send messages until FIFO condition is reached */
-    for(uint32_t iterationCount = 0U; iterationCount < canfdOpenParams->msgRAMConfig.rxFIFO0size; iterationCount++)
+    status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
+    if (status != SystemP_SUCCESS)
     {
-        status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
-        if (status != SystemP_SUCCESS)
-        {
-            DebugP_log ("Error: CANFD create Tx message object failed\r\n");
-            return;
-        }
+        DebugP_log ("Error: CANFD create Tx message object failed\r\n");
+        return;
+    }
 
-        status += CANFD_createMsgObject (canfdHandle, rxMsgObjHandle);
-        if (status != SystemP_SUCCESS)
-        {
-            DebugP_log ("Error: CANFD create Rx message object failed\r\n");
-            return;
-        }
+    status += CANFD_createMsgObject (canfdHandle, rxMsgObjHandle);
+    if (status != SystemP_SUCCESS)
+    {
+        DebugP_log ("Error: CANFD create Rx message object failed\r\n");
+        return;
+    }
 
+    if(rxMsgObject->rxFifoNum == MCAN_RX_FIFO_NUM_0)
+    {
+        /* FIFO Block mode Test - Start */
+        DebugP_log("\nFIFO 0 Message Lost Test Started:\r\n");
+    }
+    else
+    {
+        /* FIFO Block mode Test - Start */
+        DebugP_log("\nFIFO 1 Message Lost Test Started:\r\n");
+    }
+
+    /* Accept non-matching messages into FIFO */
+    /* Send messages until FIFO full condition is reached */
+    for(uint32_t iterationCount = 0U; iterationCount < canfdOpenParams->msgRAMConfig.rxFIFO0size + 1U; iterationCount++)
+    {
         /* Send data over Tx message object */
         status += CANFD_write (txMsgObjHandle,
                                 testParams->txMsgObject.startMsgId,
                                 CANFD_MCANFrameType_FD,
                                 0,
-                                &txData[0]);
+                                txDataPtr);
                                 /* Wait for Tx completion */
         SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);  
     }
 
-    /* Send another message to cause overflow */
+    /*
+     * Triggering another message will cause a buffer overflow since the FIFO is set to blocking mode.
+     * As a result, the message will be discarded, and the 'get' and 'put' indices will remain unchanged.
+     * A corresponding 'FIFO 0/1 message lost' interrupt will be generated.
+     */
     status += CANFD_write (txMsgObjHandle,
                             testParams->txMsgObject.startMsgId,
                             CANFD_MCANFrameType_FD,
                             0,
-                            &txData[0]);
+                            txDataPtr);
     /* Semaphore post will be done from errorCallback function */
     SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);
 
-    if ((testParams->reason == MCAN_INTR_SRC_RX_FIFO0_MSG_LOST) &&
-        (rxMsgObject->rxFifoNum == MCAN_RX_FIFO_NUM_0))
+    if (testParams->reason == CANFD_Reason_SRC_RX_FIFO0_MSG_LOST)
     {
-        DebugP_log ("RX FIFO0 message lost test pass");
+        DebugP_log ("RX FIFO0 message lost test pass\r\n");
         status += SystemP_SUCCESS;
     }
-    else if ((testParams->reason == MCAN_INTR_SRC_RX_FIFO1_MSG_LOST) &&
-             (rxMsgObject->rxFifoNum == MCAN_RX_FIFO_NUM_1))
+    else if (testParams->reason == CANFD_Reason_SRC_RX_FIFO1_MSG_LOST)
     {
-        DebugP_log ("RX FIFO1 message lost test pass");
+        DebugP_log ("RX FIFO1 message lost test pass\r\n");
         status += SystemP_SUCCESS;
     }
     else
@@ -480,6 +482,9 @@ static void test_canfd_loopback_msg_lost(void *args)
         status = SystemP_FAILURE;
     }
 
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, sizeof(&txDataPtr[0]));
+
     CANFD_close(canfdHandle);
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
@@ -497,11 +502,10 @@ static void test_canfd_loopback_polled(void *args)
     CANFD_OpenParams      *canfdOpenParams = &(testParams->openParams);
     CANFD_MessageObject   *txMsgObject = &(testParams->txMsgObject);
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
-
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
 
     for(int8_t i = 0; i < txMsgParams->dataLength; i++)
@@ -561,7 +565,7 @@ static void test_canfd_loopback_polled(void *args)
                         testParams->txMsgObject.startMsgId,
                         CANFD_MCANFrameType_FD,
                         0,
-                        &txData[0]);
+                        txDataPtr);
 
     status += CANFD_read(rxMsgObjHandle, MCAN_APP_TEST_MESSAGE_COUNT, &rxData[0]);
     if (status != SystemP_SUCCESS)
@@ -579,13 +583,15 @@ static void test_canfd_loopback_polled(void *args)
     /* Compare data */
     for(int32_t i = 0U; i < txMsgParams->dataLength; i++)
     {
-        if(txData[i] != rxData[i])
+        if(txDataPtr[i] != rxData[i])
         {
             status += SystemP_FAILURE;   /* Data mismatch */
             DebugP_log("Data Mismatch at offset %d\r\n", i);
             break;
         }
     }
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, sizeof(&txDataPtr[0]));
 
     status += CANFD_deleteMsgObject(txMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -618,17 +624,11 @@ static void test_canfd_loopback_dma(void *args)
     CANFD_OpenParams      *canfdOpenParams = &(testParams->openParams);
     CANFD_MessageObject   *txMsgObject = &(testParams->txMsgObject);
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
-
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
 
     /* Writeback buffer */
     CacheP_wb(&txData[0U], sizeof(txData), CacheP_TYPE_ALLD);
@@ -697,13 +697,16 @@ static void test_canfd_loopback_dma(void *args)
                         testParams->txMsgObject.startMsgId,
                         CANFD_MCANFrameType_FD,
                         1,
-                        &txData[0]);
+                        txDataPtr);
 
     if (status != SystemP_SUCCESS)
     {
         DebugP_log ("Error: CANFD write in DMA mode failed\r\n");
         status = SystemP_FAILURE;
     }
+
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, sizeof(&txDataPtr[0]));
 
     /* Wait for Tx completion */
     SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);
@@ -716,7 +719,7 @@ static void test_canfd_loopback_dma(void *args)
     /* Compare data */
     for(int32_t i = 0U; i < txMsgParams->dataLength; i++)
     {
-        if(txData[i] != rxData[i])
+        if(txDataPtr[i] != rxData[i])
         {
             status += SystemP_FAILURE;   /* Data mismatch */
             DebugP_log("Data Mismatch at offset %d\r\n", i);
@@ -783,17 +786,11 @@ static void test_canfd_loopback_perf(void *args)
     uint64_t               numOfMsgPerSec;
     uint32_t               startTicks, stopTicks, maxMsgCnt, frameType;
     uint32_t               ticksDelay = CycleCounterP_getCount32();
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
-
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
 
     canfdHandle = CANFD_open(testParams->canfdInstance, canfdOpenParams);
     TEST_ASSERT_NOT_NULL(canfdHandle);
@@ -882,7 +879,7 @@ static void test_canfd_loopback_perf(void *args)
                             testParams->txMsgObject.startMsgId,
                             frameType,
                             0,
-                            &txData[0]);
+                            txDataPtr);
 
         if (status != SystemP_SUCCESS)
         {
@@ -898,7 +895,7 @@ static void test_canfd_loopback_perf(void *args)
         /* Compare data */
         for(int32_t i = 0U; i < txMsgObject->dataLength; i++)
         {
-            if(txData[i] != rxData[i])
+            if(txDataPtr[i] != rxData[i])
             {
                 status += SystemP_FAILURE;   /* Data mismatch */
                 DebugP_log("Data Mismatch at offset %d\r\n", i);
@@ -958,6 +955,9 @@ static void test_canfd_loopback_perf(void *args)
 
     SemaphoreP_destruct(&gMcanTxDoneSem);
     SemaphoreP_destruct(&gMcanRxDoneSem);
+
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, sizeof(&txDataPtr[0]));
     
     CANFD_close(canfdHandle);
 
@@ -975,21 +975,10 @@ static void test_canfd_loopback_cancel(void *args)
 {
     int32_t                status          = SystemP_SUCCESS;
     CANFD_TestParams      *testParams      = (CANFD_TestParams *)args;
-    App_CANFD_TxMsgParams *txMsgParams     = testParams->txMsgParams;
     CANFD_OpenParams      *canfdOpenParams = &(testParams->openParams);
-
-    TaskP_Params transferTaskParms, transferCancelTaskParms;
-
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
+    TaskP_Params          transferTaskParms, transferCancelTaskParms;
 
     CANFD_close(gCanfdHandle[testParams->canfdInstance]);
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
 
     canfdHandle = CANFD_open(testParams->canfdInstance, canfdOpenParams);
     TEST_ASSERT_NOT_NULL(canfdHandle);
@@ -1047,18 +1036,13 @@ static void test_canfd_loopback_cancel_transfer(void *args)
     App_CANFD_TxMsgParams *txMsgParams = testParams->txMsgParams;
     CANFD_MessageObject   *txMsgObject = &(testParams->txMsgObject);
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
+    uint8_t               *txDataPtr = &(testParams->txMsgParams->data[0]);
 
     gTxMsgObjHandle  = &(testParams->txMsgObject);
     gRxMsgObjHandle  = &(testParams->rxMsgObject);
 
-    /* Memset Buffers */
-    memset(&txData[0U], 0, txMsgParams->dataLength * sizeof(txData[0U]));
-    memset(&rxData[0U], 0, txMsgParams->dataLength * sizeof(rxData[0U]));
-
-    for(int8_t i = 0; i < txMsgParams->dataLength; i++)
-    {
-        txData[i] = txMsgParams->data[i];
-    }
+    /* memset rx buffer */
+    memset(&rxData[0], 0, sizeof(rxData[0U]));
     
     status += SemaphoreP_constructBinary(&gMcanTxDoneSem, 0);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -1121,7 +1105,7 @@ static void test_canfd_loopback_cancel_transfer(void *args)
                           testParams->txMsgObject.startMsgId,
                           CANFD_MCANFrameType_FD,
                           0,
-                          &txData[0]);
+                          txDataPtr);
 
     if (status != SystemP_SUCCESS)
     {
@@ -1137,7 +1121,7 @@ static void test_canfd_loopback_cancel_transfer(void *args)
     /* Compare data */
     for(int32_t i = 0U; i < txMsgParams->dataLength; i++)
     {
-        if(txData[i] != rxData[i])
+        if(txDataPtr[i] != rxData[i])
         {
             gCancelTestStatus = SystemP_FAILURE;   /* Data mismatch */
             DebugP_log("Data Mismatch at offset %d\r\n", i);
@@ -1146,6 +1130,8 @@ static void test_canfd_loopback_cancel_transfer(void *args)
     }
 
     ClockP_usleep(100);
+    /* Memset Tx Buffers */
+    memset(txDataPtr, 0, sizeof(&txDataPtr[0]));
 
     status += CANFD_deleteMsgObject(gTxMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -1883,6 +1869,7 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     testParams->testCaseId   = tcId;
     testParams->canfdInstance = CONFIG_MCAN0;
     testParams->rxFifoNum   = canTxMsg[0U].rxFifoNum;
+    testParams->reason = CANFD_Reason_TX_COMPLETION;
 
     if(openParams->fdMode == true)
     {
@@ -2247,8 +2234,6 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             * interrupt to indicate the loss. This setup validates the behavior of the 
             * system under FIFO overflow conditions.
             */
-            openParams->tsSelect    = 1U;
-            openParams->filterConfig.anfe = true,
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum          = 0U,
             openParams->msgRAMConfig.txFIFOSize        = 2U,
@@ -2264,7 +2249,7 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             testParams->txMsgParams  = &canTxMsg[22U];
             testParams->rxFifoNum = MCAN_RX_FIFO_NUM_0;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[22U].filterElement;
+            canExtIdFilter[0U].efec = APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES;
             canExtIdFilter[0U].eft  = canTxMsg[22U].rxfilterType;
             break;
         case 13935:
@@ -2275,7 +2260,6 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             * interrupt to indicate the loss. This setup validates the behavior of the 
             * system under FIFO overflow conditions.
             */
-            openParams->tsSelect = 1U;
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum      = 0U,
             openParams->msgRAMConfig.txFIFOSize    = 2U,
@@ -2290,9 +2274,9 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.rxFIFO1waterMark  = App_MCAN_FIFO_WATERMARK_LEVEL,
             testParams->txMsgParams  = &canTxMsg[22U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            testParams->rxFifoNum = canTxMsg[22U].rxFifoNum;
-            canExtIdFilter[0U].efec = canTxMsg[22U].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[22U].rxfilterType;
+            testParams->rxFifoNum = MCAN_RX_FIFO_NUM_1;
+            canExtIdFilter[0U].efec = APP_CANFD_STORE_IN_RXFIFO_1_IF_FILTER_MATCHES;
+            canExtIdFilter[0U].eft  = 1U;
             break;
         case 13936:
             /*
@@ -2794,14 +2778,14 @@ void App_CANFD_TransferCallback(void *args, CANFD_Reason reason)
 
 void App_CANFD_ErrorCallback(void *args, CANFD_Reason reason, CANFD_ErrStatusResp* errStatusResp)
 {
-    CANFD_TestParams *testParams = (CANFD_TestParams *)args;
-
-    if(args != NULL)
+    if (reason == CANFD_Reason_SRC_RX_FIFO0_MSG_LOST)
     {
-        testParams->reason = reason;
-        if ((reason == CANFD_Reason_SRC_RX_FIFO0_MSG_LOST) || (reason == CANFD_Reason_SRC_RX_FIFO1_MSG_LOST))
-        {
-            SemaphoreP_post((SemaphoreP_Object *)&gMcanTxDoneSem);
-        }
+        testParams.reason = CANFD_Reason_SRC_RX_FIFO0_MSG_LOST;
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanTxDoneSem);
+    }
+    if (reason == CANFD_Reason_SRC_RX_FIFO1_MSG_LOST)
+    {
+        testParams.reason = CANFD_Reason_SRC_RX_FIFO1_MSG_LOST;
+        SemaphoreP_post((SemaphoreP_Object *)&gMcanTxDoneSem);
     }
 }
