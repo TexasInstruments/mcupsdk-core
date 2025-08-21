@@ -121,6 +121,7 @@ This page lists all the examples related to Ethernet Communication.
 ### Ether-Ring Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_ETHERRING
 -# \subpage EXAMPLES_ENET_CPSW_ETHERRING_TRAFFICGEN
+-# \subpage EXAMPLES_ENET_CPSW_ETHERRING_CAN
 ### LLDP Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
@@ -151,6 +152,7 @@ This page lists all the examples related to Ethernet Communication.
 ### Ether-Ring Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_ETHERRING
 -# \subpage EXAMPLES_ENET_CPSW_ETHERRING_TRAFFICGEN
+-# \subpage EXAMPLES_ENET_CPSW_ETHERRING_CAN
 ### LLDP Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
