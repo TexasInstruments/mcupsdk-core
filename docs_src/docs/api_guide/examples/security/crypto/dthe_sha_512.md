@@ -43,7 +43,7 @@ $make -s -C examples/security/crypto/dthe_sha/crypto_sha_512/<soc>-<board>/r5fss
 
 ### Build sbl_uart
 \code
-make -s -C examples/drivers/boot/sbl_uart/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=<soc>
+make -s -C examples/drivers/boot/sbl_uart_multicore_elf/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=<soc>
 \endcode
 
 ### Set board for UART boot
@@ -52,7 +52,7 @@ See [EVM setup](https://software-dl.ti.com/mcu-plus-sdk/esd/@VAR_SOC_NAME/latest
 
 ### Run UART_bootloader
 \code
-python uart_bootloader.py -p <COMxx> --bootloader=sbl_prebuilt/<soc>-<board>/sbl_uart.release.hs.tiimage --file=../../examples/security/crypto/dthe_sha/crypto_sha_512/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/dthe_sha_512.release.appimage
+python uart_bootloader.py -p <COMxx> --bootloader=sbl_prebuilt/<soc>-<board>/sbl_uart.release.hs.tiimage --file=../../examples/security/crypto/dthe_sha/crypto_sha_512/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/dthe_sha_512.release.mcelf
 \endcode
 
 ### Sample output
@@ -69,7 +69,7 @@ All tests have passed!!
 
 ### Build sbl_qspi
 \code
-make -C examples/drivers/boot/sbl_qspi/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=<soc>
+make -C examples/drivers/boot/sbl_qspi_multicore_elf/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/ all DEVICE=<soc>
 \endcode
 
 ### Build sbl_uart_uniflash

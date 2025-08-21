@@ -1,9 +1,11 @@
-# DTHE AES CBC-128 {#EXAMPLES_DRIVERS_DTHE_AES_CBC_128}
+# DTHE AES GCM {#EXAMPLES_DRIVERS_DTHE_AES_GCM}
 
 [TOC]
 
 # Introduction
-This example demonstrates Cipher Block Chaining mode(CBC) of AES(Advanced Encryption Standard) using AES accelerator. The AES supported modes are CBC, ECB and CMAC and all three modes comes in 128-bit and 256-bit implementations. This example explains the steps to build and run for Dthe aes cbc-128.
+This example demonstrates Galios Counter mode(GCM) of AES(Advanced Encryption Standard) using AES accelerator. The AES supports all the key sizes like 128-bit, 192-bit and 256-bit implementations. This example explains the steps to build and run for DTHE AES GCM with 128-bit, 192-bit and 256-bit keys.
+
+\note AES-GCM is a Authenticated-Encyption mechanism which encrypts while generating MAC (Message Authentication Code).
 
 \cond SOC_AM263X || SOC_AM263PX
 
@@ -12,7 +14,7 @@ This example demonstrates Cipher Block Chaining mode(CBC) of AES(Advanced Encryp
  CPU + OS              | r5fss0-0 nortos
  Toolchain             | ti-arm-clang
  Boards                | @VAR_BOARD_NAME_LOWER
- Example folder        | examples/security/crypto/dthe_aes/crypto_aes_cbc_128/
+ Example folder        | examples/security/crypto/dthe_aes/crypto_aes_gcm/
  Supported Device Type | HS-FS
 
 \endcond
@@ -24,14 +26,14 @@ This example demonstrates Cipher Block Chaining mode(CBC) of AES(Advanced Encryp
  CPU + OS              | r5fss0-0 nortos
  Toolchain             | ti-arm-clang
  Boards                | @VAR_BOARD_NAME_LOWER
- Example folder        | examples/security/crypto/dthe_aes/crypto_aes_cbc_128/
+ Example folder        | examples/security/crypto/dthe_aes/crypto_aes_gcm/
  Supported Device Type | HS-SE
 
 \endcond
 
 ## Build the aes cbc 128 example
 \code
-$make -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang all DEVICE=<soc>
+$make -s -C examples/security/crypto/dthe_aes/crypto_aes_gcm/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang all DEVICE=<soc>
 \endcode
 
 
@@ -52,15 +54,15 @@ See [EVM setup](https://software-dl.ti.com/mcu-plus-sdk/esd/@VAR_SOC_NAME/latest
 
 ### Run UART_bootloader
 \code
-python uart_bootloader.py -p <COMxx> --bootloader=sbl_prebuilt/<soc>-<board>/sbl_uart.release.hs.tiimage --file=../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/crypto_dthe_aes_cbc_128.release.mcelf
+python uart_bootloader.py -p <COMxx> --bootloader=sbl_prebuilt/<soc>-<board>/sbl_uart.release.hs.tiimage --file=../../examples/security/crypto/dthe_aes/crypto_aes_gcm/<soc>-<board>/r5fss0-0_nortos/ti-arm-clang/crypto_dthe_aes_gcm.release.mcelf
 \endcode
 
 ### Sample output
 On successful boot, R5 log at uart terminal, will have the following output.
 UART Console:
 \code
-[CRYPTO] DTHE AES CBC-128 example started ...
-[CRYPTO] DTHE AES CBC-128 example completed!!
+[CRYPTO] DTHE AES GCM example started ...
+[CRYPTO] DTHE AES GCM example completed!!
 All tests have passed!!
 
 \endcode
@@ -96,8 +98,8 @@ On successful boot, R5 log at uart terminal, will have the following output.
 
 UART Console:
 \code
-[CRYPTO] DTHE AES CBC-128 example started ...
-[CRYPTO] DTHE AES CBC-128 example completed!!
+[CRYPTO] DTHE AES GCM example started ...
+[CRYPTO] DTHE AES GCM example completed!!
 All tests have passed!!
 
 \endcode

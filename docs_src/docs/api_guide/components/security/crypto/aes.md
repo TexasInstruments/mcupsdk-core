@@ -61,6 +61,36 @@ in the Temporary Buffer; this can be any precalculated value and is dependent on
 alignment of the last input block. For CMAC mode, the tweak value (in temporary buffer)
 is calculated via K1 and K2 which is dervied from Key value from software.
 
+#### AES-GCM
+- Galois/Counter Mode (GCM) is an authenticated encryption mode that provides both data
+confidentiality and authentication. GCM combines the Counter (CTR) mode of encryption
+with the Galois mode of authentication.
+- GCM uses a binary Galois field multiplication for authentication, which can be efficiently
+implemented in hardware, making it faster than other authenticated encryption modes.
+- The mode generates an authentication tag that verifies both the integrity of the ciphertext
+and any additional authenticated data (AAD) that is not encrypted but needs to be authenticated.
+- GCM is widely used in protocols like TLS, IPsec, and IEEE 802.1AE (MACsec) due to its
+efficiency and security properties.
+- The operation involves:
+  1. Initializing a counter with an IV (initialization vector)
+  2. Encrypting the counter value using AES
+  3. XORing the encrypted counter with plaintext to produce ciphertext
+  4. Performing Galois field multiplication operations to generate the authentication tag
+
+#### AES-XTS
+- XEX-based tweaked-codebook mode with ciphertext stealing (XTS) is a mode of operation
+designed specifically for disk encryption and other storage encryption applications.
+- XTS mode addresses the security concerns in storage encryption where an adversary might
+have access to multiple snapshots of the encrypted data over time.
+- The mode uses two keys: one for the AES encryption of the data and another for "tweaking"
+the encryption to provide variability across different data blocks with the same content.
+- XTS incorporates a tweak value (usually the sector number or block address) into the
+encryption process, ensuring that identical plaintext blocks in different positions
+are encrypted differently.
+- The ciphertext stealing mechanism allows for encryption of data that is not a multiple
+of the block size without requiring additional storage.
+- XTS is particularly resistant to manipulation attacks and copy-and-paste attacks that
+might be possible with simpler modes like ECB or CBC.
 
 ### API Sequence for ECB, CBC, CTR, CMAC Algorithms (Single Shot Mechanism)
 
@@ -84,6 +114,50 @@ This sequence performs Encryption and decryption operations for AES-ECB/CBC/CTR 
 - #DTHE_AES_close(): Function to close DTHE AES driver.
 - #DTHE_close(): Function to De-initialize the DTHE instance.
 
+### API Sequence for GCM Algorithm (Single Shot Mechanism)
+
+This sequence performs authenticated encryption and decryption operations for AES-GCM algorithm. Supported key lengths are 128, 192, 256 bit.
+
+- #DTHE_open(): Function to open DTHE instance, enable DTHE engine.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters, including IV, AAD (Additional Authenticated Data), and authentication tag parameters.
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_close(): Function to De-initialize the DTHE instance.
+
+### API Sequence for GCM Algorithm (Multi Shot Mechanism)
+
+This sequence performs authenticated encryption and decryption operations for AES-GCM algorithm. Supported key lengths are 128, 192, 256 bit.
+
+- #DTHE_open(): Function to open DTHE instance, enable DTHE engine.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>init</b>, including IV and AAD parameters.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>update</b>.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>finish</b>, including authentication tag parameters.
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_close(): Function to De-initialize the DTHE instance.
+
+### API Sequence for XTS Algorithm (Single Shot Mechanism)
+
+This sequence performs encryption and decryption operations for AES-XTS algorithm. Supported key lengths are 256 and 512 bit (two 128-bit or 256-bit keys).
+
+- #DTHE_open(): Function to open DTHE instance, enable DTHE engine.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters, including tweak value (typically sector number or block address).
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_close(): Function to De-initialize the DTHE instance.
+
+### API Sequence for XTS Algorithm (Multi Shot Mechanism)
+
+This sequence performs encryption and decryption operations for AES-XTS algorithm. Supported key lengths are 256 and 512 bit (two 128-bit or 256-bit keys).
+
+- #DTHE_open(): Function to open DTHE instance, enable DTHE engine.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>init</b>, including tweak value.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>update</b>.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>finish</b>.
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_close(): Function to De-initialize the DTHE instance.
+
 
 In order to cancel an existing stream, <i>DTHE_AES_close</i> should be called followed by <i>DTHE_AES_open</i> like this. This will discard the
 current stream data -
@@ -101,4 +175,3 @@ current stream data -
 
 ## API
 - \ref SECURITY_DTHE_AES_MODULE
-
