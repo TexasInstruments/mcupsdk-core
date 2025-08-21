@@ -1927,6 +1927,8 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi)
         /* Initialize phy enable status */
         hOspi->phyEnableSuccess = FALSE;
 
+        OSPI_lld_configResetPin(hOspi,OSPI_RESETPIN_DEDICATED);
+        
         /* Enable OSPI Controller */
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                        OSPI_FLASH_CFG_CONFIG_REG_ENB_SPI_FLD,
