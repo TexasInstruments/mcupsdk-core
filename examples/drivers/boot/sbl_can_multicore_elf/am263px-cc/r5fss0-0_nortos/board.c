@@ -108,25 +108,15 @@ void mcanEnableTransceiver(void)
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
     if(status == SystemP_SUCCESS)
     {
-        if(boardVer[0] == 'A' && boardVer[1] == '\0')
-        {
-            /* boardVer is REV A */
-            status = TCA6424_Mcan_Transceiver();
-        }
-        else if(boardVer[1] == '2' && boardVer[0] == 'E')
-        {
-            /* boardVer is E2 */
-            status = TCA6424_Mcan_Transceiver();
-        }
-        else if(boardVer[1] == '1' && boardVer[0] == 'E')
+        if(boardVer[1] == '1' && boardVer[0] == 'E')
         {
             /* boardVer is E1 */
             /* MCAN Transceiver is enabled by default in E1*/
         }
         else
         {
-            /* boardVer is not valid */
-            /* Do nothing */        
+            /* boardVer is E2 or REV A or REV B */
+            status = TCA6424_Mcan_Transceiver();
         }
     }
 
