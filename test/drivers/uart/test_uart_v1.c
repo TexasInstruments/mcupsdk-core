@@ -69,7 +69,7 @@
 	
 uint8_t gUartBuffer[APP_UART_BUFSIZE];
 uint8_t gUartReceiveBuffer[APP_UART_RECEIVE_BUFSIZE];
-volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
+volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U,isCancelTest = 0;
 
 /* Semaphore to indicate Write/Read completion used in callback api's */
 static SemaphoreP_Object gUartWriteDoneSem;
@@ -291,11 +291,15 @@ static void uart_read_write_cancel_test(void *args)
     trans.count = APP_UART_RECEIVE_BUFSIZE;
     UART_read(gUartHandle[CONFIG_UART_CONSOLE], &trans);
 	ClockP_usleep(100);
+    isCancelTest = 1;
 	UART_readCancel(uartHandle,&trans);
+    isCancelTest = 0;
     /* Wait for read completion */
     SemaphoreP_pend(&gUartReadDoneSem, SystemP_WAIT_FOREVER);
-    DebugP_assert(gNumBytesRead == APP_UART_RECEIVE_BUFSIZE);
 
+    /* Initialize the transfer params,as it contains previous transfer data */
+    /*   which is not valid for the current transfer */
+    UART_Transaction_init(&trans);
 	 /* Send entry string */
     gNumBytesWritten = 0U;
     trans.buf   = &gUartBuffer[0U];
@@ -336,7 +340,9 @@ static void uart_read_write_cancel_test(void *args)
     trans.count = strlen(trans.buf);
 	strncpy(trans.buf,"\n\rThis is write cancel test\r\n", APP_UART_BUFSIZE);
     UART_write(gUartHandle[CONFIG_UART_CONSOLE], &trans);
+    isCancelTest = 1;
 	UART_writeCancel(uartHandle,&trans);
+    isCancelTest = 0;
 	
 	/* Wait for write completion */
     SemaphoreP_pend(&gUartWriteDoneSem, SystemP_WAIT_FOREVER);
@@ -426,7 +432,14 @@ static void uart_timeout_test(void *args)
 
 static void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans)
 {
-    DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    if(isCancelTest)
+    {
+        DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
+    }
+    else
+    {
+        DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    }
     gNumBytesWritten = trans->count;
     SemaphoreP_post(&gUartWriteDoneSem);
 	
@@ -435,7 +448,14 @@ static void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans
 
 static void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
 {
-    DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    if(isCancelTest)
+    {
+        DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
+    }
+    else
+    {
+        DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    }
     gNumBytesRead = trans->count;
     SemaphoreP_post(&gUartReadDoneSem);
 
