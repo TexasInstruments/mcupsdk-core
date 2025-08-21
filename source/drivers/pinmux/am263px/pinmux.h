@@ -381,6 +381,16 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId);
  */
 void Pinmux_qualPeriodConfig(uint32_t qualGroupIndex, uint8_t qualPeriod);
 
+/**
+ *  \brief  This API enables user mode access to the IOMUX register space.
+ */
+void Pinmux_enableUserMode(void);
+
+/**
+ *  \brief  This API disables user mode access to the IOMUX register space.
+ */
+void Pinmux_disableUserMode(void);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

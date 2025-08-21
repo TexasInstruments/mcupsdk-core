@@ -56,6 +56,8 @@
 #define IOMUX_KICK_LOCK_VAL                     (0x00000000U)
 #define IOMUX_KICK0_UNLOCK_VAL                  (0x83E70B13U)
 #define IOMUX_KICK1_UNLOCK_VAL                  (0x95A4F1E0U)
+#define IOMUX_USER_MODE_ENABLE_VAL              (0xADADADADU)
+#define IOMUX_USER_MODE_DISABLE_VAL             (0x00000000U)
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -139,5 +141,27 @@ void Pinmux_qualPeriodConfig(uint32_t qualGroupIndex, uint8_t qualPeriod)
         CSL_REG32_WR(regAddr, (uint32_t)qualPeriod);
         Pinmux_lockMMR(PINMUX_DOMAIN_ID_MAIN);
     }
+    return;
+}
+
+void Pinmux_enableUserMode(void)
+{
+    volatile uint32_t  *userModeReg;
+
+    /* Enable user mode */
+    userModeReg = (volatile uint32_t *) ((uint32_t)(CSL_IOMUX_U_BASE + CSL_IOMUX_USER_MODE_EN));
+    CSL_REG32_WR(userModeReg, IOMUX_USER_MODE_ENABLE_VAL);
+
+    return;
+}
+
+void Pinmux_disableUserMode(void)
+{
+    volatile uint32_t  *userModeReg;
+
+    /* Disable user mode */
+    userModeReg = (volatile uint32_t *) ((uint32_t)(CSL_IOMUX_U_BASE + CSL_IOMUX_USER_MODE_EN));
+    CSL_REG32_WR(userModeReg, IOMUX_USER_MODE_DISABLE_VAL);
+
     return;
 }

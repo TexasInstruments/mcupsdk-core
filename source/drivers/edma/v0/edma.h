@@ -1900,7 +1900,7 @@ uint32_t EDMA_getRegionId(EDMA_Handle handle);
 int32_t EDMA_allocDmaChannel(EDMA_Handle handle, uint32_t *dmaCh);
 
 /**
- *  \brief  Function to allocate the Dma Channel
+ *  \brief  Function to allocate the Qdma Channel
  *
  *  \pre    #EDMA_open() has to be called first
  *
@@ -1916,7 +1916,7 @@ int32_t EDMA_allocDmaChannel(EDMA_Handle handle, uint32_t *dmaCh);
 int32_t EDMA_allocQdmaChannel(EDMA_Handle handle, uint32_t *qdmaCh);
 
 /**
- *  \brief  Function to allocate the Qdma Channel
+ *  \brief  Function to allocate Tcc
  *
  *  \pre    #EDMA_open() has to be called first
  *
@@ -1932,7 +1932,7 @@ int32_t EDMA_allocQdmaChannel(EDMA_Handle handle, uint32_t *qdmaCh);
 int32_t EDMA_allocTcc(EDMA_Handle handle, uint32_t *tcc);
 
 /**
- *  \brief  Function to allocate the TCC
+ *  \brief  Function to allocate Param Set
  *
  *  \pre    #EDMA_open() has to be called first
  *
