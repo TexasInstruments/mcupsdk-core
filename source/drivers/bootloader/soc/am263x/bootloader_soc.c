@@ -280,7 +280,6 @@ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
                     /* ConfigureR5 in Standalone (Dual Core) mode as set in syscfg*/
                         SOC_rcmR5ConfigDualCore(CSL_CORE_ID_R5FSS0_1);
                         Bootloader_socMemInitCpu(CSL_CORE_ID_R5FSS0_1);
-                        Bootloader_socCpuResetRelease(CSL_CORE_ID_R5FSS0_1, 0);
                     }
                 }
                 else
@@ -319,7 +318,6 @@ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
                             gR5ss1PORDone = TRUE;
                         }
                         Bootloader_socMemInitCpu(CSL_CORE_ID_R5FSS1_1);
-                        Bootloader_socCpuResetRelease(CSL_CORE_ID_R5FSS1_1, 0);
                     }
                 }
                 else{

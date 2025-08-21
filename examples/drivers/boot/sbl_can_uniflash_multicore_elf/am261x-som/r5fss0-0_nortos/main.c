@@ -189,7 +189,7 @@ int main(void)
             }
 
             /* Run CPUs */
-            if(status == SystemP_SUCCESS)
+            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }

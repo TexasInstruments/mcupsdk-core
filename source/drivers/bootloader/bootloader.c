@@ -926,7 +926,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
 
     Bootloader_Config *config = (Bootloader_Config *)handle;
 
-    uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0x1};
+    uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0};
     char ELFSTR[] = { 0x7F, 'E', 'L', 'F' };    
 
     if(config->fxns->imgReadFxn == NULL || config->fxns->imgSeekFxn == NULL)
