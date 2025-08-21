@@ -65,6 +65,7 @@ lin1.linChecksum              = "LIN_CHECKSUM_ENHANCED";
 lin1.sdkInfra                 = "HLD";
 lin1.linModeHLD               = "LIN_MODE_HLD_LIN_RESPONDER";
 lin1.opModeHLD                = "LIN_OPER_MODE_DMA";
+lin1.multiBufferModeHLD       = false;
 lin1.LIN.$assign              = "LIN1";
 lin1.LIN_child.$name          = "drivers_lin_v0_lin_v0_template0";
 lin1.linRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
