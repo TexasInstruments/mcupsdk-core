@@ -49,11 +49,184 @@ Below sections describes the various options available for SOC initialization.
 ##### Run the SOC Initialization Script
 ###### AM261X-LP
 
-###### AM261X-CC
+\attention This step needs to be done **every time** the AM261X-LP is power-cycled.
+
+- **POWER-OFF** the AM261X-LP
+
+- Make sure below cables are connected as shown in \ref EVM_CABLES
+  - Power cable
+  - JTAG cable
+
+- Set AM261X-LP in DEVBOOT mode as shown below
+
+  \imageStyle{am261x_lp_boot_pins_noboot_mode.png,width:30%}
+  \image html am261x_lp_boot_pins_noboot_mode.png "DEVBOOT MODE"
+
+- **POWER-ON** the AM261X-LP
+
+- Launch the target configuration created with \ref CCS_NEW_TARGET_CONFIG
+
+    \imageStyle{ccs_launch_00.png,width:40%}
+    \image html ccs_launch_00.png "Launch Target Configuration"
+
+- You will see the @VAR_SOC_NAME target configuration in the "Debug" window as shown below
+
+    \imageStyle{ccs_launch_02.png,width:40%}
+    \image html ccs_launch_02.png "Target Configuration After Launch"
+
+- Goto "CCS Toolbar > View > Scripting Console"
+
+- Type the below command in the scripting console and press "enter", to load DMSC FW and initialize the SOC
+  - In Windows, assuming the SDK is installed at `C:/ti/mcu_plus_sdk_{soc}_{sdk version}`
+
+        loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am261x/load_sbl.js"
+
+    \imageStyle{ccs_load_dmsc_00.png,width:50%}
+    \image html ccs_load_dmsc_00.png "Scripting Console"
+
+- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am261x/load_sbl.js`
+
+- After successful execution of this script one would see logs as below
+
+  - In the scripting console, this is log from the script itself.
+    \imageStyle{ccs_load_dmsc_01.png,width:50%}
+    \image html ccs_load_dmsc_01.png "Scripting Console Log"
+
+- In case of success, there should be no error logs in the scripting console. The core will continue to run and the user can halt and reset the core.
+
+- If the script is run without providing power to the AM261X-LP or if the AM261X-LP BOOTMODE is
+  not set to \ref BOOTMODE_NOBOOT then you will see errors in the console and/or unexpected behaviour and error messages.
+  - **SOLUTION**: Power cycle AM261X-LP and repeat the steps.
+
+###### AM261X-SOM
+
+\attention This step needs to be done **every time** the AM261X-SOM is power-cycled.
+
+- **POWER-OFF** the AM261X-SOM
+
+- Make sure below cables are connected as shown in \ref EVM_CABLES
+  - Power cable
+  - JTAG cable
+
+- Set AM261X-SOM in DEVBOOT mode as shown below
+
+  \imageStyle{am261x_som_boot_pins_noboot_mode.png,width:25%}
+  \image html am261x_som_boot_pins_noboot_mode.png "DEVBOOT MODE"
+
+- **POWER-ON** the AM261X-SOM
+
+- Launch the target configuration created with \ref CCS_NEW_TARGET_CONFIG
+
+    \imageStyle{ccs_launch_00.png,width:40%}
+    \image html ccs_launch_00.png "Launch Target Configuration"
+
+- You will see the @VAR_SOC_NAME target configuration in the "Debug" window as shown below
+
+    \imageStyle{ccs_launch_02.png,width:40%}
+    \image html ccs_launch_02.png "Target Configuration After Launch"
+
+- Goto "CCS Toolbar > View > Scripting Console"
+
+- Type the below command in the scripting console and press "enter", to load DMSC FW and initialize the SOC
+  - In Windows, assuming the SDK is installed at `C:/ti/mcu_plus_sdk_{soc}_{sdk version}`
+
+        loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am261x/load_sbl.js"
+
+    \imageStyle{ccs_load_dmsc_00.png,width:50%}
+    \image html ccs_load_dmsc_00.png "Scripting Console"
+
+- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am261x/load_sbl.js`
+
+- After successful execution of this script one would see logs as below
+
+  - In the scripting console, this is log from the script itself.
+    \imageStyle{ccs_load_dmsc_01.png,width:50%}
+    \image html ccs_load_dmsc_01.png "Scripting Console Log"
+
+- In case of success, there should be no error logs in the scripting console. The core will continue to run and the user can halt and reset the core.
+
+- If the script is run without providing power to the AM261X-SOM or if the AM261X-SOM BOOTMODE is
+  not set to \ref BOOTMODE_NOBOOT then you will see errors in the console and/or unexpected behaviour and error messages.
+  - **SOLUTION**: Power cycle AM261X-SOM and repeat the steps.
 
 #### SOC Initialization using the Binary Flashed in OSPI memory {#EVM_FLASH_SOC_INIT}
-### AM261X-CC
+### AM261X-SOM
+
+The `sbl_null` is a secondary bootloader which doesn't load any application binary, but just does the SOC initialization and puts all the cores in WFI (Wait For Interrupt) mode.
+
+- This is a recommended one time step that needs to be done before
+           you can load and run programs via CCS
+
+- If this step fails, maybe due to bad flash in EVM, then try one of the other SOC initialization steps
+           mentioned at \ref EVM_SOC_INIT
+
+- This step needs to be done once unless the OSPI flash has been erased
+           or some other application has been flashed
+
+- A quick recap of steps done so far that are needed for the flashing to work
+  - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+  - Make sure python3 is installed as mentioned in \ref INSTALL_PYTHON3
+  - Make sure you have the EVM power cable and UART cable connected as shown in \ref EVM_CABLES
+
+- **POWER-OFF** the EVM
+
+- Set boot mode to UART BOOTMODE as shown in below image
+
+  \imageStyle{am261x_som_boot_pins_uart_mode.png,width:25%}
+  \image html am261x_som_boot_pins_uart_mode.png "UART BOOT MODE"
+
+- **POWER-ON** the EVM
+
+- You should see character "C" getting printed on the UART terminal every 2-3 seconds as shown below
+
+  \imageStyle{uart_rom_boot.png,width:80%}
+  \image html uart_rom_boot.png "UART output in UART BOOT MODE"
+
+- Close the UART terminal as shown below. This is important, else the UART script in next step wont be able to connect to the UART port.
+
+  \imageStyle{ccs_uart_close.png,width:80%}
+  \image html ccs_uart_close.png "Close UART terminal"
+
+- Open a command prompt and run the below command to flash the SOC initialization binary to the EVM.
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_null.cfg
+
+  - Here COM<x> is the port name of the identified UART port in Windows.
+  - On Linux,
+    - The name for UART port is typically something like `/dev/ttyUSB0`
+    - On some Linux systems, one needs to use `python3` to invoke python3.x, just `python` command may invoke python 2.x which will not work with the flashing script.
+
+- When the flashing is in progress you will see something like below
+
+  \imageStyle{flash_soc_init_in_progress.png,width:100%}
+  \image html flash_soc_init_in_progress.png "Flash in progress"
+
+- After all the flashing is done, you will see something like below
+
+  \imageStyle{flash_soc_init_success.png,width:80%}
+  \image html flash_soc_init_success.png "Flashing successful"
+
+- If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
+
+- If flashing is successful, do the next steps ...
+
+- **POWER-OFF** the EVM
+
+- Switch the EVM boot mode to OSPI mode as shown below,
+
+  \imageStyle{am261x_som_boot_pins_ospi.png,width:25%}
+  \image html am261x_som_boot_pins_ospi.png "OSPI BOOT MODE"
+
+- Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
+
+- **POWER-ON** the EVM
+
 
 #### Run the example
+
+- Now you can run the example built (see \ref CCS_LAUNCH_PAGE)
+
+- Connect to any of the Cortex_R5_0/Cortex_R5_1 cores, load programs and run (see \ref CCS_LOAD_RUN)
 
 
