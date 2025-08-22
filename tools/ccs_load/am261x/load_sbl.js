@@ -38,16 +38,16 @@
 1. Modify "sdkPath" (search for EDIT THIS) to point to the absolute path of the SDK.
     - On windows make sure to use '/' or '\\' as path separator
 
-2. Launch AM263px target connection in CCS, however DO NOT connect to any CPUs.
+2. Launch AM261x target connection in CCS, however DO NOT connect to any CPUs.
 
 3. From CCS Scripting console do (CCS Tool Bar > View > Scripting Console)
-    js:> loadJSFile "<path/to/sdk>/tools/ccs_load/am263px/load_sbl.js"
+    js:> loadJSFile "<path/to/sdk>/tools/ccs_load/am261x/load_sbl.js"
 
 4. After successful execution you should see a log like below
 
   On the CCS scripting console in CCS,
 
-    js:> LoadJSFile "/home/abishekss/workarea/mcupsdk/mcu_plus_sdk/tools/ccs_load/am263px/load_sbl.js"
+    js:> LoadJSFile "/home/abishekss/workarea/mcupsdk/mcu_plus_sdk/tools/ccs_load/am261x/load_sbl.js"
     [Cortex_R5_0] L2 Memory Init Done ...
     Going to issue reset: 'System Reset' (This is a System-Level Warm Reset) ...
     [Cortex_R5_0] Loading SBL Init Code ...
@@ -170,7 +170,7 @@ if (!withinCCS) {
     sdkPath = "C:/ti/mcu_plus_sdk";
 }
 else {
-    sdkPath = System.getenv("MCU_PLUS_SDK_AM263PX_PATH");
+    sdkPath = System.getenv("MCU_PLUS_SDK_AM261X_PATH");
     if (sdkPath == null) {
         // !!! EDIT THIS !!! Add absolute path to SDK in your environment variables
         // OR set this variable to the absolute path of the SDK
@@ -179,13 +179,13 @@ else {
 }
 
 // path to sbl elf
-sbl_elf_file = sdkPath + "/examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.out";
+sbl_elf_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.out";
 
 // path to sbl bin
-sbl_bin_file = sdkPath + "/examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.bin"
+sbl_bin_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.bin"
 
 // !!! EDIT THIS !!! Add absolute path to the CCXML file here.
-fileCcxml = "C:/ti/AM263px.ccxml"
+fileCcxml = "C:/ti/AM261x.ccxml"
 
 // Create scripting environment and get debug server if running standalone
 if (!withinCCS) {

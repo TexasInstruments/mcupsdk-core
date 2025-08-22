@@ -63,7 +63,7 @@
    check your EVM, CCS, SDK setup and try again.
 */
 
-
+const fs = require("fs");
 function updateScriptVars() {
     //Open a debug session
     dsMCU1_0 = debugServer.openSession(".*Cortex_R5_0*");
@@ -85,45 +85,46 @@ function wait(ms) {
 
 function connectHaltResetCpu() {
     dsMCU1_0.target.halt();
-    var resetType = dsMCU1_0.target.getResetType(1);
-    print("Going to issue reset: '" + resetType.getName() + "' (" + resetType.getDescription() + ") ...");
-    resetType.issueReset();
+    var resetType = dsMCU1_0.target.getResets();
+    var allowedResets = Object.keys(resetType).filter((reset) => resetType[reset]);
+    console.log("Going to issue reset: " + allowedResets[1]);
+    dsMCU1_0.target.reset(allowedResets[1]);
 }
 
 function connectTargets() {
     /* Set timeout of 10 seconds */
-    script.setScriptTimeout(10000);
+    debugServer.setScriptingTimeout(10000);
     updateScriptVars();
 
     // Writes 15 in MSS_L2_MEM_INIT
     dsMCU1_0.target.connect();
-    dsMCU1_0.memory.writeWord(0, 0x50D00240, 0xF)
+    dsMCU1_0.memory.write(0x50D00240, 0xF, 32)
 
-    print("[Cortex_R5_0] L2 Memory Init Done ...");
+    console.log("[Cortex_R5_0] L2 Memory Init Done ...");
 
     // Connect the MCU R5F
     connectHaltResetCpu()
 
-    print("[Cortex_R5_0] Loading SBL Init Code ... ");
+    console.log("[Cortex_R5_0] Loading SBL Init Code ... ");
     dsMCU1_0.target.halt();
-    dsMCU1_0.memory.loadRaw(0, 0x70002000, sbl_bin_file, 32, false);
+    dsMCU1_0.memory.loadBinary( 0x70002000, sbl_bin_file);
 
     // Copy 640 bytes data from MSRAM_VECS to R5F_VECS
-    print("[Cortex_R5_0] Copying data to R5F_VECS ... ");
-    data = dsMCU1_0.memory.readData(0, 0x70002000, 32, 160)
+    console.log("[Cortex_R5_0] Copying data to R5F_VECS ... ");
+    data = dsMCU1_0.memory.read(0x70002000, 160, 32)
     for (i in data) {
-        dsMCU1_0.memory.writeData(0, 0x00020000 + i * 4, data[i], 32)
+        dsMCU1_0.memory.write(0x00020000 + i * 4, data[i], 32)
     }
 
-    print("[Cortex_R5_0] Triggering ROM Eclipse ... ");
+    console.log("[Cortex_R5_0] Triggering ROM Eclipse ... ");
     /* Trigger ROM eclipse */
-    dsMCU1_0.memory.writeWord(0, 0x50D00080, 0x7);
+    dsMCU1_0.memory.write(0x50D00080, 0x7, 32);
 
-    print("[Cortex_R5_0] Loading SBL ... ");
+    console.log("[Cortex_R5_0] Loading SBL ... ");
     dsMCU1_0.memory.loadProgram(sbl_elf_file);
 
-    print("[Cortex_R5_0] Running SBL ... ");
-    dsMCU1_0.target.runAsynch();
+    console.log("[Cortex_R5_0] Running SBL ... ");
+    dsMCU1_0.target.run(false);
 
     return 0;
 }
@@ -131,13 +132,13 @@ function connectTargets() {
 function doEverything() {
     var run = true;
 
-    if (!File(sbl_elf_file).isFile()) {
-        print("[ERROR] File " + sbl_elf_file + " not found !!!");
+    if (!fs.existsSync(sbl_elf_file) || !fs.statSync(sbl_elf_file).isFile()) {
+        console.log("[ERROR] File " + sbl_elf_file + " not found !!!");
         run = false;
     }
 
-    if (!File(sbl_bin_file).isFile()) {
-        print("[ERROR] File " + sbl_bin_file + " not found !!!");
+    if (!fs.existsSync(sbl_bin_file) || !fs.statSync(sbl_bin_file).isFile()) {
+        console.log("[ERROR] File " + sbl_bin_file + " not found !!!");
         run = false;
     }
 
@@ -145,20 +146,14 @@ function doEverything() {
         updateScriptVars();
         var connectSuccess = connectTargets();
         if (connectSuccess == 0) {
-            print("Happy Debugging!!");
+            console.log("Happy Debugging!!");
         }
     }
     else {
-        print("Please read the instructions at top of this file to make sure the paths to the SDK are set correctly !!!")
+        console.log("Please read the instructions at top of this file to make sure the paths to the SDK are set correctly !!!")
     }
 }
 
-// Import the DSS packages into our namespace to save on typing
-importPackage(Packages.com.ti.debug.engine.scripting)
-importPackage(Packages.com.ti.ccstudio.scripting.environment)
-importPackage(Packages.java.lang)
-importPackage(java.io);
-importPackage(java.lang);
 
 var ds;
 var debugServer;
@@ -194,31 +189,20 @@ fileCcxml = "C:/ti/AM263x.ccxml"
 
 // Create scripting environment and get debug server if running standalone
 if (!withinCCS) {
-    // Import the DSS packages into our namespace to save on typing
-    importPackage(Packages.com.ti.debug.engine.scripting);
-    importPackage(Packages.com.ti.ccstudio.scripting.environment);
-    importPackage(Packages.java.lang);
-
-    // Create our scripting environment object - which is the main entry point into any script and
-    // the factory for creating other Scriptable ervers and Sessions
-    script = ScriptingEnvironment.instance();
-
-    // Get the Debug Server and start a Debug Session
-    debugServer = script.getServer("DebugServer.1");
+    const ds = initScripting();
 
     // Check if the CCXML file exists.
-    if (!File(fileCcxml).isFile()) {
-        print("[ERROR] File " + fileCcxml + " not found !!!");
-        print("Seems like the script is not run from within CCS. Please edit the load_sbl.js script to add a path to your CCXML configuration file in this case.")
+    if (!fs.existsSync(fileCcxml) || !fs.statSync(fileCcxml).isFile()) {
+        console.log("[ERROR] File " + fileCcxml + " not found !!!");
+        console.log("Seems like the script is not run from within CCS. Please edit the load_sbl.js script to add a path to your CCXML configuration file in this case.")
     }
     else {
-        debugServer.setConfig(fileCcxml);
+        debugServer.configure(fileCcxml);
         doEverything();
     }
 }
 else // otherwise leverage existing scripting environment and debug server
 {
     debugServer = ds;
-    script = env;
     doEverything();
 }
