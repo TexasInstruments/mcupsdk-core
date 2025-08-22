@@ -20,7 +20,7 @@ Also refer \ref PERFORMANCE_OPTIMIZATIONS_GUIDE
 \image html am263_dpl_low_latency_interrupt_b.png "Flow chart"
 
 
-This example uses following assembly macros for IRQ handling. These are defined in the dpl_low_latency_interrupt.c file
+This example uses following assembly macros for IRQ handling. These are defined in the mcu_plus_sdk\source\kernel\nortos\dpl\r5\HwiP_armv7r_vim.h file
 
 - ISR_CALL_LEVEL_NONFLOAT_NONREENTRANT and ISR_CALL_PULSE_NONFLOAT_NONREENTRANT
  - Use this if nesting of another interrupt inside this IRQ handler is not required and R5F Floating Point Unit is not used inside user ISR code
@@ -30,6 +30,12 @@ This example uses following assembly macros for IRQ handling. These are defined 
  - Use this if nesting of another interrupt inside this IRQ handler is required and R5F Floating Point Unit is not used inside user ISR code
 - ISR_CALL_LEVEL_FLOAT_REENTRANT and ISR_CALL_PULSE_FLOAT_REENTRANT
  - Use this if nesting of another interrupt inside this IRQ handler is required and R5F Floating Point Unit is used inside user ISR code
+- ISR_CALL_PULSE_FLOAT_SELF_REENTRANT
+ - Use this if nesting of same interrupt inside this IRQ handler is required and R5F Floating Point Unit is used inside user ISR code
+ - Supports self-nesting
+- ISR_CALL_PULSE_NONFLOAT_SELF_REENTRANT
+ - Use this if nesting of same interrupt inside this IRQ handler is required and R5F Floating Point Unit is not used inside user ISR code
+ - Supports self-nesting
 
 Refer the page \ref CHAPTER_OPTIMIZATION_SECTION_1 for steps to register custom interrupt using above macros and expected latency (cycles) improvements.
 

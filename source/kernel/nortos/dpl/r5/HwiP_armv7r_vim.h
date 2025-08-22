@@ -593,6 +593,89 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   MOVS    PC, LR                      \n"    \
     )
 
+#define ISR_CALL_PULSE_NONFLOAT_SELF_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask, vim_addr)                  \
+    __asm__ volatile(                  \
+    "   SUB     lr, lr, #4                  \n"    \
+    "   PUSH    {lr}                        \n"    \
+    "   MRS     lr, SPSR                    \n"    \
+    "   PUSH    {lr}                        \n"    \
+    "   CPS     #0x13                       \n"    \
+    "   PUSH    {r0-r4, r12}                \n"    \
+    "   AND     r2, sp, #4                  \n"    \
+    "   SUB     sp, sp, r2                  \n"    \
+    "   PUSH    {r2, lr}                    \n"    \
+    "   LDR     r0, ="#vim_sts_addr"        \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
+    "   LDR     r1, [r1]                    \n"    \
+    "   STR     r1, [r0]                    \n"    \
+    "   LDR     r0, ="#intNum"              \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#vim_addr"            \n"    \
+    "   LDR     r1, [r1]                    \n"    \
+    "   STR     r0, [r1, 0x18]              \n"    \
+    "   CPSIE   i                           \n"    \
+    "   LDR     r0, ="#arg"                 \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#fn"                  \n"    \
+    "   BLX     r1                          \n"    \
+    "   CPSID   i                           \n"    \
+    "   POP     {r2, lr}                    \n"    \
+    "   ADD     sp, sp, r2                  \n"    \
+    "   DSB                                 \n"    \
+    "   ISB                                 \n"    \
+    "   POP     {r0-r4, r12}                \n"    \
+    "   CPS     #0x12                       \n"    \
+    "   POP     {LR}                        \n"    \
+    "   MSR     SPSR_cxsf, LR               \n"    \
+    "   POP     {LR}                        \n"    \
+    "   MOVS    PC, LR                      \n"    \
+    )
+
+#define ISR_CALL_PULSE_FLOAT_SELF_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask, vim_addr)                  \
+    __asm__ volatile(                  \
+    "   SUB     lr, lr, #4                  \n"    \
+    "   PUSH    {lr}                        \n"    \
+    "   MRS     lr, SPSR                    \n"    \
+    "   PUSH    {lr}                        \n"    \
+    "   CPS     #0x13                       \n"    \
+    "   PUSH    {r0-r4, r12}                \n"    \
+    "   FMRX    R0, FPSCR                   \n"    \
+    "   VPUSH   {D0-D15}                    \n"    \
+    "   PUSH    {R0}                        \n"    \
+    "   AND     r2, sp, #4                  \n"    \
+    "   SUB     sp, sp, r2                  \n"    \
+    "   PUSH    {r2, lr}                    \n"    \
+    "   LDR     r0, ="#vim_sts_addr"        \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
+    "   LDR     r1, [r1]                    \n"    \
+    "   STR     r1, [r0]                    \n"    \
+    "   LDR     r0, ="#intNum"              \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#vim_addr"            \n"    \
+    "   LDR     r1, [r1]                    \n"    \
+    "   STR     r0, [r1, 0x18]              \n"    \
+    "   CPSIE   i                           \n"    \
+    "   LDR     r0, ="#arg"                 \n"    \
+    "   LDR     r0, [r0]                    \n"    \
+    "   LDR     r1, ="#fn"                  \n"    \
+    "   BLX     r1                          \n"    \
+    "   CPSID   i                           \n"    \
+    "   POP     {r2, lr}                    \n"    \
+    "   ADD     sp, sp, r2                  \n"    \
+    "   DSB                                 \n"    \
+    "   ISB                                 \n"    \
+    "   POP     {R0}                        \n"    \
+    "   VPOP    {D0-D15}                    \n"    \
+    "   VMSR    FPSCR, R0                   \n"    \
+    "   POP     {r0-r4, r12}                \n"    \
+    "   CPS     #0x12                       \n"    \
+    "   POP     {LR}                        \n"    \
+    "   MSR     SPSR_cxsf, LR               \n"    \
+    "   POP     {LR}                        \n"    \
+    "   MOVS    PC, LR                      \n"    \
+    )
 
 #ifdef __cplusplus
 }
