@@ -93,4 +93,16 @@ Watchdog interrupt Mode Test Started ...
 Watchdog Driver NMI received
 All tests have passed!!
 \endcode
+\cond SOC_AM273X 
+\code
+Watchdog interrupt Mode Test Started ...
+Servicing of DWD is successfull 
+Local counter has reached its maximum value = 5000 
+Watchdog Driver NMI happened
+Local counter value = 3000 
+Watchdog Driver NMI received
+Watchdog NMI happened in 2.999912 S  
+All tests have passed!!
+\endcode
+\endcond
 

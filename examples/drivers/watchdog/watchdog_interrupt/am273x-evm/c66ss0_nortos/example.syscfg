@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM273x" --part "Default" --package "ZCE" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2732-Q1" --package "NFBGA (ZCE)" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.24.2+4234"}
  */
 
 /**
@@ -14,7 +15,7 @@ const watchdog        = scripting.addModule("/drivers/watchdog/watchdog", {}, fa
 const watchdog1       = watchdog.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -49,8 +50,9 @@ esm1.esmNotifier[0].groupNumber = 2;
 
 watchdog1.$name          = "CONFIG_WDT0";
 watchdog1.resetMode      = "Watchdog_RESET_OFF";
-watchdog1.expirationTime = 1000;
-watchdog1.wdt_func_clk   = 20000000;
+watchdog1.wdt_clk_src    = "SOC_RcmPeripheralClockSource_XTAL_CLK";
+watchdog1.wdt_func_clk   = 10000000;
+watchdog1.expirationTime = 3000;
 
 debug_log.enableUartLog               = true;
 debug_log.uartLog.$name               = "CONFIG_UART_CONSOLE";
@@ -108,7 +110,6 @@ region1.memory_region[2].manualStartAddress = 0xC02E8000;
 region1.memory_region[2].size               = 0x4000;
 region1.memory_region[3].$name              = "LOG_SHM_MEM";
 region1.memory_region[3].size               = 0x4000;
-
 region1.memory_region[4].type               = "CUSTOM_ALL";
 region1.memory_region[4].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
 region1.memory_region[4].auto               = false;
@@ -172,9 +173,9 @@ section4.load_memory                  = "DSS_L2";
 section4.$name                        = "Initialization and Exception Handling";
 section4.output_section.create(3);
 section4.output_section[0].$name      = ".c6xabi.exidx";
-section4.output_section[0].palignment            = true;
+section4.output_section[0].palignment = true;
 section4.output_section[1].$name      = ".init_array";
-section4.output_section[1].palignment            = true;
+section4.output_section[1].palignment = true;
 section4.output_section[2].$name      = ".fini_array";
 section4.output_section[2].palignment = true;
 

@@ -55,6 +55,13 @@
 #include <sdl/esm/v2/sdl_esm.h>
 # endif
 
+#if defined(SOC_AM273X)
+#define MAX_NUM_OF_ITERATIONS           5000U
+/* Counter to show the functionality of servicing the DWD */
+static uint32_t gLoopCounter = 0U;
+static SemaphoreP_Object  gDwdSemphr;
+static uint32_t gCurrentTime = 0U;
+#endif
 #define NUM_OF_ITERATIONS (10U)
 
 volatile uint32_t   gWatchdogInt = 0;
@@ -103,11 +110,16 @@ int32_t SDL_ESM_WDTCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmInt
 #else
 void watchdogCallback(void *arg)
 {
+#if defined(SOC_AM273X)
+    gCurrentTime = ClockP_getTimeUsec();
+    SemaphoreP_post(&gDwdSemphr);
+#else
     if (gWatchdogInt < NUM_OF_ITERATIONS)
     {
         Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
         gWatchdogInt++;
     }
+#endif
     return;
 }
 # endif
@@ -146,14 +158,82 @@ void watchdog_interrupt_main(void *args)
     };
     SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &WDT_esmInitConfig, SDL_ESM_WDTCallbackFunction, NULL);
 # endif
-
     DebugP_log("Watchdog interrupt Mode Test Started ...\r\n");
+#if defined(SOC_AM273X)
+    int32_t status = SystemP_SUCCESS;
+    float    expiredTimeInSec = 0.0f;
+    uint32_t startTime = 0U;
+    SemaphoreP_constructBinary(&gDwdSemphr, 0);
+    /* This loop checks the DWD servicing functionality. Loop checks NMI happened or not and 
+    *    Servicing the DWD. NMI should not happen as DWD is servicing. If NMI happened 
+    *    test will fail 
+    */
+    while(gLoopCounter < MAX_NUM_OF_ITERATIONS)
+    {
+        if(SemaphoreP_pend(&gDwdSemphr, 1) == SystemP_SUCCESS)
+        {
+            DebugP_log("Watchdog Driver NMI happened\r\n");
+            status = SystemP_FAILURE;
+            break;
+        }
+        /* Servicing of DWD */
+        Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
+        gLoopCounter++;
+    }
+    if(status == SystemP_SUCCESS)
+    {
+        /* DWD NMI not happened, bcz we serviced the DWD properly*/
+        DebugP_log("Servicing of DWD is successfull \r\n");
+        DebugP_log("Local counter has reached its maximum value = %d \n\r", gLoopCounter);
+        
+        /* Making gLoopCounter to 0 to show the functionality of NMI */
+        gLoopCounter = 0U;
+        /* Again servicing to get the period of NMI */
+        Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]); 
+        startTime = ClockP_getTimeUsec();
+        /* This loop checks the DWD NMI functionality. Loop checks NMI happened or not
+        *  NMI should  happen as DWD is not servicing. 
+        *  If NMI is not happened test will fail 
+        */
+        while(gLoopCounter < MAX_NUM_OF_ITERATIONS)
+        {
+            if(SemaphoreP_pend(&gDwdSemphr, 1) == SystemP_SUCCESS)
+            {
+                DebugP_log("Watchdog Driver NMI happened\r\n");
+                status = SystemP_SUCCESS;
+                break;
+            }
+            gLoopCounter++;
+        }
+        if(gLoopCounter != MAX_NUM_OF_ITERATIONS)
+        {
+            /* Local counter has not reached its max value, before that NMI happened */
+            DebugP_log("Local counter value = %d \n\r", gLoopCounter);
+            expiredTimeInSec = (float)(gCurrentTime - startTime) / 1000000.0f;
+            DebugP_log("Watchdog Driver NMI received\r\n");
+            DebugP_log("Watchdog NMI happened in %f S  \n\r", expiredTimeInSec);
+            DebugP_log("All tests have passed!!\r\n");
+        }
+        else
+        {
+            DebugP_log("Watchdog NMI did not happen in expected time \r\n");
+            DebugP_log("Some tests have failed !!\r\n");
+        }
+
+    }
+    else
+    {
+        DebugP_log("Servicing of DWD is Failed !!!! \r\n");
+        DebugP_log("Some tests have failed !!\r\n");
+    }
+
+#else
 
     while (gWatchdogInt < NUM_OF_ITERATIONS);
 
     DebugP_log("Watchdog Driver NMI received\r\n");
-
     DebugP_log("All tests have passed!!\r\n");
+#endif
 
     Board_driversClose();
     Drivers_close();
