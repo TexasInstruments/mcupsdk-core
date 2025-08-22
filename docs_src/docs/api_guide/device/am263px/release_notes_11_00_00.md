@@ -3,15 +3,13 @@
 [TOC]
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
+\attention 2. RPRC image format has been deprecated from this release. Multi Core ELF image format should be used. (\ref MCELF_LANDING).
 
 \attention 3. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
-\attention 4. SDK will be migrated to support CCS Theia from next release (SDK 11.0) and the support for CCS Eclipse will be deprecated.
+\attention 4. SDK has been migrated to CCS Theia from this release and the support for CCS Eclipse has been deprecated.
 
-\attention 5. There is a known issue that OSPI pins in SysCfg GUI are getting reset automatically during any module change. The workaround is that OSPI Pins should be locked after proper configuration according to the board Pinout.
-
-\attention 6. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
+\attention 5. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -21,26 +19,31 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-                                                                                                | -
+Clock Tree support for PLL and Peripheral clock configuration                                                                                   | Sysconfig
+CCS Theia Support                                                                               | CCS
+Multi Core FreeRTOS IPC Example                                                                 | IPC
+OSPI Phy Graph Plotter Example                                                                  | OSPI
+Board Level Sysconfig Support                                                                   | Sysconfig
+McSPI External Loopback Example                                                                 | McSPI
 
 # Modules Not tested/supported in this release
 
-- -
+-
 
 ## Device and Validation Information
 
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263Px| R5F             | AM263Px ControlCard Rev A    (referred to as am263px-cc in code). \n         | Windows 10 64b or Ubuntu 18.04 64b
-AM263Px| R5F             | AM263Px LaunchPad  Rev E2    (referred to as am263px-lp in code). \n         | Windows 10 64b or Ubuntu 18.04 64b
+AM263Px| R5F             | AM263Px ControlCard Rev B    (referred to as am263px-cc in code). \n         | Windows 10 64b or Ubuntu 18.04 64b or MacOS 
+AM263Px| R5F             | AM263Px LaunchPad  Rev A    (referred to as am263px-lp in code). \n         | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.23.0 build, build 4000
+Code Composer Studio    | R5F            | 20.2.0
+SysConfig               | R5F            | 1.24.2 build, build 4234
 TI ARM CLANG            | R5F            | 4.0.3.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
@@ -90,7 +93,7 @@ Timer             | R5F             | YES               | FreeRTOS, NORTOS | Con
 
 Module     | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                         | Key features not tested / NOT supported
 -----------|-----------------|-------------------|------------------|-----------------------------------------------------------------------------|----------------------------------------------------
-Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: OSPI, UART. All R5F's. RPRC, MCELF, multi-core image format     | Force Dual Core Mode
+Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: OSPI, UART. All R5F's. MCELF, multi-core image format     | -
 
 ### SOC Device Drivers
 
@@ -114,7 +117,7 @@ LIN          | R5F            | YES               | YES                         
 MCAN         | R5F            | YES               | No                                    | RX, TX, interrupt and polling mode, Corrupt Message Transmission Prevention, Error Passive state, Bus Off State, Bus Monitoring Mode                            | -
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                   | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
-MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                                                      | file IO, eMMC
+MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write, file IO, eMMC                                                                                                                                      | -
 PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                                        | -
 PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                                                                       | Counter overflow detection is not enabled
 OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled, OTFA, FOTA, Optishare, Smart Layout                                                                                                  | -
@@ -195,12 +198,92 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-14749
+    <td> McSPI: Non Powers of 2 cannot be configured as fifo trigger levels in polling and interrupt mode
+    <td> McSPI
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Fix in SysCfg Meta file.
+</tr>
+<tr>
+    <td> MCUSDK-13966
+    <td> All UART triggers levels not exposed in SysCfg
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Update SysCfg to show all trigger levels from 1 to 64.
+</tr>
+<tr>
+    <td> MCUSDK-14573
+    <td> Incorrect handling of errata i2310 in UART isr
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Reorder the ISR state machine for handling UART errata correctly.
+</tr>
+<tr>
+    <td> MCUSDK-14704
+    <td> Adding multiple instances of UART DMA LLD causes failure
+    <td> UART
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px
+    <td> SysCfg template update to pass the EDMA handle correctly
+</tr>
+<tr>
+    <td> MCUSDK-14706
+    <td> GPIO Qual selection API missing
+    <td> GPIO
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Qual sel API added in pinmux driver
+</tr>
+<tr>
+    <td> MCUSDK-14569
+    <td> UART Errata i2310 is missing a step
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added IIR register read to clear the interrupt
+</tr>
+<tr>
+    <td> MCUSDK-14620
+    <td> SDK build fails in Mac Machines
+    <td> Build
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added GMAC library for MAC into SDK
+</tr>
+<tr>
+    <td> MCUSDK-14659
+    <td> Incorrect RTI clock source mux address for RTI 4 to 7
+    <td> RTI
+    <td> 10.00.00 onwards
+    <td> AM263Px
+    <td> Updated to correct mux addresses in SysCfg
+</tr>
+<tr>
+    <td> MCUSDK-13182
+    <td> SysCfg unexpectedly changes OSPI Pin
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM263Px
+    <td> The OSPI pins are locked in SDK examples.
+</tr>
+<tr>
+    <td> MCUSDK-14857, MCUSDK-14731
+    <td> Core 1 unhalted in SBL before FSM Trigger, Memory load
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Skip unhalting core 1 of both clusters in dual core mode
+</tr>
+<tr>
+    <td> MCUSDK-14712
+    <td> OSPI Reset Pin being used before configuration
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM263Px
+    <td> Configure OSPI reset in OSPI open instead of Flash open
 </tr>
 </table>
 
@@ -368,30 +451,9 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13182
-    <td> SysCfg unexpectedly changes OSPI Pin
-    <td> OSPI
-    <td> 10.00.00 onwards
-    <td> Lock the OSPI Pins in SysCfg.
-</tr>
-<tr>
-    <td> MCUSDK-14110
-    <td> Error building examples in CCS in mac
-    <td> Infra
-    <td> Example build fails in CCS only in MAC Machines
-    <td> \ref CCS_MAC_ISSUE
-</tr>
-<tr>
     <td> MCUSDK-13513
     <td> AM263Px: UDP and TCP IPERF TX is unstable with 100Mbps link speed
     <td> Networking
-    <td> 10.00.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14473
-    <td> AM263Px: Multiple chip selects cannot be configured in SysCfg
-    <td> OSPI
     <td> 10.00.00 onwards
     <td> -
 </tr>
@@ -410,18 +472,25 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14102
-    <td> Applications > 1MB not flashing using TI Uniflash tool
-    <td> Uniflash tool
-    <td> 10.00.00 onwards
-    <td> \ref UNIFLASH_1MB_ISSUE
+    <td> MCUSDK-14647
+    <td> All CANFD standard ID conigurations are not exposed in SysCfg
+    <td> CAN
+    <td> 10.02.00 onwards
+    <td> Configure Config type, ID's,etc in application
 </tr>
 <tr>
-    <td> MCUSDK-14547
-    <td> XIP Flashing not supported in SBL JTAG Uniflash example
-    <td> SBL
+    <td> MCUSDK-14714
+    <td> Bufnum of 6 and 12 will cause the vring indexes to get corrupted
+    <td> IPC
     <td> 10.00.00 onwards
-    <td> -
+    <td> Use other VRING buffer numbers.
+</tr>
+<tr>
+    <td> MCUSDK-14879
+    <td> Potential system hang issue due to priority mask based critical sections.
+    <td> FreeRTOS
+    <td> 10.00.00 onwards
+    <td> Not to use Priority mask based critical sections (Disabled by default in SDK).
 </tr>
 </table>
 

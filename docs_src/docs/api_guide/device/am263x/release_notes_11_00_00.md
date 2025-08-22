@@ -3,11 +3,11 @@
 [TOC]
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
+\attention 2. RPRC image format has been deprecated from this release. Multi Core ELF image format support should be used.(\ref MCELF_LANDING)
 
 \attention 3. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
-\attention 4. SDK will be migrated to support CCS Theia from next release (SDK 11.0) and the support for CCS Eclipse will be deprecated.
+\attention 4. SDK has been migrated to support CCS Theia from this release and the support for CCS Eclipse has been deprecated.
 
 \attention 5. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
 
@@ -19,26 +19,27 @@
 
 Feature                                                                        | Module
 -------------------------------------------------------------------------------|-----------------------------------
--                                                                              | -
+Clock Tree Support for PLL and Peripheral Clock configuration                  | SysCfg
+CCS Theia Support                                                              | CCS
+Multi Core FreeRTOS IPC Example                                                | IPC
+Board Level SysCfg support                                                     | SysCfg
+McSPI External Loopback Example                                                | McSPI
 
 ## Device and Validation Information
 
 \cond SOC_AM263X
 SOC   | Supported CPUs  | EVM                                                                          | Host PC
 ------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263x| R5F             | AM263x ControlCard Revision E2  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x-lp in code)           | Windows 10 64b or Ubuntu 18.04 64b
+AM263x| R5F             | AM263x ControlCard Revision E2  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x-lp in code)           | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 \endcond
-
-<!-- Refer here for information about using this release with E2 revision of ControlCard
-- \subpage RELEASE_NOTES_08_03_00_EVM_REV_E2_SUPPORT_PAGE -->
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.23.0 build, build 4000
+Code Composer Studio    | R5F            | 20.2.0
+SysConfig               | R5F            | 1.24.2 build, build 4234
 TI ARM CLANG            | R5F            | 4.0.3.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
@@ -57,6 +58,7 @@ Feature                                                                       | 
 ------------------------------------------------------------------------------|--------------------------
 Ether-ring Driver Implementation                                              | Networking
 Ether-ring Demo with Real Time Traffic Generator and Background LwIP traffic  | Networking
+EMMC Support with DMA                                                         | EMMC
 
 ### OS Kernel
 
@@ -86,7 +88,7 @@ Timer             | R5F             | YES               | FreeRTOS, NORTOS | Con
 
 Module     | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                         | Key features not tested / NOT supported
 -----------|-----------------|-------------------|------------------|-----------------------------------------------------------------------------|----------------------------------------------------
-Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: QSPI, UART. All R5F's. RPRC, MCELF, multi-core image format     | Force Dual Core Mode, Disable Dual Core Switch and R5SS1 only not tested
+Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: QSPI, UART. All R5F's. MCELF, multi-core image format           | -
 
 ### SOC Device Drivers
 
@@ -111,7 +113,7 @@ MCAN         | R5F            | YES               | No                          
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                            | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
 MPU Firewall | R5F            | YES               | NA                                    | Only compiled (Works only on HS-SE  device)                                                                                                                     | -
-MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                  | file IO, eMMC
+MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write, file IO                                                                                             | -
 PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                  | -
 PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                   | Counter overflow detection is not enabled
 PRUICSS      | R5F            | YES               | NA                                    | Tested with Ethercat FW HAL                                                                                                                                     | -
@@ -184,12 +186,68 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Resolution/Comments
 </tr>
 <tr>
-    <th> -
-    <th> -
-    <th> -
-    <th> -
-    <th> -
-    <th> -
+    <td> MCUSDK-14749
+    <td> McSPI: Non Powers of 2 cannot be configured as fifo trigger levels in polling and interrupt mode
+    <td> McSPI
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Fix in SysCfg Meta file.
+</tr>
+<tr>
+    <td> MCUSDK-13966
+    <td> All UART triggers levels not exposed in SysCfg
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Update SysCfg to show all trigger levels from 1 to 64.
+</tr>
+<tr>
+    <td> MCUSDK-14573
+    <td> Incorrect handling of errata i2310 in UART isr
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Reorder the ISR state machine for handling UART errata correctly.
+</tr>
+<tr>
+    <td> MCUSDK-14704
+    <td> Adding multiple instances of UART DMA LLD causes failure
+    <td> UART
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px
+    <td> SysCfg template update to pass the EDMA handle correctly
+</tr>
+<tr>
+    <td> MCUSDK-14706
+    <td> GPIO Qual selection API missing
+    <td> GPIO
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Qual sel API added in pinmux driver
+</tr>
+<tr>
+    <td> MCUSDK-14569
+    <td> UART Errata i2310 is missing a step
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added IIR register read to clear the interrupt
+</tr>
+<tr>
+    <td> MCUSDK-14620
+    <td> SDK build fails in Mac Machines
+    <td> Build
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added GMAC library for MAC into SDK
+</tr>
+<tr>
+    <td> MCUSDK-14857, MCUSDK-14731
+    <td> Core 1 unhalted in SBL before FSM Trigger, Memory load
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Skip unhalting core 1 of both clusters in dual core mode
 </tr>
 </table>
 
@@ -315,32 +373,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-13466
-    <td> UART Transfer fails in 10MHz Auto Baud mode
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> Use different mode for 10MHz clock
-</tr>
-<tr>
-    <td> MCUSDK-13193
-    <td> SBL SD transfer time increased w.r.t SDK 9.2
-    <td> SBL
-    <td> 10.00.00 onwards
-    <td> None.
-</tr>
-<tr>
     <td> MCUSDK-13652
     <td> Readelf throws warning while parsing RS note
     <td> SBL, QSPI
     <td> Readelf command throws error when trying to read the RS note segment from an mcelf file.
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14110
-    <td> Error building examples in CCS in mac
-    <td> Infra
-    <td> Example build fails in CCS only in MAC Machines
-    <td> \ref CCS_MAC_ISSUE
 </tr>
 <tr>
     <td> MCUSDK-14509
@@ -350,11 +387,25 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14102
-    <td> Applications > 1MB not flashing using TI Uniflash tool
-    <td> Uniflash tool
+    <td> MCUSDK-14647
+    <td> All CANFD standard ID conigurations are not exposed in SysCfg
+    <td> CAN
+    <td> 10.02.00 onwards
+    <td> Configure Config type, ID's,etc in application
+</tr>
+<tr>
+    <td> MCUSDK-14714
+    <td> Bufnum of 6 and 12 will cause the vring indexes to get corrupted
+    <td> IPC
     <td> 10.00.00 onwards
-    <td> \ref UNIFLASH_1MB_ISSUE
+    <td> Use other VRING buffer numbers.
+</tr>
+<tr>
+    <td> MCUSDK-14879
+    <td> Potential system hang issue due to priority mask based critical sections.
+    <td> FreeRTOS
+    <td> 10.00.00 onwards
+    <td> Not to use Priority mask based critical sections (Disabled by default in SDK).
 </tr>
 </table>
 
