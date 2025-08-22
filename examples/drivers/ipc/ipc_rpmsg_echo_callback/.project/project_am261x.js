@@ -51,7 +51,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO_CALLBACK";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO_CALLBACK";
 
 const templates_freertos_r5f =
 [
