@@ -94,6 +94,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 -# \subpage EXAMPLES_ENET_CPSW_EST
+-# \subpage EXAMPLES_ENET_CPSW_INDUSTRIAL_APP
 
 ### Layer 2 Examples on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP
@@ -130,6 +131,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_CPSW_EST
+-# \subpage EXAMPLES_ENET_CPSW_INDUSTRIAL_APP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
@@ -159,6 +161,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_CPSW_EST
+-# \subpage EXAMPLES_ENET_CPSW_INDUSTRIAL_APP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
