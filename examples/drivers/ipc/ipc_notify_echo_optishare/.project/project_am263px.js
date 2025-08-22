@@ -82,7 +82,11 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true },
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true },
     { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true },
-    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true }
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true },
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos", isPartOfSystemProject: true },
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true },
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true },
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true }
 ];
 
 const systemProjects = [
@@ -98,6 +102,20 @@ const systemProjects = [
             { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos" },
             { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos" },
             { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos" },
+        ],
+    },
+    {
+        name: "ipc_notify_echo_optishare",
+        tag: "freertos_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263px-lp",
+        optishare_memspecs : "optishare_memmap.json",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos" },
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos" },
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos" },
+            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos" },
         ],
     }
 ];
