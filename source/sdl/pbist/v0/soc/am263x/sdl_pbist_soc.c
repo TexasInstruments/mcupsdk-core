@@ -357,6 +357,42 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
               .memoryGroupsBitMap = 22u,  /* Choose MSS CR5A BTCM1*/
               .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
           },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
+          {    /* Dummy Initializer*/
+              .override           = 0x0u,
+              .algorithmsBitMap   = 0xFFu,   /*  Dummy Value */
+              .memoryGroupsBitMap = 22u,     /*  Dummy Value */
+              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+          },
       },
         #endif
 
