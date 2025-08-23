@@ -153,7 +153,7 @@ region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x3DE00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].size               = 0x10100;
+region1.memory_region[5].size               = 0x100000;
 region1.memory_region[5].manualStartAddress = 0x7003FF00;
 
 section1.$name                                    = "CONFIG_SECTION0";

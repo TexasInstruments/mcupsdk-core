@@ -44,9 +44,9 @@
 #define FLASH_WRITE_SECTOR
 
 /* Please make sure to keep the buffersize >= block/sector size and aligned with block/sector size */
-#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x10000)
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x100000)
 /* This has to match the size of MSRAM1 section in linker.cmd */
-uint8_t gFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE+BOOTLOADER_UNIFLASH_HEADER_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
+uint8_t gFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 #define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
 uint8_t gVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
