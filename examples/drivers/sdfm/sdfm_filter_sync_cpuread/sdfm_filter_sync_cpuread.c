@@ -150,16 +150,16 @@ void sdfm_filter_sync_cpuread(void *args)
 
     SDFM_configComparator(CONFIG_SDFM0_BASE_ADDR,
         (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(CONFIG_SDFM0_BASE_ADDR,
         (SDFM_FILTER_2 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(CONFIG_SDFM0_BASE_ADDR,
         (SDFM_FILTER_3 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(CONFIG_SDFM0_BASE_ADDR,
         (SDFM_FILTER_4 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
 
     /* Data Filter Unit*/
 

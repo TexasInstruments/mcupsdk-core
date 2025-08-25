@@ -202,16 +202,16 @@ static void initSDFM(uint32_t sdfmInstance)
        value, higher threshold, lower threshold */
     SDFM_configComparator(sdfmInstance,
         (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(sdfmInstance,
         (SDFM_FILTER_2 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(sdfmInstance,
         (SDFM_FILTER_3 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
     SDFM_configComparator(sdfmInstance,
         (SDFM_FILTER_4 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(32)),
-        (SDFM_GET_LOW_THRESHOLD(llt) | SDFM_GET_HIGH_THRESHOLD(hlt)), 0);
+        (SDFM_THRESHOLD(hlt,llt)), 0);
 
     /* Configure Data filter modules filter type, OSR value and enable / disable data filter */
     SDFM_configDataFilter(sdfmInstance, (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 |

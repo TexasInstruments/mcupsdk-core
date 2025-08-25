@@ -964,7 +964,7 @@ ADC_selectSOCExtChannel(uint32_t base, ADC_SOCNumber socNumber,
     //
     HW_WR_REG32(ctlRegAddr,
         ((HW_RD_REG32(ctlRegAddr) & ~((uint32_t)CSL_ADC_ADCSOC0CTL_EXTCHSEL_MASK)) |
-        (uint32_t)extChannel));
+        ((uint32_t)extChannel << CSL_ADC_ADCSOC0CTL_EXTCHSEL_SHIFT)));
 
 }
 
