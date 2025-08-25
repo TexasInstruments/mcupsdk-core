@@ -51,23 +51,22 @@
 extern uint32_t gInst;
 #endif
 
+/* PBIST test is done by ISR in below SoCs and Polling method */
+/* is used for AM26xx SoCs due to Covering VIM Memory Group   */
+/* as it cannot tested by ISR                                 */
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
 static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistInstInfo *pInfo,
                                      SDL_pbistRegs **pRegs,
                                      pSDL_DPL_HwipHandle *PBIST_intrHandle)
 {
     int32_t ret = SDL_PASS;
-
-    /* PBIST test is done by ISR in below SoCs and Polling method */
-    /* is used for AM26xx SoCs due to Covering VIM Memory Group   */
-    /* as it cannot tested by ISR                                 */
-#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
     SDL_DPL_HwipParams intrParams;
-#endif
+
     void *localAddr = NULL;
     #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_PBIST_Instance(instance);
     #endif
-#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
+
     /* Disable interrupt */
     if (pInfo->interruptNumber != SDL_PBIST_INTERRUPT_INVALID)
     {
@@ -88,7 +87,6 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
             ret = SDL_EFAIL;
         }
     }
-#endif
 
     /* Get PBIST register space Pointer */
     if (ret == SDL_PASS)
@@ -103,6 +101,25 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
 
     return ret;
 }
+
+#else /* AM263x, AM263Px and AM261x*/
+static int32_t SDL_PBIST_prepareTest(const SDL_pbistInstInfo *pInfo, SDL_pbistRegs **pRegs)
+{
+    int32_t ret = SDL_PASS;
+
+    void *localAddr = NULL;
+
+    /* Get PBIST register space Pointer */
+    localAddr = SDL_DPL_addrTranslate((uint64_t)pInfo->pPBISTRegs, PBIST_REG_REGION_SIZE);
+    if (localAddr == (void *)(-1))
+    {
+        ret = SDL_EFAIL;
+    }
+    *pRegs = (SDL_pbistRegs *)(localAddr);
+
+    return ret;
+}
+#endif
 
 static int32_t SDL_PBIST_getResult(SDL_PBIST_testType testType, const SDL_pbistRegs *pRegs, bool *pResult)
 {
@@ -178,7 +195,7 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
             timeoutCount = timeout;
             /* Timeout if exceeds time */
 
-#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
             while ((pInfo->doneFlag == PBIST_NOT_DONE)
                    && (timeoutCount > (uint32_t)0))
 #else
@@ -192,7 +209,7 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
                 timeoutCount--;
             }
 
-#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
             if (pInfo->doneFlag == PBIST_NOT_DONE)
             {
                 ret = SDL_EFAIL;
@@ -252,7 +269,9 @@ int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
     SDL_pbistRegs *pRegs;
     SDL_pbistInstInfo *pInfo;
 
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
     pSDL_DPL_HwipHandle PBIST_intrHandle = NULL;
+#endif
 
     /* Get the PBIST Instance Info */
     pInfo = SDL_PBIST_getInstInfo(instance);
@@ -266,7 +285,11 @@ int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
 
     if (ret == SDL_PASS)
     {
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
         ret = SDL_PBIST_prepareTest(instance, pInfo, &pRegs, &PBIST_intrHandle);
+#else
+        ret = SDL_PBIST_prepareTest(pInfo, &pRegs);
+#endif
 
         if (ret == SDL_PASS)
         {
@@ -274,7 +297,7 @@ int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
         }
     }
 
-#if defined (SOC_AM64X) || (SOC_AM243X) || (SOC_AM273X) || (SOC_AWR294X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X)
     (void)SDL_PBIST_cleanupTest(PBIST_intrHandle);
 #endif
 
