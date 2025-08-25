@@ -19,10 +19,17 @@ submodules that mirror those of the CPSW hardware, like DMA, ALE, MAC port,
 host port, MDIO, etc. Additionally, the Enet driver also includes PHY driver
 support as well as a resource manager to administrate the CPSW resources.
 
+\if (SOC_AM261X || SOC_AM263X || SOC_AM263PX || SOC_AM273X)
+Enet LLD relies on drivers like CPDMA for data transfer to/from the
+Ethernet peripheral's host port to the other processing cores inside the TI
+SoC devices. For the lower level access to the hardware registers, Enet LLD
+relies on the Chip Support Library (CSL).
+\else
 Enet LLD relies on other drivers like UDMA for data transfer to/from the
 Ethernet peripheral's host port to the other processing cores inside the TI
 SoC devices. For the lower level access to the hardware registers, Enet LLD
 relies on the Chip Support Library (CSL).
+\endif
 
 ![Enet LLD Software Architecture Block Diagram](EnetLLD_Diagram.png "Enet LLD Software Architecture Block Diagram")
 
@@ -191,10 +198,16 @@ Application should follow the next steps:
          only to ICSSG Switch peripherals which start by default in VLAN aware mode.
 \endif
 
+\if (SOC_AM261X || SOC_AM263X || SOC_AM263PX || SOC_AM273X)
+-# Once done with the configuration of the CPDMA parameters \ref Cpsw_Cfg::dmaCfg., CPDMA driver open will be done
+   by Cpsw_open(). CPDMA Tx and Rx channels should be opened using EnetCpdma_openTxCh() and EnetCpdma_openRxCh() based
+   on Syscfg DMA configuration.
+\else
 -# Once done with the configuration of the parameters, the UDMA driver has to be
    opened.  Enet utils library provides a helper function called EnetAppUtils_udmaOpen()
    to open the UDMA driver, and returns a handle that can be passed to the
    peripheral configuration parameters, i.e. \ref Cpsw_Cfg::dmaCfg.
+\endif
 
 -# \ref Enet_open() to open a peripheral, passing the configuration parameters
    previously initialized. \ref Enet_open() function takes the following
@@ -213,7 +226,9 @@ Application should follow the next steps:
    to the Enet driver.  It's worth noting that there will be a unique Enet handle
    (\ref Enet_Handle) for each peripheral opened.
 
--# Configure the DSCP to priority mapping for all the mac ports and host port using \ref ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP and \ref ENET_HOSTPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP commands. CPSW supports IPV4 and IPV6 DSCP priority mapping. By default, out-of-box examples maps DSCP values 0-7 to priority 0, 8-15 to priority 1, and so on for both host and mac ports. Configure default thread ID for host interface using \ref CPSW_ALE_IOCTL_SET_DEFAULT_THREADCFG when no classifer is matched.
+-# Configure the DSCP to priority mapping for all the mac ports and host port using \ref ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP and \ref ENET_HOSTPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP commands. CPSW supports IPV4 and IPV6 DSCP priority mapping. By default, out-of-box examples maps DSCP values 0-7 to priority 0, 8-15 to priority 1, and so on for both host and mac ports.
+
+-# Configure default thread ID for host interface using \ref CPSW_ALE_IOCTL_SET_DEFAULT_THREADCFG when no classifer is matched.
 
 -# Attach the core with the Resource Manager (RM) using \ref ENET_PER_IOCTL_ATTACH_CORE.
    IOCTL. To use IOCTLs, the application must have the following:
@@ -437,10 +452,30 @@ status = Enet_ioctl(hEnet, coreId, ENET_PER_IOCTL_OPEN_PORT_LINK, &prms);
 -# The DMA channels to enable data transfer are to be opened. It can be
    done using the below steps:
 
+\if (SOC_AM261X || SOC_AM263X || SOC_AM263PX || SOC_AM273X)
+    - Initialize the Tx Channel and Rx Channel parameters using
+      EnetCpdma_initTxChParams() and EnetCpdma_initRxChParams(),
+      respectively.
+    - For Tx Channel set the following parameters:
+        - EnetCpdma_OpenTxChPrms::hEnet: Ethernet handle obtained before.
+        - EnetCpdma_OpenTxChPrms::chNum: Tx Channel number.
+        - EnetCpdma_OpenTxChPrms::notifyCb: Enet CPDMA event callback function.
+        - EnetCpdma_OpenTxChPrms::numTxPkts: number of Tx packets used to alloc
+          DMA descriptors
+        - EnetCpdma_OpenTxChPrms::cbArg: Argument to be used for the callback
+          routines.
+    - For Rx Channel set the following parameters:
+        - EnetCpdma_OpenRxChPrms::hEnet: Ethernet handle obtained before.
+        - EnetCpdma_OpenRxChPrms::chNum: Tx Channel number.
+        - EnetCpdma_OpenRxChPrms::notifyCb: Enet CPDMA event callback function.
+        - EnetCpdma_OpenRxChPrms::numTxPkts: number of Tx packets used to alloc
+          DMA descriptors
+        - EnetCpdma_OpenRxChPrms::cbArg: Argument to be used for the callback
+          routines.
+\else
     - Initialize the Tx Channel and Rx Flow parameters using
       EnetUdma_initTxChParams() and EnetUdma_initRxFlowParams(),
       respectively.
-
     - For Tx Channel set the following parameters:
         - EnetUdma_OpenTxChPrms::chNum: Tx Channel number.
         - EnetUdma_OpenTxChPrms::hUdmaDrv: UDMA driver handle obtained before.
@@ -457,7 +492,6 @@ status = Enet_ioctl(hEnet, coreId, ENET_PER_IOCTL_OPEN_PORT_LINK, &prms);
           or equivalent user preferred function.
         - EnetUdma_OpenTxChPrms::cbArg: Argument to be used for the callback
           routines.
-
     - For Rx Flow set the following parameters:
         - EnetUdma_OpenRxFlowPrms::startIdx: Rx flow start index.
         - EnetUdma_OpenRxFlowPrms::flowIdx: Rx flow number.
@@ -478,7 +512,7 @@ status = Enet_ioctl(hEnet, coreId, ENET_PER_IOCTL_OPEN_PORT_LINK, &prms);
           or equivalent user preferred function.
         - EnetUdma_OpenRxFlowPrms::cbArg: Argument to be used for the callback
           routines.
-
+\endif
     - After setting the parameters, open the channel and flow using Enet utils helper
       functions EnetAppUtils_openTxCh() and EnetAppUtils_openRxFlow(), respectively.
 \if (am64x)
@@ -489,9 +523,13 @@ status = Enet_ioctl(hEnet, coreId, ENET_PER_IOCTL_OPEN_PORT_LINK, &prms);
       and another for index 1.
 \endif
 
+\if (SOC_AM261X || SOC_AM263X || SOC_AM263PX || SOC_AM273X)
+-# Now that the Ethernet peripheral (CPSW) and CPDMA are configured, the
+   application can start the data transfer.
+\else
 -# Now that the Ethernet peripheral (CPSW or ICSSG) and UDMA are configured, the
    application can start the data transfer.
-
+\endif
     - To transmit data from application:
         - Call \ref EnetDma_submitTxPktQ() to submit the packets that are
           ready to be transmitted to Tx Free Queue.
@@ -603,8 +641,11 @@ no longer wants to use the Enet LLD.
 -# \ref Enet_deinit() should be called to deinitialize the driver. No further Enet
    LLD APIs should be called from this point.
 
--# Finally, close the UDMA driver using EnetAppUtils_udmaclose()
-
+\if (SOC_AM261X || SOC_AM263X || SOC_AM263PX || SOC_AM273X)
+-# Finally, close the tx,rx CPDMA channels and CPDMA driver using EnetCpdma_closeTxCh(), EnetCpdma_closeRxCh(), and EnetCpdma_close()
+\else
+-# Finally, close the tx,rx UDMA channels and UDMA driver using EnetUdma_closeTxCh(), EnetUdma_closeRxCh(), EnetUdma_closeRxFlow() and EnetUdma_close()
+\endif
 [Back To Top](@ref enet_integration_guide_top)
 
 
