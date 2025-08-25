@@ -75,7 +75,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_CLOCK_MEASUREMENT_C6X";
+const readmeDoxygenPageTag = "EXAMPLES_CLOCK_MEASUREMENT";
 
 const templates_nortos_c66 =
 [
