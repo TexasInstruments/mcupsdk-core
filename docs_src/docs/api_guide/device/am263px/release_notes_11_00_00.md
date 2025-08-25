@@ -285,6 +285,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263Px
     <td> Configure OSPI reset in OSPI open instead of Flash open
 </tr>
+<tr>
+    <td> PROC_SDL-9179
+    <td> Redefinition error in MCU_PBIST Sysconfig
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px, AM261x
+    <td> Resolved in Source code
+</tr>
 </table>
 
 ## Known Issues
@@ -435,13 +443,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.02.00 onwards
     <td> None
-</tr>
-<tr>
-    <td> PROC_SDL-9179
-    <td> Redefinition error in MCU_PBIST Sysconfig
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use sdl examples instead of sbl_null to enable MCU_PBIST SYSCFG and test.
 </tr>
 <tr>
     <td> MCUSDK-13652

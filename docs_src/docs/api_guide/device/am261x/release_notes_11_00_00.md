@@ -190,12 +190,12 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> PROC_SDL-9179
+    <td> Redefinition error in MCU_PBIST Sysconfig
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px, AM261x
+    <td> Resolved in Source code
 </tr>
 </table>
 
@@ -362,13 +362,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.02.00 onwards
     <td> Use R5FSS0-0 example.
-</tr>
-<tr>
-    <td> PROC_SDL-9179
-    <td> Redefinition error in MCU_PBIST Sysconfig
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use sdl examples instead of sbl_null to enable MCU_PBIST SYSCFG and test.
 </tr>
 <tr>
     <td> MCUSDK-13513
