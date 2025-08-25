@@ -225,7 +225,7 @@ uint32_t gEpwm_vim_sts_addr_1_tc2;
 uint32_t gEpwm_vim_sts_clr_mask_1_tc2;
 void *epwmArgs_1_tc2;
 
-static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void irq_handler1_tc2(void)
+static __attribute__((__section__(".controlfnc"), noinline, naked, target("arm"), aligned(4))) void irq_handler1_tc2(void)
 {
     ISR_CALL_PULSE_FLOAT_REENTRANT(user_isr1_tc2, epwmArgs_1_tc2, gEpwmIntrNum_1_tc2, gEpwm_vim_sts_addr_1_tc2, gEpwm_vim_sts_clr_mask_1_tc2, gVimBaseAddr);
 }
