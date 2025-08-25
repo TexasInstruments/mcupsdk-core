@@ -173,9 +173,9 @@ function prepareOspiPinAssignmentsForMigration(syscfgContent, filePath) {
     if (sourceDevice !== 'AM263Px') {
         return syscfgContent;
     }
-    // Check if file contains OSPI module
+    const ospiRegex = /(?:CONFIG_OSPI\d*|\.OSPI\.|\bospi\b|drivers_ospi|(?:peripheralDriver\.)+OSPI)/i;
     if ((syscfgContent.includes('const flash') && syscfgContent.includes('peripheralDriver.OSPI')) || 
-        (syscfgContent.includes('const ospi') || syscfgContent.includes('drivers_ospi'))) 
+        ospiRegex.test(syscfgContent))
     {
         const lines = syscfgContent.split('\n');
         const ospiAssignmentLines = [];
@@ -183,9 +183,8 @@ function prepareOspiPinAssignmentsForMigration(syscfgContent, filePath) {
 
         for (let i = 0; i < lines.length; i++) {
             // Updated regex to capture pins with underscores like RESET_OUT0
-            if (lines[i].match(/(flash\d+\.peripheralDriver\.OSPI|ospi\d+\.OSPI)\.[A-Za-z0-9_]+\.\$assign\s*=/)) {
+            if (lines[i].match(/(?:peripheralDriver\.OSPI|ospi\d+\.OSPI)\.[A-Za-z0-9_]+\.\$assign\s*=/)) {
                 ospiAssignmentLines.push(i);
-
                 // Extract the assignment, convert to suggestSolution, and store
                 const line = lines[i].trim();
                 const cleanedAssignment = line.replace(/\s*;?\s*$/, ''); // Remove trailing semicolon and whitespace
