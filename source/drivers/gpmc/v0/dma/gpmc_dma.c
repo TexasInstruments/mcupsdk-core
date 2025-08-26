@@ -63,24 +63,28 @@ extern uint32_t gGpmcDmaConfigNum;
 Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index)
 {
 	GPMC_DmaConfig *config = NULL;
+	Gpmc_DmaArgs *dmaArgs = NULL;
 
-	if((gGpmcDmaConfigNum > 0) && (index >= 0))
-	{
-		config = &gGpmcDmaConfig[index];
-		if(config->gpmcDmaArgs)
+    if((gGpmcDmaConfigNum > 0) && (index >= 0))
+    {
+        config = &gGpmcDmaConfig[index];
+		if(config != NULL)
 		{
-			int32_t status = SystemP_SUCCESS;
-#if defined(DMA_VERSION_GPMC_UDMA)
-			status = GpmcDma_udmaOpen(config->gpmcDmaArgs);
-#endif
-			if(status != SystemP_SUCCESS)
+			if(config->gpmcDmaArgs)
 			{
-				config = NULL;
+				int32_t status = SystemP_SUCCESS;
+#if defined(DMA_VERSION_GPMC_UDMA)
+				status = GpmcDma_udmaOpen(config->gpmcDmaArgs);
+#endif
+				if(status == SystemP_SUCCESS)
+				{
+					dmaArgs = config->gpmcDmaArgs;
+				}
 			}
 		}
-	}
+    }
 
-	return config->gpmcDmaArgs;
+    return dmaArgs;
 }
 
 int32_t GPMC_dmaClose(Gpmc_DmaArgs *gpmcDmaArgs)
