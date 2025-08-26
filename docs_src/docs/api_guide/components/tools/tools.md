@@ -30,3 +30,7 @@ It consists of below sub-modules
 \cond SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage MEMORY_CONFIGURATOR
 \endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+- \subpage CLOCKTREE
+\endcond

@@ -106,6 +106,11 @@ The main software components in the block diagram are described below
     <td> \ref TOOLS
     <td>Additional tools and utilities, like flashing tools, booting tools, CCS loading scripts used with the SDK development flow
 </tr>
+<tr>
+    <td> Clocktree
+    <td>\ref CLOCKTREE
+    <td> A tool which enables the configuration of all clock components like PLLs, muxes, dividers, etc involved in the clock architecture of a device.
+</tr>
 </table>
 
 ## Directory Structure

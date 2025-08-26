@@ -56,6 +56,13 @@ Building an example is converting the source files of the application into a mac
     <td>\ref TOOLS_BOOT_SIGNING
     <td>Collection of scripts needed to sign SBL and application images.
 </tr>
+\if (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+<tr>
+    <td>Clocktree
+    <td>\ref CLOCKTREE
+    <td>Configure the Clock settings for all peripherals from the Clocktree view.
+</tr>
+\endif
 </table>
 
 ## Creation of application binary
