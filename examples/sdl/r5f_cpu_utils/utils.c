@@ -140,9 +140,15 @@ int32_t sdl_apiTest(void)
 
 void test_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
     int32_t sdlResult = SDL_EBADARGS;
     Drivers_open();
-    Board_driversOpen();
 
     DebugP_log("R5F CPU STATIC REGISTER READ Start... \r\n\n");
 
@@ -158,8 +164,6 @@ void test_main(void *args)
         DebugP_log("\nSome/All test have failed! \r\n");
     }
 
-
-    Board_driversClose();
     Drivers_close();
 }
 
