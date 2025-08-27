@@ -392,10 +392,17 @@ void test_sdl_rti_baremetal_test_app_runner(void)
 
 void sdl_rti_example_uc3_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
 	Drivers_open();
-	Board_driversOpen();
+
     test_sdl_rti_baremetal_test_app_runner();
-	Board_driversClose();
+
 	Drivers_close();
     /* Stop the test and wait here */
     while (1);

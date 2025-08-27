@@ -64,17 +64,18 @@ const lnkfiles = {
     ]
 };
 
-const defines_r5f = {
-    common: [
-        "SUBSYS_MSS",
 
+const r5f0_macro = {
+    common: [
+        "R5F0_INPUTS",
+        "SUBSYS_MSS",
     ],
 };
 
-const defines_r5fss1 = {
+const r5fss1_macro = {
     common: [
+        "R5F1_INPUTS",
         "SUBSYS_MSS",
-
     ],
 };
 
@@ -135,12 +136,12 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5fss0-0*/)) {
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
-        build_property.defines = defines_r5f;
+        build_property.defines = r5f0_macro;
     }
     if(buildOption.cpu.match(/r5fss1-0*/)) {
         build_property.libs = libs_nortos_r5fss1;
         build_property.templates = templates_nortos_r5fss1;
-        build_property.defines = defines_r5fss1;
+        build_property.defines = r5fss1_macro;
     }
 
     return build_property;

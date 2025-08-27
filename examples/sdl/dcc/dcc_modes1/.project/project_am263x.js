@@ -49,8 +49,6 @@ const libs_nortos_r5f1 = {
     ],
 };
 
-
-
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
@@ -58,7 +56,17 @@ const includes_nortos = {
     ],
 };
 
+const r5f0_macro = {
+    common: [
+        "R5F0_INPUTS",
+    ],
+};
 
+const r5fss1_macro = {
+    common: [
+        "R5F1_INPUTS",
+    ],
+};
 
 const lnkfiles = {
     common: [
@@ -125,11 +133,13 @@ function getComponentBuildProperty(buildOption) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+            build_property.defines = r5f0_macro;
         }
     
         if(buildOption.cpu.match(/r5fss1-0*/)) {
           build_property.libs = libs_nortos_r5f1;
           build_property.templates = templates_nortos_r5f1;
+          build_property.defines = r5fss1_macro;
       }
 
 

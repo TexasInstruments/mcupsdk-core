@@ -1069,12 +1069,17 @@ void test_sdl_dcc_test_app (void)
 
 void dcc_test_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
     Drivers_open();
-    Board_driversOpen();
 
     test_sdl_dcc_test_app();
 
-    Board_driversClose();
     Drivers_close();
 }
 

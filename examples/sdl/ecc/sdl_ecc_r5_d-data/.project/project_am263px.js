@@ -86,7 +86,6 @@ const r5fss1_macro = {
     common: [
         "R5F1_INPUTS",
     ],
-
 };
 
 const lnkfiles = {

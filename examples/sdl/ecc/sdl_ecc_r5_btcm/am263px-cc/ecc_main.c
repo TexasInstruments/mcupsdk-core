@@ -161,12 +161,18 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 int32_t ecc_main(void)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
 	int32_t testResult = 0;
     CSL_ArmR5CPUInfo cpuInfo;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
-    Board_driversOpen();
 
     CSL_armR5GetCpuID(&cpuInfo);
 
@@ -205,7 +211,6 @@ int32_t ecc_main(void)
         SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_MASK, SDL_UNMASK_TCM_TAG_ERRORS);
     }
     /* Close drivers to close the UART driver for console */
-    Board_driversClose();
     Drivers_close();
     while (true)
     {

@@ -119,8 +119,14 @@ void test_sdl_tog_example_app_runner(void)
 
 int32_t tog_test_main(void)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
     Drivers_open();
-    Board_driversOpen();
 
     /* Init dpl */
     sdlApp_dplInit();
@@ -128,7 +134,6 @@ int32_t tog_test_main(void)
     DebugP_log("\nTOG Sample Example \r\n");
     test_sdl_tog_example_app_runner();
 
-    Board_driversClose();
     Drivers_close();
 
     return (0);

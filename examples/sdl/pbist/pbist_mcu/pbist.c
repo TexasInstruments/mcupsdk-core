@@ -637,10 +637,15 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
 void pbist_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
-    Board_driversOpen();
     /* Declarations of variables */
     int32_t    result = SDL_PASS;
     int32_t    testResult = 0;
@@ -679,7 +684,6 @@ void pbist_main(void *args)
       #endif
       #endif
 
-      Board_driversClose();
       Drivers_close();
 
 }

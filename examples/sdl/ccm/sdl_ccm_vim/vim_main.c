@@ -101,11 +101,18 @@ static int32_t sdlApp_dplInit(void)
 
 void VIM_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
     /* Declaration of variables */
     int32_t  testResult;
 
 	Drivers_open();
-    Board_driversOpen();
+
     /* DPL Init */
     testResult = sdlApp_dplInit();
 
@@ -126,9 +133,8 @@ void VIM_main(void *args)
     {
         DebugP_log("DPL Init failed. Exiting the app.\r\n");
     }
-	Board_driversClose();
-    Drivers_close();
 
+    Drivers_close();
 }
 
 /* Nothing past this point */

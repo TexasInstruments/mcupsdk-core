@@ -101,12 +101,17 @@ static int32_t sdlApp_dplInit(void)
 
 void test_main(void)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
 
     /* Declaration of variables */
     int32_t  testResult = SDL_EFAIL;
 
     Drivers_open();
-	Board_driversOpen();
     /* Init Dpl */
     sdlApp_dplInit();
 
@@ -133,6 +138,5 @@ void test_main(void)
         DebugP_log("\nTMU ROM-Checksum Data integrity failed\r\n");
     }
 
-    Board_driversClose();
 	Drivers_close();
 }

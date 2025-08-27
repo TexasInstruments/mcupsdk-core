@@ -65,6 +65,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM263PX \
+	-DR5F1_INPUTS \
 	-DSUBSYS_MSS \
 	-DOS_NORTOS \
 

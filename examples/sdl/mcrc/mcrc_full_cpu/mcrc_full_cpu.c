@@ -447,13 +447,20 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 
 void mcrc_full_cpu_main(void *args)
 {
+    #if defined (R5F1_INPUTS)
+    /* Delay added for bootloader running from R5FSS0_0 to complete  */
+    /* the UART prints. Otherwise this app will also initialize the  */
+    /* same UART and could cause hang or data corruption             */
+    ClockP_sleep(1);
+    #endif
+
     /* Declarations of variables */
     int32_t    result = SDL_APP_PASS;
     int32_t    i;
 
     /* Init Dpl */
 	Drivers_open();
-	Board_driversOpen();
+
     result = SDL_TEST_dplInit();
     if (result != SDL_PASS)
     {
@@ -491,7 +498,7 @@ void mcrc_full_cpu_main(void *args)
     {
         DebugP_log("\n Few/all tests Failed\r\n");
     }
-	Board_driversClose();
+
 	Drivers_close();
 }
 
