@@ -62,7 +62,7 @@ void flc_main(void *args)
     /* Open OSPI Driver, among others */
     Drivers_open();
 
-    #ifdef SOC_AM261X
+    #if defined(SOC_AM261X) || defined(SOC_AM263PX)
     board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
     #endif
 
