@@ -249,6 +249,30 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px
     <td> Skip unhalting core 1 of both clusters in dual core mode
 </tr>
+<tr>
+    <td> MCUSDK-14695
+    <td> SDFM_configComparator has incorrect input in examples
+    <td> SDFM
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Updated example to pass correct value
+</tr>
+<tr>
+    <td> MCUSDK-13153
+    <td> Self nesting of interrupts is not working
+    <td> DPL
+    <td> 09.01.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added macros for handling self re-entrant IRQ
+</tr>
+<tr>
+    <td> MCUSDK-11935
+    <td> DPL Low Latency Interrupt Application: controlfnc section missing in linker command
+    <td> DPL
+    <td> 09.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added missing .controlfnc section in linker command file of DPL Low Latency Interrupt example
+</tr>
 </table>
 
 ## Known Issues

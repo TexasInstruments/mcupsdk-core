@@ -293,6 +293,62 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263Px, AM261x
     <td> Resolved in Source code
 </tr>
+<tr>
+    <td> MCUSDK-14695
+    <td> SDFM_configComparator has incorrect input in examples
+    <td> SDFM
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Updated example to pass correct value
+</tr>
+<tr>
+    <td> MCUSDK-13153
+    <td> Self nesting of interrupts is not working
+    <td> DPL
+    <td> 09.01.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added macros for handling self re-entrant IRQ
+</tr>
+<tr>
+    <td> MCUSDK-11935
+    <td> DPL Low Latency Interrupt Application: controlfnc section missing in linker command
+    <td> DPL
+    <td> 09.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Added missing .controlfnc section in linker command file of DPL Low Latency Interrupt example
+</tr>
+<tr>
+    <td> MCUSDK-14696
+    <td> ADC Sysconfig does not seem to generate codes for repeaters
+    <td> ADC
+    <td> 10.00.00 onwards
+    <td> AM263Px
+    <td> Fixed syscfg template file to generate trigger repeater code for burst mode
+</tr>
+<tr>
+    <td> MCUSDK-14645
+    <td> Implementation of the ADC_selectSOCExtChannel
+    <td> ADC
+    <td> 10.01.00 onwards
+    <td> AM263Px
+    <td> Fixed ADC_selectSOCExtChannel API implementation
+</tr>
+<tr>
+    <td> MCUSDK-14746
+    <td> TMU: Docs: QUAD feature listed under not supported section
+    <td> TMU
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Updated documentation
+</tr>
+<tr>
+    <td> MCUSDK-14661
+    <td> Errata i2485 config missing in empty projects
+    <td> TMU
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Updated example syscfg to have the part of TCMA blocked for R5SS1_CORE1
+</tr>
 </table>
 
 ## Known Issues
