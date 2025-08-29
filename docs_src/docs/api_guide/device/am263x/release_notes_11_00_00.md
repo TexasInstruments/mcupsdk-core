@@ -370,7 +370,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> ECC D-Data fail during release
     <td> SDL
     <td> 10.02.00 onwards
-    <td> None
+    <td> Use debug profile for ECC D-Data
 </tr>
 <tr>
     <td> MCUSDK-13652

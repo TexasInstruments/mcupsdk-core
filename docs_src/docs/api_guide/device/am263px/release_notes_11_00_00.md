@@ -293,6 +293,38 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263Px, AM261x
     <td> Resolved in Source code
 </tr>
+<tr>
+    <td> PROC_SDL-9150
+    <td> PBIST Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Resolved in Example code
+</tr>
+<tr>
+    <td> PROC_SDL-9151
+    <td> CCM Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Resolved in Example code
+</tr>
+<tr>
+    <td> PROC_SDL-9152
+    <td> R5F Utils Example and Test apps are getting mixed data with bootloader data
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Resolved in Example code
+</tr>
+<tr>
+    <td> PROC_SDL-9153
+    <td> TOG Example stuck in System_Init during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px
+    <td> Resolved in Example code
+</tr>
 </table>
 
 ## Known Issues
@@ -379,7 +411,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> ECC TPTC and STC examples are not supported in SDL integrated example.
     <td> SDL
     <td> 10.01.00 onwards
-    <td> Use standalone examples.
+    <td> Use standalone examples and for STC use sbl_null with syscfg enabled
 </tr>
 <tr>
     <td> PROC_SDL-8857
@@ -393,7 +425,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> ECC D-Data fail during release
     <td> SDL
     <td> 10.02.00 onwards
-    <td> None
+    <td> Use debug profile
 </tr>
 <tr>
     <td> PROC_SDL-9149
@@ -403,39 +435,11 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-9150
-    <td> PBIST Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Functionality works and log gets mixed. Disable DPL_Log.
-</tr>
-<tr>
-    <td> PROC_SDL-9151
-    <td> CCM Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Functionality works and log gets mixed. Disable DPL_Log.
-</tr>
-<tr>
-    <td> PROC_SDL-9152
-    <td> R5F Utils Example and Test apps are getting mixed data with bootloader data
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Functionality works and log gets mixed. Disable DPL_Log.
-</tr>
-<tr>
-    <td> PROC_SDL-9153
-    <td> TOG Example stuck in System_Init during release
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> None
-</tr>
-<tr>
     <td> PROC_SDL-9154
     <td> VTM Example stuck in UC2
     <td> SDL
     <td> 10.02.00 onwards
-    <td> None
+    <td> Use debug profile
 </tr>
 <tr>
     <td> PROC_SDL-9163
