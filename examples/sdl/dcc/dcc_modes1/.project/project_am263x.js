@@ -137,11 +137,10 @@ function getComponentBuildProperty(buildOption) {
         }
     
         if(buildOption.cpu.match(/r5fss1-0*/)) {
-          build_property.libs = libs_nortos_r5f1;
-          build_property.templates = templates_nortos_r5f1;
-          build_property.defines = r5fss1_macro;
-      }
-
+            build_property.libs = libs_nortos_r5f1;
+            build_property.templates = templates_nortos_r5f1;
+            build_property.defines = r5fss1_macro;
+        }
 
     return build_property;
 }
