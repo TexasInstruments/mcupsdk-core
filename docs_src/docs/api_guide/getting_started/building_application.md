@@ -36,6 +36,7 @@ Building an example is converting the source files of the application into a mac
     <td>\ref MEMORY_CONFIGURATOR
     <td>A GUI method of creating a linker file using Sysconfig tool. It generates a linker.cmd file along with other component files.
 </tr>
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 <tr>
     <td>.out to .rprc
     <td>\ref OUT2RPRC_TOOL
@@ -46,6 +47,7 @@ Building an example is converting the source files of the application into a mac
     <td>\ref MULTICOREIMAGEGEN_TOOL
     <td>Converts the RPRC files created for each CPU into a single combined multicore application image that can be booted by the SBL.
 </tr>
+\endcond
 <tr>
     <td>.out to .mcelf
     <td>\ref MCELF_GEN_TOOL
@@ -85,6 +87,7 @@ Shown below are the different steps that are done to convert the compiler+linker
 
   - This .out file can be loaded and run via CCS. Refer \ref CCS_LOAD_RUN
 
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 ### Generating .appimage binary
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
   - `multiCoreGen` is then used to combine all the RPRC files per CPU into a single `.appimage` file which is a concatenation of the
@@ -93,6 +96,7 @@ Shown below are the different steps that are done to convert the compiler+linker
 
 \imageStyle{bootflow_post_build_steps_no_xip.png,width:50%}
 \image html bootflow_post_build_steps_no_xip.png "Post build steps RPRC"
+\endcond
 
 ### Generating .mcelf binary
   - Refer \ref MCELF_LANDING for information on MCELF
@@ -119,7 +123,7 @@ Shown below are the different steps that are done to convert the compiler+linker
   - Click on the green box that contains the text **Download Latest Version**.
   - The file downloaded is named srecord-1.65.0-Linux.tar.gz. Extract the package.
 
-#### Converting .mcelf/.appimage to Intel hex:
+#### Converting .mcelf to Intel hex:
 
   - Order of invocation:
   \code

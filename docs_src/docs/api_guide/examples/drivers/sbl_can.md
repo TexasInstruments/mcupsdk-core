@@ -18,15 +18,11 @@ This bootloader runs in two steps:
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
-\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+# SBL CAN Multicore ELF {#EXAMPLES_DRIVERS_SBL_CAN_MCELF}
 
-# SBL CAN MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_CAN_MCELF}
+- For AM26xx devices, use the Multicore ELF project of SBL CAN Uniflash
 
-To parse and load an **mcelf** file via CAN bootloader, use the project **examples/drivers/boot/sbl_can_multicore_elf**
-
-When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset.
-
-The steps to run the example is same irrespective of the image format.
+- To flash an **mcelf** file via CAN uniflash, use the project **examples/drivers/boot/sbl_can_multicore_elf**
 
 \endcond
 
@@ -96,7 +92,7 @@ In this application, the CAN settings are:
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_can
+ Example folder | examples/drivers/boot/sbl_can_multicore_elf
 
 **NOTE: Tested on Windows, using PCAN-USB Peripheral.**
 \endcond

@@ -21,7 +21,7 @@ We can then boot this application without being connected to CCS via JTAG.
   - Make sure you have the EVM power cable and UART cable connected as shown in \ref EVM_CABLES
 
 - Build the hello world application as mentioned in \ref GETTING_STARTED_BUILD
-\if (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+\if (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
 
 - As part of the build process in the final step, files with extension `.mcelf` and `.mcelf_xip` are generated. These are the files
   we need to flash.
@@ -49,7 +49,7 @@ We can then boot this application without being connected to CCS via JTAG.
   - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
         ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage.hs_fs
-\elseif (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+\elseif (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf_xip
 
@@ -94,7 +94,7 @@ We can then boot this application without being connected to CCS via JTAG.
 - Edit below line in the config file to point to your application `.appimage.hs_fs` file.
   Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
       --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs --operation=flash --flash-offset=0x80000
-\elseif (SOC_AM263PX||SOC_AM263X||SOC_AN261X)
+\elseif (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
 
 Configuration file is `mcelf_sbl_ospi.cfg`
 
@@ -657,11 +657,11 @@ number of lines used in the protocol is indeed 8.
 - Open a command prompt and run the below command to flash the SOC initialization binary to the EVM.
 
         cd ${SDK_INSTALL_PATH}/tools/boot
-\cond SOC_AM263x
-        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_qspi.cfg
+\cond SOC_AM263X
+        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/mcelf_sbl_qspi.cfg
 \endcond
-\cond SOC_AM263Px || SOC_AM261X
-        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_ospi.cfg
+\cond SOC_AM263PX || SOC_AM261X
+        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/mcelf_sbl_ospi.cfg
 \endcond
   - Here COM<x> is the port name of the identified UART port in Windows.
   - On Linux,

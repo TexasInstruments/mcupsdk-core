@@ -331,28 +331,7 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
-
-\note RPRC format would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
-
-### Booting RPRC application {#BOOTFLOW_RPRC_BOOT}
-
-- An SBL typically does a bunch of SOC specific initializations and proceeds to the application loading.
-- Depending on the type of SBL loaded, SBL looks for the **multicore appimage** (refer \ref TOOLS_BOOT for more on multicore appimage)
-  of the application binary at a specified location in a boot media.
-- If the appimage is found, the multicore appimage is parsed into multiple **RPRCs**. These are optimized binaries which
-  are then loaded into individual CPUs.
-- Each RPRC image will have information regarding the core on which it is to be loaded, entry points and multiple sections
-  of that application binary
-- The SBL uses this information to initialize each core which has a valid RPRC. It then loads the RPRC according to the
-  sections specified, sets the entry points and releases the core from reset. Now the core will start running.
-
-\inlineVideo{sbl_boot.mp4,SBL BOOT for RPRC,width=50%}
-
-\cond !SOC_AM263X 
-- To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
-\endcond
-
+\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 ### Booting MCELF application {#BOOTFLOW_MCELF_BOOT}
 
 - In this case, SBL looks for the **multicore elf** image (refer \ref TOOLS_BOOT for more on multicore elf image)

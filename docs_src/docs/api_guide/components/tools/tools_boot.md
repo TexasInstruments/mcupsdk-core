@@ -19,6 +19,7 @@ This section describes the various tools that are used to create boot images for
     <th>Description
 </tr>
 <tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/tools/boot/</td></tr>
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 <tr>
     <td>multicoreImageGen/
     <td>Tool to combine multiple RPRC into a single binary
@@ -27,6 +28,7 @@ This section describes the various tools that are used to create boot images for
     <td>out2rprc/
     <td>Tool to convert compiler generated ELF .out for a CPU to a compact and loadable binary representation, called RPRC.
 </tr>
+\endcond
 <tr>
     <td>sbl_prebuilt/
     <td>Pre-built secondary bootloader (SBL) images and flash configuration files for different supported EVMs, see also \ref TOOLS_FLASH
@@ -53,7 +55,7 @@ This section describes the various tools that are used to create boot images for
 \else
 <tr>
     <td>uart_bootloader.py
-    <td>Python script used to send the SBL and appimage binaries over UART using XMODEM protocol in UART boot mode
+    <td>Python script used to send the SBL and application binaries over UART using XMODEM protocol in UART boot mode
 </tr>
 <tr>
     <td>uart_uniflash.py
@@ -70,10 +72,11 @@ This section describes the various tools that are used to create boot images for
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
-\note RPRC tools (Out2RPRC and Multi-core Image Gen) would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
+\note RPRC tools (Out2RPRC and Multi-core Image Gen) has been deprecated from SDK 11.00 release onwards. MCELF would be the default application format.
 
 \endcond
 
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 ## Out2RPRC {#OUT2RPRC_TOOL}
 
 - This tool converts the application executable (.out) into custom TI RPRC (.rprc) image - an image loadable by the secondary bootloader (SBL).
@@ -238,6 +241,7 @@ CORE        | CORE ID
 r5fss0-0    | 4
 r5fss0-1    | 5
 
+\endcond
 \endcond
 
 ## MCELF Image Gen {#MCELF_GEN_TOOL}
@@ -404,7 +408,7 @@ r5fss1-1    | 3
 \if SOC_AM65X
 - This script is used in UART boot mode for sending the SBL, system firmware(sysfw) and appimage binaries to the EVM via UART using XMODEM protocol
 \else
-- This script is used in UART boot mode for sending the SBL and appimage binaries to the EVM via UART using XMODEM protocol
+- This script is used in UART boot mode for sending the SBL and application binaries to the EVM via UART using XMODEM protocol
 \endif
 - Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
 - Booting via UART is slow, but is useful if application loading via CCS or OSPI boot is not an option
@@ -424,15 +428,15 @@ r5fss1-1    | 3
   \else
     \code
   cd ${SDK_INSTALL_PATH}/tools/boot
-  python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/sbl_uart.release.tiimage --file=< path to multicore appimage of application binary >
+  python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/sbl_uart.release.tiimage --file=< path to multicore application binary >
   \endcode
   \endif
 \if SOC_AM65X
 - When you execute this, the script first sends the uart bootloader, system firmware(sysfw) and then the multicore appimage
 \else
-- When you execute this, the script first sends the uart bootloader, and then the multicore appimage
+- When you execute this, the script first sends the uart bootloader, and then the multicore application
 \endif
-- After the multicore appimage is successfully parsed, the uart bootloader sends an acknowledgment to the script
+- After the multicore application file is successfully parsed, the uart bootloader sends an acknowledgment to the script
 and waits for 5 seconds before running the application binary
 - Upon receiving the ack, the script will exit successfully
 - Connect to the UART terminal within 5 seconds to see logs from the application
@@ -462,6 +466,16 @@ and waits for 5 seconds before running the application binary
   All commands from config file are executed !!!
   Connect to UART in 5 seconds to see logs from UART !!!
   \endcode
+  \else if (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+  \code
+  Sending the UART bootloader sbl_prebuilt/{board}/sbl_uart.release.tiimage ...
+  Sent bootloader sbl_prebuilt/{board}/sbl_uart.release.tiimage of size 243975 bytes in 23.94s.
+
+  Sending the application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.mcelf ...
+  Sent application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.mcelf of size 99580 bytes in 11.74s.
+  [STATUS] Application load SUCCESS !!!
+  Connect to UART in 2 seconds to see logs from UART !!!
+  \endcode
   \else
   \code
   Sending the UART bootloader sbl_prebuilt/{board}/sbl_uart.release.tiimage ...
@@ -479,7 +493,7 @@ and waits for 5 seconds before running the application binary
 
 ## USB Bootloader Python Script {#USB_BOOTLOADER}
 
-- This script is used in DFU boot mode for sending the SBL and appimage binaries to the EVM via USB DFU.
+- This script is used in DFU boot mode for sending the SBL and application binaries to the EVM via USB DFU.
 - Make sure that \ref INSTALL_DFU_UTIL tool is installed properly and the DFU enumeration is verified.
 \cond SOC_AM261X 
 - The source code for DFU Utils tool is available in GitHub (https://github.com/TexasInstruments/dfu-util) and Prebuilt binary is packaged in SDK.
@@ -497,7 +511,7 @@ and waits for 5 seconds before running the application binary
 \cond SOC_AM261X 
   \code
   cd ${SDK_INSTALL_PATH}/tools/boot
-  python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore appimage of application binary --use-sdk-utility
+  python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore mcelf application binary --use-sdk-utility
   \endcode
 - This **--use-sdk-utility** option selects the custom DFU util from the SDK to perform DFU operations.
 \endcond
@@ -646,7 +660,7 @@ and waits for 5 seconds before running the application binary
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## CAN Bootloader Python Script {#CAN_BOOTLOADER_PYTHON_SCRIPT}
 
-- This script is used in QSPI boot mode for sending the appimage binaries to the EVM via CAN, after flashing the SBL CAN. Refer \ref BASIC_STEPS_TO_FLASH_FILES for flashing.
+- This script is used in QSPI boot mode for sending the mcelf binaries to the EVM via CAN, after flashing the SBL CAN. Refer \ref BASIC_STEPS_TO_FLASH_FILES for flashing.
 - Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
 - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
 - Make sure you have the EVM power cable and CAN cable connected as shown in \ref EXAMPLES_DRIVERS_SBL_CAN
@@ -661,16 +675,16 @@ and waits for 5 seconds before running the application binary
 - Open a command prompt and run the below command to send the application binary to the EVM
 \code
 cd ${SDK_INSTALL_PATH}/tools/boot
-python can_bootloader.py --file=< path to multicore appimage of application binary >
+python can_bootloader.py --file=< path to multicore mcelf application binary >
 \endcode
-- When you execute this, the script first sends the multicore appimage to the EVM
-- After the multicore appimage is successfully parsed, the CAN bootloader sends an acknowledgment to the script
+- When you execute this, the script first sends the multicore mcelf to the EVM
+- After the multicore mcelf is successfully parsed, the CAN bootloader sends an acknowledgment to the script
 - Upon receiving the ack, the script will exit successfully
 - Connect to the UART terminal to see logs from the application
 - Below are the logs of the script after all the files have been sent
   \code
-  Sending the application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage ...
-  Sent application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage of size 99580 bytes in 11.74s.
+  Sending the application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.mcelf ...
+  Sent application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.mcelf of size 99580 bytes in 11.74s.
   [STATUS] BOOTLOADER_CAN_STATUS_LOAD_SUCCESS!!!
   Connect to UART to see logs from UART !!!
   \endcode

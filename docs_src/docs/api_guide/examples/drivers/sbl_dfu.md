@@ -13,8 +13,14 @@
 
 - SBL DFU implements the **dfu task** which receives the appimage and put it into a dedicated buffer in RAM memory. Once the manifestation stage of DFU state machine is completed and DFU state machine goes to IDLE state, then the dfu task will be exited and booting process of the received image will be initiated. 
 
+\if SOC_AM261X
+- It uses bootloader APIs to do the SOC initializations. Once the mcelf image is received, it is parsed into multiple **loadable segments**. These are then loaded into individual CPUs.
+- The **Note segment** of the MCELF image will have information regarding the core on which each segment that application binary needs to be loaded
+- The SBL uses this information to initialize each core, loads the segments to specified addresses, and then releases the core from reset. Now the core will start running. 
+\else
 - It uses bootloader APIs to do the SOC initializations. Once the appimage is received, the SBL parses it and splits the appimage into RPRCs where each RPRC image corresponds to a distinct core. 
 After that it initializes each core and load the corresponding RPRC image. This step sets the entry points and the core is then released from reset. 
+\endif
 
 - Refer to \htmllink{https://www.usb.org/sites/default/files/DFU_1.1.pdf, DFU_1.1.pdf} to know more about USB DFU class. 
 
@@ -22,7 +28,9 @@ After that it initializes each core and load the corresponding RPRC image. This 
 
 \cond SOC_AM261X
 
-# SBL DFU MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_DFU_MCELF}
+# SBL DFU Multicore ELF {#EXAMPLES_DRIVERS_SBL_DFU_MCELF}
+
+For AM261x, use the Multicore ELF project of SBL DFU.
 
 To parse and load an **mcelf** file via DFU bootloader, use the project **examples/drivers/boot/sbl_dfu_multicore_elf**
 
@@ -63,7 +71,7 @@ The steps to run the example is same irrespective of the image format.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_dfu
+ Example folder | examples/drivers/boot/sbl_dfu_multicore_elf
 
 \endcond
 
@@ -89,15 +97,20 @@ The standard DFU-Utility is not compatible with the AM261x device. Instead, plea
 2. Connect the USB cable to the HOST PC and observer that correct DFU device is detected. 
 3. Run the following command which uses \ref INSTALL_DFU_UTIL to send the SBL DFU bootloader tiimage. 
 
+\cond SOC_AM261X
+        sudo dfu-util -i 0 -a 0 -D <path to mcu_plus_sdk>/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_dfu_multicore_elf.release.hs_fs.tiimage
+\endcond
 
-        sudo dfu-util -i 0 -a 0 -D <path to mcu_plus_sdk>/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_dfu.release.hs_fs.tiimage 
+\cond !SOC_AM261X
+        sudo dfu-util -i 0 -a 0 -D <path to mcu_plus_sdk>/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_dfu.release.hs_fs.tiimage
+\endcond
 
  \imageStyle{sbl_dfu_rom.png,width:50%}
  \image html sbl_dfu_rom.png "DFU ROM boot log"
 
-    4 Run the following command which uses \ref INSTALL_DFU_UTIL tool to send the appimages. SBl DFU receives that and boots the application. 
+    4 Run the following command which uses \ref INSTALL_DFU_UTIL tool to send the application images. SBl DFU receives that and boots the application. 
 
-        sudo dfu-util -i 0 -a 0 -D <path to appimage>
+        sudo dfu-util -i 0 -a 0 -D <path to application image>
 
 - Another option is to use the \ref USB_BOOTLOADER which abstracts the setps 3 and 4 mentioned above. 
 
@@ -119,14 +132,14 @@ Some common error messages, reasons and potential solutions are listed below.
     <td> Check the USB connection between host machine and AM261x. Power cycle the AM261x and try running 'dfu-util -l' command to see the enumerated device list.
 </tr>
 <tr>
-    <td> Transfering .appimage gets stuck (LIBUSB_ERROR_PIPE)
+    <td> Transfering .mcelf gets stuck (LIBUSB_ERROR_PIPE)
     <td> AM261x USB did not respond to Host request or the Host Stopped communicating with AM261x
     <td> Power cycle EVM and try again.
 </tr>
 <tr>
-    <td> DFU Timeout while transfering large .appimage (LIBUSB_ERROR_TIMEOUT)
+    <td> DFU Timeout while transfering large .mcelf (LIBUSB_ERROR_TIMEOUT)
     <td> DFU-UTIL tool timed out
-    <td> Reduce the size of application image if the dfu-util tool is facing time-out issues due to large appimage OR create a custom dfu-util tool with increased timeout which suits your requirements.
+    <td> Reduce the size of application image if the dfu-util tool is facing time-out issues due to large application image OR create a custom dfu-util tool with increased timeout which suits your requirements.
 </tr>
 </table>
 \endcond

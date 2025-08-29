@@ -7,23 +7,20 @@
 \if SOC_AM65X
 This bootloader does SOC initializations and attempts to boot a multicore appimage present at 0x100000 location in the OSPI Flash. To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
 \else
-This bootloader does SOC initializations and attempts to boot a multicore appimage present at 0x81000 location in the OSPI Flash. To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
+This bootloader does SOC initializations and attempts to boot a multicore application image present at 0x81000 location in the OSPI Flash. To flash a multicore application image at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
 \endif
 
-If a multicore appimage is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+If a multicore application image is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
 \cond SOC_AM263PX || SOC_AM261X
 
-\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+# SBL OSPI Multicore ELF {#EXAMPLES_DRIVERS_SBL_OSPI_MCELF}
 
-
-# SBL OSPI MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_OSPI_MCELF}
+For AM26xx devices, use the Multicore ELF project of SBL OSPI
 
 To flash an **mcelf** file, use the project **examples/drivers/boot/sbl_ospi_multicore_elf**
 
 When an mcelf image is found, the SBL parses it, loads each segment to its specified address location. Then the core is released from reset.
-
-The steps to run the example is same irrespective of the image format.
 
 # SBL OSPI FASTBOOT {#EXAMPLES_DRIVERS_SBL_OSPI_FASTBOOT_MCELF}
 
@@ -52,11 +49,6 @@ This also has anti-rollback support. User Application needs to make sure that mi
 \endcond
 
 \cond SOC_AM261X
-# SBL OSPI NAND {#EXAMPLES_DRIVERS_SBL_OSPI_NAND}
-
-This SBL is used to run **appimage** type applications while using a **NAND type flash**. Steps to run the example is as mentioned below.
-
-Currently only 1s-1s-1s mode is supported.
 
 # SBL OSPI NAND MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_OSPI_NAND_MCELF}
 
@@ -97,7 +89,7 @@ Currently only 1s-1s-1s mode is supported.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_ospi
+ Example folder | examples/drivers/boot/sbl_ospi_multicore_elf
 
 \endcond
 
@@ -108,7 +100,7 @@ Currently only 1s-1s-1s mode is supported.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_ospi
+ Example folder | examples/drivers/boot/sbl_ospi_multicore_elf
 
 \endcond
 

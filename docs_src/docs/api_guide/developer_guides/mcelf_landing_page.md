@@ -4,13 +4,13 @@
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
-\note RPRC format would be deprecated from SDK 11.00 release onwards. MCELF would be the default application format going forward.
+\note RPRC format has been deprecated from SDK 11.00 release onwards. MCELF is the default application format.
 
 \endcond
 
 ## Introduction
 
-Multicore ELF, or MCELF is a new application image format different from the existing RPRC format.
+Multicore ELF, or MCELF is a new application image format different from the older RPRC format.
 Unlike a proprietary format like RPRC, multicore elf is based on the widely recognized ELF (Executable and Linkable format) standard.
 This ensures seamless compatibility with industry-standard tools and platforms.
 
@@ -86,10 +86,10 @@ PHT           | Program Header Table
 
 ## Booting MCELF images
 
-- The steps for booting MCELF images are similar to RPRC. The SBL parses the image, loads the segments into memory and releases the core from reset.
+- The SBL parses the image, loads the segments into memory and releases the core from reset.
 Refer \ref BOOTFLOW_MCELF_BOOT.
 
-- To boot mcelf images, special SBLs are available with names as **sbl_xx_multicore_elf**.
+- To boot mcelf images, SBLs are available with names as **sbl_xx_multicore_elf**.
 
 - Please refer:
 
@@ -104,17 +104,7 @@ Refer \ref BOOTFLOW_MCELF_BOOT.
 \endcond
   - \ref EXAMPLES_DRIVERS_SBL_UART_MCELF
 
-\note 
-- SBLs that supports parsing, loading and authenticating Multicore ELF (MCELF) are different from the one that supports RPRC format.
-- SBLs and application formats are tightly coupled and cannot be used interchangeably. MCELF SBLs support booting only MCELF format images and not RPRC format images. Similarly, RPRC SBLs support booting only RPRC format images and not MCELF format images.
-- SBLs with MCELF support have project names of the form **sbl_<bootmode>_multicore_elf** . Meanwhile, SBLs that support RPRC boot only have the boot mode specifier like **sbl_<bootmode>**.
-  - For example,
-
-    - sbl_uart is an SBL which only supports booting RPRC application image format.
-    - sbl_uart_multicore_elf is an SBL which only supports booting MCELF application image format.
-
 
 ## Limitations
 
-- TI Uniflash tool does not support flashing of .mcelf images currently.
 - XLAT and SSO features are still under development.

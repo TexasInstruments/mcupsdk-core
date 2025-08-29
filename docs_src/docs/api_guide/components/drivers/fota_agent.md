@@ -12,10 +12,6 @@ is being recieved over a certain protocol(CAN for example).
 - Only ELF image format supported
 - Both XIP and Non-XIP files
 
-## Features NOT Supported
-
-- RPRC image format
-
 ## Example Usage
 
 Include the below file to access the APIs

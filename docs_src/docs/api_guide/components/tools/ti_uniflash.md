@@ -126,7 +126,6 @@ After setting up one of the above session launch type, Click the Start button to
     - For XIP file types, use the below table to configure the load addresses. This field is used by the flash loader to recognize type of XIP file.
         | XIP File          | Load Address  |
         |-------------------|---------------|
-        | *.appimage_xip    | 0xF0000000    |
         | *.mcelf_xip       | 0xE0000000    |
 
 3.  Flash Address Table:
@@ -150,11 +149,6 @@ After setting up one of the above session launch type, Click the Start button to
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
     \imageStyle{load_jtag_1.png,width:70%}
     \image html load_jtag_1.png "Load Binary Image"
-    - For XIP file types, use the below table to configure the load addresses. This field is used by the flash loader to recognize type of XIP file.
-        | XIP File          | Load Address  |
-        |-------------------|---------------|
-        | *.appimage_xip    | 0xF0000000    |
-        | *.mcelf_xip       | 0xE0000000    |
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
         | Program     | Start Address |
@@ -291,7 +285,11 @@ When loading a file to flash or RAM, UniFlash supports the following formats:
 -   Motorola S-Record
 -   Tektronix Hex
 -   TI-TXT
+\if (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+-   Binary (.mcelf, .mcelf.hs, .mcelf.hs_fs, .tiimage)
+\else
 -   Binary (.appimage, .appimage.hs, .appimage.hs_fs, .tiimage)
+\endif
 
 When saving memory to a file, UniFlash supports the following formats:
 

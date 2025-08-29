@@ -4,19 +4,19 @@
 
 # Introduction
 
-This bootloader does SOC initializations and attempts to boot a multicore appimage file named "app" present in the first FAT partition found in the connected SD card. The file can be copied to the SD card by connecting it to the host PC using a card reader. Make sure that it is named "app" without any file extension. If the card is new, make sure that it is formatted with FAT32/16.
+This bootloader does SOC initializations and attempts to boot a multicore application image file named "app" present in the first FAT partition found in the connected SD card. The file can be copied to the SD card by connecting it to the host PC using a card reader. Make sure that it is named "app" without any file extension. If the card is new, make sure that it is formatted with FAT32/16.
 
-If a multicore appimage file is found at the location, the SBL reads the file into a buffer and parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+If a multicore application image file is found at the location, the SBL reads the file into a buffer and parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
 \cond SOC_AM263X || SOC_AM263PX
 
 This bootloader runs in three steps:
-- Format the SD Card with FAT32/16 (this is necessary if the card is new) and paste the *.appimage / *.mcelf image of desired application in the first FAT partition found in the Connected SD card. For connecting the SD Card to the host PC use a card reader. Make sure that the pasted file is named "app" without any file extension.
-- Flashing the SBL SD at offset 0x0 (Setup the EVM in UART Boot Mode, \ref BASIC_STEPS_TO_FLASH_FILES). For flashing the SBL use the `default_sbl_sd` configuration file present in tools/boot/sbl_prebuilt.
+- Format the SD Card with FAT32/16 (this is necessary if the card is new) and paste the *.mcelf image of desired application in the first FAT partition found in the Connected SD card. For connecting the SD Card to the host PC use a card reader. Make sure that the pasted file is named "app" without any file extension.
+- Flashing the SBL SD at offset 0x0 (Setup the EVM in UART Boot Mode, \ref BASIC_STEPS_TO_FLASH_FILES). For flashing the SBL use the `mcelf_sbl_sd` configuration file present in tools/boot/sbl_prebuilt.
 \cond SOC_AM263X 
 - Switch to \ref BOOTMODE_QSPI and Connect to UART in 5 seconds to see logs from UART
 \endcond
-\cond SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX
 - Switch to \ref BOOTMODE_OSPI and Connect to UART in 5 seconds to see logs from UART
 \endcond
 
@@ -27,15 +27,13 @@ This bootloader runs in three steps:
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
-\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
-
 # SBL SD MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_SD_MCELF}
+
+For AM263x/AM263Px devices, use the Multicore ELF project of SBL SD
 
 To parse and load an **mcelf** file via SD bootloader, use the project **examples/drivers/boot/sbl_sd_multicore_elf**
 
 When an mcelf image is received, the SBL parses it, loads each segment to its respective core. Then the core is released from reset.
-
-The steps to run the example is same irrespective of the image format.
 
 \endcond
 
@@ -70,7 +68,7 @@ The steps to run the example is same irrespective of the image format.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_sd
+ Example folder | examples/drivers/boot/sbl_sd_multicore_elf
 
 \endcond
 

@@ -49,7 +49,6 @@ For detailed information on loading visit \ref LOADING_APPLICATION
 
 - If application is found in the address specified to bootloader, it parses the file, loads into respective CPUs and releases core from reset.
 
-- Booting an RPRC image: \ref BOOTFLOW_RPRC_BOOT
 - Booting an MCELF image: \ref BOOTFLOW_MCELF_BOOT
 
 For detailed information on loading visit \ref RUNNING_APPLICATION

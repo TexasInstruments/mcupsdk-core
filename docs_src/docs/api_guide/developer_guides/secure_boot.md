@@ -424,13 +424,19 @@ As mentioned above, since we follow a combined boot method, SYSFW and SBL is sig
 
 #### Secure application image Generation {#APPLICATION_SECURE_IMAGE}
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
+\cond SOC_AM273X
 \note 
     * Signing and Encryption steps for **RPRC** and **MCELF** application images are the **same**. 
     * For Signing, the DEVICE and DEVICE_TYPE=HS options must be provided. 
     * For Encryption along with signing, the DEVICE, DEVICE_TYPE=HS and ENC_ENABLED=yes options must be provided.
 
-Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), appimage is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the appimage generation. The final `*.appimage.hs` or `.mcelf.hs` file generated would be signed with private key mentioned in the devconfig (and encrypted with encryption key specifed in devconfig if that option is selected).
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\note 
+    * For Signing, the DEVICE and DEVICE_TYPE=HS options must be provided. 
+    * For Encryption along with signing, the DEVICE, DEVICE_TYPE=HS and ENC_ENABLED=yes options must be provided.
+\endcond
+
+Depending on the options given in the device configuration file (`devconfig.mak` mentioned above), application image is generated for HS devices. If encryption is enabled in the configuration file, the binary will be first encrypted with the key specified and then the certificate will be generated using the customer MPK specified. If the device type is set as HS in the configuration file, nothing extra needs to be done for the application image generation. The final `*.appimage.hs` or `.mcelf.hs` file generated would be signed with private key mentioned in the devconfig (and encrypted with encryption key specifed in devconfig if that option is selected).
 \endcond
 
 \cond SOC_AM64X | SOC_AM243X

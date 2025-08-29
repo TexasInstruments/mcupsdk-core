@@ -79,14 +79,14 @@ Some common error messages, reasons and potential solutions are listed below.
     <td> Check the USB connection between host machine and AM261x. Power cycle the AM261x and try running 'dfu-util -l' command to see the enumerated device list.
 </tr>
 <tr>
-    <td> Transfering .appimage gets stuck (LIBUSB_ERROR_PIPE)
+    <td> Transfering application image gets stuck (LIBUSB_ERROR_PIPE)
     <td> AM261x USB did not respond to Host request or the Host Stopped communicating with AM261x
     <td> Power cycle EVM and try again.
 </tr>
 <tr>
-    <td> DFU Timeout while transfering large .appimage (LIBUSB_ERROR_TIMEOUT)
+    <td> DFU Timeout while transfering large application image (LIBUSB_ERROR_TIMEOUT)
     <td> DFU-UTIL tool timed out
-    <td> Reduce the size of application image if the dfu-util tool is facing time-out issues due to large appimage OR create a custom dfu-util tool with increased timeout which suits your requirements.
+    <td> Reduce the size of application image if the dfu-util tool is facing time-out issues due to large appimage/mcelf OR create a custom dfu-util tool with increased timeout which suits your requirements.
 </tr>
 </table>
 \endcond

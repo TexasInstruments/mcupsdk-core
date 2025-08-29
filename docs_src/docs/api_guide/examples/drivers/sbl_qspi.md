@@ -4,21 +4,24 @@
 
 # Introduction
 
-This bootloader does SOC initializations and attempts to boot a multicore appimage present at 0xA0000 location in the QSPI Flash. To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
+\if SOC_AM263X
 
-If a multicore appimage is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+This bootloader does SOC initializations and attempts to boot a multicore mcelf image present at 0x80000 location in the QSPI Flash. To flash a multicore mcelf at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
+\else
+This bootloader does SOC initializations and attempts to boot a multicore appimage present at 0xA0000 location in the QSPI Flash. To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
+\endif
+
+If a multicore application image is found at the location, the SBL parses it. Each core is then initialized, application image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
 \cond SOC_AM263X
 
-\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+# SBL QSPI Multicore ELF {#EXAMPLES_DRIVERS_SBL_QSPI_MCELF}
 
-# SBL QSPI MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_QSPI_MCELF}
+For AM263x device, use the Multicore ELF project for SBL QSPI
 
 To flash an **mcelf** file, use the project **examples/drivers/boot/sbl_qspi_multicore_elf**
 
 When an mcelf image is found, the SBL parses it, loads each segment to its specified address location. Then the core is released from reset.
-
-The steps to run the example is same irrespective of the image format.
 
 # SBL QSPI FASTBOOT {#EXAMPLES_DRIVERS_SBL_QSPI_FASTBOOT_MCELF}
 
@@ -56,7 +59,7 @@ The steps to run the example is same irrespective of the image format. Please fo
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_qspi
+ Example folder | examples/drivers/boot/sbl_qspi_multicore_elf
 
 \endcond
 

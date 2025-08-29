@@ -1,6 +1,6 @@
 # Loading an Application {#LOADING_APPLICATION}
 
-Once the application image (`.appimage`/`.mcelf`) is created one needs to copy or flash these to a supported boot media so that the application can start executing once the SOC is powered ON
+Once the application image (.mcelf) is created one needs to copy or flash these to a supported boot media so that the application can start executing once the SOC is powered ON
 
 When flashing the application we also need to flash a bootloader or SBL image.
 
@@ -19,13 +19,13 @@ When flashing the application we also need to flash a bootloader or SBL image.
 <tr>
     <td>HS-FS device
     <td>Supported
-	<td>Supported only for .appimage binaries
+	<td>Supported
 	<td>Supported
 </tr>
 <tr>
     <td>HS-SE device
     <td>Not Supported
-	<td>Not Supported (verify)
+	<td>Supported
 	<td>Supported
 </tr>
 </table>
@@ -35,7 +35,7 @@ When flashing the application we also need to flash a bootloader or SBL image.
 There are 3 methods to load a binary via CCS:
 	- Loading an existing .out
 	- Build and load .out directly in CCS
-	- Load .appimage via SBL JTAG UNIFLASH
+	- Load .mcelf via SBL JTAG UNIFLASH
 
 ### Loading an executable in CCS
 
@@ -52,7 +52,7 @@ There are 3 methods to load a binary via CCS:
 
 - Refer \ref CCS_PROJECTS_1CLICK_DEBUG for steps.
 
-### Loading appimage via SBL JTAG UNIFLASH
+### Loading applicaction via SBL JTAG UNIFLASH
 
 - This is a flash-writer example which uses JTAG to write files or erase flash.
 - It can perform the following operations:
@@ -74,7 +74,7 @@ There are 3 methods to load a binary via CCS:
 
 Tool				|	Description
 --------------------|-------------
-uart_bootloader.py	|	Sends the SBL and appimage binaries over UART using XMODEM protocol
+uart_bootloader.py	|	Sends the SBL and mcelf binaries over UART using XMODEM protocol
 uart_uniflash.py	|	Flashes SBL and applications to EVM flash using UART
 can_bootloader.py	|	Sends the application binaries over CAN given the SBL is already flashed
 can_uniflash.py		|	Flashes the application binaries after sending it over CAN given the SBL is already flashed

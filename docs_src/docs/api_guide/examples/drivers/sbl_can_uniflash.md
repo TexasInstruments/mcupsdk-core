@@ -22,16 +22,11 @@ Refer \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_STEPS
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
-\note RPRC image booting using SBL would be deprecated from SDK 11.00 release onwards. MCELF would be the default boot image format supported by SBL going forward.
+# SBL CAN Uniflash Multicore ELF {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_MCELF}
 
+- For AM26xx devices, use the Multicore ELF project of SBL CAN Uniflash
 
-# SBL CAN UNIFLASH MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_MCELF}
-
-To flash an **mcelf** file via CAN uniflash, use the project **examples/drivers/boot/sbl_can_uniflash_multicore_elf**
-
-When an mcelf image is received, the SBL parses it, loads each segment to its specified address location. Then the core is released from reset.
-
-The steps to run the example is same irrespective of the image format. Refer \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_STEPS
+- To flash an **mcelf** file via CAN uniflash, use the project **examples/drivers/boot/sbl_can_uniflash_multicore_elf**
 
 \endcond
 
@@ -101,7 +96,7 @@ In this application, the CAN settings are:
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_can_uniflash
+ Example folder | examples/drivers/boot/sbl_can_uniflash_multicore_elf
 
 \endcond
 \cond SOC_AM273X
@@ -122,7 +117,7 @@ In this application, the CAN settings are:
 
  - **Example is tested using PCAN-USB module**
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
  - **Hardware Conectivity**, First make sure the connections to the PCAN-USB module to PC are proper. Connect the PCAN-USB module to PC from USB and Serial Port to be connected as mentioned in the image below.
 
 \imageStyle{am263x_mcan_sbl_hw_connect.PNG,width:60%}
@@ -205,24 +200,28 @@ In this application, the CAN settings are:
 
     - **CAN Uniflash Python Script**
 
-    - For sending the app-image default_sbl_can_uniflash_app.cfg can be editted with the path of the app-image of the desired application.
-    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. \n
 \if SOC_AM263X
+    - For sending the application image mcelf_sbl_can_uniflash_app.cfg can be editted with the path of the image of the desired application.
+    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. \n
+
         For AM263x, Default Flash Offset is at 0x80000.
         \code
-        --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am263x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x80000
+        --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am263x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.mcelf --operation=flash --flash-offset=0x80000
         \endcode
 \endif
 \if SOC_AM263PX
+    - For sending the application image mcelf_sbl_can_uniflash_app.cfg can be editted with the path of the image of the desired application.
+    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. \n
+    
         For AM263Px, Default Flash Offset is at 0x81000.
         \code
-        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash-sector-write --flash-offset=0x81000
+        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.mcelf --operation=flash-sector-write --flash-offset=0x81000
         \endcode
 \endif
 \if SOC_AM261X
         For AM261x, Default Flash Offset is at 0x81000.
         \code
-        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash-sector-write --flash-offset=0x81000
+        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.mcelf --operation=flash-sector-write --flash-offset=0x81000
         \endcode
 \endif
 \if SOC_AM273X
