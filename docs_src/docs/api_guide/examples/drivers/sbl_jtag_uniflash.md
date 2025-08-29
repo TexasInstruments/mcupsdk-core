@@ -151,11 +151,11 @@ This example is more or less like a flashing server, and will terminate until us
  Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
  Enter flash offset (in hex format) : 0x0
  Enter below command in CCS scripting console to load the file data to memory.
- AFTER the file load is done, enter '1' to continue ...
-
- loadRaw(0x700c0020, 0, "C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage", 32, false);
-1
- [FLASH WRITER] Flashing success!!...
+ AFTER the file load is done, enter '1' to continue ...\
+ 
+ const session=initScripting().openSession(".*");\
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
+ 1 [FLASH WRITER] Flashing success!!...
 
 
  ==================
@@ -175,11 +175,11 @@ This example is more or less like a flashing server, and will terminate until us
  Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
  Enter flash offset (in hex format) : 0x0
  Enter below command in CCS scripting console to load the file data to memory.
- AFTER the file load is done, enter '1' to continue ...
+ AFTER the file load is done, enter '1' to continue ...\
 
- loadRaw(0x700c0020, 0, "C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage", 32, false);
-1
- [FLASH WRITER] Verifying success!!...
+ const session=initScripting().openSession(".*");\
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
+ 1 [FLASH WRITER] Verifying success!!...
 
 
  ==================

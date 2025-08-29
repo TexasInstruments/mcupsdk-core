@@ -209,8 +209,8 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
             DebugP_log(" Enter below command in CCS scripting console to load the file data to memory.\r\n");
             DebugP_log(" AFTER the file load is done, enter '1' to continue ...\r\n");
             DebugP_log("\r\n");
-            DebugP_log(" loadRaw(0x%08x, 0, \"%s\", 32, false);",
-                gFileBuf + sizeof(uniflashHeader), filename);
+            DebugP_log("const session=initScripting().openSession(\".*\")\r\n");
+            DebugP_log("session.memory.loadBinary(0x%08x,\"%s\");", gFileBuf + sizeof(uniflashHeader), filename);
             DebugP_log("\r\n");
 
             /* wait for user input */
