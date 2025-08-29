@@ -206,9 +206,11 @@ static void handle_usb_reset_intr(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This interrupt occurs when a Connect Done is detected.
+ * \brief This interrupt occurs when a Connect Done is detected.
  * Read the device status register and set the device speed in the data
  * structure. Set up EP0 to receive SETUP packets.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
  */
 void dwc_usb3_handle_connect_done_intr(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -466,7 +468,11 @@ static void handle_sof_intr(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This interrupt indicates that an EP has a pending interrupt.
+ * \brief This interrupt indicates that an EP has a pending interrupt.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param physep The physical endpoint number.
+ * \param event The event associated with the transfer.
  */
 void dwc_usb3_handle_ep_intr(volatile dwc_usb3_pcd_t *pcd, u32 physep, u32 event)
 {
@@ -631,12 +637,17 @@ void dwc_usb3_handle_ep_intr(volatile dwc_usb3_pcd_t *pcd, u32 physep, u32 event
 }
 
 /**
- * PCD interrupt handler.
+ * \brief PCD interrupt handler.
  *
  * The PCD handles the device interrupts. Many conditions can cause a
  * device interrupt. When an interrupt occurs, the device interrupt
  * service routine determines the cause of the interrupt and
  * dispatches handling to the appropriate routine.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param event The event associated with the transfer.
+ * 
+ * \return 0 if no further action is needed, 1 if the device should enter
  */
 int dwc_usb3_handle_dev_intr(volatile dwc_usb3_pcd_t *pcd, u32 event)
 {

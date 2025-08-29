@@ -196,27 +196,27 @@ typedef struct dwc_usb3_core_params {
  * Platform-specific USB endpoint
  */
 typedef struct usb_ept {
-        const void      *desc;
-        const void      *comp_desc;
-        unsigned        maxpacket:16;
-        u8              address;
+        const void      *desc;          /**< Pointer to the descriptor for the USB endpoint. */
+        const void      *comp_desc;     /**< Pointer to the companion descriptor for the USB endpoint. */
+        unsigned        maxpacket:16;   /**< Maximum packet size for the USB endpoint. */
+        u8              address;         /**< Address of the USB endpoint. */
 } usb_ep_t;
 
 /**
- * Platform-specific USB request
+ * USB request structure specific to the platform
  */
 typedef struct usb_request {
-        void            *buf;
-        unsigned        length;
-        dwc_dma_t       dma;
+        void            *buf;       /**< Pointer to the buffer associated with the USB request. */
+        unsigned        length;     /**< Length of the data in the buffer. */
+        dwc_dma_t       dma;        /**< DMA address associated with the USB request. */
 
-        unsigned        stream_id:16;
-        unsigned        zero:1;
+        unsigned        stream_id:16; /**< Stream ID for the USB request (16 bits). */
+        unsigned        zero:1;     /**< Flag indicating whether the zero-length packet is required (1 bit). */
 
-        void            (*complete)(volatile usb_ep_t *ep, volatile struct usb_request *req);
+        void            (*complete)(volatile usb_ep_t *ep, volatile struct usb_request *req); /**< Callback function invoked upon completion of the USB request. */
 
-        int             status;
-        unsigned        actual;
+        int             status;     /**< Status of the USB request, indicating success or error. */
+        unsigned        actual;     /**< Actual number of bytes transferred during the USB request. */
 } usb_request_t;
 
 /**

@@ -34,6 +34,8 @@
  * @file   dwc_queue.c
  *
  * @brief  DWC queue implementation
+ * @addtogroup misc_api_grp Miscellaneous API Routines
+ * @{
  */
 
 #include "dwc_queue.h"
@@ -42,11 +44,9 @@
 
 
 /**
- * This routine initializes the queue
+ * @brief This routine initializes the queue
  * 
  * @param queue			Pointer to the instance of queue
- * 
- * @return true if the queue initialization is successful, false if the queue initialization is failed
  */
 void dwc_queueInit(dwc_queue_t *queue)
 {
@@ -56,7 +56,7 @@ void dwc_queueInit(dwc_queue_t *queue)
 }
 
 /**
- * This routine adds an element to the queue
+ * @brief This routine adds an element to the queue
  * 
  * @param queue	Pointer to the instance of queue
  * @param data	Data to be inserted in the queue
@@ -82,7 +82,7 @@ bool dwc_queuePut(dwc_queue_t *queue, uint32_t data)
 }
 
 /**
- * This routine retrive an elements from the queue
+ * @brief This routine retrieves an elements from the queue
  * 
  * @param queue	Pointer to the instance of queue
  * @param data	Pointer to a variable where the data will be stored
@@ -107,3 +107,4 @@ bool dwc_queueGet(dwc_queue_t *queue, uint32_t *data)
 
 	return retval;
 }
+/** @} */

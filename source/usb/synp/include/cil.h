@@ -43,7 +43,7 @@ extern "C" {
  * This file contains the interface to the Core Interface Layer.
  */
 
-/** @addtogroup init_api_grp Initialization API Routines
+/** @defgroup init_api_grp Initialization API Routines
  *
  * These routines handle initialization of the CIL and PCD driver components
  * and the DWC_usb3 controller.

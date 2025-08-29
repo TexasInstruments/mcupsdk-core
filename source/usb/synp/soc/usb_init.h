@@ -29,7 +29,14 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+ /**
+ *  \defgroup USB_MODULE APIs for USB
+ *  \ingroup DRV_MODULE
+ *
+ *  This module has APIs for USB device driver.
+ *  See this page, \ref USB_DEVICE_DRIVER, for using USB using tinyUSB APIs
+ *  @{
+ */
  /** \file usb_init.h
  *
  *   \brief This file contains USB initialization APIs
@@ -63,20 +70,19 @@ extern "C" {
 /* ========================================================================== */
 
 /**
- * \brief USB Initialization function
+ * \brief This function initializes the USB driver
  */
 void USB_init();
 
-/*
- * \brief Task to handle triggered interrupt 
- * Wait for signal from DWC_task (from interrupt context)
- *  - check interrupt type (device, EP or invalid etc)
- *      - invoke handler in user context.
+/**
+ * \brief This function handles triggered events from the USB driver
+ * - process the events, check for the event type (device, EP or invalid etc) and invokes the
+ *   appropriate handler
  **/
 void USB_dwcTask();
 
 /**
- * \brief USB De-Initialization function
+ * \brief This function De-Initialization USB driver
  */
 void USB_deinit();
 

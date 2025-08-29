@@ -311,10 +311,13 @@ typedef struct {
 } UPACKED usb_interface_descriptor_t;
 #define USB_INTERFACE_DESCRIPTOR_SIZE 9
 
-typedef struct {
-	uByte		bLength;
-	uByte		bDescriptorType;
-	uByte		bEndpointAddress;
+/**
+ * \brief This structure describes a USB endpoint.
+ */
+typedef struct usb_endpoint_descriptor_t{
+	uByte		bLength;				/**< Length of the descriptor */
+	uByte		bDescriptorType;		/**< Type of the descriptor */
+	uByte		bEndpointAddress;		/**< Address of the endpoint */
 #define UE_GET_DIR(a)		((a) & 0x80U)
 #define UE_SET_DIR(a,d)		((a) | (((d)&1) << 7))
 #define UE_DIR_IN			((uByte)0x80U)
@@ -333,8 +336,8 @@ typedef struct {
 #define UE_ISO_ADAPT		((uByte)0x08U)
 #define UE_ISO_SYNC			((uByte)0x0cU)
 #define UE_GET_ISO_TYPE(a)	((a) & UE_ISO_TYPE)
-	uWord		wMaxPacketSize;
-	uByte		bInterval;
+	uWord		wMaxPacketSize;			/**< Maximum packet size for this endpoint */
+	uByte		bInterval;				/**< Polling interval for this endpoint */
 } UPACKED usb_endpoint_descriptor_t;
 #define USB_ENDPOINT_DESCRIPTOR_SIZE 7
 
@@ -701,12 +704,21 @@ struct usb_device_info {
 	u8	udi_protocol;
 	u8	udi_config;
 	u8	udi_speed;
-#define USB_SPEED_UNKNOWN		0U
-#define USB_SPEED_LOW			1U
-#define USB_SPEED_FULL			2U
-#define USB_SPEED_HIGH			3U
-#define USB_SPEED_VARIABLE		4U
-#define USB_SPEED_SUPER			5U
+/**
+ * @brief USB speed definitions.
+ *
+ * These macros define various USB speed types.
+ *
+ * \anchor USB_SPEED_DEFINITIONS USB Speed Definitions
+ * @{
+ */
+#define USB_SPEED_UNKNOWN		0U		/**< Unknown speed */
+#define USB_SPEED_LOW			1U		/**< Low speed */
+#define USB_SPEED_FULL			2U		/**< Full speed */
+#define USB_SPEED_HIGH			3U		/**< High speed */
+#define USB_SPEED_VARIABLE		4U		/**< Variable speed */
+#define USB_SPEED_SUPER			5U		/**< Super speed */
+/** @} */
 	int		udi_power;	/* power consumption in mA, 0 if selfpowered */
 	int		udi_nports;
 	char		udi_devnames[USB_MAX_DEVNAMES][USB_MAX_DEVNAMELEN];

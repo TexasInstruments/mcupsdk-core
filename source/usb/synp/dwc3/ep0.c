@@ -12,6 +12,12 @@
 #ifdef DWC_UTE
 #include "ute_if.h"
 #endif
+ /**
+ *  @addtogroup ep0_api_grp 
+ *
+ *  This module has APIs for USB Synopsis IP device driver.
+ *  @{
+ */
 
 /**********************************************************************
  *************************** Local Functions **************************
@@ -30,6 +36,7 @@ static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf, dwc_d
 static void setup_out_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf, dwc_dma_t dma);
 static void dwc_usb3_handle_ep0(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,u32 event);
 /*=======================================================================*/
+/** @} */
 /*
  * EP0 routines
  */
@@ -89,12 +96,20 @@ const static wusb_bos_desc_t bos_desc = {
 
 #endif /* !__linux__ || ... */
 
+ /**
+ *  @addtogroup ep0_api_grp 
+ * @{
+ */
+
 /**
- * This routine starts the data stage of a 3-stage control command.
+ * \brief This routine starts the data stage of a 3-stage control command.
  * pcd->ep0state must be set to EP0_OUT_DATA_PHASE or EP0_IN_DATA_PHASE, and
  * pcd->ep0->dwc_ep.is_in must be set to 0 or 1 before calling this routine.
  * For IN, the data to be sent must be placed in pcd->ep0_status_buf before
  * the call.
+ * 
+ * \param pcd 	 Programming view of DWC_usb3 peripheral controller.
+ * \param length Length of the data stage transfer.
  */
 void dwc_usb3_pcd_ep0_data_stage(volatile dwc_usb3_pcd_t *pcd, int length)
 {
@@ -108,7 +123,9 @@ void dwc_usb3_pcd_ep0_data_stage(volatile dwc_usb3_pcd_t *pcd, int length)
 }
 
 /**
- * This routine processes the SET_ADDRESS Setup Commands.
+ * \brief This routine processes the SET_ADDRESS Setup Commands.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
 static void do_set_address(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -134,7 +151,10 @@ static void do_set_address(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine stalls EP0.
+ * \brief This routine stalls EP0.
+ * 
+ * \param pcd 	 Programming view of DWC_usb3 peripheral controller.
+ * \param err_val Error value that triggered the stall
  */
 static void ep0_do_stall(volatile dwc_usb3_pcd_t *pcd, int err_val)
 {
@@ -151,8 +171,11 @@ static void ep0_do_stall(volatile dwc_usb3_pcd_t *pcd, int err_val)
 }
 
 /**
- * Clear the EP halt (STALL), and if there are pending requests start
+ * \brief Clear the EP halt (STALL), and if there are pending requests start
  * the transfer.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param ep  Pointer to the endpoint that is being cleared.
  */
 static void do_clear_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -194,8 +217,10 @@ static void do_clear_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep
 }
 
 /**
- * This routine handles the Get Descriptor request for the BOS descriptor
+ * \brief This routine handles the Get Descriptor request for the BOS descriptor
  * and the OTG descriptor, and passes all other requests to the Gadget driver.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
 static void do_get_descriptor(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -305,7 +330,9 @@ static void do_get_descriptor(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine processes the GET_STATUS Setup Commands.
+ * \brief This routine processes the GET_STATUS Setup Commands.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
 static void do_get_status(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -397,7 +424,9 @@ static void do_get_status(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine processes the SET_FEATURE Setup Commands.
+ * \brief This routine processes the SET_FEATURE Setup Commands.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
 static void do_set_feature(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -556,7 +585,9 @@ static void do_set_feature(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine processes the CLEAR_FEATURE Setup Commands.
+ * \brief This routine processes the CLEAR_FEATURE Setup Commands.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
 static void do_clear_feature(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -662,10 +693,12 @@ static void do_clear_feature(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine processes SETUP commands. The USB Command processing is
+ * \brief This routine processes SETUP commands. The USB Command processing is
  * done in two places - the first being the PCD and the second being the
  * Gadget driver (for example, the File-Backed Storage Gadget driver).
  *
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * 
  * <table>
  * <tr><td> Command </td><td> Driver </td><td> Description </td></tr>
  *
@@ -880,11 +913,11 @@ static void dwc_usb3_do_setup(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine continues control IN transfers started by ep0_start_transfer,
+ * \brief This routine continues control IN transfers started by ep0_start_transfer,
  * when the transfer does not fit in a single request.
  *
- * @param pcd Programming view of DWC_usb3 peripheral controller.
- * @param req The request to continue.
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param req The request to continue.
  */
 static void ep0_continue_transfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req)
 {
@@ -922,8 +955,12 @@ static void ep0_continue_transfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb
 }
 
 /**
- * This routine starts the Zero-Length Packet for the IN status phase of a
+ * \brief This routine starts the Zero-Length Packet for the IN status phase of a
  * control write transfer.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param buf Pointer to the buffer to be used for the ZLP.
+ * \param dma DMA address of the buffer to be used for the ZLP.
  */
 static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
 				  dwc_dma_t dma)
@@ -950,8 +987,12 @@ static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
 }
 
 /**
- * This routine starts the Zero-Length Packet for the OUT status phase of a
+ * \brief This routine starts the Zero-Length Packet for the OUT status phase of a
  * control read transfer.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param buf Pointer to the buffer to be used for the ZLP.
+ * \param dma DMA address of the buffer to be used for the ZLP.
  */
 static void setup_out_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
 				   dwc_dma_t dma)
@@ -1027,7 +1068,14 @@ void dwc_usb3_print_ep0_state(volatile dwc_usb3_pcd_t *pcd)
 #endif
 
 /**
- * This routine completes the ep0 control transfer.
+ * \brief This routine completes the ep0 control transfer.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param req The request to complete.
+ * \param desc The DMA descriptor for the transfer.
+ * \param status The status of the transfer.
+ * 
+ * \return 1 if the request is completed, 0 otherwise.
  */
 static int ep0_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,
 				dwc_usb3_dma_desc_t *desc, int status)
@@ -1147,9 +1195,13 @@ static int ep0_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_
 }
 
 /**
- * This routine handles EP0 Control transfers.
+ * \brief This routine handles EP0 Control transfers.
  *
  * The state of the control tranfers are tracked in <code>ep0state</code>.
+ * 
+ * \param pcd Programming view of DWC_usb3 peripheral controller.
+ * \param req The request to handle.
+ * \param event The event that triggered this handler.
  */
 static void dwc_usb3_handle_ep0(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,
 				u32 event)
@@ -1356,12 +1408,15 @@ out:
 }
 
 /**
- * This routine handles EP0 transfers.
+ * \brief This routine handles EP0 transfers.
  *
  * This routine gets the request corresponding to the current EP0 transfer. If
  * EP0 is in IDLE state, it calls dwc_usb3_do_setup() to begin processing
  * the next Setup request, otherwise it calls dwc_usb3_handle_ep0() to handle
  * the next stage of the current transfer.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param event The event that triggered the transfer.
  */
 void dwc_usb3_handle_ep0_xfer(volatile dwc_usb3_pcd_t *pcd, u32 event)
 {
@@ -1385,3 +1440,4 @@ void dwc_usb3_handle_ep0_xfer(volatile dwc_usb3_pcd_t *pcd, u32 event)
 		dwc_usb3_handle_ep0(pcd, req, event);
 	}
 }
+/** @} */

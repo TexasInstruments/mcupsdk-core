@@ -795,7 +795,7 @@ int dwc_usb3_get_frame(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * Get the current link state.
+ * \brief This function retrieves the current link state.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      The current link state.
@@ -813,7 +813,7 @@ u32 dwc_usb3_pcd_get_link_state(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * Set state of USB link.
+ * \brief This function sets state of USB link.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param state Link state to set.
@@ -833,7 +833,7 @@ void dwc_usb3_pcd_set_link_state(volatile dwc_usb3_pcd_t *pcd, u32 state)
 }
 
 /**
- * Send a Remote Wakeup to the host.
+ * \brief This function sends a Remote Wakeup to the host.
  *
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param function      Function that caused the remote wakeup.
@@ -847,7 +847,7 @@ void dwc_usb3_pcd_remote_wake(volatile dwc_usb3_pcd_t *pcd, int function)
 }
 
 /**
- * Set the Device Address.
+ * \brief This function sets the Device Address.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param addr  The address to set.
@@ -863,7 +863,7 @@ void dwc_usb3_set_address(volatile dwc_usb3_pcd_t *pcd, int addr)
 }
 
 /**
- * Enable USB2 Phy suspend.
+ * \brief This function enables USB2 Phy suspend.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
@@ -1089,11 +1089,13 @@ void dwc_usb3_clr_eps_enabled(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine is called when the SET_FEATURE TEST_MODE Setup packet
+ * \brief This routine is called when the SET_FEATURE TEST_MODE Setup packet
  * is sent from the host. The Device Control register is written with
  * the Test Mode bits set to the specified Test Mode. This is done as
  * a tasklet so that the "Status" phase of the control transfer
  * completes before transmitting the TEST packets.
+ * 
+ * \param data Pointer to the programming view of DWC_usb3 peripheral controller.
  */
 void dwc_usb3_pcd_do_test_mode(unsigned long data)
 {
@@ -1216,7 +1218,7 @@ static int calc_num_out_eps(volatile dwc_usb3_device_t *dev)
 }
 
 /**
- * This routine is called to initialize the DWC_usb3 CSR data structures. The
+ * \brief This routine is called to initialize the DWC_usb3 CSR data structures. The
  * register addresses in the device structures are initialized from the
  * <strong><em>base</em></strong> address supplied by the caller. The calling
  * routine must make the OS calls to get the base address of the DWC_usb3
@@ -1226,6 +1228,8 @@ static int calc_num_out_eps(volatile dwc_usb3_device_t *dev)
  * @param dev           Programming view of DWC_usb3 controller.
  * @param base          Base address of DWC_usb3 core registers.
  * @param core_params   Pointer to the core configuration parameters.
+ * 
+ * \return  0 on success, negative error code on failure
  */
 int dwc_usb3_pcd_common_init(volatile dwc_usb3_device_t *dev, volatile u8 __iomem *base,
 				const dwc_usb3_core_params_t *core_params)
@@ -1323,7 +1327,7 @@ void dwc_usb3_pcd_common_remove(volatile dwc_usb3_device_t *dev)
 }
 
 /**
- * This routine ensures the device is really a DWC_usb3 controller, by reading
+ * \brief This routine ensures the device is really a DWC_usb3 controller, by reading
  * and verifying the SNPSID register contents. The value should be 0x5533XXXX,
  * which corresponds to "U3", as in "USB3 version X.XXX".
  *
@@ -1624,7 +1628,7 @@ rxerr:
 }
 
 /**
- * This routine initializes the DWC_usb3 controller registers.
+ * \brief This routine initializes the DWC_usb3 controller registers.
  *
  * If the <strong><em>soft_reset</em></strong> parameter is
  * <strong>true</strong>, then this routine must be called in a context that
@@ -2026,7 +2030,7 @@ void dwc_usb3_pcd_device_init(volatile dwc_usb3_device_t *dev, int soft_reset,
 }
 
 /**
- * This routine deinitializes the DWC_usb3 controller registers.
+ * \brief This routine deinitializes the DWC_usb3 controller registers.
  *
  * This routine is called by dwc_usb3_pcd_remove() when the driver is unloaded,
  * so it normally does not need to be called separately,

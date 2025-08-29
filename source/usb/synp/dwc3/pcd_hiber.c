@@ -50,8 +50,10 @@
 static void dwc_reenable_xfer_and_restart(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep);
 
 /**
- * This routine sends the core into hibernation, saving the core's runtime
+ * \brief This routine sends the core into hibernation, saving the core's runtime
  * state if requested.
+ * \param pcd   	 Programming view of DWC_usb3 peripheral controller.
+ * \param save_state If non-zero, the core's runtime state is saved.
  */
 void dwc_enter_hibernation(volatile dwc_usb3_pcd_t *pcd, int save_state)
 {
@@ -389,7 +391,10 @@ static void dwc_reenable_xfer_and_restart(volatile dwc_usb3_pcd_t *pcd,
 }
 
 /**
- * This routine finishes exiting from hibernation once the device is connected.
+ * \brief This routine finishes exiting from hibernation once the device is connected.
+ * 
+ * \param pcd      Programming view of DWC_usb3 peripheral controller.
+ * \param connected If non-zero, the device is already connected to the host.
  */
 void dwc_exit_hibernation_after_connect(volatile dwc_usb3_pcd_t *pcd, int connected)
 {
@@ -510,7 +515,12 @@ void dwc_exit_hibernation_after_connect(volatile dwc_usb3_pcd_t *pcd, int connec
 }
 
 /**
- * This routine wakes the core from hibernation.
+ * \brief This routine wakes the core from hibernation.
+ * 
+ * \param pcd          Programming view of DWC_usb3 peripheral controller.
+ * \param restore_state If non-zero, the core's runtime state is restored.
+ * 
+ * \return 0 on success, 1 on failure.
  */
 int dwc_exit_hibernation(volatile dwc_usb3_pcd_t *pcd, int restore_state)
 {

@@ -56,7 +56,7 @@ extern dwc_usb3_dma_desc_t	g_in_trb_pool[][DWC_NUM_ISOC_TRBS + 1];
  ******************************************************************************/
 
 /**
- * This routine receives Connect notifications from the PCD
+ * @brief This routine receives Connect notifications from the PCD
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param speed Speed of the connection (as defined in usb.h).
@@ -99,7 +99,7 @@ int dwc_usb3_gadget_connect(volatile dwc_usb3_pcd_t *pcd, int speed)
 }
 
 /**
- * This routine receives Disconnect notifications from the PCD
+ * @brief This routine receives Disconnect notifications from the PCD
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
@@ -120,7 +120,7 @@ int dwc_usb3_gadget_disconnect(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine receives Suspend notifications from the PCD
+ * @brief This routine receives Suspend notifications from the PCD
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
@@ -140,7 +140,7 @@ int dwc_usb3_gadget_suspend(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine receives Resume notifications from the PCD
+ * @brief This routine receives Resume notifications from the PCD
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
@@ -160,7 +160,7 @@ int dwc_usb3_gadget_resume(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine receives Setup request notifications from the PCD
+ * @brief This routine receives Setup request notifications from the PCD
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param ctrl  Pointer to the Setup packet for the request.
@@ -193,7 +193,7 @@ int dwc_usb3_gadget_setup(volatile dwc_usb3_pcd_t *pcd, usb_device_request_t *ct
 }
 
 /**
- * This routine receives Transfer Complete notifications from the PCD
+ * @brief This routine receives Transfer Complete notifications from the PCD
  *
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        PCD EP for the transfer.
@@ -240,7 +240,7 @@ int dwc_usb3_gadget_complete(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd
  ******************************************************************************/
 
 /**
- * This routine allocates coherent DMA memory. It is used by the PCD to
+ * @brief This routine allocates coherent DMA memory. It is used by the PCD to
  * allocate memory for TRBs. The block of memory returned must have a start
  * address aligned to a 16-byte boundary.
  *
@@ -288,7 +288,7 @@ void *dwc_usb3_gadget_alloc_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, dw
 }
 
 /**
- * This routine frees DMA memory allocated by dwc_usb3_gadget_alloc_dma().
+ * @brief This routine frees DMA memory allocated by dwc_usb3_gadget_alloc_dma().
  *
  * @param pcd_ep        PCD EP that memory block is associated with.
  * @param size          Size of memory block to free, in bytes.
@@ -305,7 +305,7 @@ void dwc_usb3_gadget_free_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, void
 }
 
 /**
- * This routine returns the PCD request corresponding to the current transfer
+ * @brief This routine returns the PCD request corresponding to the current transfer
  * request for an endpoint. The current transfer request is the first request
  * submitted that has not been completed yet.
  *
@@ -330,7 +330,7 @@ dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(volatile dwc_usb3_pcd_t *pcd, vo
 }
 
 /**
- * This routine checks to see if there is another transfer request waiting
+ * @brief This routine checks to see if there is another transfer request waiting
  * on an endpoint that has not been started yet. If so then that transfer is
  * started.
  *
@@ -366,7 +366,7 @@ void dwc_usb3_gadget_start_next_request(volatile dwc_usb3_pcd_t *pcd, volatile d
 }
 
 /**
- * Start an Isoc EP running at the proper interval, after receiving the initial
+ * @brief This routine starts an Isoc EP running at the proper interval, after receiving the initial
  * XferNrdy event.
  *
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
@@ -439,7 +439,7 @@ void dwc_usb3_gadget_isoc_ep_start(volatile dwc_usb3_pcd_t *pcd, volatile dwc_us
 }
 
 /**
- * This routine terminates all requests which are pending on an endpoint.
+ * @brief This routine terminates all requests which are pending on an endpoint.
  *
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        EP to operate on.
@@ -462,7 +462,7 @@ void dwc_usb3_gadget_request_nuke(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb
 }
 
 /**
- * This routine marks all pending requests for an EP as not started.
+ * @brief This routine marks all pending requests for an EP as not started.
  *
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        EP to operate on.

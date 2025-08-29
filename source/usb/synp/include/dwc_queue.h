@@ -49,10 +49,15 @@ extern "C" {
 
 #define DWC_QUEUE_SIZE     (8U)
 
-typedef struct{
-    uint32_t buffer[DWC_QUEUE_SIZE];
-    uint16_t front;
-    uint16_t rear;
+/**
+ * @brief A structure representing a queue for managing data.
+ *
+ * This structure is used to implement a queue with a fixed-size buffer.
+ */
+typedef struct {
+    uint32_t buffer[DWC_QUEUE_SIZE]; /**< An array of size DWC_QUEUE_SIZE used to store the queue's data. */
+    uint16_t front; /**< The index of the front element in the queue. */
+    uint16_t rear;  /**< The index of the rear element in the queue. */
 }dwc_queue_t;
 
 void dwc_queueInit(dwc_queue_t *queue);

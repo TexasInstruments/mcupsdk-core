@@ -50,16 +50,37 @@
 #define BOOTPARAM_TIMEOUT_MS 20U
 #endif
 
+ /**
+ *  \defgroup USB_MODULE APIs for USB
+ *  \ingroup DRV_MODULE
+ *
+ *  This module has APIs for USB device driver.
+ *  See this page, \ref USB_DEVICE_DRIVER, for using USB using tinyUSB APIs
+ *  @{
+ */
+
+/** \file device_wrapper.h
+ *
+ *   \brief This file contains USB device wrapper APIs
+ */
+
+/**
+ * \brief Structure representing the USB device handle.
+ */
 typedef struct usb_handle_s {
-    /* Base of the usb_dwc_3 interface */
+    /** Base address of the USB DWC3 interface configuration registers. */
     uint32_t cfg_base;  
-    /* global USB device structure */
+    /** Pointer to the global USB device structure. */
     dwc_usb3_device_t* dwc_usb3_dev;
-    /* HwiP Object and params */
+    /** Parameters for configuring the USB interrupt. */
     HwiP_Params hwiParamsUsb;
+    /** Object representing the USB interrupt handler. */
     HwiP_Object hwiObjUsb; 
 } usb_handle_t;
 
+/**
+ * \brief This enumeration defines the return status for USB PHY. 
+ */
 typedef enum UsbPhy_ret_t_
 {
     USB_PHY_OK = 0x01U ,
@@ -67,33 +88,51 @@ typedef enum UsbPhy_ret_t_
 
 }UsbPhy_ret_t ;
 
-/* global buffers for EPs */
+
+/** 
+ * \brief Global buffers for USB IN endpoints. 
+ * These buffers are used for data transmission from the device to the host.
+ */
 extern uint8_t    ep_in_buf[DWC_MAX_EPS - 1U][DWC_MAX_PACKET_SIZE];
+
+/** 
+ * \brief Global buffers for USB OUT endpoints. 
+ * These buffers are used for data reception from the host to the device.
+ */
 extern uint8_t    ep_out_buf[DWC_MAX_EPS - 1U][DWC_MAX_PACKET_SIZE];
 
 /**
- * @brief SOC USB power on sequence
+ * @brief Performs the USB PHY power-on sequence.
  *
+ * This function initializes the USB PHY by performing the necessary
+ * power-on sequence.
+ *
+ * @return #UsbPhy_ret_t indicating the status of the operation.
  */
 UsbPhy_ret_t usb_phy_power_sequence(void);
 
 /**
- * @brief Register interrupt
+ * @brief This function configures the interrupt
  *
- * @param intr where intr represents MAINx interrupt number
+ * @param intr Interrupt number or identifier.
+ *             Specifies the interrupt to be handled or configured.
  */
 void USB_configureInterrupt(uint32_t intr);
 
 /**
- * @brief Disable interrupt
+ * @brief This function disables the interrupt
  *
- * @param intr where intr represents MAINx interrupt number
+ * @param intr Interrupt number or identifier.
+ *             Specifies the interrupt to be handled or configured.
  */
 void USB_disableInterrupt(uint32_t intr);
 
 /**
- * @brief Clear MAIN0 interrupt
+ * @brief This function clears the MAIN0 interrupt
  */
-void USB_clearInterrupt(void) ;
+void USB_clearInterrupt(void);
 
 #endif /* USB_WRAPPER_H_ */
+/**
+ *  @}
+ */

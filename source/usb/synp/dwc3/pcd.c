@@ -30,9 +30,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  * ========================================================================== */
-
 /** @file
- * This file implements the Peripheral Controller Driver.
+ * \brief This file implements the Peripheral Controller Driver.
  *
  * The Peripheral Controller Driver (PCD) is responsible for translating
  * requests from the Function Driver into the appropriate actions on the
@@ -76,17 +75,17 @@ static int dwc_usb3_ep_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile d
 static void ep_deactivate(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep);
 static void pcd_epinit(volatile dwc_usb3_pcd_t *pcd);
 /**
- * This routine allocates the TRBs for an EP.
+ * \brief This routine allocates the TRBs for an EP.
  *
- * @param ep            The EP for the allocation.
- * @param num_trbs      Number of TRBs to allocate.
- * @param trb_type      Type of the TRB.
- * @param iso_intvl     bInterval if this is an Isoc EP.
- * @param link          True if the TRBs should be linked in a circular chain
+ * \param ep            The EP for the allocation.
+ * \param num_trbs      Number of TRBs to allocate.
+ * \param trb_type      Type of the TRB.
+ * \param iso_intvl     bInterval if this is an Isoc EP.
+ * \param link          True if the TRBs should be linked in a circular chain
  *                      (only supported for Isoc EPs for now).
- * @param trbs_dma_ret  The DMA address of the allocation is returned through
+ * \param trbs_dma_ret  The DMA address of the allocation is returned through
  *                      this pointer.
- * @return              The address of the allocated memory, or NULL if the
+ * \return              The address of the allocated memory, or NULL if the
  *                      allocation fails.
  */
 dwc_usb3_dma_desc_t *dwc_usb3_pcd_trb_alloc(volatile dwc_usb3_pcd_ep_t *ep, int num_trbs,
@@ -178,9 +177,9 @@ dwc_usb3_dma_desc_t *dwc_usb3_pcd_trb_alloc(volatile dwc_usb3_pcd_ep_t *ep, int 
 }
 
 /**
- * This routine frees the TRBs allocated by dwc_usb3_pcd_trb_alloc().
+ * \brief This routine frees the TRBs allocated by dwc_usb3_pcd_trb_alloc().
  *
- * @param ep    The EP for the allocation.
+ * \param ep    The EP for the allocation.
  */
 void dwc_usb3_pcd_trb_free(volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -200,11 +199,11 @@ void dwc_usb3_pcd_trb_free(volatile dwc_usb3_pcd_ep_t *ep)
 }
 
 /**
- * This routine assigns and fills in the TRBs for a request.
+ * \brief This routine assigns and fills in the TRBs for a request.
  *
- * @param pcd   Programming view of DWC_usb3 peripheral controller.
- * @param ep    The EP for the transfer.
- * @param req   The request that needs the TRBs.
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP for the transfer.
+ * \param req   The request that needs the TRBs.
  */
 void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			    dwc_usb3_pcd_req_t *req)
@@ -304,11 +303,11 @@ void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_
 }
 
 /**
- * This routine configures EP0 OUT to receive SETUP packets and configures
+ * \brief This routine configures EP0 OUT to receive SETUP packets and configures
  * EP0 IN for transmitting packets.
  *
- * @param pcd           Programming view of DWC_usb3 peripheral controller.
- * @param restore       True if restoring endpoint state after hibernation.
+ * \param pcd           Programming view of DWC_usb3 peripheral controller.
+ * \param restore       True if restoring endpoint state after hibernation.
  */
 void dwc_usb3_ep0_activate(volatile dwc_usb3_pcd_t *pcd, int restore)
 {
@@ -387,12 +386,12 @@ void dwc_usb3_ep0_activate(volatile dwc_usb3_pcd_t *pcd, int restore)
 }
 
 /**
- * This routine activates an EP. The Device EP control registers for the EP
+ * \brief This routine activates an EP. The Device EP control registers for the EP
  * are configured as defined in the EP structure.
  *
- * @param pcd           Programming view of DWC_usb3 peripheral controller.
- * @param ep            The EP to activate.
- * @param restore       True if restoring endpoint state after hibernation.
+ * \param pcd           Programming view of DWC_usb3 peripheral controller.
+ * \param ep            The EP to activate.
+ * \param restore       True if restoring endpoint state after hibernation.
  */
 void dwc_usb3_ep_activate(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			  int restore)
@@ -578,7 +577,7 @@ skip:
 }
 
 /**
- * This routine deactivates an EP.
+ * \brief This routine deactivates an EP.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param ep    The EP to deactivate.
@@ -639,7 +638,7 @@ static void ep_deactivate(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep
 }
 
 /**
- * This routine sets up a SETUP stage transfer for EP0 and starts the transfer.
+ * \brief This routine sets up a SETUP stage transfer for EP0 and starts the transfer.
  *
  * @param pcd   Programming view of the PCD.
  */
@@ -680,7 +679,7 @@ void dwc_usb3_pcd_ep0_out_start(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine sets up a data/status stage transfer for EP0 and starts the
+ * \brief This routine sets up a data/status stage transfer for EP0 and starts the
  * transfer. If pcd->ep0->dwc_ep.is_in is 0 it will be an OUT transfer,
  * otherwise it will be an IN transfer.
  *
@@ -797,13 +796,13 @@ void dwc_usb3_pcd_ep0_start_transfer(volatile dwc_usb3_pcd_t *pcd,
 }
 
 /**
- * This routine does the setup for a data transfer for an EP and starts
+ * \brief This routine does the setup for a data transfer for an EP and starts
  * the transfer.
  *
- * @param pcd   Programming view of DWC_usb3 peripheral controller.
- * @param ep    The EP to start the transfer on.
- * @param req   The request to start.
- * @param event If non-zero, this is the first transfer for an Isoc EP, so we
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to start the transfer on.
+ * \param req   The request to start.
+ * \param event If non-zero, this is the first transfer for an Isoc EP, so we
  *              must calculate the starting uFrame and do a startxfer instead
  *              of an updatexfer.
  */
@@ -995,10 +994,9 @@ again:
 }
 
 /**
- * For restart after hibernation, we need to restart the transfer with the
- * address of the TRB that was last active before the hibernation. That address
- * was saved in the <em>hiber_desc_idx</em> field of struct dwc_ep by the
- * hibernation wakeup code.
+ * \brief After hibernation, this function restarts the transfer using the TRB
+ * address that was active before hibernation. The address is stored in the
+ * <em>hiber_desc_idx</em> field of the dwc_ep structure during the wakeup process.
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param ep    The EP to restart the transfer on.
@@ -1049,7 +1047,10 @@ int dwc_usb3_pcd_isoc_ep_hiber_restart(volatile dwc_usb3_pcd_t *pcd,
 }
 
 /**
- * Stop any active xfer on a non-EP0 endpoint.
+ * \brief This function Stops any active xfer on a non-EP0 endpoint.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to stop the transfer on.
  */
 static void dwc_usb3_stop_xfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -1079,7 +1080,9 @@ static void dwc_usb3_stop_xfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_p
 }
 
 /**
- * Stop any active xfers on the non-EP0 endpoints.
+ * \brief Stop any active xfers on the non-EP0 endpoints.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
  */
 void dwc_usb3_stop_all_xfers(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -1113,8 +1116,15 @@ void dwc_usb3_stop_all_xfers(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * This routine completes the request for the EP. If there are additional
+ * \brief This routine completes the request for the EP. If there are additional
  * requests for the EP in the queue they will be started.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to complete the request on.
+ * \param req   The request to complete.
+ * \param event The event that caused the completion.
+ * 
+ * @return      0 on success, -1 on error.
  */
 static int dwc_usb3_ep_complete_request(volatile dwc_usb3_pcd_t *pcd,
 					volatile dwc_usb3_pcd_ep_t *ep,
@@ -1347,10 +1357,14 @@ done:
 }
 
 /**
- * This routine handles non-EP0 transfers.
+ * \brief This routine handles non-EP0 transfers.
  *
  * This routine gets the request corresponding to the completed transfer
  * and then calls the core routine for handling the completion.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to complete the request on.
+ * \param event The event associated with the transfer.
  */
 void dwc_usb3_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			       u32 event)
@@ -1398,10 +1412,10 @@ next:
 }
 
 /**
- * Set the EP STALL.
+ * \brief Set the EP to STALL.
  *
- * @param pcd   Programming view of DWC_usb3 peripheral controller.
- * @param ep    The EP to set the stall on.
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to set the stall on.
  */
 void dwc_usb3_pcd_ep_set_stall(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -1424,10 +1438,10 @@ void dwc_usb3_pcd_ep_set_stall(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_p
 }
 
 /**
- * Clear the EP STALL.
+ * \brief Clear the EP STALL.
  *
- * @param pcd   Programming view of DWC_usb3 peripheral controller.
- * @param ep    The EP to clear the stall on.
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to clear the stall on.
  */
 void dwc_usb3_pcd_ep_clear_stall(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -1450,7 +1464,12 @@ void dwc_usb3_pcd_ep_clear_stall(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3
 }
 
 /**
- * This routine returns a pointer to Out EP struct with number ep_num.
+ * \brief This routine returns a pointer to Out EP struct with number ep_num.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep_num The endpoint number.
+ * 
+ * \return      Pointer to the Out EP struct.
  */
 volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_out_ep(volatile dwc_usb3_pcd_t *pcd, u32 ep_num)
 {
@@ -1465,7 +1484,12 @@ volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_out_ep(volatile dwc_usb3_pcd_t *pcd, u3
 }
 
 /**
- * This routine returns a pointer to In EP struct with number ep_num.
+ * \brief This routine returns a pointer to In EP struct with number ep_num.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep_num The endpoint number.
+ * 
+ * \return      Pointer to the In EP struct.
  */
 volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_in_ep(volatile dwc_usb3_pcd_t *pcd, u32 ep_num)
 {
@@ -1480,8 +1504,13 @@ volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_in_ep(volatile dwc_usb3_pcd_t *pcd, u32
 }
 
 /**
- * This routine gets a pointer to an EP from the wIndex address value of the
+ * \brief This routine gets a pointer to an EP from the wIndex address value of the
  * control request.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param idx   The wIndex address value of the control request.
+ * 
+ * \return      Pointer to the EP struct corresponding to the address.
  */
 volatile dwc_usb3_pcd_ep_t *dwc_usb3_pcd_get_ep_by_addr(volatile dwc_usb3_pcd_t *pcd, u16 idx)
 {
@@ -1513,11 +1542,18 @@ volatile dwc_usb3_pcd_ep_t *dwc_usb3_pcd_get_ep_by_addr(volatile dwc_usb3_pcd_t 
  */
 
 /**
- * This routine is called by the Function Driver for each EP (except EP0) to
+ * \brief This routine is called by the Function Driver for each EP (except EP0) to
  * be configured for the current configuration (SET_CONFIGURATION).
  *
  * This routine initializes the dwc_usb3_ep_t data structure, and then
  * calls dwc_usb3_ep_activate.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to enable.
+ * \param ep_desc Pointer to the USB endpoint descriptor.
+ * \param ep_comp Pointer to the USB SuperSpeed endpoint companion descriptor.
+ * 
+ * \return 0 on success, negative error code on failure.
  */
 int dwc_usb3_pcd_ep_enable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			   const usb_endpoint_descriptor_t *ep_desc,
@@ -1633,12 +1669,17 @@ int dwc_usb3_pcd_ep_enable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_e
 }
 
 /**
- * This routine is called when an EP (except EP0) is disabled due to
+ * \brief This routine is called when an EP (except EP0) is disabled due to
  * disconnect or change in configuration. Any pending requests will
  * terminate with a status of -ESHUTDOWN.
  *
  * This routine modifies the dwc_usb3_ep_t data structure for this EP,
  * and then calls ep_deactivate.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to disable.
+ * 
+ * \return 0 on success, negative error code on failure.
  */
 int dwc_usb3_pcd_ep_disable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
 {
@@ -1658,7 +1699,7 @@ int dwc_usb3_pcd_ep_disable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_
 }
 
 /**
- * This routine submits an I/O Request to an EP.
+ * \brief This routine submits an I/O Request to an EP.
  *
  * - When the request completes the request's completion callback is called
  *   to return the request to the driver.
@@ -1667,6 +1708,13 @@ int dwc_usb3_pcd_ep_disable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_
  * - Each request is turned into one or more packets.
  * - A BULK EP can queue any amount of data; the transfer is packetized.
  * - Zero-length packets are specified with the request 'zero' flag.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to submit the request to.
+ * \param req   The request to submit.
+ * \param req_flags Flags for the request.
+ * 
+ * \return 0 on success, negative error code on failure.
  */
 int dwc_usb3_pcd_ep_submit_req(volatile dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 			       dwc_usb3_pcd_req_t *req, u32 req_flags)
@@ -1763,7 +1811,12 @@ int dwc_usb3_pcd_ep_submit_req(volatile dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *
 }
 
 /**
- * This routine cancels an I/O request from an EP.
+ * \brief This routine cancels an I/O request from an EP.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * @param ep    The EP to cancel the request on.
+ * @param req   The request to cancel.
+ * @param stream The stream number for the request.
  */
 void dwc_usb3_pcd_ep_cancel_req(volatile dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 				dwc_usb3_pcd_req_t *req, u32 stream)
@@ -1780,19 +1833,18 @@ void dwc_usb3_pcd_ep_cancel_req(volatile dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t 
 }
 
 /**
- * usb_ep_set_halt stalls an endpoint.
+ * \brief This function sets or clears a stall condition on an endpoint.
  *
- * usb_ep_clear_halt clears an endpoint stall and resets its data toggle.
+ * This function can be used to stall an endpoint, clear a stall condition, 
+ * or manage the stall lock flag for the endpoint. The behavior depends on 
+ * the value argument provided:
  *
- * Both of these routines are implemented with the same underlying routine.
- * The behavior depends on the value argument.
- *
- * @param pcd   The PCD structure.
- * @param ep    The endpoint to set halt or clear halt.
- * @param value - 0 means clear_halt.
- *              - 1 means set_halt.
- *              - 2 means clear stall lock flag.
- *              - 3 means set stall lock flag.
+ * \param pcd   The PCD structure representing the USB peripheral controller.
+ * \param ep    The endpoint to set or clear the stall condition.
+ * \param value - 0: Clears the stall condition and resets the data toggle.
+ *              - 1: Sets the stall condition on the endpoint.
+ *              - 2: Clears the stall lock flag.
+ *              - 3: Sets the stall lock flag and stalls the endpoint.
  */
 void dwc_usb3_pcd_ep_set_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			      int value)
@@ -1836,7 +1888,12 @@ stall:
 }
 
 /**
- * This routine completes a request. It calls the request callback.
+ * \brief This routine completes a request. It calls the request callback.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * \param ep    The EP to complete the request on.
+ * \param req   The request to complete.
+ * \param status The status of the request completion.
  */
 void dwc_usb3_pcd_request_done(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
 			       volatile dwc_usb3_pcd_req_t *req, int status)
@@ -1865,8 +1922,10 @@ void dwc_usb3_pcd_request_done(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_p
 }
 
 /**
- * This routine is called when the Device is disconnected. It stops any
+ * \brief This routine is called when the Device is disconnected. It stops any
  * active requests and informs the Function Driver of the disconnect.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
  */
 void dwc_usb3_pcd_stop(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -1907,7 +1966,11 @@ void dwc_usb3_pcd_stop(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * Gets the current USB frame number.
+ * \brief Gets the current USB frame number.
+ * 
+ * \param pcd   Programming view of DWC_usb3 peripheral controller.
+ * 
+ * \return Current USB frame number.
  */
 int dwc_usb3_pcd_get_frame_number(volatile dwc_usb3_pcd_t *pcd)
 {
@@ -1915,7 +1978,7 @@ int dwc_usb3_pcd_get_frame_number(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * Initialize the PCD EP structures to their default state.
+ * \brief Initialize the PCD EP structures to their default state.
  *
  * @param pcd   The PCD structure.
  */
@@ -2034,7 +2097,7 @@ static void pcd_epinit(volatile dwc_usb3_pcd_t *pcd)
 }
 
 /**
- * Initialize the PCD portion of the driver.
+ * \brief Initialize the PCD portion of the driver.
  *
  * This routine should be called after dwc_usb3_pcd_common_init() and any
  * platform-specific initialization routines have been called.
@@ -2043,7 +2106,9 @@ static void pcd_epinit(volatile dwc_usb3_pcd_t *pcd)
  * to be used, because that function is called while waiting for the core to
  * come out of reset.
  *
- * @param dev   Programming view of DWC_usb3 controller.
+ * \param dev   Programming view of DWC_usb3 controller.
+ * 
+ * \return 0 on success, negative error code on failure.
  */
 int dwc_usb3_pcd_init(volatile dwc_usb3_device_t *dev)
 {
@@ -2066,12 +2131,12 @@ int dwc_usb3_pcd_init(volatile dwc_usb3_device_t *dev)
 }
 
 /**
- * Deinitialize the PCD portion of the driver.
+ * \brief Deinitialize the PCD portion of the driver.
  *
  * This routine should be called before any platform-specific deinitialization
  * routines and dwc_usb3_pcd_common_remove() are called.
  *
- * @param dev   Programming view of DWC_usb3 controller.
+ * \param dev   Programming view of DWC_usb3 controller.
  */
 void dwc_usb3_pcd_remove(volatile dwc_usb3_device_t *dev)
 {

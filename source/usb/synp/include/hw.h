@@ -59,10 +59,11 @@ extern "C" {
 /* Core Global Registers */
 
 /**
+ * \anchor gsbuscfg0_data
  * This enum represents the bit fields of the Core SoC Bus Configuration 0
- * Register (GSBUSCFG0).
- */
-	/** Bus Burst Len			<i>Access: R_W</i>.
+ * \name Register (GSBUSCFG0).
+ * @{
+	 * Bus Burst Len			<i>Access: R_W</i>.
 	 * - 0:   single
 	 * - 1:   incr
 	 * - 3:   incr4
@@ -73,18 +74,18 @@ extern "C" {
 	 * - 127: incr128 (non-AHB mode only)
 	 * - 255: incr256 (non-AHB mode only)
 	 */
-#define DWC_SBUSCFG0_HBURSTLEN_BITS			0x000000ffU
-#define DWC_SBUSCFG0_HBURSTLEN_SHIFT		0U
+#define DWC_SBUSCFG0_HBURSTLEN_BITS 0x000000ffU /**< Bit Mask for HBURSTLEN field in GSBUSCFG0 register */
+#define DWC_SBUSCFG0_HBURSTLEN_SHIFT		0U  /**< Bit Shift for HBURSTLEN field in GSBUSCFG0 register */
 
-#define DWC_SBUSCFG0_INT_DMA_BURST_SINGLE	0U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR		1U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR4	3U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR8	7U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR16	15U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR32	31U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR64	63U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR128	127U
-#define DWC_SBUSCFG0_INT_DMA_BURST_INCR256	255U
+#define DWC_SBUSCFG0_INT_DMA_BURST_SINGLE	0U   /**< Single burst length */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR		1U   /**< Incremental burst length */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR4	3U   /**< Incremental burst length of 4 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR8	7U   /**< Incremental burst length of 8 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR16	15U  /**< Incremental burst length of 16 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR32	31U  /**< Incremental burst length of 32 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR64	63U  /**< Incremental burst length of 64 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR128	127U /**< Incremental burst length of 128 */
+#define DWC_SBUSCFG0_INT_DMA_BURST_INCR256	255U /**< Incremental burst length of 256 */
 
 	/** Descriptor Write is Posted		<i>Access: R_W</i> */
 #define DWC_SBUSCFG0_DES_WR_POST_BIT			0x00000100U
@@ -129,11 +130,13 @@ extern "C" {
 	/** Data Read Request Info		<i>Access: R_W</i> */
 #define DWC_SBUSCFG0_DAT_RD_REQ_INFO_BITS		0xf0000000U
 #define DWC_SBUSCFG0_DAT_RD_REQ_INFO_SHIFT		28U
-
+/** @} */
 
 /**
- * This enum represents the bit fields of the Core SoC Bus Configuration 1
- * Register (GSBUSCFG1).
+ * \anchor gsbuscfg1_data
+ * This macros represents the bit fields of the Core SoC Bus Configuration 1
+ * \name  Register (GSBUSCFG1).
+ * @{
  */
 	/** OCP Address Space For Descriptor	<i>Access: R_W</i> */
 #define DWC_SBUSCFG1_DES_ADDR_SPC_BITS			0x0000000fU
@@ -142,10 +145,13 @@ extern "C" {
 	/** OCP Address Space For Data		<i>Access: R_W</i> */
 #define DWC_SBUSCFG1_DAT_ADDR_SPC_BITS			0x000000f0U
 #define DWC_SBUSCFG1_DAT_ADDR_SPC_SHIFT			4U
+/** @} */
 
 /**
+ * \anchor gtxthrcfg_data
  * This enum represents the bit fields of the Core Tx Threshold Control
- * Register (GTXTHRCFG).
+ * \name Register (GTXTHRCFG).
+ * @{
  */
 	/** Maximum Tx Burst Size		<i>Access: R_W</i> */
 #define DWC_TXTHRCTL_USB_MAX_TX_BURST_SIZE_BITS		0x00ff0000U
@@ -158,10 +164,14 @@ extern "C" {
 	/** Tx Multi-Packet Threshold Enable	<i>Access: R_W</i> */
 #define DWC_TXTHRCTL_USB_TX_PKT_CNT_EN_BIT			0x20000000U
 #define DWC_TXTHRCTL_USB_TX_PKT_CNT_EN_SHIFT		29U
+/** @} */
 
 /**
+ * \anchor grxthrcfg_data
  * This enum represents the bit fields of the Core Rx Threshold Control
  * Register (GRXTHRCFG).
+ * \name Register (GRXTHRCFG).
+ * @{
  */
 	/** Maximum Rx Burst Size		<i>Access: R_W</i> */
 #define DWC_RXTHRCTL_USB_MAX_RX_BURST_SIZE_BITS		0x00f80000U
@@ -174,11 +184,13 @@ extern "C" {
 	/** Rx Multi-Packet Threshold Enable	<i>Access: R_W</i> */
 #define DWC_RXTHRCTL_USB_RX_PKT_CNT_EN_BIT			0x20000000U
 #define DWC_RXTHRCTL_USB_RX_PKT_CNT_EN_SHIFT		29U
-
+/** @} */
 
 /**
+ * \anchor gctl_data
  * This enum represents the bit fields of the Core Control
- * Register (GCTL).
+ * \name Register (GCTL).
+ * @{
  */
 	/** Disable Clock Gating		<i>Access: R_W</i> */
 #define DWC_GCTL_DSBL_CLCK_GTNG_BIT			0x00000001U
@@ -244,10 +256,13 @@ extern "C" {
 	/** Power Down Scale			<i>Access: R_W</i> */
 #define DWC_GCTL_PWR_DN_SCALE_BITS			0xfff80000U
 #define DWC_GCTL_PWR_DN_SCALE_SHIFT			19U
+/** @} */
 
 /**
+ * \anchor gevten_data
  * This enum represents the bit fields of the Core Interrupt Mask
- * Register (GEVTEN).
+ * \name Register (GEVTEN).
+ * @{
  */
 	/** ULPI Carkit Event Enable		<i>Access: R_W</i> */
 #define DWC_GEVTEN_ULPI_CK_EVT_EN_BIT		0x00000001U
@@ -256,10 +271,13 @@ extern "C" {
 	/** I2C Event Enable			<i>Access: R_W</i> */
 #define DWC_GEVTEN_I2C_EVT_EN_BIT			0x00000002U
 #define DWC_GEVTEN_I2C_EVT_EN_SHIFT			1U
+/** @} */
 
 /**
+ * \anchor gsts_data
  * This enum represents the bit fields of the Core Status
- * Register (GSTS).
+ * \name Register (GSTS).
+ * @{
  */
 	/** Current Mode			<i>Access: RO</i>.
 	 * - 0: Device Mode
@@ -308,10 +326,13 @@ extern "C" {
 	/** Current BELT Value			<i>Access: RO</i> */
 #define DWC_GSTS_CBELT_BITS			0xfff00000U
 #define DWC_GSTS_CBELT_SHIFT		20U
+/** @} */
 
 /**
+ * \anchor ghwparams0_data
  * This enum represents the bit fields of the Hardware Parameters 0
- * Register (GHWPARAMS0).
+ * \name Register (GHWPARAMS0).
+ * @{
  */
 #define DWC_HWP0_MODE_BITS			0x00000007U
 #define DWC_HWP0_MODE_SHIFT			0U
@@ -330,10 +351,13 @@ extern "C" {
 
 #define DWC_HWP0_AWIDTH_BITS		0x3f000000U
 #define DWC_HWP0_AWIDTH_SHIFT		24U
+/** @} */
 
 /**
+ * \anchor ghwparams1_data
  * This enum represents the bit fields of the Hardware Parameters 1
- * Register (GHWPARAMS1).
+ * \name Register (GHWPARAMS1).
+ * @{
  */
 #define DWC_HWP1_IDWIDTH_M1_BITS		0x00000007U
 #define DWC_HWP1_IDWIDTH_M1_SHIFT		0U
@@ -377,17 +401,23 @@ extern "C" {
 
 #define DWC_HWP1_RM_OPT_FEATURES_BIT		0x40000000U
 #define DWC_HWP1_RM_OPT_FEATURES_SHIFT		30U
+/** @} */
 
 /**
+ * \anchor ghwparams2_data
  * This enum represents the bit fields of the Hardware Parameters 2
- * Register (GHWPARAMS2).
+ * \name Register (GHWPARAMS2).
+ * @{
  */
 #define DWC_HWP2_USERID_BITS	0xffffffffU
 #define DWC_HWP2_USERID_SHIFT	0U
+/** @} */
 
 /**
+ * \anchor ghwparams3_data
  * This enum represents the bit fields of the Hardware Parameters 3
- * Register (GHWPARAMS3).
+ * \name Register (GHWPARAMS3).
+ * @{
  */
 #define DWC_HWP3_SSPHY_IFC_BITS			0x00000003U
 #define DWC_HWP3_SSPHY_IFC_SHIFT		0U
@@ -415,10 +445,13 @@ extern "C" {
 
 #define DWC_HWP3_TOT_XFR_RSRC_BITS		0x7f800000U
 #define DWC_HWP3_TOT_XFR_RSRC_SHIFT		23U
+/** @} */
 
 /**
+ * \anchor ghwparams4_data
  * This enum represents the bit fields of the Hardware Parameters 4
- * Register (GHWPARAMS4).
+ * \name Register (GHWPARAMS4).
+ * @{
  */
 
 #define DWC_HWP4_TRBS_PER_XFER_BITS			0x0000003fU
@@ -438,10 +471,13 @@ extern "C" {
 
 #define DWC_HWP4_BMU_LSP_DEPTH_BITS			0xf0000000U
 #define DWC_HWP4_BMU_LSP_DEPTH_SHIFT		28U
+/** @} */
 
 /**
+ * \anchor ghwparams5_data
  * This enum represents the bit fields of the Hardware Parameters 5
- * Register (GHWPARAMS5).
+ * \name Register (GHWPARAMS5).
+ * @{
  */
 #define DWC_HWP5_BMU_BUSGM_DEPTH_BITS		0x0000000fU
 #define DWC_HWP5_BMU_BUSGM_DEPTH_SHIFT		0U
@@ -457,10 +493,13 @@ extern "C" {
 
 #define DWC_HWP5_DFQ_FIFO_DEPTH_BITS		0x0fc00000U
 #define DWC_HWP5_DFQ_FIFO_DEPTH_SHIFT		22U
+/** @} */
 
 /**
+ * \anchor ghwparams6_data
  * This enum represents the bit fields of the Hardware Parameters 6
- * Register (GHWPARAMS6).
+ * \name Register (GHWPARAMS6).
+ * @{
  */
 #define DWC_HWP6_PSQ_FIFO_DEPTH_BITS	0x0000003fU
 #define DWC_HWP6_PSQ_FIFO_DEPTH_SHIFT	0U
@@ -491,48 +530,58 @@ extern "C" {
 
 #define DWC_HWP6_RAM0_DEPTH_BITS		0xffff0000U
 #define DWC_HWP6_RAM0_DEPTH_SHIFT		16U
+/** @} */
 
 /**
+ * \anchor ghwparams7_data
  * This enum represents the bit fields of the Hardware Parameters 7
- * Register (GHWPARAMS7).
+ * \name Register (GHWPARAMS7).
+ * @{
  */
 #define DWC_HWP7_RAM1_DEPTH_BITS		0x0000ffffU
 #define DWC_HWP7_RAM1_DEPTH_SHIFT		0U
 
 #define DWC_HWP7_RAM2_DEPTH_BITS		0xffff0000U
 #define DWC_HWP7_RAM2_DEPTH_SHIFT		16U
+/** @} */
 
 /**
+ * \anchor ghwparams8_data
  * This enum represents the bit fields of the Hardware Parameters 8
- * Register (GHWPARAMS8).
+ * \name Register (GHWPARAMS8).
+ * @{
  */
 #define DWC_HWP8_DCACHE_DEPTH_BITS		0xffffffffU
 #define DWC_HWP8_DCACHE_DEPTH_SHIFT		0U
+/** @} */
 
 /**
+ * \anchor gdbgfifospace_data
  * This enum represents the bit fields of the Debug Queue/FIFO Space
- * Register (GDBGFIFOSPACE).
- */
+ * \name Register (GDBGFIFOSPACE).
+ * @{
+ 	*  	0 - 31  TxFIFO Number   
+	*  32 - 63  RxFIFO Number   
+	*  64 - 95  TxReqQ Number   
+	*  96 - 127 RxReqQ Number   
+	* 128 - 159 RxInfoQ Number  
+	* 160       DescFetchQ      
+	* 161       EventQ          
+	* 162       ProtocolStatusQ */
 	/** FIFO/Queue Select			<i>Access: R_W</i> */
 #define DWC_DBGFIFOSPACE_FIFO_QUEUE_SEL_BITS	0x000000ffU
 #define DWC_DBGFIFOSPACE_FIFO_QUEUE_SEL_SHIFT	0U
 
-	/*   0 - 31  TxFIFO Number   */
-	/*  32 - 63  RxFIFO Number   */
-	/*  64 - 95  TxReqQ Number   */
-	/*  96 - 127 RxReqQ Number   */
-	/* 128 - 159 RxInfoQ Number  */
-	/* 160       DescFetchQ      */
-	/* 161       EventQ          */
-	/* 162       ProtocolStatusQ */
-
 	/** Space Available			<i>Access: R</i> */
 #define DWC_DBGFIFOSPACE_SPACE_AVAIL_BITS	0xffff0000U
 #define DWC_DBGFIFOSPACE_SPACE_AVAIL_SHIFT	16U
+/** @} */
 
 /**
+ * \anchor gdbgltssm_data
  * This enum represents the bit fields of the Debug LTSSM
- * Register (GDBGLTSSM).
+ * \name Register (GDBGLTSSM).
+ * @{
  */
 	/** Pipe Status				<i>Access: R</i> */
 #define DWC_DBGLTSSM_PIPE_STATUS_BITS		0x0003ffffU
@@ -549,6 +598,7 @@ extern "C" {
 	/** LTDB Timeout			<i>Access: R</i> */
 #define DWC_DBGLTSSM_LTDB_TIMEOUT_BIT		0x04000000U
 #define DWC_DBGLTSSM_LTDB_TIMEOUT_SHIFT		26U
+/** @} */
 
 /**
  * This enum represents the bit fields of the Core RMMI PHY Control
@@ -580,8 +630,10 @@ extern "C" {
 #define DWC_RMMICTL_AUTO_ROM_H8_SHIFT		31U
 
 /**
+ * \anchor gusb2phycfg_data
  * This enum represents the bit fields of the Core USB2 PHY Configuration
- * Registers (GUSB2PHYCFGn).
+ * \name Registers (GUSB2PHYCFGn).
+ * @{
  */
 	/** HS/FS Timeout Calibration			<i>Access: R_W</i> */
 #define DWC_USB2PHYCFG_TOUT_CAL_BITS		0x00000007U
@@ -650,18 +702,23 @@ extern "C" {
 	/** PHY Soft Reset				<i>Access: R_W</i> */
 #define DWC_USB2PHYCFG_PHY_SOFT_RST_BIT		 0x80000000U
 #define DWC_USB2PHYCFG_PHY_SOFT_RST_SHIFT	 31U
-
+/** @} */
 /**
+ * \anchor gusb2i2cctl_data
  * This enum represents the bit fields in the USB2 I2C Control
- * Registers (GUSB2I2CCTLn).
+ * \name Registers (GUSB2I2CCTLn).
+ * @{
  */
 	/** All bits are reserved */
 #define DWC_USB2I2C_RSVD_BITS		0xffffffffU
 #define DWC_USB2I2C_RSVD_SHIFT		0U
+/** @} */
 
 /**
+ * \anchor gusb2phyacc_data
  * This enum represents the bit fields in the USB2 Phy Vendor Control
- * Registers (GUSB2PHYACCn).
+ * \name Registers (GUSB2PHYACCn).
+ * @{
  */
 	/** Register Data			<i>Access: R_W</i> */
 #define DWC_USB2PHY_REGDATA_BITS			0x000000ffU
@@ -698,10 +755,13 @@ extern "C" {
 	/** Disable ULPI Drivers		<i>Access: R_WS_SC</i> */
 #define DWC_USB2PHY_DIS_ULPI_DRVR_BIT		0x04000000U
 #define DWC_USB2PHY_DIS_ULPI_DRVR_SHIFT		26U
+/** @} */
 
 /**
+ * \anchor gusb3pipectl_data
  * This enum represents the bit fields of the USB3 Pipe Control
- * Registers (GUSB3PIPECTLn).
+ * \name Registers (GUSB3PIPECTLn).
+ * @{
  */
 	/** Elastic Buffer Mode			<i>Access: R_W</i> */
 #define DWC_PIPECTL_ELAS_BUF_MODE_BIT		0x00000001U
@@ -750,6 +810,7 @@ extern "C" {
 	/** PHY Soft Reset			<i>Access: R_W</i> */
 #define DWC_PIPECTL_PHY_SOFT_RST_BIT		0x80000000U
 #define DWC_PIPECTL_PHY_SOFT_RST_SHIFT		31U
+/** @} */
 
 /**
  * This enum represents the bit fields in the FIFO Size Registers.
@@ -763,8 +824,10 @@ extern "C" {
 #define DWC_FIFOSZ_STARTADDR_SHIFT		16U
 
 /**
+ * \anchor geventsiz_data
  * This enum represents the bit fields of the Event Buffer Size
- * Registers (GEVENTSIZn).
+ * \name Registers (GEVENTSIZn).
+ * @{
  */
 	/** Event Buffer Size			<i>Access: R_W</i> */
 #define DWC_EVENTSIZ_SIZ_BITS			0x0000ffffU
@@ -773,10 +836,13 @@ extern "C" {
 	/** Event Interrupt Mask (1 == disable)	<i>Access: R_W</i> */
 #define DWC_EVENTSIZ_INT_MSK_BIT		0x80000000U
 #define DWC_EVENTSIZ_INT_MSK_SHIFT		31U
+/** @} */
 
 /**
+ * \anchor geventcnt_data
  * This enum represents the bit fields of the Event Buffer Count
- * Registers (GEVENTCNTn).
+ * \name Registers (GEVENTCNTn).
+ * @{
  */
 	/** Event Count				<i>Access: R_W</i> */
 #define DWC_EVENTCNT_CNT_BITS			0x0000ffffU
@@ -798,6 +864,7 @@ extern "C" {
 #define DWC_EVENT_OTG_INT		1U	/** @< */
 #define DWC_EVENT_CARKIT_INT	3U	/** @< */
 #define DWC_EVENT_I2C_INT		4U
+/** @} */
 
 /**
  * This enum represents the non-generic bit fields of an Event Buffer entry
@@ -1126,16 +1193,14 @@ typedef struct dwc_usb3_core_global_regs {
 	 * Fields defined in enum @ref gusb3pipectl_data. */
 	volatile u32 gusb3pipectl[16];
 
-	/** Transmit FIFO Size Registers	<i>Offset: 300h-37Ch</i>.
-	 * Fields defined in enum @ref gfifosize_data. */
+	/** Transmit FIFO Size Registers	<i>Offset: 300h-37Ch</i>. */
 	volatile u32 gtxfifosiz[32];
 
-	/** Receive FIFO Size Registers		<i>Offset: 380h-3FC0h</i>.
-	 * Fields defined in enum @ref gfifosize_data. */
+	/** Receive FIFO Size Registers		<i>Offset: 380h-3FC0h</i>. */
 	volatile u32 grxfifosiz[32];
 
 	/** Event Buffer Registers		<i>Offset: 400h-5FCh</i>.
-	 * Fields defined in struct @ref geventbuf_data. */
+	 * Fields defined in struct @ref geventbuf_data_t. */
 	struct geventbuf_data geventbuf[32];
 
 	/** Hardware Parameter 8 Register	<i>Offset: 600h</i>.
@@ -1148,8 +1213,10 @@ typedef struct dwc_usb3_core_global_regs {
 /* Device Global Registers */
 
 /**
+ * \anchor dcfg_data
  * This enum represents the bit fields in the Device Configuration
  * Register (DCFG).
+ * @{
  */
 	/** Device Speed			<i>Access: R_W</i> */
 #define DWC_DCFG_DEVSPD_BITS		0x000007U
@@ -1187,10 +1254,13 @@ typedef struct dwc_usb3_core_global_regs {
 	/** LPM Capable				<i>Access: R_W</i> */
 #define DWC_DCFG_LPM_CAP_BIT			0x400000U
 #define DWC_DCFG_LPM_CAP_SHIFT			22U
+/** @} */
 
 /**
+ * \anchor dctl_data
  * This enum represents the bit fields in the Device Control
- * Register (DCTL).
+ * \name Register (DCTL).
+ * @{
  */
 	/** Soft Disconnect			<i>Access: R_W</i> */
 #define DWC_DCTL_SFT_DISCONN_BIT		0x00000001U
@@ -1266,10 +1336,13 @@ typedef struct dwc_usb3_core_global_regs {
 	/** Run/Stop				<i>Access: R_W</i> */
 #define DWC_DCTL_RUN_STOP_BIT				0x80000000U
 #define DWC_DCTL_RUN_STOP_SHIFT				31U
+/** @} */
 
 /**
+ * \anchor devten_data
  * This enum represents the bit fields of the Device Event Enable
- * Register (DEVTEN).
+ * \name Register (DEVTEN).
+ * @{
  */
 	/** Disconnect Detected Event Enable	<i>Access: R_W</i> */
 #define DWC_DEVTEN_DISCONN_BIT				0x0001U
@@ -1310,10 +1383,13 @@ typedef struct dwc_usb3_core_global_regs {
 	/** U2 Inactivity Timeout Enable	<i>Access: R_W</i> */
 #define DWC_DEVTEN_INACT_TIMEOUT_BIT		0x2000U
 #define DWC_DEVTEN_INACT_TIMEOUT_SHIFT		13U
+/** @} */
 
 /**
+ * \anchor dsts_data
  * This enum represents the bit fields in the Device Status
- * Register (DSTS).
+ * \name Register (DSTS).
+ * @{
  */
 	/** Connected Speed			<i>Access: RO</i>.
 	 * (see enum @ref dcfg_data for values) */
@@ -1357,10 +1433,13 @@ typedef struct dwc_usb3_core_global_regs {
 	/** Link-state Not Ready		<i>Access: RO</i> */
 #define DWC_DSTS_LNR_BIT				0x20000000U
 #define DWC_DSTS_LNR_SHIFT				29U
+/** @} */
 
 /**
+ * \anchor dgcmdpar_data
  * This enum represents the bit fields in the Device Generic Command Parameter
- * Register (DGCMDPARn) for the various commands.
+ * \name Register (DGCMDPARn) for the various commands.
+ * @{
  */
 	/** Periodic Parameters - for DWC_DGCMD_SET_PERIODIC_PARAMS command */
 #define DWC_DGCMD_PER_PARAM_SEL_BITS			0x000003ffU
@@ -1403,10 +1482,13 @@ typedef struct dwc_usb3_core_global_regs {
 #define DWC_LATENCY_VALUE_MULT_1024			1U	/** @< */
 #define DWC_LATENCY_VALUE_MULT_32768		2U	/** @< */
 #define DWC_LATENCY_VALUE_MULT_1048576		3U
+/** @} */
 
 /**
+ * \anchor dgcmd_data
  * This enum represents the bit fields in the Device Generic Command
- * Register (DGCMDn).
+ * \name Register (DGCMDn).
+ * @{
  */
 	/** Command Type			<i>Access: R_W</i> */
 #define DWC_DGCMD_TYP_BITS			0x0ffU
@@ -1438,7 +1520,7 @@ typedef struct dwc_usb3_core_global_regs {
 
 	/** Command Status values */
 #define DWC_DGCMD_STS_ERROR			15U
-
+/** @} */
 /**
  * This enum represents the bit fields in the Device Endpoint Mapping
  * Registers (DEPMAPn).
@@ -1591,8 +1673,10 @@ typedef struct dwc_usb3_dev_global_regs {
 #define DWC_CFG_ACTION_MODIFY		2U
 
 /**
+ * \anchor depcmd_data
  * This enum represents the bit fields in the Device Endpoint Command
- * Register (DEPCMDn).
+ * \name Register (DEPCMDn).
+ * @{
  */
 	/** Command Type			<i>Access: R_W</i> */
 #define DWC_EPCMD_TYP_BITS			0x0ffU
@@ -1632,6 +1716,7 @@ typedef struct dwc_usb3_dev_global_regs {
 	/** Transfer Resource Index (output)	<i>Access: R_W</i> */
 #define DWC_EPCMD_XFER_RSRC_IDX_BITS		0x007f0000U
 #define DWC_EPCMD_XFER_RSRC_IDX_SHIFT		16U
+/** @} */
 
 /**
  * Device Endpoint Specific Registers <i>Offsets 800h-9ECh for OUT,
@@ -1672,8 +1757,10 @@ typedef struct dwc_usb3_dev_ep_regs {
 /* DMA Descriptor Specific Structures */
 
 /**
- * This enum represents the bit fields in the DMA Descriptor
- * Status quadlet.
+ * \anchor desc_sts_data
+ * This enum represents the bit fields in the DMA Descriptor Status quadlet.
+ * \name DMA Descriptor Status quadlet
+ * @{
  */
 	/** Transfer Count */
 #define DWC_DSCSTS_XFRCNT_BITS		0x00ffffffU
@@ -1691,10 +1778,13 @@ typedef struct dwc_usb3_dev_ep_regs {
 #define DWC_TRBRSP_MISSED_ISOC_IN	1U	/** @< */
 #define DWC_TRBRSP_SETUP_PEND		2U	/** @< */
 #define DWC_TRBRSP_XFER_IN_PROG		4U
+/** @} */
 
 /**
- * This enum represents the bit fields in the DMA Descriptor
- * Control quadlet.
+ * \anchor desc_ctl_data
+ * This enum represents the bit fields in the DMA Descriptor Control quadlet.
+ * \name DMA Descriptor Control quadlet
+ * @{
  */
 	/** Hardware-Owned bit */
 #define DWC_DSCCTL_HWO_BIT			0x00000001U
@@ -1739,9 +1829,10 @@ typedef struct dwc_usb3_dev_ep_regs {
 	/** Stream ID / SOF Number */
 #define DWC_DSCCTL_STRMID_SOFN_BITS		0x3fffc000U
 #define DWC_DSCCTL_STRMID_SOFN_SHIFT	14U
+/** @} */
 
 /**
- * DMA Descriptor structure
+ * \brief DMA Descriptor structure
  *
  * DMA Descriptor structure contains 4 quadlets:
  * Buffer Pointer Low address, Buffer Pointer High address, Status, and Control.
