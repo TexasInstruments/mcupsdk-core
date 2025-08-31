@@ -293,38 +293,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263Px, AM261x
     <td> Resolved in Source code
 </tr>
-<tr>
-    <td> PROC_SDL-9150
-    <td> PBIST Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263Px
-    <td> Resolved in Example code
-</tr>
-<tr>
-    <td> PROC_SDL-9151
-    <td> CCM Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263Px
-    <td> Resolved in Example code
-</tr>
-<tr>
-    <td> PROC_SDL-9152
-    <td> R5F Utils Example and Test apps are getting mixed data with bootloader data
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263Px
-    <td> Resolved in Example code
-</tr>
-<tr>
-    <td> PROC_SDL-9153
-    <td> TOG Example stuck in System_Init during release
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263Px
-    <td> Resolved in Example code
-</tr>
 </table>
 
 ## Known Issues
@@ -400,6 +368,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
+    <td> MCUSDK-14898
+    <td> SDL apps fails on other than RFSS0-0 with SBL
+    <td> SBL, SDL
+    <td> 11.00.00 onwards
+    <td> This because SBL brings the RFSS1-0 out of reset before the SBL UART prints gets flushed. This will be fixed in next release. As a workaround the application in R5FSS1-0 can delay the start of application till SBL UART prints gets completed.
+</tr>
+<tr>
     <td> PROC_SDL-8392
     <td> In ECC bus safety example, ECC error is not properly cleared at the source.
     <td> SDL
@@ -426,13 +401,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.02.00 onwards
     <td> Use debug profile
-</tr>
-<tr>
-    <td> PROC_SDL-9149
-    <td> ECC D-Tag stuck in System_Init during release R5FSS1-0
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> None
 </tr>
 <tr>
     <td> PROC_SDL-9154

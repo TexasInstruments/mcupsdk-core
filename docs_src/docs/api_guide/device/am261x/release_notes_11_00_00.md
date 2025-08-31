@@ -364,6 +364,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Use R5FSS0-0 example.
 </tr>
 <tr>
+    <td> MCUSDK-14898
+    <td> SDL apps fails on other than RFSS0-0 with SBL
+    <td> SBL, SDL
+    <td> 11.00.00 onwards
+    <td> This because SBL brings the RFSS0-1 out of reset before the SBL UART prints gets flushed. This will be fixed in next release. As a workaround the application in R5FSS1-0 can delay the start of application till SBL UART prints gets completed.
+</tr>
+<tr>
     <td> MCUSDK-13513
     <td> Multiple chip selects cannot be configured in SysCfg
     <td> OSPI
