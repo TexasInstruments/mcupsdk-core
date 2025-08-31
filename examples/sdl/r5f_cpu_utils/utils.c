@@ -140,13 +140,6 @@ int32_t sdl_apiTest(void)
 
 void test_main(void *args)
 {
-    #if defined (R5F1_INPUTS)
-    /* Delay added for bootloader running from R5FSS0_0 to complete  */
-    /* the UART prints. Otherwise this app will also initialize the  */
-    /* same UART and could cause hang or data corruption             */
-    ClockP_sleep(1);
-    #endif
-
     int32_t sdlResult = SDL_EBADARGS;
     Drivers_open();
 

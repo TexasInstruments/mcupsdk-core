@@ -213,13 +213,6 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
 void ecc_main(void *args)
 {
-    #if defined (R5F1_INPUTS)
-    /* Delay added for bootloader running from R5FSS0_0 to complete  */
-    /* the UART prints. Otherwise this app will also initialize the  */
-    /* same UART and could cause hang or data corruption             */
-    ClockP_sleep(1);
-    #endif
-
 	int32_t testResult = 0;
 
     /* Open drivers to open the UART driver for console */

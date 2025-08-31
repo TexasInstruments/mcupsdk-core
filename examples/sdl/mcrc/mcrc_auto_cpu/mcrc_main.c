@@ -92,13 +92,6 @@ static int32_t sdlApp_dplInit(void)
 
 void sdl_mcrc_autocpu_test_app (void *args)
 {
-    #if defined (R5F1_INPUTS)
-    /* Delay added for bootloader running from R5FSS0_0 to complete  */
-    /* the UART prints. Otherwise this app will also initialize the  */
-    /* same UART and could cause hang or data corruption             */
-    ClockP_sleep(1);
-    #endif
-
     /* Declarations of variables */
     int32_t    result = SDL_APP_PASS;
     int32_t    i;
