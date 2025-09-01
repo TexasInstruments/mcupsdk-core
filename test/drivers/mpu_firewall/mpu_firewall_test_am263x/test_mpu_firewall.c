@@ -76,7 +76,7 @@ uint32_t gDataAbortReceived = 0;
 
 /* Strong declaration of user defined data abort exception. */
 extern void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, 
-                                           volatile uint32_t lr,volatile uint32_t spsr);
+                                           volatile uint32_t lr, volatile uint32_t spsr);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -126,7 +126,7 @@ void test_MPU_FIREWALL_getRegion(void* args)
 
     /* Checks MPU_FIREWALL_getRegion API for DTHE_SLV fwl and region 0 */
     mpuParams.id = CSL_FW_SCRM2SCRP0_SLV_ID;
-    mpuParams.regionNumber = 0U;
+    mpuParams.regionNumber = 1U;
     status = MPU_FIREWALL_getRegion(&mpuParams);
     if(status == FWL_DRV_RETURN_SUCCESS)
     {
@@ -142,8 +142,8 @@ void test_MPU_FIREWALL_getRegion(void* args)
         if(testStatus == SystemP_SUCCESS)
         {
             /* 0000 0000 0010 == 0x2
-            PRIV_ID_M4FSS0_0 -> 1U*/
-            if(mpuParams.aidConfig == (uint32_t) 0x2)
+            PRIV_ID_M4FSS0_0 should not be equal to 1U*/
+            if((mpuParams.aidConfig & (uint32_t) 0x2) != (uint32_t) 0x2)
             {
                 testStatus = SystemP_SUCCESS;
             }
@@ -188,8 +188,6 @@ void test_region_bound_check(void* args)
 
 __attribute__((optnone)) void test_region_access(void* args)
 {
-    int32_t testStatus = SystemP_FAILURE ;
-
     /* secure context of HSM_PKA is read/write protected */
     /*Read HSM_PKA */
     CSL_REG32_RD((uint32_t *) CSL_HSM_PKA_U_BASE);
@@ -239,10 +237,5 @@ __attribute__((optnone)) void test_region_access(void* args)
     /*Write SEC MGR  */
     CSL_REG32_WR((uint32_t *) CSL_HSM_SEC_MGR_U_BASE, 0x2U);
 
-    if(gDataAbortReceived == 17U)
-    {
-        testStatus = SystemP_SUCCESS;
-    }
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+    TEST_ASSERT_EQUAL_INT32(17U, gDataAbortReceived);
 }

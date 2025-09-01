@@ -42,6 +42,7 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <drivers/hw_include/cslr_soc.h>
+#include <drivers/hw_include/cslr_fss.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -126,7 +127,7 @@ void test_MPU_FIREWALL_getRegion(void* args)
 
     /* Checks MPU_FIREWALL_getRegion API for DTHE_SLV fwl and region 0 */
     mpuParams.id = CSL_FW_SCRM2SCRP0_SLV_ID;
-    mpuParams.regionNumber = 0U;
+    mpuParams.regionNumber = 1U;
     status = MPU_FIREWALL_getRegion(&mpuParams);
     if(status == FWL_DRV_RETURN_SUCCESS)
     {
@@ -142,8 +143,8 @@ void test_MPU_FIREWALL_getRegion(void* args)
         if(testStatus == SystemP_SUCCESS)
         {
             /* 0000 0000 0010 == 0x2
-            PRIV_ID_M4FSS0_0 -> 1U*/
-            if(mpuParams.aidConfig == (uint32_t) 0x2)
+            PRIV_ID_M4FSS0_0 -> 1U should not be allowed */
+            if((mpuParams.aidConfig & (uint32_t) 0x2) != (uint32_t) 0x2)
             {
                 testStatus = SystemP_SUCCESS;
             }
@@ -188,8 +189,6 @@ void test_region_bound_check(void* args)
 
 __attribute__((optnone)) void test_region_access(void* args)
 {
-    int32_t testStatus = SystemP_FAILURE ;
-
     /* secure context of HSM_PKA is read/write protected */
     /*Read HSM_PKA */
     CSL_REG32_RD((uint32_t *) CSL_HSM_PKA_U_BASE);
@@ -239,10 +238,8 @@ __attribute__((optnone)) void test_region_access(void* args)
     /*Write SEC MGR  */
     CSL_REG32_WR((uint32_t *) CSL_HSM_SEC_MGR_U_BASE, 0x2U);
 
-    if(gDataAbortReceived == 17U)
-    {
-        testStatus = SystemP_SUCCESS;
-    }
+    /*Read OTFA */
+    CSL_REG32_RD((uint32_t *) CSL_FSS_FSAS_OTFA_REGS_REGS_BASE);
 
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+    TEST_ASSERT_EQUAL_INT32(18U, gDataAbortReceived);
 }
