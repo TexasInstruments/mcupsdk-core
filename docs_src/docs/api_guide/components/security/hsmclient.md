@@ -243,12 +243,12 @@ table below
 | 11              | FW QSPI0_SLV                | 0x40160000      | 8 (0-7)                         | 0x48200000           | 256 KB       | QSPI0              |
 |                 |                             |                 |                                 | 0x60000000           | 32 MB        | EXT_FLASH0         |
 |                 |                             |                 |                                 | 0x62000000           | 32 MB        | EXT_FLASH1         |
-| 12              | FW SCRM2SCRP0_SLV           | 0x40180000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP0         |
-| 13              | FW SCRM2SCRP1_SLV           | 0x401A0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP1         |
-| 14              | FW R5SS0_CORE0_AHB_MST      | 0x401C0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE0_AHB    |
-| 15              | FW R5SS0_CORE1_AHB_MST      | 0x401E0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE1_AHB    |
-| 16              | FW R5SS1_CORE0_AHB_MST      | 0x40200000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE0_AHB    |
-| 17              | FW R5SS1_CORE1_AHB_MST      | 0x40220000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE1_AHB    |
+| 12              | FW SCRM2SCRP0_SLV           | 0x40180000      | 14 (2-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP0         |
+| 13              | FW SCRM2SCRP1_SLV           | 0x401A0000      | 14 (2-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP1         |
+| 14              | FW R5SS0_CORE0_AHB_MST      | 0x401C0000      | 14 (2-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE0_AHB    |
+| 15              | FW R5SS0_CORE1_AHB_MST      | 0x401E0000      | 14 (2-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE1_AHB    |
+| 16              | FW R5SS1_CORE0_AHB_MST      | 0x40200000      | 14 (2-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE0_AHB    |
+| 17              | FW R5SS1_CORE1_AHB_MST      | 0x40220000      | 14 (2-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE1_AHB    |
 \endcond
 
 \cond SOC_AM273X
