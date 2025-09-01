@@ -50,6 +50,7 @@ During the switcing between GP to HS or vise versa, make sure to do clean build 
 \cond SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
+   -# \subpage EXAMPLES_DRIVERS_SBL_OSPI_ENET
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
    -# \subpage EXAMPLES_DRIVERS_SBL_CAN
    -# \subpage EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH

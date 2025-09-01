@@ -1,4 +1,4 @@
-# SBL QSPI ENET {#EXAMPLES_DRIVERS_SBL_QSPI_ENET_AM263X}
+# SBL QSPI ENET {#EXAMPLES_DRIVERS_SBL_OSPI_ENET}
 
 [TOC]
 
@@ -6,8 +6,8 @@
 
 This bootloader performs SOC initializations and offers additional functionality, including: 
 1. Receiving an application images via UDP over Ethernet.
-2. Flashing the received application to QSPI Flash Memory.
-3. Attempting to boot a multicore appimage present at 0x80000 location in the QSPI Flash. This offset is specified in the QSPI bootloader and when the EVM boots in QSPI mode, it will attempt to find a application at this location.
+2. Flashing the received application to OSPI Flash Memory.
+3. Attempting to boot a multicore appimage present at 0x81000 location in the OSPI Flash. This offset is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it will attempt to find an application at this location.
 
 To flash a multicore appimage at this location, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES.
 
@@ -21,11 +21,11 @@ If a multicore appimage is found at the location, the SBL parses it, splits it i
 
 Note that the SBL is transferred solely through UART, whereas the files that the SBL processes are transmitted over Ethernet.
 
-\note To ensure the sbl_qspi_enet SBL remains intact, allocate a reserved area of 0x13C000 in MSRAM within the application image's linker script. This precaution prevents the application image from overwriting the SBL during Ethernet-based flashing.
+\note To ensure the sbl_ospi_enet SBL remains intact, allocate a reserved area of 0x13C000 in MSRAM within the application image's linker script. This precaution prevents the application image from overwriting the SBL during Ethernet-based flashing.
 \note MSRAM specifications:
 1. Total size: 0x0200000
 2. HSMRT module allocation: 0x40000
-3. ENET libraries/components allocation approximately: 0x7C000
+3. ENET libraries/components allocation approximately: 0xB0000
 4. Scratch pad allocation: 0x8000 
 \note The remaining 0x13C000 space is reserved for the application image.
 
@@ -36,11 +36,11 @@ Note that the SBL is transferred solely through UART, whereas the files that the
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_qspi_enet
+ Example folder | examples/drivers/boot/sbl_ospi_enet
 
 ## Application Flow
 
-The below flow diagram shows the application flow for the reception of an application image via UDP over ethernet on boot of the sbl_qspi_enet SBL.
+The below flow diagram shows the application flow for the reception of an application image via UDP over ethernet on boot of the sbl_ospi_enet SBL.
 
   \imageStyle{sbl_qspi_enet_flow_diagram.png,width:30%}
   \image html sbl_qspi_enet_flow_diagram.png Flow Path
@@ -92,15 +92,15 @@ EVM MAC Address can be found in the SBL UART console. In this case it is: 70:ff:
 
 # Steps to Run the Example
 
-Since this is a bootloader, the example will be run every time you boot an application using this example. It is run from a QSPI boot media unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
+Since this is a bootloader, the example will be run every time you boot an application using this example. It is run from a OSPI boot media unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
 
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
-- Refer to the page \ref BASIC_STEPS_TO_FLASH_FILES to flash the sbl_qspi_enet bootloader to the EVM in UART Boot Mode.
-  Ensure that you should flash the sbl_qspi_enet bootloader, rather than the default sbl_qspi bootloader. Optionally, you can also flash the application image to the QSPI flash memory at offset 0x80000 as mentioned in \ref BASIC_STEPS_TO_FLASH_FILES. Alternatively, you can omit this step and transmit the application image over Ethernet using the procedure outlined below.
-- Once the sbl_qspi_enet bootloader image is flashed on the EVM, switch to QSPI Boot Mode and refer to the page \ref BASIC_STEPS_TO_FLASH_FILES_OVER_ENET to send an application image over ethernet to the EVM.
+- Refer to the page \ref BASIC_STEPS_TO_FLASH_FILES to flash the sbl_ospi_enet bootloader to the EVM in UART Boot Mode.
+  Ensure that you should flash the sbl_ospi_enet bootloader, rather than the default sbl_ospi bootloader. Optionally, you can also flash the application image to the OSPI flash memory at offset 0x81000 as mentioned in \ref BASIC_STEPS_TO_FLASH_FILES. Alternatively, you can omit this step and transmit the application image over Ethernet using the procedure outlined below.
+- Once the sbl_ospi_enet bootloader image is flashed on the EVM, switch to OSPI Boot Mode and refer to the page \ref BASIC_STEPS_TO_FLASH_FILES_OVER_ENET to send an application image over ethernet to the EVM.
 # See Also
 
 \ref DRIVERS_BOOTLOADER_PAGE
@@ -118,12 +118,12 @@ PHY 0 is alive
 [ ENETSBL ] EVM MAC address: 70:ff:76:1d:ec:f2
 [ ENETSBL ] PHY 0 is alive
 [ ENETSBL ] Please wait for Linkup ...
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+Cpsw_handleLinkUp: Port 2: Link up: 100-Mbps Full-Duplex
 [ ENETSBL ] Linkup Done!
 [ ENETSBL TIMEOUT ] Skipping enet transfer.
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown: Port 2: Link down
 
-Starting QSPI Bootloader ...
+Starting OSPI Bootloader ...
 [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
 [BOOTLOADER_PROFILE] Boot Media Clock : 80.000 MHz
 [BOOTLOADER_PROFILE] Boot Image Size  : 30 KB
