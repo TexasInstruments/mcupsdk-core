@@ -251,6 +251,7 @@ const example_file_list = [
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
 	"examples/hello_world/.project/project.js",
+	"examples/hello_world_board_syscfg/.project/project.js",
     "examples/hello_world_xip_fss1/.project/project.js",
 	"examples/hello_world_cpp/.project/project.js",
     "examples/mathlib/benchmark/.project/project.js",

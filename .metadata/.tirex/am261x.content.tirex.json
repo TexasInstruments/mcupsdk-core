@@ -15283,6 +15283,130 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A simple \"Hello, World\" Example demonstrating how to use board view in syscfg.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world_board_syscfg",
+        "location": "../../examples/hello_world_board_syscfg/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_board_syscfg",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example demonstrating how to use board view in syscfg.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world_board_syscfg",
+        "location": "../../examples/hello_world_board_syscfg/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_board_syscfg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example demonstrating how to use board view in syscfg.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world_board_syscfg",
+        "location": "../../examples/hello_world_board_syscfg/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_board_syscfg",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example demonstrating how to use board view in syscfg.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world_board_syscfg",
+        "location": "../../examples/hello_world_board_syscfg/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_board_syscfg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "A \"Hello, World\" Example that with XIP enabled on FSS1 interface CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world_xip_fss1",
         "location": "../../examples/hello_world_xip_fss1/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

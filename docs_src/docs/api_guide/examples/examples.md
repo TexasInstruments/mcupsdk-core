@@ -62,6 +62,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_BENCHMARKS
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD
+-# \subpage EXAMPLES_HELLO_WORLD_BOARD_SYSCFG
 \cond SOC_AM263PX || SOC_AM261X
 -# \subpage EXAMPLES_HELLO_WORLD_XIP_FSS1
 \endcond
