@@ -58,7 +58,7 @@ The example does the below
  ---------------|-----------
  CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
- Board          | @VAR_LP_BOARD_NAME
+ Board          | @VAR_LP_BOARD_NAME_LOWER,  @VAR_BOARD_NAME_LOWER
  Example folder | examples/usb/device/cdc_echo
 
 \endcond
@@ -116,7 +116,15 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 - Connect the J10 on AM261x-LP to the USB host.
 
   \imageStyle{am261x_lp_j10.png,width:30%}
-  \image html am261x_lp_j10.png USB Type-C Device Connector
+  \image html am261x_lp_j10.png USB Micro B Device Connector
+
+  
+### AM261X-SOM
+- To test the application, one can use a Windows/Linux PC as a USB host
+- Connect the J7 on AM261x SOM to the USB host
+
+  \imageStyle{am261x_som_j7.png,width:30%}
+  \image html am261x_som_j7.png USB Micro B Device Connector
 
 \endcond
 

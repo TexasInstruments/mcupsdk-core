@@ -8,10 +8,15 @@
 - This examples demonstrates the use of **TinyUSB** **NCM DEV Class driver**. Its implements all the necessary callbacks that are 
 required by TinyUSB NCM DEV class driver. 
 
-- The Remote Network Driver Interface Specification (NCM) is a Microsoft proprietary protocol used mostly on top of 
-  USB. [NCM_DOC](https://www.usb.org/document-library/network-control-model-devices-specification-v10-and-errata-and-adopters-agreement)
+- Network Control Model (NCM) is a USB standard protocol that facilitates the transfer of Ethernet frames over a USB connection, enabling devices to function as network adapters. For more details, refer to the [NCM Specification](https://www.usb.org/document-library/network-control-model-devices-specification-v10-and-errata-and-adopters-agreement).
 
+\cond SOC_AM243X || SOC_AM64X
   \image html example_block_diag.png NCM Example Block diagram 
+\endcond
+
+\cond SOC_AM261X
+  \image html example_block_diag_am261x.png NCM Example Block diagram 
+\endcond
 
 - This example integrates LWIP HTTPD webserver running on r5fss0-0 core with TinyUSB NCM class dirver. The class driver's 
 job is to collect the ethernet frames comming over USB and forward it to the Lwip web server and vice versa. 
@@ -133,12 +138,15 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 - Connect the J10 on AM261x-LP to the USB host.
 
   \imageStyle{am261x_lp_j10.png,width:30%}
-  \image html am261x_lp_j10.png USB Type-C Device Connector
+  \image html am261x_lp_j10.png USB Micro B Device Connector
 
 
 ### AM261X-SOM
 - To test the application, one can use a Windows/Linux PC as a USB host
-- Connect the J& on AM261x SOM to the USB host
+- Connect the J7 on AM261x SOM to the USB host
+
+  \imageStyle{am261x_som_j7.png,width:30%}
+  \image html am261x_som_j7.png USB Micro B Device Connector
 
 \endcond
 
