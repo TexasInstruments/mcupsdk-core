@@ -27,6 +27,9 @@ Multi Core FreeRTOS IPC Example                                                 
 OSPI Phy Graph Plotter Example                                                                  | OSPI
 Board Level Sysconfig Support                                                                   | Sysconfig
 McSPI External Loopback Example                                                                 | McSPI
+SBL over Ethernet                                                                               | Bootloader
+LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
+Ethernet example demonstrating low-latency Raw-UDP traffic prioritization for industrial applications | Networking
 
 # Modules Not tested/supported in this release
 
@@ -68,6 +71,8 @@ GUI for UART Uniflash Tool                                                    | 
 Ether-ring Driver Implementation                                              | Networking
 Ether-ring Demo with Real Time Traffic Generator and Background LwIP traffic  | Networking
 Smart Layout                                                                  | OptiFlash
+Etherring demo showcasing the integration of vehicle CAN bus data through a CAN-Ethernet gateway | Networking
+Ethernet MDIO with Clause 45 support                                          | Networking
 
 ### OS Kernel
 
@@ -157,7 +162,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support  |
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
 Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration, IEEE 1722 compliant AVTP Stack  | Multi-Clock Domain
 LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
+Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | N/A
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 Ether-ring Implementation | R5F            | NO                | FreeRTOS    | Duplicate Rejection, Ring termination and Packet Duplication, Latency measurement for different real-time traffic profiles, Performance KPIs | N/A
 
@@ -485,17 +490,17 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13513
-    <td> AM263Px: UDP and TCP IPERF TX is unstable with 100Mbps link speed
+    <td> MCUSDK-14509
+    <td> AM263x/Am263px/AM261x: 10% Packet drop with UDP iperf in 100M bandwidth in 1Gbps FullDuplex linkspeed
     <td> Networking
     <td> 10.00.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14509
-    <td> AM263x/Am263px/AM261x: 10% Packet drop with UDP iperf in 100M bandwidth in 1Gbps FullDuplex linkspeed
+    <td> MCUSDK-14883
+    <td> AM263x, AM263Px: SBL: RPRC descoping broke SBL over Ethernet example
     <td> Networking
-    <td> 10.00.00 onwards
+    <td> 11.00.00 onwards
     <td> -
 </tr>
 <tr>
