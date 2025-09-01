@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -332,7 +332,12 @@ static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/
-/* None */
+
+#define SDL_DCC_SYSCLK_FREQ                                             200000U
+#define SDL_DCC_DIGITIZATION_ERR                                           8.0f
+#define SDL_DCC_MOSC_SETUP_TIME                                      1048575.0f
+#define SDL_DCC_MIN_DRIFT                                                  0.2f
+#define SDL_DCC_MAX_DRIFT                                                 48.0f
 
 /*===========================================================================*/
 /*                         Internal function declarations                    */
@@ -490,82 +495,63 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
                                   uint32_t       testClkFreq,
                                   uint32_t       refClkRatioNum,
                                   uint32_t       testClkRatioNum,
-                                  uint32_t       drfitPer,
+                                  uint32_t       drift,
                                   SDL_DCC_Config *configParams)
 {
-    uint32_t maxFreqKHz, maxCntLimit;
-    uint32_t maxRefCnt, minRefCnt;
-    uint64_t mulVar;
+    float asyncErr, dccErr, window, freqErr, totErr, driftPer;
 
-    /* Find maximum frequency between test and reference clock */
+    /* Calculate asyncErr depending on higher frequency */
     if (refClkFreq > testClkFreq)
     {
-        maxFreqKHz  = refClkFreq;
-        maxCntLimit = APP_DCC_SRC0_MAX_VAL;
+        asyncErr = 2.0f * ((float)refClkRatioNum/(float)testClkRatioNum) + 2.0f * ((float)SDL_DCC_SYSCLK_FREQ/(float)refClkFreq);
     }
     else
     {
-        maxFreqKHz  = testClkFreq;
-        maxCntLimit = APP_DCC_SRC1_MAX_VAL;
+        asyncErr = 2.0f + 2.0f * ((float)SDL_DCC_SYSCLK_FREQ/(float)refClkFreq);
     }
-    /* Calculate seed values for 0% drift */
-    if (maxFreqKHz == refClkFreq)
+    
+    /* Calculate seed values */
+    dccErr = asyncErr + SDL_DCC_DIGITIZATION_ERR;
+
+    if (100U < drift)
     {
-        configParams->clk0Seed = maxCntLimit / refClkRatioNum;
-        configParams->clk0Seed = configParams->clk0Seed * refClkRatioNum;
-        mulVar = ((uint64_t) (configParams->clk0Seed) *
-                  (uint32_t) (testClkRatioNum));
-        configParams->clk1Seed   = (uint32_t) (mulVar / refClkRatioNum);
-        configParams->clk0ValidSeed = refClkRatioNum;
-    }
-    else
-    {
-        configParams->clk1Seed = maxCntLimit / testClkRatioNum;
-        configParams->clk1Seed = configParams->clk1Seed * testClkRatioNum;
-        mulVar = ((uint64_t) (configParams->clk1Seed) *
-                  (uint32_t) (refClkRatioNum));
-        configParams->clk0Seed   = (uint32_t) (mulVar / testClkRatioNum);
-        configParams->clk0ValidSeed = 1U;
-    }
-    /* Applying allowed drift */
-    if (((APP_DCC_SRC0_MAX_VAL + APP_DCC_SRC0_VALID_MAX_VAL) <
-         (configParams->clk0Seed * (100U + drfitPer) / 100U)))
-    {
-        /* Seed values with drift exceeds maximum range */
-        SDL_DCCAppPrint(APP_DCC_STR ": Seed values with drift exceeds"
-                        " allowed range\r\n");
-        SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0% "
-                        " allowed drift\r\n");
-    }
-    else if (100U < drfitPer)
-    {
-        /* Error percentage is greater than 100 */
-        SDL_DCCAppPrint(APP_DCC_STR ": Warning Wrong drift %,Not applying drift\r\n");
-        SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0% drift\r\n");
+        /* Drift greater than 100 */
+        SDL_DCCAppPrint(APP_DCC_STR ": Drift set is greater than 100%\r\n");
+        SDL_DCCAppPrint(APP_DCC_STR ": Application will try to run with minimum allowed drift\r\n");
+
+        driftPer = (100.0f * dccErr * (float)testClkRatioNum) / ((float)refClkRatioNum * SDL_DCC_MOSC_SETUP_TIME);
     }
     else
     {
-        maxRefCnt = (configParams->clk0Seed * (100U + drfitPer) / 100U);
-        minRefCnt = (configParams->clk0Seed * (100U - drfitPer) / 100U);
-        if (APP_DCC_SRC0_VALID_MAX_VAL < (maxRefCnt - minRefCnt))
-        {
-            SDL_DCCAppPrint(APP_DCC_STR ": Warning Seed value for valid count "
-                        "exceeds allowed range.\r\n");
-            SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0 allowed"
-                        " drift.\r\n");
-        }
-        else
-        {
-            if (maxRefCnt == minRefCnt)
-            {
-                configParams->clk0ValidSeed = 1U;
-            }
-            else
-            {
-                configParams->clk0Seed   = minRefCnt;
-                configParams->clk0ValidSeed = (maxRefCnt - minRefCnt);
-            }
-        }
+        driftPer = (float)drift;
+    }
+
+    if (driftPer < SDL_DCC_MIN_DRIFT)
+    {
+        driftPer = SDL_DCC_MIN_DRIFT;
+    }
+    else if (driftPer > SDL_DCC_MAX_DRIFT)
+    {
+        SDL_DCCAppPrint(APP_DCC_STR ": Error - bad clock frequencies, setting driftPer to 48%\r\n");
+        driftPer = SDL_DCC_MAX_DRIFT;
+    }
+
+    window = dccErr / (0.01f * driftPer);
+    freqErr = window * (driftPer / 100.0f);
+    totErr = dccErr + freqErr;
+    configParams->clk0Seed = (uint32_t)(window - totErr);
+    configParams->clk1Seed = (uint32_t)(window * ((float)testClkRatioNum / (float)refClkRatioNum));
+    configParams->clk0ValidSeed = (uint32_t)(2.0f * totErr);
+    /* Seed values exceed range */
+    if (APP_DCC_SRC0_MAX_VAL < configParams->clk0Seed)
+    {
+        SDL_DCCAppPrint(APP_DCC_STR ": Warning - Clk 0 seed is set higher than max value. Reducing to max value.\r\n");
+        configParams->clk0Seed = APP_DCC_SRC0_MAX_VAL;
+    }
+    if (APP_DCC_SRC0_VALID_MAX_VAL < configParams->clk0ValidSeed)
+    {
+        SDL_DCCAppPrint(APP_DCC_STR ": Warning - Valid seed is set higher than max value. Reducing to max value.\r\n");
+        configParams->clk0ValidSeed = APP_DCC_SRC0_VALID_MAX_VAL;
     }
     SDL_DCCAppPrint(APP_DCC_STR ": Seed values calculation done.\r\n");
 }
