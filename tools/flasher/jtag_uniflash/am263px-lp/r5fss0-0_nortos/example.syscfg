@@ -210,11 +210,15 @@ section5.output_section[0].$name = ".bss.filebuf";
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution        = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution        = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution         = "MCAN1_RX";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution         = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution         = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_D0";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+flash1.peripheralDriver.OSPI.CLK.$assign        = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$assign       = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$assign        = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$assign         = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D6.$assign         = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$assign         = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D4.$assign         = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$assign         = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$assign         = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$assign         = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$assign         = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "EPWM11_B";
