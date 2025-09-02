@@ -61,6 +61,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/test/drivers/i2c/am273x-evm \
+	-I${MCU_PLUS_SDK_PATH}/source/security \
 	-Igenerated \
 
 DEFINES_common := \

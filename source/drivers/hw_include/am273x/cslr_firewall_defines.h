@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2023 Texas Instruments Incorporated.
+ * Copyright (C) 2023-25 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -171,7 +171,7 @@ extern "C" {
 #define CSL_FW_L3_BANKB_CFG_ADDR                (0x40140000)
 #define CSL_FW_L3_BANKB_NUM_REGION              (8)
 #define CSL_FW_L3_BANKB_NUM_PROTECTED           (1)
-#define CSL_FW_L3_BANKB_START_ADDR0             (0x880E0000)
+#define CSL_FW_L3_BANKB_START_ADDR0             (0x88100000)
 #define CSL_FW_L3_BANKB_REGION_SIZE0            (1*1024*1024)
 
 /***********************************************************************
@@ -182,7 +182,7 @@ extern "C" {
 #define CSL_FW_L3_BANKC_CFG_ADDR                (0x40160000)
 #define CSL_FW_L3_BANKC_NUM_REGION              (8)
 #define CSL_FW_L3_BANKC_NUM_PROTECTED           (1)
-#define CSL_FW_L3_BANKC_START_ADDR0             (0x881C0000)
+#define CSL_FW_L3_BANKC_START_ADDR0             (0x88200000)
 #define CSL_FW_L3_BANKC_REGION_SIZE0            (1*1024*1024)
 
 /***********************************************************************
@@ -193,8 +193,8 @@ extern "C" {
 #define CSL_FW_L3_BANKD_CFG_ADDR                (0x40180000)
 #define CSL_FW_L3_BANKD_NUM_REGION              (8)
 #define CSL_FW_L3_BANKD_NUM_PROTECTED           (1)
-#define CSL_FW_L3_BANKD_START_ADDR0             (0x882AC000)
-#define CSL_FW_L3_BANKD_REGION_SIZE0            (1*1024*1024)
+#define CSL_FW_L3_BANKD_START_ADDR0             (0x8830C000)
+#define CSL_FW_L3_BANKD_REGION_SIZE0            (576*1024)
 
 /***********************************************************************
  * FW HWA_DMA0

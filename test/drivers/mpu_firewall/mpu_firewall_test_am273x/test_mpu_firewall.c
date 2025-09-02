@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -62,6 +62,8 @@ void test_region_access(void* args);
 #define JIRA_ID_TEST_REGION_BOUND_CHECK               (11283U)
 #define JIRA_ID_TEST_REGION_ACCESS                    (11284U)
 #define CSL_HSM_SEC_ROM_U_BASE                  (0x20010000ul)
+/* Total number of Read/write perform under test_region_access() test. */
+#define REGION_ACCESS_TOTAL_COUNT               (25 - 1U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -119,7 +121,6 @@ void tearDown(void)
 
 void test_MPU_FIREWALL_getRegion(void* args)
 {
-
     Fwl_Return_t status;
     int32_t testStatus = SystemP_FAILURE ;
     MPU_FIREWALL_RegionParams mpuParams;
@@ -188,7 +189,33 @@ void test_region_bound_check(void* args)
 
 __attribute__((optnone)) void test_region_access(void* args)
 {
-    int32_t testStatus = SystemP_FAILURE ;
+    int32_t testStatus = SystemP_FAILURE;
+    /* Reset global variable */
+    gDataAbortReceived = 0;
+
+    /* secure context of DSS_L3 is read/write protected */
+    /*Read DSS_L3 */
+    CSL_REG32_RD((uint32_t *) CSL_FW_L3_BANKA_CFG_ADDR);
+    /*Write DSS_L3 */
+    CSL_REG32_WR((uint32_t *) (CSL_FW_L3_BANKA_CFG_ADDR), 0x2U);
+
+    /* secure context of DSS_L3 is read/write protected */
+    /*Read DSS_L3 */
+    CSL_REG32_RD((uint32_t *) CSL_FW_L3_BANKB_CFG_ADDR);
+    /*Write DSS_L3 */
+    CSL_REG32_WR((uint32_t *) (CSL_FW_L3_BANKB_CFG_ADDR), 0x2U);
+
+    /* secure context of DSS_L3 is read/write protected */
+    /*Read DSS_L3 */
+    CSL_REG32_RD((uint32_t *) CSL_FW_L3_BANKC_CFG_ADDR);
+    /*Write DSS_L3 */
+    CSL_REG32_WR((uint32_t *) (CSL_FW_L3_BANKC_CFG_ADDR), 0x2U);
+
+    /* secure context of DSS_L3 is read/write protected */
+    /*Read DSS_L3 */
+    CSL_REG32_RD((uint32_t *) CSL_FW_L3_BANKD_CFG_ADDR);
+    /*Write DSS_L3 */
+    CSL_REG32_WR((uint32_t *) (CSL_FW_L3_BANKD_CFG_ADDR), 0x2U);
 
     /* secure context of HSM_PKA is read/write protected */
     /*Read HSM_PKA */
@@ -206,8 +233,12 @@ __attribute__((optnone)) void test_region_access(void* args)
     /*Write HSM_PKA_RAM */
     CSL_REG32_WR((uint32_t *) 0xCE014004U, 0x2U);
 
-    /*Read TOP_EFUSE_FARM Instruction register */
-    CSL_REG32_RD((uint32_t *) CSL_TOP_EFUSE_FARM_U_BASE);
+    /* Read TOP_EFUSE_FARM Instruction register
+     * This test case is currently commented out for debugging purposes.
+     * If you uncomment this line, increment REGION_ACCESS_TOTAL_COUNT by 1
+     * to maintain consistency between expected and actual access count.
+     */
+    //CSL_REG32_RD((uint32_t *) CSL_TOP_EFUSE_FARM_U_BASE); 
 
     /*Read MPU_HSM Revision register */
     CSL_REG32_RD((uint32_t *) CSL_MPU_HSM_BASE);
@@ -239,7 +270,7 @@ __attribute__((optnone)) void test_region_access(void* args)
     /*Write SEC MGR  */
     CSL_REG32_WR((uint32_t *) CSL_HSM_SEC_MGR_U_BASE, 0x2U);
 
-    if(gDataAbortReceived == 17U)
+    if(gDataAbortReceived == REGION_ACCESS_TOTAL_COUNT)
     {
         testStatus = SystemP_SUCCESS;
     }

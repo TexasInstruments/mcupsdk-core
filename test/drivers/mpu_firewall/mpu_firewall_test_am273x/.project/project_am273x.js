@@ -32,6 +32,7 @@ const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/drivers/i2c/am273x-evm",
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
