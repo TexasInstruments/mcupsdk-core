@@ -6,6 +6,9 @@
 
 This example just does driver and board initialization and prints the string, Hello World! on UART console. The UART module uses the on board XDS110 hardware which is selected via the board view feature in Sysconfig.
 
+\image html use_hw_example.png
+
+Refer to \ref EVM_SYSCONFIG_GUIDE for additional information.
 
 # Supported Combinations
 
