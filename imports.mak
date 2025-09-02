@@ -3,7 +3,7 @@ DEVICE ?= am64x
 ifeq ($(OS),Windows_NT)
     TOOLS_PATH?=C:/ti
     CCS_PATH?=$(TOOLS_PATH)/ccs2020/ccs
-    CCS_ECLIPSE=$(CCS_PATH)/eclipse/eclipsec
+    CCS_ECLIPSE=$(CCS_PATH)/eclipse/ccs-server-cli
     CYGWIN_PATH?=$(CCS_PATH)/utils/cygwin
     MKDIR=$(CYGWIN_PATH)/mkdir -p
     RMDIR=$(CYGWIN_PATH)/rm -rf
@@ -24,7 +24,7 @@ else
     ifneq (,$(filter $(UNAME_S),Linux Darwin))
         export TOOLS_PATH?=$(HOME)/ti
         export CCS_PATH?=$(TOOLS_PATH)/ccs2020/ccs
-        export CCS_ECLIPSE=$(CCS_PATH)/eclipse/eclipse
+        export CCS_ECLIPSE=$(CCS_PATH)/eclipse/ccs-server-cli.sh
         export MKDIR=mkdir -p
         export RMDIR=rm -rf
         export RM=rm -f

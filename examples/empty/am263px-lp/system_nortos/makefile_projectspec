@@ -7,10 +7,10 @@ export PROFILE?=Release
 PROJECT_NAME=empty_am263px-lp_system_nortos
 
 all:
-	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
+	$(CCS_ECLIPSE) -noSplash -workspace $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccs.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
 
 clean:
-	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
+	$(CCS_ECLIPSE) -noSplash -workspace $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccs.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ -f makefile_projectspec clean
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ -f makefile_projectspec clean
 	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ -f makefile_projectspec clean
@@ -18,4 +18,4 @@ clean:
 
 export:
 	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
-	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectCreate -ccs.projectSpec system.projectspec -ccs.overwrite full
+	$(CCS_ECLIPSE) -noSplash -workspace $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccs.apps.projectCreate -ccs.projectSpec system.projectspec -ccs.overwrite full
