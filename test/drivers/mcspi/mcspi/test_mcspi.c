@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-24 Texas Instruments Incorporated
+ *  Copyright (C) 2021-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -238,6 +238,10 @@ void test_mcspi_loopback_multi_word_access(void *args);
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
 void test_mcspi_loopback_dma(void *args);
+# if defined(SOC_AM64X) || defined(SOC_AM243X)
+void test_mcspi_loopback_dma_with_csdisable(void *args);
+void test_mcspi_loopback_dma_with_toggled_csdisable(void *args);
+# endif
 void test_mcspi_loopback_multimaster_dma(void *args);
 #endif
 #if defined(SOC_AM65X)
@@ -295,7 +299,7 @@ void test_main(void *args)
     RUN_TEST(test_mcspi_loopback,  972, (void*)&testParams);
 #endif
 #endif
-#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX) || !defined (SOC_AM261X)
+#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX) && !defined (SOC_AM261X)
     test_mcspi_set_params(&testParams, 973);
     RUN_TEST(test_mcspi_loopback,  973, (void*)&testParams);
 #endif
@@ -424,6 +428,20 @@ void test_main(void *args)
     RUN_TEST(test_mcspi_loopback_dma,  7356, (void*)&testParams);
     test_mcspi_set_params(&testParams, 7357);
     RUN_TEST(test_mcspi_loopback_dma,  7357, (void*)&testParams);
+# if defined(SOC_AM64X) || defined(SOC_AM243X)
+    test_mcspi_set_params(&testParams, 2394);
+    RUN_TEST(test_mcspi_loopback_dma_with_csdisable,  14904, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 7356);
+    RUN_TEST(test_mcspi_loopback_dma_with_csdisable,  14905, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 7357);
+    RUN_TEST(test_mcspi_loopback_dma_with_csdisable,  14906, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 2394);
+    RUN_TEST(test_mcspi_loopback_dma_with_toggled_csdisable,  14904, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 7356);
+    RUN_TEST(test_mcspi_loopback_dma_with_toggled_csdisable,  14905, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 7357);
+    RUN_TEST(test_mcspi_loopback_dma_with_toggled_csdisable,  14906, (void*)&testParams);
+# endif
     test_mcspi_set_params(&testParams, 2397);
     RUN_TEST(test_mcspi_loopback_multimaster_dma,  2397, (void*)&testParams);
 #endif
@@ -1432,6 +1450,326 @@ void test_mcspi_loopback_dma(void *args)
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
     return;
 }
+
+# if defined(SOC_AM64X) || defined(SOC_AM243X)
+void test_mcspi_loopback_dma_with_csdisable(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            i, j, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
+    int32_t             transferOK;
+    MCSPI_Transaction   spiTransaction;
+    MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
+    uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
+    uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
+    uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
+    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    MCSPI_Config       *config;
+    MCSPI_Attrs        *attrParams;
+    MCSPI_Handle        mcspiHandle;
+    uint64_t            startTimeInUSec, elapsedTimeInUsecs, totalTimeInUsecs = 0U;
+    uint32_t            perf_offset;
+
+    /* Memset Buffers */
+    memset(&gMcspiTxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBufferDma[0U]));
+    memset(&gMcspiRxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBufferDma[0U]));
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI3]);
+
+    config = &gMcspiConfig[CONFIG_MCSPI3];
+    attrParams = (MCSPI_Attrs *)config->attrs;
+    attrParams->chMode                      = MCSPI_CH_MODE_SINGLE; 
+    attrParams->operMode                    = MCSPI_OPER_MODE_DMA;
+    mcspiOpenParams->transferMode           = MCSPI_TRANSFER_MODE_CALLBACK;
+    mcspiOpenParams->transferCallbackFxn    = test_mcspi_callback;
+    mcspiOpenParams->mcspiDmaIndex          = 0;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI3, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gMcspiTransferDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    dataWidth = testParams->dataSize;
+    if (dataWidth < 9U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr8 = (uint8_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr8 = (uint8_t *) &gMcspiRxBufferDma[0U];
+    }
+    else if (dataWidth < 17U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr16 = (uint16_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr16 = (uint16_t *) &gMcspiRxBufferDma[0U];
+    }
+    else
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr32 = (uint32_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr32 = (uint32_t *) &gMcspiRxBufferDma[0U];
+    }
+    fifoBitMask = 0x0U;
+    for (dataWidthIdx = 0U;
+         dataWidthIdx < dataWidth; dataWidthIdx++)
+    {
+        fifoBitMask |= (1U << dataWidthIdx);
+    }
+
+    /* Memfill buffers */
+    for (i = 0U; i < testParams->transferLength; i++)
+    {
+        tempTxData = 0xDEADBABE;
+        tempTxData &= (fifoBitMask);
+        if (dataWidth < 9U)
+        {
+            *tempTxPtr8++ = (uint8_t) (tempTxData);
+            *tempRxPtr8++ = 0U;
+        }
+        else if (dataWidth < 17U)
+        {
+            *tempTxPtr16++ = (uint16_t) (tempTxData);
+            *tempRxPtr16++ = 0U;
+        }
+        else
+        {
+            *tempTxPtr32++ = (uint32_t) (tempTxData);
+            *tempRxPtr32++ = 0U;
+        }
+    }
+
+    /* Writeback buffer */
+    CacheP_wb(&gMcspiTxBufferDma[0U], sizeof(gMcspiTxBufferDma), CacheP_TYPE_ALLD);
+    CacheP_wb(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+    for(j = 0U; j < APP_MCSPI_PERF_LOOP_ITER_CNT; j++)
+    {
+        /* Initiate transfer */
+        spiTransaction.channel  = gConfigMcspi3ChCfg[0U].chNum;
+        spiTransaction.count    = testParams->transferLength;
+        spiTransaction.dataSize  = dataWidth;
+        spiTransaction.csDisable = FALSE;
+        spiTransaction.txBuf    = (void *)gMcspiTxBufferDma;
+        spiTransaction.rxBuf    = (void *)gMcspiRxBufferDma;
+        spiTransaction.args     = NULL;
+        startTimeInUSec = ClockP_getTimeUsec();
+        transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI3], &spiTransaction);
+        TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction);
+
+        if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+        {
+            /* Wait for transfer completion */
+            SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+        }
+        elapsedTimeInUsecs = ClockP_getTimeUsec() - startTimeInUSec;
+        totalTimeInUsecs += elapsedTimeInUsecs;
+
+        /* Invalidate cache */
+        CacheP_inv(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+
+        /* Compare data */
+        uint8_t *tempTxPtr, *tempRxPtr;
+        tempTxPtr = (uint8_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr = (uint8_t *) &gMcspiRxBufferDma[0U];
+        for(i = 0U; i < (APP_MCSPI_MSGSIZE); i++)
+        {
+            if(*tempTxPtr++ != *tempRxPtr++)
+            {
+                status = SystemP_FAILURE;   /* Data mismatch */
+                DebugP_log("Data Mismatch at offset %d\r\n", i);
+                break;
+            }
+        }
+    }
+
+    /* Store Performance value in global var. Performance numbers are printed at the end of UT. */
+    if (dataWidth == 8) {
+        perf_offset = 0;
+    } else if (dataWidth == 16) {
+        perf_offset = 1;
+    } else{
+        perf_offset = 2;
+    }
+    gUtPerf[perf_offset].dma = totalTimeInUsecs;
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gMcspiTransferDoneSem);
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI3]);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    return;
+}
+
+void test_mcspi_loopback_dma_with_toggled_csdisable(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            i, j, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
+    int32_t             transferOK;
+    MCSPI_Transaction   spiTransaction;
+    MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
+    uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
+    uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
+    uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
+    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    MCSPI_Config       *config;
+    MCSPI_Attrs        *attrParams;
+    MCSPI_Handle        mcspiHandle;
+    uint64_t            startTimeInUSec, elapsedTimeInUsecs, totalTimeInUsecs = 0U;
+    uint32_t            perf_offset;
+
+    /* Memset Buffers */
+    memset(&gMcspiTxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBufferDma[0U]));
+    memset(&gMcspiRxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBufferDma[0U]));
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI3]);
+
+    config = &gMcspiConfig[CONFIG_MCSPI3];
+    attrParams = (MCSPI_Attrs *)config->attrs;
+    attrParams->chMode                      = MCSPI_CH_MODE_SINGLE;
+    attrParams->operMode                    = MCSPI_OPER_MODE_DMA;
+    mcspiOpenParams->transferMode           = MCSPI_TRANSFER_MODE_CALLBACK;
+    mcspiOpenParams->transferCallbackFxn    = test_mcspi_callback;
+    mcspiOpenParams->mcspiDmaIndex          = 0;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI3, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gMcspiTransferDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    dataWidth = testParams->dataSize;
+    if (dataWidth < 9U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr8 = (uint8_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr8 = (uint8_t *) &gMcspiRxBufferDma[0U];
+    }
+    else if (dataWidth < 17U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr16 = (uint16_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr16 = (uint16_t *) &gMcspiRxBufferDma[0U];
+    }
+    else
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr32 = (uint32_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr32 = (uint32_t *) &gMcspiRxBufferDma[0U];
+    }
+    fifoBitMask = 0x0U;
+    for (dataWidthIdx = 0U;
+         dataWidthIdx < dataWidth; dataWidthIdx++)
+    {
+        fifoBitMask |= (1U << dataWidthIdx);
+    }
+
+    /* Memfill buffers */
+    for (i = 0U; i < testParams->transferLength; i++)
+    {
+        tempTxData = 0xDEADBABE;
+        tempTxData &= (fifoBitMask);
+        if (dataWidth < 9U)
+        {
+            *tempTxPtr8++ = (uint8_t) (tempTxData);
+            *tempRxPtr8++ = 0U;
+        }
+        else if (dataWidth < 17U)
+        {
+            *tempTxPtr16++ = (uint16_t) (tempTxData);
+            *tempRxPtr16++ = 0U;
+        }
+        else
+        {
+            *tempTxPtr32++ = (uint32_t) (tempTxData);
+            *tempRxPtr32++ = 0U;
+        }
+    }
+
+    /* Writeback buffer */
+    CacheP_wb(&gMcspiTxBufferDma[0U], sizeof(gMcspiTxBufferDma), CacheP_TYPE_ALLD);
+    CacheP_wb(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+    for(j = 0U; j < APP_MCSPI_PERF_LOOP_ITER_CNT; j++)
+    {
+        /* Initiate transfer */
+        spiTransaction.channel  = gConfigMcspi3ChCfg[0U].chNum;
+        spiTransaction.count    = testParams->transferLength;
+        spiTransaction.dataSize  = dataWidth;
+        if(j < (APP_MCSPI_PERF_LOOP_ITER_CNT/4))
+        {
+            spiTransaction.csDisable = TRUE;
+        }
+        else if((j>=(APP_MCSPI_PERF_LOOP_ITER_CNT/4)) && (j<(APP_MCSPI_PERF_LOOP_ITER_CNT/2)))
+        {
+            spiTransaction.csDisable = FALSE;
+        }
+        else
+        {
+            spiTransaction.csDisable = TRUE;
+        }
+        spiTransaction.txBuf    = (void *)gMcspiTxBufferDma;
+        spiTransaction.rxBuf    = (void *)gMcspiRxBufferDma;
+        spiTransaction.args     = NULL;
+        startTimeInUSec = ClockP_getTimeUsec();
+        transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI3], &spiTransaction);
+        TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction);
+
+        if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+        {
+            /* Wait for transfer completion */
+            SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+        }
+        elapsedTimeInUsecs = ClockP_getTimeUsec() - startTimeInUSec;
+        totalTimeInUsecs += elapsedTimeInUsecs;
+
+        /* Invalidate cache */
+        CacheP_inv(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+
+        /* Compare data */
+        uint8_t *tempTxPtr, *tempRxPtr;
+        tempTxPtr = (uint8_t *) &gMcspiTxBufferDma[0U];
+        tempRxPtr = (uint8_t *) &gMcspiRxBufferDma[0U];
+        for(i = 0U; i < (APP_MCSPI_MSGSIZE); i++)
+        {
+            if(*tempTxPtr++ != *tempRxPtr++)
+            {
+                status = SystemP_FAILURE;   /* Data mismatch */
+                DebugP_log("Data Mismatch at offset %d\r\n", i);
+                break;
+            }
+        }
+    }
+
+    /* Store Performance value in global var. Performance numbers are printed at the end of UT. */
+    if (dataWidth == 8) {
+        perf_offset = 0;
+    } else if (dataWidth == 16) {
+        perf_offset = 1;
+    } else{
+        perf_offset = 2;
+    }
+    gUtPerf[perf_offset].dma = totalTimeInUsecs;
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gMcspiTransferDoneSem);
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI3]);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    return;
+}
+
+# endif
 
 #endif
 

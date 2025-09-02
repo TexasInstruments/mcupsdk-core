@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -579,6 +579,10 @@ void MCSPI_lld_dmaStop(MCSPILLD_Handle hMcspi,
     {
         CSL_REG32_FINS(baseAddr + MCSPI_CHCONF(chNum), MCSPI_CH0CONF_DMAR, CSL_MCSPI_CH0CONF_DMAR_DISABLED);
     }
+    
+    /* Update chconfig and chcontrol register values */
+    chObj->chCtrlRegVal = MCSPI_readChCtrlReg(baseAddr, chNum);
+    chObj->chConfRegVal = MCSPI_readChConf(baseAddr, chNum);
 
     hMcspi->state = MCSPI_STATE_READY;
 
@@ -615,15 +619,16 @@ static void MCSPI_udmaStart(MCSPILLD_Handle hMcspi, MCSPI_ChObject *chObj,
                 baseAddr + MCSPI_CHCONF(chNum),
                 MCSPI_CH0CONF_FORCE,
                 CSL_MCSPI_CH0CONF_FORCE_ASSERT);
+            chObj->chConfRegVal = MCSPI_readChConf(baseAddr, chNum);
             chObj->csEnable = FALSE;
         }
     }
 
-    /* Enable channel */
-    CSL_REG32_FINS(
-        baseAddr + MCSPI_CHCTRL(chNum),
-        MCSPI_CH0CTRL_EN,
-        CSL_MCSPI_CH0CTRL_EN_ACT);
+    /* Update chconfig and chcontrol register values */ 
+    /* Enable channel */ 
+    chObj->chCtrlRegVal = MCSPI_readChCtrlReg(baseAddr, chNum);  
+    chObj->chCtrlRegVal |= CSL_MCSPI_CH0CTRL_EN_MASK;
+    CSL_REG32_WR(baseAddr + MCSPI_CHCTRL(chNum), chObj->chCtrlRegVal);
 
     /*
      * Note: Once the channel is enabled, DMA will trigger its transfer.
