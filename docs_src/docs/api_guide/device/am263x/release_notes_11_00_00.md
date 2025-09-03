@@ -42,8 +42,9 @@ Code Composer Studio    | R5F            | 20.2.0
 SysConfig               | R5F            | 1.24.2 build, build 4234
 TI ARM CLANG            | R5F            | 4.0.3.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
-LwIP                    | R5F            | STABLE-2_2_0_RELEASE
+LwIP                    | R5F            | STABLE-2_2_1_RELEASE
 Mbed-TLS                | R5F            | 2.13.1
+Uniflash                | R5F            | 9.2.0
 
 ## Key Features
 
@@ -438,6 +439,27 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.00.00 onwards
     <td> Not to use Priority mask based critical sections (Disabled by default in SDK).
 </tr>
+<tr>
+    <td> MCUSDK-14893
+    <td> Sub projects under system projects cannot be changed in CCS Theia
+    <td> CCS
+    <td> 11.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14895
+    <td> UART LLD Rx error checking logic checks if all errors exist at once
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13011
+    <td> Data Abort in application when all cores are running freertos using Gel files(CCS)
+    <td> FreeRTOS
+    <td> 10.00.00 onwards
+    <td> Flash and use SBL NULL instead of gel files
+</tr>
 </table>
 
 ## Errata
@@ -584,6 +606,86 @@ To build SDK examples on a different toolchain, recompile the gmac library by us
 
 - A new library will be created inside mac/dist. 
 - Rename this file to "gmac.arm64-apple-darwin.darwin.dylib". 
+
+### RPRC Image format is Deprecated and Corresponding SBL's are also removed from SDK
+
+RPRC image format is no longer supported and MCELF will be the only file format. Older SBL's and
+Cfg files which mapped to RPRC format are removed and replaced with MCELF variants.
+Below is the list of updated SBL's and Cfg files:
+
+<table>
+<tr>
+    <th> Deprecated SBL + CFG File
+    <th> Supported SBL + CFG File
+</tr>
+<tr>
+    <td> SBL QSPI (default_sbl_qspi.cfg)
+    <td> SBL QSPI MULTICORE ELF (mcelf_sbl_qspi.cfg)
+</tr>
+<tr>
+    <td> SBL UART
+    <td> SBL UART MULTICORE ELF
+</tr>
+<tr>
+    <td> SBL SD (default_sbl_sd.cfg)
+    <td> SBL SD MULTICORE ELF (mcelf_sbl_sd.cfg)
+</tr>
+<tr>
+    <td> SBL CAN (default_sbl_can.cfg)
+    <td> SBL CAN MULTICORE ELF (mcelf_sbl_can.cfg)
+</tr>
+<tr>
+    <td> SBL CAN UNIFLASH (default_sbl_can_uniflash.cfg, default_sbl_can_uniflash_app.cfg)
+    <td> SBL CAN UNIFLASH MULTICORE ELF (mcelf_sbl_can_uniflash.cfg, mcelf_sbl_can_uniflash_app.cfg)
+</tr>
+</table>
+
+Please refer to the updated SDK example makefiles for Infra changes.
+
+### Module clock configuration through Clock Tree
+
+Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules. 
+With Clocktree, we now have a clear view of the entire clock tree with configurable components like PLL, DPLL, muxes, dividers added with validity checks.
+Earlier, the Input clock source and frequency for any module was configured through the module view in SysCfg. From now, this has to be done through clocktree.
+
+Please refer to \ref CLOCKTREE for more details.
+
+### Migrating examples to 11.00.00 from older versions
+
+\cond !SOC_AM64X
+\note Images are shown for AM64x. It is application for @VAR_SOC_NAME as well.
+\endcond
+
+#### Makefile Changes
+##### Library Name change on makefile and CCS projects
+From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS. 
+So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the 
+librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries. 
+
+For NoRTOS/baremetal, 
+
+\imageStyle{example_migration1.png,width:40%}
+\image html example_migration1.png "Library name change for NoRTOS example"
+
+For FreeRTOS, 
+
+\imageStyle{example_migration2.png,width:40%}
+\image html example_migration2.png "Library name change for FreeRTOS example"
+
+similar change can be done on the CCS project as well
+
+##### OS define on makefile and CCS projects 
+Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project. 
+
+For NoRTOS/baremetal, 
+
+\imageStyle{example_migration3.png,width:20%}
+\image html example_migration3.png "OS Macro addition for NoRTOS example"
+
+For FreeRTOS, 
+
+\imageStyle{example_migration4.png,width:20%}
+\image html example_migration4.png "OS Macro addition for FreeRTOS example"
 
 ### Compiler Options
 
