@@ -23,6 +23,20 @@ The PBIST Module of the SDL supports execution of the software-initiated PBIST f
 * Restore core to system control (PBIST reset and release test mode)
 * Return the status of the test
 
+Supported memory groups
+
+\cond SOC_AM263X
+\imageStyle{am263x_pbist.png,width:50%}
+\image html am263x_pbist.png "PBIST memory coverage"
+\endcond
+\cond SOC_AM263PX
+\imageStyle{am263px_pbist.png,width:50%}
+\image html am263px_pbist.png "PBIST memory coverage"
+\endcond
+\cond SOC_AM261X
+\imageStyle{am261x_pbist.png,width:50%}
+\image html am261x_pbist.png "PBIST memory coverage"
+\endcond
 ## SysConfig Features
 
 - None

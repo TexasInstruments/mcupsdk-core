@@ -564,6 +564,9 @@ To build SDK examples on a different toolchain, recompile the gmac library by us
 - A new library will be created inside mac/dist. 
 - Rename this file to "gmac.arm64-apple-darwin.darwin.dylib". 
 
+### SDL PBIST Self test
+VIM Memory groups are added to PBIST self test from this release. Because of this change, Self test (SDL_PBIST_selfTest) API has to be called in polling mode only and interrupt mode is not supported.
+
 ### Compiler Options
 
 <table>

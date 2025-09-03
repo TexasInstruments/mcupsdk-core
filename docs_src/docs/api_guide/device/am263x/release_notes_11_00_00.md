@@ -688,6 +688,9 @@ For FreeRTOS,
 \imageStyle{example_migration4.png,width:20%}
 \image html example_migration4.png "OS Macro addition for FreeRTOS example"
 
+### SDL PBIST Self test
+VIM Memory groups are added to PBIST self test from this release. Because of this change, Self test (SDL_PBIST_selfTest) API has to be called in polling mode only and interrupt mode is not supported.
+
 ### Compiler Options
 
 <table>
