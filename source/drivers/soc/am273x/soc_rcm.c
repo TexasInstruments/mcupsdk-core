@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -3493,10 +3493,14 @@ void SOC_rcmStartMemInitDSSL3(uint32_t l3bankMask)
 
     if (l3bankMask & SOC_RCM_MEMINIT_DSSL3_MEMBANK_RAM3)
     {
+        /* Errata Fix: i2294 */
+        /* Write 0x0 before writing 0x1 to trigger memory initialization for L3 Bank D */
+        dssCtrl->DSS_L3RAM_MEMINIT_START &= ~CSL_DSS_CTRL_DSS_L3RAM_MEMINIT_START_DSS_L3RAM_MEMINIT_START_L3RAM3_MEMINIT_START_MASK;
+        /* Also set memBankInit for DSS L3 bank D */
         memBankInit |= CSL_DSS_CTRL_DSS_L3RAM_MEMINIT_START_DSS_L3RAM_MEMINIT_START_L3RAM3_MEMINIT_START_MASK;
     }
 
-    /* Start the Initialization of L2 Memory */
+    /* Start the Initialization of L3 Memory */
     dssCtrl->DSS_L3RAM_MEMINIT_START = SOC_rcmInsert8 (dssCtrl->DSS_L3RAM_MEMINIT_START, 3U, 0U, memBankInit);
 }
 
