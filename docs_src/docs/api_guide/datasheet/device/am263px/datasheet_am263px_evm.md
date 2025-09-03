@@ -153,6 +153,15 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 - Theoretically for 400 Bytes at 50MHz time required for clocks is 64us.
 - Additionally hardware adds 160ns + 1bit time delay between each word transfer as measured in the scope
 
+### DPL Low latency interrupt performance
+
+Interrupt handler                         |   Measured execution time (ns)
+------------------------------------------|-------------------------------
+Non Re-entrant, Without FPU context save  |	            310
+Non Re-entrant, With FPU context save	  |             426
+Re-entrant, Without FPU context save	  |             376
+Re-entrant, With FPU context save	      |             496
+
 ### ARM R5F
 
 ### COREMARK
