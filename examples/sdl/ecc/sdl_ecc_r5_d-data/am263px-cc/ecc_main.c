@@ -112,13 +112,13 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_CTRL, clearErr); /* Write 0 value on ecc control register */
     SDL_REG32_WR(SDL_ECC_AGG_R5SS0_CORE0_VECTOR, SDL_ECC_SPECIFIC_VECTOR_VALUE);
     /* Wait for ECC Aggrs. register update properly */
-    while( ((*((uint32_t *)SDL_ECC_AGG_R5SS0_CORE0_VECTOR)>>24)&0X1) != 1u);
+    while( ((*((volatile uint32_t *)SDL_ECC_AGG_R5SS0_CORE0_VECTOR)>>24)&0X1) != 1u);
 #elif defined (R5F1_INPUTS)
     SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_VECTOR, ram_Id); /* Write ram_Id on ecc_vector register */
     SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_CTRL, clearErr); /* Write 0 value on ecc control register */
     SDL_REG32_WR(SDL_ECC_AGG_R5SS1_CORE0_VECTOR, SDL_ECC_SPECIFIC_VECTOR_VALUE);
     /* Wait for ECC Aggrs. register update properly */
-    while( ((*((uint32_t *)SDL_ECC_AGG_R5SS1_CORE0_VECTOR)>>24)&0X1) != 1u);
+    while( ((*((volatile uint32_t *)SDL_ECC_AGG_R5SS1_CORE0_VECTOR)>>24)&0X1) != 1u);
 #endif
     DebugP_log("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
