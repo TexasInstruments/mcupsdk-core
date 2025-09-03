@@ -274,6 +274,14 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px
     <td> Added missing .controlfnc section in linker command file of DPL Low Latency Interrupt example
 </tr>
+<tr>
+    <td> PROC_SDL-9148
+    <td> ECC D-Data fail during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Due to the clang optimisation. So, added pragma to disable optimisation for error clear register.
+</tr>
 </table>
 
 ## Known Issues
@@ -389,13 +397,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.01.00 onwards
     <td> Use standalone example.
-</tr>
-<tr>
-    <td> PROC_SDL-9148
-    <td> ECC D-Data fail during release
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use debug profile for ECC D-Data
 </tr>
 <tr>
     <td> MCUSDK-14898

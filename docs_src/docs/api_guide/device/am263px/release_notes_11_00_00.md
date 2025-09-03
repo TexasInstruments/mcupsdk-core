@@ -298,6 +298,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Resolved in Source code
 </tr>
 <tr>
+    <td> PROC_SDL-9148
+    <td> ECC D-Data fail during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px
+    <td> Due to the clang optimisation. So, added pragma to disable optimisation for error clear register.
+</tr>
+<tr>
     <td> MCUSDK-14695
     <td> SDFM_configComparator has incorrect input in examples
     <td> SDFM
@@ -454,13 +462,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.01.00 onwards
     <td> Use standalone example.
-</tr>
-<tr>
-    <td> PROC_SDL-9148
-    <td> ECC D-Data fail during release
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use debug profile
 </tr>
 <tr>
     <td> PROC_SDL-9154
