@@ -87,10 +87,10 @@ SDL_VTM_configTs SDL_VTM_configTempSense =
     52000
 };
 
-uint8_t SDL_tempExceedHot=0;
-uint8_t SDL_tempBelowCold=0;
-uint8_t SDL_tempLowThresholdIntr=0;
-volatile bool SDL_vtmEsmError = false;
+volatile uint8_t SDL_tempExceedHot=0;
+volatile uint8_t SDL_tempBelowCold=0;
+volatile uint8_t SDL_tempLowThresholdIntr=0;
+volatile uint8_t SDL_vtmEsmError = 0;
 
 
 static uint32_t ESMarg;
@@ -128,6 +128,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             void *arg)
 {
     int32_t alert_th_hot, alert_th_cold;
+    uint32_t temp0;
     printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x\r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
@@ -142,11 +143,12 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     }
 
     /* Reverse the condition so that ESM is not generated. */
-    alert_th_hot = 74000;
-    alert_th_cold =  66000;
+    SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+    alert_th_hot =   temp0 + 3000;
+    alert_th_cold =  temp0 - 3000;
     SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
 
-    SDL_vtmEsmError = true;
+    SDL_vtmEsmError = 1U;
 
     return 0;
 }
@@ -201,7 +203,7 @@ void SDL_TS_loInterruptHandler()
 void vtm_example_app(void)
 {
     int32_t retValue;
-    uint32_t temp0, temp1, temp2, temp3;
+    uint32_t temp0;
     int32_t alert_th_hot, alert_th_cold;
     SDL_VTM_Stat_val SDL_VTM_Stat_value;
     void (*pTSenseHInterruptHandler)(void *);
@@ -233,9 +235,6 @@ void vtm_example_app(void)
     SDL_VTM_enableTc();
     ClockP_usleep(9000);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
-    SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_1, &temp1);
-    SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_2, &temp2);
-    SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_3, &temp3);
 
     alert_th_hot = temp0 - 3000; // temperatube in mc
     alert_th_cold = temp0 + 3000; // temperatube in mc 
@@ -267,41 +266,12 @@ void vtm_example_app(void)
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
     DebugP_log("\r\n");
     DebugP_log("\r\n UC2 : ");
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
+
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);  
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
     SDL_VTM_enableTc();
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
-#if defined (SOC_AM261X)
-    ClockP_sleep(1);
-#else
-    ClockP_usleep(9000);
-#endif
     alert_th_hot = 0; // temperatube in mc
     alert_th_cold = temp0 - 3000; // temperatube in mc
     /* Configure cold alert temperature so that low threshold interrupt is generated. */
@@ -358,7 +328,7 @@ void vtm_example_app(void)
         DebugP_log("\r\nERR: SDL_VTM_initTs failed");
     }
 
-    while(SDL_vtmEsmError != true);
+    while(SDL_vtmEsmError != 1U);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
     DebugP_log("\r\n Device Temperature: %dmc", temp0);
     DebugP_log("\r\n Configured Low threshold Temperature: %dmc", alert_th_cold);
