@@ -137,8 +137,6 @@ int main(void)
 
         if(bootHandle != NULL)
         {
-
-
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
 
             /* Run CPUs */

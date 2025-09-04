@@ -1097,13 +1097,6 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                 {
 					uint8_t cpuId = gNoteSegBuffer[segmentMapIdx + i - 1];
                     
-                    /* Check if self CPU is present */
-                    if (cpuId == CSL_CORE_ID_R5FSS0_0 && (config->coresPresentMap & 0x1) == 0)
-                    {
-                        /* Add self CPU to list of cores */
-                        config->coresPresentMap |= 1 << cpuId;
-                        Bootloader_profileAddCore(cpuId);
-                    }
 					if(!initCpuDone[cpuId])
 					{
 						status = Bootloader_initCpu(handle, &bootImageInfo->cpuInfo[cpuId]);
