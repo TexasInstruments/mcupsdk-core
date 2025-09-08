@@ -19,7 +19,7 @@
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"
-        cgtVersion="8.3.13"
+        cgtVersion="8.5.0.LTS"
         device="TMS320C66XX.AM273x.evmAM273x"
         deviceCore="C66xx_DSP"
         ignoreDefaultDeviceSettings="true"

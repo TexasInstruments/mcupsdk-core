@@ -172,7 +172,7 @@ const utils = {
                 toolchainVersion = '7.2'
                 break;
             case 'ti-c6000':
-                toolchainVersion = '8.3.13'
+                toolchainVersion = '8.5.0.LTS'
                 break;
             case 'ti-pru-cgt':
                 toolchainVersion = '2.3.3'
