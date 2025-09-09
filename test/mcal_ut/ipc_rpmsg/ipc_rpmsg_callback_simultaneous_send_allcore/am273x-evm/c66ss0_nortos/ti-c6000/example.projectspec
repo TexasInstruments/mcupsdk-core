@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Ipc Rpmsg Callback Simultaneous Send Dualcore"
-        name = "ipc_rpmsg_callback_simultaneous_send_dualcore_am273x-evm_c66ss0_nortos_ti-c6000"
+        title="Ipc Rpmsg Callback Simultaneous Send Allcore"
+        name = "ipc_rpmsg_callback_simultaneous_send_allcore_am273x-evm_c66ss0_nortos_ti-c6000"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -19,7 +19,7 @@
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"
-        cgtVersion="8.5.0.LTS"
+        cgtVersion="8.3.13"
         device="TMS320C66XX.AM273x.evmAM273x"
         deviceCore="C66xx_DSP"
         ignoreDefaultDeviceSettings="true"
@@ -49,7 +49,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=ipc_rpmsg_callback_simultaneous_send_dualcore.${ConfigName}.map
+            -m=ipc_rpmsg_callback_simultaneous_send_allcore.${ConfigName}.map
             --warn_sections
             --emit_warnings_as_errors
             --rom_model
@@ -63,7 +63,7 @@
             --context c66ss0 --part Default --package ZCE
         "
 
-        description="A Ipc Rpmsg Callback Simultaneous Send Dualcore NORTOS project">
+        description="A Ipc Rpmsg Callback Simultaneous Send Allcore NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -91,7 +91,7 @@
         ></configuration>
         <pathVariable name="DSPLIB_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../ipc_rpmsg_callback_simultaneous_send_dualcore.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../ipc_rpmsg_callback_simultaneous_send_allcore.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
