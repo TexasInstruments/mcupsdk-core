@@ -100,4 +100,4 @@ Since this is mainly a flash-writer application, this is sent via the UART unlik
 
 # Sample Output
 
-Since this SBL receives the appimage/mcelf image and other files over UART using XMODEM protocol, it doesn't print anything to the console so as not to corrupt the XMODEM transport.
+Since this SBL receives the application image and other files over UART using XMODEM protocol, it doesn't print anything to the console so as not to corrupt the XMODEM transport.

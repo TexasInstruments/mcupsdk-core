@@ -697,13 +697,13 @@ At the top there is a drop down to select the UART COM port which will be used f
   - **Flash writer binary** : This is the sbl_uart_uniflash binary. This needs to be send first for the ROM to receive and boot. Once this boots up you can send any number of files arbitrarily for flashing.
 
   - **Bootloader binary** : It is assumed that the eventual goal of the flashing process is to boot your application from the flash device. For this a bootloader capable of reading an image from flash device needs to be flashed at offset 0 (generally) of the flash. This would be the `sbl_ospi` or `sbl_qspi`. Although this is no different than flashing any other file to a particular offset, we have decided to keep it a separate option for better clarity. Although the offset is almost always 0, we have provided an offset edit box as well if there is any change whatsoever.
-\if SOC_AM263PX || SOC_AM261X
+\if (SOC_AM263PX || SOC_AM261X)
   - **Application binary** : You can select the application image to be flashed from this slot. SDK convention is to flash at a 512 KB offset (0x81000). This can be changed, but keep in mind that the bootloader booting this application should be aware of this offset as well. It is a configurable option in the Sysconfig of the bootloader.
 \else 
   - **Application binary** : You can select the application image to be flashed from this slot. SDK convention is to flash at a 512 KB offset (0x80000). This can be changed, but keep in mind that the bootloader booting this application should be aware of this offset as well. It is a configurable option in the Sysconfig of the bootloader.
 \endif 
 \cond SOC_AM243X || SOC_AM64X || SOC_AM263PX || SOC_AM261X
-\if SOC_AM263PX || SOC_AM261X
+\if (SOC_AM263PX || SOC_AM261X)
   - **Application XIP binary** : You can select the XIP component to your application from this slot. These files will be of the format (`*.mcelf_xip`). These files already contain details as to where these need to be flashed, so no need to provide any offset in this case.
 \else
   - **Application XIP binary** : You can select the XIP component to your application from this slot. These files will be of the format (`*.appimage_xip`). These files already contain details as to where these need to be flashed, so no need to provide any offset in this case.
@@ -969,7 +969,11 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 - Flash driver gets loaded into RAM
   - A flash programming algorithm is loaded into RAM via JTAG.
   - This algorithm contains a program that can write to the flash memory.
+\if (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+- Then your binary (.mcelf/.tiimage) is streamed over the JTAG. The driver receives chunks of the application, unlocks the target flash memory regions, erases the sectors and performs flash write operation.
+\else
 - Then your binary (.appimage/.mcelf/.tiimage) is streamed over the JTAG. The driver receives chunks of the application, unlocks the target flash memory regions, erases the sectors and performs flash write operation.
+\endif
 \if (SOC_AM263X || SOC_AM273X || SOC_AWR294X)
 - Once the JTAG has successfully received the SBL and application binaries, switch to QSPI bootmode and reset the board.
 \else

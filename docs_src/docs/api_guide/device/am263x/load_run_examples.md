@@ -20,7 +20,7 @@
 
 - Building a particular example project compiles all source files present in drivers, examples and sysconfig, links them, then generates a .out binary.
 
-- Using the .out, we generate .appimage / .mcelf images.
+- Using the .out, we generate .mcelf images.
 	
 - Once a multicore application image is built, we can load it into memory.
 

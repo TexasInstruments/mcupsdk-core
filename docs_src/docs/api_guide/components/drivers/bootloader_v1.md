@@ -8,7 +8,7 @@ The Bootloader module provides APIs to write bootloader applications for various
 
 - QSPI Boot
 - UART Boot
-- API to parse multicore appimage
+- API to parse multicore application image
 - Separate APIs to boot self and non-self cores
 
 ## SysConfig Features
@@ -45,7 +45,15 @@ Instance Open Example
 \snippet Bootloader_sample.c open
 
 Booting Cores Example
-\snippet Bootloader_sample.c bootcores_am263x
+\cond SOC_AM263X
+\snippet Bootloader_sample_v2.c bootcores_am263x
+\endcond
+\cond SOC_AM263PX
+\snippet Bootloader_sample_v2.c bootcores_am263px
+\endcond
+\cond SOC_AM261X
+\snippet Bootloader_sample_v3.c bootcores_am261x
+\endcond
 
 Instance Close Example
 \snippet Bootloader_sample.c close
