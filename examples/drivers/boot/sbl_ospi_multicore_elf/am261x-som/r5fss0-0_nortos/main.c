@@ -238,7 +238,6 @@ int main(void)
             }
             if (status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
                 if (status == SystemP_SUCCESS)
                 {
                     /*

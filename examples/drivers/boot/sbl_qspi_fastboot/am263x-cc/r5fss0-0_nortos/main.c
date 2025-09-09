@@ -154,7 +154,6 @@ int main(void)
             }
             if(status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }

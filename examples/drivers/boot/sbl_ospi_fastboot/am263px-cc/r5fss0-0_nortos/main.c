@@ -272,7 +272,6 @@ int main(void)
             }
             if (status == SystemP_SUCCESS)
             {
-                /* Load the RPRC image on self core now */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 
