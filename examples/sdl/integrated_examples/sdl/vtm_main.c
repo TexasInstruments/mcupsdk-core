@@ -69,23 +69,29 @@ SDL_VTM_configTs SDL_VTM_configTempSense =
     52000
 };
 
-uint8_t SDL_tempExceedHot=0;
-uint8_t SDL_tempBelowCold=0;
-uint8_t SDL_tempLowThresholdIntr=0;
-volatile bool SDL_vtmEsmError = false;
+volatile uint8_t SDL_tempExceedHot=0U;
+volatile uint8_t SDL_tempBelowCold=0U;
+volatile uint8_t SDL_tempLowThresholdIntr=0U;
+volatile uint8_t SDL_vtmEsmError = 0U;
 
 int32_t VTM_clear(void)
 {
     int32_t alert_th_hot, alert_th_cold;
+    int32_t retValue;
+    uint32_t temp0;
 
     /* Reverse the condition so that ESM is not generated. */
-    alert_th_hot = 74000;
-    alert_th_cold =  66000;
-    SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
+    retValue = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+    if(retValue == 0)
+    {
+        alert_th_hot =   temp0 + 3000;
+        alert_th_cold =  temp0 - 3000;
+        SDL_VTM_setTShutTemp(SDL_VTM_INSTANCE_TS_0, alert_th_hot, alert_th_cold);
+    }
 
-    SDL_vtmEsmError = true;
+    SDL_vtmEsmError = 1U;
 
-    return 0;
+    return retValue;
 }
 
 
@@ -228,7 +234,7 @@ int32_t VTM_test(void)
     SDL_VTM_enableTc();
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
 
-    while(SDL_vtmEsmError != true);
+    while(SDL_vtmEsmError != 1U);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
 
     return retValue;
