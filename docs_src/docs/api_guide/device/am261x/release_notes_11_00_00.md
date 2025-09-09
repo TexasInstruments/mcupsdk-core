@@ -197,6 +197,22 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263Px, AM261x
     <td> Resolved in Source code
 </tr>
+<tr>
+    <td> PROC_SDL-9160
+    <td> PBIST does not cover the VIM memories
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in Source and Used polling method instead of ISR to cover VIM memory
+</tr>
+<tr>
+    <td> PROC_SDL-9154
+    <td> VTM Example stuck in UC2
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed in example
+</tr>
 </table>
 
 ## Known Issues
@@ -345,13 +361,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 <tr>
     <td> PROC_SDL-9163
     <td> ECC Aggregators FSS FOTA and OSPI
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> None
-</tr>
-<tr>
-    <td> PROC_SDL-9154
-    <td> VTM Example stuck in UC2
     <td> SDL
     <td> 10.02.00 onwards
     <td> None

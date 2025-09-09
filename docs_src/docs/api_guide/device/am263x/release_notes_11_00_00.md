@@ -284,7 +284,15 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.02.00 onwards
     <td> AM263x, AM263Px
-    <td> Due to the clang optimisation. So, added pragma to disable optimisation for error clear register.
+    <td> Fixed in example
+</tr>
+<tr>
+    <td> PROC_SDL-9160
+    <td> PBIST does not cover the VIM memories
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in Source and Used polling method instead of ISR to cover VIM memory
 </tr>
 </table>
 

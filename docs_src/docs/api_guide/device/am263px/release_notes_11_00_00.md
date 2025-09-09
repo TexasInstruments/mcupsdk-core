@@ -308,7 +308,23 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.02.00 onwards
     <td> AM263x, AM263Px
-    <td> Due to the clang optimisation. So, added pragma to disable optimisation for error clear register.
+    <td> Fixed in example.
+</tr>
+<tr>
+    <td> PROC_SDL-9160
+    <td> PBIST does not cover the VIM memories
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in Source and Used polling method instead of ISR to cover VIM memory
+</tr>
+<tr>
+    <td> PROC_SDL-9154
+    <td> VTM Example stuck in UC2
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed in example
 </tr>
 <tr>
     <td> MCUSDK-14695
@@ -467,13 +483,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SDL
     <td> 10.01.00 onwards
     <td> Use standalone example.
-</tr>
-<tr>
-    <td> PROC_SDL-9154
-    <td> VTM Example stuck in UC2
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use debug profile
 </tr>
 <tr>
     <td> PROC_SDL-9163
