@@ -243,7 +243,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 #endif
 
 #if defined (SOC_AM263PX) || defined (SOC_AM261X)
-extern uint8_t SDL_TOG_interruptDone;
+extern volatile uint8_t SDL_TOG_interruptDone;
 /* This is the list of exception handle and the parameters */
 const SDL_R5ExptnHandlers TOG_Test_R5ExptnHandlers =
 {

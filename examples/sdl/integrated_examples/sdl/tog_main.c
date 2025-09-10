@@ -68,7 +68,7 @@ __attribute((section(".text:TOG_test"))) void TOG_eventHandler(uint32_t instance
 
 volatile bool handlerFlag __attribute__((section(".data:TOG_test"))) = false;
 
-extern uint8_t SDL_TOG_interruptDone;
+extern volatile uint8_t SDL_TOG_interruptDone;
 uint32_t  delay;
 /* This is the list of exception handle and the parameters */
 const SDL_R5ExptnHandlers TOG_Test_R5ExptnHandlers =

@@ -335,7 +335,7 @@ void vtm_example_app(void)
     DebugP_log("\r\n Configured hot threshold Temperature: %dmc", alert_th_hot);
     DebugP_log("\r\n ESM Interrupt Received ");
 
-    DebugP_log("\r\n All tests Passed ");
+    DebugP_log("\r\n All tests have Passed ");
 
     return;
 }

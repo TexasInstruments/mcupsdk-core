@@ -46,7 +46,7 @@
 #include <sdl/stog/v0/soc/sdl_tog_soc.h>
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
 
-uint8_t SDL_TOG_interruptDone = 0u;
+volatile uint8_t SDL_TOG_interruptDone = 0;
 static pSDL_DPL_HwipHandle TOG_intrHandle;
 
 int32_t SDL_TOG_getBaseaddr(SDL_TOG_Inst instance,
