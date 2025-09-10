@@ -80,28 +80,17 @@ void i2c_io_expander_resolver_adc(void)
     if(status == SystemP_SUCCESS)
     {
         /* read successful */
-        if(boardVer[0] == 'A' && boardVer[1] == '\0')
-        {
-            /* boardVer is REV A */
-            DebugP_log("Detected CC version is REV A. Calling TCA6424 Drivers for io expander configurations\r\n");
-            i2c_io_expander_resolver_adc_gTCA6424();
-        }
-        else if(boardVer[1] == '1' && boardVer[0] == 'E')
+        if(boardVer[1] == '1' && boardVer[0] == 'E')
         {
             /* boardVer is E1 */
-            DebugP_log("Detected CC version is E1. Calling TCA6416 Drivers for io expander configurations\r\n");
+            DebugP_log("Calling TCA6416 Drivers for io expander configurations\r\n");
             i2c_io_expander_resolver_adc_gTCA6416();
-        }
-        else if(boardVer[1] == '2' && boardVer[0] == 'E')
-        {
-            /* boardVer is E2 */
-            DebugP_log("Detected CC version is E2. Calling TCA6424 Drivers for io expander configurations\r\n");
-            i2c_io_expander_resolver_adc_gTCA6424();
         }
         else
         {
-            /* boardVer is invalid */
-            /* Do nothing */
+            /* boardVer is E2 or REV A or Rev B */
+            DebugP_log("Calling TCA6424 Drivers for io expander configurations\r\n");
+            i2c_io_expander_resolver_adc_gTCA6424();
         }
     }
     else
