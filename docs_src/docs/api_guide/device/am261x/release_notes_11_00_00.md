@@ -213,6 +213,14 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263Px, AM261x
     <td> Fixed in example
 </tr>
+<tr>
+    <td> PROC_SDL-9147
+    <td> VTM Usecase stuck in integrated example
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed in integrated example
+</tr>
 </table>
 
 ## Known Issues
@@ -352,25 +360,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Use standalone example.
 </tr>
 <tr>
-    <td> PROC_SDL-9147
-    <td> VTM Usecase stuck in integrated example
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use standalone example.
-</tr>
-<tr>
     <td> PROC_SDL-9163
     <td> ECC Aggregators FSS FOTA and OSPI
     <td> SDL
     <td> 10.02.00 onwards
     <td> None
-</tr>
-<tr>
-    <td> PROC_SDL-9177
-    <td> ECC MSS-L2 example fail in R5FSS0-1 during release
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> Use R5FSS0-0 example.
 </tr>
 <tr>
     <td> MCUSDK-14898
