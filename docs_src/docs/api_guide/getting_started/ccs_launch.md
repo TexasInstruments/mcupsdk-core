@@ -8,8 +8,10 @@
 \else
 \note The steps on this page should be done each time EVM is power cycled or when a
       new CCS session is started.
-
 \endif
+\cond SOC_AM263X || SOC_AM261X 
+\note The screenshots shown are for AM263PX but can be similarly used for @VAR_SOC_NAME.
+\endcond
 ## Prerequisites {#PREREQUISITES}
 
 A quick recap of the steps that need to have been done before you proceed
@@ -71,12 +73,12 @@ A quick recap of the steps that need to have been done before you proceed
 
 - Launch the target configuration created with \ref CCS_NEW_TARGET_CONFIG
 
-    \imageStyle{ccs_launch_00.png,width:40%}
+    \imageStyle{ccs_launch_00.png,width:30%}
     \image html ccs_launch_00.png "Launch Target Configuration"
 
 - You will see the @VAR_SOC_NAME target configuration in the "Debug" window as shown below
 
-    \imageStyle{ccs_launch_01.png,width:40%}
+    \imageStyle{ccs_launch_01.png,width:30%}
     \image html ccs_launch_01.png "Target Configuration After Launch"
 
 \cond SOC_AM273X
@@ -163,9 +165,17 @@ continue debugging or reload application of interest on the cores.
 
 - Load program on the CPU
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+<br/>
+    \imageStyle{ccs_load_run_02_am26.png,width:30%}
+    \image html ccs_load_run_02_am26.png "Load Program"
+\endcond
+
+\cond SOC_AM273X || SOC_AM64X || SOC_AM243X
+<br/>
     \imageStyle{ccs_load_run_02.png,width:50%}
     \image html ccs_load_run_02.png "Load Program"
-
+\endcond
 - **When using makefiles to build**,
   - In the "Load Program" dialog, select "Browse" and select the program from `examples/{example folder}/{board}/{cpu}_{os}/{compiler}` as shown below for the "hello world" program.
 
@@ -173,17 +183,31 @@ continue debugging or reload application of interest on the cores.
     \image html ccs_load_run_03.png "Select Program for Makefile Build"
 
 - **When using CCS projects**,
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+  - In the "Load Program" dialog, select "Workspace", select the project and then select the program as shown below,
+\endcond
+\cond SOC_AM273X || SOC_AM64X || SOC_AM243X
   - In the "Load Program" dialog, select "Browse Project", select the project and then select the program as shown below,
+\endcond
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+<br/> 
+    \imageStyle{ccs_load_run_04_am26.png,width:40%}
+    \image html ccs_load_run_04_am26.png "Select Program for CCS Projects Build"
+\endcond
+
+\cond SOC_AM273X || SOC_AM64X || SOC_AM243X
+<br/>
     \imageStyle{ccs_load_run_04.png,width:40%}
     \image html ccs_load_run_04.png "Select Program for CCS Projects Build"
-
-    \imageStyle{ccs_load_run_05.png,width:25%}
+\endcond
+<br/>
+    \imageStyle{ccs_load_run_05.png,width:45%}
     \image html ccs_load_run_05.png "Select the Program from CCS Project"
 
 - After the program is loaded, you will see the program is halted at "main" as shown below
 
-    \imageStyle{ccs_load_run_06.png,width:40%}
+    \imageStyle{ccs_load_run_06.png,width:35%}
     \image html ccs_load_run_06.png "Program at main()"
 
 - Depending on the example you are running, you may need to load more programs on other CPUs
@@ -191,14 +215,21 @@ continue debugging or reload application of interest on the cores.
   communication (IPC) examples. For the "hello world" program shown above, no more programs need to be loaded.
 
 - Select "Resume" to run the program and debug using the various CCS debug options
+<br/> 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+    \imageStyle{ccs_load_run_07_am26.png,width:30%}
+    \image html ccs_load_run_07_am26.png "Load Program"
+\endcond
 
+\cond SOC_AM273X || SOC_AM64X || SOC_AM243X
+<br/>
     \imageStyle{ccs_load_run_07.png,width:30%}
-    \image html ccs_load_run_07.png "Run the Program"
-
+    \image html ccs_load_run_07.png "Load Program"
+\endcond
 - The program output will be seen on CCS console, and/or UART terminal, if enabled.
   Below shows a sample output on both CCS console and UART console, after running the "hello world" program.
 
-    \imageStyle{ccs_load_run_08.png,width:50%}
+    \imageStyle{ccs_load_run_08.png,width:90%}
     \image html ccs_load_run_08.png "Run the Program"
 
 \cond SOC_AM273X

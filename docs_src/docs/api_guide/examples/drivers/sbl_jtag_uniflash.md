@@ -201,6 +201,85 @@ All tests have passed!!
 
 \endcode
 
+\elseif SOC_AM263X
+\code
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Verify Application file in Flash
+
+ x: Exit
+
+ Enter Choice: 1
+ [FLASH WRITER] Erasing complete flash ...
+ [FLASH WRITER] This can take few minutes, so please wait ...
+ [FLASH WRITER] Erasing complete flash ... SUCCESS !!!
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Verify Application file in Flash
+
+ x: Exit
+
+ Enter Choice: 2
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...\
+ 
+ const session=initScripting().openSession(".*");\
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
+ 1 [FLASH WRITER] Flashing success!!...
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Verify Application file in Flash
+
+ x: Exit
+
+ Enter Choice: 3
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263px-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...\
+
+ const session=initScripting().openSession(".*");\
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
+ 1 [FLASH WRITER] Verifying success!!...
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Verify Application file in Flash
+
+ x: Exit
+
+ Enter Choice: x
+
+ [FLASH WRITER] Application exited !!!
+All tests have passed!!
+
+\endcode
+
 \else
 \code
 
