@@ -303,5 +303,5 @@ firewall_service1.mpu_region[1].$name          = "CONFIG_MPU_FIREWALL_REGION1";
 firewall_service1.mpu_region[1].regionNum      = 1;
 firewall_service1.mpu_region[1].allaidConfig   = true;
 firewall_service1.mpu_region[1].allPermissions = true;
-firewall_service1.mpu_region[1].endAddr        = 0x72003FFF;
 firewall_service1.mpu_region[1].firewallId     = "MBOX_RAM_SLV";
+firewall_service1.mpu_region[1].startAddr      = 0x72000C00;

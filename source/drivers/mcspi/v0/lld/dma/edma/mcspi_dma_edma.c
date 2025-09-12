@@ -419,7 +419,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
 
             if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
             {
-                if(chObj->curTxWords == 0U)
+                if((chObj->curRxWords == 0U) && (transaction->count >= chObj->effRxFifoDepth))
                 {
                     edmaRxParam.bCnt  = (uint16_t) chObj->effRxFifoDepth;
                     edmaRxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curRxWords)) / chObj->effRxFifoDepth);
@@ -481,7 +481,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
             
             if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
             {
-                if(chObj->curTxWords == 0U)
+                if((chObj->curTxWords == 0U) && (transaction->count >= chObj->effTxFifoDepth))
                 {
                     edmaTxParam.bCnt  = (uint16_t) chObj->effTxFifoDepth;
                     edmaTxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curTxWords)) / chObj->effTxFifoDepth);
@@ -675,7 +675,7 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
     uint32_t                baseAddr;
     volatile uint32_t       chStat;
     MCSPILLD_InitHandle     hMcspiInit;
-    uint32_t startTicks, elapsedTicks = 0, irqStatus = 0U;
+    uint32_t irqStatus = 0U;
     int32_t status  =       MCSPI_STATUS_SUCCESS;
 
     if((NULL != args) && (intrHandle != NULL))
@@ -686,17 +686,25 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
         chObj = &hMcspi->hMcspiInit->chObj[chNum];
         baseAddr = hMcspi->baseAddr;
         hMcspiInit = hMcspi->hMcspiInit;
-        startTicks = hMcspiInit->clockP_get();
 
         if (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode)
         {
-            do{
-                    /* Wait for end of transfer. */
-                    chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
-                    elapsedTicks = hMcspiInit->clockP_get() - startTicks;
-            }while (((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0U) && (elapsedTicks < transaction->timeout));
+            /* update transaction */
+            MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
 
-            irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
+            do{
+                /* Wait for end of transfer. */
+                chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
+            }while ((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0U);
+
+            if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+            {
+                do{
+                    /* Wait for end of transfer. */
+                    irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
+                }while ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) != CSL_MCSPI_IRQSTATUS_EOW_MASK);
+            }
+
             if (((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_TX0_UNDERFLOW_MASK << (4U * chNum))) != 0U) &&
                 (hMcspiInit->msMode == MCSPI_MS_MODE_PERIPHERAL))
                 {
@@ -711,24 +719,29 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
             }
             else
             {
-                if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
+                if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
                 {
-                    hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
-                    /* Stop MCSPI Channel */
-                    MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
-                    hMcspi->state = MCSPI_STATE_READY;
-                }
-                else
-                {
-                    if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+                    if (transaction->count == chObj->curTxWords)
                     {
-                        /* update transaction */
-                        MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
+                        hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                        /* Stop MCSPI Channel */
+                        MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
+                        hMcspi->state = MCSPI_STATE_READY;
+                    }
+                    else
+                    {
                         /* reconfigure fifo and initite the last chunck */
                         MCSPI_initiateLastChunkTransfer(hMcspi, chObj, transaction);
                         /* DMA tranfser API */
                         (void)MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
                     }
+                }
+                else
+                {
+                    hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                    /* Stop MCSPI Channel */
+                    MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
+                    hMcspi->state = MCSPI_STATE_READY;
                 }
             }
         }
@@ -755,6 +768,9 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
 
         if (MCSPI_TR_MODE_TX_ONLY != chObj->chCfg->trMode)
         {
+            /* update transaction */
+            MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
+
             irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
             if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
             {
@@ -776,17 +792,15 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
             {
                 if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
                 {
-                    if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
+                    if (transaction->count == chObj->curRxWords)
                     {
                         hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
                         /* Stop MCSPI Channel */
                         MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
                         hMcspi->state = MCSPI_STATE_READY;
                     }
-                    else
-                    {      
-                        /* update transaction */
-                        MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
+                    else   
+                    {
                         /* reconfigure fifo and initite the last chunck */
                         MCSPI_initiateLastChunkTransfer(hMcspi, chObj, transaction);
                         /* DMA tranfser API */
@@ -810,13 +824,16 @@ static void MCSPI_edmaUpdateTransferParams(MCSPILLD_Handle hMcspi,
                                             MCSPI_ChObject *chObj,
                                             const MCSPI_Transaction *transaction)
 {
-    uint32_t reminder;
+    uint32_t reminder = 0;
 
     if((hMcspi != NULL) && (chObj != NULL) && (transaction != NULL))
     {
-        reminder = (transaction->count % chObj->effTxFifoDepth);
         if (MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode)
         {
+            if((transaction->count - chObj->curTxWords) >= chObj->effTxFifoDepth)
+            {
+                reminder = ((transaction->count - chObj->curTxWords) % chObj->effTxFifoDepth);
+            }
             chObj->curTxWords = transaction->count - reminder;
             chObj->curRxWords = transaction->count - reminder;
             chObj->curTxBufPtr += chObj->curTxWords * (1U << chObj->bufWidthShift);
@@ -824,11 +841,19 @@ static void MCSPI_edmaUpdateTransferParams(MCSPILLD_Handle hMcspi,
         }
         else if (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode)
         {
+            if((transaction->count - chObj->curTxWords) >= chObj->effTxFifoDepth)
+            {
+                reminder = ((transaction->count - chObj->curTxWords) % chObj->effTxFifoDepth);
+            }
             chObj->curTxWords = transaction->count - reminder;
             chObj->curTxBufPtr += chObj->curTxWords * (1U << chObj->bufWidthShift);
         }
         else 
         {
+            if((transaction->count - chObj->curRxWords) >= chObj->effRxFifoDepth)
+            {
+                reminder = ((transaction->count - chObj->curRxWords) % chObj->effRxFifoDepth);
+            }
             chObj->curRxWords = transaction->count - reminder;
             chObj->curRxBufPtr += chObj->curRxWords * (1U << chObj->bufWidthShift);
         }

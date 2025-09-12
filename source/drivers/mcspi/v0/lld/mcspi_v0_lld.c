@@ -685,8 +685,16 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
                             transaction->csDisable);
         if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
         {
-            /* Enable FIFO*/
-            MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
+            if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
+            {
+                /* Enable FIFO*/
+                MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
+            }
+            else
+            {
+                /* Enable FIFO*/
+                MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
+            }
         }
 
         status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
@@ -2459,7 +2467,8 @@ static void MCSPI_setFifoConfig(MCSPILLD_Handle hMcspi,
     uint32_t regVal;
     uint32_t reminder = 0, effNumWordsTxRx;
 
-    if (MCSPI_OPER_MODE_INTERRUPT == hMcspi->hMcspiInit->operMode)
+    if ((MCSPI_OPER_MODE_INTERRUPT == hMcspi->hMcspiInit->operMode) || 
+        (MCSPI_OPER_MODE_DMA == hMcspi->hMcspiInit->operMode))
     {
         /* Start transferring only multiple of FIFO trigger level */
         if(MCSPI_TR_MODE_RX_ONLY != chObj->chCfg->trMode)
