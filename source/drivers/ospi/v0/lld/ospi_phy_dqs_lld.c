@@ -697,7 +697,7 @@ void OSPI_lld_phyGetTuningData(uint32_t *tuningData, uint32_t *tuningDataSize)
 
 */
 
-int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint8_t arrays[4][128][128])
+int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint8_t arrays[5][128][128])
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
     OSPI_PhyConfig searchPoint;
@@ -711,7 +711,7 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     /* Perform the Basic PHY configuration for the OSPI controller */
     OSPI_phyBasicConfig(hOspi);
 
-    for(rdDelay = OSPI_PHY_INIT_RD_DELAY; rdDelay < OSPI_PHY_MAX_RD_DELAY; rdDelay++)
+    for(rdDelay = OSPI_PHY_INIT_RD_DELAY; rdDelay <= OSPI_PHY_MAX_RD_DELAY; rdDelay++)
     {
         for(txDll = 0; txDll < 128; txDll++)
         {
