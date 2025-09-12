@@ -98,7 +98,7 @@ function connectTargets() {
 
     // Writes 15 in MSS_L2_MEM_INIT
     dsMCU1_0.target.connect();
-    dsMCU1_0.memory.write(0x50D00240, 0xF, 32)
+    dsMCU1_0.memory.write(0x50D00240, 0xF, 32);
 
     console.log("[Cortex_R5_0] L2 Memory Init Done ...");
 

@@ -98,7 +98,7 @@ function connectTargets() {
 
     // Writes 15 in MSS_L2_MEM_INIT
     dsMCU1_0.target.connect();
-    dsMCU1_0.memory.write(0x50D00240, 0xF, 32)
+    dsMCU1_0.memory.write(0x50D00330, 0xF, 32);
 
     console.log("[Cortex_R5_0] L2 Memory Init Done ...");
 
@@ -118,7 +118,7 @@ function connectTargets() {
 
     console.log("[Cortex_R5_0] Triggering ROM Eclipse ... ");
     /* Trigger ROM eclipse */
-    dsMCU1_0.memory.write(0x50D00080, 0x7, 32);
+    dsMCU1_0.memory.write(0x50D00898, 0x7, 32);
 
     console.log("[Cortex_R5_0] Loading SBL ... ");
     dsMCU1_0.memory.loadProgram(sbl_elf_file);
@@ -179,10 +179,10 @@ else {
 }
 
 // path to sbl elf
-sbl_elf_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.out";
+sbl_elf_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.out";
 
 // path to sbl bin
-sbl_bin_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-cc/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.bin"
+sbl_bin_file = sdkPath + "/examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/sbl_null.release.bin"
 
 // !!! EDIT THIS !!! Add absolute path to the CCXML file here.
 fileCcxml = "C:/ti/AM261x.ccxml"
