@@ -93,6 +93,10 @@
 #include <icss_dual_emac/mii/PRU1_bin.h>
 #endif
 
+#ifdef SOC_AM261X
+#include <board/ioexp/ioexp_tca6408.h>
+#endif
+
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -104,9 +108,11 @@
 #define LWIPINIT_TASK_PRIORITY                  (8U)
 #define LWIPINIT_TASK_STACK_SIZE                (0x4000U)
 
+#ifdef AM263PX_CC
 /*I2C Instance and Index for IO Expander programming*/
 #define MDIO_MDC_MUX_SEL1                       (0x12U)
 #define IO_EXP_I2C_INSTANCE                     (0x01U)
+#endif
 
 /*ICSS_EMAC Tx API Call Task*/
 #define ICSS_EMAC_Tx_TASK_PRIORITY              (10U)
@@ -128,6 +134,16 @@
 /* Wait time for PHY Reset and Other configuration changes to take effect (in microseconds) */
 #define PHY_RESET_WAIT_TIME                     (300000U)
 
+#ifdef AM261X_LP
+/*I2C Instance and Index for IO Expander programming*/
+#define I2C_ADDRESS_IO_EXPANDER_TCA6408         (0x21)
+#define MDIO_MDC_MUX_SEL                        (0x03)
+
+/*Defines for PCB Rev read from EEPROM*/
+#define EEPROM_OFFSET_READ_PCB_REV              (0x0022U)
+#define EEPROM_READ_PCB_REV_DATA_LEN            (0x2U)
+#endif
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -138,6 +154,12 @@ void icssmMuxSelection(void);
 
 #ifdef AM263PX_CC
 void setIOExpMuxSelection(void *args);
+#endif
+
+#ifdef AM261X_LP
+void ICSS_EMAC_setMDIOMuxSelection(void *args);
+
+bool isPcbRevisionA(void);
 #endif
 
 /* ========================================================================== */
@@ -551,6 +573,8 @@ Lwip2Emac_Handle lwipifHandle;
 
 #ifdef AM263PX_CC
 static TCA6424_Config  gTCA6424_Config;
+#elif AM261X_LP
+static TCA6408_Config  gTCA6408_Config;
 #endif
 
 void print_cpu_load()
@@ -600,6 +624,14 @@ void ICSS_EMAC_testPinmuxConfig(void)
 #elif AM263PX_CC
     /* Set MDIO/MDC_MUX_SEL1 to low using IO Expander */
     setIOExpMuxSelection(NULL);
+#elif AM261X_LP
+    /* Read PCB revision from EEPROM at specified offset */
+    if (isPcbRevisionA())
+    {
+        /* Configure MDIO mux settings specific to REV A boards */
+        ICSS_EMAC_setMDIOMuxSelection(NULL);
+    }
+    /* Note: No handling for other LP-AM261 Revisions in this code segment */
 #endif
 
     /* Wait for the configuration changes to take effect */
@@ -656,31 +688,66 @@ void ICSS_EMAC_testPHYInitConfig(void)
 }
 #elif defined AM261X_LP
 void ICSS_EMAC_testPHYInitConfig(void)
-{
-    ETHPHY_DP83826E_LedSourceConfig ledConfig0;
-    ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig0;
+{    
+    /* Use the API to check for RevA */
+    bool isRevA = isPcbRevisionA();
 
-    /* PHY pin LED_0 as link */
-    ledConfig0.ledNum = ETHPHY_DP83826E_LED0;
-    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_MII_LINK_100BT_FD;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+    if(isRevA)
+    {
+        /* DP83869 PHY configuration */
+        ETHPHY_DP83869_LedSourceConfig ledConfig0;
+        ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig0;
 
-    /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
-    ledConfig0.ledNum = ETHPHY_DP83826E_LED1;
-    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_SPEED_10BT;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        /* PHY pin LED_0 as link */
+        ledConfig0.ledNum = ETHPHY_DP83869_LED0;
+        ledConfig0.mode = ETHPHY_DP83869_LED_MODE_100BTX_LINK_UP;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
 
-    /* PHY pin LED_2 as Rx/Tx Activity */
-    ledConfig0.ledNum = ETHPHY_DP83826E_LED2;
-    ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
+        ledConfig0.ledNum = ETHPHY_DP83869_LED1;
+        ledConfig0.mode = ETHPHY_DP83869_LED_MODE_1000BT_LINK_UP;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        
+        /* PHY pin LED_2 as Rx/Tx Activity */
+        ledConfig0.ledNum = ETHPHY_DP83869_LED2;
+        ledConfig0.mode = ETHPHY_DP83869_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        
+        ledBlinkConfig0.rate = ETHPHY_DP83869_LED_BLINK_RATE_200_MS;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+    }
+    else
+    {
+        /* DP83826E PHY configuration */
+        ETHPHY_DP83826E_LedSourceConfig ledConfig0;
+        ETHPHY_DP83826E_LedBlinkRateConfig ledBlinkConfig0;
 
-    ledBlinkConfig0.rate = ETHPHY_DP83826E_LED_BLINK_RATE_200_MS;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+        /* PHY pin LED_0 as link */
+        ledConfig0.ledNum = ETHPHY_DP83826E_LED0;
+        ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_MII_LINK_100BT_FD;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+
+        /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
+        ledConfig0.ledNum = ETHPHY_DP83826E_LED1;
+        ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_SPEED_10BT;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        
+        /* PHY pin LED_2 as Rx/Tx Activity */
+        ledConfig0.ledNum = ETHPHY_DP83826E_LED2;
+        ledConfig0.mode = ETHPHY_DP83826E_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig0, sizeof(ledConfig0));
+        
+        ledBlinkConfig0.rate = ETHPHY_DP83826E_LED_BLINK_RATE_200_MS;
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+        ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig0, sizeof(ledBlinkConfig0));
+    }
 
     /* Enable MII mode for DP83869 PHY */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
@@ -689,11 +756,78 @@ void ICSS_EMAC_testPHYInitConfig(void)
     /* Disable 1G advertisement and soft-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+    
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
 
     /*Wait for PHY to come out of reset*/
     ClockP_usleep(PHY_RESET_WAIT_TIME);
+}
+
+/**
+ * Configure MDIO Mux Selection for using ICSSM MDIO
+ *
+ * This function sets up the TCA6408 I/O expander to control the MDIO/MDC mux
+ * selection. It configures a pin 3 as output and sets it HIGH to select
+ * ICSSM MDIO.
+ *
+ * @param args Unused parameter, maintained for compatibility
+ */
+void ICSS_EMAC_setMDIOMuxSelection(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            ioIndex = MDIO_MDC_MUX_SEL;     /* Index for the MDIO mux selection pin */
+    TCA6408_Params      tca6408Params;
+
+    TCA6408_Params_init(&tca6408Params);
+    tca6408Params.i2cAddress  = I2C_ADDRESS_IO_EXPANDER_TCA6408;    /* I2C address of the expander */
+
+    /* Open the TCA6408 I/O expander device */
+    status = TCA6408_open(&gTCA6408_Config, &tca6408Params);
+
+    if(status == SystemP_SUCCESS)
+    {
+        /* Configure the mux selection pin as output mode */
+        status = TCA6408_config(
+                      &gTCA6408_Config,
+                      ioIndex,
+                      TCA6408_MODE_OUTPUT);
+
+        /* 
+         * Set pin HIGH to select ICSSM MDIO
+         * This routes MDIO signals to the Industrial Communication SubSystem (ICSS)
+         */
+        if(status == SystemP_SUCCESS)
+        {
+            status = TCA6408_setOutput(
+                         &gTCA6408_Config,
+                         ioIndex,
+                         TCA6408_OUT_STATE_HIGH);
+        }
+        /* Close the I/O expander to release resources */
+        TCA6408_close(&gTCA6408_Config);
+    }
+}
+
+/**
+ * @brief Reads PCB revision from EEPROM and determines if it's RevA
+ * 
+ * @return bool True if board is RevA, False otherwise or if read fails
+ */
+bool isPcbRevisionA(void)
+{
+    uint8_t boardVer[EEPROM_READ_PCB_REV_DATA_LEN] = {0};
+    int32_t status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, 
+                                boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
+    
+    if (status != SystemP_SUCCESS)
+    {
+        DebugP_log("EEPROM Read for PCB Revision failed!!!\n\r");
+        return false;  /* Return false on read failure */
+    }
+    
+    /* Check if board is Rev A - first character is 'A' and properly null-terminated */
+    return (boardVer[0] == 'A' && boardVer[1] == '\0');
 }
 #else
 void ICSS_EMAC_testPHYInitConfig(void)
