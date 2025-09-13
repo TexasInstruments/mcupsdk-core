@@ -12,12 +12,13 @@ const hsmclient         = scripting.addModule("/drivers/hsmclient/hsmclient", {}
 const hsmclient1        = hsmclient.addInstance();
 const ipc               = scripting.addModule("/drivers/ipc/ipc");
 const debug_log         = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg           = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7         = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71        = mpu_armv7.addInstance();
 const mpu_armv72        = mpu_armv7.addInstance();
 const mpu_armv73        = mpu_armv7.addInstance();
 const mpu_armv74        = mpu_armv7.addInstance();
+const mpu_armv75        = mpu_armv7.addInstance();
 const default_linker    = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1   = default_linker.addInstance();
 const general           = scripting.addModule("/memory_configurator/general", {}, false);
@@ -74,6 +75,11 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 22;
 mpu_armv74.attributes        = "Cached+Sharable";
+
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x44000000;
+mpu_armv75.size       = 11;
+mpu_armv75.attributes = "NonCached";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 

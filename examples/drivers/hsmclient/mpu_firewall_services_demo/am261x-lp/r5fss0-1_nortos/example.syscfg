@@ -13,7 +13,7 @@ const hsmclient1      = hsmclient.addInstance();
 const ipc             = scripting.addModule("/drivers/ipc/ipc");
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -104,7 +104,7 @@ mpu_armv78.allowExecute = false;
 mpu_armv79.$name      = "CONFIG_MPU_REGION8";
 mpu_armv79.baseAddr   = 0x44000000;
 mpu_armv79.size       = 11;
-mpu_armv79.attributes = "Cached+Sharable";
+mpu_armv79.attributes = "NonCached";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 

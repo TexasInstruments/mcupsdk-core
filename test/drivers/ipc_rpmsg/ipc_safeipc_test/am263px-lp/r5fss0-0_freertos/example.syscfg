@@ -22,6 +22,7 @@ const mpu_armv74        = mpu_armv7.addInstance();
 const mpu_armv75        = mpu_armv7.addInstance();
 const mpu_armv76        = mpu_armv7.addInstance();
 const mpu_armv77        = mpu_armv7.addInstance();
+const mpu_armv78        = mpu_armv7.addInstance();
 const default_linker    = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1   = default_linker.addInstance();
 const general           = scripting.addModule("/memory_configurator/general", {}, false);
@@ -102,6 +103,11 @@ mpu_armv77.baseAddr     = 0x701D0000;
 mpu_armv77.allowExecute = false;
 mpu_armv77.attributes   = "NonCached";
 mpu_armv77.size         = 15;
+
+mpu_armv78.$name      = "CONFIG_MPU_REGION7";
+mpu_armv78.baseAddr   = 0x44000000;
+mpu_armv78.size       = 11;
+mpu_armv78.attributes = "NonCached";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 

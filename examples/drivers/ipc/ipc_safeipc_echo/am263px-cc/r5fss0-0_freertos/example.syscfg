@@ -108,7 +108,7 @@ mpu_armv77.size         = 15;
 mpu_armv78.$name      = "CONFIG_MPU_REGION7";
 mpu_armv78.baseAddr   = 0x44000000;
 mpu_armv78.size       = 11;
-mpu_armv78.attributes = "Device";
+mpu_armv78.attributes = "NonCached";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
