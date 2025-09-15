@@ -41,13 +41,13 @@
 2. Launch AM261x target connection in CCS, however DO NOT connect to any CPUs.
 
 3. From CCS Scripting console do (CCS Tool Bar > View > Scripting Console)
-    js:> loadJSFile "<path/to/sdk>/tools/ccs_load/am261x/load_sbl.js"
+    Upload this script to the console
 
 4. After successful execution you should see a log like below
 
   On the CCS scripting console in CCS,
 
-    js:> LoadJSFile "/home/abishekss/workarea/mcupsdk/mcu_plus_sdk/tools/ccs_load/am261x/load_sbl.js"
+    js:>
     [Cortex_R5_0] L2 Memory Init Done ...
     Going to issue reset: 'System Reset' (This is a System-Level Warm Reset) ...
     [Cortex_R5_0] Loading SBL Init Code ...

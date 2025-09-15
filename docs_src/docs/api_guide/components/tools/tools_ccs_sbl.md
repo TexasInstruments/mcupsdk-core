@@ -44,6 +44,10 @@ This section describes CCS utility scripts that can optionally be used to make y
         \imageStyle{load_js_file.png,width:80%}
         \image html load_js_file.png "Load JS File"
 
+-# If using CCS Eclipse, open CCS scripting console `CCS Tool Bar > View > Scripting Console` and run the below command.
+
+        js:> loadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/@VAR_SOC_NAME_LOWER/load_sbl_eclipse.js"
+
 -# After successful execution you should see a log like below. Example used here is "sbl_null"
 
         [Cortex_R5_0] L2 Memory Init Done ...
