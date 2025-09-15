@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --variant "500MHz" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.25.0+4268"}
  */
 
 /**
@@ -49,6 +49,7 @@ ram1.serialRamDriver.$name                              = "board_ram_serialRam_s
 ram1.serialRamDriver.peripheralDriver.$name             = "CONFIG_OSPI0";
 ram1.serialRamDriver.peripheralDriver.protocol          = "8d_8d_8d";
 ram1.serialRamDriver.peripheralDriver.dmaEnable         = true;
+ram1.serialRamDriver.peripheralDriver.baudRateDiv       = 4;
 ram1.serialRamDriver.peripheralDriver.OSPI.$assign      = "OSPI1";
 ram1.serialRamDriver.peripheralDriver.OSPI.CLK.$assign  = "GPIO29";
 ram1.serialRamDriver.peripheralDriver.OSPI.CSn0.$assign = "GPIO38";
