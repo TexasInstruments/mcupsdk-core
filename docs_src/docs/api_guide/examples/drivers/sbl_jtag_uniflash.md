@@ -153,10 +153,26 @@ This example is more or less like a flashing server, and will terminate until us
  Enter below command in CCS scripting console to load the file data to memory.
  AFTER the file load is done, enter '1' to continue ...\
  
- const session=initScripting().openSession(".*");\
- session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
- 1 [FLASH WRITER] Flashing success!!...
+For CCS Theia, run the below 2 commands
 
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: const session=initScripting().openSession(".*")
+
+Cortex_R5_0: session.memory.loadBinary(0x70040020,"C:/sbl_null.release.tiimage");
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: 
+
+Cortex_R5_0: 
+
+Cortex_R5_0: For CCS Eclipse, run the below command
+
+Cortex_R5_0:  loadRaw(0x70040020, 0, "C:/sbl_null.release.tiimage", 32, false);
+1
+
+Cortex_R5_0:  [FLASH WRITER] Flashing success!!...
 
  ==================
  JTAG Uniflash Menu
@@ -177,9 +193,26 @@ This example is more or less like a flashing server, and will terminate until us
  Enter below command in CCS scripting console to load the file data to memory.
  AFTER the file load is done, enter '1' to continue ...\
 
- const session=initScripting().openSession(".*");\
- session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
- 1 [FLASH WRITER] Verifying success!!...
+For CCS Theia, run the below 2 commands
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: const session=initScripting().openSession(".*")
+
+Cortex_R5_0: session.memory.loadBinary(0x70040020,"C:/sbl_null.release.tiimage");
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: 
+
+Cortex_R5_0: 
+
+Cortex_R5_0: For CCS Eclipse, run the below command
+
+Cortex_R5_0:  loadRaw(0x70040020, 0, "C:/sbl_null.release.tiimage", 32, false);
+1
+
+Cortex_R5_0:  [FLASH WRITER] Verifying success!!...
 
 
  ==================
@@ -236,9 +269,26 @@ All tests have passed!!
  Enter below command in CCS scripting console to load the file data to memory.
  AFTER the file load is done, enter '1' to continue ...\
  
- const session=initScripting().openSession(".*");\
- session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
- 1 [FLASH WRITER] Flashing success!!...
+For CCS Theia, run the below 2 commands
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: const session=initScripting().openSession(".*")
+
+Cortex_R5_0: session.memory.loadBinary(0x70040020,"C:/sbl_null.release.tiimage");
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: 
+
+Cortex_R5_0: 
+
+Cortex_R5_0: For CCS Eclipse, run the below command
+
+Cortex_R5_0:  loadRaw(0x70040020, 0, "C:/sbl_null.release.tiimage", 32, false);
+1
+
+Cortex_R5_0:  [FLASH WRITER] Flashing success!!...
 
 
  ==================
@@ -258,9 +308,26 @@ All tests have passed!!
  Enter below command in CCS scripting console to load the file data to memory.
  AFTER the file load is done, enter '1' to continue ...\
 
- const session=initScripting().openSession(".*");\
- session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263px-cc/sbl_null.release.tiimage");\
- 1 [FLASH WRITER] Verifying success!!...
+For CCS Theia, run the below 2 commands
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: const session=initScripting().openSession(".*")
+
+Cortex_R5_0: session.memory.loadBinary(0x70040020,"C:/sbl_null.release.tiimage");
+
+Cortex_R5_0: ___________________________________________________________________________________
+
+Cortex_R5_0: 
+
+Cortex_R5_0: 
+
+Cortex_R5_0: For CCS Eclipse, run the below command
+
+Cortex_R5_0:  loadRaw(0x70040020, 0, "C:/sbl_null.release.tiimage", 32, false);
+1
+
+Cortex_R5_0:  [FLASH WRITER] Verifying success!!...
 
 
  ==================
