@@ -422,7 +422,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
                 if((chObj->curRxWords == 0U) && (transaction->count >= chObj->effRxFifoDepth))
                 {
                     edmaRxParam.bCnt  = (uint16_t) chObj->effRxFifoDepth;
-                    edmaRxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curRxWords)) / chObj->effRxFifoDepth);
+                    edmaRxParam.cCnt  = (uint16_t) (transaction->count / chObj->effRxFifoDepth);
                 }
                 else
                 {
@@ -484,7 +484,7 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
                 if((chObj->curTxWords == 0U) && (transaction->count >= chObj->effTxFifoDepth))
                 {
                     edmaTxParam.bCnt  = (uint16_t) chObj->effTxFifoDepth;
-                    edmaTxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curTxWords)) / chObj->effTxFifoDepth);
+                    edmaTxParam.cCnt  = (uint16_t) (transaction->count / chObj->effTxFifoDepth);
                 }
                 else
                 {

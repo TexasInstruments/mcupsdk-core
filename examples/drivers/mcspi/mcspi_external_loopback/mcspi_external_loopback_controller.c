@@ -55,6 +55,8 @@
 uint8_t gMcspiTxBuffer[APP_MCSPI_MSGSIZE];
 uint8_t gMcspiRxBuffer[APP_MCSPI_MSGSIZE];
 
+extern int32_t mcspi_io_expander_open(void);
+
 void *mcspi_controller_transfer_main(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
@@ -64,6 +66,10 @@ void *mcspi_controller_transfer_main(void *args)
 
     Drivers_open();
     Board_driversOpen();
+
+#ifdef SOC_AM263PX
+    (void)mcspi_io_expander_open();
+#endif
 
     DebugP_log("[MCSPI] External Loopback example started in Controller mode...\r\n");
 

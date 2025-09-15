@@ -124,7 +124,7 @@ const buildOptionCombos = [
 
 const systemProjects = [
     {
-        name: "ipc_safeipc_echo",
+        name: "ipc_safeipc_echo_mcal_ut",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -137,7 +137,7 @@ const systemProjects = [
         ],
     },
     {
-        name: "ipc_safeipc_echo",
+        name: "ipc_safeipc_echo_mcal_ut",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -157,7 +157,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ipc_safeipc_echo";
+    property.name = "ipc_safeipc_echo_mcal_ut";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 

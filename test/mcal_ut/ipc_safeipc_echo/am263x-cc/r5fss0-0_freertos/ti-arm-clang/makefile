@@ -21,14 +21,14 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ipc_safeipc_echo.$(PROFILE).out
-COREOUTNAME:=ipc_safeipc_echo.$(PROFILE).optishare.out
+OUTNAME:=ipc_safeipc_echo_mcal_ut.$(PROFILE).out
+COREOUTNAME:=ipc_safeipc_echo_mcal_ut.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=ipc_safeipc_echo.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=ipc_safeipc_echo.$(PROFILE).mcelf.hs
+BOOTIMAGE_NAME_MCELF:=ipc_safeipc_echo_mcal_ut.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=ipc_safeipc_echo_mcal_ut.$(PROFILE).mcelf.hs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -214,7 +214,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang ipc_safeipc_echo ...
+	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang ipc_safeipc_echo_mcal_ut ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -342,12 +342,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for ipc_safeipc_echo.$(PROFILE) ...
+	@echo Creating Coverage Report for ipc_safeipc_echo_mcal_ut.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_safeipc_echo.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_safeipc_echo.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_safeipc_echo.$(PROFILE).profdata > coverage/ipc_safeipc_echo.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ipc_safeipc_echo.$(PROFILE).profdata.json --output-json=coverage/ipc_safeipc_echo.$(PROFILE).analysis.json --output=../ipc_safeipc_echo.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_safeipc_echo_mcal_ut.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_safeipc_echo_mcal_ut.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_safeipc_echo_mcal_ut.$(PROFILE).profdata > coverage/ipc_safeipc_echo_mcal_ut.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ipc_safeipc_echo_mcal_ut.$(PROFILE).profdata.json --output-json=coverage/ipc_safeipc_echo_mcal_ut.$(PROFILE).analysis.json --output=../ipc_safeipc_echo_mcal_ut.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

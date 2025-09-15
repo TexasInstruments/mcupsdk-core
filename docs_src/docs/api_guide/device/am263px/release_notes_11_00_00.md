@@ -7,11 +7,13 @@
 
 \attention 3. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
-\attention 4. SDK has been migrated to CCS Theia from this release and the support for CCS Eclipse has been deprecated.
+\attention 4. SDK has been updated to support CCS Theia Out of Box from this release. Refer to Compatibility section below for changes w.r.t Eclipse.
 
 \attention 5. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
 
 \attention 6. Uniflash 9.2.0 does not support out of the box flashing of AM263Px-CC Rev B and AM263Px-LP Rev A binaries. As a workaround, use Uniflash's custom flasher feature mentioned here \ref CUSTOM_FLASH. Out of box flashing support for these boards will be available in the next Uniflash release.
+
+\attention 7. For customer migrating from any release before SDK 10.00.00 to 10.00.00 or any release after, "DPL CFG" module has to be added in SysCfg in order to enable interrupts during DPL initialization. This module was added in SysCfg for 10.00.00 release to allow configuring Init time Enable/Disable of interrupts for RTOS applications (Default set to enabled).
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -382,6 +384,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263Px
     <td> Updated example syscfg to have the part of TCMA blocked for R5SS1_CORE1
 </tr>
+<tr>
+    <td> MCUSDK-14917
+    <td> "Selected mode" in pinmux.csv.xdt file not being updated correctly in SysCfg
+    <td> Pinmux
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in Pinmux CSV template
+</tr>
 </table>
 
 ## Known Issues
@@ -575,6 +585,27 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 10.00.00 onwards
     <td> Flash and use SBL NULL instead of gel files
 </tr>
+<tr>
+    <td> MCUSDK-14941
+    <td> McSPI: Non Multiple's of FIFO cannot be transferred in DMA mode
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> Use FIFO Trigger level of 1.
+</tr>
+<tr>
+    <td> MCUSDK-14936
+    <td> Uniflash unable to connect to target in OSPI boot mode
+    <td> Uniflash
+    <td> 10.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14914
+    <td> Unable to add UART communication port to target configuration in Theia
+    <td> Real Time Debug
+    <td> 10.02.00 onwards
+    <td> Use the CCXML file from CCS eclipse after updating to correct COM port. 
+</tr>
 </table>
 
 ## Errata
@@ -753,6 +784,18 @@ With Clocktree, we now have a clear view of the entire clock tree with configura
 Earlier, the Input clock source and frequency for any module was configured through the module view in SysCfg. From now, this has to be done through clocktree.
 
 Please refer to \ref CLOCKTREE for more details.
+
+### Migrating back from CCS Theia to CCS Eclipse
+
+SDK was supporting CCS Eclipse until this release and now been migrated to support CCS Theia Out of Box. Below sections describe how to update the applications for Eclipse if needed.
+
+#### Importing and Building in Eclipse
+
+CCS Projectspec files are same for both Theia and Eclipse. Hence, no update is needed to import and build an SDK application on Eclipse.
+
+#### CCS SBL Loading
+
+JS Script for SBL loading on eclipse is updated to "load_sbl_eclipse.js". Please refer to \ref TOOLS_CCS for more details.
 
 ### Migrating examples to 11.00.00 from older versions
 

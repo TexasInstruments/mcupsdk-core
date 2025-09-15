@@ -11,7 +11,7 @@ endif
 
 PROFILE?=release
 
-SYSTEM_PROJECT_NAME:=ipc_safeipc_echo_system
+SYSTEM_PROJECT_NAME:=ipc_safeipc_echo_mcal_ut_system
 
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
 MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
@@ -30,23 +30,23 @@ CORES = \
 
 CORE_IMG_ARGS :=
 
-CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).out
+CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 
-CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).out
+CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
 
-CORE_2_IMG=../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).out
+CORE_2_IMG=../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
 
-CORE_3_IMG=../r5fss1-1_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).out
+CORE_3_IMG=../r5fss1-1_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=3:$(CORE_3_IMG)
 
 COREXMLS = \
-	../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).lnkxml\
-	../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).lnkxml\
-	../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).lnkxml\
-	../r5fss1-1_nortos/ti-arm-clang/ipc_safeipc_echo.$(PROFILE).lnkxml\
+	../r5fss0-0_freertos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).lnkxml\
+	../r5fss0-1_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).lnkxml\
+	../r5fss1-0_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).lnkxml\
+	../r5fss1-1_nortos/ti-arm-clang/ipc_safeipc_echo_mcal_ut.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 

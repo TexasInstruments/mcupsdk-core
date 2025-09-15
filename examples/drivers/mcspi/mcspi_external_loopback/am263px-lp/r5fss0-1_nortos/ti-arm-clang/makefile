@@ -37,6 +37,7 @@ endif
 
 FILES_common := \
 	mcspi_external_loopback_controller.c \
+	board.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -48,6 +49,7 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
+	../.. \
 	../../.. \
 	generated \
 

@@ -12,6 +12,7 @@ const files_freertos_rf5 = {
 const files_nortos_rf5 = {
     common: [
         "mcspi_external_loopback_controller.c",
+        "board.c",
         "main.c",
     ],
 };
@@ -22,6 +23,7 @@ const files_nortos_rf5 = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
+        "../..",
         "../../..", /* Example base */
     ],
 };
