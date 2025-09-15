@@ -1,0 +1,896 @@
+MCUSDK-12291-95, 12298-1303, 12304-06,12308-09,12314-12331,12602,12603
+Cortex_R5_0: Unit tests started ...
+
+Cortex_R5_0: ../../../test_uart.c:122:uart_external_loopback_full_test:MCUSDK-12291:PASS
+
+Cortex_R5_0: ../../../test_uart.c:124:uart_external_loopback_full_test:MCUSDK-12292:PASS
+
+Cortex_R5_0: ../../../test_uart.c:126:uart_echo_read_partial_external_loopback_full_test:MCUSDK-12293:PASS
+
+Cortex_R5_0: ../../../test_uart.c:128:uart_external_loopback_full_test:MCUSDK-12294:PASS
+
+Cortex_R5_0: ../../../test_uart.c:130:uart_external_loopback_full_test:MCUSDK-12295:PASS
+
+Cortex_R5_0: ../../../test_uart.c:132:uart_six_bit_char_length_external_loopback_full_test:MCUSDK-12298:PASS
+
+Cortex_R5_0: ../../../test_uart.c:134:uart_external_loopback_full_test:MCUSDK-12299:PASS
+
+Cortex_R5_0: ../../../test_uart.c:136:uart_external_loopback_full_test:MCUSDK-12300:PASS
+
+Cortex_R5_0: ../../../test_uart.c:138:uart_external_loopback_full_test:MCUSDK-12301:PASS
+
+Cortex_R5_0: ../../../test_uart.c:140:uart_external_loopback_full_test:MCUSDK-12302:PASS
+
+Cortex_R5_0: ../../../test_uart.c:142:uart_external_loopback_full_test:MCUSDK-12304:PASS
+
+Cortex_R5_0: ../../../test_uart.c:144:uart_external_loopback_full_test:MCUSDK-12314:PASS
+
+Cortex_R5_0: ../../../test_uart.c:146:uart_external_loopback_full_test:MCUSDK-12315:PASS
+
+Cortex_R5_0: ../../../test_uart.c:148:uart_external_loopback_full_test:MCUSDK-12316:PASS
+
+Cortex_R5_0: ../../../test_uart.c:150:uart_external_loopback_full_test:MCUSDK-12317:PASS
+
+Cortex_R5_0: ../../../test_uart.c:152:uart_external_loopback_full_test:MCUSDK-12318:PASS
+
+Cortex_R5_0: ../../../test_uart.c:154:uart_external_loopback_full_test:MCUSDK-12319:PASS
+
+Cortex_R5_0: ../../../test_uart.c:156:uart_external_loopback_full_test:MCUSDK-12320:PASS
+
+Cortex_R5_0: ../../../test_uart.c:158:uart_external_loopback_full_test:MCUSDK-12321:PASS
+
+Cortex_R5_0: ../../../test_uart.c:160:uart_external_loopback_full_test:MCUSDK-12322:PASS
+
+Cortex_R5_0: ../../../test_uart.c:162:uart_external_loopback_full_test:MCUSDK-12323:PASS
+
+Cortex_R5_0: ../../../test_uart.c:164:uart_external_loopback_full_test:MCUSDK-12324:PASS
+
+Cortex_R5_0: ../../../test_uart.c:166:uart_external_loopback_full_test:MCUSDK-12325:PASS
+
+Cortex_R5_0: ../../../test_uart.c:168:uart_external_loopback_full_test:MCUSDK-12326:PASS
+
+Cortex_R5_0: ../../../test_uart.c:170:uart_external_loopback_full_test:MCUSDK-12327:PASS
+
+Cortex_R5_0: ../../../test_uart.c:172:uart_external_loopback_full_test:MCUSDK-12305:PASS
+
+Cortex_R5_0: ../../../test_uart.c:174:uart_external_loopback_full_test:MCUSDK-12306:PASS
+
+Cortex_R5_0: ../../../test_uart.c:176:uart_external_loopback_full_test:MCUSDK-12328:PASS
+
+Cortex_R5_0: ../../../test_uart.c:178:uart_external_loopback_full_test:MCUSDK-12329:PASS
+
+Cortex_R5_0: ../../../test_uart.c:180:uart_external_loopback_full_test:MCUSDK-12330:PASS
+
+Cortex_R5_0: ../../../test_uart.c:182:uart_external_loopback_full_test:MCUSDK-12331:PASS
+
+Cortex_R5_0: ../../../test_uart.c:186:uart_external_loopback_full_test:MCUSDK-12308:PASS
+
+Cortex_R5_0: ../../../test_uart.c:188:uart_autobaud_external_loopback_full_test:MCUSDK-12309:PASS
+
+Cortex_R5_0: ../../../test_uart.c:190:uart_write_cancel_external_loopback_full_test:MCUSDK-12602:PASS
+
+Cortex_R5_0: ../../../test_uart.c:192:uart_read_cancel_external_loopback_full_test:MCUSDK-12603:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: -----------------------
+
+Cortex_R5_0: 35 Tests 0 Failures 0 Ignored 
+
+Cortex_R5_0: All tests have passed
+
+
+
+
+
+MCUSDK-165
+Cortex_R5_0: GPIO Input Interrupt Test Started ...
+
+Cortex_R5_0: GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...
+
+Cortex_R5_0: Press and release SW4 button on EVM to trigger GPIO interrupt ...
+
+Cortex_R5_0: Key is pressed 0 times
+
+Cortex_R5_0: Key is pressed 0 times
+
+Cortex_R5_0: Key is pressed 2 times
+
+Cortex_R5_0: Key is pressed 7 times
+
+Cortex_R5_0: GPIO Input Interrupt Test Passed!!
+
+Cortex_R5_0: All tests have passed!!
+
+
+
+
+MCUSDK-164
+Cortex_R5_0: GPIO LED Blink Test Started ...
+
+Cortex_R5_0: LED will Blink for 10 seconds ...
+
+Cortex_R5_0: GPIO LED Blink Test Passed!!
+
+Cortex_R5_0: All tests have passed!!
+
+
+MCUSDK-4172
+[RTI LED Blink Test] Starting ...
+[RTI LED Blink Test] Timer Started...
+[RTI LED Blink Test] Timer Stopped...
+All tests have passed!!
+
+
+
+MCUSDK-13684
+Bootloader Pass
+
+
+
+MCUSDK-3880,3881,3890
+Unit tests st
+[SBL] Starting QSPI Bootloader ... 
+KPI_DATA: [BOOTLOADER_PROFILE] CPU Clock        : 400.000 MHz 
+KPI_DATA: [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH 
+KPI_DATA: [BOOTLOADER_PROFILE] Boot Media Clock : 80.000 MHz 
+KPI_DATA: [BOOTLOADER_PROFILE] Boot Image Size  : 153 KB 
+KPI_DATA: [BOOTLOADER_PROFILE] Cores present    : 
+r5f0-0
+r5f0-1
+r5f1-0
+r5f1-1
+KPI_DATA: [BOOTLOADER PROFILE] System_init                      :        155us 
+KPI_DATA: [BOOTLOADER PROFILE] Drivers_open                     :         38us 
+KPI_DATA: [BOOTLOADER PROFILE] Board_driversOpen                :         26us 
+KPI_DATA: [BOOTLOADER PROFILE] LoadHsmRtFw                      :       9372us 
+KPI_DATA: [BOOTLOADER PROFILE] CPU load                         :      12517us 
+KPI_DATA: [BOOTLOADER PROFILE] SBL End                          :          6us 
+KPI_DATA: [BOOTLOADER_PROFILE] SBL Total Time Taken             :      22116us 
+
+[SBL] Image loading done, switching to application ...
+
+Unit tests started ...
+Software Warm Reset Test Passed
+../../../test_soc.c:339:test_socSwWarmReset:MCUSDK-3890:PASS
+SOC Test Started...
+Set MCAN clock
+Set QSPI clock
+Set RTI clock
+Set WDT clock
+Set MCSPI clock
+Set MMC clock
+Set ICSSM UART clock
+Set CPTS clock
+Set GPMC clock
+Set ControlSS PLL clock
+Set I2C clock
+Set LIN UART clock
+R5FSS0 Core Frequency 400 MHZ
+R5FSS1 Core Frequency 400 MHZ
+../../../test_soc.c:340:test_socSetFrequencyR5FSS:MCUSDK-3880:PASS
+R5FSS0 Core0 PhyToVirtAndVirtToPhy Test Passed
+../../../test_soc.c:344:test_socPhyToVirtAndVirtToPhy:MCUSDK-3881:PASS
+
+-----------------------
+3 Tests 0 Failures 0 Ignored 
+All tests have passed
+[r5f0-1]     0.000368s : 
+[r5f0-1]     0.000390s : Unit tests started ...
+[r5f0-1]     0.000472s : R5FSS0 Core1 PhyToVirtAndVirtToPhy Test Passed
+[r5f0-1]     0.000507s : ../../../test_soc.c:344:test_socPhyToVirtAndVirtToPhy:MCUSDK-3881:PASS
+[r5f0-1]     0.000721s : 
+[r5f0-1]     0.000737s : -----------------------
+[r5f0-1]     0.000817s : 1 Tests 0 Failures 0 Ignored 
+[r5f0-1]     0.000915s : All tests have passed
+[r5f1-0]     0.000368s : 
+[r5f1-0]     0.000390s : Unit tests started ...
+[r5f1-0]     0.000476s : R5FSS1 Core Frequency 400 MHZ
+[r5f1-0]     0.000504s : R5FSS1 Core0 PhyToVirtAndVirtToPhy Test Passed
+[r5f1-0]     0.000538s : ../../../test_soc.c:344:test_socPhyToVirtAndVirtToPhy:MCUSDK-3881:PASS
+[r5f1-0]     0.000752s : 
+[r5f1-0]     0.000768s : -----------------------
+[r5f1-0]     0.000848s : 1 Tests 0 Failures 0 Ignored 
+[r5f1-0]     0.000946s : All tests have passed
+[r5f1-1]     0.000368s : 
+[r5f1-1]     0.000390s : Unit tests started ...
+[r5f1-1]     0.000473s : R5FSS1 Core1 PhyToVirtAndVirtToPhy Test Passed
+[r5f1-1]     0.000507s : ../../../test_soc.c:344:test_socPhyToVirtAndVirtToPhy:MCUSDK-3881:PASS
+[r5f1-1]     0.000721s : 
+[r5f1-1]     0.000737s : -----------------------
+[r5f1-1]     0.000817s : 1 Tests 0 Failures 0 Ignored 
+[r5f1-1]     0.000915s : All tests have passed
+
+
+
+MCUSDK-14788,14789,14790,14791
+
+
+Cortex_R5_0: 
+
+Cortex_R5_0: Unit tests started ...
+
+Cortex_R5_0: ../../../test_dpl.c:1526:test_hwi:MCUSDK-282:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1527:test_semaphoreMutex:MCUSDK-283:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1528:test_semaphoreBinary:MCUSDK-284:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1529:test_semaphoreCounting:MCUSDK-285:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1530:test_semaphoreTimeout:MCUSDK-286:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1531:test_clockMode:MCUSDK-287:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1532:test_clockMode:MCUSDK-288:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1533:test_clock:MCUSDK-289:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1534:test_heap:MCUSDK-290:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1535:test_cycleCounter:MCUSDK-291:PASS
+
+Cortex_R5_0: INFO: test_debugLog:675: We should see this.
+
+Cortex_R5_0: ERROR: test_debugLog:686: We should see this.
+
+Cortex_R5_0: WARNING: test_debugLog:687: We should see this.
+
+../../../test_dpl.c:1536:test_debugLog:MCUSDK-292:PAS
+Cortex_R5_0: S
+
+Cortex_R5_0: 
+
+Cortex_R5_0:  Without SemaphoreP,
+
+Cortex_R5_0:   number of interrupts = 10000
+
+Cortex_R5_0:   total cycles = 9100239
+
+Cortex_R5_0:   cycles per interrupt = 910
+
+Cortex_R5_0: 
+
+Cortex_R5_0:  With SemaphoreP,
+
+Cortex_R5_0:   number of interrupts = 10000
+
+Cortex_R5_0:   total cycles = 12269456
+
+Cortex_R5_0:   cycles per interrupt = 1226
+
+Cortex_R5_0: 
+
+Cortex_R5_0: ../../../test_dpl.c:1537:test_hwiProfile:MCUSDK-293:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1538:test_queue:MCUSDK-3808:PASS
+
+Cortex_R5_0: Start: 11
+
+Cortex_R5_0: End: 20
+
+Cortex_R5_0: Total Overhead: 9 Cycles
+
+Cortex_R5_0: Start: 11
+
+Cortex_R5_0: End: 1823
+
+Cortex_R5_0: Total Overhead: 1812 Cycles
+
+Cortex_R5_0: Total: 1812 Cycles = 4 microseconds @ 400MHz
+
+Cortex_R5_0: ../../../test_dpl.c:1539:test_clockConfig:MCUSDK-10782:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1556:test_hwiNested:MCUSDK-295:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1561:test_mainToIsrWithFloatOperations:MCUSDK-1571:PASS
+
+Cortex_R5_0: Triggering Undefined Instruction exception...
+
+Cortex_R5_0: Triggering Prefetch Abort exception...
+
+Cortex_R5_0: Triggering Data Abort exception...
+
+Cortex_R5_0: ../../../test_dpl.c:1570:test_exceptionUserHandlers:MCUSDK-14420:PASS
+
+Cortex_R5_0: Testing with pulse interrupts
+
+Cortex_R5_0: ../../../test_dpl.c:269:test_criticalSectionFromMain:MCUSDK-14788:PASS
+
+Cortex_R5_0: Testing with level interrupts
+
+Cortex_R5_0: ../../../test_dpl.c:270:test_criticalSectionFromMain:MCUSDK-14789:PASS
+
+Cortex_R5_0: Testing with pulse interrupts
+
+Cortex_R5_0: ../../../test_dpl.c:273:test_criticalSectionFromIsr:MCUSDK-14790:PASS
+
+Cortex_R5_0: Testing with level interrupts
+
+Cortex_R5_0: ../../../test_dpl.c:274:test_criticalSectionFromIsr:MCUSDK-14791:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1591:test_addrconversion:MCUSDK-898:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: -----------------------
+
+Cortex_R5_0: 22 Tests 0 Failures 0 Ignored 
+
+Cortex_R5_0: All tests have passed
+
+
+
+MCUSDK 12248,12249
+Cortex_R5_0: Unit tests started ...
+
+Cortex_R5_0: ../../../test_dpl.c:1526:test_hwi:MCUSDK-282:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1527:test_semaphoreMutex:MCUSDK-283:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1528:test_semaphoreBinary:MCUSDK-284:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1529:test_semaphoreCounting:MCUSDK-285:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1530:test_semaphoreTimeout:MCUSDK-286:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1531:test_clockMode:MCUSDK-287:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1532:test_clockMode:MCUSDK-288:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1533:test_clock:MCUSDK-289:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1534:test_heap:MCUSDK-290:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1535:test_cycleCounter:MCUSDK-291:PASS
+
+Cortex_R5_0: INFO: test_debugLog:675: We should see this.
+
+Cortex_R5_0: ERROR: test_debugLog:686: We should see this.
+
+Cortex_R5_0: WARNING: test_debugLog:687: We should see this.
+
+../../../test_dpl.c:1536:test_debugLog:MCUSDK-292:PAS
+Cortex_R5_0: S
+
+Cortex_R5_0: 
+
+Cortex_R5_0:  Without SemaphoreP,
+
+Cortex_R5_0:   number of interrupts = 10000
+
+Cortex_R5_0:   total cycles = 6011810
+
+Cortex_R5_0:   cycles per interrupt = 601
+
+Cortex_R5_0: 
+
+Cortex_R5_0:  With SemaphoreP,
+
+Cortex_R5_0:   number of interrupts = 10000
+
+Cortex_R5_0:   total cycles = 13966686
+
+Cortex_R5_0:   cycles per interrupt = 1396
+
+Cortex_R5_0: 
+
+Cortex_R5_0: ../../../test_dpl.c:1537:test_hwiProfile:MCUSDK-293:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1538:test_queue:MCUSDK-3808:PASS
+
+Cortex_R5_0: Start: 11
+
+Cortex_R5_0: End: 40
+
+Cortex_R5_0: Total Overhead: 29 Cycles
+
+Cortex_R5_0: Start: 11
+
+Cortex_R5_0: End: 2676
+
+Cortex_R5_0: Total Overhead: 2665 Cycles
+
+Cortex_R5_0: Total: 2665 Cycles = 6 microseconds @ 400MHz
+
+Cortex_R5_0: ../../../test_dpl.c:1539:test_clockConfig:MCUSDK-10782:PASS
+
+Cortex_R5_0: Test task iteration #5
+
+Cortex_R5_0: Test task iteration #4
+
+Cortex_R5_0: Test task iteration #3
+
+Cortex_R5_0: Test task iteration #2
+
+Cortex_R5_0: Test task iteration #1
+
+Cortex_R5_0: My task iteration #5
+
+Cortex_R5_0: My task iteration #4
+
+Cortex_R5_0: My task iteration #3
+
+Cortex_R5_0: My task iteration #2
+
+Cortex_R5_0: My task iteration #1
+
+Cortex_R5_0: ../../../test_dpl.c:1543:test_task:MCUSDK-294:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1544:test_event:MCUSDK-805:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1548:test_mailbox:MCUSDK-13390:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1561:test_mainToIsrWithFloatOperations:MCUSDK-1571:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1567:test_mainToFiqWithFloatOperations:MCUSDK-12213:PASS
+
+Cortex_R5_0: Triggering Undefined Instruction exception...
+
+Cortex_R5_0: Triggering Prefetch Abort exception...
+
+Cortex_R5_0: Triggering Data Abort exception...
+
+Cortex_R5_0: ../../../test_dpl.c:1570:test_exceptionUserHandlers:MCUSDK-14420:PASS
+
+Cortex_R5_0: ../../../test_dpl.c:1591:test_addrconversion:MCUSDK-898:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: -----------------------
+
+Cortex_R5_0: 21 Tests 0 Failures 0 Ignored 
+
+Cortex_R5_0: All tests have passed
+
+
+
+MCUSDK-1332
+Cortex_R5_0: Unit tests started ...
+
+Cortex_R5_0: ../../../test_i2c.c:128:test_i2c_write_read:MCUSDK-261:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:131:test_i2c_write_read:MCUSDK-262:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:134:test_i2c_write_read:MCUSDK-263:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:137:test_i2c_write_read:MCUSDK-264:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:140:test_i2c_write_read:MCUSDK-265:PASS
+
+Cortex_R5_0: Found device at address 0x0000001c
+
+Cortex_R5_0: Found device at address 0x00000052
+
+Cortex_R5_0: Found device at address 0x00000053
+
+Cortex_R5_0: ../../../test_i2c.c:145:test_i2c_probe:MCUSDK-266:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:145:test_i2c_probe:MCUSDK-267:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:145:test_i2c_probe:MCUSDK-268:PASS
+
+Cortex_R5_0: Found device at address 0x0000001c
+
+Cortex_R5_0: ../../../test_i2c.c:145:test_i2c_probe:MCUSDK-269:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:148:test_i2c_callback_mode:MCUSDK-269:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:149:test_i2c_open_close:MCUSDK-270:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:150:test_i2c_timeout:MCUSDK-271:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:154:test_i2c_write_read:MCUSDK-345:PASS
+
+Cortex_R5_0: ../../../test_i2c.c:156:test_i2c_error_nack:MCUSDK-12793:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: -----------------------
+
+Cortex_R5_0: 14 Tests 0 Failures 0 Ignored 
+
+Cortex_R5_0: All tests have passed
+
+
+MCUSDK-2548
+[MAIN_Cortex_R5_0_0] Watchdog reset Mode Test Started ...
+Servicing WDT for 3 iterations
+Servicing WDT !!
+Servicing WDT !!
+Servicing WDT !!
+Watchdog triggers warm reset in 3000 (ms)
+All tests have passed!!
+3
+2
+1
+
+
+MCUSDK-1327
+GPIO Multi LED Blink Test Started ...
+Each LED will Blink for 10 seconds ...
+GPIO Multi LED Blink Test Passed!!
+All tests have passed!!
+
+
+MCUSDK-8862
+[MMCSD RAW IO] Starting...
+All tests have passed!!
+
+MCUSDK-2065
+[MMCSD FILE IO] Starting...
+All tests have passed!!
+
+
+
+
+
+
+MCUSDK-3323
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 1
+ [FLASH WRITER] Erasing complete flash ...
+ [FLASH WRITER] This can take few minutes, so please wait ...
+ [FLASH WRITER] Erasing complete flash ... SUCCESS !!!
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 2
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263x-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...
+ const session=initScripting().openSession(".*");
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263x-cc/sbl_null.release.tiimage");
+ 1
+ [FLASH WRITER] Flashing success!!...
+
+
+ ==================
+ JTAG Uniflash Menu
+ ==================
+
+ 1: Erase Complete Flash
+ 2: Write Application File to Flash and Verify
+ 3: Write XIP File to Flash and Verify
+ 4: Verify Application file in Flash
+ 5: Verify XIP file in Flash
+
+ x: Exit
+
+ Enter Choice: 3
+
+ Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_10_02_00\tools\boot\sbl_prebuilt\am263x-cc\sbl_null.release.tiimage
+ Enter flash offset (in hex format) : 0x0
+ Enter below command in CCS scripting console to load the file data to memory.
+ AFTER the file load is done, enter '1' to continue ...
+ const session=initScripting().openSession(".*");
+ session.memory.loadBinary(0x700c0020,"C:/ti/mcu_plus_sdk_10_02_00/tools/boot/sbl_prebuilt/am263x-cc/sbl_null.release.tiimage");
+ 1 
+ [FLASH WRITER] Verifying success!!...
+
+
+MCUSDK-6272
+[LIN] LIN mode external, application started ...
+[I2C] LIN Volatage Level Shifter started ...
+[LIN] : New Data Sent = 12
+[LIN] : New Data Sent = 34
+[LIN] : New Data Sent = 56
+[LIN] : New Data Sent = 78
+[LIN] : New Data Sent = 9a
+[LIN] : New Data Sent = ab
+[LIN] : New Data Sent = cd
+[LIN] : New Data Sent = ef
+All tests have passed!!
+
+
+MCUSDK-14429,14430,14431,14432
+[LIN] LIN Commander Write Application Started ...
+[I2C] LIN Voltage Level Shifter started ...
+[LIN] Commander Write ... !!!
+All tests have passed!!
+
+[LIN] LIN Commander Read Application Started ...
+[I2C] LIN Voltage Level Shifter started ...
+[LIN] Commander Read ... !!!
+Received Message Data:
+a1
+a2
+a3
+a4
+All tests have passed!!
+
+[LIN] LIN Responder Write Application Started ...
+[I2C] LIN Voltage Level Shifter started ...
+[LIN] Responder Write ... !!!
+All tests have passed!!
+
+[LIN] LIN Responder Read Application Started ...
+[I2C] LIN Voltage Level Shifter started ...
+[LIN] Responder Read ... !!!
+Received Message ID: 0x1d
+Received Message Frame Length: 8
+Received Message Data:
+0xa1
+0xa2
+0xa3
+0xa4
+0xa5
+0xa6
+0xa7
+0xa8
+All tests have passed!!
+
+
+MCUSDK-13677,13678
+Starting SD Bootloader ...
+[BOOTLOADER_PROFILE] Boot Media       : SD Card
+[BOOTLOADER_PROFILE] Boot Image Size  : 183 KB
+[BOOTLOADER_PROFILE] Cores present    :
+r5f1-1
+r5f1-0
+r5f0-1
+r5f0-0
+[BOOTLOADER PROFILE] System_init                      :        368us
+[BOOTLOADER PROFILE] Drivers_open                     :     280357us
+[BOOTLOADER PROFILE] LoadHsmRtFw                      :         44us
+[BOOTLOADER PROFILE] Board_driversOpen                :        405us
+[BOOTLOADER PROFILE] File read from SD card           :     240375us
+[BOOTLOADER PROFILE] CPU load                         :      16916us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :     538468us
+ 
+Image loading done, switching to application ...
+
+
+
+MCUSDK-12453
+[Cortex_R5_0] hello core 0
+[Cortex_R5_1] hello core 1
+[Cortex_R5_0] hello core 0
+[Cortex_R5_1] hello core 1
+[Cortex_R5_0] hello core 0
+[Cortex_R5_1] hello core 1
+'' ''
+'' ''
+'' ''
+[Cortex_R5_0] hello core 0
+[Cortex_R5_1] hello core 1
+[Cortex_R5_0] All Test Cases passed!
+
+
+
+MCUSDK-10156,10685
+
+[MCAN] External read - write test, application started ...
+After transmitting messages it will wait to recieve ten messages for test to pass ...
+All tests have passed!!
+
+
+
+MCUSDK 14778,14779,14780,14781,14782,14783,14784,14785
+
+Cortex_R5_0: 
+
+Cortex_R5_0: Unit tests started ...
+
+Cortex_R5_0: 
+
+Cortex_R5_0: Running FreeRTOS unit tests with system mode ping and pong tasks...
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task switches = 5042050 us, 1008409023 cycles
+
+Cortex_R5_0: number of task switches = 200000 
+
+Cortex_R5_0: time per task switch (semaphore give/take) = 25210 ns, 5042 cycles
+
+Cortex_R5_0: ../../../test_freertos.c:772:test_taskSwitchWithSemaphore:MCUSDK-272:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task switches = 3912461 us
+
+Cortex_R5_0: number of task switches = 200000 
+
+Cortex_R5_0: time per task switch (direct-to-task notification give/take) = 19562 ns
+
+Cortex_R5_0: ../../../test_freertos.c:773:test_taskSwitchWithTaskNotify:MCUSDK-273:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task switches = 3321596 us
+
+Cortex_R5_0: number of task switches = 200000 
+
+Cortex_R5_0: time per task switch (event group set/wait) = 16607 ns
+
+Cortex_R5_0: ../../../test_freertos.c:774:test_taskSwitchWithEventGroups:MCUSDK-637:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task switches = 6443162 us
+
+Cortex_R5_0: number of task switches = 100000 
+
+Cortex_R5_0: time per task - ISR - task switch (event group set/wait) = 64431 ns
+
+Cortex_R5_0: ../../../test_freertos.c:775:test_taskToIsrUsingEventGroups:MCUSDK-638:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task yields = 591725 us
+
+Cortex_R5_0: number of task yields = 100000 
+
+Cortex_R5_0: time per task yield = 5917 ns
+
+Cortex_R5_0: ../../../test_freertos.c:776:test_taskYeild:MCUSDK-274:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task switches = 1067247 us
+
+Cortex_R5_0: number of task switches = 100000 
+
+Cortex_R5_0: time per task - ISR - task switch (semaphore give/take) = 10672 ns
+
+Cortex_R5_0: ../../../test_freertos.c:777:test_taskToIsrUsingSemaphoreAndNoTaskSwitch:MCUSDK-275:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task switches = 1574806 us
+
+Cortex_R5_0: number of task switches = 100000 
+
+Cortex_R5_0: time per task - ISR - task switch (direct-to-task notification give/take) = 15748 ns
+
+Cortex_R5_0: ../../../test_freertos.c:778:test_taskToIsrUsingTaskNotifyAndNoTaskSwitch:MCUSDK-276:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task - task switches = 5660341 us
+
+Cortex_R5_0: number of ISRs = 200000 
+
+Cortex_R5_0: time per task - ISR - task switch (semaphore give/take) = 28301 ns
+
+Cortex_R5_0: ../../../test_freertos.c:779:test_taskToIsrUsingSemaphoreAndWithTaskSwitch:MCUSDK-277:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task switches = 4556996 us
+
+Cortex_R5_0: number of task switches = 200000 
+
+Cortex_R5_0: time per task - ISR - task switch (direct-to-task notification give/take) = 22784 ns
+
+Cortex_R5_0: ../../../test_freertos.c:780:test_taskToIsrUsingTaskNotifyAndWithTaskSwitch:MCUSDK-278:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task switches = 5078626 us
+
+Cortex_R5_0: number of task switches = 200000 
+
+Cortex_R5_0: time per task switch (semaphore give/take) = 25393 ns
+
+Cortex_R5_0: ../../../test_freertos.c:781:test_taskSwitchWithFloatOperations:MCUSDK-279:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: execution time for task - ISR - task switches = 1098916 us
+
+Cortex_R5_0: number of ISRs = 200000 
+
+Cortex_R5_0: time per task - ISR - task switch (semaphore give/take) = 5494 ns
+
+Cortex_R5_0: ../../../test_freertos.c:784:test_taskToIsrWithFloatOperations:MCUSDK-639:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:786:test_taskDelay:MCUSDK-280:PASS
+
+Cortex_R5_0: Timer ISR count = 99964
+
+Cortex_R5_0: ../../../test_freertos.c:787:test_timer:MCUSDK-281:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:936:test_atomics:MCUSDK-1371:PASS
+
+Cortex_R5_0: Testing with pulse interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:641:test_criticalSectionFromTask:MCUSDK-14776:PASS
+
+Cortex_R5_0: Testing with level interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:642:test_criticalSectionFromTask:MCUSDK-14777:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:643:test_criticalSectionFromTaskWithHiPriReTrigPulse:MCUSDK-14778:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:644:test_criticalSectionFromTaskWithHiPriReTrigLevel:MCUSDK-14779:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:645:test_criticalSectionFromTaskWithLoPriReTrigPulse:MCUSDK-14780:PASS
+
+Cortex_R5_0: ../../../test_freertos.c:646:test_criticalSectionFromTaskWithLoPriReTrigLevel:MCUSDK-14781:PASS
+
+Cortex_R5_0: Testing with pulse interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:649:test_criticalSectionFromIsr:MCUSDK-14782:PASS
+
+Cortex_R5_0: Testing with level interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:650:test_criticalSectionFromIsr:MCUSDK-14783:PASS
+
+Cortex_R5_0: Testing with pulse interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:651:test_criticalSectionFromIsrDeepNested:MCUSDK-14784:PASS
+
+Cortex_R5_0: Testing with level interrupts
+
+Cortex_R5_0: ../../../test_freertos.c:652:test_criticalSectionFromIsrDeepNested:MCUSDK-14785:PASS
+
+Cortex_R5_0:  LOAD: CPU  = 97.44 %
+
+Cortex_R5_0:  LOAD: ping = 37.43 %
+
+Cortex_R5_0:  LOAD: pong = 34.27 %
+
+Cortex_R5_0:  LOAD: reset load statistics !!!
+
+Cortex_R5_0:  LOAD: CPU  =  0. 1 %
+
+Cortex_R5_0:  LOAD: ping =  0. 0 %
+
+Cortex_R5_0:  LOAD: pong =  0. 0 %
+
+Cortex_R5_0:  LOAD: CPU  = 50.13 %
+
+Cortex_R5_0:  LOAD: ping =  0. 0 %
+
+Cortex_R5_0:  LOAD: pong =  0. 0 %
+
+Cortex_R5_0: ../../../test_freertos.c:946:test_taskLoad:MCUSDK-1372:PASS
+
+Cortex_R5_0: 
+
+Cortex_R5_0: -----------------------
+
+Cortex_R5_0: 25 Tests 0 Failures 0 Ignored 
+
+Cortex_R5_0: All tests have passed
+
+
+
+MCUSDK-8864
+[SBL] Image loading done, switching to application ...
+[r5f0-1]     0.002077s : [IPC RPMSG ECHO] Remote Core waiting for messages from main core ... !!!
+[r5f1-0]     0.096291s : [IPC RPMSG ECHO] Remote Core waiting for messages from main core ... !!!
+[r5f1-1]     0.096282s : [IPC RPMSG ECHO] Remote Core waiting for messages from main core ... !!!
+[IPC RPMSG ECHO] Message exchange started by main core !!!
+[IPC RPMSG ECHO] All echoed messages received by main core from 3 remote cores !!!
+[IPC RPMSG ECHO] Messages sent to each core = 100000 
+[IPC RPMSG ECHO] Number of remote cores = 3 
+[IPC RPMSG ECHO] Total execution time = 6174946 usecs
+[IPC RPMSG ECHO] One way message latency = 10291 nsec
+All tests have passed!!
