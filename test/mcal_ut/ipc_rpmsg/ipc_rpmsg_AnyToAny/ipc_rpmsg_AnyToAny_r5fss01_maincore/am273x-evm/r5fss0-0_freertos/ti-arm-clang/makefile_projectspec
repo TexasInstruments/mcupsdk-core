@@ -1,10 +1,10 @@
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME=ipc_rpmsg_callback_simultaneous_send_allcore_am273x-evm_c66ss0_nortos_ti-c6000
+PROJECT_NAME=ipc_rpmsg_any_to_any_r5fss01_maincore_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 
 all:
 	$(CCS_ECLIPSE) -workspace $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccs.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

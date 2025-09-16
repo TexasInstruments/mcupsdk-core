@@ -3,25 +3,25 @@
     <applicability>
         <when>
             <context
-                deviceFamily="C6000"
-                deviceId="TMS320C66XX.AM273x.evmAM273x"
+                deviceFamily="ARM"
+                deviceId="Cortex R.AM273x.evmAM273x"
             />
         </when>
     </applicability>
 
     <project
-        title="Ipc Rpmsg Callback Simultaneous Send Allcore"
-        name = "ipc_rpmsg_callback_simultaneous_send_allcore_am273x-evm_c66ss0_nortos_ti-c6000"
+        title="Ipc Rpmsg Any To Any C66ss0 Maincore"
+        name = "ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
                 Release,
         "
         connection="TIXDS110_Connection.xml"
-        toolChain="TI"
-        cgtVersion="8.5.0.LTS"
-        device="TMS320C66XX.AM273x.evmAM273x"
-        deviceCore="C66xx_DSP"
+        toolChain="TICLANG"
+        cgtVersion="4.0.3.LTS"
+        device="Cortex R.AM273x.evmAM273x"
+        deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -29,69 +29,71 @@
         outputType="executable"
 
         compilerBuildOptions="
-            -I${CG_TOOL_ROOT}/include
+            -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
-            -mv6600
-            --abi=eabi
-            -q
-            -mi10
-            -mo
-            -pden
-            -pds=238
-            -pds=880
-            -pds1110
-            --emit_warnings_as_errors
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f
+            -mcpu=cortex-r5
+            -mfloat-abi=hard
+            -mfpu=vfpv3-d16
+            -mthumb
+            -Wall
+            -Werror
+            -g
+            -Wno-gnu-variable-sized-type-not-at-end
+            -Wno-unused-function
             -DSOC_AM273X
-            -DOS_NORTOS
+            -DOS_FREERTOS
         "
         linkerBuildOptions="
-            -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
+            -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=ipc_rpmsg_callback_simultaneous_send_allcore.${ConfigName}.map
-            --warn_sections
-            --emit_warnings_as_errors
-            --rom_model
-            -x
+            -m=ipc_rpmsg_any_to_any_c66ss0_maincore.${ConfigName}.map
+            --diag_suppress=10063
+            --ram_model
+            --reread_libs
+            --gen_xml_func_hash
         "
 
         postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am273x"
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context c66ss0 --part Default --package ZCE
+            --context r5fss0-0 --part Default --package ZCE
         "
 
-        description="A Ipc Rpmsg Callback Simultaneous Send Allcore NORTOS project">
+        description="A Ipc Rpmsg Any To Any C66ss0 Maincore FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
                 -D_DEBUG_=1
             "
             linkerBuildOptions="
-                -lnortos.am273x.c66.ti-c6000.debug.lib
-                -ldrivers.am273x.c66.ti-c6000.nortos.debug.lib
-                -lboard.am273x.c66.ti-c6000.nortos.debug.lib
+                -lfreertos.am273x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.freertos.debug.lib
+                -lboard.am273x.r5f.ti-arm-clang.freertos.debug.lib
                 -llibc.a
+                -llibsysbm.a
             "
         ></configuration>
         <configuration name="Release"
             compilerBuildOptions="
-                --program_level_compile
-                -o3
-                -mf3
+                -Os
             "
             linkerBuildOptions="
-                -lnortos.am273x.c66.ti-c6000.release.lib
-                -ldrivers.am273x.c66.ti-c6000.nortos.release.lib
-                -lboard.am273x.c66.ti-c6000.nortos.release.lib
+                -lfreertos.am273x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.freertos.release.lib
+                -lboard.am273x.r5f.ti-arm-clang.freertos.release.lib
                 -llibc.a
+                -llibsysbm.a
             "
         ></configuration>
         <pathVariable name="DSPLIB_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../ipc_rpmsg_callback_simultaneous_send_allcore.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../ipc_rpmsg_any_to_any_c66ss0_maincore.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
