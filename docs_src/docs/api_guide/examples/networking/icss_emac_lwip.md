@@ -17,6 +17,56 @@ The examples does the following:
 - Example is configured to run in Switch mode.
 \endcond
 
+\cond SOC_AM261X
+# RevE2 Backward Compatibility
+
+The ICSS-EMAC Lwip example in SDK 11.00 and above supports RevA boards by default. For RevA boards, the PHY configuration is automatically detected using the Board ID information stored in the EEPROM. However, to enable backward compatibility with RevE2 boards, which have a different PHY and configuration, manual changes to the syscfg file are required. 
+
+The RevE2 boards use a different PHY model (DP83826E) compared to RevA boards (DP83869), and the MDIO addresses are also different. Additionally, the routing of ICSSM MDIO signals differs between the two board revisions (which is handled in the application based on the Board ID read from EEPROM). The following syscfg changes are needed to properly configure the example for RevE2 boards:
+
+## Syscfg Changes for RevE2 Support
+
+1. Open the Syscfg configuration for the example.
+2. Navigate to the ETHPHY (ICSS-EMAC) module.
+3. Change the "ETHPHY Device" from "DP83869" to "DP83826E" and change the "MDIO Phy Address" correspondingly as shown below:
+
+   <div style="display: flex; justify-content: space-between;">
+     <div style="width: 48%;">
+       \imageStyle{ICSS_EMAC_LWIP_RevE2_PHY0_config.PNG,width:100%}
+       \image html ICSS_EMAC_LWIP_RevE2_PHY0_config.PNG ETHPHY 0 Configuration
+     </div>
+     <div style="width: 48%;">
+       \imageStyle{ICSS_EMAC_LWIP_RevE2_PHY1_config.PNG,width:100%}
+       \image html ICSS_EMAC_LWIP_RevE2_PHY1_config.PNG ETHPHY 1 Configuration
+     </div>
+   </div>
+
+4. Navigate to ICSS-EMAC module and change the "Phy Address 0" and "Phy Address 1" correspondingly as shown below:
+
+   \imageStyle{ICSS_EMAC_LWIP_RevE2_config.PNG,width:30%}
+   \image html ICSS_EMAC_LWIP_RevE2_config.PNG ICSS-EMAC Configuration
+
+5. Save the configurations.
+
+\note For convenience, the example directory includes two pre-configured syscfg files:
+- `example.syscfg`: Default configuration for RevA boards.
+- `rev_e2_example.syscfg`: Ready-to-use configuration for RevE2 boards.
+
+- To use the RevE2 configuration, you can either:
+  - Make the manual changes described above to your existing syscfg file.
+  - Rename `rev_e2_example.syscfg` to `example.syscfg` to replace the default configuration.
+
+Refer to the README.txt file in the example directory for more details.
+
+## Hardware Differences
+
+Key differences between RevE2 and RevA are the following:
+- RevA has DP83869 on-board PHY and RevE2 has DP83826E add-on PHY. 
+- RevA needs an additional muxing to route ICSSM MDIO and RevE2 has ICSSM MDIO routed by default. 
+
+\note Ensure you have selected the correct board revision before building the example to avoid communication issues.
+
+\endcond
 # Supported Combinations
 
 \cond SOC_AM261X
