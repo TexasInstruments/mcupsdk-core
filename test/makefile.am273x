@@ -238,6 +238,7 @@ help:
 	@echo  $(MAKE) -s -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_r5fss00_maincore/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_r5fss01_maincore/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_c66ss0_maincore/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C mcal_ut/ipc_rpmsg/ipc_rpmsg_OnetoOne_BacktoBack/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -516,6 +517,7 @@ BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_OnetoOne_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_any_to_any_r5fss00_maincore_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_any_to_any_r5fss01_maincore_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos
 
 
 
@@ -1112,6 +1114,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos:
 	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_c66ss0_maincore/am273x-evm/system_freertos_nortos -f makefile all
 
+ ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos:
+	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_OnetoOne_BacktoBack/am273x-evm/system_freertos -f makefile all
+
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -1309,6 +1314,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_OnetoOne_am273x-evm_system_freertos_c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_any_to_any_r5fss00_maincore_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_any_to_any_r5fss01_maincore_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos_clean
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -1901,6 +1907,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_c66ss0_maincore/am273x-evm/system_freertos_nortos -f makefile clean
 
+ ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos_clean:
+	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_OnetoOne_BacktoBack/am273x-evm/system_freertos -f makefile clean
+
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -2098,6 +2107,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_OnetoOne_am273x-evm_system_freertos_s
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_any_to_any_r5fss00_maincore_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_any_to_any_r5fss01_maincore_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos_scrub
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -2689,6 +2699,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ipc_rpmsg_any_to_any_c66ss0_maincore_am273x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_c66ss0_maincore/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ ipc_rpmsg_OnetoOneBacktoBack_am273x-evm_system_freertos_scrub:
+	$(MAKE) -C mcal_ut/ipc_rpmsg/ipc_rpmsg_OnetoOne_BacktoBack/am273x-evm/system_freertos -f makefile scrub
 
 
 sbl: libs
