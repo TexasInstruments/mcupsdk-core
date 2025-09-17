@@ -481,9 +481,13 @@ function getSysCfgDevice(board) {
         default:
         case "am263px-cc":
             return "AM263Px";
-        case "am263px-cc-addon-ind":
+        case "am263px-cc-dp83826/am263px-cc":
             return "AM263Px";
-        case "am263px-cc-addon-auto":
+        case "am263px-cc-dp83tg720/am263px-cc":
+            return "AM263Px";
+        case "am263px-lp-dp83869/am263px-lp":
+            return "AM263Px";
+        case "am263px-cc-dp83869/am263px-cc":
             return "AM263Px";
     }
 }
@@ -497,9 +501,13 @@ function getProjectSpecDevice(board) {
         default:
         case "am263px-cc":
             return "AM263Px";
-        case "am263px-cc-addon-ind":
+        case "am263px-cc-dp83826/am263px-cc":
             return "AM263Px";
-        case "am263px-cc-addon-auto":
+        case "am263px-cc-dp83tg720/am263px-cc":
+            return "AM263Px";
+        case "am263px-lp-dp83869/am263px-lp":
+            return "AM263Px";
+        case "am263px-cc-dp83869/am263px-cc":
             return "AM263Px";
     }
 }
@@ -515,9 +523,13 @@ function getSysCfgPkg(board) {
         default:
         case "am263px-cc":
             return "ZCZ_S";
-        case "am263px-cc-addon-ind":
+        case "am263px-cc-dp83826/am263px-cc":
             return "ZCZ_S";
-        case "am263px-cc-addon-auto":
+        case "am263px-cc-dp83tg720/am263px-cc":
+            return "ZCZ_S";
+        case "am263px-lp-dp83869/am263px-lp":
+            return "ZCZ_C";
+        case "am263px-cc-dp83869/am263px-cc":
             return "ZCZ_S";
     }
 }
@@ -529,9 +541,13 @@ function getSysCfgPart(board) {
         default:
         case "am263px-cc":
             return "AM263P4";
-        case "am263px-cc-addon-ind":
+        case "am263px-cc-dp83826/am263px-cc":
             return "AM263P4";
-        case "am263px-cc-addon-auto":
+        case "am263px-cc-dp83tg720/am263px-cc":
+            return "AM263P4";
+        case "am263px-lp-dp83869/am263px-lp":
+            return "AM263P4";
+        case "am263px-cc-dp83869/am263px-cc":
             return "AM263P4";
     }
 }
@@ -543,9 +559,13 @@ function getDevToolTirex(board) {
         default:
         case "am263px-cc":
             return "TMDSCNCD263P";
-        case "am263px-cc-addon-ind":
+        case "am263px-cc-dp83826/am263px-cc":
             return "TMDSCNCD263P";
-        case "am263px-cc-addon-auto":
+        case "am263px-cc-dp83tg720/am263px-cc":
+            return "TMDSCNCD263P";
+        case "am263px-lp-dp83869/am263px-lp":
+            return "LP-AM263P";
+        case "am263px-cc-dp83869/am263px-cc":
             return "TMDSCNCD263P";
     }
 }

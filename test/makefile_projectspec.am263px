@@ -5,9 +5,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_phy_test_am263px-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += memory_access_latency_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
@@ -65,14 +65,14 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+ enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_build:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
 
  flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -91,9 +91,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_phy_test_am263px-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += memory_access_latency_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
@@ -151,14 +151,14 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+ enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
 
  flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -177,9 +177,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_phy_test_am263px-cc_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += memory_access_latency_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
@@ -237,14 +237,14 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  memory_access_latency_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+ enet_test_cpsw_layer2_performance_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- enet_test_cpsw_layer2_performance_am263px-cc_r5fss0-1_freertos_ti-arm-clang_export:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- enet_test_cpsw_layer2_performance_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+ enet_test_cpsw_layer2_performance_am263px-cc-dp83869/am263px-cc_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
 
  flasher_jtag_uniflash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -287,9 +287,9 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C benchmarks/memory_access_latency/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/am263px-cc-dp83869/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
