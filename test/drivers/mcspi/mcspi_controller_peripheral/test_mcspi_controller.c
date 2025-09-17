@@ -69,9 +69,9 @@
  *  MCU_SPI0_D1(Pin 14) (B11)   ------------->   MCU_SPI1_D0(Pin 55)  (B10)
  * 
  *  Please connect pins as described below on AM261x LP.
- *  MCU_SPI0_CS0 (J2/J4 Pin 19) (B13)  ------------>  MCU_SPI2_CS1  (J5/J7 Pin 58)  M1  
+ *  MCU_SPI0_CS0 (J2/J4 Pin 19) (B13)  ------------>  MCU_SPI2_CS0  (J5/J7 Pin 58)  M1  
  *  MCU_SPI0_CLK (J6/J8 Pin 51) (T2)   ------------>  MCU_SPI2_CLK  (J6/J8 Pin 47)  D17 
- *  MCU_SPI0_D0  (J6/J8 Pin 52) (T1)   ------------>  MCU_SPI2_D1   (J6/J8 Pin 54)  B18
+ *  MCU_SPI0_D0  (J2/J4 Pin 15) (B12)  ------------>  MCU_SPI2_D1   (J6/J8 Pin 54)  B18
  *  MCU_SPI0_D1  (J6/J8 Pin 53) (U1)   ------------>  MCU_SPI2_D0   (J6/J8 Pin 55)  A16
  * 
  *  Please connect pins as described below on AM261x SOM and AM263x HSEC Board .

@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --variant "500MHz" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.25.0+4268"}
  */
 
 /**
@@ -94,7 +94,7 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
 mpu_armv75.attributes   = "NonCached";
 mpu_armv75.allowExecute = false;
-mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.baseAddr     = 0x70150000;
 mpu_armv75.size         = 16;
 
 default_linker1.$name = "memory_configurator_default_linker0";

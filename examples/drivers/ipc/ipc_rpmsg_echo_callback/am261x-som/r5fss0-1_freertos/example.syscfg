@@ -78,7 +78,7 @@ mpu_armv76.allowExecute = false;
 mpu_armv76.attributes   = "NonCached";
 
 mpu_armv77.$name        = "CONFIG_MPU_REGION6";
-mpu_armv77.baseAddr     = 0x701D0000;
+mpu_armv77.baseAddr     = 0x70150000;
 mpu_armv77.allowExecute = false;
 mpu_armv77.attributes   = "NonCached";
 mpu_armv77.size         = 15;
