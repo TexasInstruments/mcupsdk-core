@@ -56,7 +56,7 @@ SDFM configuration is shown below:
 - OutputXbar8 can be probed at HSEC Pin 85 for Clock
 - Provide Data Streams on SDFM0_D1 at HSEC 99   or, alternately, use EPWM0_A output for data stream input from HSEC 49
 - Provide Data Streams on SDFM0_D2 at HSEC 103  or, alternately, use EPWM0_A output for data stream input from HSEC 49
-## AM263PX-LP (E2) with 180 pin HSEC Dock
+## AM263PX-LP (E2)
 Not Supported
 ## AM261X-SOM (E1) with 180 pin HSEC Dock
 - SDFM1_CLK0 can be probed at HSEC Pin 100 for Clock
@@ -64,9 +64,9 @@ Not Supported
 - Provide Data Streams on SDFM1_D1 at HSEC 106   or, alternately, use EPWM0_A output for data stream input from HSEC 49
 - Provide Data Streams on SDFM1_D2 at HSEC 153  or, alternately, use EPWM0_A output for data stream input from HSEC 49
 
-## AM261X-LP (E1) with 180 pin HSEC Dock
-- SDFM1_CLK0 can be probed at J6/8 pin 55
-- OutputXbar5 can be probed at J5/7 48
+## AM261X-LP Rev A
+- SDFM1_CLK0 can be probed at J1/3 pin 6 (needs IO Expander to demux from ADC input) otherwise, probe the output clock at the outputxbar output (see below).
+- OutputXbar5 can be probed at J5/7 48 for the ECAP generated Clock Source which is internally fed to the SDFM instance.
 - Provide Data Streams on SDFM1_D1 at J6/8 59   or, alternately, use EPWM2_A output for data stream input from J2/4 40
 - Provide Data Streams on SDFM1_D2 at J6/8 54   or, alternately, use EPWM2_A output for data stream input from J2/4 40
 

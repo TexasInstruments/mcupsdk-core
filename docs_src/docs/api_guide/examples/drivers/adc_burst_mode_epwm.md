@@ -30,10 +30,10 @@ The example demonstrates Burst mode of ADC periodically triggered by trigger fro
  - reads which EOC generated Interrupt and reads the respective result registers.
 
 # Watch Variables
- - gAdc1Result0[] : Digital representation of the voltage, averaged on burst sample on pin ADC0_AIN0
- - gAdc1Result1[] : Digital representation of the voltage, averaged on burst sample on pin ADC0_AIN1
- - gAdc1Result2[] : Digital representation of the voltage sampled on pin ADC0_AIN2
- - gAdc1result3[] : Digital representation of the voltage sampled on pin ADC0_AIN3
+ - gAdc1Result0[] : Digital representation of the voltage, averaged on burst sample on pin ADC1_AIN0
+ - gAdc1Result1[] : Digital representation of the voltage, averaged on burst sample on pin ADC1_AIN1
+ - gAdc1Result2[] : Digital representation of the voltage sampled on pin ADC1_AIN2
+ - gAdc1Result3[] : Digital representation of the voltage sampled on pin ADC1_AIN3
 
 # External Connections :
 ## AM263Px-CC E2 or AM263x-CC E2 or AM261X-SOM

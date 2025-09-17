@@ -91,7 +91,7 @@ When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
   - CTRIPL    : 70
 
 ## AM263PX-LP
-- Connect J1/J3 Pin 30 (DAC_OUT) to J1/3 Pin 23 and J1/3 28 (CMPSSA0H/L)
+- Connect J1/J3 Pin 30 (DAC_OUT) to J1/J3 Pin 23 and J1/J3 28 (CMPSSA0H/L)
 - Probe the following on boosterpack
   - EPWM0A    : J2/4 Pin 11
   - EPWM1A    : J2/4 Pin 37
@@ -101,16 +101,14 @@ When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
   - CTRIPH    : J6/8 Pin 72
   - CTRIPL    : J6/8 Pin 71 
 
-## AM261X-LP
-- Connect J1/J3 Pin 30 (DAC_OUT) to J1/3 Pin 23 and J1/3 2 (CMPSSA0H/L)
+## AM261X-LP REV A
+- Connect J1/J3 Pin 30 (DAC_OUT) to J1/J3 Pin 26 and J1/J3 2 (CMPSSA0H/L)
 - Probe the following on boosterpack
   - EPWM3A    : J5/7 Pin 38
-  - EPWM1A    : J5/7 Pin 69
   - EPWM2A    : J2/4 Pin 40
   - DEActive0 : J5/7 Pin 49
   - DEActive1 : J5/7 Pin 50
-  - CTRIPH    : J6/8 Pin 3
-  - CTRIPL    : J6/8 Pin 4 
+  - CTRIPL    : J5/7 Pin 43 (needs IO Expander config) 
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_DIODE_EMULATION_COMBOS}

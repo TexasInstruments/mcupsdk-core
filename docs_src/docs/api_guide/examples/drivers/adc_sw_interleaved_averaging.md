@@ -72,10 +72,8 @@ completed so far in the conversion cycle and average them.
 - feed analog input on ADC 2 Channel 1 - J5/J7 Pin - 63
 
 ## AM261X-LP
-When using AM261X-LP E2 board,
+When using AM261X-LP E2 or REV A board,
 - input trigger pulse on GPIO 16 (configured as input) - J5/J7 pin - 43 or connect it to GPIO 15 (Configured as output) -  J1/J3 Jpin - 5
-When using AM261X-LP E1 board,
-- input trigger pulse on GPIO 16 (configured as input) - J2/J4 pin - 19 or connect it to GPIO 15 (Configured as output) -  J2/J4 Jpin - 17
 - feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
 - feed analog input on ADC 1 Channel 1 - J5/J7 Pin - 42
 - feed analog input on ADC 2 Channel 0 - J1/J3 Pin - 25
