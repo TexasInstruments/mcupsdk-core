@@ -94,7 +94,7 @@ void OSPI_phyGetTuningData(uint32_t *tuningData, uint32_t *tuningDataSize)
 
 */
 
-int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t arrays[4][128][128])
+int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t arrays[5][128][128])
 {
     int32_t status = SystemP_SUCCESS;
     OSPILLD_Handle hOspi;

@@ -50,7 +50,7 @@
     })
 # endif
 
-#define OSPI_PHY_INIT_RD_DELAY      (1U)
+#define OSPI_PHY_INIT_RD_DELAY      (0U)
 #define OSPI_PHY_MAX_RD_DELAY       (4U)
 #define OSPI_DLL_LOCK_TIMEOUT       (82U)
 #define OSPI_DDR_SEARCH_STEP        (4U)

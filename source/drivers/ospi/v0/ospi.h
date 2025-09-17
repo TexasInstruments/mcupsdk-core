@@ -735,7 +735,7 @@ int32_t OSPI_phyTuneSDR(OSPI_Handle handle, uint32_t flashOffset);
  *
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
-int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t arrays[4][128][128]);
+int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t arrays[5][128][128]);
 
 /**
  *  \brief  This function returns the address to the attack vector buf required for tuning the PHY
