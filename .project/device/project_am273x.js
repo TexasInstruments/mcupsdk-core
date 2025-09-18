@@ -258,6 +258,7 @@ const example_file_list = [
     "test/mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_r5fss01_maincore/.project/project_am273x.js",
     "test/mcal_ut/ipc_rpmsg/ipc_rpmsg_AnyToAny/ipc_rpmsg_AnyToAny_c66ss0_maincore/.project/project_am273x.js",
     "test/mcal_ut/ipc_rpmsg/ipc_rpmsg_OnetoOne_BacktoBack/.project/project_am273x.js",
+    "test/mcal_ut/ipc_rpmsg/ipc_rpmsg_rxNotifyCallback/.project/project_am273x.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc_stream/.project/project.js",
     "test/security/crypto/test_dthe_aes_cfb/.project/project.js",
