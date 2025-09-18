@@ -144,6 +144,8 @@ help:
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C middleware/tielfup32/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_ip_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/common/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -421,6 +423,8 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ccm_common_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -840,6 +844,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C middleware/tielfup32/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1218,6 +1228,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ccm_common_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1632,6 +1644,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C middleware/tielfup32/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -2010,6 +2028,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ccm_common_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2423,6 +2443,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_tielfup32_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C middleware/tielfup32/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ l2_cpsw_switch_test_am261x-lp-dp83tg720/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ l2_cpsw_switch_test_am261x-lp-dp83826/am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C ../source/networking/enet/core/test/layer2_cpsw_switch_test/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  sdl_ccm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
