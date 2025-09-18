@@ -44,8 +44,8 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ioexp1.$name                                                = "CONFIG_IOEXP0";
-ioexp1.i2cAddress                                           = "SOM-E1 0x21";
-ioexp1.TCA6408ARGTR_port0_pinADCO_AIN0_DAC_OUT_MUX_SEL_mode = 0;
+ioexp1.i2cAddress                                           = "SOM-RevA 0x21";
+ioexp1.TCA6408ARGT_port0_pinADCO_AIN0_DAC_OUT_MUX_SEL_mode = 0;
 
 dac1.$name        = "CONFIG_DAC0";
 dac1.enableOutput = true;

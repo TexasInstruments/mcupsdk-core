@@ -48,6 +48,7 @@ const int_xbar1       = int_xbar.addInstance();
 ioexp1.$name                                     = "CONFIG_IOEXP0";
 ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_state  = 1;
 

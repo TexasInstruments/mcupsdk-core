@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --variant "500MHz" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.25.0+4268"}
  */
 
 /**
@@ -48,6 +48,7 @@ const section12       = section.addInstance();
 ioexp1.$name                                     = "CONFIG_IOEXP0";
 ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
 
 dac1.$name        = "CONFIG_DAC0";
 dac1.enableOutput = true;

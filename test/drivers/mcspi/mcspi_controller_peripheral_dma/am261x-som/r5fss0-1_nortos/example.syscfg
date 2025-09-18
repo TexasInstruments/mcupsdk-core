@@ -46,10 +46,10 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ioexp1.$name                                                = "CONFIG_IOEXP0";
-ioexp1.i2cAddress                                           = "SOM-E1 0x21";
-ioexp1.TCA6408ARGTR_port0_pinSPI0_FSITX0_MUX_SEL_mode       = 0;
-ioexp1.TCA6408ARGTR_port0_pinPMIC_SPI1_FSIRX0_MUX_SEL_mode  = 0;
-ioexp1.TCA6408ARGTR_port0_pinPMIC_SPI1_FSIRX0_MUX_SEL_state = 1;
+ioexp1.i2cAddress                                           = "SOM-RevA 0x21";
+ioexp1.TCA6408ARGT_port0_pinSPI0_FSITX0_MUX_SEL_mode       = 0;
+ioexp1.TCA6408ARGT_port0_pinPMIC_SPI1_FSIRX0_MUX_SEL_mode  = 0;
+ioexp1.TCA6408ARGT_port0_pinPMIC_SPI1_FSIRX0_MUX_SEL_state = 1;
 
 const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1              = i2c.addInstance({}, false);

@@ -56,11 +56,11 @@ const int_xbar2       = int_xbar.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ioexp1.$name                                                = "CONFIG_IOEXP0";
-ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode            = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode              = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode              = 0;
-ioexp1.i2cAddress                                           = "SOM-E1 0x21";
-ioexp1.TCA6408ARGTR_port0_pinADCO_AIN0_DAC_OUT_MUX_SEL_mode = 0;
+ioexp1.TCA6408ARGT_port0_pinBP_BO_MUX_EN_N_mode            = 0;
+ioexp1.TCA6408ARGT_port0_pinBP_MUX_SW_SO_mode              = 0;
+ioexp1.TCA6408ARGT_port0_pinBP_MUX_SW_S1_mode              = 0;
+ioexp1.i2cAddress                                           = "SOM-RevA 0x21";
+ioexp1.TCA6408ARGT_port0_pinADCO_AIN0_DAC_OUT_MUX_SEL_mode = 0;
 
 adc1.$name                          = "CONFIG_ADC0";
 adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";

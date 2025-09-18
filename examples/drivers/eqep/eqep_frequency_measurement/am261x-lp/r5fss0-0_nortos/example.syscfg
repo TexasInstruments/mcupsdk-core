@@ -55,7 +55,7 @@ ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
 
 ioexp2.$name                                        = "CONFIG_IOEXP1";
-ioexp2.i2cAddress                                   = "LP-E1 0x21";
+ioexp2.i2cAddress                                   = "LP-RevA 0x21";
 ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_mode  = 0;
 ioexp2.TCA6408ARGTR_port0_pinFSI_EQEP_MUX_SEL_state = 1;
 
