@@ -41,7 +41,7 @@
  
  #define RX_SWEEP_SIZE       (128U)
  #define TX_SWEEP_SIZE       (128U)
- #define RD_DELAY_SWEEP_SIZE (4U)
+ #define RD_DELAY_SWEEP_SIZE (5U)
  
  static char gFilename[FILE_NAME_MAX_LEN] = "graph.bin";
  
