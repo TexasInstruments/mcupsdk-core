@@ -66,7 +66,7 @@
  * The service names MUST match what linux is expecting
  */
 /* This is used to run the echo test with linux kernel */
-#define IPC_RPMESSAGE_SERVICE_PING        "ti.ipc4.ping-pong"
+#define IPC_RPMESSAGE_SERVICE_PING        "rpmsg-client-sample"
 #define IPC_RPMESSAGE_ENDPT_PING          (13U)
 
 /* This is used to run the echo test with user space kernel */
