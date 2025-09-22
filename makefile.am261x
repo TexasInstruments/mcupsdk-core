@@ -460,8 +460,12 @@ help:
 	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -470,6 +474,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_user_reg_cfg/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1591,8 +1597,12 @@ BUILD_COMBO_EXAMPLE_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_fre
 BUILD_COMBO_EXAMPLE_ALL += optiflash_xip_benchmark_l2_64k_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1601,6 +1611,8 @@ BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pmic_user_reg_cfg_am261x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -2922,11 +2934,23 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2951,6 +2975,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -4086,8 +4116,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += optiflash_xip_benchmark_l2_64k_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4096,6 +4130,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmic_user_reg_cfg_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -5412,11 +5448,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5441,6 +5489,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6576,8 +6630,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += optiflash_xip_benchmark_l2_64k_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_esm_pwm_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6586,6 +6644,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_reset_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmic_user_reg_cfg_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -7902,11 +7962,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ocmc_benchmarking_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_esm_level_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  pmic_esm_level_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  pmic_esm_level_mode_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_esm_pwm_mode_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  pmic_esm_pwm_mode_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmic/pmic_esm_pwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7931,6 +8003,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pmic_qa_watchdog_interrupt_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  pmic_qa_watchdog_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

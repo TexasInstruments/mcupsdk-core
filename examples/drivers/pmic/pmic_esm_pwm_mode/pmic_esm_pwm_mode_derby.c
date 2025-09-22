@@ -107,7 +107,6 @@ void pmic_esm_pwm_mode_main(void *args)
 {
     Pmic_CoreHandle_t* handle;
     int32_t status = PMIC_ST_SUCCESS;
-    uint8_t val = (uint8_t)0;
 
     SDL_DPL_Interface dpl_interface =
     {
@@ -124,12 +123,9 @@ void pmic_esm_pwm_mode_main(void *args)
 
     DebugP_log("Starting ESM pwm mode example !!\r\n");
 
-    /* Unlock the PMIC registers if locked */
-    status = Pmic_getRegLockState(handle, &val);
-    if(val == PMIC_REG_STATE_LOCK && status == PMIC_ST_SUCCESS)
-    {
-        status = Pmic_setRegLockState(handle,PMIC_LOCK_DISABLE);
-    }
+    // Unlock PMIC registers
+    status = Pmic_unlockRegs(handle);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
 
     /* Clear all errors statuses*/
     if(PMIC_ST_SUCCESS == status)
@@ -186,10 +182,10 @@ static int32_t PMICApp_setEsmIn(Pmic_CoreHandle_t *pmicHandle)
     uint32_t status = PMIC_ST_SUCCESS;
 
     Pmic_GpioCfg_t gpiocfg = {
-        .validParams = PMIC_CFG_GPI1_VALID_SHIFT,
-        .gpo1 = PMIC_GPI1_ESM_IN,
+        .validParams = PMIC_FUNCTIONALITY_VALID,
+        .functionality = PMIC_GPIO_ESM_INPUT,
     };
-    status = Pmic_gpioSetCfg(pmicHandle, &gpiocfg);
+    status = Pmic_gpioSetCfg(pmicHandle, PMIC_GPIO, &gpiocfg);
     return status;
 }
 
@@ -198,10 +194,10 @@ static int32_t PMICApp_setGpoNint(Pmic_CoreHandle_t *pmicHandle)
     uint32_t status = PMIC_ST_SUCCESS;
 
     Pmic_GpioCfg_t gpiocfg = {
-        .validParams = PMIC_CFG_GPO1_VALID_SHIFT,
-        .gpo1 = PMIC_GPO1_NINT,
+        .validParams = PMIC_FUNCTIONALITY_VALID,
+        .functionality = PMIC_NINT_GPI_NINT,
     };
-    status = Pmic_gpioSetCfg(pmicHandle, &gpiocfg);
+    status = Pmic_gpioSetCfg(pmicHandle, PMIC_NINT_GPI, &gpiocfg);
     return status;
 }
 
@@ -238,58 +234,30 @@ static void PMICApp_esmPwmMode(Pmic_CoreHandle_t* pmicHandle)
 
     Pmic_EsmCfg_t esmCfg = {
         .validParams =
-            (PMIC_CFG_ESM_ENABLE_VALID_SHIFT | PMIC_CFG_ESM_MODE_VALID_SHIFT |
-                PMIC_CFG_ESM_ERR_THR_VALID_SHIFT | PMIC_CFG_ESM_TIME_BASE_VALID_SHIFT |
-                PMIC_CFG_ESM_DELAY1_VALID_SHIFT | PMIC_CFG_ESM_DELAY2_VALID_SHIFT |
-                PMIC_CFG_ESM_HMAX_VALID_SHIFT | PMIC_CFG_ESM_HMIN_VALID_SHIFT |
-                PMIC_CFG_ESM_LMAX_VALID_SHIFT | PMIC_CFG_ESM_LMIN_VALID_SHIFT),
+            (PMIC_ESM_ENABLE_VALID | PMIC_ESM_MODE_VALID |
+                PMIC_ESM_ERR_CNT_THR_VALID | PMIC_ESM_DELAY1_VALID |
+                PMIC_ESM_DELAY2_VALID),
         .enable = (bool)TRUE,
-        .mode = PMIC_ESM_PWM_MODE,
-        .errThr = PMIC_ESM_ERR_THR_MAX,
-        .timeBase = PMIC_ESM_TIME_BASE_8_US,
+        .mode = ESM_PWM_MODE,
+        .errCntThr = ESM_ERR_CNT_THR_MAX,
         .delay1 = 0xFFU,
         .delay2 = 0xFFU,
-        .lmin = 0x00,
-        .lmax = 0xFF,
-        .hmin = 0x00,
-        .hmax = 0xFF,
     };
     
     Pmic_EsmCfg_t esmCFG_verify = {
         .validParams =
-            (PMIC_CFG_ESM_ENABLE_VALID_SHIFT | PMIC_CFG_ESM_MODE_VALID_SHIFT |
-                PMIC_CFG_ESM_ERR_THR_VALID_SHIFT | PMIC_CFG_ESM_TIME_BASE_VALID_SHIFT |
-                PMIC_CFG_ESM_DELAY1_VALID_SHIFT | PMIC_CFG_ESM_DELAY2_VALID_SHIFT |
-                PMIC_CFG_ESM_HMAX_VALID_SHIFT | PMIC_CFG_ESM_HMIN_VALID_SHIFT |
-                PMIC_CFG_ESM_LMAX_VALID_SHIFT | PMIC_CFG_ESM_LMIN_VALID_SHIFT),
+        (PMIC_ESM_ENABLE_VALID | PMIC_ESM_MODE_VALID |
+            PMIC_ESM_ERR_CNT_THR_VALID | PMIC_ESM_DELAY1_VALID |
+            PMIC_ESM_DELAY2_VALID),
     };
 
-    Pmic_EsmStatus_t esmErr = { 
+    Pmic_EsmStat_t esmErr = { 
         .validParams = 
-        (PMIC_ESM_ERR_VALID_SHIFT | PMIC_ESM_DELAY1_ERR_VALID_SHIFT | 
-         PMIC_ESM_DELAY2_ERR_VALID_SHIFT )
-    };
-
-    Pmic_IrqCfg_t IrqMasks[] = 
-    {
-        {
-            .validParams = PMIC_IRQ_CFG_ALL_VALID_SHIFT,
-            .irqNum = PMIC_ESM_DLY1_ERR_INT,
-            .config = PMIC_IRQ_CONFIG0_INT_SET,
-            .mask = (bool)FALSE,
-        },
-        {
-            .validParams = PMIC_IRQ_CFG_ALL_VALID_SHIFT,
-            .irqNum = PMIC_ESM_DLY2_ERR_INT,
-            .config = PMIC_IRQ_CONFIG0_INT_SET,
-            .mask = (bool)FALSE,
-        },
+        (PMIC_ESM_STATUS_ALL_VALID )
     };
 
     DebugP_log("\r\n");
     DebugP_log("Interrupt: Setting ESM Delay1 and Delay2 error config to generate Interrupt\r\n");
-    status = Pmic_irqSetCfgs(pmicHandle, PMIC_NO_OF_ESM_ERRORS, IrqMasks);
-    DebugP_assert(status == PMIC_ST_SUCCESS);
 
     /* Configure ESM in pwm mode*/
     status = Pmic_esmSetCfg(pmicHandle, &esmCfg);
@@ -300,14 +268,12 @@ static void PMICApp_esmPwmMode(Pmic_CoreHandle_t* pmicHandle)
     DebugP_assert(status == PMIC_ST_SUCCESS);
     DebugP_assert(esmCfg.enable == esmCFG_verify.enable);
     DebugP_assert(esmCfg.mode == esmCFG_verify.mode);
-    DebugP_assert(esmCfg.timeBase == esmCFG_verify.timeBase);
-    DebugP_assert(esmCfg.polarity == esmCFG_verify.polarity);
-    DebugP_assert(esmCfg.deglitch == esmCFG_verify.deglitch);
+    DebugP_assert(esmCfg.errCntThr == esmCFG_verify.errCntThr);
     DebugP_assert(esmCfg.delay1 == esmCFG_verify.delay1);
     DebugP_assert(esmCfg.delay2 == esmCFG_verify.delay2);
 
     /*Clear all esm error status*/
-    status = Pmic_esmClrStatus(pmicHandle, &esmErr);
+    status = Pmic_esmClrStat(pmicHandle, &esmErr);
     DebugP_assert(status == PMIC_ST_SUCCESS);
 
     /*Start the PMIC ESM*/
@@ -337,7 +303,7 @@ static void PMICApp_esmPwmMode(Pmic_CoreHandle_t* pmicHandle)
                 /*Add delay to set error pin to normal mode*/
                 ClockP_usleep(200000);
                 /*Clear all esm error status*/
-                status = Pmic_esmClrStatus(pmicHandle, &esmErr);
+                status = Pmic_esmClrStat(pmicHandle, &esmErr);
                 DebugP_assert(status == PMIC_ST_SUCCESS);
                 DebugP_log("Cleared PMIC ESM error states and ESM error from MCU\r\n");
                 isEsmInt = TRUE;
@@ -347,10 +313,10 @@ static void PMICApp_esmPwmMode(Pmic_CoreHandle_t* pmicHandle)
 
     if(status == PMIC_ST_SUCCESS)
     {
-        IrqMasks[1U].config = PMIC_IRQ_CONFIG0_INT_SET_GOTO_RESET_MCU;
-
         DebugP_log("\r\n");
         DebugP_log("Reset: Setting ESM Delay2 error config to device transitions to RESET-MCU state\r\n");
+        
+        DebugP_assert(status == PMIC_ST_SUCCESS);
         DebugP_log("Generating error from MCU to PMIC\r\n");
         status = SDL_ESM_setNError(SDL_ESM_INST_MAIN_ESM0);
         if(status == PMIC_ST_SUCCESS)

@@ -2,9 +2,17 @@ let path = require('path');
 
 let device = "am261x";
 
-const files = {
+const files_blackbird = {
     common: [
         "pmic_esm_level_mode_blackbird.c",
+        "main.c",
+        "board.c",
+    ],
+};
+
+const files_derby = {
+    common: [
+        "pmic_esm_level_mode_derby.c",
         "main.c",
         "board.c",
     ],
@@ -49,7 +57,7 @@ const includes_freertos_r5f = {
 };
 
 
-const libs_nortos_r5f = {
+const libs_nortos_r5f_blackbird = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -59,7 +67,18 @@ const libs_nortos_r5f = {
     ],
 };
 
-const libs_freertos_r5f = {
+
+const libs_nortos_r5f_derby = {
+    common: [
+        "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_derby.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_freertos_r5f_blackbird = {
     common: [
         "freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -68,6 +87,17 @@ const libs_freertos_r5f = {
         "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
+
+const libs_freertos_r5f_derby = {
+    common: [
+        "freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_derby.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
 
 
 const lnkfiles = {
@@ -104,6 +134,8 @@ const templates_freertos_r5f =
 
 
 const buildOptionCombos = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
 ];
@@ -124,7 +156,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
@@ -132,17 +163,35 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_r5f;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_r5f;
-            build_property.templates = templates_freertos_r5f;
+        if(buildOption.board.match(/am261x-lp*/) ){
+            build_property.files = files_derby;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f_derby;
+                build_property.templates = templates_freertos_r5f;
+            }
+            else
+            {
+                build_property.libs = libs_nortos_r5f_derby;
+                build_property.templates = templates_nortos_r5f;
+            }
         }
-        else
-        {
-            build_property.libs = libs_nortos_r5f;
-            build_property.templates = templates_nortos_r5f;
+        else{
+            build_property.files = files_blackbird;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f_blackbird;
+                build_property.templates = templates_freertos_r5f;
+            }
+            else
+            {
+                build_property.libs = libs_nortos_r5f_blackbird;
+                build_property.templates = templates_nortos_r5f;
+            }
         }
     }
 

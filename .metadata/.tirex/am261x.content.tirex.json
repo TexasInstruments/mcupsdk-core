@@ -12541,6 +12541,72 @@
         ],
         "description": "An example to show PMIC ESM operation in level mode set interrupt and reset when pmic esm_in pin is low CPU is R5FSS0-0 running NORTOS.",
         "name": "pmic_esm_level_mode",
+        "location": "../../examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_esm_level_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC ESM operation in level mode set interrupt and reset when pmic esm_in pin is low CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_esm_level_mode",
+        "location": "../../examples/drivers/pmic/pmic_esm_level_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_esm_level_mode",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC ESM operation in level mode set interrupt and reset when pmic esm_in pin is low CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_esm_level_mode",
         "location": "../../examples/drivers/pmic/pmic_esm_level_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
@@ -12588,6 +12654,72 @@
             "drivers",
             "pmic",
             "pmic_esm_level_mode",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC ESM operation in pwm mode set interrupt and reset when error is detected in PWM signal on pmic esm_in pin CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_esm_pwm_mode",
+        "location": "../../examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_esm_pwm_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC ESM operation in pwm mode set interrupt and reset when error is detected in PWM signal on pmic esm_in pin CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_esm_pwm_mode",
+        "location": "../../examples/drivers/pmic/pmic_esm_pwm_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_esm_pwm_mode",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -12852,6 +12984,72 @@
             "drivers",
             "pmic",
             "pmic_trigger_watchdog_reset",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a Interrupt when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_qa_watchdog_interrupt",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a Interrupt when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_qa_watchdog_interrupt",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_interrupt",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
