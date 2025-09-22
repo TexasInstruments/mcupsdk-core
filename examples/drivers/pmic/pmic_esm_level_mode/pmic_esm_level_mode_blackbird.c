@@ -165,7 +165,7 @@ static int32_t PMICApp_setEsmIn(Pmic_CoreHandle_t *pmicHandle)
 
     Pmic_GpioCfg_t gpiocfg = {
         .validParams = PMIC_CFG_GPI1_VALID_SHIFT,
-        .gpo1 = PMIC_GPI1_ESM_IN,
+        .gpi1 = PMIC_GPI1_ESM_IN,
     };
     status = Pmic_gpioSetCfg(pmicHandle, &gpiocfg);
     return status;
