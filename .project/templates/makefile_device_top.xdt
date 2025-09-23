@@ -261,7 +261,7 @@ $(BUILD_COMBO_CLEAN_GCC_`component.name`):
 
 # Various Component Scrub Targets
 % for (component of args.component_list) {
-BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`_scrub
+BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`
 % }
 
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {

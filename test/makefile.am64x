@@ -282,8 +282,8 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 
 
 # Various Component Scrub Targets
-BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang.nortos_scrub unity_r5f.ti-arm-clang.freertos_scrub unity_m4f.ti-arm-clang.nortos_scrub unity_m4f.ti-arm-clang.freertos_scrub unity_a53.gcc-aarch64.nortos_scrub unity_a53.gcc-aarch64.freertos_scrub unity_a53.gcc-aarch64.freertos-smp_scrub_scrub
-BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_scrub doxy_samples_r5f.ti-arm-clang.freertos_scrub_scrub
+BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang.nortos_scrub unity_r5f.ti-arm-clang.freertos_scrub unity_m4f.ti-arm-clang.nortos_scrub unity_m4f.ti-arm-clang.freertos_scrub unity_a53.gcc-aarch64.nortos_scrub unity_a53.gcc-aarch64.freertos_scrub unity_a53.gcc-aarch64.freertos-smp_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang.nortos_scrub doxy_samples_r5f.ti-arm-clang.freertos_scrub
 
 
 # Combine all Components Scrub Targets

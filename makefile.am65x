@@ -196,13 +196,13 @@ $(BUILD_COMBO_CLEAN_nortos):
 
 
 # Various Component Scrub Targets
-BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang.nortos_scrub board_r5f.ti-arm-clang.freertos_scrub_scrub
-BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang.nortos_scrub drivers_r5f.ti-arm-clang.freertos_scrub_scrub
-BUILD_COMBO_SCRUB_freeRTOS_fat-freertos = freeRTOS_fat-freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_freeRTOS_fat-nortos = freeRTOS_fat-nortos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang.nortos_scrub middleware_r5f.ti-arm-clang.freertos_scrub_scrub
-BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang.nortos_scrub board_r5f.ti-arm-clang.freertos_scrub
+BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang.nortos_scrub drivers_r5f.ti-arm-clang.freertos_scrub
+BUILD_COMBO_SCRUB_freeRTOS_fat-freertos = freeRTOS_fat-freertos_r5f.ti-arm-clang_scrub
+BUILD_COMBO_SCRUB_freeRTOS_fat-nortos = freeRTOS_fat-nortos_r5f.ti-arm-clang_scrub
+BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang.nortos_scrub middleware_r5f.ti-arm-clang.freertos_scrub
+BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub
+BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub
 
 
 # Combine all Components Scrub Targets
