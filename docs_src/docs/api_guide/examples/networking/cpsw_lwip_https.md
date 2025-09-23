@@ -54,7 +54,7 @@ The example does the following:
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/lwip/cpsw_lwip_https
  
  For support on @VAR_LP_BOARD_NAME_LOWER, please refer \ref ETHERNET_ADDON_BOARDS_TOP

@@ -46,7 +46,7 @@ The application has the macro PROFILE_EN for profiling software latency of the r
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | am261x-lp
+ Boards         | @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_cpsw_industrial_app
  \endcond
 
@@ -55,7 +55,7 @@ The application has the macro PROFILE_EN for profiling software latency of the r
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | am263x-lp
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_cpsw_industrial_app
  \endcond
 
@@ -64,7 +64,7 @@ The application has the macro PROFILE_EN for profiling software latency of the r
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | am263px-lp
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_cpsw_industrial_app
  \endcond
 
