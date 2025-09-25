@@ -65,10 +65,6 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
             .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR3,
             .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE3,
         },
-        {
-            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR4,
-            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE4,
-        }
         }
 
     },
@@ -98,10 +94,6 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
             .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR3,
             .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE3,
         },
-        {
-            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR4,
-            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE4,
-        }
         }
 
     },
@@ -225,46 +217,6 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
             .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR0,
             .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE0,
         },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR1,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE1,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR2,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE2,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR3,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE3,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR4,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE4,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR5,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE5,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR6,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE6,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR7,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE7,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR8,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE8,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR9,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE9,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_CFG_SLV_START_ADDR10,
-            .regionSize = CSL_FW_OSPI0_CFG_SLV_REGION_SIZE10,
-        }
         }
 
     },
@@ -282,14 +234,6 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
             .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR0,
             .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE0,
         },
-        {
-            .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR1,
-            .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE1,
-        },
-        {
-            .startAddr = CSL_FW_OSPI1_CFG_SLV_START_ADDR2,
-            .regionSize = CSL_FW_OSPI1_CFG_SLV_REGION_SIZE2,
-        }
         }
     },
     {
@@ -297,43 +241,15 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
                                 FW R5SS0_CONFIG_SLV
         ***********************************************************************/
 
-        .baseAddr = CSL_FW_R5SS0_CONFIG_SLV_CFG_ADDR,
-        .numRegions = CSL_FW_R5SS0_CONFIG_SLV_NUM_REGION,
-        .targetCount = CSL_FW_R5SS0_CONFIG_SLV_NUM_PROTECTED,
+        .baseAddr = CSL_FW_R5SS0_SLV_CFG_ADDR,
+        .numRegions = CSL_FW_R5SS0_SLV_NUM_REGION,
+        .targetCount = CSL_FW_R5SS0_SLV_NUM_PROTECTED,
         .target = (Firewall_Target[])
         {
         {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR0,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE0,
+            .startAddr = CSL_FW_R5SS0_SLV_START_ADDR0,
+            .regionSize = CSL_FW_R5SS0_SLV_REGION_SIZE0,
         },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR1,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE1,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR2,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE2,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR3,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE3,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR4,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE4,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR5,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE5,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR6,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE6,
-        },
-        {
-            .startAddr = CSL_FW_R5SS0_CONFIG_SLV_START_ADDR7,
-            .regionSize = CSL_FW_R5SS0_CONFIG_SLV_REGION_SIZE7,
-        }
         }
     },
     {
@@ -373,7 +289,7 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
         {
             .startAddr = CSL_FW_OSPI1_SLV_START_ADDR0,
             .regionSize = CSL_FW_OSPI1_SLV_REGION_SIZE0,
-        },
+        }
         }
     },
 
