@@ -1282,11 +1282,19 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
                  * This step ensures that the PHY tuning data is available for proper operation of the OSPI interface.
                  * Without this, the system may fail to achieve optimal performance or encounter communication issues.
                  */
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+                uint32_t sec = 0, page = 0;
+                uint32_t phyTuningData = 0,phyTuningDataSize = 0;
+                OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
+                Flash_offsetToSectorPage(config, phyTuningOffset, &sec, &page);
+                Flash_norOspiEraseSector(config, sec);
+#else
                 uint32_t blk = 0, page = 0;
                 uint32_t phyTuningData = 0,phyTuningDataSize = 0;
                 OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
                 Flash_offsetToBlkPage(config, phyTuningOffset, &blk, &page);
                 Flash_norOspiErase(config, blk);
+#endif
                 Flash_norOspiWrite(config, phyTuningOffset, (uint8_t *)phyTuningData, phyTuningDataSize);
                 attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
                 
