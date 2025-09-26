@@ -131,11 +131,11 @@ function getCgtOptions(cpu, device)
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_txpru1);
     }
-    if(cpu.match(/icssg0/))
+    if(cpu.match(/icss_g0/))
     {
         cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_icssg0);
     }
-    if(cpu.match(/icssg1/))
+    if(cpu.match(/icss_g1/))
     {
         cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_icssg1);
     }

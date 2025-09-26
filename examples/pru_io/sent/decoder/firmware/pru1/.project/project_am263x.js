@@ -99,8 +99,6 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "sent decoder pru1 fw"
     property.buildOptionCombos = buildOptionCombos;
-    property.pru_main_file = "main";
-    property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
 

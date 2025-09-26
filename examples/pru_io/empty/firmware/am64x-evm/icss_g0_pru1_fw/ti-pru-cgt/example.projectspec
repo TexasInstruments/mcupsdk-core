@@ -32,6 +32,7 @@
             -I${CG_TOOL_ROOT}/include
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common
+            -DICSSG0
             -DPRU1
             -DSLICE1
             -v4

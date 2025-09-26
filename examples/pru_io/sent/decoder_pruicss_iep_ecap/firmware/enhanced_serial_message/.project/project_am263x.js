@@ -84,8 +84,6 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "PRU0 Firmware for Sent Decoder Using ECAP (Enhanced serial message support)"
     property.buildOptionCombos = buildOptionCombos;
-    property.pru_main_file = "main";
-    property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
 
