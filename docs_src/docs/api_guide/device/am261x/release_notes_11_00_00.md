@@ -28,7 +28,7 @@
 
 Feature                                                                                               | Module
 ------------------------------------------------------------------------------------------------------|----------------------------------- 
--                                                                                                     | -
+XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip CPSW Example'     | Networking
 
 # Modules Not tested/supported in this release
 
@@ -64,7 +64,7 @@ Mbed-TLS                | R5F            | 2.13.1
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
--                                                                   | -
+Ethernet MDIO with Clause 45 support                                | Networking
 
 ### OS Kernel
 
@@ -153,7 +153,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support  |
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
 Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
 LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, scatter-gather                         | Other LwIP features
-Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC & PHY loopback with RMII 100Mbps(DP83826-EVM-AM2), MAC & PHY loopback with RMII 100Mbps(DP83TG720-EVM-AM2), Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier  |  MII mode
+Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC & PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier  |  MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
@@ -248,23 +248,9 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13755
-    <td> AM261x: 10% RX align code and CRC errors in port 2
-    <td> Networking
-    <td> 10.00.00 onwards
-    <td> -
-</tr>
-<tr>
     <td> SMCUAPPS-972
     <td> AM261x: Gel files upgrade to program the HSDIVIDER clock correctly
     <td> MCU Apps
-    <td> 10.00.01 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14596
-    <td> AM261x: Enet: GPTP link configuration read failure for RMII and MII 
-    <td> Networking
     <td> 10.00.01 onwards
     <td> -
 </tr>
@@ -280,6 +266,34 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
     <td> Networking
     <td> 10.00.01 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14950
+    <td> AM26x: Networking examples show up as "..." on TIREX
+    <td> Networking
+    <td> 10.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14692
+    <td> Raw HTTP Server example does not work with Static IP
+    <td> Networking
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14792
+    <td> AM261x LwIP ping app does not work (enet_lwip_cpsw)
+    <td> Networking
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13896
+    <td> Syscfg does not let you configure ethernet interfaces pinmux independently
+    <td> Networking
+    <td> 10.02.00 onwards
     <td> -
 </tr>
 <tr>
@@ -539,7 +553,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 </tr>
 <tr>
     <td> -
-    <td> DP83TG720-EVM-AM2 and DP83826-EVM-AM2 dont work simultaneously for switching traffic in AM261-LP boards
+    <td> DP83TG720-EVM-AM2 and DP83826-EVM-AM2 dont work simultaneously for switching traffic in AM261-LP Rev E1 and E2 boards
     <td> Networking
     <td> 10.00.00 onwards
     <td> -
@@ -550,6 +564,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Cache
     <td> 10.01.00
     <td> Create MPU configurations for last 32B of each L2 Bank with Non Cached attribute
+</tr>
+<tr>
+    <td> -
+    <td> LP-AM261 Out-of-box CPSW networking examples supports Rev-A board version seamlessly with DP83869 PHY.
+    <td> Networking
+    <td> 11.00.00 onwards
+    <td> To use LP-AM261 Rev-E1,Rev-E2 boards, follow the steps mentioned in \ref AM261X_LP_E1_E2_SUPPORT.
 </tr>
 </table>
 
