@@ -1289,11 +1289,19 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
                 Flash_offsetToSectorPage(config, phyTuningOffset, &sec, &page);
                 Flash_norOspiEraseSector(config, sec);
 #else
-                uint32_t blk = 0, page = 0;
+#if defined (SOC_AM243X) || defined (SOC_AM64X)
+                uint32_t page = 0, blk = 0;
                 uint32_t phyTuningData = 0,phyTuningDataSize = 0;
                 OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
                 Flash_offsetToBlkPage(config, phyTuningOffset, &blk, &page);
                 Flash_norOspiErase(config, blk);
+#else
+                uint32_t page = 0, sect = 0;
+                uint32_t phyTuningData = 0,phyTuningDataSize = 0;
+                OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
+                Flash_offsetToSectorPage(config, phyTuningOffset, &sect, &page);
+                Flash_norOspiEraseSector(config, sect);
+#endif
 #endif
                 Flash_norOspiWrite(config, phyTuningOffset, (uint8_t *)phyTuningData, phyTuningDataSize);
                 attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
