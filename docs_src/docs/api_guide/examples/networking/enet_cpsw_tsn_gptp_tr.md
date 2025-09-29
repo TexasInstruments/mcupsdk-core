@@ -208,6 +208,7 @@ Out of box configuration for PPS signal output of this example is as follow:
 | am263x-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J8 connector |
 | am263px-CC | SFDM0_CLK1 | A16 | 3.814 KHz | Pin1 on J18 connector |
 | am263px-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J8 connector |
+| am261x-LP | GPIO124 | A19 | 3.814 KHz | Pin9 on J6 connector |
 
 To set/modify configuration of PPS signal , you may follow the below steps:
 
