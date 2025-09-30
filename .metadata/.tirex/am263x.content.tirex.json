@@ -18066,7 +18066,7 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "This example is intended to be DEMO implementation of SENT ENCODER CPU is R5FSS0-0 running FREERTOS.",
+        "description": "This Example Is Intended To Be a Demo Implementation Of SENT Encoder CPU is R5FSS0-0 running FREERTOS.",
         "name": "sent_encoder",
         "location": "../../examples/pru_io/sent/encoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -18100,7 +18100,7 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "SENT decoder Example CPU is R5FSS0-0 running FREERTOS.",
+        "description": "SENT Decoder Example CPU is R5FSS0-0 running FREERTOS.",
         "name": "sent_decoder_r5f_example",
         "location": "../../examples/pru_io/sent/decoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [

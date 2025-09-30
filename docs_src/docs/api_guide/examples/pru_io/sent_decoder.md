@@ -9,7 +9,15 @@ The Single Edge Nibble Transmission protocol is a unidirectional communications 
 \imageStyle{SENT_Intro.png,width:60%}
 \image html SENT_Intro.png "SENT Signal"
 
+\cond SOC_AM263X
 **The SENT decoder Example is a reference for software based implementation of SAE J2716. PRU ICSS firmware enables SENT decoder interface on TI Sitara AM263x processor.**
+\endcond
+\cond SOC_AM263PX
+**The SENT decoder Example is a reference for software based implementation of SAE J2716. PRU ICSS firmware enables SENT decoder interface on TI Sitara AM263Px processor.**
+\endcond
+\cond SOC_AM261X
+**The SENT decoder Example is a reference for software based implementation of SAE J2716. PRU ICSS firmware enables SENT decoder interface on TI Sitara AM261x processor.**
+\endcond
 This example does following:
 configures pin mux,
 sets soc mux to enable gpio mode for ICSS,
@@ -34,25 +42,68 @@ The following pulses (all with nominal timings) make up the transmitting sequenc
 
 
 # Supported Combinations
+\cond SOC_AM263X || SOC_AM263PX
+| Parameter      | Value                                         |
+| -------------- | ----------------------------------------------|
+| CPU + OS       | r5fss0-0 freertos                             |
+| Toolchain      | ti-arm-clang                                  |
+| Board          | @VAR_BOARD_NAME_LOWER                         |
+| Example folder | examples/pru_io/sent/decoder/example          |
+\endcond
+\cond SOC_AM261X
+| Parameter      | Value                                         |
+| -------------- | ----------------------------------------------|
+| CPU + OS       | r5fss0-0 freertos                             |
+| Toolchain      | ti-arm-clang                                  |
+| Board          | am261x-lp                                     |
+| Example folder | examples/pru_io/sent/decoder/example          |
+\endcond
 
 \cond SOC_AM263X || SOC_AM263PX
-
-| Parameter      | Value                                        |
-| -------------- | -------------------------------------------- |
-| ICSSM          | ICSSM                                        |
-| Toolchain      | pru-cgt                                      |
-| Board          | @VAR_BOARD_NAME_LOWER                        |
-| Example folder | examples/pru_io/sent/decoder/decoder_example |
-
+| Parameter      | Value                                              |
+| -------------- | ---------------------------------------------------|
+| ICSSM          | ICSSM0 - PRU0                                      |
+| Toolchain      | pru-cgt                                            |
+| Board          | @VAR_BOARD_NAME_LOWER                              |
+| Example folder | examples/pru_io/sent/decoder/firmware/pru(0 or 1)  |
 \endcond
+\cond SOC_AM261X
+| Parameter      | Value                                              |
+| -------------- | ---------------------------------------------------|
+| ICSSM          | ICSSM1 - PRU0                                      |
+| Toolchain      | pru-cgt                                            |
+| Board          | am261x-lp                                          |
+| Example folder | examples/pru_io/sent/decoder/firmware/pru(0 or 1)  |
+\endcond
+
 ## HW Setup
+
+\cond SOC_AM263PX || SOC_AM263X
+
 \imageStyle{sent_hw_setup1.jpg,width:60%}
 \image html sent_hw_setup1.jpg "Encoder setup "
 \imageStyle{sent_hw_setup3.jpg,width:60%}
 \image html sent_hw_setup3.jpg "Decoder setup"
 \imageStyle{sent_hw_setup2.jpg,width:60%}
 \image html sent_hw_setup2.jpg "Encoder+Decoder Setup"
+\cond SOC_AM263PX
+- Requirement: Two <a href="https://www.ti.com/tool/TMDSCNCD263P"> AM263px CC </a> with <a href="https://www.ti.com/tool/TMDSHSECDOCK"> HSECDOCK </a>
+\endcond
+\cond SOC_AM263X
 - Requirement: Two <a href="https://www.ti.com/tool/TMDSCNCD263"> AM263x CC </a> with <a href="https://www.ti.com/tool/TMDSHSECDOCK"> HSECDOCK </a>
+\endcond
+
+\endcond
+
+\cond SOC_AM261X
+
+\imageStyle{am261x_reva_encoder_decoder_setup.jpg,width:60%}
+\image html am261x_reva_encoder_decoder_setup.jpg "Encoder+Decoder Setup"
+- Requirement: Two <a href="https://www.ti.com/tool/LP-AM261"> AM261x LP </a>
+
+\endcond
+
+\cond SOC_AM263X
 
 Connect the following pins of HSECDOCK as shown in the below image
 ```
@@ -68,19 +119,64 @@ Ground Pin(Any) -> Ground Pin(Any) [To Make sure both boards are having common g
 ```
 \imageStyle{sent_decoder_pins_config.png,width:60%}
 \image html sent_decoder_pins_config.png "HW setup"
+\endcond
+\cond SOC_AM263PX
 
-# Steps to Run the Example
+Connect the following pins of HSECDOCK as shown in the below image
+```
+PR0_PRU0_GPIO0 -> PR0_PRU0_GPIO0 (Pin no. 125)
+PR0_PRU0_GPIO1 -> PR0_PRU0_GPIO1 (Pin no. 126)
+PR0_PRU0_GPIO2 -> PR0_PRU0_GPIO2 (Pin no. 127)
+PR0_PRU0_GPIO3 -> PR0_PRU0_GPIO3 (Pin no. 128)
+PR0_PRU0_GPIO4 -> PR0_PRU0_GPIO4 (Pin no. 124)
+PR0_PRU0_GPIO5 -> PR0_PRU0_GPIO5 (Pin no. 108)
+PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (Pin no. 123)
+PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (Pin no. 122)
+Ground Pin(Any) -> Ground Pin(Any) [To Make sure both boards are having common ground]
+```
+\imageStyle{sent_decoder_pins_config.png,width:60%}
+\image html sent_decoder_pins_config.png "HW setup"
+\endcond
 
-- **When using CCS projects to build**, Import sent_decoder_r5f project from the above mentioned Example folder path.
-- Build the  projects.
-- Load R5F project, run it. Decoder setup is now ready.
-- We will be validating decoder demo using SENT encoder example. Next step is to setup sent encoder follow the steps mentioned in \ref EXAMPLES_SENT_ENCODER.
+\cond SOC_AM261X
+Connect the following pins of AM261x as shown in the below image
+```
+PR0_PRU0_GPIO0 -> PR0_PRU0_GPIO0 (Pin no. J2-11)
+PR0_PRU0_GPIO1 -> PR0_PRU0_GPIO1 (Pin no. J7-67)
+PR0_PRU0_GPIO3 -> PR0_PRU0_GPIO3 (Pin no. J7-40)
+PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (Pin no. J7-69)
+PR0_PRU0_GPIO7 -> PR0_PRU0_GPIO7 (Pin no. J7-64)
+PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (Pin no. J7-65)
+PR0_PRU0_GPIO11 -> PR0_PRU0_GPIO11 (Pin no. J7-37)
+PR0_PRU0_GPIO13 -> PR0_PRU0_GPIO13 (Pin no. J8-35)
+Ground Pin(Any) -> Ground Pin(Any) [To Make sure both boards are having common ground]
+```
+\endcond
+
+# Steps to Run the Example {#EXAMPLES_SENT_DECODER_STEPS_TO_RUN}
+
+- **When using CCS projects to build**, import the CCS project from the above mentioned Example folder path for R5F and PRU, After this `main.asm`, `linker.cmd` files gets copied to ccs workspace of PRU project.
+
+- Build the PRU project using the CCS project menu (This step is optional, used when the firmware is modified) (see \ref CCS_PROJECTS_PAGE).
+     - Build Flow: Once you click on build in PRU project, firmware header file which is generated in release or debug folder of ccs workspace, is moved to  `<sdk-install-dir/examples/pru_io/sent/decoder/firmware/pru0/device/>` or `<sdk-install-dir/examples/pru_io/sent/decoder/firmware/pru1/device/>` based on which firmware was
+     used.
+
+- Build the R5F project using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+     - Firmware header file path is included in R5F project include options by default, Instructions in Firmware header file can be written into PRU IRAM memory using \ref PRUICSS_loadFirmware API call
+     - Build Flow: Once you click on build in R5F project, SysConfig files are generated, Finally the R5F project will be generated using both the generated SysConfig and PRU project binaries.
+     - Note: The PRU project won't run independently as it is dependent on SysConfig files generated by the R5F project to intialize pru.
+
+    \note
+    Prerequisite: [PRU-CGT-2-3](https://www.ti.com/tool/PRU-CGT) (ti-pru-cgt) should be installed at: `C:/ti/`
+
+- Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
 \note
 Prerequisite: [PRU-CGT-2-3](https://www.ti.com/tool/PRU-CGT) (ti-pru-cgt) should be installed at: `C:/ti/`
 
  - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
- - Open a UART terminal and use config menu to view received SENT frames \ref CCS_UART_TERMINAL
+ - Open a UART terminal as per \ref CCS_UART_TERMINAL and view received SENT frames 
+
 ### Sample Output
 
 ```
@@ -169,17 +265,57 @@ Value:    07     04      08      07      04      08      03
  - See list supported firmware design and list of supported feature : \ref SENT
 
 # Steps to modify SENT decoder PRU Firmware
-
+## Modifying Tick Period
 Modification supported: Change hardcoded tick period in firmware. Current release supports only 1us tick period support in firmware. In order to modify it:
 
 - **When using CCS projects to build**, Import decoder_pru1_fw project from the above mentioned Example folder path.
 - In `main.asm` file modify ch0_ticktime to desired value(1000 to 3000) and accordingly modify ch0_syncpulse_min_dur = (0.8*ch0_ticktime)*56 and ch0_syncpulse_max_dur = (1.2*ch0_ticktime)*56. For example for 500ns tick period.
-- Rebuild examples\\pru_io\\sent\\decoder\\decoder_pru1_fw project
-- Rebuild examples\\pru_io\\sent\\decoder\\decoder_example
-- Load R5F updated binary, run it.
+- Refer the following section for running the example after altering the firmware [Steps to Run the Example](\ref EXAMPLES_SENT_DECODER_STEPS_TO_RUN)
 
 ```
 ch0_ticktime                .set   500
 ch0_syncpulse_min_dur       .set   400*56
 ch0_syncpulse_max_dur       .set   600*56
 ```
+
+## Modifying the pins used
+1.The user needs to select the correct pins with proper pinmux configurations in sysconfig.
+
+2.Update PRU0 Channel State Definitions
+Modify the channel state values in the PRU0 firmware's main.asm file to match your desired pin configuration.
+Update these channel state values according to your pin requirements.
+
+```
+channel0_state .set    0    -> Pin for Channel 0,
+
+channel1_state .set    1    -> Pin for Channel 1,
+
+channel2_state .set    3    -> Pin for Channel 2,
+
+channel3_state .set    6    -> Pin for Channel 3,
+
+...additional channels as needed
+```
+3.Adjust PRU1 Channel Mask Configuration
+Update the channel mask definitions in the PRU1's header.inc file to align with your pin selection.
+Modify channel masks to match your hardware configuration.
+```
+channel0_mask .set   (0x00)    -> Mask for Channel 0,
+
+channel1_mask .set   (0x01)    -> Mask for Channel 1,
+
+channel2_mask .set   (0x03)    -> Mask for Channel 2,
+
+channel3_mask .set   (0x06)    -> Mask for Channel 3,
+
+... additional channels as needed
+```
+4.Rebuild and Deploy
+
+After making these modifications:
+
+- Import the project into Code Composer Studio (CCS)
+- Build the project to incorporate your changes
+- Deploy the updated firmware to your target device
+- Run the application to validate your custom pin configuration
+- Refer the following section for running the example after altering the firmware [Steps to Run the Example](@ref EXAMPLES_SENT_DECODER_STEPS_TO_RUN)

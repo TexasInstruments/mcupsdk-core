@@ -59,6 +59,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc \
 	-Igenerated \
 
 DEFINES_common := \

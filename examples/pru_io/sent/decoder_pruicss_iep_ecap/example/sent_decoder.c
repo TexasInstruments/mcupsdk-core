@@ -37,18 +37,19 @@
 #include "ti_board_open_close.h"
 
 #include <drivers/pruicss.h>
-#include "sent_decoder.h"
+#include <sent_decoder.h>
 
 /* TODO: Move following macro generation to SysConfig */
 #define ENABLE_ENHANCED_SERIAL_MESSAGE
 
 #if defined(ENABLE_ENHANCED_SERIAL_MESSAGE)
-#include <firmware/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h> // > PRUFirmware array
+#include <sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h> // > PRUFirmware array
 #elif defined(ENABLE_SHORT_SERIAL_MESSAGE)
-#include <firmware/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h> // > PRUFirmware array
+#include <sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h> // > PRUFirmware array
 #else
-#include <firmware/sent_decoder_using_iep_capture_pru0_bin.h> // > PRUFirmware array
+#include <sent_decoder_using_iep_capture_pru0_bin.h> // > PRUFirmware array
 #endif
+
 
 /**
  *  @brief PRU Core
@@ -218,7 +219,20 @@ void enable_board_mux(void)
     I2C_transfer(I2C_getHandle(CONFIG_I2C2), &i2cTransaction);
 
 }
-
+#ifdef SOC_AM261X
+void Drivers_socTimeSyncXbar1Open1()
+{
+    /*
+    * TIME SYNC 1 XBAR
+    */
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_2, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_8);
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_3, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_9);
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_4, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_10);
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_5, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_11);
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_6, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_12);
+    SOC_xbarSelectTimesyncXbar1InputSource(CSL_SOC_TIMESYNC_XBAR1_U_BASE, SOC_TIMESYNC_XBAR1_ICSS_MODULE_7, SOC_TIMESYNC_XBAR1_GPIO_INT_XBAR_OUT_13);
+}
+#endif
 void sent_main(void *args)
 {
     int status;
@@ -234,8 +248,12 @@ void sent_main(void *args)
     DebugP_assert(SystemP_SUCCESS == status);
 
     /*Enable GPIO Mode for ICSS*/
+#ifdef SOC_AM263X
     enable_board_mux();
-
+#endif
+#ifdef SOC_AM261X
+    Drivers_socTimeSyncXbar1Open1();
+#endif
     /*Initialise ICSS*/
     pruicss_init();
     /*Load Firmware and Run*/

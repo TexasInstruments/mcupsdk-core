@@ -90,7 +90,7 @@ five_tick_pull_down .macro
 
 create_high_pulse .macro TICKS
     ;Set R30 pin high(1-6 and 8th GPIO pins high as 7th pin is not routed out)
-    ldi r30, 0x17F
+    ldi r30, r30_value
     n_clock_tick    TICKS
 	.endm ;create high pulse
 

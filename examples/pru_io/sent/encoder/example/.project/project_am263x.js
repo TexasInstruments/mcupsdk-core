@@ -32,7 +32,8 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example"
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc"
     ],
 };
 
@@ -78,7 +79,7 @@ function getComponentProperty() {
     property.name = "sent_encoder";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
-    property.description = "This example is intended to be DEMO implementation of SENT ENCODER"
+    property.description = "This Example Is Intended To Be a Demo Implementation Of SENT Encoder"
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

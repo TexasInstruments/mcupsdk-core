@@ -60,6 +60,8 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/pru_io/driver \
 	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru1/am263x-cc \
 	-Igenerated \
 
 DEFINES_common := \

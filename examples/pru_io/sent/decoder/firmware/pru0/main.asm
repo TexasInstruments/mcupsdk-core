@@ -76,6 +76,26 @@
 IEP_COUNT_REG0_OFFSET      .set    0x10
 IEP_COUNT_REG1_OFFSET      .set    0x14
 
+    .if $defined("SOC_AM261X")
+channel0_state .set    0
+channel1_state .set    1
+channel2_state .set    3
+channel3_state .set    6
+channel4_state .set    7
+channel5_state .set    8
+channel6_state .set    11
+channel7_state .set    13
+    .else
+channel0_state .set    0
+channel1_state .set    1
+channel2_state .set    2
+channel3_state .set    3
+channel4_state .set    4
+channel5_state .set    5
+channel6_state .set    6
+channel7_state .set    8
+    .endif
+
 ;********
 ;* MAIN *
 ;********
@@ -133,56 +153,57 @@ do_not_clr_ch3:
     and     state_change_mask, state_change_mask, initial_state_mask
     mov		initial_state_mask, final_state_mask
 ; If channel0 have falling edge registered, go to next instruction else skip_sample_ch0
-    qbbc	skip_sample_ch0, state_change_mask, 0
+    qbbc	skip_sample_ch0, state_change_mask, channel0_state
 ; Update channel0_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel0_pulse_len, current_state_timestamp, channel0_previous_falledge
 ; Store this falling edge on channel0 as previous falling edge for comparision reference
     mov     channel0_previous_falledge, current_state_timestamp
 skip_sample_ch0:
 ; ; If channel1 have falling edge registered, go to next instruction else skip_sample_ch1
-    qbbc	skip_sample_ch1, state_change_mask, 1
+    qbbc	skip_sample_ch1, state_change_mask, channel1_state
 ; Update channel1_pulse_len with the pulse length = current_state_timestamp - initial_value
 	sub     channel1_pulse_len, current_state_timestamp, channel1_previous_falledge
 ; Store this falling edge on channel1 as previous falling edge for comparision reference
     mov     channel1_previous_falledge, current_state_timestamp
 skip_sample_ch1:
 ; If channel2 have falling edge registered, go to next instruction else skip_sample_ch2
-    qbbc	skip_sample_ch2, state_change_mask, 2
+    qbbc	skip_sample_ch2, state_change_mask, channel2_state
+
 ; Update channel2_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel2_pulse_len, current_state_timestamp, channel2_previous_falledge
 ; Store this falling edge on channel2 as previous falling edge for comparision reference
     mov     channel2_previous_falledge, current_state_timestamp
 skip_sample_ch2:
 ; If channel3 have falling edge registered, go to next instruction else skip_sample_ch3
-    qbbc	skip_sample_ch3, state_change_mask, 3
+    qbbc	skip_sample_ch3, state_change_mask, channel3_state
 ; Update channel3_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel3_pulse_len, current_state_timestamp, channel3_previous_falledge
 ; Store this falling edge on channel3 as previous falling edge for comparision reference
     mov     channel3_previous_falledge, current_state_timestamp
 skip_sample_ch3:
 ; If channel4 have falling edge registered, go to next instruction else skip_sample_ch4
-    qbbc	skip_sample_ch4, state_change_mask, 4
+    qbbc	skip_sample_ch4, state_change_mask, channel4_state
 ; Update channel4_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel4_pulse_len, current_state_timestamp, channel4_previous_falledge
 ; Store this falling edge on channel4 as previous falling edge for comparision reference
     mov     channel4_previous_falledge, current_state_timestamp
 skip_sample_ch4:
 ; If channel5 have falling edge registered, go to next instruction else skip_sample_ch5
-    qbbc	skip_sample_ch5, state_change_mask, 5
+    qbbc	skip_sample_ch5, state_change_mask, channel5_state
 ; Update channel5_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel5_pulse_len, current_state_timestamp, channel5_previous_falledge
 ; Store this falling edge on channel5 as previous falling edge for comparision reference
     mov     channel5_previous_falledge, current_state_timestamp
 skip_sample_ch5:
 ; If channel6 have falling edge registered, go to next instruction else skip_sample_ch6
-    qbbc	skip_sample_ch6, state_change_mask, 6
+    qbbc	skip_sample_ch6, state_change_mask, channel6_state
 ; Update channel6_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel6_pulse_len, current_state_timestamp, channel6_previous_falledge
 ; Store this falling edge on channel6 as previous falling edge for comparision reference
     mov     channel6_previous_falledge, current_state_timestamp
 skip_sample_ch6:
 ; If channel7 have falling edge registered, go to next instruction else skip_sample_ch7. Here channel 7 is mapped to GPIO 8 so we are using offset 8
-    qbbc	skip_sample_ch7, state_change_mask, 8
+    qbbc	skip_sample_ch7, state_change_mask, channel7_state
 ; Update channel7_pulse_len with the pulse length = current_state_timestamp - initial_value
     sub     channel7_pulse_len, current_state_timestamp, channel7_previous_falledge
 ; Store this falling edge on channel7 as previous falling edge for comparision reference

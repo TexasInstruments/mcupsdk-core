@@ -35,8 +35,11 @@
 /* ========================================================================== */
 
 #include <sent_decoder.h>
-#include <firmware/sent_decoder_pru0_bin.h>
-#include <firmware/sent_decoder_pru1_bin.h>
+
+#include <sent_decoder_pru0_bin.h>
+#include <sent_decoder_pru1_bin.h>
+
+
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -143,7 +146,8 @@ void pruicss_load_run_fw(void)
  *
  * @return  none
  */
-void enable_board_mux(void)
+#ifdef SOC_AM263X
+ void enable_board_mux(void)
 {
     /*Required to configure SOC MUX to select ICSS pins for input. 1- PWM XBAR, 0- ICSS Pins*/
     SOC_selectIcssGpiMux(0, 0x0);
@@ -166,9 +170,8 @@ void enable_board_mux(void)
     buffer[0] = 0x6U;
     buffer[1] = ~(0x3 << 2);
     I2C_transfer(I2C_getHandle(CONFIG_I2C2), &i2cTransaction);
-
 }
-
+#endif
 void sent_main(void *args)
 {
     int status;
@@ -181,8 +184,9 @@ void sent_main(void *args)
     DebugP_assert(SystemP_SUCCESS == status);
 
     /*Enable GPIO Mode for ICSS*/
+#ifdef SOC_AM263X
     enable_board_mux();
-
+#endif
     /*Initialise ICSS*/
     pruicss_init();
     /*Load Firmware and Run*/

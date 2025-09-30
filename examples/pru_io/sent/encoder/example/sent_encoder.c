@@ -41,8 +41,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/pruicss/m_v0/pruicss.h>
-#include <drivers/pinmux/am263x/pinmux.h>
-#include <firmware/sent_encoder_pru_bin.h>
+#include <sent_encoder_pru_bin.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -108,54 +107,6 @@ uint8_t scDataArray2[ENHANCED_SERIAL_MSG_LENGTH] = {
     0x4, 0x4, 0x4, 0x4, 0x4, 0x4, /* Data 0xaaa */
     0x4, 0x4, 0x4, 0x4, 0x4, 0x4, /* Data 0xaaa */
 };
-
-Pinmux_PerCfg_t gPinMuxMainDomainCfg_1[] = {
-            /* ICSSM_IEP pin config */
-
-    /* PR0_PRU0_GPIO0 -> PR0_PRU0_GPIO0 (K17) */
-    {
-        PIN_PR0_PRU0_GPIO0,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO1 -> PR0_PRU0_GPIO1 (K18) */
-    {
-        PIN_PR0_PRU0_GPIO1,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO2 -> PR0_PRU0_GPIO2 (J18) */
-    {
-        PIN_PR0_PRU0_GPIO2,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO3 -> PR0_PRU0_GPIO3 (J17) */
-    {
-        PIN_PR0_PRU0_GPIO3,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO4 -> PR0_PRU0_GPIO4 (K16) */
-    {
-        PIN_PR0_PRU0_GPIO4,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO5 -> PR0_PRU0_GPIO5 (G17) */
-    {
-        PIN_PR0_PRU0_GPIO5,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (K15) */
-    {
-        PIN_PR0_PRU0_GPIO6,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (G15) */
-    {
-        PIN_PR0_PRU0_GPIO8,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-
-    {PINMUX_END, PINMUX_END}
-};
-
 /* ========================================================================== */
 /*                       Function Declarations                                */
 /* ========================================================================== */
@@ -224,7 +175,6 @@ void enable_board_mux(void)
 {
     /*Required to configure SOC MUX to select ICSS pins for input. 1- PWM XBAR, 0- ICSS Pins*/
     SOC_selectIcssGpiMux(0, 0x0);
-
     I2C_Transaction i2cTransaction;
     uint8_t buffer[2];
 
@@ -243,7 +193,6 @@ void enable_board_mux(void)
     buffer[0] = 0x6U;
     buffer[1] = ~(0x3 << 2);
     I2C_transfer(I2C_getHandle(CONFIG_I2C2), &i2cTransaction);
-
 }
 
 void display_menu()
@@ -278,7 +227,6 @@ void get_command(uint32_t *cmd, uint32_t *count)
         *cmd = 0;
         DebugP_log("\r\n| WARNING: invalid command, 0 will be selected\n");
     }
-
     if(*cmd == SENT_CMD_MULTIPLE_FRAMES || *cmd == SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES || *cmd == SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES)
     {
         DebugP_log("\r\n| Enter count : ");
@@ -305,15 +253,9 @@ void encoder_main(void *args)
     status = Board_driversOpen();
     DebugP_assert(SystemP_SUCCESS == status);
 
-    Pinmux_config(gPinMuxMainDomainCfg_1, PINMUX_DOMAIN_ID_MAIN);
-    DebugP_log("Pin Mux done!!\r\n");
-
-    /* Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers */
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-
+#ifdef SOC_AM263X
     enable_board_mux();
-
+#endif
     pruicss_init();
     pruicss_load_run_fw();
 

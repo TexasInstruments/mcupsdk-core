@@ -82,7 +82,7 @@ clean:
 post-build:
 		-$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_pru0_bin.h sent_decoder_using_iep_capture_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.out
 		- $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_pru0_bin.h 
-		- $(MOVE) sent_decoder_using_iep_capture_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_using_iep_capture_pru0_bin.h
+		- $(MOVE) sent_decoder_using_iep_capture_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am263x-cc/sent_decoder_using_iep_capture_pru0_bin.h
 	-@echo ' '
 
 .PHONY: all clean

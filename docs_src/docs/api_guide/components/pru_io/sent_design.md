@@ -21,16 +21,17 @@ The AM263x SENT decoder is intended to receive transmission from sensors with SE
 \imageStyle{sent_signal.png,width:80%}
 \image html sent_signal.png "SENT Signal"
 
-## System Overview
-
-### Sitara™ AM263x Processor
-
-Refer TRM for details
 
 #### PRU-ICSS
-
+\cond SOC_AM263X
 Refer PRU-ICSS chapter of AM263x Technical Reference Manual
-
+\endcond
+\cond SOC_AM261X
+Refer PRU-ICSS chapter of AM261x Technical Reference Manual
+\endcond
+\cond SOC_AM263PX
+Refer PRU-ICSS chapter of AM263Px Technical Reference Manual
+\endcond
 ## Software Description
 
 At start-up, the application running on the ARM Cortex-R5 initializes the module clocks and configures the pinmux. The PRU is initialized and the PRU firmware is loaded on both PRU slice of the ICSS instance. Once the PRU0 starts executing, the sampling logic of SENT decoder interface is operational and next PRU 1 starts executing where decoding logic is running to extract sent values from the SENT pulse and also calculate CRC. The application can use it to communicate with a SENT sensor. The application then waits until it receives an indication of complete decoding of SENT frame on each channel by the firmware through the interface before displaying the result.

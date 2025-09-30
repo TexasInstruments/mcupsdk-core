@@ -1,5 +1,5 @@
 let path = require('path');
-const { example } = require('yargs');
+
 
 let device = "am263x";
 
@@ -34,7 +34,9 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example"
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru1/am263x-cc",
     ],
 };
 
@@ -80,7 +82,7 @@ function getComponentProperty() {
     property.name = "sent_decoder_r5f_example";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
-    property.description = "SENT decoder Example"
+    property.description = "SENT Decoder Example"
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

@@ -37,7 +37,6 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/pruicss.h>
-#include <drivers/pinmux/am263x/pinmux.h>
 #include <icss_intc_defines.h>
 
 /**

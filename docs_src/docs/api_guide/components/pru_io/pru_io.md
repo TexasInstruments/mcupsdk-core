@@ -30,4 +30,5 @@ This section consists of description of interfaces/modules developed using PRU:
 \cond SOC_AM263PX || SOC_AM261X
 This section consists of description of interfaces/modules developed using PRU:
 - \subpage COMPONENT_PRU_GUIDE
+- \subpage SENT
 \endcond

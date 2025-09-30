@@ -16,7 +16,6 @@
         "/security/security",
         "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash",
         "sdl/sdl",
         "/clockTree/clockTreeComponents.js"
     ],

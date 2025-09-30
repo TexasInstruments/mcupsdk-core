@@ -5,13 +5,12 @@ This page lists all the examples related to PRU IO.
 -# \subpage EXAMPLES_PRU_ADC
 -# \subpage EXAMPLES_PRU_EMPTY
 \endcond
-\cond SOC_AM263PX || SOC_AM261X
+
+\cond SOC_AM261X || SOC_AM263X || SOC_AM263PX
 -# \subpage EXAMPLES_PRU_EMPTY
-\endcond
-\cond SOC_AM263X
-\note: Below mentioned example are experimental feature.
+\note Below mentioned example are experimental features.
 -# \subpage EXAMPLES_SENT_DECODER
 -# \subpage EXAMPLES_SENT_ENCODER
 -# \subpage EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP
--# \subpage EXAMPLES_PRU_EMPTY
 \endcond
+

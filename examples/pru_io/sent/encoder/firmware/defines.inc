@@ -56,3 +56,18 @@ DATA3_OFFSET        .set    (0xC)
 DATA4_OFFSET        .set    (0xD)
 DATA5_OFFSET        .set    (0xE)
 CRC_OFFSET          .set    (0xF)
+
+;************************************************************************************
+;   For am263px and am263x, PRU0-GPIO0,GPIO1,GPIO2,GPIO3,GPIO4,GPIO5,GPIO6,GPIO8 are  
+;   set to high so the corresponding hex value 0x17F is loaded in r30.
+;
+;   For am261-lp, PRU0-GPIO0,GPIO1,GPIO3,GPIO6,GPIO7,GPIO8,GPIO11,GPIO13 are
+;   set to high so the corresponding hex value 0x29CB is loaded in r30.
+;************************************************************************************
+    .if	$isdefed("SOC_AM263X")
+r30_value           .set    (0x17F)
+    .elseif $isdefed("SOC_AM263PX")
+r30_value           .set    (0x17F)
+    .elseif $isdefed("SOC_AM261X")
+r30_value           .set    (0x29CB)
+    .endif

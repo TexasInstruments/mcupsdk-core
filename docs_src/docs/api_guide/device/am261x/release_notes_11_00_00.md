@@ -35,6 +35,7 @@ USB NCM Class Support                                                           
 FreeRTOS based CDC Example                                                                      | USB
 LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
 XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip CPSW Example'   | Networking
+SENT Decoder and Encoder Examples                                                               | PRU-IO
 
 # Modules Not tested/supported in this release
 
