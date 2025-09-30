@@ -10,7 +10,7 @@ AM263Px Control Card(TMDSCND263P) board provides the support for Ethernet add-on
 \endcond
 
 \cond SOC_AM261X
-LP-AM261 board provides the support for the following Ethernet add-on boards.
+LP-AM261 E1/E2 board provides the support for the following Ethernet add-on boards.
 \endcond
 
 1. Automotive Ethernet add-on Board(<a href="https://www.ti.com/tool/DP83TG720-EVM-AM2">DP83TG720-EVM-AM2</a>) 
@@ -25,8 +25,9 @@ The diagram below shoes the top view of AM263Px Control Card which shows the Eth
 \endcond
 
 \cond SOC_AM261X 
-Currently the out-of box support for both the PHYs is present in Ethernet add-on board for the following networking examples:
-\ref EXAMPLES_NETWORKING
+Currently the on-board Phy(DP83869) is supported in the following out-of-box networking examples:
+\ref EXAMPLES_NETWORKING.
+For information on supporting add-on boards in CPSW Networking examples on Rev-E1/E2 LP-AM261, please refer to \ref AM261X_LP_E1_E2_SUPPORT
 \endcond
 
 ## Important Usage Guidelines
