@@ -309,3 +309,16 @@ int32_t Flash_disableDacMode(Flash_Handle handle)
     }
     return status;
 }
+
+int32_t Flash_phyTune(Flash_Handle handle)
+{
+    Flash_Config *config = (Flash_Config*)handle;
+    int32_t status = SystemP_FAILURE;
+
+    if(config && config->fxns && config->fxns->phyTuneFxn)
+    {
+        status = config->fxns->phyTuneFxn(config);
+    }
+
+    return status;
+}
