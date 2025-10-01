@@ -606,6 +606,8 @@ typedef struct
     /**< Decoder Chip select number */
     uint32_t                baudRateDiv;
     /**< Baud-rate divisor to derive DQS and other output clks */
+    uint32_t                validateOtp;
+    /**< Enable Phy Tuning Point validatation */
     const OSPI_AddrRegion *dmaRestrictedRegions;
     /**< Pointer to array of OSPI_AddrRegion data structures filled by SysConfig. The
     array should be terminated by a { 0xFFFFFFFFU, 0U } entry. It is used while
@@ -1587,6 +1589,31 @@ int32_t OSPI_dmaCopy(OSPILLD_Handle handle, void* dst, void* src, uint32_t lengt
  * \return SystemP_SUCCESS on success, else failure
  */
 int32_t OSPI_isDmaInterruptEnabled(OSPILLD_Handle handle);
+
+/**
+ * \brief Validates a tuning point for the OSPI physical interface
+ *
+ * This function verifies if the current OSPI physical interface configuration
+ * (tuning point) is valid by performing a read operation at the specified flash offset.
+ *
+ * \param hOspi OSPI LLD handle
+ * \param flashOffset Flash memory offset to use for the validation read operation
+ *
+ * \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t OSPI_lld_phyValidateTuningPoint(OSPILLD_Handle hOspi, uint32_t flashOffset);
+
+/**
+ * \brief Checks if OTP validation is enabled for the OSPI controller
+ *
+ * This function determines whether the OTP (One-Time Programmable) validation
+ * feature is currently enabled in the OSPI controller.
+ *
+ * \param hOspi    Handle to the OSPI controller instance
+ *
+ * \return uint32_t    Returns 1 if OTP validation is enabled, 0 otherwise
+ */
+uint32_t OSPI_lld_isValidateOtpEnable(OSPILLD_Handle hOspi);
 
 /** @} */
 

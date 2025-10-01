@@ -127,3 +127,17 @@ int32_t OSPI_phyTuneSDR(OSPI_Handle handle, uint32_t flashOffset)
 
     return status;
 }
+
+int32_t OSPI_phyValidateTuningPoint(OSPI_Handle handle, uint32_t flashOffset)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    OSPILLD_Handle hOspi;
+    if(NULL!= handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_phyValidateTuningPoint(hOspi,flashOffset);
+    }
+    return status;
+}

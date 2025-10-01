@@ -214,6 +214,7 @@ OSPI_Handle OSPI_open(uint32_t index, const OSPI_Params *openParams)
         ospilldInitHandle->baudRateDiv           = attrs->baudRateDiv;
         ospilldInitHandle->dmaRestrictedRegions  = attrs->dmaRestrictedRegions;
         ospilldInitHandle->phyConfiguration      = attrs->phyConfiguration;
+        ospilldInitHandle->validateOtp           = attrs->validateOtp;
 
         memcpy(ospilldInitHandle->devDelays,attrs->devDelays, resMemoryCount * sizeof(uint32_t));       
 
@@ -1114,4 +1115,17 @@ static void OSPI_interruptCallback(void *args)
     OSPILLD_Handle handle = (OSPILLD_Handle)args;
     OSPI_Object *obj    = ((OSPI_Config *)handle->args)->object;
     (void) SemaphoreP_post(&obj->transferSemObj);
+}
+
+uint32_t OSPI_isValidateOtpEnable(OSPI_Handle handle)
+{
+    uint32_t retVal = 0U;
+    OSPILLD_Handle hOspi;
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        retVal = OSPI_lld_isValidateOtpEnable(hOspi);
+    }
+    return retVal;
 }

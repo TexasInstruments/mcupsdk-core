@@ -922,10 +922,40 @@ static int32_t Flash_norOspiRead(Flash_Config *config, uint32_t offset, uint8_t 
     int32_t status = SystemP_SUCCESS;
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
     Flash_Attrs *attrs = config->attrs;
-
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    int32_t phyStatus = SystemP_SUCCESS;
+    uint32_t phyTuningOffset;
+#endif
     if(obj->phyEnable)
     {
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+    /* Validate OTP */
+    if(OSPI_isValidateOtpEnable(obj->ospiHandle))
+    {
+        phyTuningOffset = Flash_getPhyTuningOffset(config);
+        phyStatus = OSPI_phyValidateTuningPoint(obj->ospiHandle, phyTuningOffset);
+
+        if(phyStatus == SystemP_FAILURE)
+        {
+            phyStatus = Flash_norOspiPhyTune(config);
+        }
+
+        if(phyStatus == SystemP_SUCCESS)
+        {
+            OSPI_enablePhy(obj->ospiHandle);
+        }
+        else
+        {
+            obj->phyEnable = FALSE;
+        }
+    }
+    else
+    {
         OSPI_enablePhy(obj->ospiHandle);
+    }
+#else
+    OSPI_enablePhy(obj->ospiHandle);
+#endif
     }
 
     /* Validate address input */

@@ -2501,3 +2501,11 @@ static uint32_t OSPI_getWriteSramLevel(OSPILLD_Handle hOspi)
 
     return sramLevel;
 }
+
+uint32_t OSPI_lld_isValidateOtpEnable(OSPILLD_Handle hOspi)
+{
+    uint32_t retVal = 0U;
+    /* Check if DAC is enabled or not */
+    retVal = hOspi->hOspiInit->validateOtp;
+    return retVal;
+}
