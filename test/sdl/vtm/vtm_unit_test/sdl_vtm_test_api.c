@@ -139,12 +139,12 @@ int32_t sdlVTM_apiTest(void)
     thrVal.gtTh2 = 500;
     thrVal.gtTh1 = 400;
 
-        pCtrl =     (SDL_VTM_TS_READ_VD_MAP_VAL            |    \
-                 SDL_VTM_TS_READ_ALL_THRESHOLD_ALERTS    |    \
-                 SDL_VTM_TS_READ_FIRST_TIME_EOC_BIT        |    \
-                 SDL_VTM_TS_READ_DATA_VALID_BIT            |    \
+        pCtrl = (SDL_VTM_TS_READ_VD_MAP_VAL           |    \
+                 SDL_VTM_TS_READ_ALL_THRESHOLD_ALERTS |    \
+                 SDL_VTM_TS_READ_FIRST_TIME_EOC_BIT   |    \
+                 SDL_VTM_TS_READ_DATA_VALID_BIT       |    \
                  SDL_VTM_TS_READ_DATA_OUT_VAL);
-    tsConfig.thr_val    =    thrVal;
+    tsConfig.thr_val = thrVal;
 
     if(testResult == 0)
     {
@@ -279,7 +279,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         /* To get EFAIL, added actual value with 1  */
         vdConfig.vd_temp_evts   = SDL_VTM_VD_EVT_SELECT_TEMP_SENSOR_0+1;
@@ -328,7 +328,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         /* To get EFAIL, added actual value with 1  */
         tsGlobal_cfg.validMap = SDL_VTM_TSGLOBAL_ANY_MAXT_OUTRG_ALERT_EN_VALID;
@@ -362,7 +362,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         /* To get EFAIL, added actual value with 1  */
         tsGlobal_cfg.validMap = SDL_VTM_TSGLOBAL_MAXT_OUTRG_ALERT_THR_VALID ;
@@ -448,8 +448,8 @@ int32_t sdlVTM_apiTest(void)
     if(testResult == 0)
     {
         tsConfig.configTsCtrl = (SDL_VTM_VD_CONFIG_CTRL_SET_CTL     |    \
-                                SDL_VTM_VD_CONFIG_CTRL_SET_THR        |    \
-                                SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT)        ;
+                                 SDL_VTM_VD_CONFIG_CTRL_SET_THR     |    \
+                                 SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT);
         sdlResult = SDL_VTM_initTs((SDL_VTM_InstTs)SDL_VTM_INSTANCE_TS_0, &tsConfig);
 
         if (sdlResult != SDL_PASS)
@@ -461,7 +461,19 @@ int32_t sdlVTM_apiTest(void)
 
     if(testResult == 0)
     {
-            tsConfig.configTsCtrl = 0;
+        tsConfig.configTsCtrl = SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT_DISABLE;
+        sdlResult = SDL_VTM_initTs((SDL_VTM_InstTs)SDL_VTM_INSTANCE_TS_0, &tsConfig);
+
+        if (sdlResult != SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_VTM_initTs API test failed on line no: %d \r\n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    if(testResult == 0)
+    {
+        tsConfig.configTsCtrl = 0;
         sdlResult = SDL_VTM_initTs((SDL_VTM_InstTs)SDL_VTM_INSTANCE_TS_0, &tsConfig);
 
         if (sdlResult != SDL_PASS)
@@ -530,7 +542,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  SDL_VTM_TS_CTRL_RESET_CTRL_VALID;
         ctrlCfg.tsReset                 =   SDL_VTM_TS_CTRL_SENSOR_NORM_OP;
@@ -545,7 +557,7 @@ int32_t sdlVTM_apiTest(void)
             testResult = -1;
         }
     }
-        if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  (SDL_VTM_TS_CTRL_RESET_CTRL_VALID    |    \
                                             SDL_VTM_TS_CTRL_SOC_VALID);
@@ -562,7 +574,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-            if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  (SDL_VTM_TS_CTRL_SOC_VALID    |    \
                                             SDL_VTM_TS_CTRL_MODE_VALID);
@@ -579,7 +591,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  SDL_VTM_TS_CTRL_SOC_VALID;
         ctrlCfg.adc_stat                =   SDL_VTM_TS_CTRL_SINGLESHOT_ADC_CONV_COMPLETE;
@@ -595,7 +607,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-            if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  SDL_VTM_TS_CTRL_MODE_VALID;
         ctrlCfg.mode                    =   SDL_VTM_TS_CTRL_SINGLESHOT_MODE;
@@ -611,7 +623,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         ctrlCfg.valid_map               =  SDL_VTM_TS_CTRL_MODE_VALID;
         ctrlCfg.mode                    =   SDL_VTM_TS_CTRL_CONTINUOUS_MODE;
@@ -627,7 +639,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
 
         tsConfig.high_temp_in_milli_degree_celsius  =   68000;
@@ -643,7 +655,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
 
         tsConfig.high_temp_in_milli_degree_celsius  =   68000;
@@ -659,7 +671,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
 
         tsConfig.high_temp_in_milli_degree_celsius  =   0;
@@ -691,7 +703,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
        tsConfig.high_temp_in_milli_degree_celsius  =   68000;
         tsConfig.low_temp_in_milli_degree_celsius   =   64000-5000;
@@ -706,7 +718,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         thrVal.thrValidMap = SDL_VTM_GT_TH1_VALID;
         thrVal.gtTh1En = TRUE;
@@ -1030,7 +1042,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if (testResult == 0)
+    if (testResult == 0)
     {
         pCtrl = 0;
         for (i = SDL_VTM_INSTANCE_TS_0; i < gNumTempSensors; i++ )
@@ -1241,7 +1253,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-        if(testResult == 0)
+    if(testResult == 0)
     {
         tsIns = SDL_VTM_INSTANCE_TS_0;
         thrVal.thrValidMap = SDL_VTM_LT_TH0_VALID;
@@ -1255,7 +1267,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-            if(testResult == 0)
+    if(testResult == 0)
     {
         tsIns = SDL_VTM_INSTANCE_TS_0;
         thrVal.thrValidMap = SDL_VTM_GT_TH1_VALID;
@@ -1268,7 +1280,7 @@ int32_t sdlVTM_apiTest(void)
             testResult = -1;
         }
     }
-            if(testResult == 0)
+    if(testResult == 0)
     {
         tsIns = SDL_VTM_INSTANCE_TS_0;
         thrVal.thrValidMap = SDL_VTM_GT_TH2_VALID;
@@ -1347,9 +1359,9 @@ int32_t sdlVTM_apiTest(void)
             DebugP_log("SDL_VTM_vdSetOppVid API test failed on line no. %d \n", __LINE__);
             testResult = -1;
         }
-   }
+    }
 
-       if (testResult == 0)
+    if (testResult == 0)
     {
         vdIns = SDL_VTM_INSTANCE_VD_DOMAIN_0;
         sdlResult = SDL_VTM_vdSetOppVid(p_cfg1, vdIns, 0U, vid_opp_val[0]);
@@ -1359,7 +1371,7 @@ int32_t sdlVTM_apiTest(void)
             DebugP_log("SDL_VTM_vdSetOppVid API test failed on line no. %d \n", __LINE__);
             testResult = -1;
         }
-   }
+    }
 
     if (testResult == 0)
     {
@@ -1385,7 +1397,7 @@ int32_t sdlVTM_apiTest(void)
         }
     }
 
-       if(testResult == 0)
+    if(testResult == 0)
     {
         tsGlobal_cfg.validMap = 0;
         sdlResult = SDL_VTM_tsSetGlobalCfg(p_cfg2, &tsGlobal_cfg);
@@ -1573,8 +1585,7 @@ int32_t sdlVTM_apiTest(void)
         DebugP_log("\n  SDL_VTM_tsGetCtrl API test failed on line no: %d \n", __LINE__);
         testResult = -1;
     }
-
-     return (testResult);
+    return (testResult);
 
 #endif
 

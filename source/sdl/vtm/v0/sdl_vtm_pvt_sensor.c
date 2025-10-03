@@ -239,7 +239,7 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
     volatile                int32_t i;
     SDL_VTM_adc_code        adc_code_h, adc_code_l;
     uint32_t                value;
-    SDL_VTM_Ctrlcfg     ts_ctrl_cfg;
+    SDL_VTM_Ctrlcfg         ts_ctrl_cfg;
 
     if ((p_cfg2 != NULL_PTR))
     {
@@ -292,6 +292,50 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
                            VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN, \
                            SDL_VTM_TSGLOBAL_ANY_MAXT_OUTRG_ALERT_ENABLE);
          }
+    }
+    else
+    {
+        retVal = SDL_EBADARGS;
+    }
+
+    return (retVal);
+
+}
+
+int32_t SDL_VTM_tsSetMaxTOutRgAlertThrDisable(const SDL_VTM_cfg2Regs *p_cfg2, SDL_VTM_InstTs instance)
+{
+    int32_t retVal = SDL_EBADARGS;
+    volatile int32_t i;
+    SDL_VTM_Ctrlcfg ts_ctrl_cfg;
+
+    if (p_cfg2 != NULL_PTR)
+    {
+        /*
+         * Disable maximum temperature out of range alert and thresholds
+         * Step 1: WKUP_VTM_TMPSENS_CTRL_j unset the MAXT_OUTRG_EN  bit
+         * Step 2: WKUP_VTM_MISC_CTRL unset the ANYMAXT_OUTRG_ALERT_EN  bit
+         */
+
+        /* Step 1 */
+        ts_ctrl_cfg.valid_map = 0U;
+        ts_ctrl_cfg.maxt_outrg_alert_en = SDL_VTM_TS_CTRL_MAXT_OUTRG_NO_ALERT;
+        retVal = SDL_VTM_tsSetCtrl (p_cfg2,
+                                    instance,
+                                    &ts_ctrl_cfg);
+
+        if (retVal == SDL_PASS)
+        {
+            /* have some delay before write */
+            for (i = 0; i < SDL_VTM_REG_READ_DELAY;)
+            {
+                i = i + 1;
+            }
+
+            /* Step 2 */
+            SDL_REG32_FINS(&p_cfg2->MISC_CTRL,                          \
+                           VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN,  \
+                           SDL_VTM_TSGLOBAL_ANY_MAXT_OUTRG_ALERT_DISABLE);
+        }
     }
     else
     {

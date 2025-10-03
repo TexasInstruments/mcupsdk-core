@@ -944,11 +944,31 @@ int32_t sdlVTM_errTest(void)
     }
     if(testResult == 0)
     {
+        sdlResult = SDL_VTM_tsSetMaxTOutRgAlertThrDisable(NULL, SDL_VTM_INSTANCE_TS_0);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsSetMaxTOutRgAlertThrDisable negative test failed on line no. %d \r\n", __LINE__);
+            testResult = -1;
+        }
+    }
+    if(testResult == 0)
+    {
         sdlResult = SDL_VTM_tsSetMaxTOutRgAlertThr(p_cfg2, SDL_VTM_INSTANCE_TS_MAX_NUM, 68000, 64000);
 
         if (sdlResult == SDL_PASS)
         {
             DebugP_log("SDL_VTM_tsSetMaxTOutRgAlertThr negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+    if(testResult == 0)
+    {
+        sdlResult = SDL_VTM_tsSetMaxTOutRgAlertThrDisable(p_cfg2, SDL_VTM_INSTANCE_TS_MAX_NUM);
+
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("SDL_VTM_tsSetMaxTOutRgAlertThrDisable negative test failed on line no. %d \r\n", __LINE__);
             testResult = -1;
         }
     }

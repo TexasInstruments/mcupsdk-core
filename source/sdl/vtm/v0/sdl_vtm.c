@@ -8,7 +8,7 @@
  *
  *  \par
  *  ============================================================================
- *  @n   (C) Copyright 2023, Texas Instruments, Inc.
+ *  @n   (C) Copyright 2023-25, Texas Instruments, Inc.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -163,6 +163,11 @@ int32_t SDL_VTM_initTs(SDL_VTM_InstTs instance, const SDL_VTM_configTs *pConfig)
         low_temp_in_mdc     =       pConfig->low_temp_in_milli_degree_celsius;
         thr_val             =       pConfig->thr_val;
 
+        /*
+         * The following APIs usually return one of only SDL_PASS or SDL_EBADARGS, by nature. The possibility
+         * of SDL_EBADARGS is ruled out due to earlier checks on pConfig, instance, and the direct assignment
+         * to p_cfg1 and p_cfg2. Hence the return values for calls made in sequence below have been ignored
+         */
         if((cfgTsCtrl & (SDL_VTM_configTsCtrl)SDL_VTM_VD_CONFIG_CTRL_SET_CTL) != 0U)
         {
             /*ADC mode and set Outer Range Alert*/
@@ -178,6 +183,11 @@ int32_t SDL_VTM_initTs(SDL_VTM_InstTs instance, const SDL_VTM_configTs *pConfig)
         {
             /*Threshold and Interrupt*/
             (void)SDL_VTM_tsSetThresholds (p_cfg1, instance, &thr_val);
+        }
+        if(((cfgTsCtrl & (SDL_VTM_configTsCtrl)SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT_DISABLE) != 0U))
+        {
+            /*Disable the thermal shutdown range alert*/
+            (void)SDL_VTM_tsSetMaxTOutRgAlertThrDisable(p_cfg2, instance);
         }
     }
     return (sdlResult);

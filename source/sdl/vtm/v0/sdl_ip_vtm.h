@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated.
+ *  Copyright (C) 2023-25 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -83,6 +83,7 @@ typedef uint8_t SDL_VTM_configTsCtrl;
 #define SDL_VTM_VD_CONFIG_CTRL_SET_CTL                (1U)
 #define SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT		      (2U)
 #define SDL_VTM_VD_CONFIG_CTRL_SET_THR			      (4U)
+#define SDL_VTM_VD_CONFIG_CTRL_OUTRNG_ALRT_DISABLE    (8U)
 
 
 /**
@@ -777,13 +778,27 @@ int32_t SDL_VTM_tsConvTempToAdc (int32_t milli_degree_temp_val,
  *  \param high_temp_in_milli_degree_celcius    [IN]   high temperature in milli degree celcius
  *  \param low_temp_in_milli_degree_celcius     [IN]   low temperature in milli degree celcius
  *  \return The CSL error code for the API.
- *                                 Success      : CSL_PASS
- *                                 Invalid Args : CSL_EBADARGS
+ *                                 Success      : SDL_PASS
+ *                                 Invalid Args : SDL_EBADARGS
  */
 int32_t SDL_VTM_tsSetMaxTOutRgAlertThr(const SDL_VTM_cfg2Regs    	*p_cfg2,
                                       SDL_VTM_InstTs 				instance,
                                       int32_t               high_temp_in_milli_degree_celcius,
                                       int32_t               low_temp_in_milli_degree_celcius);
+
+/**
+ *  \brief VTM Temperature Sensor Maximum Temperature Out of Range Alert threshold
+ *
+ *  This function disables the "high temperature threshold" and "low temperature threshold"
+ *  alert thresholds for the VTM hardware.
+ *
+ *  \param p_cfg2 [IN]  Pointer to the VTM configuration2 structure
+ *  \param instance [IN]  VTM Temperature sensor instance
+ *  \return The CSL error code for the API.
+ *                                 Success      : SDL_PASS
+ *                                 Invalid Args : SDL_EBADARGS
+ */
+int32_t SDL_VTM_tsSetMaxTOutRgAlertThrDisable(const SDL_VTM_cfg2Regs *p_cfg2, SDL_VTM_InstTs instance);
 
 
 /** @} */
