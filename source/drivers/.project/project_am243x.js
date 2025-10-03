@@ -292,6 +292,12 @@ const includes = {
     ],
 };
 
+const defines = {
+    common: [
+        "ENABLE_PHY_TUNING_SOC_BUILD"
+    ]
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
     { device: device, cpu: "r5f", cgt: "gcc-armv7"},
@@ -321,6 +327,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
+        build_property.defines = defines;
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.files = files_m4f;

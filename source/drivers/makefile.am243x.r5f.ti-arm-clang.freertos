@@ -238,6 +238,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM243X \
+    -DENABLE_PHY_TUNING_SOC_BUILD \
     -DOS_FREERTOS \
 
 # Remove later with combined boot

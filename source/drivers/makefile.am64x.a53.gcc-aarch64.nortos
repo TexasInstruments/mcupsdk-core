@@ -151,6 +151,7 @@ INCLUDES_common := \
 DEFINES_common := \
     -DSOC_AM64X \
     -DAMP_FREERTOS_A53 \
+    -DENABLE_PHY_TUNING_SOC_BUILD \
     -DOS_NORTOS \
 
 # Remove later with combined boot

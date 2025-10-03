@@ -430,7 +430,14 @@ const includes = {
 
 const defines_amp_a53 = {
     common: [
-        "AMP_FREERTOS_A53"
+        "AMP_FREERTOS_A53",
+        "ENABLE_PHY_TUNING_SOC_BUILD"
+    ]
+};
+
+const defines_r5 = {
+    common: [
+        "ENABLE_PHY_TUNING_SOC_BUILD"
     ]
 };
 
@@ -471,6 +478,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
+        build_property.defines = defines_r5;
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.files = files_m4f;
