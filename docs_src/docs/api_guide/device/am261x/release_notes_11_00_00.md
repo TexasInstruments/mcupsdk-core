@@ -214,6 +214,30 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Fixed in example
 </tr>
 <tr>
+    <td> MCUSDK-14695
+    <td> SDFM_configComparator has incorrect input in examples
+    <td> SDFM
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated example to pass correct value
+</tr>
+<tr>
+    <td> MCUSDK-14696
+    <td> ADC Sysconfig does not seem to generate codes for repeaters
+    <td> ADC
+    <td> 10.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed syscfg template file to generate trigger repeater code for burst mode
+</tr>
+<tr>
+    <td> MCUSDK-14645
+    <td> Implementation of the ADC_selectSOCExtChannel
+    <td> ADC
+    <td> 10.01.00 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed ADC_selectSOCExtChannel API implementation
+</tr>
+<tr>
     <td> PROC_SDL-9147
     <td> VTM Usecase stuck in integrated example
     <td> SDL
@@ -349,6 +373,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> MCUSDK-13834
     <td> EQEP: EQEP frequency measurement example is not working as expected
     <td> EQEP
+    <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-14059
+    <td> CMPSS DE example has Glitch in PWM output
+    <td> CMPSS
     <td> 10.00.01 onwards
     <td> None
 </tr>
