@@ -2,12 +2,6 @@
 
 [TOC]
 
-\cond SOC_AM261X
-\note 1. There are known issues about SBL DFU's inconsistency in transfering larger .mcelf files
-\note 2. There are known issues about USB CDC application failing loopback tests after some iterations.
-\note 3. There are known issues with USB libraries when compiled with Optimization flags, by default they are compiled with "-O0" right now.
-\endcond
-
 ## Introduction
 
 The USB SW stack in MCU+ SDK is shown below.
@@ -18,8 +12,8 @@ The USB SW stack in MCU+ SDK is shown below.
 \endcond
 
 \cond SOC_AM261X
-\imageStyle{usb_cdc_tinyusb_arch_am261x.png,width:30%}
-\image html usb_cdc_tinyusb_arch_am261x.png "USB SW Stack Block Diagram"
+\imageStyle{usb_cdc_ncm_tinyusb_arch_am261x.png,width:40%}
+\image html usb_cdc_ncm_tinyusb_arch_am261x.png "USB SW Stack Block Diagram"
 \endcond
 
 There are three layers as listed below,
