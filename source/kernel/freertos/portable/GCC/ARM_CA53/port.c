@@ -119,6 +119,16 @@ uint64_t ullPortInterruptNesting = 0;
 /* flag to control tick ISR handling, this is made true just before schedular start */
 uint64_t ullPortSchedularRunning = pdFALSE;
 
+static inline void portDSB(void)
+{
+	__asm__ __volatile__ (" dsb sy"   "\n\t": : : "memory");
+}
+
+static inline void portISB(void)
+{
+	__asm__ __volatile__ (" isb sy"   "\n\t": : : "memory");
+}
+
 /*
  * See header file for description.
  */
@@ -248,12 +258,18 @@ void vPortEndScheduler( void )
 void vPortEnterCritical( void )
 {
 	/* Mask interrupts */
+	portDSB();
+    portISB();
 	portDISABLE_INTERRUPTS();
+	portDSB();
+    portISB();
 
 	/* Now interrupts are disabled ullCriticalNesting can be accessed
 	directly.  Increment ullCriticalNesting to keep a count of how many times
 	portENTER_CRITICAL() has been called. */
 	ullCriticalNesting++;
+	portDSB();
+    portISB();
 
 	/* This is not the interrupt safe version of the enter critical function so
 	assert() if it is being called from an interrupt context.  Only API
@@ -272,13 +288,19 @@ void vPortExitCritical( void )
 	{
 		/* Decrement the nesting count as the critical section is being
 		exited. */
+		portDSB();
+        portISB();
 		ullCriticalNesting--;
+		portDSB();
+        portISB();
 
 		/* If the nesting level has reached zero then all interrupt
 		must be re-enabled. */
 		if( ullCriticalNesting == portNO_CRITICAL_NESTING )
 		{
 			portENABLE_INTERRUPTS();
+			portDSB();
+			portISB();
 		}
 	}
 }
