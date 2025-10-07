@@ -34,7 +34,7 @@ USAGE: python usb_bootloader.py [OPTIONS]
 '''
 
 # Max appimage size supported by SBL DFU bootloader
-MAX_APPIMAGE_SIZE = 0x60000
+MAX_APPIMAGE_SIZE = 0x80000
 
 # Function to detect dfu device enumeration
 def wait_for_enumeration():
