@@ -118,18 +118,21 @@ int32_t PMIC_tps65036xxOpen(PMIC_Config *config, const PMIC_Params *params)
         {
             memset(coreHandle, 0, sizeof(Pmic_CoreHandle_t));
             object->pmicCoreHandle = coreHandle;
+
+            /* Fill parameters to pmicConfigData */
+            pmicConfigData.i2cAddr = params->i2cAddr;
+            pmicConfigData.commHandle = I2C_getHandle(params->instance);
+            pmicConfigData.ioRead = PMIC_regRead;
+            pmicConfigData.ioWrite = PMIC_regWrite;
+            pmicConfigData.critSecStart = PMIC_criticalSectionStartFn;
+            pmicConfigData.critSecStop = PMIC_criticalSectionStopFn;
+
+            status += Pmic_init(&pmicConfigData, coreHandle);
         }
-
-        /* Fill parameters to pmicConfigData */
-        pmicConfigData.i2cAddr = params->i2cAddr;
-        pmicConfigData.commHandle = I2C_getHandle(params->instance);
-        pmicConfigData.ioRead = PMIC_regRead;
-        pmicConfigData.ioWrite = PMIC_regWrite;
-        pmicConfigData.critSecStart = PMIC_criticalSectionStartFn;
-        pmicConfigData.critSecStop = PMIC_criticalSectionStopFn;
-
-        status += Pmic_init(&pmicConfigData, coreHandle);
-
+        else 
+        {
+            status = SystemP_FAILURE;
+        }
     }
 
     if(SystemP_SUCCESS == status)
