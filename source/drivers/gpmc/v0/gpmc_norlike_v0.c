@@ -90,10 +90,19 @@ int32_t GPMC_norWriteData(GPMC_Config *handle,uint32_t offset,
         uint32_t devSize = obj->params.devSize;
         uint32_t baseAddress = hwAttrs->dataBaseAddr;
 
-        if(devSize == CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS)
+        uint8_t *src = buf;
+        uint8_t *dst = (uint8_t *)(offset + baseAddress);
+        
+        if(obj->params.dmaEnable && (size >= GPMC_DMA_COPY_LOWER_LIMIT)
+            && (GPMC_isDmaRestrictedRegion(handle, (uint32_t)src) == FALSE))
         {
-            volatile uint8_t *pSrc = (volatile uint8_t *)buf;
-            volatile uint8_t *pDst = (volatile uint8_t *)(offset + baseAddress);
+            status = GPMC_dmaCopy(obj->gpmcDmaHandle, dst, src, size, TRUE);
+        }
+
+        else if(devSize == CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS)
+        {
+            volatile uint8_t *pSrc = (volatile uint8_t *)src;
+            volatile uint8_t *pDst = (volatile uint8_t *)dst;
             while (size != 0U)
             {
                 *pDst = *pSrc;
@@ -101,11 +110,12 @@ int32_t GPMC_norWriteData(GPMC_Config *handle,uint32_t offset,
                 pDst++;
                 size--;
             }
+            status = SystemP_SUCCESS;
         }
         else
         {
-            volatile uint16_t *pSrc = (volatile uint16_t *)buf;
-            volatile uint16_t *pDst = (volatile uint16_t *)(offset + baseAddress);
+            volatile uint16_t *pSrc = (volatile uint16_t *)src;
+            volatile uint16_t *pDst = (volatile uint16_t *)dst;
             while (size != 0U)
             {
                 *pDst = *pSrc;
@@ -120,9 +130,8 @@ int32_t GPMC_norWriteData(GPMC_Config *handle,uint32_t offset,
                     size -= 2;
                 }
             }
+            status = SystemP_SUCCESS;
         }
-
-        status = SystemP_SUCCESS;
     }
 
     return status;
@@ -142,7 +151,16 @@ int32_t GPMC_norReadData(GPMC_Config *handle, uint32_t offset,
         uint32_t devSize = obj->params.devSize;
         uint32_t baseAddress = hwAttrs->dataBaseAddr;
 
-        if(devSize == CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS)
+        uint8_t *dst = buf;
+        uint8_t *src = (uint8_t *)(offset + baseAddress);
+        
+        if(obj->params.dmaEnable && (size >= GPMC_DMA_COPY_LOWER_LIMIT)
+            && (GPMC_isDmaRestrictedRegion(handle, (uint32_t)src) == FALSE))
+        {
+            status = GPMC_dmaCopy(obj->gpmcDmaHandle, dst, src, size, TRUE);
+        }
+
+        else if(devSize == CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS)
         {
             volatile uint8_t *pDst = (volatile uint8_t *)buf;
             volatile uint8_t *pSrc = (volatile uint8_t *)(offset + baseAddress);
@@ -153,6 +171,7 @@ int32_t GPMC_norReadData(GPMC_Config *handle, uint32_t offset,
                 pDst++;
                 size--;
             }
+            status = SystemP_SUCCESS;
         }
         else
         {
@@ -172,6 +191,7 @@ int32_t GPMC_norReadData(GPMC_Config *handle, uint32_t offset,
                 pDst++;
                 size -= 2U;
             }
+            status = SystemP_SUCCESS;
         }
     }
 

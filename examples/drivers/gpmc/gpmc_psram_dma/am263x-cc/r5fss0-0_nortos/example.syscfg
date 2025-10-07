@@ -55,9 +55,19 @@ ram1.parallelRamDriver.psramDriverIoExpander.I2C.$assign     = "I2C2";
 ram1.parallelRamDriver.psramDriverIoExpander.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
 ram1.parallelRamDriver.sleepEnGpioDriver.$name               = "CONFIG_GPIO1";
 ram1.parallelRamDriver.psramDriver.$name                     = "CONFIG_GPMC0";
+ram1.parallelRamDriver.psramDriver.dmaEnable                 = true;
 ram1.parallelRamDriver.psramDriver.GPMC.GPMC_OEn_REn.$assign = "PR0_PRU1_GPIO5";
 ram1.parallelRamDriver.psramDriver.GPMC.GPMC_WEn.$assign     = "PR0_PRU1_GPIO8";
 ram1.parallelRamDriver.psramDriver.GPMC.GPMC_CSn0.$assign    = "PR0_PRU1_GPIO14";
+
+const edma                                    = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                                   = edma.addInstance({}, false);
+edma1.$name                                   = "CONFIG_EDMA0";
+ram1.parallelRamDriver.psramDriver.edmaDriver = edma1;
+edma1.edmaRmDmaCh[0].$name                    = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name                   = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name                      = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name                    = "CONFIG_EDMA_RM3";
 
 gpio2.$name = "CONFIG_GPIO0";
 gpio2.rx    = true;

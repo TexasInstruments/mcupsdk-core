@@ -62,26 +62,28 @@ extern uint32_t gGpmcDmaConfigNum;
 
 Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index)
 {
-	GPMC_DmaConfig *config = NULL;
-	Gpmc_DmaArgs *dmaArgs = NULL;
+    GPMC_DmaConfig *config = NULL;
+    Gpmc_DmaArgs *dmaArgs = NULL;
 
     if((gGpmcDmaConfigNum > 0) && (index >= 0))
     {
         config = &gGpmcDmaConfig[index];
-		if(config != NULL)
-		{
-			if(config->gpmcDmaArgs)
-			{
-				int32_t status = SystemP_SUCCESS;
+        if(config != NULL)
+        {
+            if(config->gpmcDmaArgs)
+            {
+                int32_t status = SystemP_SUCCESS;
 #if defined(DMA_VERSION_GPMC_UDMA)
-				status = GpmcDma_udmaOpen(config->gpmcDmaArgs);
+                status = GpmcDma_udmaOpen(config->gpmcDmaArgs);
+#elif defined(DMA_VERSION_GPMC_EDMA)
+                status = GpmcDma_edmaOpen(config->gpmcDmaArgs);
 #endif
-				if(status == SystemP_SUCCESS)
-				{
-					dmaArgs = config->gpmcDmaArgs;
-				}
-			}
-		}
+                if(status == SystemP_SUCCESS)
+                {
+                    dmaArgs = config->gpmcDmaArgs;
+                }
+            }
+        }
     }
 
     return dmaArgs;
@@ -89,36 +91,40 @@ Gpmc_DmaArgs* GPMC_dmaOpen(int32_t index)
 
 int32_t GPMC_dmaClose(Gpmc_DmaArgs *gpmcDmaArgs)
 {
-	int32_t status = SystemP_SUCCESS;
+    int32_t status = SystemP_SUCCESS;
 
-	if(gpmcDmaArgs != NULL)
-	{
+    if(gpmcDmaArgs != NULL)
+    {
 #if defined(DMA_VERSION_GPMC_UDMA)
-		status = GpmcDma_udmaClose(gpmcDmaArgs);
+        status = GpmcDma_udmaClose(gpmcDmaArgs);
+#elif defined(DMA_VERSION_GPMC_EDMA)
+        status = GpmcDma_edmaClose(gpmcDmaArgs);
 #endif
-	}
-	else
-	{
-		status = SystemP_FAILURE;
-	}
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
-	return status;
+    return status;
 }
 
 int32_t GPMC_dmaCopy(Gpmc_DmaArgs *gpmcDmaArgs, void *dst, void *src, uint32_t length, uint8_t fifoDrain)
 {
-	int32_t status = SystemP_SUCCESS;
+    int32_t status = SystemP_SUCCESS;
 
-	if(gpmcDmaArgs != NULL)
-	{
+    if(gpmcDmaArgs != NULL)
+    {
 #if defined(DMA_VERSION_GPMC_UDMA)
-		status = GpmcDma_udmaCopy(gpmcDmaArgs, (uint32_t*) dst, (uint32_t*) src, length, fifoDrain);
+        status = GpmcDma_udmaCopy(gpmcDmaArgs, (uint32_t*) dst, (uint32_t*) src, length, fifoDrain);
+#elif defined(DMA_VERSION_GPMC_EDMA)
+        status = GpmcDma_edmaCopy(gpmcDmaArgs, (uint32_t*) dst, (uint32_t*) src, length, fifoDrain);
 #endif
-	}
-	else
-	{
-		status = SystemP_FAILURE;
-	}
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
-	return status;
+    return status;
 }

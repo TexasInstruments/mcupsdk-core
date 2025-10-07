@@ -46,9 +46,10 @@ FILES_common := \
     gpio.c \
     gpmc_v0.c \
     gpmc_priv_v0.c \
+    gpmc_dma.c \
+    gpmc_dma_edma.c \
     gpmc_nandlike_v0.c \
     gpmc_norlike_v0.c \
-    gpmc_dma.c \
     i2c_v1.c \
     i2c_v1_lld.c \
     ipc_notify_v1.c \
@@ -109,6 +110,7 @@ FILES_PATH_common = \
     gpio/v0 \
     gpmc/v0 \
     gpmc/v0/dma \
+    gpmc/v0/dma/edma \
     i2c/v1 \
     i2c/v1/lld \
     ipc_notify/v1 \

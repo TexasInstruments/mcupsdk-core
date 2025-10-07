@@ -353,6 +353,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \cond SOC_AM263X
 -# GPMC
    -# \subpage EXAMPLES_DRIVERS_GPMC_PSRAM_IO
+   -# \subpage EXAMPLES_DRIVERS_GPMC_PSRAM_DMA
 \endcond
 -# HSMCLIENT
    -# \subpage EXAMPLES_HSM_SERVICES
