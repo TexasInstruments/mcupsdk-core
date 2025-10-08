@@ -105,6 +105,10 @@ typedef struct
     uint32_t busSftyFi;
     /* offset of bus safety Error Register */
     uint32_t busSftyErr;
+#if defined (SOC_AM261X)
+    /* offset of bus safety Err Status Register */
+    uint32_t busSftyErrStat;
+#endif
     /* offset of bus safety Err Stat CMD Register */
     uint32_t busSftyErrStatCmd;
     /* offset of bus safety Err Stat Write Register */
