@@ -626,11 +626,9 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 </tr> 
 <tr>
     <td> IO Expander
-    <td> 
-    <td> 
+    <td> IO Expander Pins have changed in LP Rev A
+    <td> IO Expander at 0x21H has updated pins P0,P3,P4,P5 from CPSW/ICSS_BRD_CONN_DET1, MDIO/MDC_MUX_SEL1, MDIO/MDC_MUX_SEL2, CPSW/ICSS_BRD_CONN_DET2 in E2 to BP_MUX_SW_S6, BP_MUX_SW_S4, MDIO/MDC_MUX_SEL, BP_MUX_SW_S5 in REV A .
 </tr>
-
-
 
 ### Compiling examples in MacOS machines
 
