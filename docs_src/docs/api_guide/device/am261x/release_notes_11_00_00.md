@@ -4,21 +4,15 @@
 
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel flow is mandatory.
+\attention 2. RPRC image format has been deprecated from this release. Multi Core ELF image format should be used. (\ref MCELF_LANDING).
 
 \attention 3. DFU Utils tool is not supported on Mac systems due to a build issue.
 
-\attention 4. Uniflash 9.1.0 does not support out of the box flashing of AM261x-LP E2 binaries. As a workaround, use Uniflash's custom flasher feature mentioned here \ref CUSTOM_FLASH. Out of box flashing support for E2 board will be available in the next Uniflash release.
+\attention 4. SDK has been updated to support CCS Theia Out of Box from this release. Refer to Compatibility section below for changes w.r.t Eclipse.
 
-\attention 4. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
+\attention 5. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
-\attention 5. SDK will be migrated to support CCS Theia from next release (SDK 11.0) and the support for CCS Eclipse will be deprecated.
-
-\attention 6. There is a known issue that OSPI pins in SysCfg GUI are getting reset automatically during any module change. The workaround is that OSPI Pins should be locked after proper configuration according to the board Pinout.
-
-\attention 7. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
-
-\attention 8. CCS 12.8.1 doesn't support AM261x by default. Please follow the steps mentioned in \ref CCS_SETUP_PAGE to enable AM261x device support.
+\attention 6. For customer migrating from any release before SDK 10.00.00 to 10.00.00 or any release after, "DPL CFG" module has to be added in SysCfg in order to enable interrupts during DPL initialization. This module was added in SysCfg for 10.00.00 release to allow configuring Init time Enable/Disable of interrupts for RTOS applications (Default set to enabled).
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -26,9 +20,21 @@
 
 ## New in this Release
 
-Feature                                                                                               | Module
-------------------------------------------------------------------------------------------------------|----------------------------------- 
-XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip CPSW Example'     | Networking
+Feature                                                                                         | Module
+------------------------------------------------------------------------------------------------|-----------------------------------
+Clock Tree support for PLL and Peripheral clock configuration                                                                                   | Sysconfig
+CCS Theia Support                                                                               | CCS
+Multi Core FreeRTOS IPC Example                                                                 | IPC
+OSPI Phy Graph Plotter Example                                                                  | OSPI
+Rev A Launchpad Support                                                                         | Board
+Rev A SOM Support                                                                               | Board
+Board Level Sysconfig Support                                                                   | Sysconfig
+USB Sysconfig support                                                                           | Sysconfig
+McSPI External Loopback Example                                                                 | McSPI
+USB NCM Class Support                                                                           | USB
+FreeRTOS based CDC Example                                                                      | USB
+LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
+XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip CPSW Example'   | Networking
 
 # Modules Not tested/supported in this release
 
@@ -38,19 +44,20 @@ XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip 
 
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM261x | R5F             | AM261x Launchpad Rev E2    (referred to as am261x-lp in code). \n            | Windows 10 64b or Ubuntu 18.04 64b or MacOS
-AM261x | R5F             | AM261x SOM Rev E1          (referred to as am261x-som in code). \n           | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM261x | R5F             | AM261x Launchpad Rev A    (referred to as am261x-lp in code). \n            | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM261x | R5F             | AM261x SOM Rev A          (referred to as am261x-som in code). \n           | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.23.0 build, build 4000
+Code Composer Studio    | R5F            | 20.3.0
+SysConfig               | R5F            | 1.25.0 build, build 42688
 TI ARM CLANG            | R5F            | 4.0.3.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_1_RELEASE
 Mbed-TLS                | R5F            | 2.13.1
+Uniflash                | R5F            | 9.3.0
 
 
 ## Key Features
@@ -94,7 +101,7 @@ Timer             | R5F             | YES               | FreeRTOS, NORTOS | Con
 
 Module     | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                         | Key features not tested / NOT supported
 -----------|-----------------|-------------------|------------------|-----------------------------------------------------------------------------|----------------------------------------------------
-Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: OSPI, UART. All R5F's. RPRC, multi-core image format            | Force Dual Core Mode
+Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes: OSPI, UART. All R5F's. Multi-core ELF image format            | Force Dual Core Mode
 
 ### SOC Device Drivers
 
@@ -102,8 +109,8 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 -------------|----------------|-------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------
 ADC          | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
-CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter, Calibration                                                                                                                                           | CMPSS Dac LoopBack feature
-CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII and MII 100Mbps , MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | 
+CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter, Calibration                                       | CMPSS Dac LoopBack feature
+CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII and MII 100Mbps , MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | -
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes, Signal Monitoring features                                                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking, Error Handling                                                                 | -
@@ -190,12 +197,148 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Resolution/Comments
 </tr>
 <tr>
+    <td> MCUSDK-14055
+    <td> SBL DFU and SBL DFU Uniflash Example failure
+    <td> USB
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Resolved in driver
+</tr>
+<tr>
+    <td> MCUSDK-14502
+    <td> PMIC WDG QA Example not working on AM261x-LP E2 board
+    <td> PMIC
+    <td> 10.02.00 onwards
+    <td> AM261x
+    <td> Fixed in driver by increasing sleep time for waiting to trigger wdg reset
+</tr>
+<tr>
+    <td> MCUSDK-14547
+    <td> XIP Flashing not supported in SBL JTAG Uniflash example
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> Added XIP flashing support in the example
+</tr>
+<tr>
+    <td> MCUSDK-14609
+    <td> FOTA Example Failure on AM261x SOM
+    <td> OptiFlash
+    <td> 10.02.00 onwards
+    <td> AM261x
+    <td> Resolved by reducing OSPI clock frequency from 166Mhz to 133Mhz
+</tr>
+<tr>
+    <td> MCUSDK-14606
+    <td> USB Enumeration fails randomly
+    <td> USB
+    <td> 10.02.00 onwards
+    <td> AM261x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14704
+    <td> Adding multiple instances of UART DMA LLD causes failure
+    <td> UART
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed array indexing while assigning dma config
+</tr>
+<tr>
+    <td> MCUSDK-14917
+    <td> "Selected mode" in pinmux.csv.xdt file not being updated correctly in SysCfg
+    <td> Pinmux
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in Pinmux CSV template
+</tr>
+<tr>
     <td> PROC_SDL-9179
     <td> Redefinition error in MCU_PBIST Sysconfig
     <td> SDL
     <td> 10.02.00 onwards
     <td> AM263Px, AM261x
     <td> Resolved in Source code
+</tr>
+<tr>
+    <td> MCUSDK-14749
+    <td> McSPI: Non Powers of 2 cannot be configured as fifo trigger levels in polling and interrupt mode
+    <td> McSPI
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fix in SysCfg Meta file.
+</tr>
+<tr>
+    <td> MCUSDK-13966
+    <td> All UART triggers levels not exposed in SysCfg
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Update SysCfg to show all trigger levels from 1 to 64.
+</tr>
+<tr>
+    <td> MCUSDK-14573
+    <td> Incorrect handling of errata i2310 in UART isr
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Reorder the ISR state machine for handling UART errata correctly.
+</tr>
+<tr>
+    <td> MCUSDK-14706
+    <td> GPIO Qual selection API missing
+    <td> GPIO
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Qual sel API added in pinmux driver
+</tr>
+<tr>
+    <td> MCUSDK-14569
+    <td> UART Errata i2310 is missing a step
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added IIR register read to clear the interrupt
+</tr>
+<tr>
+    <td> MCUSDK-14620
+    <td> SDK build fails in Mac Machines
+    <td> Build
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added GMAC library for MAC into SDK
+</tr>
+<tr>
+    <td> MCUSDK-14659
+    <td> Incorrect RTI clock source mux address for RTI 4 to 7
+    <td> RTI
+    <td> 10.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> Updated to correct mux addresses in SysCfg
+</tr>
+<tr>
+    <td> MCUSDK-13182
+    <td> SysCfg unexpectedly changes OSPI Pin
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> The OSPI pins are locked in SDK examples.
+</tr>
+<tr>
+    <td> MCUSDK-14857, MCUSDK-14731
+    <td> Core 1 unhalted in SBL before FSM Trigger, Memory load
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Skip unhalting core 1 of both clusters in dual core mode
+</tr>
+<tr>
+    <td> MCUSDK-14712
+    <td> OSPI Reset Pin being used before configuration
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> Configure OSPI reset in OSPI open instead of Flash open
 </tr>
 <tr>
     <td> PROC_SDL-9160
@@ -272,13 +415,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> SMCUAPPS-972
-    <td> AM261x: Gel files upgrade to program the HSDIVIDER clock correctly
-    <td> MCU Apps
-    <td> 10.00.01 onwards
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-13847
     <td> AM261x: GPTP lwIP debug example doesnt fit in RAM
     <td> Networking
@@ -319,27 +455,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Networking
     <td> 10.02.00 onwards
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14055
-    <td> SBL DFU and SBL DFU Uniflash Example failure
-    <td> USB
-    <td> 10.00.01 onwards
-    <td> Issue is only in Release mode. Run the examples in Debug mode.
-</tr>
-<tr>
-    <td> MCUSDK-14056
-    <td> Klocwork issues on USB Driver
-    <td> USB
-    <td> 10.00.01 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14110
-    <td> Error building examples in CCS in mac
-    <td> Infra
-    <td> Example build fails in CCS only in MAC Machines
-    <td> \ref CCS_MAC_ISSUE
 </tr>
 <tr>
     <td> PINDSW-7715
@@ -426,25 +541,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13182
-    <td> SysCfg unexpectedly changes OSPI Pin
-    <td> OSPI
-    <td> 10.00.00 onwards
-    <td> Lock the OSPI Pins in OSPI SysCfg.
-</tr>
-<tr>
     <td> MCUSDK-14582
     <td> Flash: Incorrect flash name after Loading Flash JSON
     <td> OSPI
     <td> 10.00.00 onwards
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14102
-    <td> Applications > 1MB not flashing using TI Uniflash tool
-    <td> Uniflash tool
-    <td> 10.00.00 onwards
-    <td> \ref UNIFLASH_1MB_ISSUE
 </tr>
 <tr>
     <td> MCUSDK-14613
@@ -454,43 +555,92 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14547
-    <td> XIP Flashing not supported in SBL JTAG Uniflash example
+    <td> MCUSDK-14714
+    <td> Bufnum of 6 and 12 will cause the vring indexes to get corrupted
+    <td> IPC
+    <td> 10.00.00 onwards
+    <td> Use other VRING buffer numbers.
+</tr>
+<tr>
+    <td> MCUSDK-14879
+    <td> Potential system hang issue due to priority mask based critical sections.
+    <td> FreeRTOS
+    <td> 10.00.00 onwards
+    <td> Not to use Priority mask based critical sections (Disabled by default in SDK).
+</tr>
+<tr>
+    <td> MCUSDK-14893
+    <td> Sub projects under system projects cannot be changed in CCS Theia
+    <td> CCS
+    <td> 11.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14819
+    <td> Ram is getting erased/overwritten once warm reset is done in application
     <td> SBL
+    <td> 11.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14895
+    <td> UART LLD Rx error checking logic checks if all errors exist at once
+    <td> UART
     <td> 10.00.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14502
-    <td> PMIC WDG QA Example not working on AM261x-LP E2 board
-    <td> PMIC
+    <td> MCUSDK-14613
+    <td> XIP image loading not working in CCS for am261x-lp E2 board
+    <td> CCS, XIP
     <td> 10.02.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14609
-    <td> FOTA Example Failure on AM261x SOM
-    <td> OptiFlash
+    <td> MCUSDK-14647
+    <td> All CANFD standard ID configurations are not exposed in syscfg gui
+    <td> CAN
+    <td> 10.02.00 onwards
+    <td> Configure Config type, ID's etc in application
+</tr>
+<tr>
+    <td> MCUSDK-14705
+    <td> Flash verify not working for XIP images
+    <td> Flash
     <td> 10.02.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14610
-    <td> MCAN External Loopback Failure on AM261x SOM
-    <td> MCAN
+    <td> MCUSDK-14914
+    <td> Unable to add UART communication port to target configuration in Theia
+    <td> Real Time Debug
+    <td> 10.02.00 onwards
+    <td> Use the CCXML file from CCS eclipse after updating to correct COM port. 
+</tr>
+<tr>
+    <td> MCUSDK-14941
+    <td> McSPI: Non Multiple's of FIFO cannot be transferred in DMA mode
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> Use FIFO Trigger level of 1.
+</tr>
+<tr>
+    <td> MCUSDK-13011
+    <td> Data Abort in application when all cores are running freertos using Gel files(CCS)
+    <td> FreeRTOS
+    <td> 10.00.00 onwards
+    <td> Flash and use SBL NULL instead of gel files
+</tr>
+<tr>
+    <td> MCUSDK-14636
+    <td> AM261x: Phy Tuning not supported for NAND Flash and PSRAM
+    <td> OSPI, Flash
     <td> 10.02.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14611
-    <td> LIN External Loopback Failure on AM261x SOM
-    <td> LIN
-    <td> 10.02.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14606
-    <td> USB Enumeration fails randomly
+    <td> MCUSDK-14656
+    <td> Mac OS Support not available for DFU Utils tool
     <td> USB
     <td> 10.02.00 onwards
     <td> -
@@ -571,6 +721,12 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> GPIO
     <td> Open
 </tr>
+<tr>
+    <td> i2404
+    <td> Race condition in mailbox registers resulting in events miss
+    <td> IPC, Mailbox
+    <td> Implemented
+</tr>
 </table>
 
 ## Limitations
@@ -642,6 +798,106 @@ To build SDK examples on a different toolchain, recompile the gmac library by us
 
 - A new library will be created inside mac/dist. 
 - Rename this file to "gmac.arm64-apple-darwin.darwin.dylib". 
+
+### RPRC Image format is Deprecated and Corresponding SBL's are also removed from SDK
+
+RPRC image format is no longer supported and MCELF will be the only file format. Older SBL's and
+Cfg files which mapped to RPRC format are removed and replaced with MCELF variants.
+Below is the list of updated SBL's and Cfg files:
+
+<table>
+<tr>
+    <th> Deprecated SBL + CFG File
+    <th> Supported SBL + CFG File
+</tr>
+<tr>
+    <td> SBL QSPI (default_sbl_qspi.cfg)
+    <td> SBL QSPI MULTICORE ELF (mcelf_sbl_qspi.cfg)
+</tr>
+<tr>
+    <td> SBL UART
+    <td> SBL UART MULTICORE ELF
+</tr>
+<tr>
+    <td> SBL SD (default_sbl_sd.cfg)
+    <td> SBL SD MULTICORE ELF (mcelf_sbl_sd.cfg)
+</tr>
+<tr>
+    <td> SBL CAN (default_sbl_can.cfg)
+    <td> SBL CAN MULTICORE ELF (mcelf_sbl_can.cfg)
+</tr>
+<tr>
+    <td> SBL CAN UNIFLASH (default_sbl_can_uniflash.cfg, default_sbl_can_uniflash_app.cfg)
+    <td> SBL CAN UNIFLASH MULTICORE ELF (mcelf_sbl_can_uniflash.cfg, mcelf_sbl_can_uniflash_app.cfg)
+</tr>
+</table>
+
+Please refer to the updated SDK example makefiles for Infra changes.
+
+### Flash Reset moved to SysCfg
+
+Earlier, flash reset was done in board.c file within application which is now moved
+to SysCfg. If Flash reset logic needs to be added, please enable "Enable Flash Reset API"
+configurable in Flash module. This is by enabled out of box for all SDK Flash examples.
+For custom flash, define the flash reset API in application and add the API name to 
+"Flash Reset Function" configurable.
+
+### Module clock configuration through Clock Tree
+
+Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules. 
+With Clocktree, we now have a clear view of the entire clock tree with configurable components like PLL, DPLL, muxes, dividers added with validity checks.
+Earlier, the Input clock source and frequency for any module was configured through the module view in SysCfg. From now, this has to be done through clocktree.
+
+Please refer to \ref CLOCKTREE for more details.
+
+### Migrating back from CCS Theia to CCS Eclipse
+
+SDK was supporting CCS Eclipse until this release and now been migrated to support CCS Theia Out of Box. Below sections describe how to update the applications for Eclipse if needed.
+
+#### Importing and Building in Eclipse
+
+CCS Projectspec files are same for both Theia and Eclipse. Hence, no update is needed to import and build an SDK application on Eclipse.
+
+#### CCS SBL Loading
+
+JS Script for SBL loading on eclipse is updated to "load_sbl_eclipse.js". Please refer to \ref TOOLS_CCS for more details.
+
+### Migrating examples to 11.00.00 from older versions
+
+\cond !SOC_AM64X
+\note Images are shown for AM64x. It is application for @VAR_SOC_NAME as well.
+\endcond
+
+#### Makefile Changes
+##### Library Name change on makefile and CCS projects
+From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS. 
+So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the 
+librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries. 
+
+For NoRTOS/baremetal, 
+
+\imageStyle{example_migration1.png,width:40%}
+\image html example_migration1.png "Library name change for NoRTOS example"
+
+For FreeRTOS, 
+
+\imageStyle{example_migration2.png,width:40%}
+\image html example_migration2.png "Library name change for FreeRTOS example"
+
+similar change can be done on the CCS project as well
+
+##### OS define on makefile and CCS projects 
+Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project. 
+
+For NoRTOS/baremetal, 
+
+\imageStyle{example_migration3.png,width:20%}
+\image html example_migration3.png "OS Macro addition for NoRTOS example"
+
+For FreeRTOS, 
+
+\imageStyle{example_migration4.png,width:20%}
+\image html example_migration4.png "OS Macro addition for FreeRTOS example"
 
 ### SDL PBIST Self test
 VIM Memory groups are added to PBIST self test from this release. Because of this change, Self test (SDL_PBIST_selfTest) API has to be called in polling mode only and interrupt mode is not supported.

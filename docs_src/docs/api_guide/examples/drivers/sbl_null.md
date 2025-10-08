@@ -130,6 +130,16 @@ INFO: Bootloader_runSelfCpu:219: All done, reseting self ...
 \endcode
 \endcond
 
+\cond SOC_AM261X
+\code
+Starting NULL Bootloader ...
+INFO: Bootloader_runCpu:150: CPU r5f0-1 is initialized to 500000000 Hz !!!
+NULL Bootloader Execution Complete...
+INFO: Bootloader_loadSelfCpu:202: CPU r5f0-0 is initialized to 500000000 Hz !!!
+INFO: Bootloader_runSelfCpu:219: All done, reseting self ...
+\endcode
+\endcond
+
 \cond SOC_AM65X
 \code
 Starting NULL Bootloader ...

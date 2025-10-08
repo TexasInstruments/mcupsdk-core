@@ -161,3 +161,22 @@ Starting OSPI Bootloader ...
 \endcode
 
 \endcond
+
+\cond SOC_AM261X
+
+\code
+    Starting OSPI Bootloader ...
+    [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+    [BOOTLOADER_PROFILE] Boot Media Clock : 100.000 MHz
+    [BOOTLOADER_PROFILE] Boot Image Size  : 0 KB
+    [BOOTLOADER_PROFILE] Cores present    :
+    r5f0-0
+    [BOOTLOADER PROFILE] System_init                      :        199us
+    [BOOTLOADER PROFILE] Drivers_open                     :         76us
+    [BOOTLOADER PROFILE] LoadHsmRtFw                      :        861us
+    [BOOTLOADER PROFILE] Board_driversOpen                :       3039us
+    [BOOTLOADER PROFILE] CPU load                         :        102us
+    [BOOTLOADER_PROFILE] SBL Total Time Taken             :       4280us
+\endcode
+
+\endcond
