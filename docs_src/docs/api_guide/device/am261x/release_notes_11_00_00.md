@@ -606,6 +606,32 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 </table>
 
 ## Upgrade and Compatibility Information
+
+### LP / SOM Rev E2 to Rev A revision Changes 
+<table>
+<tr>
+    <th> Component
+    <th> Change
+    <th> Comments
+</tr>
+<tr>
+    <td> ADC / CMPSS
+    <td> ADC / CMPSS pin positions have changed in LP Rev A
+    <td> ADC0 Channels 0,4,6 have changed their pin positions from pins 23,26,29 in Rev E2 to 26,29,23 in Rev A respectively. Updated Example documentations <br>\ref EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM <br>\ref EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE <br>\ref EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING
+</tr> 
+<tr>
+    <td> SDFM
+    <td> SDFM Pin Positions have Changed in LP Rev A
+    <td> SDFM1 Clk0, D0 and D3 have changed their default positions from 18,12,43 in Rev E2 to 6,3,10 in Rev A respectively. Please follow the Pinmux configurations accordingly. Updated Example sysconfig and documentation for \ref EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK .
+</tr> 
+<tr>
+    <td> IO Expander
+    <td> 
+    <td> 
+</tr>
+
+
+
 ### Compiling examples in MacOS machines
 
 Currently the gmac library packaged within SDK is compiled using gcc darwin23.6.0 on Apple MAC.
