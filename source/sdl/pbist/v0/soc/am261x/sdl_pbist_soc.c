@@ -73,12 +73,7 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
     {
         .PBISTRegsHiAddress  = 0u,
         .pPBISTRegs          = (SDL_pbistRegs *)SDL_TOP_PBIST_U_BASE,
-        /*
-         * Golden vectors not currently supported running from MCU core because
-         * this will be self destructive. Below select memory which is guaranteed
-         * not to be utilized can be run.
-         */
-        .numPBISTRuns        =PBIST_MAX_NUM_RUNS,
+        .numPBISTRuns        = PBIST_MAX_NUM_RUNS,
         .PBISTConfigRun =
         {
             {
