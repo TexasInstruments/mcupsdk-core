@@ -3015,9 +3015,12 @@ void SOC_rcmR5SS0TriggerReset(void)
     CSL_FINS(regVal, MSS_CTRL_R5SS0_CONTROL_RESET_FSM_TRIGGER, 0x7);
     mssCtrl->R5SS0_CONTROL = regVal;
 
-    /* execute wfi, and reset core0 and core 1 */
+    /* execute wfi inside a loop to clear any pending interrupts, and reset core0 and core 1 */
 #if defined(__ARM_ARCH_7R__)
-    __wfi();
+    while (1)
+    {
+        __wfi();
+    }
 #endif
 }
 
