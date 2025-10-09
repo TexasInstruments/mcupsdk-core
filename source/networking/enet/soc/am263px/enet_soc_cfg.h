@@ -64,7 +64,7 @@ extern "C" {
 /* --------------------------------------------------------------------------*/
 
 /*! \brief CPSW interVLAN support (requires #ENET_CFG_CPSW_MACPORT_INTERVLAN). */
-#define ENET_CFG_CPSW_INTERVLAN                     (ENET_OFF)
+#define ENET_CFG_CPSW_INTERVLAN                     (ENET_ON)
 
 /*! \brief CPSW 2G (2 Port Switch) support. */
 #define ENET_CFG_CPSW_2PORTSWITCH                   (ENET_OFF)
@@ -100,7 +100,7 @@ extern "C" {
 #define ENET_CFG_CPSW_MACPORT_TRAFFIC_SHAPING       (ENET_ON)
 
 /*! \brief CPSW interVLAN support */
-#define ENET_CFG_CPSW_MACPORT_INTERVLAN             (ENET_OFF)
+#define ENET_CFG_CPSW_MACPORT_INTERVLAN             (ENET_ON)
 
 /*! \brief Maximum number of remote clients cores */
 #define ENET_CFG_REMOTE_CLIENT_CORES_MAX            (1U)
