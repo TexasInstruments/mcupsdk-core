@@ -35,26 +35,17 @@ To build applications using this SDK, one needs below host PC machine
 ## Download and Install Additional SDK Tools
 
 ### SysConfig {#INSTALL_SYSCONFIG}
-\if SOC_AM261X
-  - The AM261x SysConfig build version can be found on the TI Drive.
-  - Please reach out to your TI representative for assistance with downloading and installing it.
-\else
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
-- Download SysConfig 1.24.2 and Install at below path,
+- Download SysConfig @VAR_SYSCFG_VERSION and Install at below path,
   - Windows, C:/ti
   - Linux and MacOS, ${HOME}/ti
-\endif
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
 ### Uniflash
-\if SOC_AM261X
-\note The Uniflash tool support has not been included for the AM261x in this release. It will be available in the upcoming APL release.
-\else
 - The TI Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
 - Download the latest Uniflash @VAR_UNIFLASH_VERSION and install at below path,
   - Windows, C:/ti
   - Linux and MacOS, ${HOME}/ti
-\endif
 \endcond
 
 \cond SOC_AM64X

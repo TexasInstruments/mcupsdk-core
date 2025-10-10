@@ -790,10 +790,16 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 ### Migration to 400 MHz in ZFG package
 <table>
 <tr>
+    <th> Component
+    <th> Change
+    <th> Comments
+</tr>
+<tr>
     <td> Clocktree
     <td> Switching between 500 MHz and 400 MHz in ZFG package has changed.
     <td> There are two variants available, catering to different R5F clock frequencies: 400 MHz and 500 MHz. The default variant is 500 MHz, but users can switch to the 400 MHz variant. This switching was earlier done through clock module in sysconfig but now it's done through Device View settings (\ref CLOCKTREE_VARIANT_SWITCHING)
 </tr>
+</table>
 
 ### Compiling examples in MacOS machines
 
@@ -880,8 +886,8 @@ JS Script for SBL loading on eclipse is updated to "load_sbl_eclipse.js". Please
 #### Makefile Changes
 ##### Library Name change on makefile and CCS projects
 From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS.
-So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the
-librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries.
+So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicable for the
+libraries which were already built separately for NoRTOS/FreeRTOS like kernel libraries.
 
 For NoRTOS/baremetal,
 

@@ -78,11 +78,11 @@
     \image html first_launch.png "CCS Select Workspace"
 \endcond
 \cond SOC_AM261X
-## Enabling AM261x Device Support in Code Composer Studio (CCS)
+## CSP Update for AM261x (CCS)
 
 - Launch CCS. Go to Help ---> Check for Updates
 
-    \imageStyle{ccs_update_check.png,width:50%}
+    \imageStyle{ccs_update_check.png,width:20%}
     \image html ccs_update_check.png "Check for Updates Menu"
 
 - The window will list the available updates. Select "AM2x Arm-based MCU Feature Support" and click next.
