@@ -241,6 +241,7 @@ const example_file_list = [
     "examples/pru_io/empty/.project/project.js",
     "examples/pru_io/adc/ads131/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
+    "examples/sdl/vtm/vtm_reset/.project/project.js",
     "examples/sdl/vtm/vtm_uc/.project/project.js",
     "examples/sdl/dcc/dcc_modes/.project/project.js",
     "examples/sdl/pok/pok_mcu/.project/project.js",
