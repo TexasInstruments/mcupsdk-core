@@ -11,6 +11,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_STOG
 -# VTM
    -# \subpage EXAMPLES_SDL_VTM
+   -# \subpage EXAMPLES_SDL_VTM_RESET
 -# POK
    -# \subpage EXAMPLES_SDL_POK
 -# DCC
@@ -156,6 +157,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCU_ESM
 -# VTM
    -# \subpage EXAMPLES_SDL_VTM
+   -# \subpage EXAMPLES_SDL_VTM_RESET
 -# POK
    -# \subpage EXAMPLES_SDL_POK
 -# R5FCPU_UTILS
