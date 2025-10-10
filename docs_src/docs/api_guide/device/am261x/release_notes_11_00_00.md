@@ -616,7 +616,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Unable to add UART communication port to target configuration in Theia
     <td> Real Time Debug
     <td> 10.02.00 onwards
-    <td> Use the CCXML file from CCS eclipse after updating to correct COM port. 
+    <td> Use the CCXML file from CCS eclipse after updating to correct COM port.
 </tr>
 <tr>
     <td> MCUSDK-14941
@@ -764,7 +764,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 
 ## Upgrade and Compatibility Information
 
-### LP / SOM Rev E2 to Rev A revision Changes 
+### LP / SOM Rev E2 to Rev A revision Changes
 <table>
 <tr>
     <th> Component
@@ -775,16 +775,24 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> ADC / CMPSS
     <td> ADC / CMPSS pin positions have changed in LP Rev A
     <td> ADC0 Channels 0,4,6 have changed their pin positions from pins 23,26,29 in Rev E2 to 26,29,23 in Rev A respectively. Updated Example documentations <br>\ref EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM <br>\ref EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE <br>\ref EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING
-</tr> 
+</tr>
 <tr>
     <td> SDFM
     <td> SDFM Pin Positions have Changed in LP Rev A
     <td> SDFM1 Clk0, D0 and D3 have changed their default positions from 18,12,43 in Rev E2 to 6,3,10 in Rev A respectively. Please follow the Pinmux configurations accordingly. Updated Example sysconfig and documentation for \ref EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK .
-</tr> 
+</tr>
 <tr>
     <td> IO Expander
     <td> IO Expander Pins have changed in LP Rev A
     <td> IO Expander at 0x21H has updated pins P0,P3,P4,P5 from CPSW/ICSS_BRD_CONN_DET1, MDIO/MDC_MUX_SEL1, MDIO/MDC_MUX_SEL2, CPSW/ICSS_BRD_CONN_DET2 in E2 to BP_MUX_SW_S6, BP_MUX_SW_S4, MDIO/MDC_MUX_SEL, BP_MUX_SW_S5 in REV A .
+</tr>
+
+### Migration to 400 MHz in ZFG package
+<table>
+<tr>
+    <td> Clocktree
+    <td> Switching between 500 MHz and 400 MHz in ZFG package has changed.
+    <td> There are two variants available, catering to different R5F clock frequencies: 400 MHz and 500 MHz. The default variant is 500 MHz, but users can switch to the 400 MHz variant. This switching was earlier done through clock module in sysconfig but now it's done through Device View settings (\ref CLOCKTREE_VARIANT_SWITCHING)
 </tr>
 
 ### Compiling examples in MacOS machines
@@ -797,8 +805,8 @@ To build SDK examples on a different toolchain, recompile the gmac library by us
     $ make all
 \endcode
 
-- A new library will be created inside mac/dist. 
-- Rename this file to "gmac.arm64-apple-darwin.darwin.dylib". 
+- A new library will be created inside mac/dist.
+- Rename this file to "gmac.arm64-apple-darwin.darwin.dylib".
 
 ### RPRC Image format is Deprecated and Corresponding SBL's are also removed from SDK
 
@@ -840,12 +848,12 @@ Please refer to the updated SDK example makefiles for Infra changes.
 Earlier, flash reset was done in board.c file within application which is now moved
 to SysCfg. If Flash reset logic needs to be added, please enable "Enable Flash Reset API"
 configurable in Flash module. This is by enabled out of box for all SDK Flash examples.
-For custom flash, define the flash reset API in application and add the API name to 
+For custom flash, define the flash reset API in application and add the API name to
 "Flash Reset Function" configurable.
 
 ### Module clock configuration through Clock Tree
 
-Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules. 
+Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules.
 With Clocktree, we now have a clear view of the entire clock tree with configurable components like PLL, DPLL, muxes, dividers added with validity checks.
 Earlier, the Input clock source and frequency for any module was configured through the module view in SysCfg. From now, this has to be done through clocktree.
 
@@ -871,31 +879,31 @@ JS Script for SBL loading on eclipse is updated to "load_sbl_eclipse.js". Please
 
 #### Makefile Changes
 ##### Library Name change on makefile and CCS projects
-From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS. 
-So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the 
-librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries. 
+From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS.
+So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the
+librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries.
 
-For NoRTOS/baremetal, 
+For NoRTOS/baremetal,
 
 \imageStyle{example_migration1.png,width:40%}
 \image html example_migration1.png "Library name change for NoRTOS example"
 
-For FreeRTOS, 
+For FreeRTOS,
 
 \imageStyle{example_migration2.png,width:40%}
 \image html example_migration2.png "Library name change for FreeRTOS example"
 
 similar change can be done on the CCS project as well
 
-##### OS define on makefile and CCS projects 
-Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project. 
+##### OS define on makefile and CCS projects
+Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project.
 
-For NoRTOS/baremetal, 
+For NoRTOS/baremetal,
 
 \imageStyle{example_migration3.png,width:20%}
 \image html example_migration3.png "OS Macro addition for NoRTOS example"
 
-For FreeRTOS, 
+For FreeRTOS,
 
 \imageStyle{example_migration4.png,width:20%}
 \image html example_migration4.png "OS Macro addition for FreeRTOS example"

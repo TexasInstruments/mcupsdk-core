@@ -47,8 +47,10 @@ PLL configuration is also possible; however, for changes to take effect, the exa
 
 \imageStyle{pll_files_generated.png,width:50%}
     \image html pll_files_generated.png "PLL clock frequencies change from Clocktree"
-    
+
 \cond SOC_AM261X
+
+## Switching between 500 MHz and 400 MHz in ZFG package {#CLOCKTREE_VARIANT_SWITCHING}
 
 For the AM261x ZFG Package:
 There are two variants available, catering to different R5F clock frequencies: 400 MHz and 500 MHz. The default variant is 500 MHz, but users can switch to the 400 MHz variant. The pinmux configuration will remain the same as ZFG, but the clocktree architecture will align with that of ZCZ.
@@ -57,6 +59,6 @@ There are two variants available, catering to different R5F clock frequencies: 4
     \image html am261x_zfg_variant_switch.png "Navigate to the Device View to Switch between Variants"
 
 \imageStyle{am261x_zfg_variant_change_variant.png,width:50%}
-    \image html am261x_zfg_variant_change_variant.png "Switching between Variants"    
+    \image html am261x_zfg_variant_change_variant.png "Switching between Variants"
 
 \endcond
