@@ -217,8 +217,15 @@ class sysfw_trace_rules:
                     msg = msg_data_decode[idx]
                     msk = create_mask(msg['higher_bit'], msg['lower_bit'])
                     v = (message_data & msk) >> msg['lower_bit']
-                    s1 = msg['name'] + ': ' + msg['fmt'] % v
-                    s = s + ' ' + s1
+                    if 'sub_msg' in msg:
+                        try:
+                            sub_msg = msg['sub_msg']["0x%02X" % v]
+                            s = s + " " + sub_msg ['msg']
+                        except Exception:
+                            s = s + " Unknown Sub Message: " + "0x%02X" % v
+                    else:
+                        s1 = msg['name'] + ': ' + msg['fmt'] % v
+                        s = s + ' ' + s1
             except Exception:
                 s = s + " MSG:0x%06X" % message_data
 

@@ -8,7 +8,7 @@
             "higher_bit": 21,
             "lower_bit": 16
         },
-        "detect_regex": "^0x[0-9A-Z]+$",
+        "detect_regex": "^0x[0-9A-Za-z]+$",
         "domain": {
             "higher_bit": 31,
             "lower_bit": 29
@@ -184,7 +184,19 @@
 							"fmt": "%d",
                             "higher_bit": 1,
                             "lower_bit": 0,
-                            "name": "0x01 => Certificate length > ASN1P_IMAX, 0x02 => Issue fetching certificate, 0x3 => Issue with Hash operation, 0x4 => Hash comparison fails"
+                            "name": "Error code"
+						}
+					]
+				},
+				"0x04":{
+					"action_long": "Points of failures during run time OTP Revision read/write",
+					"action_short": "OTP_REV",
+					"msg_data": [
+						{
+							"fmt": "%d",
+                            "higher_bit": 2,
+                            "lower_bit": 0,
+                            "name": "Error code"
 						}
 					]
 				},
@@ -2841,6 +2853,32 @@
                                     ]
                                 }
                             }
+                        },
+                        "0x03007": {
+                            "action_long": "Verify message host ID matches resource host ID",
+                            "action_short": "PSIL_HOST_ID_CHECK",
+                            "sub_actions": {
+                                "0x13": {
+                                    "msg_data": [
+                                        {
+                                            "fmt": "%d",
+                                            "higher_bit": 16,
+                                            "lower_bit": 0,
+                                            "name": "Resource host ID in RM boardcfg"
+                                        }
+                                    ]
+                                },
+                                "0x14": {
+                                    "msg_data": [
+                                        {
+                                            "fmt": "%d",
+                                            "higher_bit": 16,
+                                            "lower_bit": 0,
+                                            "name": "Message host ID"
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
@@ -4161,12 +4199,12 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "PD Usage Count"
                         }
@@ -4185,12 +4223,12 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "PD Usage Count"
                         }
@@ -4209,8 +4247,8 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
-                            "name": "Power domain ID"
+                            "lower_bit": 13,
+                            "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
@@ -4233,12 +4271,12 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "Module Use Count"
                         }
@@ -4257,12 +4295,12 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "Module Use Count"
                         }
@@ -4276,17 +4314,17 @@
                             "fmt": "%d",
                             "higher_bit": 21,
                             "lower_bit": 20,
-                            "name": "LPSC ID"
+                            "name": "PSC ID"
                         },
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
-                            "name": "Power domain ID"
+                            "lower_bit": 13,
+                            "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "Module Retention Count"
                         }
@@ -4300,24 +4338,24 @@
                             "fmt": "%d",
                             "higher_bit": 21,
                             "lower_bit": 20,
-                            "name": "LPSC ID"
+                            "name": "PSC ID"
                         },
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
-                            "name": "Power domain ID"
+                            "lower_bit": 13,
+                            "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "Module Retention Count"
                         }
                     ]
                 },
                 "0x12": {
-                    "action_long": "Retention Put",
+                    "action_long": "Initialize Power Domains",
                     "action_short": "PD_INIT",
                     "msg_data": [
                         {
@@ -4329,12 +4367,12 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
                             "fmt": "%d",
-                            "higher_bit": 13,
+                            "higher_bit": 12,
                             "lower_bit": 0,
                             "name": "Module Retention Count"
                         }
@@ -4359,7 +4397,7 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
@@ -4383,7 +4421,7 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
@@ -4407,7 +4445,7 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
+                            "lower_bit": 13,
                             "name": "Power domain ID"
                         },
                         {
@@ -4431,8 +4469,8 @@
                         {
                             "fmt": "%d",
                             "higher_bit": 19,
-                            "lower_bit": 14,
-                            "name": "Power domain ID"
+                            "lower_bit": 13,
+                            "name": "LPSC ID"
                         },
                         {
                             "fmt": "%d",
@@ -4440,6 +4478,18 @@
                             "lower_bit": 0,
                             "name": "Enable(1)/Disable(0)"
                         }
+                    ]
+                },
+                "0x18": {
+                    "action_long": "TI-SCI message content: latency",
+                    "action_short": "MSG_PARAM_LATENCY",
+                    "msg_data": [
+                       {
+                            "fmt": "%d",
+                            "higher_bit": 15,
+                            "lower_bit": 0,
+                            "name": "Resume latency value"
+                       }
                     ]
                 },
                 "0x20": {
@@ -4505,6 +4555,188 @@
                             "higher_bit": 13,
                             "lower_bit": 0,
                             "name": "error_code"
+                        }
+                    ]
+                },
+                "0x30": {
+                    "action_long": "Low power mode sequence",
+                    "action_short": "PM_LPM_SEQ",
+                    "msg_data": [
+                        {
+                            "fmt": "%X",
+                            "higher_bit": 21,
+                            "lower_bit": 8,
+                            "name": "Sequence number",
+                            "sub_msg" : {
+                                "0x01":{
+                                    "msg": "DM stub started"
+                                },
+                                "0x02":{
+                                    "msg": "Unlocked MMRs"
+                                },
+                                "0x03":{
+                                    "msg": "Kept DDR in self refresh"
+                                },
+                                "0x04":{
+                                    "msg": "DDR in reset isolation"
+                                },
+                                "0x05":{
+                                    "msg": "Enabled USB reset isolation"
+                                },
+                                "0x06":{
+                                    "msg": "Disabled main LPSC"
+                                },
+                                "0x07":{
+                                    "msg": "Bypassed main PLL"
+                                },
+                                "0x08":{
+                                    "msg": "Configured wake-up sources"
+                                },
+                                "0x0A":{
+                                    "msg": "Disabled second set of main LPSC"
+                                },
+                                "0x0B":{
+                                    "msg": "Switched from MAIN PLL to MCU PLL"
+                                },
+                                "0x0C":{
+                                    "msg": "Configured clock muxes"
+                                },
+                                "0x0E":{
+                                    "msg": "Enabled DM reset mask"
+                                },
+                                "0x0F":{
+                                    "msg": "Kept main domain in reset"
+                                },
+                                "0x10":{
+                                    "msg": "Disabled MCU domain"
+                                },
+                                "0x11":{
+                                    "msg": "Masked main domain reset"
+                                },
+                                "0x12":{
+                                    "msg": "Gated WWD clock"
+                                },
+                                "0x13":{
+                                    "msg": "Bypassed MCU PLL"
+                                },
+                                "0x14":{
+                                    "msg": "Disabled clock switch on clock loss"
+                                },
+                                "0x15":{
+                                    "msg": "Powered off HFOSC"
+                                },
+                                "0x16":{
+                                    "msg": "Enabled gating of clock on WFI"
+                                },
+                                "0x17":{
+                                    "msg": "DM in WFI"
+                                },
+                                "0x18":{
+                                    "msg": "LPM wake event"
+                                },
+                                "0x19":{
+                                    "msg": "DM exited WFI"
+                                },
+                                "0x1A":{
+                                    "msg": "Disabled gating of clock on WFI"
+                                },
+                                "0x1B":{
+                                    "msg": "Powered on HFOSC"
+                                },
+                                "0x1C":{
+                                    "msg": "Enabled clock switch on clock loss"
+                                },
+                                "0x1D":{
+                                    "msg": "Restored MCU PLL"
+                                },
+                                "0x1E":{
+                                    "msg": "Unmasked WWD clock"
+                                },
+                                "0x1F":{
+                                    "msg": "Enabled MCU LPSCs"
+                                },
+                                "0x20":{
+                                    "msg": "Wrote stub magic word"
+                                },
+                                "0x21":{
+                                    "msg": "Powered on main domain"
+                                },
+                                "0x22":{
+                                    "msg": "Released main reset"
+                                },
+                                "0x23":{
+                                    "msg": "Switched to SMS PLL from MCU PLL"
+                                },
+                                "0x24":{
+                                    "msg": "Enabled remaining MCU PLL"
+                                },
+                                "0x25":{
+                                    "msg": "TIFS core is ready"
+                                },
+                                "0x26":{
+                                    "msg": "Loaded FS stub"
+                                },
+                                "0x27":{
+                                    "msg": "Received continue resume"
+                                },
+                                "0x29":{
+                                    "msg": "Enabled remaining PLL"
+                                },
+                                "0x2A":{
+                                    "msg": "Removed DDR reset isolation"
+                                },
+                                "0x2B":{
+                                    "msg": "Exited DDR self reset"
+                                },
+                                "0x2C":{
+                                    "msg": "Disabled USB reset isolation"
+                                },
+                                "0x2D":{
+                                    "msg": "Sent continue resume to TFS"
+                                },
+                                "0x2E":{
+                                    "msg": "Received sync resume message"
+                                },
+                                "0x2F":{
+                                    "msg": "Locked MCU CTRL MMR "
+                                },
+                                "0x30":{
+                                    "msg": "FS stub started"
+                                },
+                                "0x31":{
+                                    "msg": "Received continue resume on FS stub from DM stub"
+                                },
+                                "0x32":{
+                                    "msg": "TIFS context restored"
+                                },
+                                "0x33":{
+                                    "msg": "Removed DM reset mask"
+                                },
+                                "0x34":{
+                                    "msg": "Removed main domain reset isolation"
+                                },
+                                "0x35":{
+                                    "msg": "Gated clock of legacy peripherals"
+                                },
+                                "0x36":{
+                                    "msg": "Ungated clock of legacy peripherals"
+                                },
+                                "0x37":{
+                                    "msg": "Unloaded CAN magic words in MMR"
+                                },
+                                "0x38":{
+                                    "msg": "Loaded CAN magic words in MMR"
+                                },
+                                "0x51":{
+                                    "msg": "Enabled main LPSC"
+                                }
+                            }
+                        },
+                        {
+                            "fmt": "%d",
+                            "higher_bit": 7,
+                            "lower_bit": 0,
+                            "name": " Value"
                         }
                     ]
                 },
@@ -4583,6 +4815,131 @@
                             "higher_bit": 21,
                             "lower_bit": 0,
                             "name": "Message Data"
+                        }
+                    ]
+                }
+            }
+        },
+        "0x04": {
+            "action_domain_name": "Low Power Mode",
+            "action_modifiers": [
+                {
+                    "mask": "0x40",
+                    "modifier_long": "Action failed",
+                    "modifier_short": "FAIL"
+                }
+            ],
+            "actions": {
+                "0x30": {
+                    "action_long": "Low power mode sequence for K3 Lite Devices",
+                    "action_short": "PM_LPM_SEQ",
+                    "msg_data": [
+                        {
+                            "fmt": "%X",
+                            "higher_bit": 21,
+                            "lower_bit": 8,
+                            "name": "Sequence number",
+                            "sub_msg" : {
+                                "0x01":{
+                                    "msg": "Saved secure manager context"
+                                },
+                                "0x02":{
+                                    "msg": "Received prepare sleep message"
+                                },
+                                "0x03":{
+                                    "msg": "Saved TIFS PLL during LPM suspend"
+                                },
+                                "0x04":{
+                                    "msg": "Saved the firewall Configuration"
+                                },
+                                "0x05":{
+                                    "msg": "Encrypted and saved minimal context in DDR"
+                                },
+                                "0x06":{
+                                    "msg": "Configured the magic word in MMR"
+                                },
+                                "0x07":{
+                                    "msg": "LPM wakeup event received"
+                                },
+                                "0x08":{
+                                    "msg": "A53 core has entered WFI"
+                                },
+                                "0x9":{
+                                    "msg": "Saved A53's PLL"
+                                },
+                                "0x0A":{
+                                    "msg": "Stopped the TIFS clock"
+                                },
+                                "0x0B":{
+                                    "msg": "Disabled the WKUP PLL, so TIFS operates at bypass frequency"
+                                },
+                                "0x0C":{
+                                    "msg": "A53 Core has been turned off"
+                                },
+                                "0x0D":{
+                                    "msg": "Disabled first set of main LPSC"
+                                },
+                                "0x0E":{
+                                    "msg": "Turned off first set of main Power Domains"
+                                },
+                                "0x0F":{
+                                    "msg": "Disabled second set of main LPSC"
+                                },
+                                "0x10":{
+                                    "msg": "Turned off second set of main Power Domains"
+                                },
+                                "0x11":{
+                                    "msg": "Powered off TIFS Oscillator"
+                                },
+                                "0x12":{
+                                    "msg": "Powered on TIFS Oscillator"
+                                },
+                                "0x13":{
+                                    "msg": "Restored TIFS PLL to operate at boot frequency"
+                                },
+                                "0x14":{
+                                    "msg": "Turned on the Isolation LPSC"
+                                },
+                                "0x15":{
+                                    "msg": "Turned on second set of main Power Domains"
+                                },
+                                "0x16":{
+                                    "msg": "Enabled second set of main LPSC"
+                                },
+                                "0x17":{
+                                    "msg": "Restored A53's PLL"
+                                },
+                                "0x18":{
+                                    "msg": "Turned on first set of main Power Domains"
+                                },
+                                "0x19":{
+                                    "msg": "Enabled first set of main LPSC"
+                                },
+                                "0x1A":{
+                                    "msg": "Resumed TIFS clock"
+                                },
+                                "0x1B":{
+                                    "msg": "Cleared the magic word"
+                                },
+                                "0x1C":{
+                                    "msg": "A53 Core has been turned on"
+                                },
+                                "0x1D":{
+                                    "msg": "Failed to trigger low power mode entry as the mode value is invalid"
+                                },
+                                "0x1E":{
+                                    "msg": "TIFS core has exited WFI"
+                                },
+                                "0x1F":{
+                                    "msg": "Received Enter sleep message"
+                                },
+                                "0x20":{
+                                    "msg": "Reinitialized the crypto module"
+                                },
+                                "0x22":{
+                                    "msg": "Latch clearing sequence failed"
+                                }          
+                            }
                         }
                     ]
                 }

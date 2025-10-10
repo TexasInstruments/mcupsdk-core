@@ -71,6 +71,7 @@ extern "C"
 #define TISCI_MSG_FLAG_FW_CAP_LPM_IO_ONLY_PLUS_DDR      TISCI_BIT(6)
 #define TISCI_MSG_FLAG_FW_CAP_IO_ISOLATION              TISCI_BIT(7)
 #define TISCI_MSG_FLAG_FW_CAP_DM                        TISCI_BIT(8)
+#define TISCI_MSG_FLAG_FW_CAP_LPM_ABORT                 TISCI_BIT(9)
 
 /**
  * \brief Notification message to indicate the DMSC is available.
