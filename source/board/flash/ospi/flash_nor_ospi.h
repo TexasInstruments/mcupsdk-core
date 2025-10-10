@@ -55,6 +55,19 @@ typedef struct {
 
 } Flash_NorOspiObject;
 
+typedef struct {
+    /* Fallback frequency in case of communication failure */
+    uint32_t fallBackFreq;
+    /* Baud rate divisor for DDR (Double Data Rate) mode */
+    uint32_t ddrBaudRateDiv;
+    /* Number of dummy clock cycles for 8D read id operations */
+    uint16_t idDummy8;
+    /* Number of dummy clock cycles for 8D command operations */
+    uint16_t dummyClksCmd8d;
+    /* Number of dummy clock cycles for 8D read operations */
+    uint16_t dummyClksRd8d;
+}Flash_NorOspiFallBackCfg;
+
 /* Flash specific externs */
 extern Flash_Fxns gFlashNorOspiFxns;
 

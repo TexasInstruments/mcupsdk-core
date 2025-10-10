@@ -369,6 +369,7 @@ typedef struct Flash_Config_s
     void                       *object;      /**< Flash driver object, used to maintain driver implementation state */
     uint32_t                   skipHwInit;  /**< Option to skip the HW initialization of the flash */
     uint32_t                   rwOffset;    /**< Global read write offset*/
+    void                       *fallBackCfg; /**< Flash fallback configs, used to configure flash in  */
 } Flash_Config;
 
 /* Flash specific includes */

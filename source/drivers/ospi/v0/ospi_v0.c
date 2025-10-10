@@ -202,6 +202,8 @@ OSPI_Handle OSPI_open(uint32_t index, const OSPI_Params *openParams)
 
         ospilldInitHandle->dataBaseAddr          = attrs->dataBaseAddr;
         ospilldInitHandle->inputClkFreq          = attrs->inputClkFreq;
+        ospilldInitHandle->moduleId              = attrs->moduleId;
+        ospilldInitHandle->clkId                 = attrs->clkId;
         ospilldInitHandle->intrNum               = attrs->intrNum;
         ospilldInitHandle->intrEnable            = attrs->intrEnable;
         ospilldInitHandle->intrPriority          = attrs->intrPriority;
@@ -1128,4 +1130,55 @@ uint32_t OSPI_isValidateOtpEnable(OSPI_Handle handle)
         retVal = OSPI_lld_isValidateOtpEnable(hOspi);
     }
     return retVal;
+}
+
+int32_t OSPI_setFrequency(OSPI_Handle handle, uint64_t inputClkFreq)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_setFrequency(hOspi, inputClkFreq);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    return status;
+}
+
+int32_t OSPI_setDelays(OSPI_Handle handle, uint32_t inputClkFreq)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_setDelays(hOspi, inputClkFreq);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    return status;
+}
+
+int32_t OSPI_setBaudRateDiv(OSPI_Handle handle, uint32_t baudRateDiv)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_setBaudRateDiv(hOspi, baudRateDiv);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    return status;
 }

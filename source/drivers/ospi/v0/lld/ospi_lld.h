@@ -578,6 +578,10 @@ typedef struct
 {
     uint32_t                dataBaseAddr;
     /**< Base address of the OSPI flash */
+    uint32_t                moduleId;
+    /**< OSPI Module Id */
+    uint32_t                clkId;
+    /**< OSPI Clock Id */
     uint32_t                inputClkFreq;
     /**< Module input clock frequency */
 
@@ -1614,6 +1618,47 @@ int32_t OSPI_lld_phyValidateTuningPoint(OSPILLD_Handle hOspi, uint32_t flashOffs
  * \return uint32_t    Returns 1 if OTP validation is enabled, 0 otherwise
  */
 uint32_t OSPI_lld_isValidateOtpEnable(OSPILLD_Handle hOspi);
+
+/**
+ *  \brief Sets the operating frequency for the OSPI peripheral
+ *
+ *  This function configures the OSPI controller to operate at the specified
+ *  frequency based on the input clock frequency provided.
+ *
+ *  \param hOspi OSPI LLD handle
+ *  \param inputClkFreq Input clock frequency in Hz
+ *
+ *  \return SystemP_SUCCESS on success, error code on failure
+ */
+int32_t OSPI_lld_setFrequency(OSPILLD_Handle hOspi, uint64_t inputClkFreq);
+
+/**
+ *  \brief Sets timing delays for the OSPI interface based on input clock frequency
+ *
+ *  This function configures the appropriate timing delays for the OSPI interface
+ *  to ensure reliable communication with external memory devices. The delays are
+ *  calculated based on the provided input clock frequency.
+ *
+ *  \param hOspi OSPI LLD handle
+ *  \param inputClkFreq Input clock frequency in Hz
+ *
+ *  \return SystemP_SUCCESS on success, error code on failure
+ */
+int32_t OSPI_lld_setDelays(OSPILLD_Handle hOspi, uint32_t inputClkFreq);
+
+/**
+ *  \brief Sets the baud rate divider for OSPI communication
+ *
+ *  This function configures the baud rate divider to control the OSPI clock frequency.
+ *  The actual OSPI clock frequency is determined by dividing the input clock frequency
+ *  by the specified baud rate divider.
+ *
+ *  \param hOspi OSPI LLD handle
+ *  \param baudRateDiv Baud rate divider value
+ *
+ *  \return SystemP_SUCCESS on success, error code on failure
+ */
+int32_t OSPI_lld_setBaudRateDiv(OSPILLD_Handle hOspi, uint32_t baudRateDiv);
 
 /** @} */
 

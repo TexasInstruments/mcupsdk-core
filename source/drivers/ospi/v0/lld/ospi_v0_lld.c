@@ -52,6 +52,8 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+#define OSPI_DIV_ROUND_UP(n, d)     (((n) + (d) - 1U) / (d))
+
 /** \brief    OSPI DMA related macros */
 #define OSPI_DMA_COPY_LOWER_LIMIT     (1024U)
 #define OSPI_DMA_COPY_SRC_ALIGNMENT   (32U)
@@ -73,11 +75,25 @@
  */
 #define CSL_OSPI_DEV_DELAY_ARRAY_SIZE  (4U)
 
+/**
+ *  \brief   OSPI ref clock generates max frequency of 200MHz, OSPI
+ *           max operating frequency 200/8 equals 25MHz
+ */
+#define OSPI_MAX_OPERATING_FREQUENCY      (25000000U)
+
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+/** \brief   OSPI device delays in cycles of OSPI master ref clock */
+#define CSL_OSPI_DEV_DELAY_CSSOT     (60U)  /* Chip Select Start of Transfer Delay */
+#define CSL_OSPI_DEV_DELAY_CSEOT     (60U)  /* Chip Select End of Transfer Delay */
+#define CSL_OSPI_DEV_DELAY_CSDADS    (60U) /* Chip Select De-Assert Different Slaves Delay */
+#define CSL_OSPI_DEV_DELAY_CSDA      (60U) /* Chip Select De-Assert Delay */
+#else
 /** \brief   OSPI device delays in cycles of OSPI controller ref clock */
 #define CSL_OSPI_DEV_DELAY_CSSOT     (46U)  /* Chip Select Start of Transfer Delay */
 #define CSL_OSPI_DEV_DELAY_CSEOT     (46U)  /* Chip Select End of Transfer Delay */
 #define CSL_OSPI_DEV_DELAY_CSDADS    (192U) /* Chip Select De-Assert Different Peripheral Delay */
 #define CSL_OSPI_DEV_DELAY_CSDA      (192U) /* Chip Select De-Assert Delay */
+#endif
 
 /** \brief  SRAM partition configuration definitions */
 /** size of the indirect read/write partition in the SRAM,
@@ -143,6 +159,7 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi);
 static int32_t OSPI_isDmaRestrictedRegion(OSPILLD_Handle hOspi, uint32_t addr);
 static uint32_t OSPI_utilLog2(uint32_t num);
 static uint8_t OSPI_getCmdExt(OSPILLD_Handle hOspi, uint8_t cmd);
+static uint32_t OSPI_lld_calculateTicksForns(const uint32_t refClkhz, const uint32_t nsVal);
 
 /* LLD Parameter Validation */ 
 static inline int32_t OSPI_lld_isFrameFormatValid(uint32_t frmFmt);
@@ -1279,7 +1296,18 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
                 tempSrc += (remainingBytes - unalignedBytes);
                 memcpy(tempDst, tempSrc, unalignedBytes);
             }
-
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+            /* Enable PHY Pipeline only if phy is enabled */
+            uint32_t phyEnable = CSL_REG32_FEXT(&pReg->CONFIG_REG,
+                                                OSPI_FLASH_CFG_CONFIG_REG_PHY_MODE_ENABLE_FLD);
+            if(phyEnable == TRUE)
+            {
+                /* Enable PHY pipeline */
+                CSL_REG32_FINS(&pReg->CONFIG_REG,
+                    OSPI_FLASH_CFG_CONFIG_REG_PIPELINE_PHY_FLD,
+                    TRUE);
+            }
+#else
             if(hOspiInit->phyEnable == TRUE)
             {
                 /* Enable PHY pipeline */
@@ -1287,7 +1315,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
                     OSPI_FLASH_CFG_CONFIG_REG_PIPELINE_PHY_FLD,
                     TRUE);
             }
-
+#endif
             if(remainingBytes > 0)
             {
                 /* Move dest and src pointers back in case of dangling bytes */
@@ -1830,6 +1858,10 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi)
                    OSPI_FLASH_CFG_RD_DATA_CAPTURE_REG_BYPASS_FLD,
                    1);
         /* Delay Setup */
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+        OSPI_lld_setDelays(hOspi, hOspiInit->inputClkFreq);
+        OSPI_lld_setBaudRateDiv(hOspi, hOspiInit->baudRateDiv);
+#else
         uint32_t delays[4] = { 10, 10, 10, 10 };
         uint32_t devDelay = ((delays[0] << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_INIT_FLD_SHIFT)  | \
                       (delays[1] << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_AFTER_FLD_SHIFT) | \
@@ -1850,6 +1882,7 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi)
                    OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD,
                    CSL_OSPI_BAUD_RATE_DIVISOR_DEFAULT);
         }
+#endif
 
         /* Disable PHY pipeline mode */
         CSL_REG32_FINS(&pReg->CONFIG_REG,
@@ -2508,4 +2541,99 @@ uint32_t OSPI_lld_isValidateOtpEnable(OSPILLD_Handle hOspi)
     /* Check if DAC is enabled or not */
     retVal = hOspi->hOspiInit->validateOtp;
     return retVal;
+}
+
+static uint32_t OSPI_lld_calculateTicksForns(const uint32_t refClkhz, const uint32_t nsVal)
+{
+	uint32_t ticks;
+
+	ticks = refClkhz / 1000;	/* kHz */
+	ticks = OSPI_DIV_ROUND_UP(ticks * nsVal, 1000000);
+
+	return ticks;
+}
+
+int32_t OSPI_lld_setFrequency(OSPILLD_Handle hOspi, uint64_t inputClkFreq)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+    OSPILLD_InitHandle hOspiInit;
+
+    if(hOspi != NULL)
+    {
+        hOspiInit = hOspi->hOspiInit;
+        status = SOC_moduleSetClockFrequency(hOspiInit->moduleId, hOspiInit->clkId, inputClkFreq);
+    }
+    else
+    {
+        status = OSPI_SYSTEM_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t OSPI_lld_setDelays(OSPILLD_Handle hOspi, uint32_t inputClkFreq)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+    const CSL_ospi_flash_cfgRegs *pReg;
+    uint32_t tsclk, cssot, csset, csdads, csda;
+
+    if(hOspi != NULL)
+    {
+        pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
+
+        /* Delay Setup */
+        tsclk = OSPI_DIV_ROUND_UP(inputClkFreq, OSPI_MAX_OPERATING_FREQUENCY);
+        cssot = OSPI_lld_calculateTicksForns(inputClkFreq, CSL_OSPI_DEV_DELAY_CSSOT);
+
+        if(cssot < tsclk)
+        {
+            cssot = tsclk;
+        }
+
+        csset = OSPI_lld_calculateTicksForns(inputClkFreq, CSL_OSPI_DEV_DELAY_CSEOT);
+        csdads = OSPI_lld_calculateTicksForns(inputClkFreq, CSL_OSPI_DEV_DELAY_CSDADS);
+        csda = OSPI_lld_calculateTicksForns(inputClkFreq, CSL_OSPI_DEV_DELAY_CSDA);
+
+        uint32_t devDelay = ((cssot << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_INIT_FLD_SHIFT)  | \
+                      (csset << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_AFTER_FLD_SHIFT) | \
+                      (csdads << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_BTWN_FLD_SHIFT)  | \
+                      (csda << CSL_OSPI_FLASH_CFG_DEV_DELAY_REG_D_NSS_FLD_SHIFT));
+        CSL_REG32_WR(&pReg->DEV_DELAY_REG, devDelay);
+    }
+    else
+    {
+        status = OSPI_SYSTEM_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t OSPI_lld_setBaudRateDiv(OSPILLD_Handle hOspi, uint32_t baudRateDiv)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+    const CSL_ospi_flash_cfgRegs *pReg;
+
+    if(hOspi != NULL)
+    {
+        pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
+
+        if(baudRateDiv != 0U)
+        {
+            CSL_REG32_FINS(&pReg->CONFIG_REG,
+                   OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD,
+                   CSL_OSPI_BAUD_RATE_DIVISOR(baudRateDiv));
+        }
+        else
+        {
+            CSL_REG32_FINS(&pReg->CONFIG_REG,
+                   OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD,
+                   CSL_OSPI_BAUD_RATE_DIVISOR_DEFAULT);
+        }
+    }
+    else
+    {
+        status = OSPI_SYSTEM_FAILURE;
+    }
+
+    return status;
 }
