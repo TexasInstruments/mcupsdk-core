@@ -365,6 +365,8 @@ struct tisci_sec_header {
 /* Keywriter lite TISCI message to write keys from a buffer  */
 #define TISCI_MSG_KEY_WRITER_LITE               (0x9045U)
 
+/******************************************************/
+
 /* Processor Control APIs */
 
 /** Message to get a Processor */
@@ -399,6 +401,9 @@ struct tisci_sec_header {
  * and authenticated boot configuration of a processor
  */
 #define TISCI_MSG_MCELF_PROC_AUTH_BOOT_FINISH        (0xC124U)
+
+/** Message to R/W MSMC timeout gasket configuration registers */
+#define TISCI_MSG_CONFIGURE_MSMC_GASKET        (0xC125U)
 
 /* RM IDs */
 
