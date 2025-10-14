@@ -786,6 +786,16 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> IO Expander Pins have changed in LP Rev A
     <td> IO Expander at 0x21H has updated pins P0,P3,P4,P5 from CPSW/ICSS_BRD_CONN_DET1, MDIO/MDC_MUX_SEL1, MDIO/MDC_MUX_SEL2, CPSW/ICSS_BRD_CONN_DET2 in E2 to BP_MUX_SW_S6, BP_MUX_SW_S4, MDIO/MDC_MUX_SEL, BP_MUX_SW_S5 in REV A .
 </tr>
+<tr>
+    <td> GPIO
+    <td> GPIO Interrupt Pin has changed in LP and SOM Rev A
+    <td> For Launchpad, the GPIO interrupt pin has changed from GPIO124 to GPIO5 in REV A. GPIO INT Crossbar has changed from GPIO_INT_XBAR_GPIO_0_BANK_INTR_7 to GPIO_INT_XBAR_GPIO_0_BANK_INTR_0 in REV A. <br>For SOM, the GPIO interrupt pin has changed from GPIO128 to GPIO120 in REV A. GPIO INT Crossbar has changed from GPIO_INT_XBAR_GPIO_0_BANK_INTR_8 to GPIO_INT_XBAR_GPIO_0_BANK_INTR_7 in REV A.
+</tr>
+<tr>
+    <td> PMIC
+    <td> Resolved PMIC watchdog reset issue on LP Rev A
+    <td> With the hardware fix for the PMIC watchdog reset issue in LP Rev A, the software workaround has been removed from all SBLs. For LP Rev E2 boards, the workaround is still required. Ensure the PMIC module is enabled in the SBL sysconfig.
+</tr>
 
 ### Migration to 400 MHz in ZFG package
 <table>
