@@ -72,16 +72,16 @@ SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0xfff00fffu, 0xffffff00u, 0x1ffbff, 0x00000000u,
+    .enableBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
                 },
      /**< All events enable: except clkstop events for unused clocks
       *   and PCIE events */
 	  /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0xfff00fffu, 0xffffff00u, 0x1ffbff, 0x00000000u,
+    .priorityBitmap = {0xfff00fffu, 0xffffff0fu, 0x1ffbff, 0x00000000u,
                         },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0xfff00fffu, 0xffffff00u, 0x1ffbff, 0x00000000u,
+    .errorpinBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
