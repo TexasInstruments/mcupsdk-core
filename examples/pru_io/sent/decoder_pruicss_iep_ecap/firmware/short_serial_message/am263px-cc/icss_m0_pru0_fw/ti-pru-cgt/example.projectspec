@@ -12,7 +12,7 @@
     <project
         title="Sent Decoder Using Iep Capture Short Serial Msg"
         name = "sent_decoder_using_iep_capture_short_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt"
-        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
             Debug,
@@ -36,6 +36,7 @@
             -DSLICE0
             -v4
             -DSOC_AM263PX
+            -DENABLE_SHORT_SERIAL_MESSAGE
             -DOS_FW
         "
         linkerBuildOptions="
@@ -47,11 +48,6 @@
 
         postBuildStep="
             $(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_short_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h
-        "
-
-        enableSysConfigTool="true"
-        sysConfigBuildOptions="
-            --context icss_m0_pru0 --part AM263P4 --package ZCZ_S
         "
 
         description="A Sent Decoder Using Iep Capture Short Serial Msg FW project">
@@ -75,12 +71,8 @@
         </file>
         <file path="./linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
-        </file>
-        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

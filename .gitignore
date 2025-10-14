@@ -117,3 +117,5 @@ tools/boot/multicore-elf/
 .internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.rel
 .internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.rst
 .internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.sym
+examples/pru_io/**/*ti-pru-cgt_linkinfo.xml
+examples/pru_io/**/*.obj

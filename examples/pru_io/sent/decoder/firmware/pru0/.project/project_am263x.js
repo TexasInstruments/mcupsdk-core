@@ -33,8 +33,14 @@ const lnkfiles = {
     ]
 };
 
-const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
+const lflags = {
+    common: [
+        "--entry_point=main",
+        "--diag_suppress=10063-D", /* Added to suppress entry_point related warning */
+    ],
+};
 
+const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
 const templates_pru =
 [
     {
@@ -46,22 +52,10 @@ const templates_pru =
 const buildOptionCombos = [
     { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
-const cflags = {
-    common: [
-        "-v4"
-    ],
-};
-
-const lflags = {
-    common: [
-        "--entry_point=main",
-        "--diag_suppress=10063-D", /* Added to suppress entry_point related warning */
-    ],
-};
 
 function getmakefilePruPostBuildSteps(cpu, board)
 {
-    let core = "pru0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -73,13 +67,13 @@ function getmakefilePruPostBuildSteps(cpu, board)
     }
 
     return  [
-        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3]+" -o sent_decoder_"+core+"_bin.h sent_decoder_"+core+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h ; $(MOVE) sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core+"_bin.h"
+        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3].toLocaleLowerCase()+" -o sent_decoder_"+core.toLocaleLowerCase()+"_bin.h sent_decoder_"+core.toLocaleLowerCase()+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core.toLocaleLowerCase()+"_bin.h ; $(MOVE) sent_decoder_"+core.toLocaleLowerCase()+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core.toLocaleLowerCase()+"_bin.h"
     ];
 }
 
 function getccsPruPostBuildSteps(cpu, board)
 {
-    let core = "pru0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -91,10 +85,9 @@ function getccsPruPostBuildSteps(cpu, board)
     }
 
     return  [
-        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3]+" -o sent_decoder_"+core+"_bin.h sent_decoder_"+core+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core+"_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core+"_bin.h"
+        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3].toLocaleLowerCase()+" -o sent_decoder_"+core.toLocaleLowerCase()+"_bin.h sent_decoder_"+core.toLocaleLowerCase()+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core.toLocaleLowerCase()+"_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core.toLocaleLowerCase()+"_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_"+core.toLocaleLowerCase()+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core.toLocaleLowerCase()+"_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_"+core.toLocaleLowerCase()+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263x-cc/sent_decoder_"+core.toLocaleLowerCase().toLocaleLowerCase()+"_bin.h"
     ];
 }
-
 function getComponentProperty() {
     let property = {};
 
@@ -105,6 +98,8 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "SENT Decoder PRU0 Firmware"
     property.buildOptionCombos = buildOptionCombos;
+    property.pru_main_file = "main";
+    property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
 
@@ -117,16 +112,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
-    build_property.includes = includes;
-    // build_property.cflags = cflags;
     build_property.lflags = lflags;
-    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    
-    build_property.skipMakefileCcsBootimageGen = true;
+    build_property.includes = includes;
     build_property.templates = templates_pru;
+    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+
+    build_property.skipMakefileCcsBootimageGen = true;
     build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
     build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
-
 
     return build_property;
 }

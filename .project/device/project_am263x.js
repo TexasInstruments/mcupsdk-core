@@ -253,15 +253,15 @@ const example_file_list = [
     "source/networking/enet/core/examples/ether_ring/.project/project.js",
     "source/networking/enet/core/examples/etherring_trafficgen/.project/project.js",
     "source/networking/enet/core/examples/etherring_can/.project/project.js",
-    "examples/pru_io/sent/encoder/firmware/.project/project.js",
-    "examples/pru_io/sent/encoder/example/.project/project.js",
-    "examples/pru_io/sent/decoder/example/.project/project.js",
-    "examples/pru_io/sent/decoder/firmware/pru0/.project/project.js",
-    "examples/pru_io/sent/decoder/firmware/pru1/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/example/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/.project/project.js",
+	"examples/pru_io/sent/decoder/example/.project/project.js",
+	"examples/pru_io/sent/decoder/firmware/pru0/.project/project.js",
+	"examples/pru_io/sent/decoder/firmware/pru1/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/example/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/.project/project.js",
+	"examples/pru_io/sent/encoder/example/.project/project.js",
+	"examples/pru_io/sent/encoder/firmware/.project/project.js",
     "examples/real_time_debug/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cbc_128/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cbc_256/.project/project.js",
@@ -546,7 +546,7 @@ function getFlashAddr() {
 }
 
 function getOsList(cpu) {
-    return ["nortos", "freertos"];    
+    return ["nortos", "freertos"];
 }
 
 module.exports = {

@@ -720,15 +720,15 @@ help:
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/firmware/pru0/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/firmware/pru1/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1860,9 +1860,9 @@ BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos
@@ -1902,12 +1902,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_pru0_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_pru1_fw_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 
@@ -3732,12 +3732,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
 
- sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
-
- sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
-
  sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/sent/decoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -3750,14 +3744,20 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
  sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
 
  sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
 
- sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+ sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
 
  edma_interrupt_transfer_am261x-som_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile all
@@ -4415,9 +4415,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am261x-lp_system_freertos_nortos_clean
@@ -4455,12 +4455,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_pru0_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_pru1_fw_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
@@ -6282,12 +6282,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
 
- sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
-
- sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
-
  sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -6300,14 +6294,20 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
  sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
 
  sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
 
- sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+ sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
 
  edma_interrupt_transfer_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile clean
@@ -6965,9 +6965,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am261x-lp_system_freertos_nortos_scrub
@@ -7005,12 +7005,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_pru0_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_pru1_fw_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
@@ -8832,12 +8832,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
 
- sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
-	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
-
- sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
-
  sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/sent/decoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
@@ -8850,14 +8844,20 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
  sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
 
  sent_decoder_using_iep_capture_short_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
 
- sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
-	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+ sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ sent_encoder_pru_fw_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
 
  edma_interrupt_transfer_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile scrub

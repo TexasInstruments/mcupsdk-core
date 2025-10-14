@@ -41,7 +41,6 @@ const lflags = {
 };
 
 const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
-const syscfgfile = "../example.syscfg";
 const templates_pru =
 [
     {
@@ -56,7 +55,7 @@ const buildOptionCombos = [
 
 function getmakefilePruPostBuildSteps(cpu, board)
 {
-    let core = "PRU0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -74,7 +73,7 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
 function getccsPruPostBuildSteps(cpu, board)
 {
-    let core = "PRU0"
+    let core = "pru0";
 
     switch(cpu)
     {

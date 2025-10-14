@@ -32,26 +32,6 @@ const lnkfiles = {
     ]
 };
 
-const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
-
-const templates_pru =
-[
-    {
-        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
-        output: "linker.cmd",
-    },
-];
-
-const buildOptionCombos = [
-    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
-];
-
-const cflags = {
-    common: [
-        "-v4"
-    ],
-};
-
 const lflags = {
     common: [
         "--entry_point=main",
@@ -59,8 +39,33 @@ const lflags = {
     ],
 };
 
+const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
+
+const templates_pru =
+[
+    {
+        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
+        output: "linker.cmd",
+    }
+];
+
+const buildOptionCombos = [
+    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+];
+
 function getmakefilePruPostBuildSteps(cpu, board)
 {
+    let core = "pru0";
+
+    switch(cpu)
+    {
+        case "icss_m0_pru1":
+            core = "pru1"
+            break;
+        case "icss_m0_pru0":
+            core = "pru0"
+    }
+
     return  [
         "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentencoderFirmwarepru -o sent_encoder_pru_bin.h sent_encoder_pru_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h ; $(MOVE) sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc/sent_encoder_pru_bin.h"
     ];
@@ -68,6 +73,17 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
 function getccsPruPostBuildSteps(cpu, board)
 {
+    let core = "pru0";
+
+    switch(cpu)
+    {
+        case "icss_m0_pru1":
+            core = "pru1"
+            break;
+        case "icss_m0_pru0":
+            core = "pru0"
+    }
+
     return  [
         "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentencoderFirmwarepru -o sent_encoder_pru_bin.h sent_encoder_pru_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc/sent_encoder_pru_bin.h; if ${CCS_HOST_OS} == linux mv sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc/sent_encoder_pru_bin.h"
     ];
@@ -83,6 +99,8 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "sent encoder pru fw"
     property.buildOptionCombos = buildOptionCombos;
+    property.pru_main_file = "main";
+    property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
 
@@ -95,16 +113,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
-    build_property.includes = includes;
-    build_property.cflags = cflags;
     build_property.lflags = lflags;
+    build_property.includes = includes;
     build_property.templates = templates_pru;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    
+
     build_property.skipMakefileCcsBootimageGen = true;
     build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
     build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
-
 
     return build_property;
 }

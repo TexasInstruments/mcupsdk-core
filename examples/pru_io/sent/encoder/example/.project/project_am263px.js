@@ -25,16 +25,18 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/pru_io/lib",
     ],
 };
 
-const includes_freertos_r5f = {
+
+const includes_freertos_r5f_am263px_lp = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263px-cc"
     ],
 };
@@ -55,7 +57,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER"
+const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
 
 const templates_freertos_r5f =
 [
@@ -68,21 +70,21 @@ const templates_freertos_r5f =
     }
 ];
 
-
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
 ];
+
 
 function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sent_encoder",
+    property.name = "sent_encoder";
     property.isInternal = false;
-    property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "This Example Is Intended To Be a Demo Implementation Of SENT Encoder"
     property.buildOptionCombos = buildOptionCombos;
+    property.tirexResourceSubClass = [ "example.gettingstarted" ];
 
     return property;
 }
@@ -92,38 +94,21 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
+    build_property.includes = includes_freertos_r5f_am263px_lp;
+
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_r5f;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_r5f;
-            build_property.templates = templates_freertos_r5f;
-        }
-    }
-    if(buildOption.cpu.match(/c66*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_c66;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_c66;
-            build_property.templates = templates_freertos_c66;
-        }
-    }
+
+
+    build_property.libdirs = libdirs_freertos;
+    build_property.libs = libs_freertos_r5f;
+    build_property.templates = templates_freertos_r5f;
 
     return build_property;
-}
-
-function getSystemProjects(device)
-{
-    return systemProjects;
 }
 
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
-    getSystemProjects,
 };

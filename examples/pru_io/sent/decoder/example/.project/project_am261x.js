@@ -35,7 +35,6 @@ const includes_freertos_r5f_am261x_lp = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am261x-lp",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am261x-lp",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru1/am261x-lp",
@@ -56,7 +55,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
 
@@ -85,10 +84,8 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "SENT Decoder Example"
     property.buildOptionCombos = buildOptionCombos;
-    // property.isSkipTopLevelBuild = true;
-    // property.skipUpdatingTirex = true;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
-    
+
     return property;
 }
 
@@ -104,11 +101,10 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    
     build_property.libdirs = libdirs_freertos;
     build_property.libs = libs_freertos_r5f;
     build_property.templates = templates_freertos_r5f;
-    
+
     return build_property;
 }
 

@@ -22,7 +22,7 @@ const filedirs = {
 };
 const defines = {
     common: [
-        "ENABLE_ENHANCED_SERIAL_MESSAGE",
+        "ENABLE_SHORT_SERIAL_MESSAGE",
     ],
 };
 const includes = {
@@ -45,7 +45,7 @@ const lflags = {
 };
 
 const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP";
-const syscfgfile = "../example.syscfg";
+
 const templates_pru =
 [
     {
@@ -60,7 +60,7 @@ const buildOptionCombos = [
 
 function getmakefilePruPostBuildSteps(cpu, board)
 {
-    let core = "PRU0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -72,13 +72,13 @@ function getmakefilePruPostBuildSteps(cpu, board)
     }
 
     return  [
-        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_enhanced_serial_msg_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ; $(MOVE) sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h"
+        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_short_serial_msg_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ; $(MOVE) sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h"
     ];
 }
 
 function getccsPruPostBuildSteps(cpu, board)
 {
-    let core = "PRU0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -90,7 +90,7 @@ function getccsPruPostBuildSteps(cpu, board)
     }
 
     return  [
-        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_enhanced_serial_msg_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h"
+        "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_short_serial_msg_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am261x-lp/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h"
     ];
 }
 function getComponentProperty() {
@@ -118,10 +118,11 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.lflags = lflags;
+    build_property.defines = defines;
     build_property.includes = includes;
     build_property.templates = templates_pru;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    
+
     build_property.skipMakefileCcsBootimageGen = true;
     build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
     build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);

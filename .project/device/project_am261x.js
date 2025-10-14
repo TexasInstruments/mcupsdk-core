@@ -342,15 +342,15 @@ const example_file_list = [
 	"examples/usb/device/ncm/.project/project.js",
 	"examples/pru_io/empty/.project/project.js",
 	"examples/pru_io/empty/firmware/.project/project.js",
+	"examples/pru_io/sent/decoder/example/.project/project.js",
+	"examples/pru_io/sent/decoder/firmware/pru0/.project/project.js",
+	"examples/pru_io/sent/decoder/firmware/pru1/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/example/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/.project/project.js",
+	"examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/.project/project.js",
+	"examples/pru_io/sent/encoder/example/.project/project.js",
 	"examples/pru_io/sent/encoder/firmware/.project/project.js",
-    "examples/pru_io/sent/encoder/example/.project/project.js",
-    "examples/pru_io/sent/decoder/example/.project/project.js",
-    "examples/pru_io/sent/decoder/firmware/pru0/.project/project.js",
-    "examples/pru_io/sent/decoder/firmware/pru1/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/example/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/.project/project.js",
-    "examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	"test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
@@ -522,7 +522,7 @@ function getSysCfgCpu(cpu) {
 }
 
 function getSysCfgPkg(board) {
-    
+
     switch (board) {
         case "am261x-lp":
             return "ZFG";
@@ -605,7 +605,7 @@ function getFlashAddr() {
 }
 
 function getOsList(cpu) {
-    return ["nortos", "freertos"];    
+    return ["nortos", "freertos"];
 }
 module.exports = {
     getComponentList,

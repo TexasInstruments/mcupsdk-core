@@ -552,6 +552,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_lwip_cpsw_am263px-lp-dp83869/a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ether_ring_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += etherring_trafficgen_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -2328,11 +2331,17 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C source/networking/enet/core/examples/etherring_can/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/pru_io/sent/decoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  sent_decoder_pru0_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru0/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
  sent_decoder_pru1_fw_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru1/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  sent_decoder_using_iep_capture_enhanced_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
@@ -2342,6 +2351,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  sent_decoder_using_iep_capture_short_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  sent_encoder_pru_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
@@ -3222,6 +3234,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_lwip_cpsw_am263px-lp-dp83869/a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ether_ring_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += etherring_trafficgen_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4998,11 +5013,17 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/etherring_can/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/sent/decoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  sent_decoder_pru0_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru0/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
  sent_decoder_pru1_fw_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru1/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  sent_decoder_using_iep_capture_enhanced_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
@@ -5012,6 +5033,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  sent_decoder_using_iep_capture_short_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  sent_encoder_pru_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
@@ -5892,6 +5916,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_lwip_cpsw_am263px-lp-dp83869/
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ether_ring_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += etherring_trafficgen_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += real_time_debug_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += real_time_debug_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += real_time_debug_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -7668,11 +7695,17 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  etherring_can_am263px-lp-dp83869/am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C source/networking/enet/core/examples/etherring_can/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ sent_decoder_r5f_example_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/pru_io/sent/decoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  sent_decoder_pru0_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru0/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
  sent_decoder_pru1_fw_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/decoder/firmware/pru1/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ sent_decoder_using_iep_capture_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  sent_decoder_using_iep_capture_enhanced_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
@@ -7682,6 +7715,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  sent_decoder_using_iep_capture_short_serial_msg_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ sent_encoder_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/pru_io/sent/encoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  sent_encoder_pru_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
@@ -8578,11 +8614,14 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/ether_ring/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/etherring_trafficgen/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/etherring_can/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/firmware/pru0/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/firmware/pru1/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/short_serial_message/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/example/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am263px-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/real_time_debug/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]

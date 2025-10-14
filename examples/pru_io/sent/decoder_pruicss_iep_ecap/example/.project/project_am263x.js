@@ -4,8 +4,8 @@ let device = "am263x";
 
 const files = {
     common: [
-        "sent_decoder.c",
         "main.c",
+        "sent_decoder.c",
     ],
 };
 
@@ -25,10 +25,12 @@ const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/pru_io/lib",
     ],
 };
 
-const includes_freertos_r5f = {
+const includes_freertos_r5f_am263x_lp = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
@@ -45,6 +47,7 @@ const libs_freertos_r5f = {
     common: [
         "freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -69,7 +72,6 @@ const templates_freertos_r5f =
     }
 ];
 
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "freertos"},
 ];
@@ -82,9 +84,9 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "sent_decoder_using_iep_capture";
     property.isInternal = false;
-    property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "SENT Decoder Example Using PRUICSS IEP ECAP"
     property.buildOptionCombos = buildOptionCombos;
+    property.tirexResourceSubClass = [ "example.gettingstarted" ];
 
     return property;
 }
@@ -94,21 +96,18 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
+    build_property.includes = includes_freertos_r5f_am263x_lp;
+
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_r5f;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_r5f;
-            build_property.templates = templates_freertos_r5f;
-        }
-    }
+
+    build_property.libdirs = libdirs_freertos;
+    build_property.libs = libs_freertos_r5f;
+    build_property.templates = templates_freertos_r5f;
+
     return build_property;
 }
-
 
 module.exports = {
     getComponentProperty,

@@ -81,7 +81,7 @@ clean:
 post-build:
 		-$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentencoderFirmwarepru -o sent_encoder_pru_bin.h sent_encoder_pru_fw_am263px-cc_icss_m0_pru0_fw_ti-pru-cgt.out
 		- $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h 
-		- $(MOVE) sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263x-cc/sent_encoder_pru_bin.h
+		- $(MOVE) sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/am263px-cc/sent_encoder_pru_bin.h
 	-@echo ' '
 
 .PHONY: all clean

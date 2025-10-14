@@ -36,7 +36,6 @@ const includes_freertos_r5f_am261x_lp = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am261x-lp",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/enhanced_serial_message/am261x-lp",
         "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp",
@@ -87,10 +86,8 @@ function getComponentProperty() {
     property.isInternal = false;
     property.description = "SENT Decoder Example Using PRUICSS IEP ECAP"
     property.buildOptionCombos = buildOptionCombos;
-    // property.isSkipTopLevelBuild = true;
-    // property.skipUpdatingTirex = true;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
-    
+
     return property;
 }
 
@@ -105,11 +102,10 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    
     build_property.libdirs = libdirs_freertos;
     build_property.libs = libs_freertos_r5f;
     build_property.templates = templates_freertos_r5f;
-    
+
     return build_property;
 }
 

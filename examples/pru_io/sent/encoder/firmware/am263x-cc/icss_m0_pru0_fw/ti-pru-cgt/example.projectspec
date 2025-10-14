@@ -35,7 +35,6 @@
             -DPRU0
             -DSLICE0
             -v4
-            -v4
             -DSOC_AM263X
             -DOS_FW
         "

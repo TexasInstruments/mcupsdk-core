@@ -80,9 +80,9 @@ clean:
 	-@echo ' '
 
 post-build:
-		-$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h sent_decoder_using_iep_capture_enhanced_serial_msg_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt.out
-		- $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h 
-		- $(MOVE) sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/sent_decoder_using_iep_capture_pru0_bin.h
+		-$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_pru0_bin.h sent_decoder_using_iep_capture_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt.out
+		- $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_pru0_bin.h 
+		- $(MOVE) sent_decoder_using_iep_capture_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/no_serial_message/am261x-lp/sent_decoder_using_iep_capture_pru0_bin.h
 	-@echo ' '
 
 .PHONY: all clean

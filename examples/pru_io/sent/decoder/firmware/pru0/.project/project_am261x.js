@@ -41,7 +41,6 @@ const lflags = {
 };
 
 const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
-const syscfgfile = "../example.syscfg";
 const templates_pru =
 [
     {
@@ -56,7 +55,7 @@ const buildOptionCombos = [
 
 function getmakefilePruPostBuildSteps(cpu, board)
 {
-    let core = "PRU0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -74,7 +73,7 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
 function getccsPruPostBuildSteps(cpu, board)
 {
-    let core = "pru0"
+    let core = "pru0";
 
     switch(cpu)
     {
@@ -117,7 +116,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.includes = includes;
     build_property.templates = templates_pru;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    
+
     build_property.skipMakefileCcsBootimageGen = true;
     build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
     build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);

@@ -34,8 +34,8 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f
-            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/driver
+            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example
             -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263px-cc
             -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru1/am263px-cc
             -mcpu=cortex-r5
@@ -54,6 +54,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/pru_io/lib
             -i${CG_TOOL_ROOT}/lib
             -m=sent_decoder_r5f_example.${ConfigName}.map
             --diag_suppress=10063
@@ -96,9 +97,9 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../sent_decoder.c" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../sent_decoder.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

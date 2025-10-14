@@ -25,9 +25,9 @@ ASM_DEPS += \
 OBJDIR := .
 
 FILES_PATH_common = \
+	. \
 	.. \
 	../../.. \
-	. \
 	../../../../pru0 \
 
 FILES_PATH := $(FILES_PATH_common)

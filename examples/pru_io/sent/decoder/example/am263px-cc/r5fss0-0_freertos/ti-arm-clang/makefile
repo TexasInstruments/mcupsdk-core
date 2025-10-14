@@ -36,8 +36,8 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	sent_decoder.c \
 	main.c \
+	sent_decoder.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -50,7 +50,6 @@ FILES_PATH_common = \
 	.. \
 	../../.. \
 	../../../firmware \
-	. \
 	generated \
 
 INCLUDES_common := \
@@ -59,8 +58,8 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
-	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example \
 	-I${MCU_PLUS_SDK_PATH}/source/pru_io/driver \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example \
 	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/am263px-cc \
 	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru1/am263px-cc \
 	-Igenerated \
@@ -106,6 +105,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/pru_io/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -133,6 +133,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/pru_io/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
