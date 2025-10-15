@@ -148,8 +148,13 @@ int main(void)
         {
             /* Initialize PRU Cores if applicable */
             Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+            #ifdef ENC_BOOT
             bootConfig = (Bootloader_Config *)bootHandle;
             bootConfig->scratchMemPtr = gAppimage;
+            #else
+            cfg->enableScratchMem = 0U;
+            #endif
+            
             if(TRUE == cfg->initICSSCores)
             {
                 status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
