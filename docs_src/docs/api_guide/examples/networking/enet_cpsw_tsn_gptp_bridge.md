@@ -3,7 +3,7 @@
 \warning AM273x is single ethernet port device and hence gPTP Bridge mode is not possible to execute 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM261X
 [TOC]
 
 # Introduction
@@ -21,7 +21,7 @@ In this example, We have one Rx and two Tx DMA channel to handle all the traffic
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64x || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM261X
 In this example, We use two Rx and two Tx DMA channel, one Rx and one Tx channel specific to gPTP traffic.
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
@@ -104,7 +104,12 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 # Steps to Run the Example
 
 ## Prerequisites
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM261X
 - @VAR_BOARD_NAME_LOWER or @VAR_LP_BOARD_NAME_LOWER
+\endcond
+\cond SOC_AM64X
+- @VAR_BOARD_NAME_LOWER
+\endcond
 - Cat6 ethernet cable
 - Two PCs with Linux Ubuntu OS (or any PC running bash shell) and both with PTP capable network card.
 - Install `linuxptp` on both the PCs
