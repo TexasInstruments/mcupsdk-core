@@ -15,11 +15,8 @@
         "/networking/networking",
         "/security/security",
         "/usb/usb",
-        "/xbar/xbar",
-        "/memory_configurator/components",
-        "/optiflash/optiflash",
-        "sdl/sdl",
-        "/clockTree/clockTreeComponents.js"
+        "/pru_io/pru_io",
+        "/memory_configurator/components"
     ],
     "devices": [
         "AM64x",
@@ -37,7 +34,6 @@
         "AM62x",
         "AM65xx_SR2.0_beta",
     ],
-    "boardPath": "/board/",
     "contexts": {
         "AM65xx_SR2.0_beta": [{
             "name": "r5fss0-0",
