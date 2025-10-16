@@ -138,7 +138,9 @@ int main(void)
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
         Bootloader_Handle bootHandle;
+        #ifdef ENC_BOOT
         Bootloader_Config *bootConfig;
+        #endif
 
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
