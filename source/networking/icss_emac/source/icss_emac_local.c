@@ -173,11 +173,21 @@ void ICSS_EMAC_calcPort1BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
     uint32_t p0Q15BufferOffset = p0Q14BufferOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE14] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
     uint32_t p0Q16BufferOffset = p0Q15BufferOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE15] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
 
+#ifdef BUILD_HSR_PRP_MII
+    bufferOffsets[ICSS_EMAC_QUEUE16] = p0Q16BufferOffset;/* To avoid "variable unused" warning in case of "treat warning as an error" build*/
+    bufferOffsets[ICSS_EMAC_QUEUE1] = p0Q3BufferOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#else
     bufferOffsets[ICSS_EMAC_QUEUE1] = p0Q16BufferOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#endif
 
     for (qCount = (ICSS_EMAC_QUEUE1+1U); qCount < pDynamicMMap->numQueues; qCount++)
     {
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: Queue3 common queue is port 2 host Tx queue combined, multiply by 4 to get port 2 queue related offset*/
+        bufferOffsets[qCount] = bufferOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#else
         bufferOffsets[qCount] = bufferOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#endif
     }
 
     bufferOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferOffset + 1536U;
@@ -201,12 +211,22 @@ void ICSS_EMAC_calcPort1BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
     uint32_t p0Q15BdOffset = p0Q14BdOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE14] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     uint32_t p0Q16BdOffset = p0Q15BdOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE15] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
 
+#ifdef BUILD_HSR_PRP_MII
+    bdOffsets[ICSS_EMAC_QUEUE16] = p0Q16BdOffset;/* To avoid "variable unused" warning in case of "treat warning as an error" build*/
+    bdOffsets[ICSS_EMAC_QUEUE1] =p0Q3BdOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#else
     bdOffsets[ICSS_EMAC_QUEUE1] = p0Q16BdOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#endif
 
 
     for (qCount = (ICSS_EMAC_QUEUE1+1U); qCount < pDynamicMMap->numQueues; qCount++)
     {
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: Queue3 common queue is port 2 host Tx queues combined, multiply by 4 to get port 2 queue related offset*/
+        bdOffsets[qCount] =  bdOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#else
         bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#endif
     }
 
     bdOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE) ;
@@ -257,10 +277,21 @@ void ICSS_EMAC_calcPort2BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
     uint32_t p1Q15BufferOffset = p1Q14BufferOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE14] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
     uint32_t p1Q16BufferOffset = p1Q15BufferOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE15] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
 
+#ifdef BUILD_HSR_PRP_MII
+    bufferOffsets[ICSS_EMAC_QUEUE16] = p1Q16BufferOffset;/* To avoid "variable unused" warning in case of "treat warning as an error" build*/
+    bufferOffsets[ICSS_EMAC_QUEUE1] = p0Q1BufferOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#else
     bufferOffsets[ICSS_EMAC_QUEUE1] = p1Q16BufferOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#endif
     for (qCount = (ICSS_EMAC_QUEUE1+1U); qCount < pDynamicMMap->numQueues; qCount++)
     {
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: Queue2 common queue is port 1 host Tx queues combined, multiply by -3 to get port 1 queue related offsets
+         *Queue3 common queue is port 2 host Tx queues combined, multiply by 4 to get port 2 queue related offsets*/
+        bufferOffsets[qCount] = bufferOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE * (qCount == ICSS_EMAC_QUEUE3 ? 3 : 1);
+#else
         bufferOffsets[qCount] = bufferOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
+#endif
     }
 
     bufferOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferOffset + (1536U*2U);
@@ -304,10 +335,21 @@ void ICSS_EMAC_calcPort2BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
 
     uint32_t p1ColBDOffset = pDynamicMMap->p0ColBufferDescOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE);
 
+#ifdef BUILD_HSR_PRP_MII
+    bdOffsets[ICSS_EMAC_QUEUE1] = p0Q1BdOffset + pDynamicMMap->rxHostQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+    bdOffsets[ICSS_EMAC_QUEUE16] = p1Q16BdOffset;/* To avoid "variable unused" warning in case of "treat warning as an error" build*/
+#else
     bdOffsets[ICSS_EMAC_QUEUE1] = p1Q16BdOffset + pDynamicMMap->txQueueSize[ICSS_EMAC_QUEUE16] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#endif    
     for (qCount = (ICSS_EMAC_QUEUE1+1U); qCount < pDynamicMMap->numQueues; qCount++)
     {
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: Queue2 common queue is port 1 host Tx queues combined, multiply by -3 to get port 1 queue related offsets
+         *Queue3 common queue is port 2 host Tx queues combined, multiply by 4 to get port 2 queue related offsets*/
+        bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE * (qCount == ICSS_EMAC_QUEUE3 ? 3 : 1);
+#else
         bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->txQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
+#endif
     }
 
     bdOffsets[ICSS_EMAC_COLQUEUE] = p1ColBDOffset + ICSS_EMAC_DEFAULT_FW_BD_SIZE * (ICSS_EMAC_DEFAULT_FW_COLLISION_QUEUE_SIZE);
@@ -481,11 +523,20 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort1[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: As we are combining two queues for common queues, Queue 2, Queue 3 size should be double*/
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE * 2U) + bufferOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
+#endif        
         pTemp16++;
         *pTemp16 =  (uint16_t)(bdOffsetsPort1[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE * 2U) + bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#endif
         pTemp16++;
     }
 
@@ -500,11 +551,20 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     {
         *pTemp16 = (uint16_t)(bufferOffsetsPort2[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: As we are combining two queues for common queues, Queue 2, Queue 3 size should be double*/
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE * 2U) + bufferOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE) + bufferOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE);
+#endif        
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort2[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE * 2U) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#endif        
         pTemp16++;
     }
 
@@ -565,7 +625,12 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort1[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: As we are combining two queues for common queues, Queue 2, Queue 3 size should be double*/
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE * 2U) +  bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) +  bdOffsetsPort1[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#endif
         pTemp16++;
     }
 
@@ -583,7 +648,12 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
         pTemp16++;
         *pTemp16 = (uint16_t)(bdOffsetsPort2[qCount]);
         pTemp16++;
+#ifdef BUILD_HSR_PRP_MII
+        /*Tx-optimization: As we are combining two queues for common queues, Queue 2, Queue 3 size should be double*/
+        *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE * 2U) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#else
         *pTemp16 = (uint16_t)((pDynamicMMap->txQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+#endif        
         pTemp16++;
     }
 

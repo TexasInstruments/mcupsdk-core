@@ -146,6 +146,10 @@ typedef struct ICSS_EMAC_PktInfo_s
     uint32_t fdbLookupSuccess;
     /*! Packet was flooded. FW Learning Only. */
     uint32_t flooded;
+#ifdef BUILD_HSR_PRP_MII
+    /*! Flag to indicate whether packet is meant for host to receive or not*/
+    uint32_t host_recv_flag;
+#endif
 } ICSS_EMAC_PktInfo;
 
 /**

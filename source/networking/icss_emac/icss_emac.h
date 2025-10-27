@@ -64,6 +64,14 @@ extern "C" {
 
 /** \brief Maximum number of Ports in a single ICSS  */
 #define ICSS_EMAC_MAX_PORTS_PER_INSTANCE    (2)
+#ifdef BUILD_HSR_PRP_MII  
+/**Firmware-based Learning Mode Enabled  */
+#define ICSS_EMAC_FW_LEARNING_EN (2U)
+/**Low priority packets is sent or received for priority based interrupt*/
+#define ICSS_EMAC_LOW_PRIORITY   (1U)
+/**High priority packets is sent or received for priority based interrupt*/
+#define ICSS_EMAC_HIGH_PRIORITY  (2U)
+#endif
 
 /**
  *  \anchor ICSS_EMAC_Modes
@@ -169,6 +177,16 @@ extern "C" {
 #define ICSS_EMAC_COLQUEUE ((uint32_t)16U)
 /** @} */
 
+#ifdef BUILD_HSR_PRP_MII  
+/**Tx Queue is occupied already by a thread*/
+#define ICSS_EMAC_SET_TX_OCCUPIED (1U)
+/**Tx Queue is not occupied at the moment by any thread*/
+#define ICSS_EMAC_CLR_TX_OCCUPIED (0U)
+/**Scan High Priority Queues first*/
+#define ICSS_EMAC_SCAN_PORT1_HIGH_FIRST (0U)
+/**Scan Low priority Queues after high priority ones*/
+#define ICSS_EMAC_SCAN_PORT2_HIGH_FIRST (1U)
+#endif
 /** \brief Total Queues available */
 #define ICSS_EMAC_NUMQUEUES ((uint32_t)17U)
 
@@ -461,6 +479,19 @@ extern "C" {
 
 #define ICSS_EMAC_OBJECT_SIZE_IN_BYTES                  (42000)
 
+#ifdef BUILD_HSR_PRP_MII
+/**Mask of FDB Lookup success flag in buffer descriptor*/
+#define ICSS_EMAC_BD_FDB_LOOKUP_SUCCESS_MASK ((uint32_t)0x00000040U)
+
+/**Position of FDB Lookup success flag in buffer descriptor*/
+#define ICSS_EMAC_BD_FDB_LOOKUP_SUCCESS_SHIFT ((uint32_t)6U)
+
+/**Mask of Firmware flood status in buffer descriptor*/
+#define ICSS_EMAC_BD_FW_FLOOD_MASK ((uint32_t)0x00000080U)
+
+/**Position of Firmware flood status in buffer descriptor*/
+#define ICSS_EMAC_BD_FW_FLOOD_SHIFT ((uint32_t)7U)
+#endif
 /**
  * \brief Alias for ICSS EMAC Handle containing base addresses and modules
  */
@@ -638,6 +669,14 @@ typedef struct ICSS_EMAC_Attrs_s
     /**< New buffer design enable flag uses seperate host queue per prot*/
     uint8_t                     portPrioritySelection;
     /**< Flag to alter between port priority for host queue processing*/
+#ifdef BUILD_HSR_PRP_MII
+    uint8_t                     pktPriority;
+    /**Flag for show casing whether an Tx queue is occupied.
+     * To avoid the access of same queue by different tasks at the same time*/
+    int8_t                      txOccupied;
+    /**Start with scanning port 1 queue, if this flag is 0, else start with port 2 queues*/
+    uint8_t                     pingPong;
+#endif
 } ICSS_EMAC_Attrs;
 
 /**
@@ -764,6 +803,10 @@ typedef struct ICSS_EMAC_RxArgument_s
     /**< Returns port number on which frame was received */
     uint32_t            more;
     /**< Returns more which is set to 1 if there are more frames in the queue */
+#ifdef BUILD_HSR_PRP_MII
+    uint32_t            host_recv_flag; 
+    /*Returns the packet flag whether it is valid for host or not */
+#endif
 } ICSS_EMAC_RxArgument;
 
 /**
