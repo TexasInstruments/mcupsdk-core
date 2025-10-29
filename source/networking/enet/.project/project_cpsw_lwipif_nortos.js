@@ -114,6 +114,7 @@ const defines_r5f = {
         "ENET_CFG_TRACE_LEVEL=3",
         "ENET_ENABLE_PER_CPSW=1",
         "ENABLE_ENET_LOG",
+        "ENET_CPSW",
     ],
     debug: [
         "ENET_CFG_DEV_ERROR=1",
