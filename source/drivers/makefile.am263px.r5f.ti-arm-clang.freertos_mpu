@@ -168,6 +168,7 @@ FILES_PATH_common = \
     flsopskd/v0 \
     pmu \
     pmu/r5f \
+    pmu/r5f/ti-arm-clang \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

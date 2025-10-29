@@ -45,7 +45,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "TEST_SDL_STC";
 

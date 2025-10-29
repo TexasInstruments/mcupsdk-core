@@ -52,6 +52,7 @@ ASMFILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../ti-arm-clang \
 	generated \
 
 INCLUDES_common := \

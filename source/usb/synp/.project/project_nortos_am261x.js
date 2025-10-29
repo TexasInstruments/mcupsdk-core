@@ -53,14 +53,19 @@ const defines = {
     release: [
     ],
 };
-const cflags = {
+const cflags_ti_arm_clang = {
     common: [
         "-Wno-address-of-packed-member",
+    ],
+};
+const cflags_iar_arm = {
+    common: [
     ],
 };
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "nortos"},
+    { device: device, cpu: "r5f", cgt: "iar-arm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -84,7 +89,12 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.includes = includes;
     build_property.defines = defines;
-    build_property.cflags = cflags;
+    if(buildOption.cgt.match(/ti-arm-clang*/)) {
+        build_property.cflags = cflags_ti_arm_clang;
+    }
+    else if(buildOption.cgt.match(/iar-arm*/)) {
+        build_property.cflags = cflags_iar_arm;
+    }
 
     return build_property;
 }

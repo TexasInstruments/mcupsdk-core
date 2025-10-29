@@ -16,6 +16,10 @@ function genSystemProjectDevice(device) {
         for ( project of systemProjects)
         {
             let outPath = `${property.dirPath}/${project.board}/system_${project.tag}`
+            if(device === "am261x"){
+                project.cgt = project.cgt || "ti-arm-clang";
+                outPath = `${property.dirPath}/${project.board}/system_${project.tag}/${project.cgt}`
+            }
 
             project.device = device;
 

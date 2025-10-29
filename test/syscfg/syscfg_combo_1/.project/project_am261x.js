@@ -76,7 +76,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "example.syscfg"
 
 const templates_nortos_r5f =
 [

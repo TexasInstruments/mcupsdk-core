@@ -86,7 +86,6 @@ INCLUDES_common := \
     -I../../drivers/soc/am261x \
     -I../../kernel/freertos/FreeRTOS-Kernel/include \
     -I../../kernel/freertos/config/am261x/r5f \
-    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I../tinyusb/config/freertos/am261x/ncm_config \
     -I../tinyusb/tinyusb-stack/src \
     -I../tinyusb/tinyusb-stack/src/common \
@@ -104,6 +103,7 @@ INCLUDES_common := \
     -I../../networking/lwip/lwip-stack/src/include/lwip \
     -I../../networking/lwip/lwip-config/am261x/usb/ \
     -I../../networking/lwip/lwip-port/include/ \
+    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \

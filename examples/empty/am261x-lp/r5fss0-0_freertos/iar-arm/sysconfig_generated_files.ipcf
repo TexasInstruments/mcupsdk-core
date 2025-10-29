@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+<iarProjectConnection version="1.6" name="SysConfig syscfg Files" oneShot="false"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="IarProjectConnection_1.8.xsd">
+    <files>
+    <path>$PROJ_DIR$/syscfg/ti_drivers_config.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_drivers_config.h</path>
+    <path>$PROJ_DIR$/syscfg/ti_drivers_open_close.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_drivers_open_close.h</path>
+    <path>$PROJ_DIR$/syscfg/ti_dpl_config.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_dpl_config.h</path>
+    <path>$PROJ_DIR$/syscfg/ti_pinmux_config.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_power_clock_config.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_board_config.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_board_config.h</path>
+    <path>$PROJ_DIR$/syscfg/ti_board_open_close.c</path>
+    <path>$PROJ_DIR$/syscfg/ti_board_open_close.h</path>
+    <path>$PROJ_DIR$/syscfg/linker.icf</path>
+    </files>
+</iarProjectConnection>

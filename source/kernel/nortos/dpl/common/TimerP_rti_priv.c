@@ -172,8 +172,10 @@ uint32_t TimerP_getCountPriv(uint32_t baseAddr)
     frc = *frc_addr;
     frc = frc + 1U; /* dummy increment so that compipler does not optimized this out */
 
+    uint32_t uc = *uc_addr;
+    uint32_t cpuc = *cpuc_addr;
     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
-    return MAX_NUMBER_OF_COUNT - (*cpuc_addr - *uc_addr) - 1UL;
+    return MAX_NUMBER_OF_COUNT - (cpuc - uc) - 1UL;
 }
 
 uint32_t TimerP_getReloadCountPriv(uint32_t baseAddr)

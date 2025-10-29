@@ -20,6 +20,19 @@
   - Right click on the project title and click "Build Project"
   - This will build the project, now you can load and run it (see \ref CCS_LAUNCH_PAGE)
 
+\cond SOC_AM261X
+
+## Using IAR Embedded Workbench projects
+
+- Quick steps to import the "hello world example" IAR EW project are listed below
+  - In IAR EW, goto `Toolbar > File > Open Workspace`
+  - Browse and goto the folder `${SDK_INSTALL_DIR}/examples/hello_world/am261x-lp/r5fss0-0_freertos/iar-arm`
+  - Select the `hello_world_am261x-lp_r5fss0-0_freertos.template.eww` file
+  - The workspace and project will be imported.
+  - Right click on the project title and click `"Make"`
+  - This will build the project, now you can load and run it (see \ref IAR_LAUNCH_PAGE)
+
+\endcond
 ## Using makefiles
 
 - **When using makefiles to build**, make sure you have built the example of interest using makefiles (see \ref MAKEFILE_BUILD_PAGE)

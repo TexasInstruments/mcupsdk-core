@@ -65,9 +65,9 @@
 /**********************************************************************
  *************************** Local Functions **************************
  **********************************************************************/
-static int _handshake(volatile dwc_usb3_device_t *dev, volatile u32 __iomem *ptr,u32 mask, u32 done);
-static int calc_num_in_eps(volatile dwc_usb3_device_t *dev);
-static int calc_num_out_eps(volatile dwc_usb3_device_t *dev);
+static int _handshake(dwc_usb3_device_t *dev, volatile u32 __iomem *ptr,u32 mask, u32 done);
+static int calc_num_in_eps(dwc_usb3_device_t *dev);
+static int calc_num_out_eps(dwc_usb3_device_t *dev);
 /**
  * Fill in the four dwords of a DMA descriptor (aka a TRB).
  */
@@ -157,7 +157,7 @@ void dwc_usb3_disable_desc(dwc_usb3_dma_desc_t *desc)
  * @return      1 when the mask bit has the specified value (handshake done),
  *              0 when timeout has passed (handshake failed).
  */
-static int _handshake(volatile dwc_usb3_device_t *dev, volatile u32 __iomem *ptr,
+static int _handshake(dwc_usb3_device_t *dev, volatile u32 __iomem *ptr,
 		      u32 mask, u32 done)
 {
 	u32 usec = 100000;
@@ -188,7 +188,7 @@ static int _handshake(volatile dwc_usb3_device_t *dev, volatile u32 __iomem *ptr
 /**
  * Send TRANSMIT FUNCTION WAKE DEVICE NOTIFICATION command to Device
  */
-int dwc_usb3_xmit_fn_remote_wake(volatile dwc_usb3_pcd_t *pcd, u32 intf)
+int dwc_usb3_xmit_fn_remote_wake(dwc_usb3_pcd_t *pcd, u32 intf)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -231,7 +231,7 @@ int dwc_usb3_xmit_fn_remote_wake(volatile dwc_usb3_pcd_t *pcd, u32 intf)
 /**
  * Send LATENCY TOLERANCE MESSAGE DEVICE NOTIFICATION command to Device
  */
-int dwc_usb3_xmit_ltm(volatile dwc_usb3_pcd_t *pcd, u32 value)
+int dwc_usb3_xmit_ltm(dwc_usb3_pcd_t *pcd, u32 value)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -265,7 +265,7 @@ int dwc_usb3_xmit_ltm(volatile dwc_usb3_pcd_t *pcd, u32 value)
 /**
  * Send ROLE REQUEST DEVICE NOTIFICATION command to Device
  */
-int dwc_usb3_xmit_host_role_request(volatile dwc_usb3_pcd_t *pcd, u32 param)
+int dwc_usb3_xmit_host_role_request(dwc_usb3_pcd_t *pcd, u32 param)
 {
 #ifdef DEBUG
 	char *type = "UNKNOWN";
@@ -319,7 +319,7 @@ int dwc_usb3_xmit_host_role_request(volatile dwc_usb3_pcd_t *pcd, u32 param)
 /**
  * Send SET SCRATCHPAD BUFFER ARRAY command to Device
  */
-int dwc_usb3_set_scratchpad_buf_array(volatile dwc_usb3_pcd_t *pcd, dwc_dma_t dma_addr)
+int dwc_usb3_set_scratchpad_buf_array(dwc_usb3_pcd_t *pcd, dwc_dma_t dma_addr)
 {
 	dwc_debug2(pcd->usb3_dev, "%s(%lx)\n", __func__,
 		   (unsigned long)dma_addr);
@@ -346,7 +346,7 @@ int dwc_usb3_set_scratchpad_buf_array(volatile dwc_usb3_pcd_t *pcd, dwc_dma_t dm
 /**
  * Send SELECTED FIFO FLUSH command to Device
  */
-int dwc_usb3_flush_fifo(volatile dwc_usb3_pcd_t *pcd, u32 fifo_sel)
+int dwc_usb3_flush_fifo(dwc_usb3_pcd_t *pcd, u32 fifo_sel)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -376,7 +376,7 @@ int dwc_usb3_flush_fifo(volatile dwc_usb3_pcd_t *pcd, u32 fifo_sel)
 /**
  * Send DEPCFG command to EP
  */
-int dwc_usb3_dep_cfg(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_cfg(dwc_usb3_pcd_t *pcd,
 		     dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 		     u32 depcfg0, u32 depcfg1, u32 depcfg2)
 {
@@ -410,7 +410,7 @@ int dwc_usb3_dep_cfg(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPXFERCFG command to EP
  */
-int dwc_usb3_dep_xfercfg(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_xfercfg(dwc_usb3_pcd_t *pcd,
 			 dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			 u32 depstrmcfg)
 {
@@ -436,7 +436,7 @@ int dwc_usb3_dep_xfercfg(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPGETEPSTATE command to EP
  */
-u32 dwc_usb3_dep_getepstate(volatile dwc_usb3_pcd_t *pcd,
+u32 dwc_usb3_dep_getepstate(dwc_usb3_pcd_t *pcd,
 				 dwc_usb3_dev_ep_regs_t __iomem *ep_reg)
 {
 	u32 retval;
@@ -462,7 +462,7 @@ u32 dwc_usb3_dep_getepstate(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPSSTALL command to EP
  */
-int dwc_usb3_dep_sstall(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_sstall(dwc_usb3_pcd_t *pcd,
 			dwc_usb3_dev_ep_regs_t __iomem *ep_reg)
 {
 	dwc_debug1(pcd->usb3_dev, "dep_sstall, ep_reg=%lx\n",
@@ -483,7 +483,7 @@ int dwc_usb3_dep_sstall(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPCSTALL command to EP
  */
-int dwc_usb3_dep_cstall(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_cstall(dwc_usb3_pcd_t *pcd,
 			dwc_usb3_dev_ep_regs_t __iomem *ep_reg, int clr_pend)
 {
 	u32 depcmd;
@@ -510,7 +510,7 @@ int dwc_usb3_dep_cstall(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPSTRTXFER command to EP
  */
-int dwc_usb3_dep_startxfer(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_startxfer(dwc_usb3_pcd_t *pcd,
 			   dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			   dwc_dma_t dma_addr, u32 stream_or_uf)
 {
@@ -554,7 +554,7 @@ int dwc_usb3_dep_startxfer(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPUPDTXFER command to EP
  */
-int dwc_usb3_dep_updatexfer(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_updatexfer(dwc_usb3_pcd_t *pcd,
 			    dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			    u32 tri)
 {
@@ -578,7 +578,7 @@ int dwc_usb3_dep_updatexfer(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPENDXFER command to EP
  */
-int dwc_usb3_dep_endxfer(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_endxfer(dwc_usb3_pcd_t *pcd,
 			 dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			 u32 tri, u32 flags, void *condition)
 {
@@ -608,7 +608,7 @@ int dwc_usb3_dep_endxfer(volatile dwc_usb3_pcd_t *pcd,
 }
 
 #ifdef DWC_STAR_9000463548_WORKAROUND
-int dwc_usb3_dep_endxfer_nowait(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_endxfer_nowait(dwc_usb3_pcd_t *pcd,
 				dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 				u32 tri, int flags)
 {
@@ -630,7 +630,7 @@ int dwc_usb3_dep_endxfer_nowait(volatile dwc_usb3_pcd_t *pcd,
 	return 0;
 }
 
-int dwc_usb3_dep_wait_endxfer(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_wait_endxfer(dwc_usb3_pcd_t *pcd,
 			      dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			      void *condition)
 {
@@ -645,7 +645,7 @@ int dwc_usb3_dep_wait_endxfer(volatile dwc_usb3_pcd_t *pcd,
 /**
  * Send DEPSTRTNEWCFG command to EP
  */
-int dwc_usb3_dep_startnewcfg(volatile dwc_usb3_pcd_t *pcd,
+int dwc_usb3_dep_startnewcfg(dwc_usb3_pcd_t *pcd,
 			     dwc_usb3_dev_ep_regs_t __iomem *ep_reg,
 			     u32 rsrcidx)
 {
@@ -675,7 +675,7 @@ int dwc_usb3_dep_startnewcfg(volatile dwc_usb3_pcd_t *pcd,
  * @param ep    The EP to enable.
  * @return      0 if succesful, -DWC_E_BUSY if already enabled.
  */
-int dwc_usb3_enable_ep(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
+int dwc_usb3_enable_ep(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep)
 {
 	u32 ep_index_num, dalepena;
 
@@ -707,7 +707,7 @@ int dwc_usb3_enable_ep(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t 
  * @param ep    The EP to disable.
  * @return      0 if succesful, -DWC_E_INVALID if already disabled.
  */
-int dwc_usb3_disable_ep(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
+int dwc_usb3_disable_ep(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep)
 {
 	u32 ep_index_num, dalepena;
 
@@ -739,7 +739,7 @@ int dwc_usb3_disable_ep(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      The device speed.
  */
-int dwc_usb3_get_device_speed(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_get_device_speed(dwc_usb3_pcd_t *pcd)
 {
 	u32 dsts;
 	int speed = USB_SPEED_UNKNOWN;
@@ -783,7 +783,7 @@ int dwc_usb3_get_device_speed(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      The current microframe number.
  */
-int dwc_usb3_get_frame(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_get_frame(dwc_usb3_pcd_t *pcd)
 {
 	u32 dsts;
 
@@ -800,7 +800,7 @@ int dwc_usb3_get_frame(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      The current link state.
  */
-u32 dwc_usb3_pcd_get_link_state(volatile dwc_usb3_pcd_t *pcd)
+u32 dwc_usb3_pcd_get_link_state(dwc_usb3_pcd_t *pcd)
 {
 	u32 status, state;
 
@@ -818,7 +818,7 @@ u32 dwc_usb3_pcd_get_link_state(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param state Link state to set.
  */
-void dwc_usb3_pcd_set_link_state(volatile dwc_usb3_pcd_t *pcd, u32 state)
+void dwc_usb3_pcd_set_link_state(dwc_usb3_pcd_t *pcd, u32 state)
 {
 	u32 dctl;
 
@@ -838,7 +838,7 @@ void dwc_usb3_pcd_set_link_state(volatile dwc_usb3_pcd_t *pcd, u32 state)
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param function      Function that caused the remote wakeup.
  */
-void dwc_usb3_pcd_remote_wake(volatile dwc_usb3_pcd_t *pcd, int function)
+void dwc_usb3_pcd_remote_wake(dwc_usb3_pcd_t *pcd, int function)
 {
 	/* For USB 3.0, send function remote wake notification */
 	if (pcd->speed == USB_SPEED_SUPER) {
@@ -852,7 +852,7 @@ void dwc_usb3_pcd_remote_wake(volatile dwc_usb3_pcd_t *pcd, int function)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @param addr  The address to set.
  */
-void dwc_usb3_set_address(volatile dwc_usb3_pcd_t *pcd, int addr)
+void dwc_usb3_set_address(dwc_usb3_pcd_t *pcd, int addr)
 {
 	u32 dcfg;
 
@@ -867,9 +867,9 @@ void dwc_usb3_set_address(volatile dwc_usb3_pcd_t *pcd, int addr)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_ena_usb2_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_ena_usb2_phy_suspend(dwc_usb3_pcd_t *pcd)
 {
-	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
+	dwc_usb3_device_t *dev = pcd->usb3_dev;
 	u32 usb2phycfg;
 
 	if ((dev->core_params->phyctl > 0) || ((dev->core_params->hibernate > 0) &&
@@ -890,7 +890,7 @@ void dwc_usb3_ena_usb2_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_dis_usb2_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_dis_usb2_phy_suspend(dwc_usb3_pcd_t *pcd)
 {
 	u32 usb2phycfg;
 
@@ -909,7 +909,7 @@ void dwc_usb3_dis_usb2_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_ena_usb3_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_ena_usb3_phy_suspend(dwc_usb3_pcd_t *pcd)
 {
 #ifndef SELA_PLATFORM
 	u32 pipectl;
@@ -930,7 +930,7 @@ void dwc_usb3_ena_usb3_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_dis_usb3_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_dis_usb3_phy_suspend(dwc_usb3_pcd_t *pcd)
 {
 #ifndef SELA_PLATFORM
 	u32 pipectl;
@@ -951,7 +951,7 @@ void dwc_usb3_dis_usb3_phy_suspend(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_accept_u1(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_accept_u1(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -965,7 +965,7 @@ void dwc_usb3_accept_u1(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_accept_u2(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_accept_u2(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -979,7 +979,7 @@ void dwc_usb3_accept_u2(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_enable_u1(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_enable_u1(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -993,7 +993,7 @@ void dwc_usb3_enable_u1(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_enable_u2(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_enable_u2(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -1007,7 +1007,7 @@ void dwc_usb3_enable_u2(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_disable_u1(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_disable_u1(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -1021,7 +1021,7 @@ void dwc_usb3_disable_u1(volatile dwc_usb3_pcd_t *pcd)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_disable_u2(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_disable_u2(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
 
@@ -1036,7 +1036,7 @@ void dwc_usb3_disable_u2(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      1 if enabled, 0 if not.
  */
-int dwc_usb3_u1_enabled(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_u1_enabled(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
     int ret=0;
@@ -1052,7 +1052,7 @@ int dwc_usb3_u1_enabled(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      1 if enabled, 0 if not.
  */
-int dwc_usb3_u2_enabled(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_u2_enabled(dwc_usb3_pcd_t *pcd)
 {
 	u32 dctl;
     int ret=0;
@@ -1066,9 +1066,9 @@ int dwc_usb3_u2_enabled(volatile dwc_usb3_pcd_t *pcd)
  * Clear 'eps_enabled' flag and 'ena_once' flags for all EPs, so EPs will get
  * completely reconfigured by SetConfig and SetInterface.
  */
-void dwc_usb3_clr_eps_enabled(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_clr_eps_enabled(dwc_usb3_pcd_t *pcd)
 {
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_pcd_ep_t *ep;
 	u32 i;
 
 	pcd->eps_enabled = 0;
@@ -1099,7 +1099,7 @@ void dwc_usb3_clr_eps_enabled(volatile dwc_usb3_pcd_t *pcd)
  */
 void dwc_usb3_pcd_do_test_mode(unsigned long data)
 {
-	volatile dwc_usb3_pcd_t *pcd = (dwc_usb3_pcd_t *)data;
+	dwc_usb3_pcd_t *pcd = (dwc_usb3_pcd_t *)data;
 	int test_mode = pcd->test_mode;
 	u32 dctl;
 
@@ -1183,7 +1183,7 @@ void dwc_usb3_pcd_do_test_mode(unsigned long data)
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-static int calc_num_in_eps(volatile dwc_usb3_device_t *dev)
+static int calc_num_in_eps(dwc_usb3_device_t *dev)
 {
 #ifdef DWC3_MAXEPS_FROM_HWPARAM
 	u32 num_in_eps = dev->hwparams3 >> DWC_HWP3_NUM_IN_EPS_SHIFT &
@@ -1202,7 +1202,7 @@ static int calc_num_in_eps(volatile dwc_usb3_device_t *dev)
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-static int calc_num_out_eps(volatile dwc_usb3_device_t *dev)
+static int calc_num_out_eps(dwc_usb3_device_t *dev)
 {
 #ifdef DWC3_MAXEPS_FROM_HWPARAM
 	u32 num_eps = dev->hwparams3 >> DWC_HWP3_NUM_EPS_SHIFT &
@@ -1231,10 +1231,10 @@ static int calc_num_out_eps(volatile dwc_usb3_device_t *dev)
  * 
  * \return  0 on success, negative error code on failure
  */
-int dwc_usb3_pcd_common_init(volatile dwc_usb3_device_t *dev, volatile u8 __iomem *base,
+int dwc_usb3_pcd_common_init(dwc_usb3_device_t *dev, volatile u8 __iomem *base,
 				const dwc_usb3_core_params_t *core_params)
 {
-	volatile dwc_usb3_pcd_t *pcd;
+	dwc_usb3_pcd_t *pcd;
 	u32 temp __attribute__((unused));
 
 	dwc_debug3(dev, "%s(%lx,%lx)\n", __func__, (unsigned long)base,
@@ -1322,7 +1322,7 @@ int dwc_usb3_pcd_common_init(volatile dwc_usb3_device_t *dev, volatile u8 __iome
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_pcd_common_remove(volatile dwc_usb3_device_t *dev)
+void dwc_usb3_pcd_common_remove(dwc_usb3_device_t *dev)
 {
 }
 
@@ -1344,9 +1344,9 @@ void dwc_usb3_pcd_common_remove(volatile dwc_usb3_device_t *dev)
  *                      normal register access routines are functional.
  * @return              0 if the SNPSID value is valid, -DWC_E_INVALID if not.
  */
-int dwc_usb3_pcd_check_snpsid(volatile dwc_usb3_device_t *dev, u32 addr_ofs)
+int dwc_usb3_pcd_check_snpsid(dwc_usb3_device_t *dev, u32 addr_ofs)
 {
-	dev->snpsid = dwc_rd32(dev, (volatile u32 __iomem *)
+	dev->snpsid = dwc_rd32(dev, (u32 __iomem *)
 					(dev->base + addr_ofs + 0x120));
 	if ((dev->snpsid & 0xffff0000U) != 0x55330000U) {
 		dwc_error1(dev, "bad value for SNPSID: 0x%08x!\n", dev->snpsid);
@@ -1361,7 +1361,7 @@ int dwc_usb3_pcd_check_snpsid(volatile dwc_usb3_device_t *dev, u32 addr_ofs)
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_dump_dbgregs(volatile dwc_usb3_device_t *dev)
+void dwc_usb3_dump_dbgregs(dwc_usb3_device_t *dev)
 {
 	u32 wr_data;
 	u32 rd_data __attribute__((unused));
@@ -1398,7 +1398,7 @@ void dwc_usb3_dump_dbgregs(volatile dwc_usb3_device_t *dev)
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_dump_global_registers(volatile dwc_usb3_device_t *dev)
+void dwc_usb3_dump_global_registers(dwc_usb3_device_t *dev)
 {
 	volatile u32 __iomem *addr __attribute__((unused));
 
@@ -1449,7 +1449,7 @@ void dwc_usb3_dump_global_registers(volatile dwc_usb3_device_t *dev)
  *
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_dump_dev_registers(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_dump_dev_registers(dwc_usb3_pcd_t *pcd)
 {
 	volatile u32 __iomem *addr __attribute__((unused));
 
@@ -1475,7 +1475,7 @@ void dwc_usb3_dump_dev_registers(volatile dwc_usb3_pcd_t *pcd)
  * @param dev   Programming view of DWC_usb3 controller.
  * @param sz    New sizes for the FIFOs.
  */
-void dwc_usb3_set_tx_fifo_size(volatile dwc_usb3_device_t *dev, int *sz)
+void dwc_usb3_set_tx_fifo_size(dwc_usb3_device_t *dev, int *sz)
 {
 	dwc_usb3_core_global_regs_t __iomem *global_regs =
 						dev->core_global_regs;
@@ -1549,7 +1549,7 @@ txerr:
  * @param dev   Programming view of DWC_usb3 controller.
  * @param size  New size for the FIFO.
  */
-void dwc_usb3_set_rx_fifo_size(volatile dwc_usb3_device_t *dev, u32 size)
+void dwc_usb3_set_rx_fifo_size(dwc_usb3_device_t *dev, u32 size)
 {
 	dwc_usb3_core_global_regs_t __iomem *global_regs =
 						dev->core_global_regs;
@@ -1643,12 +1643,12 @@ rxerr:
  * @param soft_reset    True if doing a soft reset of the core.
  * @param restore       True if restoring register state after hibernation.
  */
-void dwc_usb3_pcd_device_init(volatile dwc_usb3_device_t *dev, int soft_reset,
+void dwc_usb3_pcd_device_init(dwc_usb3_device_t *dev, int soft_reset,
 			      int restore)
 {
 	dwc_usb3_core_global_regs_t __iomem *global_regs =
 						dev->core_global_regs;
-	volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
+	dwc_usb3_pcd_t *pcd = &dev->pcd;
 	u32 temp;
 	u32 i;
 	int ram_width, size;
@@ -2037,11 +2037,11 @@ void dwc_usb3_pcd_device_init(volatile dwc_usb3_device_t *dev, int soft_reset,
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_pcd_device_remove(volatile dwc_usb3_device_t *dev)
+void dwc_usb3_pcd_device_remove(dwc_usb3_device_t *dev)
 {
 	dwc_usb3_core_global_regs_t __iomem *global_regs =
 						dev->core_global_regs;
-	volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
+	dwc_usb3_pcd_t *pcd = &dev->pcd;
 	u32 temp;
 
 	if (dev->hibernate >= DWC_HIBER_SLEEPING) {

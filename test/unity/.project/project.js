@@ -14,6 +14,7 @@ const filedirs = {
 
 const buildOptionCombos_am261x = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "iar-arm"},
 ];
 
 const buildOptionCombos_am263px = [

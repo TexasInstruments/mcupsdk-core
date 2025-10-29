@@ -310,7 +310,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {r0-r4, r12}                \n"    \
     "   POP     {LR}                        \n"    \
     "   MSR     SPSR_cxsf, LR               \n"    \
@@ -339,7 +339,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {r0-r4, r12}                \n"    \
     "   POP     {LR}                        \n"    \
     "   MSR     SPSR_cxsf, LR               \n"    \
@@ -371,7 +371,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {R0}                        \n"    \
     "   VPOP    {D0-D15}                    \n"    \
     "   VMSR    FPSCR, R0                   \n"    \
@@ -406,7 +406,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {R0}                        \n"    \
     "   VPOP    {D0-D15}                    \n"    \
     "   VMSR    FPSCR, R0                   \n"    \
@@ -444,7 +444,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]             \n"    \
     "   POP     {r2, lr}                    \n"    \
     "   ADD     sp, sp, r2                  \n"    \
     "   CPSID   i                           \n"    \
@@ -485,7 +485,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {r2, lr}                    \n"    \
     "   ADD     sp, sp, r2                  \n"    \
     "   CPSID   i                           \n"    \
@@ -529,7 +529,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {r2, lr}                    \n"    \
     "   ADD     sp, sp, r2                  \n"    \
     "   CPSID   i                           \n"    \
@@ -576,7 +576,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   POP     {r2, lr}                    \n"    \
     "   ADD     sp, sp, r2                  \n"    \
     "   CPSID   i                           \n"    \
@@ -613,7 +613,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   CPSIE   i                           \n"    \
     "   LDR     r0, ="#arg"                 \n"    \
     "   LDR     r0, [r0]                    \n"    \
@@ -655,7 +655,7 @@ static inline uint32_t HWI_SECTION HwiP_getActivePriority()
     "   LDR     r0, [r0]                    \n"    \
     "   LDR     r1, ="#vim_addr"            \n"    \
     "   LDR     r1, [r1]                    \n"    \
-    "   STR     r0, [r1, 0x18]              \n"    \
+    "   STR     r0, [r1, #0x18]              \n"    \
     "   CPSIE   i                           \n"    \
     "   LDR     r0, ="#arg"                 \n"    \
     "   LDR     r0, [r0]                    \n"    \

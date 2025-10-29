@@ -119,7 +119,7 @@ static HeapP_Object gMyHeap;
 static uint8_t gMyTaskStack[MY_TASK_STACK_SIZE] __attribute__((aligned(32)));
 static TaskP_Object gMyTask;
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
 #ifdef HWIP_USE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS
 void test_r5f_critical_section(void);
 #endif
@@ -255,7 +255,10 @@ static void myNestedISR1(void *args)
 
     HwiP_post(MY_NESTED_ISR2_NUM);
 
-    if(gMyNestedISRCount1 != gMyNestedISRCount2)
+    /* Read volatile counters into temporaries to avoid undefined order of volatile accesses */
+    uint32_t isrCnt1 = gMyNestedISRCount1;
+    uint32_t isrCnt2 = gMyNestedISRCount2;
+    if (isrCnt1 != isrCnt2)
     {
         gNestedISRViolation++;
     }
@@ -1166,7 +1169,7 @@ void test_memRdWr(void *args)
     DebugP_log(" MSMC RD cycles = %d (value = %d)\r\n", msmcRdCycles/loop, msmcVal/loop);
 }
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
 float floatLoadAndMultiply(float f1, float f2);
 float floatMultiply();
 
@@ -1341,7 +1344,11 @@ void test_exceptionUserHandlers(void *args)
     gUndefinedInstructionTracker = 1U;                          /* Set tracker to mark as expected fault    */
     DebugP_log("Triggering Undefined Instruction exception...\r\n");
     /* MRC command to operate debug related register, causing an undef exception                            */
+#if defined (__ICCARM__)
+        __asm volatile ("MRC p14,#0,r0,c0,c2,#2");                        /* This should cause undefined exception    */
+#else
     __asm__ __volatile__("MRC p14,#0,r0,c0,c2,#2");             /* This should cause undefined exception    */
+#endif
     TEST_ASSERT_EQUAL_UINT32(0U, gUndefinedInstructionTracker); /* Validate Undefined Instruction tracker   */
 
     /** Prefetch Abort exception */
@@ -1548,7 +1555,7 @@ void test_main(void *args)
     RUN_TEST(test_mailbox, 13390, NULL);
     #endif
 
-    #if defined(__ARM_ARCH_7R__) && defined(OS_FREERTOS)
+    #if (defined(__ARM_ARCH_7R__) || defined(__ARM7R__)) && defined(OS_FREERTOS)
     /* nested ISR not supported for now */
     #elif defined(_TMS320C6X)
     /* nested ISR not supported in C66x */
@@ -1556,7 +1563,7 @@ void test_main(void *args)
     RUN_TEST(test_hwiNested, 295, NULL);
     #endif
 
-    #if defined(__ARM_ARCH_7R__)
+    #if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
     /* floating point operations in ISR supported in R5F only */
     RUN_TEST(test_mainToIsrWithFloatOperations, 1571, NULL);
 

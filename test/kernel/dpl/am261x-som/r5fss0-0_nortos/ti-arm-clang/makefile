@@ -53,6 +53,7 @@ ASMFILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../ti-arm-clang \
 	generated \
 
 INCLUDES_common := \
@@ -255,13 +256,13 @@ $(OBJDIR):
 $(SYSCFG_GEN_FILES): syscfg
 
 ifeq ($(SYSTEM_FLAG), false)
-syscfg: ../example.syscfg
+syscfg: example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)

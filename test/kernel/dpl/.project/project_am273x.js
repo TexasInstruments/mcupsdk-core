@@ -28,10 +28,17 @@ const asmfiles_r5f = {
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
-const filedirs = {
+const filedirs_common = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+    ],
+};
+
+const filedirs_ti_arm_clang = {
+    common: [
+        ...filedirs_common.common,
+        "../../../ti-arm-clang",
     ],
 };
 
@@ -201,7 +208,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files;
         build_property.asmfiles = asmfiles_r5f;
     }
-    build_property.filedirs = filedirs;
+    build_property.filedirs = filedirs_ti_arm_clang;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;

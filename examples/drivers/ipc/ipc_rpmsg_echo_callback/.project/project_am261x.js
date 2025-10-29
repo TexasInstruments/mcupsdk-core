@@ -49,7 +49,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO_CALLBACK";
 

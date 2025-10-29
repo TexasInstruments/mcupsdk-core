@@ -145,9 +145,13 @@ void MPU_SECTION MpuP_enable(void)
         /* set cache back to initial settings */
         CacheP_enable(type);
 
+#if defined (__ICCARM__)
+        __asm volatile (" dsb" "\n\t": : : "memory");
+        __asm volatile (" isb" "\n\t": : : "memory");
+#else
         __asm__  __volatile__ (" dsb" "\n\t": : : "memory");
         __asm__  __volatile__ (" isb" "\n\t": : : "memory");
-
+#endif
         HwiP_restore(key);
     }
 }
@@ -167,8 +171,11 @@ void MPU_SECTION MpuP_disable(void)
         /* disable all enabled caches */
         CacheP_disable(type);
 
+#if defined (__ICCARM__)
+        __asm volatile (" dsb" "\n\t": : : "memory");
+#else
         __asm__ __volatile__ (" dsb" "\n\t": : : "memory");
-
+#endif
         MpuP_disableAsm();
 
         /* set cache back to initial settings */

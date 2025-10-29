@@ -36,7 +36,7 @@
 #include <kernel/dpl/TimerP.h>
 
 /* This is needed in r5f since assert can be called before MPU init */
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
 #define BOOT_SECTION __attribute__((section(".text.boot")))
 #else
 #define BOOT_SECTION

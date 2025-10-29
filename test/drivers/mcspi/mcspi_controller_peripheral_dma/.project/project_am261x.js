@@ -79,7 +79,7 @@ const includes_freertos_r5f = {
     ],
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "example.syscfg"
 
 const templates_nortos_r5f =
 [

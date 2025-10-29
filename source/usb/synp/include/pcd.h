@@ -421,13 +421,13 @@ typedef struct dwc_usb3_pcd {
 	unsigned int b_hnp_enable		: 1;
 #endif
 	/** Pointer to the structure representing EP0. */
-	volatile dwc_usb3_pcd_ep_t *ep0;
+	dwc_usb3_pcd_ep_t *ep0;
 
 	/** Array of OUT EPs (not including EP0) */
-	volatile dwc_usb3_pcd_ep_t *out_ep[DWC_MAX_EPS - 1U];
+	dwc_usb3_pcd_ep_t *out_ep[DWC_MAX_EPS - 1U];
 
 	/** Array of IN EPs (not including EP0) */
-	volatile dwc_usb3_pcd_ep_t *in_ep[DWC_MAX_EPS - 1U];
+	dwc_usb3_pcd_ep_t *in_ep[DWC_MAX_EPS - 1U];
 
 	/** Pointer to device Global registers.
 	 * Device Global Registers starting at offset 700h
@@ -454,7 +454,7 @@ typedef struct dwc_usb3_pcd {
 	/** @} */
 
 	/** 'dummy' request, for EP0 only */
-	volatile dwc_usb3_pcd_req_t *ep0_req;
+	dwc_usb3_pcd_req_t *ep0_req;
 
 #ifdef DWC_UTE
 	/** size of Rx FIFO, requested by UTE */
@@ -620,40 +620,40 @@ typedef struct dwc_usb3_pcd {
 #define dwc_usb3_ep0_setup_pkt_dma(pcd)		(pcd)->ep0_setup_pkt_dma
 /** @} */
 
-extern void dwc_usb3_stop_all_xfers(volatile dwc_usb3_pcd_t *pcd);
-extern void dwc_usb3_complete_request(volatile dwc_usb3_pcd_t *pcd,
-				     volatile dwc_usb3_pcd_ep_t *ep, u32 event);
-extern volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_out_ep(volatile dwc_usb3_pcd_t *pcd, u32 ep_num);
-extern volatile dwc_usb3_pcd_ep_t *dwc_usb3_get_in_ep(volatile dwc_usb3_pcd_t *pcd, u32 ep_num);
+extern void dwc_usb3_stop_all_xfers(dwc_usb3_pcd_t *pcd);
+extern void dwc_usb3_complete_request(dwc_usb3_pcd_t *pcd,
+				     dwc_usb3_pcd_ep_t *ep, u32 event);
+extern dwc_usb3_pcd_ep_t *dwc_usb3_get_out_ep(dwc_usb3_pcd_t *pcd, u32 ep_num);
+extern dwc_usb3_pcd_ep_t *dwc_usb3_get_in_ep(dwc_usb3_pcd_t *pcd, u32 ep_num);
 #ifdef DEBUG_EP0
-extern void dwc_usb3_print_ep0_state(volatile dwc_usb3_pcd_t *pcd);
+extern void dwc_usb3_print_ep0_state(dwc_usb3_pcd_t *pcd);
 #endif
-extern void dwc_usb3_handle_ep_intr(volatile dwc_usb3_pcd_t *pcd, u32 physep, u32 event);
-extern int dwc_usb3_handle_dev_intr(volatile dwc_usb3_pcd_t *pcd, u32 event);
-extern void dwc_usb3_handle_connect_done_intr(volatile dwc_usb3_pcd_t *pcd);
-extern void dwc_enter_hibernation(volatile dwc_usb3_pcd_t *pcd, int save_state);
-extern void dwc_exit_hibernation_after_connect(volatile dwc_usb3_pcd_t *pcd,
+extern void dwc_usb3_handle_ep_intr(dwc_usb3_pcd_t *pcd, u32 physep, u32 event);
+extern int dwc_usb3_handle_dev_intr(dwc_usb3_pcd_t *pcd, u32 event);
+extern void dwc_usb3_handle_connect_done_intr(dwc_usb3_pcd_t *pcd);
+extern void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state);
+extern void dwc_exit_hibernation_after_connect(dwc_usb3_pcd_t *pcd,
 					       int connected);
-extern int dwc_exit_hibernation(volatile dwc_usb3_pcd_t *pcd, int restore_state);
-extern int dwc_usb3_handle_pme_intr(volatile struct dwc_usb3_device *dev);
-extern void dwc_usb3_power_ctl(volatile struct dwc_usb3_device *dev, int on);
+extern int dwc_exit_hibernation(dwc_usb3_pcd_t *pcd, int restore_state);
+extern int dwc_usb3_handle_pme_intr(struct dwc_usb3_device *dev);
+extern void dwc_usb3_power_ctl(struct dwc_usb3_device *dev, int on);
 
 /** @addtogroup init_api_grp 
  * @{ */
-extern int dwc_usb3_pcd_init(volatile struct dwc_usb3_device *dev);
-extern void dwc_usb3_pcd_remove(volatile struct dwc_usb3_device *dev);
+extern int dwc_usb3_pcd_init(struct dwc_usb3_device *dev);
+extern void dwc_usb3_pcd_remove(struct dwc_usb3_device *dev);
 /** @} */
 
 /** @addtogroup trb_api_grp TRB API Routines
  *
  * These routines handle the allocation, deallocation, and setup of TRBs.
  * @{ */
-extern dwc_usb3_dma_desc_t *dwc_usb3_pcd_trb_alloc(volatile dwc_usb3_pcd_ep_t *ep,
+extern dwc_usb3_dma_desc_t *dwc_usb3_pcd_trb_alloc(dwc_usb3_pcd_ep_t *ep,
 		int num_trbs, uByte trb_type, int iso_intvl, int link,
 		dwc_dma_t *trbs_dma_ret);
-extern void dwc_usb3_pcd_trb_free(volatile dwc_usb3_pcd_ep_t *ep /*, int num_trbs, int link,
+extern void dwc_usb3_pcd_trb_free(dwc_usb3_pcd_ep_t *ep /*, int num_trbs, int link,
 				  void *trbs, dwc_dma_t trbs_dma*/);
-extern void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
+extern void dwc_usb3_pcd_fill_trbs(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 				   dwc_usb3_pcd_req_t *req);
 /** @} */
 
@@ -666,29 +666,29 @@ extern void dwc_usb3_pcd_fill_trbs(volatile dwc_usb3_pcd_t *pcd, volatile dwc_us
  * by the @ref ep0_api_grp below or internally by the PCD.
  * @{ */
 
-extern void dwc_usb3_ep_activate(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
+extern void dwc_usb3_ep_activate(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 	int restore);
-extern int dwc_usb3_pcd_ep_enable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
+extern int dwc_usb3_pcd_ep_enable(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 			const usb_endpoint_descriptor_t *ep_desc,
 			const ss_endpoint_companion_descriptor_t *ep_comp);
-extern int dwc_usb3_pcd_ep_disable(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep);
-extern int dwc_usb3_pcd_ep_submit_req(volatile dwc_usb3_pcd_t *pcd,
+extern int dwc_usb3_pcd_ep_disable(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep);
+extern int dwc_usb3_pcd_ep_submit_req(dwc_usb3_pcd_t *pcd,
 				      dwc_usb3_pcd_ep_t *ep,
 				      dwc_usb3_pcd_req_t *req, u32 req_flags);
-extern void dwc_usb3_pcd_ep_cancel_req(volatile dwc_usb3_pcd_t *pcd,
+extern void dwc_usb3_pcd_ep_cancel_req(dwc_usb3_pcd_t *pcd,
 				       dwc_usb3_pcd_ep_t *ep,
 				       dwc_usb3_pcd_req_t *req, u32 stream);
-extern void dwc_usb3_pcd_request_done(volatile dwc_usb3_pcd_t *pcd,
-				      volatile dwc_usb3_pcd_ep_t *ep,
-				      volatile dwc_usb3_pcd_req_t *req, int status);
-extern void dwc_usb3_pcd_ep_start_transfer(volatile dwc_usb3_pcd_t *pcd,
-					   volatile dwc_usb3_pcd_ep_t *ep,
-					   volatile dwc_usb3_pcd_req_t *req, u32 event);
-extern void dwc_usb3_pcd_ep_set_stall(volatile dwc_usb3_pcd_t *pcd,
-				      volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_pcd_ep_clear_stall(volatile dwc_usb3_pcd_t *pcd,
-					volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_pcd_ep_set_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
+extern void dwc_usb3_pcd_request_done(dwc_usb3_pcd_t *pcd,
+				      dwc_usb3_pcd_ep_t *ep,
+				      dwc_usb3_pcd_req_t *req, int status);
+extern void dwc_usb3_pcd_ep_start_transfer(dwc_usb3_pcd_t *pcd,
+					   dwc_usb3_pcd_ep_t *ep,
+					   dwc_usb3_pcd_req_t *req, u32 event);
+extern void dwc_usb3_pcd_ep_set_stall(dwc_usb3_pcd_t *pcd,
+				      dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_pcd_ep_clear_stall(dwc_usb3_pcd_t *pcd,
+					dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_pcd_ep_set_halt(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
 				     int value);
 /** @} */
 
@@ -696,12 +696,12 @@ extern void dwc_usb3_pcd_ep_set_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_
  *
  * These routines are only used for Control endpoint 0.
  * @{ */
-extern void dwc_usb3_ep0_activate(volatile dwc_usb3_pcd_t *pcd, int restore);
-extern void dwc_usb3_pcd_ep0_out_start(volatile dwc_usb3_pcd_t *pcd);
-extern void dwc_usb3_pcd_ep0_start_transfer(volatile dwc_usb3_pcd_t *pcd,
-					   volatile dwc_usb3_pcd_req_t *req);
-extern void dwc_usb3_pcd_ep0_data_stage(volatile dwc_usb3_pcd_t *pcd, int length);
-extern void dwc_usb3_handle_ep0_xfer(volatile dwc_usb3_pcd_t *pcd, u32 event);
+extern void dwc_usb3_ep0_activate(dwc_usb3_pcd_t *pcd, int restore);
+extern void dwc_usb3_pcd_ep0_out_start(dwc_usb3_pcd_t *pcd);
+extern void dwc_usb3_pcd_ep0_start_transfer(dwc_usb3_pcd_t *pcd,
+					   dwc_usb3_pcd_req_t *req);
+extern void dwc_usb3_pcd_ep0_data_stage(dwc_usb3_pcd_t *pcd, int length);
+extern void dwc_usb3_handle_ep0_xfer(dwc_usb3_pcd_t *pcd, u32 event);
 
 /** @} */
 
@@ -710,12 +710,12 @@ extern void dwc_usb3_handle_ep0_xfer(volatile dwc_usb3_pcd_t *pcd, u32 event);
  * These are miscellaneous routines that don't fit into any of the other
  * categories.
  * @{ */
-extern volatile dwc_usb3_pcd_ep_t *dwc_usb3_pcd_get_ep_by_addr(volatile dwc_usb3_pcd_t *pcd,
+extern dwc_usb3_pcd_ep_t *dwc_usb3_pcd_get_ep_by_addr(dwc_usb3_pcd_t *pcd,
 						      u16 idx);
-extern int dwc_usb3_pcd_get_frame_number(volatile dwc_usb3_pcd_t *pcd);
-extern int dwc_usb3_pcd_isoc_ep_hiber_restart(volatile dwc_usb3_pcd_t *pcd,
-					     volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_pcd_stop(volatile dwc_usb3_pcd_t *pcd);
+extern int dwc_usb3_pcd_get_frame_number(dwc_usb3_pcd_t *pcd);
+extern int dwc_usb3_pcd_isoc_ep_hiber_restart(dwc_usb3_pcd_t *pcd,
+					     dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_pcd_stop(dwc_usb3_pcd_t *pcd);
 /** @} */
 
 /** @addtogroup gadget_notif_grp Function Driver notification routines
@@ -723,14 +723,14 @@ extern void dwc_usb3_pcd_stop(volatile dwc_usb3_pcd_t *pcd);
  * These routines receive notifications from the PCD when certain events occur
  * which the Function Driver may need to be aware of.
  * @{ */
-extern int dwc_usb3_gadget_connect(volatile dwc_usb3_pcd_t *pcd, int speed);
-extern int dwc_usb3_gadget_disconnect(volatile dwc_usb3_pcd_t *pcd);
-extern int dwc_usb3_gadget_suspend(volatile dwc_usb3_pcd_t *pcd);
-extern int dwc_usb3_gadget_resume(volatile dwc_usb3_pcd_t *pcd);
-extern int dwc_usb3_gadget_setup(volatile dwc_usb3_pcd_t *pcd,
+extern int dwc_usb3_gadget_connect(dwc_usb3_pcd_t *pcd, int speed);
+extern int dwc_usb3_gadget_disconnect(dwc_usb3_pcd_t *pcd);
+extern int dwc_usb3_gadget_suspend(dwc_usb3_pcd_t *pcd);
+extern int dwc_usb3_gadget_resume(dwc_usb3_pcd_t *pcd);
+extern int dwc_usb3_gadget_setup(dwc_usb3_pcd_t *pcd,
 				 usb_device_request_t *ctrl);
-extern int dwc_usb3_gadget_complete(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep,
-				    volatile dwc_usb3_pcd_req_t *pcd_req, int status);
+extern int dwc_usb3_gadget_complete(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep,
+				    dwc_usb3_pcd_req_t *pcd_req, int status);
 /** @} */
 
 /** @addtogroup gadget_callbk_grp Function Driver callback routines
@@ -738,20 +738,20 @@ extern int dwc_usb3_gadget_complete(volatile dwc_usb3_pcd_t *pcd, volatile dwc_u
  * The PCD calls these routines when it needs something from the Function
  * Driver.
  * @{ */
-extern void *dwc_usb3_gadget_alloc_dma(volatile dwc_usb3_pcd_ep_t *ep, int size,
+extern void *dwc_usb3_gadget_alloc_dma(dwc_usb3_pcd_ep_t *ep, int size,
 				       dwc_dma_t *mem_dma_ret);
-extern void dwc_usb3_gadget_free_dma(volatile dwc_usb3_pcd_ep_t *ep, int size, void *mem,
+extern void dwc_usb3_gadget_free_dma(dwc_usb3_pcd_ep_t *ep, int size, void *mem,
 				     dwc_dma_t mem_dma);
-extern dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(volatile dwc_usb3_pcd_t *pcd,
-						       volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_gadget_start_next_request(volatile dwc_usb3_pcd_t *pcd,
-					      volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_gadget_isoc_ep_start(volatile dwc_usb3_pcd_t *pcd,
-					 volatile dwc_usb3_pcd_ep_t *ep, u32 event);
-extern void dwc_usb3_gadget_request_nuke(volatile dwc_usb3_pcd_t *pcd,
-					volatile dwc_usb3_pcd_ep_t *ep);
-extern void dwc_usb3_gadget_set_ep_not_started(volatile dwc_usb3_pcd_t *pcd,
-					      volatile dwc_usb3_pcd_ep_t *ep);
+extern dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(dwc_usb3_pcd_t *pcd,
+						       dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_gadget_start_next_request(dwc_usb3_pcd_t *pcd,
+					      dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_gadget_isoc_ep_start(dwc_usb3_pcd_t *pcd,
+					 dwc_usb3_pcd_ep_t *ep, u32 event);
+extern void dwc_usb3_gadget_request_nuke(dwc_usb3_pcd_t *pcd,
+					dwc_usb3_pcd_ep_t *ep);
+extern void dwc_usb3_gadget_set_ep_not_started(dwc_usb3_pcd_t *pcd,
+					      dwc_usb3_pcd_ep_t *ep);
 /** @} */
 
 /**
@@ -759,11 +759,11 @@ extern void dwc_usb3_gadget_set_ep_not_started(volatile dwc_usb3_pcd_t *pcd,
  *
  * \param tasklet Pointer to the tasklet structure to be scheduled.
  */
-extern void dwc_usb3_task_schedule(volatile struct tasklet_struct *tasklet);
+extern void dwc_usb3_task_schedule(struct tasklet_struct *tasklet);
 
 #ifdef CONFIG_USB_OTG_DWC
-extern void dwc_usb3_start_hnp(volatile dwc_usb3_pcd_t *pcd);
-extern void dwc_usb3_host_release(volatile dwc_usb3_pcd_t *pcd);
+extern void dwc_usb3_start_hnp(dwc_usb3_pcd_t *pcd);
+extern void dwc_usb3_host_release(dwc_usb3_pcd_t *pcd);
 #endif
 
 #ifdef __cplusplus

@@ -35,6 +35,7 @@
 int32_t _system_pre_init(void);
 void __TI_auto_init(void);
 
+#if !defined (__ICCARM__)
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
 
@@ -44,6 +45,7 @@ __attribute__((section(".text.boot"))) int32_t _system_pre_init(void)
     (void) memset((void*)&__BSS_START, 0x00, bss_size);
     return 1;
 }
+#endif
 
 #if !defined (__clang__)
 void __TI_auto_init(void)

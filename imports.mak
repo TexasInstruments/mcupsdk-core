@@ -3,6 +3,7 @@ DEVICE ?= am64x
 ifeq ($(OS),Windows_NT)
     TOOLS_PATH?=C:/ti
     CCS_PATH?=$(TOOLS_PATH)/ccs2050/ccs
+    IAR_TOOL_PATH?=C:/iar/ewarm-9.70.1
     CCS_ECLIPSE=$(CCS_PATH)/eclipse/ccs-server-cli
     CYGWIN_PATH?=$(CCS_PATH)/utils/cygwin
     MKDIR=$(CYGWIN_PATH)/mkdir -p
@@ -25,6 +26,7 @@ else
     ifneq (,$(filter $(UNAME_S),Linux Darwin))
         export TOOLS_PATH?=$(HOME)/ti
         export CCS_PATH?=$(TOOLS_PATH)/ccs2050/ccs
+        export IAR_TOOL_PATH?=/opt/iarsystems/bxarm-9.70.1
         export CCS_ECLIPSE=$(CCS_PATH)/eclipse/ccs-server-cli.sh
         export MKDIR=mkdir -p
         export RMDIR=rm -rf
@@ -53,6 +55,7 @@ ifeq ($(wildcard $(CGT_TI_C6000_PATH)),)
     CGT_TI_C6000_PATH=$(TOOLS_PATH)/ti-cgt-c6000_8.5.0.LTS
 endif
 DSPLIB_PATH=$(MCU_PLUS_SDK_PATH)/source/dsplib_c66x_3_4_0_0
+CGT_IAR_ARM_PATH=$(IAR_TOOL_PATH)/arm
 CCS_NODE = $(CCS_PATH)/tools/node/node
 SYSCFG_PATH ?= $(TOOLS_PATH)/sysconfig_1.27.0
 SYSCFG_CLI_PATH ?= $(SYSCFG_PATH)

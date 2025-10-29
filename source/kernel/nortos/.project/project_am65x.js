@@ -55,11 +55,18 @@ const asmfiles_r5f = {
     ],
 };
 
-const filedirs_r5f = {
+const filedirs_r5f_common = {
     common: [
-        "dpl/common",
         "dpl/r5",
+        "dpl/common",
     ],
+};
+
+const filedirs_r5f_ti_arm_clang = {
+    common:[
+        ...filedirs_r5f_common.common,
+        "dpl/r5/ti-arm-clang",
+    ]
 };
 
 const buildOptionCombos = [
@@ -84,7 +91,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
-        build_property.filedirs = filedirs_r5f;
+        build_property.filedirs = filedirs_r5f_ti_arm_clang;
         build_property.cflags = cflags_r5f;
         build_property.defines = defines_r5f;
     }

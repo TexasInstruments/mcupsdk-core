@@ -425,10 +425,12 @@ const filedirs_r5f_common = {
     ],
 };
 
-const filedirs_r5f = {
+const filedirs_r5f_ti_arm_clang = {
     common: [
         ...filedirs_r5f_common.common,
         "portable/TI_ARM_CLANG/ARM_CR5F",
+        "../nortos/dpl/r5/ti-arm-clang",
+        "dpl/r5/ti-arm-clang",
     ],
 };
 
@@ -437,6 +439,8 @@ const filedirs_r5f_mpu = {
         ...filedirs_r5f_common.common,
         "portable/TI_ARM_CLANG/ARM_CR5F_MPU",
         "FreeRTOS-Kernel/portable/Common",
+        "../nortos/dpl/r5/ti-arm-clang",
+        "dpl/r5/ti-arm-clang",
     ],
 };
 
@@ -580,7 +584,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_r5f;
         build_property.includes = includes_r5f;
         build_property.asmfiles = asmfiles_r5f;
-        build_property.filedirs = filedirs_r5f;
+        build_property.filedirs = filedirs_r5f_ti_arm_clang;
         build_property.cflags = cflags_r5f;
         build_property.templates = templates_freertos_r5f;
     }

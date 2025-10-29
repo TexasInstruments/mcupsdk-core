@@ -143,7 +143,7 @@ void dcd_sof_enable(uint8_t rhport, bool en)
 /* Configure endpoint's registers according to descriptor */
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 {
-    volatile usb_ep_t *ep;
+    usb_ep_t *ep;
     TU_LOG2("[dcd_edpt_open] ep_addr=%d\n", ep_desc->bEndpointAddress);
 
     /* Open the specific endpoint according to descriptor */
@@ -162,7 +162,7 @@ void dcd_edpt_close_all (uint8_t rhport)
   /* TODO implement dcd_edpt_close_all() */
 }
 
-void epXferCmplCb(volatile usb_ep_t *ep, volatile usb_request_t *req) {
+void epXferCmplCb(usb_ep_t *ep, usb_request_t *req) {
     uint8_t dir   = tu_edpt_dir(ep->address);
 
     TU_LOG2("[epXferCmplCb] EP:%02X req(0x%08X) buf(0x%08X) status(%d) length(%d) actual(%d)\n",
@@ -194,7 +194,7 @@ void epXferCmplCb(volatile usb_ep_t *ep, volatile usb_request_t *req) {
     dwc_usb3_free_request(usb_handle.dwc_usb3_dev, ep, req);
 }
 
-void inEp0XferCmplCb(volatile usb_ep_t *ep, volatile usb_request_t *req) {
+void inEp0XferCmplCb(usb_ep_t *ep, usb_request_t *req) {
 
     TU_LOG2("[inEpXferCmplCb] EP:%02X req(0x%08X) buf(0x%08X) status(%d) length(%d) actual(%d)\n",
             0x80, (uintptr_t) req, (uintptr_t)req->buf, req->status, req->length, req->actual);
@@ -207,7 +207,7 @@ void inEp0XferCmplCb(volatile usb_ep_t *ep, volatile usb_request_t *req) {
     req->complete = 0;
 }
 
-void outEp0XferCmplCb(volatile usb_ep_t *ep, volatile usb_request_t *req) {
+void outEp0XferCmplCb(usb_ep_t *ep, usb_request_t *req) {
 
     TU_LOG2("[outEp0XferCmplCb] EP:%02X req(0x%08X) buf(0x%08X) status(%d) length(%d) actual(%d)\n",
             ep->address, (uintptr_t) req, (uintptr_t)req->buf, req->status, req->length, req->actual);
@@ -231,7 +231,7 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
     uint8_t epnum = tu_edpt_number(ep_addr);
     uint8_t dir   = tu_edpt_dir(ep_addr);
     dwc_usb3_pcd_t *pcd = &usb_handle.dwc_usb3_dev->pcd;
-    volatile dwc_usb3_pcd_ep_t  *pcd_ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
+    dwc_usb3_pcd_ep_t  *pcd_ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
     TU_LOG2("[dcd_edpt_xfer] ep:%02x \n", ep_addr);
     bool ret = true;
 
@@ -327,7 +327,7 @@ void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
 {
     TU_LOG2("[dcd_edpt_stall] ep_addr=%d\n", ep_addr);
     dwc_usb3_pcd_t *pcd = &usb_handle.dwc_usb3_dev->pcd;
-    volatile dwc_usb3_pcd_ep_t *ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
+    dwc_usb3_pcd_ep_t *ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
     dwc_usb3_pcd_ep_set_halt(pcd, ep, 1);
 }
 
@@ -336,7 +336,7 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
 {
     TU_LOG2("[dcd_edpt_clear_stall] ep_addr=%d\n", ep_addr);
     dwc_usb3_pcd_t *pcd = &usb_handle.dwc_usb3_dev->pcd;
-    volatile dwc_usb3_pcd_ep_t *ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
+    dwc_usb3_pcd_ep_t *ep = dwc_usb3_pcd_get_ep_by_addr(pcd, ep_addr);
     dwc_usb3_pcd_ep_set_halt(pcd, ep, 0);
 }
 

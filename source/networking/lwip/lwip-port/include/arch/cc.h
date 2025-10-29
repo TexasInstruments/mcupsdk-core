@@ -40,7 +40,6 @@ extern "C"
 
 /* std.h functions required */
 #include <stdint.h>
-#include <sys/types.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/nortos/dpl/common/printf.h>
 
@@ -48,9 +47,12 @@ extern "C"
 #define SSIZE_MAX INT_MAX
 #endif
 
+#if !defined(__ICCARM__)
+#include <sys/types.h>
+#include <sys/select.h>
+#endif
 /* Disable lwIP's private definition of 'struct timeval' */
 #define LWIP_TIMEVAL_PRIVATE 0
-#include <sys/select.h>
 
 /* Use lwip provided errors as ti compiler is too granular*/
 #define LWIP_PROVIDE_ERRNO  1

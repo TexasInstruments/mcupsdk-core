@@ -142,7 +142,7 @@ void *AddrTranslateP_getLocalAddr(uint64_t systemAddr)
     else
     {
         /* no mapping found, set output = input with 32b truncation */
-        localAddr = (void *) systemAddr;
+        localAddr = (void *)(uintptr_t) systemAddr;
     }
     return localAddr;
 }

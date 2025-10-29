@@ -6,6 +6,9 @@ CG_TOOL_ROOT=$(`args.cgtOptions.path`)
 
 CC=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.cc`
 AR=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.ar`
+% if (args.project.cgt == "iar-arm") {
+AS=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.as`
+% }
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
@@ -62,6 +65,18 @@ FILES_PATH_`prop` = \
 
     % }
 % }
+% if (args.project.cgt == "iar-arm" && args.project.third_party_files!= undefined) {
+%   obj = args.project.third_party_files;
+%   for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+THIRD_PARTY_FILE_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    %   }
+%   }
+% }
 % obj = args.project.includes;
 % for (prop in obj) {
 % if (prop == "common") {
@@ -103,6 +118,16 @@ CFLAGS_`prop` := \
 
     % }
 % }
+% obj = args.project.asmflags;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+ASMFLAGS_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
 % obj = args.project.arflags;
 % for (prop in obj) {
     % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
@@ -120,7 +145,15 @@ ASMEXTNFILES := $(ASMEXTNFILES_common) $(ASMEXTNFILES_$(PROFILE))
 % }
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+% if (args.project.cgt == "iar-arm"){
+ASMFLAGS := $(ASMFLAGS_common)
+% if ((args.project.cgt == "iar-arm") && (args.project.third_party_files)) {
+THIRD_PARTY_FILE_PATH := $(THIRD_PARTY_FILE_common)
+% }
+% }
+% else {
 ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+% }
 % if (args.project.cgt == "ti-arm-clang") {
 ifeq ($(INSTRUMENTATION_MODE), yes)
 CFLAGS += -fprofile-instr-generate -fcoverage-mapping
@@ -166,6 +199,15 @@ $(OBJDIR)/%.obj %.obj: %.c
 % if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
 % }
+% if (args.project.cgt == "iar-arm") {
+%       if(args.project.third_party_files) {
+	$(CC) $(CFLAGS) \
+    $(foreach file, $(THIRD_PARTY_FILE_PATH), $(if $(findstring $(file), $<), --no_warnings)) \
+    $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
+%       } else {
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
+%   }
+% }
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: $(LIBNAME): $<
@@ -177,6 +219,9 @@ $(OBJDIR)/%.obj %.obj: %.S
 % }
 % if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
 	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+% }
+% if (args.project.cgt == "iar-arm"){
+	$(AS) $(ASMFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 % }
 % if (args.project.device == "awr294x") {
 

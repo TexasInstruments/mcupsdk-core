@@ -10,7 +10,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectSpec>
 % for (let project of args.project.projects) {
+%   if(args.project.device == "am261x"){
+    <import spec="../../`project.cpu`_`project.os`/`project.cgt`/example.projectspec"/>
+%   }
+%   else {
     <import spec="../`project.cpu`_`project.os`/`project.cgt`/example.projectspec"/>
+%}
 % }
     <project
         name="`args.project.name`_`args.project.board`_system_`args.project.tag`"

@@ -39,7 +39,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLE_SPINLOCK";
 

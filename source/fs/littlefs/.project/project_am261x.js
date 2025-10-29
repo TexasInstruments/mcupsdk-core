@@ -25,7 +25,7 @@ const includes_r5f = {
 };
 
 
-const cflags = {
+const cflags_ti_arm_clang = {
     common: [
         "-Wno-extra",
         "-Wno-uninitialized",
@@ -36,8 +36,15 @@ const cflags = {
     ],
 };
 
+const cflags_iar_arm = {
+    release: [
+        "-Ohz",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "iar-arm"},
 ];
 
 function getComponentProperty() {
@@ -57,9 +64,15 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
-    build_property.cflags = cflags;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.includes = includes_r5f;
+    }
+
+    if(buildOption.cgt.match(/ti-arm-clang*/)) {
+        build_property.cflags = cflags_ti_arm_clang;
+    }
+    else if(buildOption.cgt.match(/iar-arm*/)) {
+        build_property.cflags = cflags_iar_arm;
     }
 
     return build_property;

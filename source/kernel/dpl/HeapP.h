@@ -38,8 +38,10 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include <sys/types.h>
 #include <kernel/dpl/SystemP.h>
+#if !defined(__ICCARM__)
+#include <sys/types.h>
+#endif
 
 /**
  * \defgroup KERNEL_DPL_HEAP APIs for Heap management

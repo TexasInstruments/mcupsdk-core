@@ -13,12 +13,12 @@
  *************************** Local Functions **************************
  **********************************************************************/
 
-static void dwc_wait_for_link_up(volatile dwc_usb3_pcd_t *pcd);
+static void dwc_wait_for_link_up(dwc_usb3_pcd_t *pcd);
 
 /**
  * Helper routine for dwc_wait_pme_thread()
  */
-static void dwc_wait_for_link_up(volatile dwc_usb3_pcd_t *pcd)
+static void dwc_wait_for_link_up(dwc_usb3_pcd_t *pcd)
 {
 	unsigned long flags;
 	u32 temp;
@@ -60,9 +60,9 @@ static void dwc_wait_for_link_up(volatile dwc_usb3_pcd_t *pcd)
  * hibernation. This code is ONLY for testing hibernation on the Synopsys
  * HAPS platform.
  */
-int dwc_usb3_wait_pme(volatile dwc_usb3_device_t *dev)
+int dwc_usb3_wait_pme(dwc_usb3_device_t *dev)
 {
-	volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
+	dwc_usb3_pcd_t *pcd = &dev->pcd;
 	unsigned long flags;
 	u32 temp;
 	int state, i;
@@ -123,7 +123,7 @@ int dwc_usb3_wait_pme(volatile dwc_usb3_device_t *dev)
 	return temp;
 }
 
-int dwc_usb3_handle_pme_intr(volatile dwc_usb3_device_t *dev)
+int dwc_usb3_handle_pme_intr(dwc_usb3_device_t *dev)
 {
 	int ret;
 
@@ -138,6 +138,6 @@ int dwc_usb3_handle_pme_intr(volatile dwc_usb3_device_t *dev)
 	return 1;
 }
 
-void dwc_usb3_power_ctl(volatile dwc_usb3_device_t *dev, int on)
+void dwc_usb3_power_ctl(dwc_usb3_device_t *dev, int on)
 {
 }

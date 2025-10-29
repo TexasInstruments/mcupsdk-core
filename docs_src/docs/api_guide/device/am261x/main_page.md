@@ -92,6 +92,11 @@ The main software components in the block diagram are described below
     <td>CLANG based ARM compiler from TI for ARM R5F and M4F
 </tr>
 <tr>
+    <td>IAR Embedded Workbench
+    <td>\htmllink{https://www.iar.com/embedded-development-tools/iar-embedded-workbench, **IAR Embedded Workbench**}
+    <td>IDE used to build, debug and load projects using IAR toolchain
+</tr>
+<tr>
     <td>SysConfig
     <td>\ref SYSCONFIG_INTRO_PAGE
     <td>System configuration tool, used to configure peripherals, pinmux, clocks and generate system initialization code
@@ -195,6 +200,10 @@ In Linux, the tools are installed by default in ${HOME}/ti.
 <tr>
     <td>C:/ti/ti-cgt-armllvm_@VAR_TI_ARM_CLANG_VERSION
     <td>TI ARM CLANG compiler tool chain</td>
+</tr>
+<tr>
+    <td>C:/iar/ewarm-@VAR_IAR_ARM_VERSION
+    <td>IAR ARM compiler tool chain</td>
 </tr>
 </table>
 

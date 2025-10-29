@@ -126,13 +126,36 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
  Example folder | examples/drivers/gpio/gpio_led_blink/
 
 \endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+  ^             | iar-arm
+ Board          | @VAR_LP_BOARD_NAME_LOWER,  @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/gpio/gpio_led_blink/
+
+\endcond
 # Steps to Run the Example
 
+\if SOC_AM261X
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+\else
+- When using CCS projects to build, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- When using makefiles to build, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+\endif
+
 \cond SOC_AM64X
 - Watch out for LED LD26 on the EVM to blink which is controlled by MCU_GPIO0_5.
 \endcond

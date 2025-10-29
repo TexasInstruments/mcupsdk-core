@@ -253,13 +253,13 @@ $(OBJDIR):
 $(SYSCFG_GEN_FILES): syscfg
 
 ifeq ($(SYSTEM_FLAG), false)
-syscfg: ../example.syscfg
+syscfg: example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM2612 --package ZFG --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM2612 --package ZFG --output generated/ example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-1 --part AM2612 --package ZFG --output generated/  ../example.syscfg
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-1 --part AM2612 --package ZFG --output generated/  example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)

@@ -1,0 +1,11 @@
+%%{
+    common = args.common
+    project = args.project
+%%}
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$/`project.name`_`project.board`_`buildOption.cpu`_`buildOption.os`.ewp</path>
+    </project>
+    <batchBuild/>
+</workspace>

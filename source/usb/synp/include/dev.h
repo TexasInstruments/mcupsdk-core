@@ -117,8 +117,8 @@ typedef struct dwc_usb3_device {
 	/** Event Buffers for receiving interrupts. Up to 32 buffers are
 	 * supported by the hardware, but we only use 1.
 	 */
-	volatile u32 *event_ptr[DWC_NUM_EVENT_BUFS];
-	volatile u32 *event_buf[DWC_NUM_EVENT_BUFS];
+	u32 *event_ptr[DWC_NUM_EVENT_BUFS];
+	u32 *event_buf[DWC_NUM_EVENT_BUFS];
 	dwc_dma_t event_buf_dma[DWC_NUM_EVENT_BUFS];
 	/** @} */
 
@@ -156,12 +156,12 @@ typedef struct dwc_usb3_device {
 	/** Hooks for customizing device initialization. See
 	 *  dwc_usb3_pcd_device_init() in cil.c to see how these work.
 	 */
-	void (*soft_reset_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
-	void (*phy_config_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
-	void (*fifo_sizing_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
-	void (*gctl_init_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
-	void (*set_address_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
-	void (*ep0_start_hook)(volatile struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*soft_reset_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*phy_config_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*fifo_sizing_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*gctl_init_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*set_address_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
+	void (*ep0_start_hook)(struct dwc_usb3_device *dev, int softrst, int rstor);
 	/** @} */
 
 	/** Value to write into the DCTL HIRD_Thresh field on register

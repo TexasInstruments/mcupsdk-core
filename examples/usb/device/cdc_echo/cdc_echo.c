@@ -68,8 +68,6 @@ int cdc_echo_main(void)
         tud_task(); /* tinyusb device task */
         cdc_task(); /* CDC handler */
     }
-    
-    return 0;
 }
 
 /* echo to either Serial0 or Serial1

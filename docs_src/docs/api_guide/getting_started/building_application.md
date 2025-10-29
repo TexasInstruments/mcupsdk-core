@@ -85,7 +85,11 @@ Shown below are the different steps that are done to convert the compiler+linker
 \imageStyle{compiler_build_steps_no_xip.png,width:20%}
 \image html compiler_build_steps_no_xip.png "Generating .out file"
 
+\if SOC_AM261X
+  - This .out file can be loaded and run via CCS or IAR EW. Refer \ref CCS_LOAD_RUN and \ref IAR_LOAD_RUN
+\else
   - This .out file can be loaded and run via CCS. Refer \ref CCS_LOAD_RUN
+\endif
 
 \cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AM243X || SOC_AM64X)
 ### Generating .appimage binary

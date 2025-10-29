@@ -65,7 +65,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO";
 

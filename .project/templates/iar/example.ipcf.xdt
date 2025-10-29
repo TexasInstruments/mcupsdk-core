@@ -1,0 +1,154 @@
+%%{
+    common = args.common
+    project = args.project
+    syscfg = args.syscfg
+    utils = args.utils
+    sdkPath = args.sdkPath
+    syscfg_output_path = "syscfg"
+%%}
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+
+<iarProjectConnection version="1.2" name="`args.project.name`" oneShot="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="IarProjectConnection_1.2.xsd">
+
+    <device>
+        <name>`utils.getDeviceNameIARProject(project.device, project.cpu)`</name>
+    </device>
+
+    <customArgVars>
+        <group name="`project.name`" active="true">
+            <argVar>
+                <name>SYSCFG_NODE</name>
+                <value>$SYSCFG_PATH$/nodejs/node</value>
+            </argVar>
+            <argVar>
+                <name>SYSCFG_PATH</name>
+                <value>C:\ti\sysconfig_`utils.getSysCfgVersionProjectSpec()`</value>
+            </argVar>
+            <argVar>
+                <name>SYSCFG_SDKPRODUCT</name>
+                <value>$MCU_PLUS_SDK_PATH$/.metadata/product.json</value>
+            </argVar>
+        </group>
+    </customArgVars>
+
+    <asmIncludePath>
+        <path>$PROJ_DIR$</path>
+    </asmIncludePath>
+
+    <includePath>
+        <path>$PROJ_DIR$</path>
+        <path>$PROJ_DIR$/`syscfg_output_path`</path>
+% for (includePath of project.includes.common) {
+        <path>`includePath.replace('${MCU_PLUS_SDK_PATH}','$MCU_PLUS_SDK_PATH$')`</path>
+% }
+    </includePath>
+
+    <defines>
+% for (defined of project.defines.common) {
+        <define>`defined`</define>
+% }
+    </defines>
+
+    <extraOptions>
+% const ignoredCFlags = ['--cpu=','--fpu=','--cpu_mode','--endian=','--entry','--semihosting','--redirect'];
+% const cflags = project.cflags.common.filter(flag =>
+%    !ignoredCFlags.some(ignored => flag.includes(ignored))
+% );
+% for ( option of cflags) {
+            <arg>`option`</arg>
+% }
+    </extraOptions>
+
+    <linkerFile>
+        <override>true</override>
+        <path>$PROJ_DIR$/syscfg/linker.icf</path>
+    </linkerFile>
+
+    <linkerExtraOptions>
+% const ignoredLFlags = ['--entry','--semihosting','--redirect'];
+% const lflags = project.lflags.common.filter(flag =>
+%    !ignoredLFlags.some(ignored => flag.includes(ignored))
+% );
+% for ( option of lflags) {
+            <arg>`option`</arg>
+% }
+% for ( libs of project.libs.common) {
+            <arg>`libs.replace('${ConfigName}', '$CONFIG_NAME$')`</arg>
+% }
+% for ( libspath of project.libdirs.common) {
+            <arg>-L`libspath.replace('${MCU_PLUS_SDK_PATH}','$MCU_PLUS_SDK_PATH$')`</arg>
+% }
+    </linkerExtraOptions>
+
+    <customBuildTools>
+        <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
+            <fileExtensions>.syscfg</fileExtensions>
+            <command>$SYSCFG_NODE$ $SYSCFG_PATH$/dist/cli.js --product $SYSCFG_SDKPRODUCT$ --context `syscfg.cpu` --part `syscfg.part` --package `syscfg.pkg` --output `syscfg_output_path`/ example.syscfg</command>
+            <output>
+% if ( project.syscfgfile ) {
+                <path>syscfg/ti_drivers_config.c</path>
+                <path>syscfg/ti_drivers_config.h</path>
+                <path>syscfg/ti_drivers_open_close.c</path>
+                <path>syscfg/ti_drivers_open_close.h</path>
+                <path>syscfg/ti_dpl_config.c</path>
+                <path>syscfg/ti_dpl_config.h</path>
+                <path>syscfg/ti_pinmux_config.c</path>
+                <path>syscfg/ti_power_clock_config.c</path>
+                <path>syscfg/ti_board_config.c</path>
+                <path>syscfg/ti_board_config.h</path>
+                <path>syscfg/ti_board_open_close.c</path>
+                <path>syscfg/ti_board_open_close.h</path>
+                <path>syscfg/linker.icf</path>
+% for(val of args.project.libs["common"]){
+	% if (val.startsWith("enet")) {
+                <path>syscfg/ti_enet_config.c</path>
+                <path>syscfg/ti_enet_config.h</path>
+                <path>syscfg/ti_enet_dma_init.c</path>
+                <path>syscfg/ti_enet_dma_init.h</path>
+                <path>syscfg/ti_enet_init.c</path>
+                <path>syscfg/ti_enet_open_close.c</path>
+                <path>syscfg/ti_enet_open_close.h</path>
+                <path>syscfg/ti_enet_soc.c</path>
+                <path>syscfg/ti_enet_lwipif.c</path>
+                <path>syscfg/ti_enet_lwipif.h</path>
+		 % }
+		% if ((args.project.device == "am261x") && (val.includes("tusb"))){
+                <path>syscfg/ti_usb_descriptor.c</path>
+                <path>syscfg/ti_usb_config.h</path>
+		% }
+	% }
+% if (args.project.isBootLoader  && ( (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x"))){
+                <path>syscfg/ti_clocktree_pll_config.c</path>
+                <path>syscfg/ti_clocktree_pll_config.h</path>
+%}
+% }
+            </output>
+            <hasPrio>true</hasPrio> <!-- true: run this tool before all other tools-->
+        </customBuildTool>
+    </customBuildTools>
+
+    <buildActions>
+        <buildAction>
+            <command>make -C $PROJ_DIR$ -f makefile_ccs_bootimage_gen OUTNAME=Exe/$PROJ_FNAME$ PROFILE=$CONFIG_NAME$ MCU_PLUS_SDK_PATH=$MCU_PLUS_SDK_PATH$ CG_TOOL_ROOT=$TOOLKIT_DIR$ CCS_IDE_MODE=desktop DEVICE=`project.device`</command>
+            <output>
+                <path>$EXE_DIR$/$PROJ_FNAME$.mcelf</path>
+                <path>$EXE_DIR$/$PROJ_FNAME$.mcelf_xip</path>
+            </output>
+            <input>
+                <path>$TARGET_PATH$</path>
+            </input>
+            <workingDirectory>$PROJ_DIR$</workingDirectory>
+        </buildAction>
+    </buildActions>
+
+    <files>
+% for (file of project.files.common) {
+        <path copyTo="$PROJ_DIR$/`file`">$MCU_PLUS_SDK_PATH$/`project.relpath`/`file`</path>
+        <path copyTo="$PROJ_DIR$/`file`">$MCU_PLUS_SDK_PATH$/`project.relpath`/`project.board`/`project.cpu`_`project.os`/`file`</path>
+% }
+        <path copyTo="$PROJ_DIR$/example.syscfg">$MCU_PLUS_SDK_PATH$/`project.relpath`/`project.board`/`project.cpu`_`project.os`/example.syscfg</path>
+    </files>
+</iarProjectConnection>

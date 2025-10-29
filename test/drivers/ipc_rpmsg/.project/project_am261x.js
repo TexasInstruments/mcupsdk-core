@@ -50,7 +50,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "example.syscfg"
 
 const templates_freertos_r5f =
 [

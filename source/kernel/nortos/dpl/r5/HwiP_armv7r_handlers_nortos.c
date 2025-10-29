@@ -42,10 +42,16 @@
 extern "C" {
 #endif
 
+#if defined (__ICCARM__)
+void TEXT_HWI HwiP_reserved_handler(void);
+void TEXT_HWI HwiP_fiq_handler(void);
+void TEXT_HWI HwiP_svc_handler(void);
+#else
 /* Following handlers are set directly in vector table, hence use interrupt attribute */
 void TEXT_HWI __attribute__((interrupt("UNDEF"))) HwiP_reserved_handler(void);
 void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void);
 void TEXT_HWI __attribute__((interrupt("SWI"))) HwiP_svc_handler(void);
+#endif
 
 /** Following handlers starts in assembly and switch to C implementation. 
  * Hence DON'T use interrupt attribute. Else it will result in re-entry */ 
@@ -60,14 +66,14 @@ void TEXT_HWI WEAK HwiP_user_prefetch_abort_handler_c(IFSR ifsr, AIFSR aifsr, vo
                                                       volatile uint32_t LR,volatile uint32_t SPSR);
 void TEXT_HWI WEAK HwiP_user_undefined_handler_c(volatile uint32_t LR, volatile uint32_t SPSR);
 
-volatile uint32_t GET_DFSR(void);
-volatile uint32_t GET_ADFSR(void);
-volatile uint32_t GET_DFAR(void);
-volatile uint32_t GET_IFSR(void);
-volatile uint32_t GET_AIFSR(void);
-volatile uint32_t GET_IFAR(void);
-volatile uint32_t GET_SPSR(void);
-volatile uint32_t GET_LR(void);
+uint32_t GET_DFSR(void);
+uint32_t GET_ADFSR(void);
+uint32_t GET_DFAR(void);
+uint32_t GET_IFSR(void);
+uint32_t GET_AIFSR(void);
+uint32_t GET_IFAR(void);
+uint32_t GET_SPSR(void);
+uint32_t GET_LR(void);
 
 #ifdef __cplusplus
 }
@@ -76,17 +82,29 @@ volatile uint32_t GET_LR(void);
 /* Save FPU context, used in FIQ Handler */
 static inline  void Hwip_save_fpu_context(void)
 {
+#if defined (__ICCARM__)
+__asm volatile( "FMRX  R0, FPSCR"  "\n\t": : : "memory");
+__asm volatile( "VPUSH {D0-D15}"  "\n\t": : : "memory");
+__asm volatile( "PUSH  {R0}"  "\n\t": : : "memory");
+#else
     __asm__ __volatile__ ( "FMRX  R0, FPSCR"  "\n\t": : : "memory");
     __asm__ __volatile__ ( "VPUSH {D0-D15}"  "\n\t": : : "memory");
     __asm__ __volatile__ ( "PUSH  {R0}"  "\n\t": : : "memory");
+#endif
 }
 
 /* Restore FPU context, used in FIQ Handler */
 static inline  void Hwip_restore_fpu_context(void)
 {
+#if defined (__ICCARM__)
+    __asm volatile ( "POP   {R0}"  "\n\t": : : "memory");
+    __asm volatile ( "VPOP  {D0-D15}"  "\n\t": : : "memory");
+    __asm volatile ( "VMSR  FPSCR, R0"  "\n\t": : : "memory");
+#else
     __asm__ __volatile__ ( "POP   {R0}"  "\n\t": : : "memory");
     __asm__ __volatile__ ( "VPOP  {D0-D15}"  "\n\t": : : "memory");
     __asm__ __volatile__ ( "VMSR  FPSCR, R0"  "\n\t": : : "memory");
+#endif
 }
 
 
@@ -168,8 +186,11 @@ void TEXT_HWI HwiP_irq_handler_c(void)
         HwiP_ackIRQ(0);
     }
 }
-
+#if defined (__ICCARM__)
+void TEXT_HWI HwiP_fiq_handler(void)
+#else
 void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
+#endif
 {
     int32_t status;
     uint32_t intNum;
@@ -229,7 +250,11 @@ void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
     #endif
 }
 
+#if defined (__ICCARM__)
+void TEXT_HWI HwiP_reserved_handler(void)
+#else
 void TEXT_HWI __attribute__((interrupt("UNDEF"))) HwiP_reserved_handler(void)
+#endif
 {
     volatile uint32_t loop = 1;
     while(loop!=0U)
@@ -247,9 +272,9 @@ void TEXT_HWI HwiP_undefined_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
-        volatile uint32_t SPSR;
+        uint32_t SPSR;
         /* DFSR register */
-        volatile uint32_t LR;
+        uint32_t LR;
         /* Instruction causing the exception*/
     }UNDEF_REG;
 
@@ -260,8 +285,11 @@ void TEXT_HWI HwiP_undefined_handler_c(volatile uint32_t LR)
     HwiP_user_undefined_handler_c(abort_regs.LR, abort_regs.SPSR);
 
 }
-
+#if defined (__ICCARM__)
+void TEXT_HWI HwiP_svc_handler(void)
+#else
 void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void)
+#endif
 {
     volatile uint32_t loop = 1;
     while(loop!=0U)
@@ -280,15 +308,15 @@ void TEXT_HWI HwiP_prefetch_abort_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
-        volatile uint32_t IFSR;
+        uint32_t IFSR;
         /* IFSR register */
-        volatile uint32_t AIFSR;
+        uint32_t AIFSR;
         /* AIFSR register */
-        volatile uint32_t IFAR;
+        uint32_t IFAR;
         /* IFAR register */
-        volatile uint32_t LR;
+        uint32_t LR;
         /* Instruction causing the exception*/
-        volatile uint32_t SPSR;
+        uint32_t SPSR;
         /* SPSR register*/
     }PREFETCH_ABORT_REG;
 
@@ -339,15 +367,15 @@ void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
-        volatile uint32_t DFSR;
+        uint32_t DFSR;
         /* DFSR register */
-        volatile uint32_t ADFSR;
+        uint32_t ADFSR;
         /* ADFSR register */
-        volatile uint32_t DFAR;
+        uint32_t DFAR;
         /* DFAR register */
-        volatile uint32_t LR;
+        uint32_t LR;
         /* Instruction causing the exception*/
-        volatile uint32_t SPSR;
+        uint32_t SPSR;
         /* SPSR register*/
     }DATA_ABORT_REG;
 

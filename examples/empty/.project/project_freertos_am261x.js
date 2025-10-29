@@ -26,28 +26,54 @@ const libdirs_freertos = {
     ],
 };
 
-const includes_freertos_r5f = {
+const includes_freertos_r5f_common = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
     ],
 };
 
-const libs_freertos_r5f = {
+const includes_freertos_r5f_ti_arm_clang = {
+    common: [
+        ...includes_freertos_r5f_common.common,
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+    ],
+};
+
+const includes_freertos_r5f_iar_arm = {
+    common: [
+        ...includes_freertos_r5f_common.common,
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/IAR/ARM_CR5F",
+    ],
+};
+
+const libs_freertos_r5f_ti_arm_clang = {
     common: [
         "freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
-const lnkfiles = {
+const libs_freertos_r5f_iar_arm = {
+    common: [
+        "freertos.am261x.r5f.iar-arm.${ConfigName}.lib",
+        "drivers.am261x.r5f.iar-arm.${ConfigName}.lib",
+    ],
+};
+
+const lnkfiles_ti_arm_clang = {
     common: [
         "linker.cmd",
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const lnkfiles_iar_arm = {
+    common: [
+        "linker.icf",
+    ]
+};
+
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
 
@@ -68,12 +94,15 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "iar-arm", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "iar-arm", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
 ];
 
 const systemProjects = [
     {
         name: "empty",
         tag: "freertos",
+        cgt: "ti-arm-clang",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am261x-som",
@@ -85,12 +114,25 @@ const systemProjects = [
     {
         name: "empty",
         tag: "freertos",
+        cgt: "ti-arm-clang",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am261x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
             { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
+        ],
+    },
+    {
+        name: "empty",
+        tag: "freertos",
+        cgt: "iar-arm",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am261x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "iar-arm", board: "am261x-lp", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "iar-arm", board: "am261x-lp", os: "freertos"},
         ],
     },
 ];
@@ -114,16 +156,28 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_r5f;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_r5f;
-            build_property.templates = templates_freertos_r5f;
+        if(buildOption.cgt === "ti-arm-clang") {
+            build_property.lnkfiles = lnkfiles_ti_arm_clang;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f_ti_arm_clang;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f_ti_arm_clang;
+                build_property.templates = templates_freertos_r5f;
+            }
+        }
+        if(buildOption.cgt === "iar-arm") {
+            build_property.lnkfiles = lnkfiles_iar_arm;
+            if(buildOption.os.match(/freertos*/) )
+            {
+                build_property.includes = includes_freertos_r5f_iar_arm;
+                build_property.libdirs = libdirs_freertos;
+                build_property.libs = libs_freertos_r5f_iar_arm;
+                build_property.templates = templates_freertos_r5f;
+            }
         }
     }
     if(buildOption.cpu.match(/c66*/)) {

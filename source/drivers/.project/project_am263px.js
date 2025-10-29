@@ -160,12 +160,20 @@ const filedirs = {
 	],
 };
 
-const filedirs_r5f =  {
+const filedirs_r5f_common =  {
     common: [
         "pmu",
         "pmu/r5f",
     ]
 };
+
+const filedirs_r5f_ti_arm_clang =  {
+    common: [
+        ...filedirs_r5f_common.common,
+        "pmu/r5f/ti-arm-clang",
+    ],
+};
+
 
 const asmfiles_r5f = {
     common: [
@@ -207,7 +215,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
+        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f_ti_arm_clang.common]};
         build_property.cflags = cflags_r5f;
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;

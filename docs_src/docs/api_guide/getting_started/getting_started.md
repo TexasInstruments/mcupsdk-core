@@ -103,7 +103,13 @@ I2C Target              | I2C device which responds to I2C Controller
 
 - **Step 1:** Download, install SDK and related tools, see \subpage SDK_DOWNLOAD_PAGE [**NEEDS TO BE DONE ONCE when SDK is installed**]
 
+\if SOC_AM261X
+- **Step 2:** Setup IDE for development [**NEEDS TO BE DONE ONCE when SDK is installed**]
+      - **Step 2.a:** For development using CCS, Download, install and setup CCS, see \subpage CCS_SETUP_PAGE
+      - **Step 2.b:** For development using IAR, Download, install and setup IAR Workbench, see \subpage IAR_SETUP_PAGE
+\else
 - **Step 2:** Download, install and setup CCS for development, see \subpage CCS_SETUP_PAGE [**NEEDS TO BE DONE ONCE when SDK is installed**]
+\endif
 
 \if SOC_AM65X
 - **Step 3:** Setup IDK for program execution, see \subpage IDK_SETUP_PAGE

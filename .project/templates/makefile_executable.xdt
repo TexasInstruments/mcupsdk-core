@@ -21,6 +21,9 @@ LNK=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.lnk`
 %if (((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) && (args.project.lnkpreprocessor_gcc != undefined)) {
 CPP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cpp`
 % }
+% if (args.project.cgt == "iar-arm") {
+AS=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.as`
+% }
 STRIP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.strip`
 OBJCOPY=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.objcopy`
 % if (args.project.cgt == "ti-arm-clang") {
@@ -230,12 +233,22 @@ CFLAGS_`prop` := \
 
 	% }
 % }
+% obj = args.project.asmflags;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+ASMFLAGS_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
 % obj = args.project.lnkfiles;
 % for (prop in obj) {
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 LNK_FILES_`prop` = \
 		% for(let val of obj[prop]) {
-			%if( (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") && (args.project.device == "am263px" || (args.project.device == "am273x") || (args.project.device == "am261x") || (args.project.device == "am273x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x")) ) {
+			%if( (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000" || args.project.cgt == "iar-arm") && (args.project.device == "am263px" || (args.project.device == "am273x") || (args.project.device == "am261x") || (args.project.device == "am273x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x")) ) {
 	generated/`val` \
 	%}
 	%else{
@@ -262,7 +275,7 @@ LNK_FILES_PREPROCESSOR_`prop` = \
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 LIBS_PATH_`prop` = \
 		% for(let val of obj[prop]) {
-			% if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
+			% if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7') || (args.project.cgt == 'iar-arm')) {
 	-L`val` \
 			% }
 			% else {
@@ -279,6 +292,9 @@ LIBS_`prop` = \
 		% for(let val of obj[prop]) {
 % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
 	-l:`val` \
+% }
+% else if(args.project.cgt == 'iar-arm') {
+	`val` \
 % }
 % else {
 	-l`val` \
@@ -342,6 +358,9 @@ CPPFILES := $(FILES_cpp_common) $(FILES_cpp_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+% if (args.project.cgt == "iar-arm"){
+ASMFLAGS := $(ASMFLAGS_common)
+% }
 % if (args.project.cgt == "ti-arm-clang") {
 ifeq ($(INSTRUMENTATION_MODE), yes)
 CFLAGS += -fprofile-instr-generate -fcoverage-mapping
@@ -418,6 +437,9 @@ endif
 % if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
 % }
+% if (args.project.cgt == "iar-arm") {
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
+% }
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(LIBNAME): $<
@@ -429,6 +451,9 @@ $(OBJDIR)/%.obj %.obj: %.S
 % }
 % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
 	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+% }
+% if (args.project.cgt == "iar-arm"){
+	$(AS) $(ASMFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 % }
 
 % if(((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) && (!args.project.isBootLoader)) {
@@ -507,6 +532,9 @@ $(OUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 % }
 % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
 	$(LNK) $(LIBS_PATH) -Wl,-Map=$(OUTNAME:%.out=%.map) -o $@ -Wl,--start-group $(LFLAGS) $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) -Wl,--end-group -Wl,-T,$(LNK_FILES)
+% }
+% if (args.project.cgt == "iar-arm"){
+	$(LNK) $(LFLAGS) $(addprefix $(OBJDIR), $(OBJS)) -o $@ $(LIBS) $(LIBS_PATH) --config $(LNK_FILES) --map $(basename $@).map $(ASMFLAGS_common)
 % }
 	@echo  Linking: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $@ Done !!!
 	@echo  .

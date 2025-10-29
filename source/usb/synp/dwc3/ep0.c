@@ -22,19 +22,19 @@
 /**********************************************************************
  *************************** Local Functions **************************
  **********************************************************************/
-static void dwc_usb3_do_setup(volatile dwc_usb3_pcd_t *pcd);
-static void ep0_do_stall(volatile dwc_usb3_pcd_t *pcd, int err_val);
-static void do_clear_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep);
-static void do_get_status(volatile dwc_usb3_pcd_t *pcd);
-static void do_clear_feature(volatile dwc_usb3_pcd_t *pcd);
-static void do_set_feature(volatile dwc_usb3_pcd_t *pcd);
-static void do_set_address(volatile dwc_usb3_pcd_t *pcd);
-static void do_get_descriptor(volatile dwc_usb3_pcd_t *pcd);
-static void ep0_continue_transfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req);
-static int ep0_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,dwc_usb3_dma_desc_t *desc, int status);
-static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf, dwc_dma_t dma);
-static void setup_out_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf, dwc_dma_t dma);
-static void dwc_usb3_handle_ep0(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,u32 event);
+static void dwc_usb3_do_setup(dwc_usb3_pcd_t *pcd);
+static void ep0_do_stall(dwc_usb3_pcd_t *pcd, int err_val);
+static void do_clear_halt(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep);
+static void do_get_status(dwc_usb3_pcd_t *pcd);
+static void do_clear_feature(dwc_usb3_pcd_t *pcd);
+static void do_set_feature(dwc_usb3_pcd_t *pcd);
+static void do_set_address(dwc_usb3_pcd_t *pcd);
+static void do_get_descriptor(dwc_usb3_pcd_t *pcd);
+static void ep0_continue_transfer(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req);
+static int ep0_complete_request(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req,dwc_usb3_dma_desc_t *desc, int status);
+static void setup_in_status_phase(dwc_usb3_pcd_t *pcd, void *buf, dwc_dma_t dma);
+static void setup_out_status_phase(dwc_usb3_pcd_t *pcd, void *buf, dwc_dma_t dma);
+static void dwc_usb3_handle_ep0(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req,u32 event);
 /*=======================================================================*/
 /** @} */
 /*
@@ -111,7 +111,7 @@ const static wusb_bos_desc_t bos_desc = {
  * \param pcd 	 Programming view of DWC_usb3 peripheral controller.
  * \param length Length of the data stage transfer.
  */
-void dwc_usb3_pcd_ep0_data_stage(volatile dwc_usb3_pcd_t *pcd, int length)
+void dwc_usb3_pcd_ep0_data_stage(dwc_usb3_pcd_t *pcd, int length)
 {
 	pcd->ep0_req->dwc_req.buf[0] = (char*)pcd->ep0_status_buf;
 	pcd->ep0_req->dwc_req.bufdma[0] = pcd->ep0_status_buf_dma;
@@ -127,7 +127,7 @@ void dwc_usb3_pcd_ep0_data_stage(volatile dwc_usb3_pcd_t *pcd, int length)
  * 
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
-static void do_set_address(volatile dwc_usb3_pcd_t *pcd)
+static void do_set_address(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
 
@@ -156,10 +156,10 @@ static void do_set_address(volatile dwc_usb3_pcd_t *pcd)
  * \param pcd 	 Programming view of DWC_usb3 peripheral controller.
  * \param err_val Error value that triggered the stall
  */
-static void ep0_do_stall(volatile dwc_usb3_pcd_t *pcd, int err_val)
+static void ep0_do_stall(dwc_usb3_pcd_t *pcd, int err_val)
 {
 	usb_device_request_t ctrl __attribute__((unused)) = pcd->ep0_setup_pkt->req;
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 
 	dwc_print3(pcd->usb3_dev, "req %02x.%02x protocol STALL; err %d\n",
 		   ctrl.bmRequestType, ctrl.bRequest, err_val);
@@ -177,7 +177,7 @@ static void ep0_do_stall(volatile dwc_usb3_pcd_t *pcd, int err_val)
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  * \param ep  Pointer to the endpoint that is being cleared.
  */
-static void do_clear_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep)
+static void do_clear_halt(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *ep)
 {
 	dwc_usb3_dev_ep_regs_t __iomem *ep_reg;
 
@@ -222,7 +222,7 @@ static void do_clear_halt(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep
  * 
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
-static void do_get_descriptor(volatile dwc_usb3_pcd_t *pcd)
+static void do_get_descriptor(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
 	u8 desc_type = UGETW(ctrl.wValue) >> 8;
@@ -334,11 +334,11 @@ static void do_get_descriptor(volatile dwc_usb3_pcd_t *pcd)
  * 
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
-static void do_get_status(volatile dwc_usb3_pcd_t *pcd)
+static void do_get_status(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
 	u8 *status = pcd->ep0_status_buf;
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_pcd_ep_t *ep;
 	int length;
 
 #ifdef DEBUG_EP0
@@ -428,10 +428,10 @@ static void do_get_status(volatile dwc_usb3_pcd_t *pcd)
  * 
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
-static void do_set_feature(volatile dwc_usb3_pcd_t *pcd)
+static void do_set_feature(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_pcd_ep_t *ep;
 	int ret;
 
 #ifdef DEBUG_EP0
@@ -589,10 +589,10 @@ static void do_set_feature(volatile dwc_usb3_pcd_t *pcd)
  * 
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  */
-static void do_clear_feature(volatile dwc_usb3_pcd_t *pcd)
+static void do_clear_feature(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_pcd_ep_t *ep;
 
 #ifdef DEBUG_EP0
 	dwc_debug5(pcd->usb3_dev, "CLEAR_FEATURE %02x.%02x v%04x i%04x l%04x\n",
@@ -740,10 +740,10 @@ static void do_clear_feature(volatile dwc_usb3_pcd_t *pcd)
  * dwc_usb3_gadget_setup() routine from dwc_usb3_do_setup() processes the
  * gadget-specific SETUP commands.
  */
-static void dwc_usb3_do_setup(volatile dwc_usb3_pcd_t *pcd)
+static void dwc_usb3_do_setup(dwc_usb3_pcd_t *pcd)
 {
 	usb_device_request_t ctrl = pcd->ep0_setup_pkt->req;
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 	u16 wvalue, wlength;
 	int ret;
 
@@ -919,9 +919,9 @@ static void dwc_usb3_do_setup(volatile dwc_usb3_pcd_t *pcd)
  * \param pcd Programming view of DWC_usb3 peripheral controller.
  * \param req The request to continue.
  */
-static void ep0_continue_transfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req)
+static void ep0_continue_transfer(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req)
 {
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 	dwc_usb3_dev_ep_regs_t __iomem *ep_reg;
 	dwc_usb3_dma_desc_t *desc;
 	dwc_dma_t desc_dma;
@@ -962,10 +962,10 @@ static void ep0_continue_transfer(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb
  * \param buf Pointer to the buffer to be used for the ZLP.
  * \param dma DMA address of the buffer to be used for the ZLP.
  */
-static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
+static void setup_in_status_phase(dwc_usb3_pcd_t *pcd, void *buf,
 				  dwc_dma_t dma)
 {
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -994,10 +994,10 @@ static void setup_in_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
  * \param buf Pointer to the buffer to be used for the ZLP.
  * \param dma DMA address of the buffer to be used for the ZLP.
  */
-static void setup_out_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
+static void setup_out_status_phase(dwc_usb3_pcd_t *pcd, void *buf,
 				   dwc_dma_t dma)
 {
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -1022,7 +1022,7 @@ static void setup_out_status_phase(volatile dwc_usb3_pcd_t *pcd, void *buf,
 /**
  * This routine prints the ep0 state for debug purposes.
  */
-void dwc_usb3_print_ep0_state(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_print_ep0_state(dwc_usb3_pcd_t *pcd)
 {
 #ifdef DEBUG
 	char *str;
@@ -1077,10 +1077,10 @@ void dwc_usb3_print_ep0_state(volatile dwc_usb3_pcd_t *pcd)
  * 
  * \return 1 if the request is completed, 0 otherwise.
  */
-static int ep0_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,
+static int ep0_complete_request(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req,
 				dwc_usb3_dma_desc_t *desc, int status)
 {
-	volatile dwc_usb3_pcd_ep_t *ep = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep = pcd->ep0;
 	int is_last = 0;
 
 	dwc_debug4(pcd->usb3_dev, "%s(%lx,%lx,%d)\n", __func__,
@@ -1203,10 +1203,10 @@ static int ep0_complete_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_
  * \param req The request to handle.
  * \param event The event that triggered this handler.
  */
-static void dwc_usb3_handle_ep0(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_req_t *req,
+static void dwc_usb3_handle_ep0(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_req_t *req,
 				u32 event)
 {
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 	dwc_usb3_dma_desc_t *desc;
 	u32 byte_count, len;
 	u32 status;
@@ -1418,9 +1418,9 @@ out:
  * \param pcd   Programming view of DWC_usb3 peripheral controller.
  * \param event The event that triggered the transfer.
  */
-void dwc_usb3_handle_ep0_xfer(volatile dwc_usb3_pcd_t *pcd, u32 event)
+void dwc_usb3_handle_ep0_xfer(dwc_usb3_pcd_t *pcd, u32 event)
 {
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 	dwc_usb3_pcd_req_t *req = NULL;
 
 #ifdef DEBUG_EP0

@@ -78,6 +78,7 @@ interface driver on the Host side will convert and transfer the ethernet traffic
  CPU + OS       | r5fss0-0_nortos
   ^             | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
+  ^             | iar-arm
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/usb/device/ncm
 
@@ -88,10 +89,19 @@ interface driver on the Host side will convert and transfer the ethernet traffic
 
 ## Build the example
 
+\if SOC_AM261X
+- **When using CCS projects to build**, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
+- **When using makefiles to build**, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
+\else
 - When using CCS projects to build, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
 - When using makefiles to build, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+\endif
 
 ## HW Setup
 
@@ -151,9 +161,11 @@ refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=
 \endcond
 
 ## Run the example
-
+\if SOC_AM261X
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+\else
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
-
+\endif
 - When application is running observe that ncm network device is detected by HOST PC ( Windows/linux)
 - If the enumeration is successful the following should be displayed on console. 
 

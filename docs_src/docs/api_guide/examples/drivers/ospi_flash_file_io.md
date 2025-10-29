@@ -55,6 +55,7 @@ When fileWriteCounter matches the given APP_OSPI_FILE_WRITE_COUNT macro value, t
  CPU + OS       | r5fss0-0 freertos
  ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
+  ^             | iar-arm
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/ospi/ospi_flash_diag_lld
 
@@ -62,11 +63,21 @@ When fileWriteCounter matches the given APP_OSPI_FILE_WRITE_COUNT macro value, t
 
 # Steps to Run the Example
 
+\if SOC_AM261X
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+\else
+- When using CCS projects to build, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- When using makefiles to build, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+\endif
 
 # See Also
 

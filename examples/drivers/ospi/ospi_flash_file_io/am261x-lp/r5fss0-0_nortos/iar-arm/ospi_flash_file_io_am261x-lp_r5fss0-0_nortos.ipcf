@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+
+<iarProjectConnection version="1.2" name="ospi_flash_file_io" oneShot="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="IarProjectConnection_1.2.xsd">
+
+    <device>
+        <name>AM2612_R5_SS0_0</name>
+    </device>
+
+    <customArgVars>
+        <group name="ospi_flash_file_io" active="true">
+            <argVar>
+                <name>SYSCFG_NODE</name>
+                <value>$SYSCFG_PATH$/nodejs/node</value>
+            </argVar>
+            <argVar>
+                <name>SYSCFG_PATH</name>
+                <value>C:\ti\sysconfig_1.27.0</value>
+            </argVar>
+            <argVar>
+                <name>SYSCFG_SDKPRODUCT</name>
+                <value>$MCU_PLUS_SDK_PATH$/.metadata/product.json</value>
+            </argVar>
+        </group>
+    </customArgVars>
+
+    <asmIncludePath>
+        <path>$PROJ_DIR$</path>
+    </asmIncludePath>
+
+    <includePath>
+        <path>$PROJ_DIR$</path>
+        <path>$PROJ_DIR$/syscfg</path>
+        <path>$MCU_PLUS_SDK_PATH$/source</path>
+    </includePath>
+
+    <defines>
+        <define>SOC_AM261X</define>
+        <define>OS_NORTOS</define>
+    </defines>
+
+    <extraOptions>
+            <arg>--debug</arg>
+            <arg>--diag_suppress=Pa039</arg>
+            <arg>--diag_suppress=Pe177</arg>
+            <arg>-e</arg>
+            <arg>--silent</arg>
+    </extraOptions>
+
+    <linkerFile>
+        <override>true</override>
+        <path>$PROJ_DIR$/syscfg/linker.icf</path>
+    </linkerFile>
+
+    <linkerExtraOptions>
+            <arg>--silent</arg>
+            <arg>nortos.am261x.r5f.iar-arm.$CONFIG_NAME$.lib</arg>
+            <arg>drivers.am261x.r5f.iar-arm.nortos.$CONFIG_NAME$.lib</arg>
+            <arg>board.am261x.r5f.iar-arm.nortos.$CONFIG_NAME$.lib</arg>
+            <arg>littlefs.am261x.r5f.iar-arm.nortos.$CONFIG_NAME$.lib</arg>
+            <arg>-L$MCU_PLUS_SDK_PATH$/source/kernel/nortos/lib</arg>
+            <arg>-L$MCU_PLUS_SDK_PATH$/source/drivers/lib</arg>
+            <arg>-L$MCU_PLUS_SDK_PATH$/source/board/lib</arg>
+            <arg>-L$MCU_PLUS_SDK_PATH$/source/fs/littlefs/lib</arg>
+    </linkerExtraOptions>
+
+    <customBuildTools>
+        <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
+            <fileExtensions>.syscfg</fileExtensions>
+            <command>$SYSCFG_NODE$ $SYSCFG_PATH$/dist/cli.js --product $SYSCFG_SDKPRODUCT$ --context r5fss0-0 --part AM2612 --package ZFG --output syscfg/ example.syscfg</command>
+            <output>
+                <path>syscfg/ti_drivers_config.c</path>
+                <path>syscfg/ti_drivers_config.h</path>
+                <path>syscfg/ti_drivers_open_close.c</path>
+                <path>syscfg/ti_drivers_open_close.h</path>
+                <path>syscfg/ti_dpl_config.c</path>
+                <path>syscfg/ti_dpl_config.h</path>
+                <path>syscfg/ti_pinmux_config.c</path>
+                <path>syscfg/ti_power_clock_config.c</path>
+                <path>syscfg/ti_board_config.c</path>
+                <path>syscfg/ti_board_config.h</path>
+                <path>syscfg/ti_board_open_close.c</path>
+                <path>syscfg/ti_board_open_close.h</path>
+                <path>syscfg/linker.icf</path>
+            </output>
+            <hasPrio>true</hasPrio> <!-- true: run this tool before all other tools-->
+        </customBuildTool>
+    </customBuildTools>
+
+    <buildActions>
+        <buildAction>
+            <command>make -C $PROJ_DIR$ -f makefile_ccs_bootimage_gen OUTNAME=Exe/$PROJ_FNAME$ PROFILE=$CONFIG_NAME$ MCU_PLUS_SDK_PATH=$MCU_PLUS_SDK_PATH$ CG_TOOL_ROOT=$TOOLKIT_DIR$ CCS_IDE_MODE=desktop DEVICE=am261x</command>
+            <output>
+                <path>$EXE_DIR$/$PROJ_FNAME$.mcelf</path>
+                <path>$EXE_DIR$/$PROJ_FNAME$.mcelf_xip</path>
+            </output>
+            <input>
+                <path>$TARGET_PATH$</path>
+            </input>
+            <workingDirectory>$PROJ_DIR$</workingDirectory>
+        </buildAction>
+    </buildActions>
+
+    <files>
+        <path copyTo="$PROJ_DIR$/ospi_flash_file_io.c">$MCU_PLUS_SDK_PATH$/examples/drivers/ospi/ospi_flash_file_io/ospi_flash_file_io.c</path>
+        <path copyTo="$PROJ_DIR$/ospi_flash_file_io.c">$MCU_PLUS_SDK_PATH$/examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_nortos/ospi_flash_file_io.c</path>
+        <path copyTo="$PROJ_DIR$/main.c">$MCU_PLUS_SDK_PATH$/examples/drivers/ospi/ospi_flash_file_io/main.c</path>
+        <path copyTo="$PROJ_DIR$/main.c">$MCU_PLUS_SDK_PATH$/examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_nortos/main.c</path>
+        <path copyTo="$PROJ_DIR$/example.syscfg">$MCU_PLUS_SDK_PATH$/examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_nortos/example.syscfg</path>
+    </files>
+</iarProjectConnection>

@@ -138,13 +138,36 @@ The RM board config need to have an entry for the interrupt router for the core 
  Example folder | examples/drivers/gpio/gpio_input_interrupt/
 
 \endcond
+
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+^               | iar-arm
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/gpio/gpio_input_interrupt/
+
+\endcond
+
 # Steps to Run the Example
 
+\if SOC_AM261X
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+\else
+- When using CCS projects to build, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- When using makefiles to build, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+\endif
 \cond SOC_AM64X
 - Press and release SW5 button on the EVM to generate the trigger GPIO interrupt. This button is connected to GPIO1_43.
 \endcond

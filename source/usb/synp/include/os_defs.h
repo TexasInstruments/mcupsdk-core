@@ -213,7 +213,7 @@ typedef struct usb_request {
         unsigned        stream_id:16; /**< Stream ID for the USB request (16 bits). */
         unsigned        zero:1;     /**< Flag indicating whether the zero-length packet is required (1 bit). */
 
-        void            (*complete)(volatile usb_ep_t *ep, volatile struct usb_request *req); /**< Callback function invoked upon completion of the USB request. */
+        void            (*complete)(usb_ep_t *ep, struct usb_request *req); /**< Callback function invoked upon completion of the USB request. */
 
         int             status;     /**< Status of the USB request, indicating success or error. */
         unsigned        actual;     /**< Actual number of bytes transferred during the USB request. */
@@ -221,7 +221,7 @@ typedef struct usb_request {
 
 /**
  */
-static inline void dwc_usb3_task_schedule(volatile struct tasklet_struct *tasklet)
+static inline void dwc_usb3_task_schedule(struct tasklet_struct *tasklet)
 {
 #ifdef LINUXTEST
         tasklet_schedule(tasklet);
@@ -314,19 +314,19 @@ extern void dwc_usb3_driver_remove(void);
 extern void dwc_usb3_common_irq(int irq, void *dev);
 #endif
 
-extern volatile usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const void *epdesc,
+extern usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const void *epdesc,
                                     const void *epcomp);
-extern int dwc_usb3_ep_disable(volatile struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep);
-extern int dwc_usb3_close_all_ep(volatile struct dwc_usb3_device *usb3_dev);
-extern usb_request_t *dwc_usb3_alloc_request(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep);
-extern void dwc_usb3_free_request(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep,
-                                  volatile usb_request_t *usb_req);
-extern int dwc_usb3_ep_queue(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep,
+extern int dwc_usb3_ep_disable(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep);
+extern int dwc_usb3_close_all_ep(struct dwc_usb3_device *usb3_dev);
+extern usb_request_t *dwc_usb3_alloc_request(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep);
+extern void dwc_usb3_free_request(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep,
+                                  usb_request_t *usb_req);
+extern int dwc_usb3_ep_queue(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep,
                              usb_request_t *usb_req);
 extern int dwc_usb3_ep_dequeue(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep,
                                usb_request_t *usb_req);
-extern int dwc_usb3_wait_pme(volatile struct dwc_usb3_device *usb3_dev);
-extern int dwc_usb3_handle_pme_intr(volatile struct dwc_usb3_device *usb3_dev);
+extern int dwc_usb3_wait_pme(struct dwc_usb3_device *usb3_dev);
+extern int dwc_usb3_handle_pme_intr(struct dwc_usb3_device *usb3_dev);
 
 extern int dwc_usb3_function_init(struct dwc_usb3_device *usb3_dev);
 extern void dwc_usb3_function_remove(struct dwc_usb3_device *usb3_dev);

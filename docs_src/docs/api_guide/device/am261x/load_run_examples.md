@@ -11,8 +11,8 @@
 
 ## Building an application
 
-\note SDK supports building applications via both **Makefile** and **CCS**. 
-		- `makefile_ccs_bootimage_gen` file present inside a CCS project will have steps involved in building an application via CCS.
+\note SDK supports building applications via **Makefile**, **CCS** and **IAR Embedded Workbench**. 
+		- `makefile_ccs_bootimage_gen` file present inside a CCS and IAR project will have steps involved in building an application via CCS or IAR.
 		- `makefile` present inside each example folder consists of the steps involved in building the application via make.
 
 \note Refer \ref GETTING_STARTED_BUILD for an example of CCS and Makefile based build.
@@ -32,8 +32,9 @@ For detailed information on building visit \ref BUILDING_APPLICATION
 
 - Loading is when an application is written into RAM/Flash memory.
 
-- There are 3 ways to load a binary:
+- There are 4 ways to load a binary:
 	- via CCS
+	- via IAR Embedded Workbench
 	- via TI Uniflash tool
 	- via Python scripts
 

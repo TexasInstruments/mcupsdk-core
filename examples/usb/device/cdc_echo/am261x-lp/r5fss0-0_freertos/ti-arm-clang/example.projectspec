@@ -32,10 +32,10 @@
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
-            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f
             -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/cdc_config
             -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -107,7 +107,7 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_USB_CDC_ECHO.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">

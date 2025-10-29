@@ -314,8 +314,6 @@ int ncm_main(void) {
         tud_task();
         service_traffic();
     }
-
-    return 0;
 }
 
 /* lwip has provision for using a mutex, when applicable */

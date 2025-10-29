@@ -464,7 +464,7 @@ typedef struct
       *  this represents number of bytes actually read by the API */
     uint32_t                timeout;
     /**< Timeout for this transaction in units of system ticks */
-    uint32_t                status;
+    int32_t                status;
     /**< [OUT] \ref UART_TransferStatus code */
     uint32_t                *args;
     /**< [IN] Argument to be passed to the callback function */

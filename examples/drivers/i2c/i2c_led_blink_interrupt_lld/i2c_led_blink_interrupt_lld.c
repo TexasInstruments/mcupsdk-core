@@ -65,7 +65,11 @@ void I2C_lld_transferCompleteCallback_implementation (void * args,
                                             const I2CLLD_Message * msg,
                                             int32_t transferStatus);
 
+#if defined(__ICCARM__)
+static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"))) void App_I2C_ISR(void);
+#else
 static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void App_I2C_ISR(void);
+#endif
 
 void i2c_led_blink_main(void *arg)
 {
@@ -177,7 +181,11 @@ void i2c_led_blink_main(void *arg)
     return;
 }
 
+#if defined(__ICCARM__)
+static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"))) void App_I2C_ISR(void)
+#else
 static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void App_I2C_ISR(void)
+#endif
 {
     ISR_CALL_LEVEL_NONFLOAT_REENTRANT(I2C_lld_controllerIsr, \
                                       gI2cLldHandle0, \

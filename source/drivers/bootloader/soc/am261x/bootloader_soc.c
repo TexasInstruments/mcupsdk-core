@@ -505,7 +505,7 @@ int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
 {
     int32_t status = SystemP_FAILURE;
 
-    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)SOC_virtToPhy((void *)startAddr);
+    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)(uintptr_t)SOC_virtToPhy((void *)startAddr);
     gSecureBootStreamArray[gStreamId].dataLen = size;
     gSecureBootStreamArray[gStreamId].canBeEncrypted = BOOTLOADER_APP_SEGMENT_CANNOTBE_ENCRYPTED;
 
@@ -520,7 +520,7 @@ int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc)
 {
 	int32_t status = SystemP_FAILURE;
 
-    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)SOC_virtToPhy((void *)startAddr);
+    gSecureBootStreamArray[gStreamId].dataIn = (uint8_t *)(uintptr_t)SOC_virtToPhy((void *)startAddr);
     gSecureBootStreamArray[gStreamId].dataLen = size;
     gSecureBootStreamArray[gStreamId].canBeEncrypted = enc;
 

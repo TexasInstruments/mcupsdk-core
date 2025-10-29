@@ -67,9 +67,17 @@ This example just does driver and board initialization and prints the string, He
 
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+  \cond SOC_AM261X
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
+  \endcond
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+  \if SOC_AM261X
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+  \else
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+  \endif
 
 # Sample Output
 

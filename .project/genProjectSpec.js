@@ -212,7 +212,17 @@ const utils = {
                 return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();
             }
         );
-    }
+    },
+
+    getDeviceNameIARProject: (device, cpu) => {
+        let deviceName = "";
+        if (device == 'am261x')
+            if(cpu == 'r5fss0-0')
+                deviceName = "AM2612_R5_SS0_0";
+            else if(cpu == 'r5fss0-1')
+                deviceName = "AM2612_R5_SS0_1";
+        return deviceName;
+    },
 }
 
 function genProjectSpecExample(device) {
@@ -262,11 +272,37 @@ function genProjectSpecExample(device) {
                 },
                 flashAddr: require(`./device/project_${device}.js`).getFlashAddr(),
             };
-
-            common.convertTemplateToFile(
-                    `.project/templates/projectspec_${project.type}.xdt`,
-                    `${project.dirPath}/example.projectspec`,
+            
+            if(project.cgt == "ti-arm-clang") {
+                common.convertTemplateToFile(
+                        `.project/templates/projectspec_${project.type}.xdt`,
+                        `${project.dirPath}/example.projectspec`,
+                        args);
+            }
+            else if(project.cgt == "iar-arm") {
+                let project_name = `${project.name}_${project.board}_${buildOption.cpu}_${buildOption.os}`;
+                common.convertTemplateToFile(
+                        `.project/templates/iar/example.ewp.xdt`,
+                        `${project.dirPath}/${project_name}.ewp`,
+                        args);
+                common.convertTemplateToFile(
+                    `.project/templates/iar/example.ewd.xdt`,
+                    `${project.dirPath}/${project_name}.ewd`,
                     args);
+                common.convertTemplateToFile(
+                    `.project/templates/iar/example.template.eww.xdt`,
+                    `${project.dirPath}/${project_name}.template.eww`,
+                    args);
+                common.convertTemplateToFile(
+                    `.project/templates/iar/example.ipcf.xdt`,
+                    `${project.dirPath}/${project_name}.ipcf`,
+                    args);
+                common.convertTemplateToFile(
+                    `.project/templates/iar/sysconfig_generated_files.ipcf.xdt`,
+                    `${project.dirPath}/sysconfig_generated_files.ipcf`,
+                    args);
+            }
+
             if("syscfgfile" in args.project) {
                 common.convertTemplateToFile(
                         `.project/templates/syscfg_c.rov.xs.xdt`,

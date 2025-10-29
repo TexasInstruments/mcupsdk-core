@@ -110,16 +110,15 @@ int dfu_main(void)
       #endif
       tud_task(); /* tinyusb device task */
 		
-		if(gManifestDone == MANIFEST_DONE)
-		{
-			/* send the received file to uart as string */ 
-			DebugP_log("\r\n%s",(char*)gFileBuf);
-			gManifestDone = MANIFEST_PENDING ; 
-			/* reset the buffer */ 
-			memset((void*)gFileBuf,0,MAX_FILE_SIZE); 
-		}
+      if(gManifestDone == MANIFEST_DONE)
+      {
+        /* send the received file to uart as string */ 
+        DebugP_log("\r\n%s",(char*)gFileBuf);
+        gManifestDone = MANIFEST_PENDING ; 
+        /* reset the buffer */ 
+        memset((void*)gFileBuf,0,MAX_FILE_SIZE); 
+      }
     }
-    return 0;
 }
 
 /*--------------------------------------------------------------------+

@@ -84,6 +84,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "iar-arm"},
 ];
 
 function getComponentProperty() {

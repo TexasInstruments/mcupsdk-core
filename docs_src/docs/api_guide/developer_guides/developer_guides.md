@@ -69,6 +69,9 @@ SDK features and tools.
 - \subpage BOOTFLOW_GUIDE
 - \subpage MCELF_LANDING
 - \subpage CCS_PROJECTS_PAGE
+\cond SOC_AM261X
+- \subpage IAR_PROJECTS_PAGE
+\endcond
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
 - \subpage SECURE_BOOT

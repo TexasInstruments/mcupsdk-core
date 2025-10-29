@@ -32,7 +32,7 @@
 
 #include <drivers/hw_include/cslr_soc.h>
 #include <drivers/soc.h>
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
 #ifdef __ARM_ACLE
 #include <arm_acle.h>
 #endif /* __ARM_ACLE */
@@ -3086,7 +3086,7 @@ void SOC_rcmR5SS0TriggerReset(void)
     mssCtrl->R5SS0_CONTROL = regVal;
 
     /* execute wfi inside a loop to clear any pending interrupts, and reset core0 and core 1 */
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
     while (1)
     {
         __wfi();
@@ -3109,7 +3109,7 @@ void SOC_generateSwWarmReset(void)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
     /* execute wfi */
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
     __wfi();
 #endif
 }

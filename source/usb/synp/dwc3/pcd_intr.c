@@ -57,19 +57,19 @@
  *************************** Local Functions **************************
  **********************************************************************/
 
-static int handle_disconnect_intr(volatile dwc_usb3_pcd_t *pcd);
-static void handle_usb_reset_intr(volatile dwc_usb3_pcd_t *pcd);
-static void handle_link_status_change_intr(volatile dwc_usb3_pcd_t *pcd);
-static void handle_wakeup_detected_intr(volatile dwc_usb3_pcd_t *pcd);
-static int handle_hiber_req_intr(volatile dwc_usb3_pcd_t *pcd, u32 event);
-static void handle_u3_l2l1_susp_intr(volatile dwc_usb3_pcd_t *pcd);
-static void handle_sof_intr(volatile dwc_usb3_pcd_t *pcd);
+static int handle_disconnect_intr(dwc_usb3_pcd_t *pcd);
+static void handle_usb_reset_intr(dwc_usb3_pcd_t *pcd);
+static void handle_link_status_change_intr(dwc_usb3_pcd_t *pcd);
+static void handle_wakeup_detected_intr(dwc_usb3_pcd_t *pcd);
+static int handle_hiber_req_intr(dwc_usb3_pcd_t *pcd, u32 event);
+static void handle_u3_l2l1_susp_intr(dwc_usb3_pcd_t *pcd);
+static void handle_sof_intr(dwc_usb3_pcd_t *pcd);
 
 /**
  * This interrupt indicates that the USB link state has changed to L2, U3, or
  * (if L1 Hibernation is enabled) L1, and software intervention is required.
  */
-static int handle_hiber_req_intr(volatile dwc_usb3_pcd_t *pcd, u32 event)
+static int handle_hiber_req_intr(dwc_usb3_pcd_t *pcd, u32 event)
 {
 	int hird __attribute__((unused));
 	int is_superspeed;
@@ -111,9 +111,9 @@ static int handle_hiber_req_intr(volatile dwc_usb3_pcd_t *pcd, u32 event)
 /**
  * This interrupt indicates that the device has been disconnected.
  */
-static int handle_disconnect_intr(volatile dwc_usb3_pcd_t *pcd)
+static int handle_disconnect_intr(dwc_usb3_pcd_t *pcd)
 {
-	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
+	dwc_usb3_device_t *dev = pcd->usb3_dev;
 	u32 temp;
 
 	dwc_print0(dev, "DISCONNECT\n");
@@ -146,10 +146,10 @@ static int handle_disconnect_intr(volatile dwc_usb3_pcd_t *pcd)
  * Interrupt occurs, all transfers are stopped and the device state is set
  * to DEFAULT.
  */
-static void handle_usb_reset_intr(volatile dwc_usb3_pcd_t *pcd)
+static void handle_usb_reset_intr(dwc_usb3_pcd_t *pcd)
 {
-	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_device_t *dev = pcd->usb3_dev;
+	dwc_usb3_pcd_ep_t *ep;
 	u32 i;
 
 	dwc_print0(pcd->usb3_dev, "USB RESET\n");
@@ -212,10 +212,10 @@ static void handle_usb_reset_intr(volatile dwc_usb3_pcd_t *pcd)
  * 
  * \param pcd   Programming view of DWC_usb3 peripheral controller.
  */
-void dwc_usb3_handle_connect_done_intr(volatile dwc_usb3_pcd_t *pcd)
+void dwc_usb3_handle_connect_done_intr(dwc_usb3_pcd_t *pcd)
 {
-	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
-	volatile dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
+	dwc_usb3_device_t *dev = pcd->usb3_dev;
+	dwc_usb3_pcd_ep_t *ep0 = pcd->ep0;
 	u32 temp;
 	u32 speed;
 #ifndef SELA_PLATFORM_NOCTL
@@ -346,7 +346,7 @@ void dwc_usb3_handle_connect_done_intr(volatile dwc_usb3_pcd_t *pcd)
 /**
  * This interrupt indicates that the USB link state has changed.
  */
-static void handle_link_status_change_intr(volatile dwc_usb3_pcd_t *pcd)
+static void handle_link_status_change_intr(dwc_usb3_pcd_t *pcd)
 {
 	int state;
 	int speed;
@@ -400,7 +400,7 @@ static void handle_link_status_change_intr(volatile dwc_usb3_pcd_t *pcd)
  * This interrupt indicates that the DWC_usb3 controller has detected a
  * resume or remote wakeup sequence.
  */
-static void handle_wakeup_detected_intr(volatile dwc_usb3_pcd_t *pcd)
+static void handle_wakeup_detected_intr(dwc_usb3_pcd_t *pcd)
 {
 	u32 state;
 
@@ -419,7 +419,7 @@ static void handle_wakeup_detected_intr(volatile dwc_usb3_pcd_t *pcd)
 /**
  * This interrupt indicates that a U3/L2-L1 Suspend event has occurred.
  */
-static void handle_u3_l2l1_susp_intr(volatile dwc_usb3_pcd_t *pcd)
+static void handle_u3_l2l1_susp_intr(dwc_usb3_pcd_t *pcd)
 {
 	int state;
 
@@ -462,7 +462,7 @@ static void handle_u3_l2l1_susp_intr(volatile dwc_usb3_pcd_t *pcd)
  * This routine handles the SOF Interrupts. At this time the SOF Interrupt
  * is disabled.
  */
-static void handle_sof_intr(volatile dwc_usb3_pcd_t *pcd)
+static void handle_sof_intr(dwc_usb3_pcd_t *pcd)
 {
 	dwc_debug0(pcd->usb3_dev, "SOF\n");
 }
@@ -474,9 +474,9 @@ static void handle_sof_intr(volatile dwc_usb3_pcd_t *pcd)
  * \param physep The physical endpoint number.
  * \param event The event associated with the transfer.
  */
-void dwc_usb3_handle_ep_intr(volatile dwc_usb3_pcd_t *pcd, u32 physep, u32 event)
+void dwc_usb3_handle_ep_intr(dwc_usb3_pcd_t *pcd, u32 physep, u32 event)
 {
-	volatile dwc_usb3_pcd_ep_t *ep;
+	dwc_usb3_pcd_ep_t *ep;
 	u32 epnum, is_in, temp;
 	const char *dir __attribute__((unused));
 
@@ -649,7 +649,7 @@ void dwc_usb3_handle_ep_intr(volatile dwc_usb3_pcd_t *pcd, u32 physep, u32 event
  * 
  * \return 0 if no further action is needed, 1 if the device should enter
  */
-int dwc_usb3_handle_dev_intr(volatile dwc_usb3_pcd_t *pcd, u32 event)
+int dwc_usb3_handle_dev_intr(dwc_usb3_pcd_t *pcd, u32 event)
 {
 	u32 dint = event >> DWC_DEVT_SHIFT & DWC_DEVT_BITS >> DWC_DEVT_SHIFT;
 	u32 temp, ret = 0;

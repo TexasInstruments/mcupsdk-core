@@ -159,10 +159,17 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
         for ( project of systemProjects)
         {
             let outPath = `${property.dirPath}/${project.board}/system_${project.tag}`
+            if (device === "am261x") {
+                project.cgt = project.cgt || "ti-arm-clang";
+                outPath = `${property.dirPath}/${project.board}/system_${project.tag}/${project.cgt}`
+            }
 
             let system_example_make = {};
 
             system_example_make.name = `${project.name}_${project.board}_system_${project.tag}`;
+            if (device === "am261x") {
+                 system_example_make.name = `${project.name}_${project.board}_system_${project.tag}_${project.cgt}`;
+             }
             system_example_make.relpath = common.path.relative(path.normalize(__dirname + `/../${genFolder}`), outPath);
             system_example_make.buildTarget = " " + system_example_make.name;
             system_example_make.buildTargetClean = " " + system_example_make.name + "_clean";

@@ -70,6 +70,19 @@ Application exits after 10 iterations..
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+  ^             | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+  ^             | iar-arm
+ Board          | @VAR_LP_BOARD_NAME_LOWER,  @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/i2c/i2c_led_blink/
+
+\endcond
+
 \cond SOC_AM263X || SOC_AM263PX
 ## AM263X-CC
 - Watch out for LEDs LD2, LD3, LD4, LD5, LD6, LD7, LD8, LD9, LD10, LD11 on the CC to blink which is controlled by I2C2.
@@ -80,11 +93,22 @@ Application exits after 10 iterations..
 
 # Steps to Run the Example
 
+\if SOC_AM261X
 - **When using CCS projects to build**, import the CCS project for the required combination
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using IAR EW projects to build**, import the IAR EW workspace for the required combination
+  and build it using the IAR EW project menu (see \ref IAR_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
+- Launch a CCS or IAR EW debug session and run the executable, see \ref CCS_LAUNCH_PAGE or \ref IAR_LAUNCH_PAGE
+\else
+- When using CCS projects to build, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- When using makefiles to build, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+\endif
+
 
 # See Also
 

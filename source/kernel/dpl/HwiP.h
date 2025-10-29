@@ -49,7 +49,7 @@ extern "C" {
  * @{
  */
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
 
   /* compile flag to enable or disable save/restore of FPU context in FIQ */
   // #define HWIP_FPU_CONTEXT_SAVE_RESTORE_ENABLE

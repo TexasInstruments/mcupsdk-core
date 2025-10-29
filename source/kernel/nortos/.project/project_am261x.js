@@ -37,11 +37,17 @@ const defines_r5f = {
     ]
 };
 
-const cflags_r5f = {
+const cflags_r5f_ti_arm_clang = {
     common: [
-        "-Wno-extra"
-    ]
+         "-Wno-extra"
+    ],
 };
+
+const cflags_r5f_iar = {
+	common: [
+		"--diag_suppress=Pe177",
+	],
+}
 
 const asmfiles_r5f = {
     common: [
@@ -59,17 +65,31 @@ const asmfiles_r5f = {
     ],
 };
 
-const filedirs_r5f = {
+const filedirs_r5f_common = {
     common: [
         "dpl/r5",
         "dpl/common",
     ],
 };
 
+const filedirs_r5f_ti_arm_clang = {
+    common:[
+        ...filedirs_r5f_common.common,
+        "dpl/r5/ti-arm-clang",
+    ]
+}
+
+const filedirs_r5f_iar_arm = {
+    common:[
+        ...filedirs_r5f_common.common,
+        "dpl/r5/iar-arm",
+    ]
+}
 
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "nortos"},
+    { device: device, cpu: "r5f", cgt: "iar-arm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -90,9 +110,15 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
-        build_property.filedirs = filedirs_r5f;
-        build_property.cflags = cflags_r5f;
         build_property.defines = defines_r5f;
+        if(buildOption.cgt.match(/ti-arm-clang*/)) {
+            build_property.cflags = cflags_r5f_ti_arm_clang;
+            build_property.filedirs = filedirs_r5f_ti_arm_clang;
+        }
+        else if(buildOption.cgt.match(/iar-arm*/)) {
+            build_property.cflags = cflags_r5f_iar;
+            build_property.filedirs = filedirs_r5f_iar_arm;
+        }
     }
 
     return build_property;

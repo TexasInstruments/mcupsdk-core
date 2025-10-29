@@ -55,6 +55,7 @@ ASMFILES_common := \
 FILES_PATH_common = \
     dpl/r5 \
     dpl/common \
+    dpl/r5/ti-arm-clang \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

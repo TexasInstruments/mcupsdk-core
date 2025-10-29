@@ -50,6 +50,7 @@ function mergeCgtOptions(project, commonCgtOptions) {
     concatArrayPropertiesInObject(project, commonCgtOptions, "libs", true);
     concatArrayPropertiesInObject(project, commonCgtOptions, "libdirs", true);
     concatArrayPropertiesInObject(project, commonCgtOptions, "lnkfiles", false);
+    concatArrayPropertiesInObject(project, commonCgtOptions, "asmflags", false);
 
     return project;
 }
@@ -74,7 +75,12 @@ function addOsIncludes(project, os, buildOption) {
                 includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CM4F");
                 cpu = "m4f";
             } else if (buildOption.cpu.match (/r5f*/)) {
-                includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F");
+                if(buildOption.cgt.match(/iar-arm*/)) {
+                    includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/IAR_ARM/ARM_CR5F");
+                }
+                else {
+                    includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F");
+                }
                 cpu = "r5f";
             } else if (buildOption.cpu.match(/a53*/)) {
                 includes.push("${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53");

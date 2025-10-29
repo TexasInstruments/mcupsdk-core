@@ -81,14 +81,20 @@ const filedirs = {
     ],
 };
 
-const includes = {
+// Suppress warnings in this directories
+const third_party_filedirs = {
+    common: [
+        "tinyusb-stack/",
+    ]
+}
+
+const includes_common = {
     common: [
         "../../drivers/hw_include",
         "../../drivers/hw_include/am261x",
         "../../drivers/soc/am261x",
         "../../kernel/freertos/FreeRTOS-Kernel/include",
         "../../kernel/freertos/config/am261x/r5f",
-        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "../tinyusb/config/freertos/am261x/ncm_config",
         "../tinyusb/tinyusb-stack/src",
         "../tinyusb/tinyusb-stack/src/common",
@@ -109,6 +115,20 @@ const includes = {
     ],
 };
 
+const includes_ti_arm_clang = {
+    common: [
+        ...includes_common.common,
+        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+    ],
+};
+
+const includes_iar_arm = {
+    common: [
+        ...includes_common.common,
+        "../../kernel/freertos/portable/IAR_ARM/ARM_CR5F",
+    ],
+};
+
 const defines = {
     common: [
         "TINYUSB_INTEGRATION",
@@ -119,7 +139,7 @@ const defines = {
     ],
 };
 
-const cflags = {
+const cflags_ti_arm_clang = {
     common: [
         "-Wno-address-of-packed-member",
     ],
@@ -127,8 +147,14 @@ const cflags = {
     ],
 };
 
+const cflags_iar_arm = {
+    common: [
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: device, cpu: "r5f", cgt: "iar-arm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -152,10 +178,15 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.includes = includes;
     build_property.defines = defines;
     if(buildOption.cgt.match(/ti-arm-clang*/)) {
-        build_property.cflags = cflags;
+        build_property.includes = includes_ti_arm_clang;
+        build_property.cflags = cflags_ti_arm_clang;
+    }
+    else if(buildOption.cgt.match(/iar-arm*/)) {
+        build_property.includes = includes_iar_arm;
+        build_property.cflags = cflags_iar_arm;
+        build_property.third_party_files = third_party_filedirs;
     }
 
     return build_property;

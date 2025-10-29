@@ -55,7 +55,11 @@ The SBL is like any other example of the SDK. They use the bootloader library AP
 
 Depending on the boot media from which we load the application binary, we have multiple SBLs like `sbl_ospi`,`sbl_uart` etc.
 
+\if SOC_AM261X
+A bare minimum SBL called the `sbl_null` is also included which aids the users to load their applications via CCS or IAR EW. Here are some details regarding those.
+\else
 A bare minimum SBL called the `sbl_null` is also included which aids the users to load their applications via CCS. Here are some details regarding those.
+\endif
 
 ### SBL NULL
 

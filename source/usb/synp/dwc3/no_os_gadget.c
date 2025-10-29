@@ -62,7 +62,7 @@ extern dwc_usb3_dma_desc_t	g_in_trb_pool[][DWC_NUM_ISOC_TRBS + 1];
  * @param speed Speed of the connection (as defined in usb.h).
  * @return      0 for success, else negative error code.
  */
-int dwc_usb3_gadget_connect(volatile dwc_usb3_pcd_t *pcd, int speed)
+int dwc_usb3_gadget_connect(dwc_usb3_pcd_t *pcd, int speed)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -104,7 +104,7 @@ int dwc_usb3_gadget_connect(volatile dwc_usb3_pcd_t *pcd, int speed)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
  */
-int dwc_usb3_gadget_disconnect(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_gadget_disconnect(dwc_usb3_pcd_t *pcd)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 #ifdef TINYUSB_INTEGRATION
@@ -125,7 +125,7 @@ int dwc_usb3_gadget_disconnect(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
  */
-int dwc_usb3_gadget_suspend(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_gadget_suspend(dwc_usb3_pcd_t *pcd)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -145,7 +145,7 @@ int dwc_usb3_gadget_suspend(volatile dwc_usb3_pcd_t *pcd)
  * @param pcd   Programming view of DWC_usb3 peripheral controller.
  * @return      0 for success, else negative error code.
  */
-int dwc_usb3_gadget_resume(volatile dwc_usb3_pcd_t *pcd)
+int dwc_usb3_gadget_resume(dwc_usb3_pcd_t *pcd)
 {
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
 
@@ -166,7 +166,7 @@ int dwc_usb3_gadget_resume(volatile dwc_usb3_pcd_t *pcd)
  * @param ctrl  Pointer to the Setup packet for the request.
  * @return      0 for success, else negative error code.
  */
-int dwc_usb3_gadget_setup(volatile dwc_usb3_pcd_t *pcd, usb_device_request_t *ctrl)
+int dwc_usb3_gadget_setup(dwc_usb3_pcd_t *pcd, usb_device_request_t *ctrl)
 {
 	int ret = 0;
 
@@ -201,11 +201,11 @@ int dwc_usb3_gadget_setup(volatile dwc_usb3_pcd_t *pcd, usb_device_request_t *ct
  * @param status        Transfer status, 0 for success else negative error code.
  * @return              0 for success, else negative error code.
  */
-int dwc_usb3_gadget_complete(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep,
-			     volatile dwc_usb3_pcd_req_t *pcd_req, int status)
+int dwc_usb3_gadget_complete(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep,
+			     dwc_usb3_pcd_req_t *pcd_req, int status)
 {
-	volatile usb_ep_t	*usb_ep = &pcd_ep->usb_ep;
-	volatile usb_request_t	*usb_req = &pcd_req->usb_req;
+	usb_ep_t	*usb_ep = &pcd_ep->usb_ep;
+	usb_request_t	*usb_req = &pcd_req->usb_req;
 	u32		actual = pcd_req->dwc_req.actual;
 
 	dwc_info(pcd->usb3_dev, "%s(%lx)\n", __func__, (unsigned long)pcd_ep);
@@ -256,7 +256,7 @@ int dwc_usb3_gadget_complete(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd
  * @return              Address of allocated memory block, or NULL if allocation
  *                      fails.
  */
-void *dwc_usb3_gadget_alloc_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, dwc_dma_t *mem_dma_ret)
+void *dwc_usb3_gadget_alloc_dma(dwc_usb3_pcd_ep_t *pcd_ep, int size, dwc_dma_t *mem_dma_ret)
 {
 	void		*mem;
 	dwc_dma_t	mem_dma;
@@ -295,7 +295,7 @@ void *dwc_usb3_gadget_alloc_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, dw
  * @param mem           Address of memory block.
  * @param mem_dma       Physical address of memory block.
  */
-void dwc_usb3_gadget_free_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, void *mem, dwc_dma_t mem_dma)
+void dwc_usb3_gadget_free_dma(dwc_usb3_pcd_ep_t *pcd_ep, int size, void *mem, dwc_dma_t mem_dma)
 {
 	dwc_debug2(pcd_ep->dwc_ep.pcd->usb3_dev, "%s(%lx)\n", __func__, (unsigned long)pcd_ep);
 
@@ -313,7 +313,7 @@ void dwc_usb3_gadget_free_dma(volatile dwc_usb3_pcd_ep_t *pcd_ep, int size, void
  * @param pcd_ep        PCD EP to operate on.
  * @return              Pointer to PCD request, or NULL if no request available.
  */
-dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep)
+dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep)
 {
 	dwc_usb3_pcd_req_t *pcd_req;
 
@@ -337,7 +337,7 @@ dwc_usb3_pcd_req_t *dwc_usb3_gadget_get_request(volatile dwc_usb3_pcd_t *pcd, vo
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        PCD EP to operate on.
  */
-void dwc_usb3_gadget_start_next_request(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep)
+void dwc_usb3_gadget_start_next_request(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep)
 {
 	dwc_usb3_pcd_req_t *pcd_req = NULL;
 
@@ -373,7 +373,7 @@ void dwc_usb3_gadget_start_next_request(volatile dwc_usb3_pcd_t *pcd, volatile d
  * @param pcd_ep        EP to operate on.
  * @param event         Event data containing the XferNrdy microframe.
  */
-void dwc_usb3_gadget_isoc_ep_start(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep, u32 event)
+void dwc_usb3_gadget_isoc_ep_start(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep, u32 event)
 {
 	dwc_usb3_pcd_req_t *pcd_req = NULL;
 
@@ -444,7 +444,7 @@ void dwc_usb3_gadget_isoc_ep_start(volatile dwc_usb3_pcd_t *pcd, volatile dwc_us
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        EP to operate on.
  */
-void dwc_usb3_gadget_request_nuke(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep)
+void dwc_usb3_gadget_request_nuke(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep)
 {
 	dwc_usb3_pcd_req_t *pcd_req;
 
@@ -467,7 +467,7 @@ void dwc_usb3_gadget_request_nuke(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb
  * @param pcd           Programming view of DWC_usb3 peripheral controller.
  * @param pcd_ep        EP to operate on.
  */
-void dwc_usb3_gadget_set_ep_not_started(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *pcd_ep)
+void dwc_usb3_gadget_set_ep_not_started(dwc_usb3_pcd_t *pcd, dwc_usb3_pcd_ep_t *pcd_ep)
 {
 	dwc_usb3_pcd_req_t *pcd_req;
 
@@ -499,15 +499,15 @@ void dwc_usb3_gadget_set_ep_not_started(volatile dwc_usb3_pcd_t *pcd, volatile d
  * @param epcomp        USB SS endpoint companion descriptor for the EP.
  * @return              Pointer to USB EP context, or NULL on failure.
  */
-volatile usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const void *epdesc, const void *epcomp)
+usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const void *epdesc, const void *epcomp)
 {
 	const usb_endpoint_descriptor_t			*ep_desc = (const usb_endpoint_descriptor_t *)epdesc;
 	const ss_endpoint_companion_descriptor_t	*ep_comp = (const ss_endpoint_companion_descriptor_t *)epcomp;
 	dwc_usb3_pcd_t					*pcd = &usb3_dev->pcd;
-	volatile dwc_usb3_pcd_ep_t				*pcd_ep;
+	dwc_usb3_pcd_ep_t				*pcd_ep;
 	dwc_usb3_dma_desc_t				*desc;
 	dwc_dma_t					desc_dma;
-	volatile usb_ep_t					*usb_ep;
+	usb_ep_t					*usb_ep;
 	uByte					ep_num, ep_dir, ep_type;
 	int						link, num_trbs, retval;
 
@@ -576,10 +576,10 @@ volatile usb_ep_t *dwc_usb3_ep_enable(struct dwc_usb3_device *usb3_dev, const vo
  * @param usb_ep        USB EP to disable.
  * @return              0 for success, else negative error code.
  */
-int dwc_usb3_ep_disable(volatile struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep)
+int dwc_usb3_ep_disable(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep)
 {
-	volatile dwc_usb3_pcd_t		*pcd = &usb3_dev->pcd;
-	volatile dwc_usb3_pcd_ep_t	*pcd_ep;
+	dwc_usb3_pcd_t		*pcd = &usb3_dev->pcd;
+	dwc_usb3_pcd_ep_t	*pcd_ep;
 	int			retval;
 
 	dwc_debug2(usb3_dev, "%s(%lx)\n", __func__, (unsigned long)usb_ep);
@@ -599,10 +599,10 @@ int dwc_usb3_ep_disable(volatile struct dwc_usb3_device *usb3_dev, volatile usb_
  * @param usb3_dev      Programming view of DWC_usb3 device.
  * @return              0 for success, else negative error code.
  */
-int dwc_usb3_close_all_ep(volatile struct dwc_usb3_device *usb3_dev)
+int dwc_usb3_close_all_ep(struct dwc_usb3_device *usb3_dev)
 {
-    volatile dwc_usb3_pcd_t      *pcd = &usb3_dev->pcd;
-    volatile dwc_usb3_pcd_ep_t   *pcd_ep;
+    dwc_usb3_pcd_t      *pcd = &usb3_dev->pcd;
+    dwc_usb3_pcd_ep_t   *pcd_ep;
     u32 i;
     int         retval = 0;
 
@@ -636,7 +636,7 @@ int dwc_usb3_close_all_ep(volatile struct dwc_usb3_device *usb3_dev)
  * @param usb3_dev      Programming view of DWC_usb3 device.
  * @param usb_ep        USB EP for the request.
  */
-usb_request_t *dwc_usb3_alloc_request(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep)
+usb_request_t *dwc_usb3_alloc_request(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep)
 {
 	dwc_usb3_pcd_req_t	*pcd_req;
 	unsigned int		req_idx;
@@ -663,7 +663,7 @@ usb_request_t *dwc_usb3_alloc_request(struct dwc_usb3_device *usb3_dev, volatile
  * @param usb_ep        USB EP for the request.
  * @param usb_req       USB request to be freed.
  */
-void dwc_usb3_free_request(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep, volatile usb_request_t *usb_req)
+void dwc_usb3_free_request(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep, usb_request_t *usb_req)
 {
 	dwc_usb3_pcd_req_t	*pcd_req = dwc_usb3_get_pcd_req(usb_req);
 	unsigned int		req_idx = pcd_req - &g_pcd_req[0];
@@ -689,7 +689,7 @@ void dwc_usb3_free_request(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *
  * @param usb_req       USB request for the transfer.
  * @return              0 for success, else negative error code.
  */
-int dwc_usb3_ep_queue(struct dwc_usb3_device *usb3_dev, volatile usb_ep_t *usb_ep, usb_request_t *usb_req)
+int dwc_usb3_ep_queue(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep, usb_request_t *usb_req)
 {
 	dwc_usb3_pcd_t		*pcd = &usb3_dev->pcd;
 	dwc_usb3_pcd_ep_t	*pcd_ep = dwc_usb3_get_pcd_ep(usb_ep);
@@ -811,7 +811,7 @@ int dwc_usb3_ep_dequeue(struct dwc_usb3_device *usb3_dev, usb_ep_t *usb_ep, usb_
 int dwc_usb3_gadget_init(dwc_usb3_device_t *usb3_dev)
 {
 	dwc_usb3_pcd_t		*pcd = &usb3_dev->pcd;
-	volatile dwc_usb3_pcd_ep_t	*ep;
+	dwc_usb3_pcd_ep_t	*ep;
 	u32			i;
 
 	dwc_debug1(usb3_dev, "%s()\n", __func__);

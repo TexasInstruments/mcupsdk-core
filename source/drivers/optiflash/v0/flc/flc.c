@@ -66,7 +66,7 @@ FLC_API_STS_t FLC_configureRegion(FLC_RegionInfo * const regionInfo)
 FLC_API_STS_t FLC_startRegion(FLC_RegionInfo * const regionInfo)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -83,7 +83,7 @@ FLC_API_STS_t FLC_startRegion(FLC_RegionInfo * const regionInfo)
 FLC_API_STS_t FLC_isRegionDone(FLC_RegionInfo * const regionInfo, uint32_t *status)
 {
     FLC_API_STS_t retStatus = FLC_API_STS_SUCCESS;
-    if(((FLC_RegionInfo * const)NULL == regionInfo) || (NULL == status))
+    if((NULL == regionInfo) || (NULL == status))
     {
         retStatus = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -99,7 +99,7 @@ FLC_API_STS_t FLC_isRegionDone(FLC_RegionInfo * const regionInfo, uint32_t *stat
 FLC_API_STS_t FLC_wasReadError(FLC_RegionInfo * const regionInfo, uint32_t *status)
 {
     FLC_API_STS_t retStatus = FLC_API_STS_SUCCESS;
-    if(((FLC_RegionInfo * const)NULL == regionInfo) || (NULL == status))
+    if((NULL == regionInfo) || (NULL == status))
     {
         retStatus = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -115,7 +115,7 @@ FLC_API_STS_t FLC_wasReadError(FLC_RegionInfo * const regionInfo, uint32_t *stat
 FLC_API_STS_t FLC_wasWriteError(FLC_RegionInfo * const regionInfo, uint32_t *status)
 {
     FLC_API_STS_t retStatus = FLC_API_STS_SUCCESS;
-    if(((FLC_RegionInfo * const)NULL == regionInfo) || (NULL == status))
+    if((NULL == regionInfo) || (NULL == status))
     {
         retStatus = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -131,7 +131,7 @@ FLC_API_STS_t FLC_wasWriteError(FLC_RegionInfo * const regionInfo, uint32_t *sta
 FLC_API_STS_t FLC_clearWriteError(FLC_RegionInfo * const regionInfo)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -147,7 +147,7 @@ FLC_API_STS_t FLC_clearWriteError(FLC_RegionInfo * const regionInfo)
 FLC_API_STS_t FLC_clearReadError(FLC_RegionInfo * const regionInfo)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -163,7 +163,7 @@ FLC_API_STS_t FLC_clearReadError(FLC_RegionInfo * const regionInfo)
 FLC_API_STS_t FLC_readIRQMask(FLC_RegionInfo * const regionInfo, uint32_t *status)
 {
     FLC_API_STS_t retStatus = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         retStatus = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -179,7 +179,7 @@ FLC_API_STS_t FLC_readIRQMask(FLC_RegionInfo * const regionInfo, uint32_t *statu
 FLC_API_STS_t FLC_readIRQStatus(FLC_RegionInfo * const regionInfo, uint32_t *status)
 {
     FLC_API_STS_t retStatus = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         retStatus = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -195,7 +195,7 @@ FLC_API_STS_t FLC_readIRQStatus(FLC_RegionInfo * const regionInfo, uint32_t *sta
 FLC_API_STS_t FLC_enableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -225,7 +225,7 @@ FLC_API_STS_t FLC_enableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interru
 FLC_API_STS_t FLC_clearInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -255,7 +255,7 @@ FLC_API_STS_t FLC_clearInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrup
 FLC_API_STS_t FLC_disableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }
@@ -285,7 +285,7 @@ FLC_API_STS_t FLC_disableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interr
 FLC_API_STS_t FLC_disable(FLC_RegionInfo * const regionInfo)
 {
     FLC_API_STS_t status = FLC_API_STS_SUCCESS;
-    if((FLC_RegionInfo * const)NULL == regionInfo)
+    if(NULL == regionInfo)
     {
         status = FLC_API_STS_ERROR_NULL_PTR;
     }

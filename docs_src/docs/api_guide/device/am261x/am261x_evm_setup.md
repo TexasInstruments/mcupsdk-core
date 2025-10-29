@@ -63,6 +63,8 @@ Important cable connections, ports and switches.
   - In this screenshot this happens to be COM5/COM11 however on your machine this could be different.
     One tip to make sure there is no mistake in identifying the UART port is to disconnect all other UART to USB devices other than this EVM before checking in device manager.
 
+## Additional Details
+
 ### BOOT MODE
 
 #### OSPI BOOT MODE  {#BOOTMODE_OSPI}

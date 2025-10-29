@@ -474,7 +474,7 @@ LIN_setMaximumBaudRate(uint32_t base, uint32_t clockVal, uint32_t baudrate)
      * - `clockVal` is the clock frequency driving the LIN module.
      * - `baudrate` is the desired communication baud rate.
      */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, ( 0.9 * clockVal / baudrate));
+    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, (uint32_t)( 0.9 * clockVal / baudrate));
 }
 
 /**

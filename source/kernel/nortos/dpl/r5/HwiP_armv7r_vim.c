@@ -34,6 +34,9 @@
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/soc_config.h>
+#if defined(__ICCARM__)
+#include <intrinsics.h>
+#endif 
 
 /** Each bit in the IRQPRIMSK corresponds to the priority level. 
  *  - bit = 1 -> Interrupts of this priority are enabled.
@@ -45,7 +48,12 @@
  */
 #define GET_PRIMSK_FROM_PRIORITY(pri)   ((uint32_t)((0x1U << (pri)) - 1U))
 
-#define NOP1()  do { __asm__ __volatile__("NOP");            } while(0)
+#if defined(__ICCARM__)
+#define NOP1()  do {  __asm volatile("NOP"); } while(0)
+#else
+#define NOP1()  do { __asm__ __volatile__("NOP"); } while(0)
+#endif
+
 #define NOP5()  do { NOP1(); NOP1(); NOP1(); NOP1(); NOP1(); } while(0)
 #define NOP10() do { NOP5(); NOP5();                         } while(0)
 
@@ -53,8 +61,13 @@ static volatile uint32_t gdummy;
 
 static void Hwip_dataAndInstructionBarrier(void)
 {
+#if defined(__ICCARM__)
+    __ISB();
+    __DSB();
+#else
     __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
     __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
+#endif
 }
 
 
@@ -345,8 +358,13 @@ static uint32_t HWI_SECTION HwiP_setVimIrqPriMaskRawAtomic(uint32_t priMask)
 
     /* Read & Write IRQVEC to force re-evaluation */
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_IRQVEC);
+#if defined(__ICCARM__)
+    __asm volatile ("LDR r2,[%0]"::"r"(addr):"r2");
+    __asm volatile ("STR r2,[%0]"::"r"(addr):"r2");
+#else
     __asm__ __volatile__("LDR r2,[%0]"::"r"(addr):"r2");
     __asm__ __volatile__("STR r2,[%0]"::"r"(addr):"r2");
+#endif
 
     /* Restore the interrupts globally */
     HwiP_restore(oldIntrState);

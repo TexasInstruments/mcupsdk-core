@@ -40,8 +40,12 @@ MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 % let numProjects = 0;
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+CORE_`numProjects`=--script ../../`project.cpu`_`project.os`/`project.cgt`/example.syscfg --context `args.device.getSysCfgCpu(project.cpu)` --output ../../`project.cpu`_`project.os`/`project.cgt`/generated
+%} else {
 CORE_`numProjects`=--script ../`project.cpu`_`project.os`/example.syscfg --context `args.device.getSysCfgCpu(project.cpu)` --output ../`project.cpu`_`project.os`/`project.cgt`/generated
-    % numProjects = numProjects + 1;
+%}
+    	% numProjects = numProjects + 1;
 % }
 
 CORES = \
@@ -73,7 +77,11 @@ CORE_IMG_ARGS :=
 	% for (let project of args.project.projects) {
 		% let coreId = getCoreId(project.cpu, args.project.device);
 % if(-1 != coreId) {
+% 	if(args.project.device=="am261x"){
+CORE_`coreId`_IMG=../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
+%} else {
 CORE_`coreId`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
+%}
 CORE_IMG_ARGS +=--core-img=`coreId`:$(CORE_`coreId`_IMG)
 
 % }
@@ -87,7 +95,11 @@ CORE_IMG_OPTISHARE_ARGS :=
 	% for (let project of args.project.projects) {
 		% let coreId = getCoreId(project.cpu, args.project.device);
 % if(-1 != coreId) {
+% 	if(args.project.device=="am261x"){
+CORE_`coreId`_OPTISHARE_IMG=../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).optishare.out
+%} else {
 CORE_`coreId`_OPTISHARE_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).optishare.out
+%}
 CORE_IMG_OPTISHARE_ARGS +=--core-img=`coreId`:$(CORE_`coreId`_OPTISHARE_IMG)
 
 % }
@@ -95,7 +107,11 @@ CORE_IMG_OPTISHARE_ARGS +=--core-img=`coreId`:$(CORE_`coreId`_OPTISHARE_IMG)
 % }
 COREXMLS = \
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).lnkxml\
+%} else {
 	../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).lnkxml\
+%}
 % }
 
 SYSTEM_FLAG := true
@@ -104,7 +120,11 @@ all: postBuild
 
 corebuild: syscfg
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	$(MAKE) -C ../../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
+%} else {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
+%}
 % }
 
 
@@ -134,15 +154,28 @@ endif
 % }
 % for (let project of args.project.projects) {
 % if (project.isLinuxFwGen) {
+% 	if(args.project.device=="am261x"){
+	$(COPY) ../../`project.cpu`_`project.os`/`project.cgt`/`args.device.getLinuxFwName(project.cpu)` .
+%} else {
 	$(COPY) ../`project.cpu`_`project.os`/`project.cgt`/`args.device.getLinuxFwName(project.cpu)` .
+%}
 % }
 % }
 
 %if(args.project.device == "am263px" || args.project.device == "am261x"){
 
+% if(args.project.cgt == "iar-arm")
+% {
+CG_TOOL_ROOT=$(CGT_IAR_ARM_PATH)
+CC=$(CG_TOOL_ROOT)/bin/iccarm
+LNK=$(CG_TOOL_ROOT)/bin/ilinkarm
+% }
+% else 
+% {
 CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
 CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
+% }
 
 sso: optisave
 
@@ -150,7 +183,11 @@ coreout: sso.out
 	@echo .
 	@echo generating files with sso
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	$(MAKE) -C ../../`project.cpu`_`project.os`/`project.cgt`/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../../system_`args.project.tag`/sso.out
+%   } else {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_`args.project.tag`/sso.out
+%   }
 % }
 	@echo generating files with sso done!
 	@echo .
@@ -171,7 +208,11 @@ sso.cmd: all $(COREXMLS)
 
 optisave: buildmcelfsso
 % for (let core_project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	$(OPTISAVE) ../../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).lnkxml ../../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).optishare.lnkxml > ../../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).ossr
+%   } else {
 	$(OPTISAVE) ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).lnkxml ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).optishare.lnkxml > ../`core_project.cpu`_`core_project.os`/`core_project.cgt`/`args.project.name`.$(PROFILE).ossr
+%	}
 % }
 
 buildmcelfsso: coreout
@@ -185,7 +226,11 @@ buildmcelfsso: coreout
 
 clean:
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	$(MAKE) -C ../../`project.cpu`_`project.os`/`project.cgt`/ clean
+%   } else {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ clean
+%	}
 % }
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
@@ -210,7 +255,11 @@ clean:
 
 scrub:
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+	$(MAKE) -C ../../`project.cpu`_`project.os`/`project.cgt`/ scrub
+%   } else {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ scrub
+%   }
 % }
 % for (let project of args.project.projects) {
 % if (project.isLinuxFwGen) {
@@ -359,12 +408,20 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am64x.p
 % if (!["am263x", "am263px", "am261x", "am64x", "am243x"].includes(args.project.device)) {
 MULTI_CORE_APP_PARAMS = \
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+    ../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+% 	} else {
     ../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+%	}
 % }
 
 MULTI_CORE_APP_PARAMS_XIP = \
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+    ../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+% 	} else {
     ../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+%	}
 % }
 
 % if (args.project.device == "awr294x") {
@@ -373,7 +430,11 @@ MULTI_CORE_APP_PARAMS_QSPI = $(MULTI_CORE_APP_PARAMS) $(R4_RPRC_PATH)@$(BOOTIMAG
 % }
 MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
 % for (let project of args.project.projects) {
+% 	if(args.project.device=="am261x"){
+    ../../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc \
+% 	} else {
     ../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).rprc \
+%	}
 % }
 
 $(MULTI_CORE_BOOTIMAGE_DEPENDENCY):

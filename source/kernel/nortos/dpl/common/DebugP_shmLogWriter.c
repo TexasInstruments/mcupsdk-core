@@ -57,7 +57,7 @@ void DebugP_shmLogWriterPutLine(const uint8_t *buf, uint16_t num_bytes)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t max_bytes;
-    volatile uint32_t wr_idx, rd_idx;
+    uint32_t wr_idx, rd_idx;
 
     if (gDebugShmLogWriter == NULL)
     {

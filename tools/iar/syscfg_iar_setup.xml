@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewers>
+    <association>
+        <extensions>.syscfg</extensions>
+        <action>$SYSCFG_PATH$\sysconfig_gui.bat --compiler iar --product '$MCU_PLUS_SDK_PATH$\.metadata\product.json' --output '$PROJ_DIR$/syscfg' '$FILE_PATH$'</action>
+    </association>
+</viewers>

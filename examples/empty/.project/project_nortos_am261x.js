@@ -26,7 +26,7 @@ const libdirs_nortos = {
     ],
 };
 
-const libs_nortos_r5f = {
+const libs_nortos_r5f_ti_arm_clang = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -34,13 +34,26 @@ const libs_nortos_r5f = {
 };
 
 
-const lnkfiles = {
+const libs_nortos_r5f_iar_arm = {
+    common: [
+        "nortos.am261x.r5f.iar-arm.${ConfigName}.lib",
+        "drivers.am261x.r5f.iar-arm.${ConfigName}.lib",
+    ],
+};
+
+const lnkfiles_ti_arm_clang = {
     common: [
         "linker.cmd",
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const lnkfiles_iar_arm = {
+    common: [
+        "linker.icf",
+    ]
+};
+
+const syscfgfile = "example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
 
@@ -61,12 +74,15 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "iar-arm", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "iar-arm", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
 ];
 
 const systemProjects = [
     {
         name: "empty",
         tag: "nortos",
+        cgt: "ti-arm-clang",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am261x-som",
@@ -78,12 +94,25 @@ const systemProjects = [
     {
         name: "empty",
         tag: "nortos",
+        cgt: "ti-arm-clang",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am261x-lp",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
             { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+        ],
+    },
+    {
+        name: "empty",
+        tag: "nortos",
+        cgt: "iar-arm",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am261x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "iar-arm", board: "am261x-lp", os: "nortos"},
+            { device: device, cpu: "r5fss0-1", cgt: "iar-arm", board: "am261x-lp", os: "nortos"},
         ],
     },
 ];
@@ -108,12 +137,18 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs_nortos;
-    build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
+        if(buildOption.cgt.match(/ti-arm-clang/)) {
+            build_property.libs = libs_nortos_r5f_ti_arm_clang;
+            build_property.lnkfiles = lnkfiles_ti_arm_clang;
+        }
+        else if(buildOption.cgt.match(/iar-arm/)) {
+            build_property.libs = libs_nortos_r5f_iar_arm;
+            build_property.lnkfiles = lnkfiles_iar_arm;
+        }
     }
     if(buildOption.cpu.match(/c66*/)) {
         build_property.libs = libs_nortos_c66;

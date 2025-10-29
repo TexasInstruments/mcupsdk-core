@@ -94,7 +94,6 @@ FILES_common := \
     watchdog_rti.c \
     watchdog_soc.c \
     xmodem.c \
-    fota_agent.c \
 
 ASMFILES_common := \
     csl_arm_r5_pmu.S \
@@ -164,6 +163,7 @@ FILES_PATH_common = \
     fss/v0 \
     pmu \
     pmu/r5f \
+    pmu/r5f/ti-arm-clang \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

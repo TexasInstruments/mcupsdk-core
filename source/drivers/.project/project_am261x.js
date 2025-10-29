@@ -86,7 +86,6 @@ const files_r5f = {
 		"watchdog_rti.c",
 		"watchdog_soc.c",
 		"xmodem.c",
-		"fota_agent.c"
 	],
 };
 
@@ -153,7 +152,7 @@ const filedirs = {
         "optiflash/v0/rl2",
 		"flsopskd/v0",
 		"fota_agent/v0",
-		"fss/v0"
+		"fss/v0",
 	],
 };
 
@@ -161,7 +160,21 @@ const filedirs_r5f =  {
     common: [
         "pmu",
         "pmu/r5f",
-    ]
+    ],
+	ti_arm_clang: [
+		"pmu/r5f/ti-arm-clang",
+	],
+	iar_arm: [
+		"pmu/r5f/iar-arm",
+	],
+};
+
+const suppress_warnings_filedirs = {
+	common: [
+		"epwm/v1",
+		"ospi/v0/lld/dma/edma",
+		"soc/am261x",
+	],
 };
 
 const asmfiles_r5f = {
@@ -170,10 +183,19 @@ const asmfiles_r5f = {
     ]
 };
 
-const cflags_r5f = {
+const cflags_r5f_ti_arm_clang = {
     release: [
         "-Oz",
         "-flto",
+    ],
+};
+
+const cflags_r5f_iar_arm = {
+	common: [
+		"--diag_suppress=Pe177",
+	],
+    release: [
+        "-Ohz",
     ],
 };
 
@@ -185,6 +207,7 @@ const includes = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "iar-arm"},
 ];
 
 function getComponentProperty() {
@@ -204,10 +227,17 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
-        build_property.cflags = cflags_r5f;
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
+		if(buildOption.cgt.match(/ti-arm-clang*/)) {
+        	build_property.cflags = cflags_r5f_ti_arm_clang;
+			build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common, ...filedirs_r5f.ti_arm_clang]};
+		}
+		else if(buildOption.cgt.match(/iar-arm*/)) {
+			build_property.cflags = cflags_r5f_iar_arm;
+			build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common, ...filedirs_r5f.iar_arm]};
+			build_property.third_party_files = suppress_warnings_filedirs;
+		}
     }
 	build_property.includes = includes;
 

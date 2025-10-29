@@ -13,7 +13,6 @@ ConfigName:=$(PROFILE)
 LIBNAME:=freertos.am261x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    AddrTranslateP_null.c \
     boot_armv7r.c \
     DebugP_shmLogWriter.c \
     DebugP_shmLogReader.c \
@@ -82,6 +81,8 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
     portable/TI_ARM_CLANG/ARM_CR5F \
+    ../nortos/dpl/r5/ti-arm-clang \
+    dpl/r5/ti-arm-clang \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
