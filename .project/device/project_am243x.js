@@ -256,6 +256,8 @@ const example_file_list = [
     "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_sa2ul_tls_benchmark/.project/project.js",
     "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_gptp/.project/project.js",
     "source/networking/enet/core/examples/netxduo/enet_netxduo_cpsw_iperf/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_iperf/.project/project.js",
+    "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_gptp/.project/project.js",
     "examples/pru_io/adc/ads85x8/.project/project.js",
     "examples/pru_io/adc/ads127/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
