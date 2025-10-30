@@ -43,11 +43,9 @@ When both the comparisons match, test result is passed otherwise failed.
 
 # Steps to Run the Example
 
-- **When using CCS projects to build**, import the CCS project for the required combination
-  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
-- Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+- Flash the application binary to the device, follow the steps mentioned here (see \ref GETTING_STARTED_FLASH).
 
 # See Also
 
