@@ -370,7 +370,7 @@ static void nx_enet_drv_initialize(NX_IP_DRIVER *driver_req_ptr)
     p_if_data->netx_ip_ptr = ip_ptr;
 
     /* Save the MTU size. */
-    interface_ptr->nx_interface_ip_mtu_size = NX_DRIVER_ETHERNET_MTU;
+    interface_ptr->nx_interface_ip_mtu_size = NX_DRIVER_ETHERNET_MTU - NX_DRIVER_ETHERNET_FRAME_SIZE;
 
     /* Save phyiscal address. */
     interface_ptr->nx_interface_physical_address_msw = (ULONG)((p_if_data->macaddr[0] << 8) | (p_if_data->macaddr[1]));
