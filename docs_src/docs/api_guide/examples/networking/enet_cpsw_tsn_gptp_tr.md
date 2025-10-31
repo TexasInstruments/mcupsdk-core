@@ -210,6 +210,11 @@ Out of box configuration for PPS signal output of this example is as follow:
 | am263px-LP | SFDM0_CLK1 | A16 | 3.814 KHz | Pin4 on J8 connector |
 | am261x-LP | GPIO124 | A19 | 3.814 KHz | Pin9 on J6 connector |
 
+PPS signal output with Board modification of this example is as follow:
+| EVM | Mapped Signal Name | SOC Pin Name | PPS frequency | Output | Board modification
+|---------|---------------|------------|-------------------------|-------------|-------------|
+| am261x-SOM | GPIO124 | A16 | 3.814 KHz | 24th pin on J20(101 pin) in Hsec Dock | Remove R215 and populate R214
+
 To set/modify configuration of PPS signal , you may follow the below steps:
 
   1. Configure the bitSelect in EnetApp_enableTsSync() function in tsnapp_cpsw_main.c file. If bit n is selected, 2^(n+1) nano seconds is the time period of the square wave. Please note bitSelect starts from bit 17 which corresponds to 3.814 KHz.
