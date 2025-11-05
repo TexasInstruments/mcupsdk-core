@@ -27,6 +27,7 @@ const defines = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0"
     ],
 };
 
