@@ -955,11 +955,19 @@ int32_t OSPI_lld_phyTuneDDR(OSPILLD_Handle hOspi, uint32_t flashOffset)
        /* Use the second algorithm */
         status = OSPI_lld_phyFindOTP2(hOspi, flashOffset, &otp);
     }
-    /* Configure phy for the optimal tuning point */
-    OSPI_lld_phySetRdDelayTxRxDLL(hOspi, &otp);
 
-    /* Update the phyRdDelay book-keeping. This is needed when we enable PHY later */
-    hOspi->phyRdDataCapDelay = otp.rdDelay;
+    if(status == OSPI_SYSTEM_SUCCESS)
+    {
+        /* Configure phy for the optimal tuning point */
+        OSPI_lld_phySetRdDelayTxRxDLL(hOspi, &otp);
+
+        /* Update the phyRdDelay book-keeping. This is needed when we enable PHY later */
+        hOspi->phyRdDataCapDelay = otp.rdDelay;
+    }
+    else
+    {
+        hOspi->phyRdDataCapDelay = 0xFFU;
+    }
 
      /* Disable PHY */
     OSPI_lld_disablePhy(hOspi);
