@@ -549,6 +549,8 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_est/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_industrial_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cpsw_industrial_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cli_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_cli_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/icss_emac_lwip/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/icss_emac_lwip/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/enet_tx_scatter_gather/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1525,6 +1527,8 @@ BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_freertos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_industrial_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += icss_emac_lwip_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang
@@ -3034,6 +3038,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_industrial_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -3865,6 +3875,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_freertos_ti-ar
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_industrial_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += icss_emac_lwip_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
@@ -5369,6 +5381,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_industrial_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -6200,6 +6218,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_freertos_ti-ar
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_industrial_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += icss_emac_lwip_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -7703,6 +7723,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  enet_cpsw_industrial_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C source/networking/enet/core/examples/enet_cpsw_industrial_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cli_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cli_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/enet_cli_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  icss_emac_lwip_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/lwip/icss_emac_lwip/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

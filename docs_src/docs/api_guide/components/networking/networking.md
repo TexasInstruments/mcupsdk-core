@@ -167,8 +167,8 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 \endcond
 
-\cond SOC_AM243X
+\cond SOC_AM243X || SOC_AM263PX || SOC_AM263X || SOC_AM64X
 ### Enet CLI
-- \subpage ENET_CLI
+- \subpage EXAMPLES_ENET_CLI_APP
 \endcond
 

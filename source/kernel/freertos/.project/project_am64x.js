@@ -50,6 +50,9 @@ const files_r5f_common = {
         "FreeRTOS_POSIX_timer.c",
         "FreeRTOS_POSIX_unistd.c",
         "FreeRTOS_POSIX_utils.c",
+        // picked from freertos CLI
+        "FreeRTOS_CLI.c",
+
     ]
 };
 
@@ -123,6 +126,8 @@ const files_a53 = {
         "FreeRTOS_POSIX_utils.c",
         // picked from freertos "portable"
         "port.c",
+        // picked from freertos CLI
+        "FreeRTOS_CLI.c",
     ]
 };
 
@@ -177,6 +182,8 @@ const files_a53_smp = {
         "FreeRTOS_POSIX_utils.c",
         // picked from freertos "portable_smp"
         "port.c",
+        // picked from freertos CLI
+        "FreeRTOS_CLI.c",
     ]
 };
 
@@ -242,6 +249,7 @@ const includes_r5f_common = {
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+        "FreeRTOS-Plus-CLI",
     ],
 };
 
@@ -270,6 +278,7 @@ const includes_a53 = {
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+        "FreeRTOS-Plus-CLI",
     ],
 };
 
@@ -282,6 +291,7 @@ const includes_a53_smp = {
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+        "FreeRTOS-Plus-CLI",
     ],
 };
 
@@ -410,6 +420,8 @@ const filedirs_r5f_common = {
         "FreeRTOS-Kernel/portable/MemMang",
         // picked from freertos "posix"
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
+        // picked from freertos CLI
+        "FreeRTOS-Plus-CLI/",
     ],
 };
 
@@ -443,6 +455,8 @@ const filedirs_a53 = {
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
         // picked from freertos "portable"
         "portable/GCC/ARM_CA53",
+        // picked from freertos CLI
+        "FreeRTOS-Plus-CLI/",
     ],
 };
 
@@ -461,6 +475,8 @@ const filedirs_a53_smp = {
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
         // picked from freertos "portable"
         "portable_smp/GCC/ARM_CA53",
+        // picked from freertos CLI
+        "FreeRTOS-Plus-CLI/",
     ],
 };
 

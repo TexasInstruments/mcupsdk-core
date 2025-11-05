@@ -36,10 +36,6 @@ The Enet CLI library provides a command line interpreter for networking applicat
  ^ | `utils writemem <start_addr> <word1> ...` | Writes to memory starting from `start_addr`.
  ^ | `utils help` | Prints a list of all commands available in the `utils` module.
  
-## Application Programming Interface
- 
-For details on the APIs, refer to \ref ENET_CLI_API.
-
 ## Demo and Examples
 
 \ref EXAMPLES_ENET_CLI_APP

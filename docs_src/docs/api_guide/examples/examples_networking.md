@@ -230,7 +230,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ICSS_EMAC_LWIP
 \endcond
 
-\cond SOC_AM243X
+\cond SOC_AM243X || SOC_AM263PX || SOC_AM263X || SOC_AM64X
 ### CLI Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CLI_APP
 \endcond

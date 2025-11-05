@@ -58,6 +58,7 @@ FILES_common := \
     FreeRTOS_POSIX_timer.c \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
+    FreeRTOS_CLI.c \
     port.c \
 
 ASMFILES_common := \
@@ -80,6 +81,7 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/ \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
+    FreeRTOS-Plus-CLI/ \
     portable/TI_ARM_CLANG/ARM_CR5F \
 
 INCLUDES_common := \
@@ -90,6 +92,7 @@ INCLUDES_common := \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
+    -IFreeRTOS-Plus-CLI \
     -Iportable/TI_ARM_CLANG/ARM_CR5F \
     -Iconfig/am263px/r5f \
 

@@ -225,6 +225,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/enet_layer2_multi_channel/.project/project.js",
     "source/networking/enet/core/examples/enet_layer2_cpsw_switch/.project/project.js",
     "source/networking/enet/core/examples/enet_cpsw_est/.project/project.js",
+    "source/networking/enet/core/examples/enet_cli_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/est_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_icssg_app/gptp_icssg_dualmac/.project/project.js",

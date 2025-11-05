@@ -241,6 +241,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/enet_layer2_multi_channel/.project/project.js",
     "source/networking/enet/core/examples/enet_cpsw_est/.project/project.js",
     "source/networking/enet/core/examples/enet_cpsw_industrial_app/.project/project.js",
+    "source/networking/enet/core/examples/enet_cli_app/.project/project.js",
     "examples/networking/lwip/icss_emac_lwip/.project/project.js",
     "source/networking/icss_emac/firmware/icss_dual_emac/mii/.project/project.js",
     "source/networking/icss_emac/firmware/icss_switch/mii/.project/project.js",

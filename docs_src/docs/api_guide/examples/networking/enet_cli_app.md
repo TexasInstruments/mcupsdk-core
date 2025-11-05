@@ -4,23 +4,65 @@
 
 ## Introduction
 
-This example demonstrates the usage of the Enet CLI library.
+This example demonstrates the usage of the Enet CLI commands
 
 This example does the following:
 - Initializes and opens the ethernet drivers.
-- Initializes the Enet CLI library and enables built-in commands of the library.
+- Initializes CLI App and enables built-in commands
 - Registers a few custom commands for various operations like sending and recieving packets, adding unicast address, configuring VLAN, etc.
 - It also registers commands to launch the gPTP stack and LwIP shell.
 - On running the application, it launches a command line interface on the UART terminal.
 
 ## Supported Combinations
 
+\cond SOC_AM263X
+
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
- Boards         | am243x-lp
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_cli_app
+
+\endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | source/networking/enet/core/examples/enet_cli_app
+ 
+ For support on @VAR_BOARD_NAME_ADDON_AUTO, please refer \ref ETHERNET_ADDON_BOARDS_TOP
+
+\endcond
+
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+  ^             | a53ss0-0 freertos
+ Toolchain      | ti-arm-clang
+ ^              | gcc-aarch64
+ Boards         | @VAR_BOARD_NAME_LOWER @VAR_SK_BOARD_NAME_LOWER
+ Example folder | source/networking/enet/core/examples/enet_cli_app
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+Example folder | source/networking/enet/core/examples/enet_cli_app
+
+\endcond
+
 
 ## Packet pool configuration
 To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
@@ -116,7 +158,7 @@ utils {help|cpuload|readmem|writemem}:
 
 \endcode
 
-The commands `enet_cfg`, `enet_dbg`, `phy` and `utils` are the built-in commands provided by the Enet CLI library. The rest of the commands are user defined.
+The commands `enet_cfg`, `enet_dbg`, `phy` and `utils` are the built-in commands. The rest of the commands are user defined.
 
 ### Accessing the LwIP Shell
 
@@ -190,4 +232,4 @@ These are the built-in commands provided by the LwIP shell.
 
 ## See Also
 
-\ref NETWORKING | \ref ENET_CLI
+\ref NETWORKING

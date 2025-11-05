@@ -57,6 +57,7 @@ FILES_common := \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
     port.c \
+    FreeRTOS_CLI.c \
 
 ASMFILES_common := \
     boot_armv8_asm.S \
@@ -77,6 +78,7 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
     portable/GCC/ARM_CA53 \
+    FreeRTOS-Plus-CLI/ \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
@@ -87,6 +89,7 @@ INCLUDES_common := \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
+    -IFreeRTOS-Plus-CLI \
 
 DEFINES_common := \
     -DSOC_AM64X \
