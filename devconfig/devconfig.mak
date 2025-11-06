@@ -46,8 +46,12 @@ else ifeq ($(DEVICE),am263px)
 else ifeq ($(DEVICE),am65x)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/k3_dev_mpk.pem
 else
-	CUST_MPK=$(SIGNING_TOOL_PATH)/custMpk_am64x_am243x.pem
-	CUST_MEK=$(SIGNING_TOOL_PATH)/custMek_am64x_am243x.txt
+    ifeq ($(ALGORITHM),ECDSA384R1)
+        CUST_MPK=$(SIGNING_TOOL_PATH)/custMpk_am64x_am243x_secp384r1.pem
+    else
+        CUST_MPK=$(SIGNING_TOOL_PATH)/custMpk_am64x_am243x.pem
+    endif
+    CUST_MEK=$(SIGNING_TOOL_PATH)/custMek_am64x_am243x.txt
 endif
 
 # Encryption option for application (yes/no)
