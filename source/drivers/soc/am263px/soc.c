@@ -338,8 +338,14 @@ void SOC_enableAdcInternalReference(uint32_t adcInstance, uint32_t enable)
     /* Unlock Top Control Space */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
 
+    /* Mask HHV before enabling reference buffer to ensure the ADC does not cause an MCU reset. */
+    CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_MASK_ANA_ISO, (0x7 & CSL_TOP_CTRL_MASK_ANA_ISO_MASK_ANA_ISO_MASK_MASK));
+
     /* Enable/ Disable ADC references by writing to MMR */
     CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + refbufCtrl_regOffset, mask);
+
+    /* Unmask HHV */
+    CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_MASK_ANA_ISO, ((~0x7) & CSL_TOP_CTRL_MASK_ANA_ISO_MASK_ANA_ISO_MASK_MASK));
 
     /* Lock Top Control Space */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
