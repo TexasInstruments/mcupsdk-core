@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,6 +42,7 @@
 /* Some common NOR XSPI flash commands */
 #define QSPI_NOR_CMD_RDID           (0x9FU)
 #define QSPI_NOR_CMD_SINGLE_READ    (0x03U)
+#define QSPI_NOR_CMD_DUAL_READ      (0x3BU)
 #define QSPI_NOR_CMD_QUAD_READ      (0x6BU)
 #define QSPI_NOR_PAGE_PROG          (0x02U)
 #define QSPI_NOR_CMD_RSTEN          (0x66U)
@@ -62,6 +63,11 @@
 #define QSPI_NOR_WRR_WRITE_TIMEOUT  (1200U * 1000U)
 #define QSPI_NOR_PAGE_PROG_TIMEOUT  (400U)
 #define QSPI_Timeout_10ms           (10000)
+
+#define QPSI_ADDR_LEN_IN_BYTES                    (3U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_QUAD_READ      (8U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_DUAL_READ      (8U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_SINGLE_READ    (0U)
 
 int32_t QSPI_norFlashCmdRead(QSPI_Handle handle, uint8_t cmd, uint32_t cmdAddr, uint8_t *rxBuf, uint32_t rxLen)
 {
@@ -165,25 +171,44 @@ int32_t QSPI_norFlashWaitReady(QSPI_Handle handle, uint32_t timeOut)
 int32_t QSPI_norFlashInit(QSPI_Handle handle)
 {
     uint8_t cmd;
+    int32_t status = SystemP_SUCCESS;
 
-    /* Reset the Flash */
-    cmd = QSPI_NOR_CMD_RSTEN;
-    (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+    if ((handle != NULL) && (handle->attrs != NULL))
+    {
+        uint32_t rxLines = handle->attrs->rxLines;
 
-    cmd = QSPI_NOR_CMD_RST;
-    (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+        /* Reset the Flash */
+        cmd = QSPI_NOR_CMD_RSTEN;
+        (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
 
-    (void) QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+        cmd = QSPI_NOR_CMD_RST;
+        (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+        (void) QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+        (void) QSPI_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
+        (void) QSPI_setAddressByteCount(handle, QPSI_ADDR_LEN_IN_BYTES);
 
-    (void) QSPI_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
+        if(rxLines == QSPI_RX_LINES_QUAD)
+        {
+            (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_QUAD_READ);
+            (void) QSPI_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_QUAD_READ);
+        }
+        else if(rxLines == QSPI_RX_LINES_DUAL)
+        {
+            (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_DUAL_READ);
+            (void) QSPI_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_DUAL_READ);
+        }
+        else
+        {
+            (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
+            (void) QSPI_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_SINGLE_READ);
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
-    (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
-
-    (void) QSPI_setAddressByteCount(handle, 3U);
-
-    (void) QSPI_setDummyBitCount(handle, 0);
-
-    return 0;
+    return status;
 }
 
 int32_t QSPI_norFlashWrite(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
@@ -195,13 +220,14 @@ int32_t QSPI_norFlashWrite(QSPI_Handle handle, uint32_t offset, uint8_t *buf, ui
     {
         status = SystemP_FAILURE;
     }
-    if(status == SystemP_SUCCESS)
+    if ((status == SystemP_SUCCESS) && (handle != NULL) && (buf != NULL) && (len > 0))
     {
+        /* As per datasheet max 256 bytes can be programmed, that is the page size. */
         uint32_t pageSize, chunkLen, actual;
         uint8_t cmdWren = QSPI_NOR_CMD_WREN;
         QSPI_Transaction transaction;
 
-        pageSize = 256;
+        pageSize = 256U;
         chunkLen = pageSize;
 
         for (actual = 0; actual < len; actual += chunkLen)
@@ -346,28 +372,56 @@ int32_t QSPI_norFlashWriteIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf
     {
         status = SystemP_FAILURE;
     }
-    if(status == SystemP_SUCCESS)
+    if ((status == SystemP_SUCCESS) && (handle != NULL) && (buf != NULL) && (len > 0))
     {
-
+        /* As per datasheet max 256 bytes can be programmmed, that is the page size. */
+        uint32_t pageSize = 256U;
+        uint32_t chunkLen = 0U , actual = 0U;
         uint8_t cmdWren = QSPI_NOR_CMD_WREN;
         uint8_t cmrProg = QSPI_NOR_PAGE_PROG;
-        QSPI_WriteCmdParams wrParams = {0};
 
-        status = QSPI_norFlashCmdWrite(handle, cmdWren, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+        while ((actual < len) && (status == SystemP_SUCCESS))
+        {
+            /* Write Enable */
+            status = QSPI_norFlashCmdWrite(handle, cmdWren, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+            if(status == SystemP_SUCCESS)
+            {
+                status = QSPI_norFlashWriteEnableLatched(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+            }
 
-        if(status == SystemP_SUCCESS)
-        {
-            status = QSPI_norFlashWriteEnableLatched(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
-        }
-        if(status == SystemP_SUCCESS)
-        {
-            /* Send Page Program command */
-            wrParams.cmd = cmrProg;
-            wrParams.cmdAddr = offset;
-            wrParams.numAddrBytes = 3U;
-            wrParams.txDataBuf = (void *)(buf);
-            wrParams.txDataLen = len;
-            status = QSPI_writeConfigModeIntr(handle, &wrParams);
+            if(status == SystemP_SUCCESS)
+            {
+                /*  Calculate chunk length for this page. To program more than one page:
+                 *  You must issue multiple Page Program commands, each for a single page. 
+                 */
+
+                chunkLen = ((len - actual) < pageSize) ? (len - actual) : pageSize;
+
+                QSPI_WriteCmdParams wrParams = {0};
+                wrParams.cmd = cmrProg;
+                wrParams.cmdAddr = offset;
+                wrParams.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+                wrParams.txDataBuf = (void *)(buf + actual);
+                wrParams.txDataLen = chunkLen;
+
+                status = QSPI_writeConfigModeIntr(handle, &wrParams);
+            }
+
+            if(status == SystemP_SUCCESS)
+            {
+                /* Wait for write to complete before next page */
+                status = QSPI_norFlashWaitReady(handle, QSPI_NOR_PAGE_PROG_TIMEOUT);
+            }
+
+            if(status == SystemP_SUCCESS)
+            {
+                offset += chunkLen;
+                actual += chunkLen;
+            }
+            else
+            {
+                break;
+            }
         }
     }
 
@@ -379,12 +433,34 @@ int32_t QSPI_norFlashReadIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf,
     int32_t status = SystemP_SUCCESS;
     QSPI_ReadCmdParams rdParams = {0};
 
-    /* Send Read Program command */
-    rdParams.cmd = QSPI_NOR_CMD_SINGLE_READ;
-    rdParams.cmdAddr = offset;
-    rdParams.numAddrBytes = 3U;
-    rdParams.rxDataBuf = (void *)(buf);
-    rdParams.rxDataLen = len;
-    status = QSPI_readConfigModeIntr(handle,&rdParams);
+    if ((handle != NULL) && (handle->attrs != NULL) && (buf != NULL) && (len > 0U))
+    {
+        uint32_t rxLines = handle->attrs->rxLines;
+        
+        /* Send Read Program command */
+        if(rxLines == QSPI_RX_LINES_QUAD)
+        {
+            rdParams.cmd = QSPI_NOR_CMD_QUAD_READ;
+        }
+        else if(rxLines == QSPI_RX_LINES_DUAL)
+        {
+            rdParams.cmd = QSPI_NOR_CMD_DUAL_READ;
+        }
+        else
+        {
+            rdParams.cmd = QSPI_NOR_CMD_SINGLE_READ;
+        }
+
+        rdParams.cmdAddr = offset;
+        rdParams.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+        rdParams.rxDataBuf = (void *)(buf);
+        rdParams.rxDataLen = len;
+        status = QSPI_readConfigModeIntr(handle,&rdParams);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
     return status;
 }

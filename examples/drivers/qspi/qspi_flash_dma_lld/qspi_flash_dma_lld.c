@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,9 +54,7 @@
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
-
-#define APP_QSPI_DATA_SIZE (42*1024)
-
+#define APP_QSPI_DATA_SIZE     (42*1024U)
 
 /* The source buffer used for transfer */
 uint8_t gQspiTxBuf[APP_QSPI_DATA_SIZE];
@@ -67,14 +65,12 @@ void qspi_flash_diag_test_fill_buffers();
 int32_t qspi_flash_diag_test_compare_buffers();
 static __attribute__((target("arm"), aligned(4))) void App_EDMA_ISR(void);
 
-
 void QSPIreadCompleteCallback (QSPILLD_Handle handle);
 
 uint32_t transferMutex = MUTEX_ARM_LOCKED;
 
 void qspi_flash_dma_lld(void *args)
 {
-
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t manfId=0, deviceId=0;

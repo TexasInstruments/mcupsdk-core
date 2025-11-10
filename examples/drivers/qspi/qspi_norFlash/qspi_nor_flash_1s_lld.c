@@ -39,11 +39,13 @@
 
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
 #include "qspi_nor_flash_1s_lld.h"
 
 /* Some common NOR XSPI flash commands */
 #define QSPI_NOR_CMD_RDID           (0x9FU)
 #define QSPI_NOR_CMD_SINGLE_READ    (0x03U)
+#define QSPI_NOR_CMD_DUAL_READ      (0x3BU)
 #define QSPI_NOR_CMD_QUAD_READ      (0x6BU)
 #define QSPI_NOR_PAGE_PROG          (0x02U)
 #define QSPI_NOR_CMD_RSTEN          (0x66U)
@@ -64,6 +66,11 @@
 #define QSPI_NOR_WRR_WRITE_TIMEOUT  (1200U * 1000U)
 #define QSPI_NOR_PAGE_PROG_TIMEOUT  (400U)
 
+#define QPSI_ADDR_LEN_IN_BYTES                    (3U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_QUAD_READ      (8U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_DUAL_READ      (8U)
+#define QSPI_NUM_OF_DUMMY_BITS_FOR_SINGLE_READ    (0U)
+
 int32_t QSPI_norFlashWriteEnableLatched(QSPILLD_Handle handle, uint32_t timeOut)
 {
     int32_t status = SystemP_SUCCESS;
@@ -74,7 +81,7 @@ int32_t QSPI_norFlashWriteEnableLatched(QSPILLD_Handle handle, uint32_t timeOut)
     msg.cmd = QSPI_NOR_CMD_RDSR1;
     msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
     msg.dataLen = 1U;
-    msg.numAddrBytes = 3U;
+    msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
     msg.dataBuf = &readStatus;
 
     status = QSPI_lld_readCmd(handle,&msg);
@@ -111,7 +118,7 @@ int32_t QSPI_norFlashWaitReady(QSPILLD_Handle handle, uint32_t timeOut)
     msg.cmd = QSPI_NOR_CMD_RDSR1;
     msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
     msg.dataLen = 1U;
-    msg.numAddrBytes = 3U;
+    msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
     msg.dataBuf = &readStatus;
 
     status = QSPI_lld_readCmd(handle, &msg);
@@ -146,25 +153,50 @@ int32_t QSPI_norFlashWaitReady(QSPILLD_Handle handle, uint32_t timeOut)
 
 int32_t QSPI_norFlashInit(QSPILLD_Handle handle)
 {
-    QSPILLD_WriteCmdParams msg = {0};
+    int32_t status = SystemP_SUCCESS;
 
-    /* Reset the Flash */
-    msg.cmd = QSPI_NOR_CMD_RSTEN;
-    msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
-    msg.dataLen = 0U;
-    msg.numAddrBytes = 3U;
-    msg.dataBuf = NULL;
-    (void) QSPI_lld_writeCmd(handle, &msg);
+    if ((handle != NULL) && (handle->hQspiInit != NULL))
+    {
+        QSPILLD_WriteCmdParams msg = {0};
+        QSPILLD_InitHandle hQspiInit = handle->hQspiInit;
 
-    msg.cmd = QSPI_NOR_CMD_RST;
-    (void) QSPI_lld_writeCmd(handle, &msg);
-    (void) QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
-    (void) QSPI_lld_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
-    (void) QSPI_lld_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
-    (void) QSPI_lld_setAddressByteCount(handle, 3);
-    (void) QSPI_lld_setDummyBitCount(handle, 0);
+        /* Reset the Flash */
+        msg.cmd = QSPI_NOR_CMD_RSTEN;
+        msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
+        msg.dataLen = 0U;
+        msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+        msg.dataBuf = NULL;
+        (void) QSPI_lld_writeCmd(handle, &msg);
 
-    return 0;
+        msg.cmd = QSPI_NOR_CMD_RST;
+        (void) QSPI_lld_writeCmd(handle, &msg);
+        (void) QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+        (void) QSPI_lld_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
+        (void) QSPI_lld_setAddressByteCount(handle, QPSI_ADDR_LEN_IN_BYTES);
+
+        if(hQspiInit->rxLines == QSPI_RX_LINES_QUAD)
+        {
+            (void) QSPI_lld_setReadCmd(handle, QSPI_NOR_CMD_QUAD_READ);
+            (void) QSPI_lld_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_QUAD_READ);
+        }
+        else if(hQspiInit->rxLines == QSPI_RX_LINES_DUAL)
+        {
+            (void) QSPI_lld_setReadCmd(handle, QSPI_NOR_CMD_DUAL_READ);
+            (void) QSPI_lld_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_DUAL_READ);
+        }
+        else
+        {
+            (void) QSPI_lld_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
+            (void) QSPI_lld_setDummyBitCount(handle, QSPI_NUM_OF_DUMMY_BITS_FOR_SINGLE_READ);
+        }
+    }
+
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
 }
 
 int32_t QSPI_norFlashWrite(QSPILLD_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
@@ -192,7 +224,7 @@ int32_t QSPI_norFlashWrite(QSPILLD_Handle handle, uint32_t offset, uint8_t *buf,
             msg.cmd = cmdWren;
             msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
             msg.dataLen = 0U;
-            msg.numAddrBytes = 3U;
+            msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
             msg.dataBuf = NULL;
             status = QSPI_lld_writeCmd(handle,&msg);
 
@@ -214,7 +246,7 @@ int32_t QSPI_norFlashWrite(QSPILLD_Handle handle, uint32_t offset, uint8_t *buf,
                 msg.cmd = cmrProg;
                 msg.cmdAddr = addrOffset;
                 msg.dataLen = chunkLen;
-                msg.numAddrBytes = 3U;
+                msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
                 msg.dataBuf = (void *)(buf + actual);
                 status = QSPI_lld_writeCmd(handle, &msg);
             }
@@ -242,36 +274,85 @@ int32_t QSPI_norFlashWrite(QSPILLD_Handle handle, uint32_t offset, uint8_t *buf,
     return status;
 }
 
-int32_t QSPI_norFlashWriteIntr(QSPILLD_Handle handle,QSPILLD_WriteCmdParams *wrMsg)
+int32_t QSPI_norFlashWriteIntr(QSPILLD_Handle handle, QSPILLD_WriteCmdParams *wrMsg)
 {
     int32_t status = SystemP_SUCCESS;
     QSPILLD_WriteCmdParams writeEnable = {0};
-    QSPILLD_WriteCmdParams *msg = wrMsg;
-    /* Check offset alignment */
-    if(0 != (msg->cmdAddr % 256U))
+    QSPILLD_WriteCmdParams pageMsg = {0};
+
+    if ((handle != NULL) && (wrMsg != NULL))
+    {
+        uint32_t pageSize = 256U;
+        uint32_t totalLen = wrMsg->dataLen;
+        uint32_t addr = wrMsg->cmdAddr;
+        uint8_t *data = (uint8_t *)wrMsg->dataBuf;
+        uint32_t remaining = totalLen;
+        uint32_t chunkLen = 0U;
+        
+        /* Check offset alignment */
+        if (addr % pageSize != 0)
+        {
+            return SystemP_FAILURE;
+        }
+
+        while (remaining > 0)
+        {
+            chunkLen = (remaining > pageSize) ? pageSize : remaining;
+
+            /* Write Enable */
+            writeEnable.cmd = QSPI_NOR_CMD_WREN;
+            writeEnable.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
+            writeEnable.dataLen = 0U;
+            writeEnable.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+            writeEnable.dataBuf = NULL;
+            status = QSPI_lld_writeCmd(handle, &writeEnable);
+            if (status == SystemP_SUCCESS)
+            {
+                /* Wait for WEL latch */
+                status = QSPI_norFlashWriteEnableLatched(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+            }
+            if (status == SystemP_SUCCESS)
+            {
+                /* Prepare page program command */
+                pageMsg.cmd = QSPI_NOR_PAGE_PROG;
+                pageMsg.cmdAddr = addr;
+                pageMsg.dataLen = chunkLen;
+                pageMsg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+                pageMsg.dataBuf = data;
+
+                /* Issue page program (interrupt mode) */
+                status = QSPI_lld_writeCmdIntr(handle, &pageMsg);
+            }
+            /* When you call QSPI_norFlashWaitReady it polls the status register until the 
+             * WIP bit is cleared. If you call this function immediately after starting 
+             * the interrupt-driven write, the write operation may not have actually 
+             * started or completed yet, or the interrupt handler may not have finished 
+             * transferring the data. As a result, the polling may interfere with the 
+             * ongoing write operation, causing the flash to misinterpret the sequence,
+             * which can result in extra 0xFF bytes being written or data corruption.
+             * Hence a Small delay to ensure command completion.
+             */
+            ClockP_usleep(10000); 
+            if (status == SystemP_SUCCESS)
+            {
+                /* Wait for program to finish */
+                status = QSPI_norFlashWaitReady(handle, QSPI_NOR_PAGE_PROG_TIMEOUT);
+            }
+            if (status == SystemP_SUCCESS)
+            {
+                addr += chunkLen;
+                data += chunkLen;
+                remaining -= chunkLen;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    else
     {
         status = SystemP_FAILURE;
-    }
-    if(status == SystemP_SUCCESS)
-    {
-        writeEnable.cmd = QSPI_NOR_CMD_WREN;
-        writeEnable.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
-        writeEnable.dataLen = 0U;
-        writeEnable.numAddrBytes = 3U;
-        writeEnable.dataBuf = NULL;
-
-        status = QSPI_lld_writeCmd(handle,&writeEnable);
-
-        if(status == SystemP_SUCCESS)
-        {
-            status = QSPI_norFlashWriteEnableLatched(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
-        }
-        if(status == SystemP_SUCCESS)
-        {
-            msg->cmd = QSPI_NOR_PAGE_PROG;
-            msg->numAddrBytes = 3U;
-            status = QSPI_lld_writeCmdIntr(handle,msg);
-        }
     }
 
     return status;
@@ -279,20 +360,11 @@ int32_t QSPI_norFlashWriteIntr(QSPILLD_Handle handle,QSPILLD_WriteCmdParams *wrM
 
 int32_t QSPI_norFlashRead(QSPILLD_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
 {
-    int32_t status = SystemP_FAILURE;
-    uint32_t dataLen = len;
-    uint32_t itr = 0U;
-    uint32_t pageSize = 256U;
+    int32_t status = SystemP_SUCCESS;
+    uint32_t currOffset = offset;
+    uint8_t *currBuf = buf;
 
-    for(itr = 0U; itr < dataLen-1; itr = itr+256)
-    {
-        status = QSPI_lld_read(handle, pageSize, (void *)(buf+itr), (offset+itr), SystemP_WAIT_FOREVER);
-        
-        if(status == SystemP_FAILURE)
-        {
-            break;
-        }
-    }
+    status = QSPI_lld_read(handle, len, (void *)currBuf, currOffset, SystemP_WAIT_FOREVER);
 
     return status;
 }
@@ -315,7 +387,7 @@ int32_t QSPI_norFlashErase(QSPILLD_Handle handle, uint32_t address)
     msg.cmd = QSPI_NOR_CMD_WREN;
     msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
     msg.dataLen = 0U;
-    msg.numAddrBytes = 3U;
+    msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
     msg.dataBuf = NULL;
 
     status = QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
@@ -350,7 +422,7 @@ int32_t QSPI_norFlashReadId(QSPILLD_Handle handle, uint32_t *manufacturerId, uin
     msg.cmd = QSPI_NOR_CMD_RDID;
     msg.cmdAddr = QSPI_LLD_CMD_INVALID_ADDR;
     msg.dataLen = 3U;
-    msg.numAddrBytes = 3U;
+    msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
     msg.dataBuf = &idCode;
 
     status += QSPI_lld_readCmd(handle, &msg);

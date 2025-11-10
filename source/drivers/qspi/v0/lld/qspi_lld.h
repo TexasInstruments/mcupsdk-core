@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -268,6 +268,10 @@ typedef struct QSPI_EdmaParams_s *QSPI_DmaChConfig;
  * \brief This transaction state indicates read functionality
  */
 #define QSPI_STATE_DATA_READ            (3U)
+/**
+ * \brief This transaction state indicates writing dummy cycles functionality
+ */
+#define QSPI_STATE_WRITE_DUMMY_CYCLES   (6U)
 /**
  * \brief This transaction state indicates Block for read completion
  */

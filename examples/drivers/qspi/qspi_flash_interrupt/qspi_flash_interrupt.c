@@ -47,8 +47,7 @@
 #include <string.h>
 
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
-
-#define APP_QSPI_DATA_SIZE (256U)
+#define APP_QSPI_DATA_SIZE     (256U)
 
 /* The source buffer used for transfer */
 uint8_t gQspiTxBuf[APP_QSPI_DATA_SIZE] __attribute__((aligned(128U)));
@@ -60,7 +59,6 @@ int32_t qspi_flash_diag_test_compare_buffers(void);
 
 void qspi_flash_interrupt(void *args)
 {
-
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t manfId=0, deviceId=0;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,9 +48,10 @@
 #include <kernel/dpl/MutexArmP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
-#define APP_QSPI_FLASH_OFFSET  (0x40000U)
-
-#define APP_QSPI_DATA_SIZE (256)
+#define APP_QSPI_FLASH_OFFSET       (0x40000U)
+#define APP_QSPI_DATA_SIZE          (256U)
+#define QSPI_NOR_CMD_SINGLE_READ    (0x03U)
+#define QPSI_ADDR_LEN_IN_BYTES      (3U)
 
 uint32_t intrNum;
 uint32_t gQSPIVimStsAddr, intrNum, gQSPIVimStsClrMask, intcBaseAddr;
@@ -71,10 +72,8 @@ static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), 
 
 void qspi_flash_interrupt_lld(void *args)
 {
-
     int32_t status = SystemP_SUCCESS;
-
-    uint32_t manfId=0, deviceId=0;
+    uint32_t manfId = 0U, deviceId = 0U;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -86,15 +85,13 @@ void qspi_flash_interrupt_lld(void *args)
     gQSPIVimStsAddr = intcBaseAddr + (0x404u + (((intrNum)>> 5) & 0xFu) * 0x20u);
     gQSPIVimStsClrMask = 0x1u << ((intrNum) & 0x1Fu);
 
-        /* Register Interrupt */
+    /* Register Interrupt */
     HwiP_setPri(intrNum, 4U);
     HwiP_setVecAddr(intrNum, (uintptr_t)&App_QSPI_ISR);
     HwiP_enableInt(intrNum);
     HwiP_setAsPulse(intrNum, TRUE);
 
     DebugP_log("[QSPI Flash Diagnostic Test] Starting ...\r\n");
-
-    qspi_flash_diag_test_fill_buffers();
 
     QSPI_norFlashInit(gQspiHandle);
 
@@ -137,8 +134,10 @@ void qspi_flash_interrupt_lld(void *args)
         transferMutex = MUTEX_ARM_LOCKED;
         /* Populating the command and Rx buffer */
         msg.dataBuf = gQspiRxBuf;
-        msg.cmd = 0x03;
-        msg.numAddrBytes = 3U;
+        msg.numAddrBytes = QPSI_ADDR_LEN_IN_BYTES;
+
+        msg.cmd = QSPI_NOR_CMD_SINGLE_READ;
+
         /* QSPI Interrupt Read */
         QSPI_lld_readCmdIntr(gQspiHandle,&msg);
 
@@ -188,7 +187,6 @@ static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), 
                                       gQSPIVimStsClrMask,
                                       intcBaseAddr);
 }
-
 
 void isrCallback(void *args)
 {

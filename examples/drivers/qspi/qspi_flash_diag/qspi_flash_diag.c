@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,8 +48,7 @@
 #include <string.h>
 
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
-
-#define APP_QSPI_DATA_SIZE (256)
+#define APP_QSPI_DATA_SIZE     (256U)
 
 /* The source buffer used for transfer */
 uint8_t gQspiTxBuf[APP_QSPI_DATA_SIZE];
@@ -76,7 +75,6 @@ void qspi_flash_diag(void *args);
 
 void qspi_flash_diag(void *args)
 {
-
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t manfId=0, deviceId=0;
@@ -133,7 +131,9 @@ void qspi_flash_diag(void *args)
 
     if(SystemP_SUCCESS == status)
     {
-        /* Read the SFDP table and print flash details */
+        /* Read the SFDP table and print flash details.
+         * As per the flash datasheet, SFDP data will be only read in single read mode
+         */
         status = qspi_flash_diag_print_sfdp(qspiHandle);
     }
 

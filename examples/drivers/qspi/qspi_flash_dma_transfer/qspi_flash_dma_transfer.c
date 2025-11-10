@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -47,8 +47,7 @@
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
-
- #define APP_QSPI_DATA_SIZE (42*1024)
+#define APP_QSPI_DATA_SIZE (42*1024U) /* 42 KB */
 
 /* The source buffer used for transfer */
 uint8_t gQspiTxBuf[APP_QSPI_DATA_SIZE];
@@ -61,7 +60,6 @@ uint32_t transferMutex = MUTEX_ARM_LOCKED;
 
 void qspi_flash_dma_transfer(void *args)
 {
-
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t blk, page;
