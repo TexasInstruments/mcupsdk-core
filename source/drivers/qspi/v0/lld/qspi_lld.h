@@ -269,10 +269,6 @@ typedef struct QSPI_EdmaParams_s *QSPI_DmaChConfig;
  */
 #define QSPI_STATE_DATA_READ            (3U)
 /**
- * \brief This transaction state indicates writing dummy cycles functionality
- */
-#define QSPI_STATE_WRITE_DUMMY_CYCLES   (6U)
-/**
  * \brief This transaction state indicates Block for read completion
  */
 #define QSPI_STATE_BLOCK                (4U)
@@ -281,15 +277,23 @@ typedef struct QSPI_EdmaParams_s *QSPI_DmaChConfig;
  */
 #define QSPI_STATE_NON_BLOCK            (5U)
 /**
- * \brief Maximum frame length for QSPI transfer
+ * \brief This transaction state indicates writing dummy cycles functionality
  */
-#define QSPI_MAX_FRAME_LENGTH           (4096U)
+#define QSPI_STATE_WRITE_DUMMY_CYCLES   (6U)
+/**@}*/
+
+/**
+ * \brief Number of Dummy Bits for QSPI read 
+ */
+#define QSPI_NUM_OF_DUMMY_BITS_ZERO    (0U)
 /**
  * \brief Size of CMD, Address and Dummy bytes in SPI words for quad read 
  */
 #define QSPI_CMD_ADDR_DUMMY_BYTES_LEN   (5U)
-
-/**@}*/
+/**
+ * \brief Maximum frame length for QSPI transfer
+ */
+#define QSPI_MAX_FRAME_LENGTH           (4096U)
 
 /* ========================================================================== */
 /*                      Function pointers Declarations                        */
@@ -517,6 +521,7 @@ int32_t QSPI_lld_deInitDma(QSPILLD_Handle hQspi);
 
 /**
  *  \brief  Function to send specific commands and receive related data from flash in configuration mode
+ *          This API is typically used for reading flash information such as manufacturer ID, SFDP data.
  *
  *  \param  hQspi      #QSPILLD_Handle of QSPI instance.
  *  \param  writeMsg   Pointer to a structure #QSPILLD_WriteCmdParams contains read command OPCODE,
@@ -525,6 +530,19 @@ int32_t QSPI_lld_deInitDma(QSPILLD_Handle hQspi);
  *  \return #QSPI_SYSTEM_SUCCESS if command read was successful; else error on failure
  */
 int32_t QSPI_lld_readCmd(QSPILLD_Handle hQspi, QSPILLD_WriteCmdParams *writeMsg);
+
+/**
+ *  \brief  Function to send specific commands and receive related data from flash in configuration mode
+ *          This API is intended to read data with and without dummy cycles based on condition whether 
+ *          dummy bits are required or not, set from syscfg-gui.
+ *
+ *  \param  hQspi      #QSPILLD_Handle of QSPI instance.
+ *  \param  writeMsg   Pointer to a structure #QSPILLD_WriteCmdParams contains read command OPCODE,
+ *                     flash memory address, buffer to store the response from flash and buffer length
+ *
+ *  \return #QSPI_SYSTEM_SUCCESS if command read was successful; else error on failure
+ */
+int32_t QSPI_lld_readData(QSPILLD_Handle hQspi, QSPILLD_WriteCmdParams *writeMsg);
 
 /**
  *  \brief  Function to send specific commands and receive related data from flash in interrupt mode

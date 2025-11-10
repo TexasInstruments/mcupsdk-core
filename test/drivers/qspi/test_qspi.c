@@ -289,8 +289,8 @@ static void test_qspi_entireFlashWriteRead(void *args)
     uint32_t itr = 0U;
     uint32_t blocksize = 1U;
 
-    DebugP_log("Executing Flash Erase on entire flash...\r\n");
-    DebugP_log("Writing to the flash, wait for few seconds...\r\n");
+    DebugP_log("Executing Flash Erase and writing on entire flash...\r\n");
+    DebugP_log("Wait for few minutes...\r\n");
     status = QSPI_norFlashErase(qspiHandle, TEST_QSPI_FLASH_OFFSET, QSPI_NOR_CMD_BLOCK_ERASE);
     for(itr = TEST_QSPI_FLASH_OFFSET; itr<flashSize; itr = itr + pageSize, blocksize++)
     {
@@ -304,8 +304,9 @@ static void test_qspi_entireFlashWriteRead(void *args)
         status = QSPI_norFlashWaitReady(qspiHandle, QSPI_NOR_WRR_WRITE_TIMEOUT);
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
     }
+    DebugP_log("Writing to the flash completed.\r\n");
     QSPI_setMemAddrSpace(qspiHandle, QSPI_MEM_MAP_PORT_SEL_MEM_MAP_PORT);
-    DebugP_log("Reading from the flash, wait for few seconds...\r\n");
+    DebugP_log("Reading from the flash, wait for few minutes...\r\n");
     for(itr = TEST_QSPI_FLASH_OFFSET; itr<flashSize; itr = itr + pageSize)
     {
         status = QSPI_norFlashRead(qspiHandle, itr, gQspiRxBuf, tranferLength, testParams);
@@ -314,6 +315,7 @@ static void test_qspi_entireFlashWriteRead(void *args)
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
         memset(gQspiRxBuf,0,tranferLength);
     }
+    DebugP_log("Reading from the flash completed.\r\n");
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 }
 

@@ -100,7 +100,8 @@ extern "C" {
 #define SOC_EDMA_MEMPROTECT                (1U)
 /** @brief Number of Transfer Controllers available */
 #define SOC_EDMA_NUM_TPTC                  (2U)
-
+/** @brief Maximum flash size supported in Memmory map mode in Mega Bytes */
+#define SOC_QSPI_MAX_FLASH_IN_MEM_MAP      (16U)
 /**
  * \anchor EDMA_ErrorID
  * \name EDMA Error Definitions on this SOC

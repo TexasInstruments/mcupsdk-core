@@ -76,6 +76,8 @@ extern "C" {
 
 /** @} */
 
+/** @brief Maximum flash size supported in Memmory map mode in Mega Bytes */
+#define SOC_QSPI_MAX_FLASH_IN_MEM_MAP       (8U)
 
 /** @brief Number of ePWM instances */
 #define CSL_EPWM_PER_CNT (3U)

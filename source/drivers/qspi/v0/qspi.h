@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -264,7 +264,6 @@ typedef struct
     /**< Interrupt priority */
     bool                    dmaEnable;
     /**< Enable DMA mode */
-
 } QSPI_Attrs;
 
 typedef struct QSPI_Config_s
@@ -436,6 +435,7 @@ int32_t QSPI_writeConfigModeIntr(QSPI_Handle handle, QSPI_WriteCmdParams *wrPara
  *  \return #SystemP_SUCCESS if command read was successful; else error on failure
  *
  *  \sa     #QSPI_open
+ *  \sa     #QSPI_ReadCmdParams
  */
 int32_t QSPI_readCmd(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams);
 

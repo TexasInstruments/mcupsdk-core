@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-24 Texas Instruments Incorporated
+ *  Copyright (C) 2021-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -552,7 +552,7 @@ static int32_t Flash_norQspiRead(Flash_Config *config, uint32_t offset, uint8_t 
     QSPI_Transaction transaction;
     uint32_t chunkLen, actual;
 
-    if ((config != NULL) && (buf != NULL) && (config->object != NULL) &&
+    if ((config != NULL) && (config->object != NULL) && 
         (config->devConfig != NULL) && (config->attrs != NULL))
     {
         obj = (Flash_NorQspiObject *)(config->object);
@@ -581,12 +581,12 @@ static int32_t Flash_norQspiRead(Flash_Config *config, uint32_t offset, uint8_t 
                 transaction.addrOffset = offset + actual;
                 transaction.buf = (void *)(buf + actual);
                 transaction.count = chunkLen;
-                if (flashSize > 8U)
+                /* If flash size is more than the supported in Memory map 
+                 * mode, read transfer will be done in config mode.
+                 */
+                if (flashSize > SOC_QSPI_MAX_FLASH_IN_MEM_MAP)
                 {
-                   /* If flash size is more than 8MB, read transfer will be done
-                    * in config mode.
-                    */
-                    status = QSPI_readConfigMode(obj->qspiHandle, &transaction);
+                   status = QSPI_readConfigMode(obj->qspiHandle, &transaction);
                 }
                 else
                 {

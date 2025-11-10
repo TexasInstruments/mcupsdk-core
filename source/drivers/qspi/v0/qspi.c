@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -203,6 +203,7 @@ QSPI_Handle QSPI_open(uint32_t index, const QSPI_Params *openParams)
         qspilldInitHandle->Clock_getTicks   = ClockP_getTicks;
         qspilldInitHandle->Clock_usecToTicks= ClockP_usecToTicks;
         qspilldHandle->transaction          = NULL;
+        qspilldHandle->numDummyBits         = obj->numDummyBits;
 
         if(true == attrs->dmaEnable)
         {
@@ -533,6 +534,7 @@ int32_t QSPI_setDummyBitCount(QSPI_Handle handle, uint32_t count)
     {
         QSPI_Object *obj = ((QSPI_Config *)handle)->object;
         qspilldHandle               = obj->qspilldHandle;
+        obj->numDummyBits = count;
         qspilldHandle->numDummyBits =  count;
     }
     else
@@ -587,7 +589,7 @@ int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans)
             edmaInterrupt = EDMA_isInterruptEnabled(qspilldHandle->hQspiInit->qspiDmaHandle);
             status = QSPI_lld_readDma(qspilldHandle,trans->count,trans->buf,trans->addrOffset,trans->transferTimeout);
 
-            if(status == SystemP_SUCCESS && edmaInterrupt == TRUE && qspilldHandle->state == QSPI_STATE_BLOCK)
+            if((status == SystemP_SUCCESS) && (edmaInterrupt == TRUE) && (qspilldHandle->state == QSPI_STATE_BLOCK))
             {
                 qspilldHandle->state = QSPI_STATE_IDLE;
                 /* Pend the semaphore */
@@ -607,12 +609,14 @@ int32_t QSPI_readConfigMode(QSPI_Handle handle, QSPI_Transaction *trans)
     int32_t status = SystemP_SUCCESS;
     QSPI_ReadCmdParams  rdParams;
     QSPILLD_Handle      qspilldHandle;
+    QSPILLD_WriteCmdParams *msg = NULL;
 
     /* QSPI LLD Handle */
     if((NULL != handle) && (NULL != trans))
     {
         QSPI_Object *obj = ((QSPI_Config *)handle)->object;
         qspilldHandle    = obj->qspilldHandle;
+        msg = (QSPILLD_WriteCmdParams *)&rdParams;
 
         rdParams.cmd          = qspilldHandle->readCmd;
         rdParams.cmdAddr      = trans->addrOffset;
@@ -620,7 +624,7 @@ int32_t QSPI_readConfigMode(QSPI_Handle handle, QSPI_Transaction *trans)
         rdParams.rxDataBuf    = trans->buf;
         rdParams.rxDataLen    = trans->count;
 
-        status = QSPI_readCmd(handle, &rdParams);
+        status = QSPI_lld_readData(qspilldHandle, msg);
     }
     else
     {
@@ -730,7 +734,7 @@ int32_t QSPI_readConfigModeIntr(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams
     return status;
 }
 
-void QSPI_interruptCallback(void* args)
+static void QSPI_interruptCallback(void* args)
 {
     QSPILLD_Handle handle = (QSPILLD_Handle) args;
     QSPI_Object *obj    = ((QSPI_Config *)handle->args)->object;
