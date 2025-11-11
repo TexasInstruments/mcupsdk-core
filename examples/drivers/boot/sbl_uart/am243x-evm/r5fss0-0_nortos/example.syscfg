@@ -84,7 +84,7 @@ general1.svc_stack_size = 256;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(7);
+region1.memory_region.create(8);
 region1.memory_region[0].type               = "TCMA_R5F";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].size               = 0x40;
@@ -110,6 +110,11 @@ region1.memory_region[6].auto               = false;
 region1.memory_region[6].$name              = "MSRAM_2";
 region1.memory_region[6].manualStartAddress = 0x70180000;
 region1.memory_region[6].size               = 0x60000;
+region1.memory_region[7].type               = "DDR_ALL";
+region1.memory_region[7].size               = 0x200000;
+region1.memory_region[7].$name              = "DDR";
+region1.memory_region[7].auto               = false;
+region1.memory_region[7].manualStartAddress = 0x87000000;
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;
@@ -178,10 +183,10 @@ section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.$name                       = "CONFIG_SECTION0";
 section5.group                       = false;
 section5.type                        = "NOLOAD";
-section5.load_memory                 = "MSRAM_2";
+section5.$name                       = "Appimage";
+section5.load_memory                 = "DDR";
 section5.output_section.create(1);
 section5.output_section[0].alignment = 0;
 section5.output_section[0].$name     = ".bss.filebuf";
