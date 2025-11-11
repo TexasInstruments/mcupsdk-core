@@ -101,6 +101,8 @@ MCELF_ADDR_TRANSLATION_PATH?=none
 MCELF_MAX_SEGMENT_SIZE?=8192
 
 ifeq ($(DEVICE),am273x)
-# Key version can be 1.1 or 1.2
+    ifeq ($(DEVICE_TYPE),GP)
+        # Only set KEY_VERSION for HS-FS(GP), not for HSSE
         KEY_VERSION=1.1
+    endif
 endif
