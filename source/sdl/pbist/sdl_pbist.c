@@ -47,7 +47,7 @@
 #define PBIST_REG_REGION_SIZE             (0x400u)
 
 #define PBIST_MAX_TIMEOUT_VALUE           (100000000u)
-#if defined (SOC_AM273X) || (SOC_AWR294X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
 extern uint32_t gInst;
 #endif
 

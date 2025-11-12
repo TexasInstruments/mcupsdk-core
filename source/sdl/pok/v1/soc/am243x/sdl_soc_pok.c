@@ -75,8 +75,11 @@ bool SDL_POK_getBaseaddr(SDL_POK_InstanceType instance, uint32_t *pBaseAddress)
             default:
                 break;
         }
+        if (instValid)
+        {
+            *pBaseAddress = (uint32_t)SDL_DPL_addrTranslate(*pBaseAddress, size);
+        }
     }
-        *pBaseAddress = (uint32_t)SDL_DPL_addrTranslate(*pBaseAddress, size);
-      return (instValid);
+    return (instValid);
 }
 

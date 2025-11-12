@@ -84,10 +84,11 @@ bool SDL_ESM_getBaseAddr(const SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr)
             default:
                 break;
         }
+        if (instValid)
+        {
+            *esmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*esmBaseAddr, size);
+        }
     }
-
-    *esmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*esmBaseAddr, size);
-
     return (instValid);
 }
 
