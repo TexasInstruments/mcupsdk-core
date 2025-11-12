@@ -110,6 +110,7 @@ const example_file_list = [
     "examples/mathlib/benchmark/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/.project/project.js",
     "source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/.project/project.js",
+    "source/networking/enet/core/examples/enet_rawudp/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     // "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/lwip/cpsw_lwip_https/.project/project.js",
