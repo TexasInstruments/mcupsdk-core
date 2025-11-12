@@ -49,7 +49,6 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
-            -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
             -m=task_switch_mpu.${ConfigName}.map
             --diag_suppress=10063
@@ -74,7 +73,6 @@
             linkerBuildOptions="
                 -lfreertos.am263px.r5f-mpu.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.freertos_mpu.debug.lib
-                -lboard.am263px.r5f.ti-arm-clang.freertos_mpu.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -86,7 +84,6 @@
             linkerBuildOptions="
                 -lfreertos.am263px.r5f-mpu.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.freertos_mpu.release.lib
-                -lboard.am263px.r5f.ti-arm-clang.freertos_mpu.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

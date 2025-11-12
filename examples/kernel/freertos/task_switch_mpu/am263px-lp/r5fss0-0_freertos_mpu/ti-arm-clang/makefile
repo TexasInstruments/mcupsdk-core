@@ -102,13 +102,11 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lfreertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -122,14 +120,12 @@ LFLAGS_common = \
 LIBS_NAME = \
 	freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.freertos_mpu.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

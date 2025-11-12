@@ -416,6 +416,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am263x-cc_r5fss0-0_freer
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -1843,6 +1845,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-lp/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec all
+
+ task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-cc/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec all
+
  basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -2778,6 +2786,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am263x-cc_r5fss0-0_freer
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4205,6 +4215,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-lp/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec clean
+
+ task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-cc/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec clean
+
  basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -5140,6 +5156,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am263x-cc_r5fss0-0_free
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -6567,6 +6585,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ task_switch_mpu_am263x-lp_r5fss0-0_freertos_mpu_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-lp/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec export
+
+ task_switch_mpu_am263x-cc_r5fss0-0_freertos_mpu_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch_mpu/am263x-cc/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec export
+
  basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -7518,6 +7542,8 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch_mpu/am263x-lp/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch_mpu/am263x-cc/r5fss0-0_freertos_mpu/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

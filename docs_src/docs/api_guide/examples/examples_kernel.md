@@ -15,7 +15,7 @@ including driver porting layer examples.
 -# \subpage EXAMPLES_KERNEL_PREFETCH_ABORT
 -# \subpage EXAMPLES_KERNEL_UNDEFINED_ABORT
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
 -# \subpage EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH_MPU
 \endcond
 \cond SOC_AM64X || SOC_AM243X

@@ -41,7 +41,6 @@ const libdirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/board/lib",
     ],
 };
 
@@ -49,7 +48,6 @@ const libs_r5f = {
     common: [
         "freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -76,6 +74,7 @@ const templates_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos_mpu"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos_mpu"},
 ];
 
 function getComponentProperty() {

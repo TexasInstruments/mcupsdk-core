@@ -17,7 +17,7 @@ MCU+ SDK supports FreeRTOS on below CPUS
 \endcond
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
 MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-MPU-memory-protection-unit) on below CPUs
 - ARM R5F
 \endcond
@@ -34,7 +34,7 @@ MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-M
   - preemptive priority based scheduler for multiple cores
   - static and/or dynamic memory allocation mode
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM263X || SOC_AM261X
 - FreeRTOS MPU (only on R5F)
   - Create user mode and privileged mode tasks
   - User mode tasks with up-to 7 configurable task specific MPU regions
@@ -68,10 +68,10 @@ MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-M
 
 - Co-routines, stream buffer are not enabled and are not compiled by default. Users can add these to the FreeRTOS config and makefile if they want to use these features.
 - Tickless IDLE mode
-\cond !SOC_AM263PX
+\cond !(SOC_AM263PX || SOC_AM261X || SOC_AM263X)
 - Task level memory protection wrapper
 \endcond
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM263X || SOC_AM261X
 - [`portSWITCH_TO_USER_MODE`](https://www.freertos.org/Documentation/02-Kernel/04-API-references/13-FreeRTOS-MPU-specific/04-portSWITCH_TO_USER_MODE)
   is not supported
   - i.e, a task created in privileged mode cannot set its privilege level to user mode
@@ -192,7 +192,7 @@ that are included to build a freertos library.
 
 See \subpage KERNEL_FREERTOS_IMPORTANT_GUIDELINES_PAGE for FreeRTOS usage guidelines and comparison to SysBIOS.
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
 See \subpage KERNEL_FREERTOS_MPU_IMPORTANT_GUIDELINES_PAGE for FreeRTOS MPU usage guidelines.
 \endcond
 

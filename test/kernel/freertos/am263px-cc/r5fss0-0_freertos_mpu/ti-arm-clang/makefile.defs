@@ -1,0 +1,14 @@
+GEN_FILES__QUOTED += \
+*.appimage* \
+*.appimage_xip \
+*.rprc* \
+*.rprc_xip \
+*.tiimage* \
+*.bin \
+*.lnkxml \
+*.map \
+*.ossr
+
+GEN_FILES__QUOTED += \
+*.mcelf* \
+*.mcelf_xip 

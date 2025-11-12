@@ -140,7 +140,7 @@ The example source files are split to dedicated files to achieve following acces
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos_mpu
  Toolchain      | ti-arm-clang
- Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/kernel/freertos/task_switch_mpu
 
 # Steps to Run the Example

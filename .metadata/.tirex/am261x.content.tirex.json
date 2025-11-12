@@ -16647,6 +16647,72 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Mpu Example. CPU is R5FSS0-0 running FREERTOS_MPU.",
+        "name": "task_switch_mpu",
+        "location": "../../examples/kernel/freertos/task_switch_mpu/am261x-lp/r5fss0-0_freertos_mpu/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch_mpu",
+            "r5fss0-0_freertos_mpu"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Mpu Example. CPU is R5FSS0-0 running FREERTOS_MPU.",
+        "name": "task_switch_mpu",
+        "location": "../../examples/kernel/freertos/task_switch_mpu/am261x-som/r5fss0-0_freertos_mpu/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch_mpu",
+            "r5fss0-0_freertos_mpu"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
