@@ -34,7 +34,8 @@ McSPI External Loopback Example                                                 
 USB NCM Class Support                                                                           | USB
 FreeRTOS based CDC Example                                                                      | USB
 LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
-XIP+RL2 support is included in Networking OOB example, referenced in 'Enet Lwip CPSW Example'   | Networking
+IET Feature Enablement via Syscfg-GUI                                                           | Networking
+XIP+RL2 support is included in Networking OOB example, referenced in EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT | Networking
 SENT Decoder and Encoder Examples                                                               | PRU-IO
 
 # Modules Not tested/supported in this release
@@ -455,6 +456,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Syscfg does not let you configure ethernet interfaces pinmux independently
     <td> Networking
     <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-15051
+    <td> ENET: am261x: UDP client example not working in CCS boot mode
+    <td> Networking
+    <td> 11.00.00 onwards
     <td> -
 </tr>
 <tr>
