@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2018 Texas Instruments Incorporated - http://www.ti.com/
+ *  Copyright (C) 2017-2025 Texas Instruments Incorporated - http://www.ti.com/
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,8 +54,11 @@
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
-
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_undefInstructionExptnHandler(void)
+#else
 void undefInstructionExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.udefExptnHandler != (exptnHandlerPtr)NULL)
@@ -73,7 +76,11 @@ void undefInstructionExptnHandler(void)
     }
 }
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_swIntrExptnHandler(void)
+#else
 void swIntrExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.swiExptnHandler != (exptnHandlerPtr)NULL)
@@ -91,7 +98,11 @@ void swIntrExptnHandler(void)
     }
 }
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_prefetchAbortExptnHandler(void)
+#else
 void prefetchAbortExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.pabtExptnHandler != (exptnHandlerPtr)NULL)
@@ -109,7 +120,11 @@ void prefetchAbortExptnHandler(void)
     }
 }
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_dataAbortExptnHandler(void)
+#else
 void dataAbortExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.dabtExptnHandler != (exptnHandlerPtr)NULL)
@@ -127,7 +142,11 @@ void dataAbortExptnHandler(void)
     }
 }
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_irqExptnHandler(void)
+#else
 void irqExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.irqExptnHandler != (exptnHandlerPtr)NULL)
@@ -145,7 +164,11 @@ void irqExptnHandler(void)
     }
 }
 
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+void SDL_fiqExptnHandler(void)
+#else
 void fiqExptnHandler(void)
+#endif
 {
     /* Call registered call back */
     if (gExptnHandlers.fiqExptnHandler != (exptnHandlerPtr)NULL)

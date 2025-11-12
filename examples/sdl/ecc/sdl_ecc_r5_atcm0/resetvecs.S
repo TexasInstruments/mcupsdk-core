@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,6 +59,15 @@ _vectors:
         LDR pc, fiq_addr            /* FIQ */
 
 reset_addr: .long _c_int00
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+undefined_addr: .long SDL_undefInstructionExptnHandler
+svc_addr: .long SDL_swIntrExptnHandler
+prefetch_abort_addr: .long SDL_prefetchAbortExptnHandler
+data_abort_addr: .long SDL_dataAbortExptnHandler
+reserved_addr: .long _sdlRsvdHandler
+irq_addr: .long SDL_irqExptnHandler
+fiq_addr: .long SDL_fiqExptnHandler
+#else
 undefined_addr: .long undefInstructionExptnHandler
 svc_addr: .long swIntrExptnHandler
 prefetch_abort_addr: .long prefetchAbortExptnHandler
@@ -66,4 +75,5 @@ data_abort_addr: .long dataAbortExptnHandler
 reserved_addr: .long _sdlRsvdHandler
 irq_addr: .long irqExptnHandler
 fiq_addr: .long fiqExptnHandler
+#endif
 	.end

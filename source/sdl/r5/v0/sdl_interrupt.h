@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ *  Copyright (C) 2013-2025 Texas Instruments Incorporated - http://www.ti.com/
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -146,13 +146,21 @@ typedef struct
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+__attribute__((interrupt("UNDEF"), section(".text.hwi"), aligned(32)))   void SDL_undefInstructionExptnHandler(void);
+__attribute__((interrupt("SWI"), section(".text.hwi"), aligned(32)))     void SDL_swIntrExptnHandler(void);
+__attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void SDL_prefetchAbortExptnHandler(void);
+__attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void SDL_dataAbortExptnHandler(void);
+__attribute__((interrupt("IRQ"), section(".text.hwi"), aligned(32)))     void SDL_irqExptnHandler(void);
+__attribute__((interrupt("FIQ"), section(".text.hwi"), aligned(32)))     void SDL_fiqExptnHandler(void);
+#else
 __attribute__((interrupt("UNDEF"), section(".text.hwi"), aligned(32)))   void undefInstructionExptnHandler(void);
 __attribute__((interrupt("SWI"), section(".text.hwi"), aligned(32)))     void swIntrExptnHandler(void);
 __attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void prefetchAbortExptnHandler(void);
 __attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void dataAbortExptnHandler(void);
 __attribute__((interrupt("IRQ"), section(".text.hwi"), aligned(32)))     void irqExptnHandler(void);
 __attribute__((interrupt("FIQ"), section(".text.hwi"), aligned(32)))     void fiqExptnHandler(void);
-
+#endif
 /**
  * \brief   This function enables the Cortex-R5's IRQ and FIQ interrupts
  **/

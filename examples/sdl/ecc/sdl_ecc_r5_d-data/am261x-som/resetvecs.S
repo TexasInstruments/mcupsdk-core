@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,8 +61,8 @@ _vectors:
 reset_addr: .long _c_int00
 undefined_addr: .long HwiP_undefined_handler
 svc_addr: .long HwiP_svc_handler
-prefetch_abort_addr: .long prefetchAbortExptnHandler
-data_abort_addr: .long dataAbortExptnHandler
+prefetch_abort_addr: .long SDL_prefetchAbortExptnHandler
+data_abort_addr: .long SDL_dataAbortExptnHandler
 reserved_addr: .long HwiP_reserved_handler
 irq_addr: .long HwiP_irq_handler_c
 fiq_addr: .long HwiP_fiq_handler
