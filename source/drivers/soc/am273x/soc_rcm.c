@@ -1591,12 +1591,42 @@ static int32_t SOC_rcmGetDspClkSrcAndDivValue(SOC_RcmDspClockSource *clkSource,
 
 static uint32_t SOC_rcmGetModuleClkDivVal(uint32_t inFreq, uint32_t outFreq)
 {
-    uint32_t moduleClkDivVal;
+    if (outFreq == 0U) {
+        /* Avoid division by zero */
+        return 0U; 
+    }
 
-    DebugP_assert((inFreq % outFreq) == 0);
-    moduleClkDivVal = inFreq / outFreq;
-    moduleClkDivVal--;
-    return moduleClkDivVal;
+    if (inFreq % outFreq == 0U)
+    {
+        /* Integer division: exact multiple */
+        uint32_t moduleClkDivVal = inFreq / outFreq;
+        moduleClkDivVal--;
+        return moduleClkDivVal;
+    }
+    else
+    {
+        /* Non-integer division: use floating point and round to nearest */
+        float div = (float)inFreq / (float)outFreq;
+        /* Round to nearest integer */
+        uint32_t moduleClkDivVal = (uint32_t)(div + 0.5);
+        /* Calculate actual output frequency */
+        uint32_t actOutFreq = inFreq / moduleClkDivVal;
+
+        /* Use relative tolerance (e.g., 0.5%) for assertion */
+        float relTolerance = 0.005f; /* 0.5% */
+        float lowerBound = outFreq * (1.0f - relTolerance);
+        float upperBound = outFreq * (1.0f + relTolerance);
+        DebugP_assert((actOutFreq >= lowerBound) && (actOutFreq <= upperBound));
+
+        if (moduleClkDivVal > 0U)
+        {
+            return moduleClkDivVal - 1U;
+        } 
+        else 
+        {
+            return 0U;
+        }
+    }
 }
 
 static uint32_t SOC_rcmGetModuleClkDivRegVal(uint32_t moduleClkDivVal)
