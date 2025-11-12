@@ -896,7 +896,6 @@ int32_t sdl_Esm_posTest(void)
         }
     }
 
-
     if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-2013 */
@@ -904,6 +903,15 @@ int32_t sdl_Esm_posTest(void)
         {
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCfgIntr(esmBaseAddr, 31U, &val) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
 
@@ -981,6 +989,15 @@ int32_t sdl_Esm_posTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 5u, &pEnStatus) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(esmBaseAddr, 1023U, &pEnStatus) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);

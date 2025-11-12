@@ -45,6 +45,7 @@
     uint32_t base;
     bool event;
     uint32_t esmBaseAddr;
+    uint32_t testEsmBaseAddr;
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 static SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
@@ -1328,6 +1329,16 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &testEsmBaseAddr);
+        if (SDL_ESM_enableCriticalIntr(testEsmBaseAddr, 1025U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         if (SDL_ESM_enableCriticalIntr(0, 1025) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -1384,6 +1395,35 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &testEsmBaseAddr);
+        if (SDL_ESM_isEnableCriticalIntr(testEsmBaseAddr, 1025u, &pEnStatus) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &testEsmBaseAddr);
+        if (SDL_ESM_isEnableCriticalIntr(testEsmBaseAddr, 6u, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_isEnableCriticalIntr(SDL_ESM_INSTANCE_MAX, 1025u, &pEnStatus) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         if (SDL_ESM_isEnableCriticalIntr(0u, 1025u, NULL) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -1412,6 +1452,16 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_disableCriticalIntr(esmBaseAddr, 1025u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &testEsmBaseAddr);
+        if (SDL_ESM_disableCriticalIntr(testEsmBaseAddr, 1025u) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
