@@ -389,9 +389,9 @@ typedef struct {
 typedef struct {
 
 /** Command Error Status */
-    uint16_t                cmdErrorStat;
+    uint32_t                cmdErrorStat;
 /** Transfer Error Status */
-    uint16_t                xferErrorStat;
+    uint32_t                xferErrorStat;
 /** Data buffer index */
     uint8_t                 *dataBufIdx;
 /** Data Block count used for Transfer */
