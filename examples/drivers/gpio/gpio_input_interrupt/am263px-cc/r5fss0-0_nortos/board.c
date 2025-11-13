@@ -40,7 +40,7 @@
  */
 /* This is based on DMSC board config and core */
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_R5FSS0_CORE0_INTR_GPIO_INTRXBAR_OUT_14)
-#define BOARD_BUTTON_GPIO_SWITCH_NUM    (1)
+#define BOARD_BUTTON_GPIO_SWITCH_NUM    (11)
 
 void Board_gpioInit(void)
 {
