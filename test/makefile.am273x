@@ -104,6 +104,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/canfd_hld/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_auxclk_sel/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/CycleCounterP_c66/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/HwiP_c66_handlers_nortos/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -386,6 +387,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_canfd_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_CycleCounterP_c66_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_HwiP_c66_handlers_am273x-evm_c66ss0_nortos_ti-c6000
@@ -722,6 +724,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C drivers/mcasp/mcasp_auxclk_sel/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
 
  dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
@@ -1188,6 +1193,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_canfd_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_CycleCounterP_c66_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_HwiP_c66_handlers_am273x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1519,6 +1525,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C drivers/mcasp/mcasp_auxclk_sel/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
 
  dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
@@ -1985,6 +1994,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_canfd_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_CycleCounterP_c66_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_HwiP_c66_handlers_am273x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -2316,6 +2326,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ mcasp_auxclk_sel_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C drivers/mcasp/mcasp_auxclk_sel/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
 
  dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub

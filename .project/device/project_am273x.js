@@ -214,6 +214,7 @@ const example_file_list = [
     "test/drivers/mcan/mcan_lld/.project/project.js",
     "test/drivers/mcan/canfd_hld/.project/project.js",
     "test/drivers/mcasp/mcasp_multiinst_loopback/.project/project.js",
+    "test/drivers/mcasp/mcasp_auxclk_sel/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/c66/CycleCounterP_c66/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/c66/HwiP_c66_handlers_nortos/.project/project.js",

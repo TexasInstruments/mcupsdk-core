@@ -152,6 +152,7 @@ void mcasp_loopback_main(void *args)
     else
     {
         DebugP_log("Data mismatch for %d bytes!!\r\n", k);
+        DebugP_log("Some tests have failed!!\r\n");
     }
 
     Board_driversClose();
