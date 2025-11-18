@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -39,53 +39,86 @@
  *  \par
 */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <sdl/sdl_lbist.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/lbist/sdl_lbist_priv.h>
-
 #include <sdl/dpl/sdl_dpl.h>
+
+/* ========================================================================== */
+/*                                Macros                                      */
+/* ========================================================================== */
+
+/* None */
+
+/* ========================================================================== */
+/*                 Internal Function Declarations                             */
+/* ========================================================================== */
+
+static void SDL_LBIST_getExpectedMISR(SDL_lbistInstInfo *pInfo, uint32_t *pExpectedMISRValue);
+static int32_t SDL_LBIST_runTest(SDL_lbistRegs *pRegs, SDL_lbistInstInfo *pInfo);
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+/* None */
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+/**
+ * Design: PROC_SDL-1039,PROC_SDL-1040
+ */
+static void SDL_LBIST_getExpectedMISR(SDL_lbistInstInfo *pInfo, uint32_t *pExpectedMISRValue)
+{
+    *pExpectedMISRValue = pInfo->expectedMISR;
+    return;
+}
 
 static int32_t SDL_LBIST_runTest(SDL_lbistRegs *pRegs, SDL_lbistInstInfo *pInfo)
 {
     SDL_ErrType_t status = SDL_PASS;
     bool isLBISTRunning = (bool)false;
 
+    /*
+     * The validity of arguments passed to this function, that is, pRegs and
+     * pInfo, is guaranteed due to checks performed in SDL_LBIST_selfTest.
+     * The APIs called in sequence below can only fail due to SDL_EBADARGS,
+     * which is now impossible. Hence, we skip keeping track of possible
+     * failures .
+     */
+
     /* Initialize done flag */
     pInfo->doneFlag = LBIST_NOT_DONE;
 
-    /**-- Step 1: Configure LBIST --*/
+    /* Step 1: Configure LBIST */
 
-    status = SDL_LBIST_programConfig(pRegs, &pInfo->LBISTConfig);
+    SDL_LBIST_programConfig(pRegs, &pInfo->LBISTConfig);
 
-    /**-- Step 2: Run LBIST test --*/
+    /* Step 2: Run LBIST test */
 
-    /**--- Step 2a: Enable Isolation ---*/
-    if (status == SDL_PASS)
-    {
-        /* Call SDL API */
-        status = SDL_LBIST_enableIsolation(pRegs);
-        /**--- Step 2b: reset LBIST ---*/
-        if (status == SDL_PASS)
-        {
-            status = SDL_LBIST_reset(pRegs);
-            /**--- Step 2c: Enable Run BIST Mode ---*/
-            if (status == SDL_PASS)
-            {
-                status = SDL_LBIST_enableRunBISTMode(pRegs);
-            }
-        }
-    }
+    /* Step 2a: Enable Isolation */
 
-    /**--- Step 2d: Start LBIST ---*/
-    if (status == SDL_PASS)
-    {
-        status = SDL_LBIST_start(pRegs);
-        /**--- Step 2e: Check LBIST Running status ---*/
-        if (status == SDL_PASS)
-        {
-            status = SDL_LBIST_isRunning(pRegs, &isLBISTRunning);
-        }
-    }
+    /* Call SDL API */
+    SDL_LBIST_enableIsolation(pRegs);
+
+    /* Step 2b: reset LBIST */
+    SDL_LBIST_reset(pRegs);
+
+    /* Step 2c: Enable Run BIST Mode */
+    SDL_LBIST_enableRunBISTMode(pRegs);
+
+    /* Step 2d: Start LBIST */
+    SDL_LBIST_start(pRegs);
+
+    /* Step 2e: Check LBIST Running status */
+    status = SDL_LBIST_isRunning(pRegs, &isLBISTRunning);
+
     return status;
 }
 
@@ -95,37 +128,41 @@ static int32_t SDL_LBIST_runTest(SDL_lbistRegs *pRegs, SDL_lbistInstInfo *pInfo)
 
 int32_t SDL_LBIST_selfTest(SDL_LBIST_inst instance, SDL_LBIST_testType testType)
 {
-  SDL_lbistRegs *pRegs;
-  SDL_lbistInstInfo *pInfo;
-  SDL_ErrType_t status = SDL_PASS;
+    SDL_lbistRegs *pRegs;
+    SDL_lbistInstInfo *pInfo;
+    SDL_ErrType_t status = SDL_PASS;
 
-  /* Get the LBIST Instance Info */
-  pInfo = SDL_LBIST_getInstInfo((uint32_t)instance);
+    if (((uint32_t)instance >= SDL_LBIST_NUM_INSTANCES) ||
+        ((testType != SDL_LBIST_TEST) && (testType != SDL_LBIST_TEST_RELEASE)))
+    {
+        status = SDL_EBADARGS;
+    }
 
-  if ((pInfo == NULL) ||
-      ((testType != SDL_LBIST_TEST) && (testType != SDL_LBIST_TEST_RELEASE)))
-  {
-      status = SDL_EBADARGS;
-  }
+    if (status == SDL_PASS)
+    {
+        /* Get the LBIST Instance Info */
+        pInfo = SDL_LBIST_getInstInfo((uint32_t)instance);
+    }
 
-  if (status == SDL_PASS)
-  {
-      /* Get LBIST register space Pointer */
-      pRegs = pInfo->pLBISTRegs;
-  }
+    if (status == SDL_PASS)
+    {
+        /* Get LBIST register space Pointer */
+        pRegs = pInfo->pLBISTRegs;
+    }
 
-  if (status == SDL_PASS)
-  {
-      if (testType == SDL_LBIST_TEST)
-      {
-          status = SDL_LBIST_runTest(pRegs, pInfo);
-      }
-      else
-      {
-          status = SDL_LBIST_disableIsolation(pRegs);
-      }
-  }
-  return status;
+    if (status == SDL_PASS)
+    {
+        if (testType == SDL_LBIST_TEST)
+        {
+            status = SDL_LBIST_runTest(pRegs, pInfo);
+        }
+        else
+        {
+            status = SDL_LBIST_disableIsolation(pRegs);
+        }
+    }
+
+    return status;
 }
 
 /**
@@ -154,44 +191,63 @@ int32_t SDL_LBIST_checkResult(SDL_LBIST_inst instance, bool *pResult)
     SDL_lbistRegs *pRegs;
     SDL_lbistInstInfo *pInfo;
 
-    /* Get the LBIST Instance Info */
-    pInfo = SDL_LBIST_getInstInfo((uint32_t)instance);
-
-    /* Get LBIST register space Pointer */
-    /* Perform Address Translation. */
-    pRegs = (SDL_lbistRegs *)SDL_DPL_addrTranslate((uint64_t)((pInfo->pLBISTRegs)), SDL_MCU_CTRL_MMR0_CFG0_SIZE);
-
-    /**--- Step 2f: Get Signature of test ---*/
-    status = SDL_LBIST_getMISR(pRegs, &calculatedMISR);
-
-    /**--- Step 2g: Get Expected Signature ---*/
-    if (status == SDL_PASS)
+    if (((uint32_t)instance >= SDL_LBIST_NUM_INSTANCES) || (pResult == NULL))
     {
-        expectedMISR = pInfo->expectedMISR;
+        status = SDL_EBADARGS;
     }
 
-    /**--- Step 2h: Clear Run BIST Mode ---*/
+    if (status == SDL_PASS)
+    {
+        /* Get the LBIST Instance Info */
+        pInfo = SDL_LBIST_getInstInfo((uint32_t)instance);
+    }
+
+    if (status == SDL_PASS)
+    {
+        /* Get LBIST register space Pointer */
+        /* Perform Address Translation. */
+        pRegs = (SDL_lbistRegs *)SDL_DPL_addrTranslate((uint64_t)((pInfo->pLBISTRegs)), SDL_MCU_CTRL_MMR0_CFG0_SIZE);
+    }
+    
+    /* Step 2f: Get Signature of test */
+    if (status == SDL_PASS)
+    {
+        status = SDL_LBIST_getMISR(pRegs, &calculatedMISR);
+    }
+
+    /* Step 2g: Get Expected Signature */
+    if (status == SDL_PASS)
+    {
+        SDL_LBIST_getExpectedMISR(pInfo, &expectedMISR);
+    }
+
+    /* Step 2h: Clear Run BIST Mode */
     if (status == SDL_PASS)
     {
         status = SDL_LBIST_clearRunBISTMode(pRegs);
     }
 
-    /**--- Step 2i: Stop LBIST ---*/
+    /* Step 2i: Stop LBIST */
     if (status == SDL_PASS)
     {
         status = SDL_LBIST_stop(pRegs);
     }
 
-    /**--- Step 2j: Reset LBIST ---*/
+    /* Step 2j: Reset LBIST */
     if (status == SDL_PASS)
     {
         status = SDL_LBIST_reset(pRegs);
     }
 
-    /**--- Step 3: Check result of LBIST  ---*/
+    /* Step 3: Check result of LBIST  */
     if (status == SDL_PASS)
     {
+        /**
+         * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition is dependent on hardware failure, which is not possible to force in testing
+         * TI_COVERAGE_UNIT_EFFECT Since we can not force this in testing, calculatedMISR != expectedMISR will always be false. This is the expected behaviour
+         */
         if (calculatedMISR != expectedMISR)
+        /* TI_COVERAGE_GAP_STOP */
         {
             *pResult = (bool)false;
         }

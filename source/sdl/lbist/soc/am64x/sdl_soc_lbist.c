@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 Texas Instruments Incorporated
+ * Copyright (C) 2023-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -108,18 +108,14 @@ void SDL_LBIST_eventHandler( void *arg )
     bool isLBISTDone = FALSE;
     SDL_lbistInstInfo *pInstInfo = SDL_LBIST_getInstInfo((uint32_t)LBIST_MCU_M4F);
     SDL_lbistRegs *pLBISTRegs;
-
-    if (pInstInfo != NULL)
+    pLBISTRegs = pInstInfo->pLBISTRegs;
+    /* Check if the LBIST done flag is set */
+    SDL_LBIST_isDone(pLBISTRegs, &isLBISTDone);
+    if (isLBISTDone == TRUE)
     {
-        pLBISTRegs = pInstInfo->pLBISTRegs;
-        /* Check if the LBIST done flag is set */
-        status = SDL_LBIST_isDone(pLBISTRegs, &isLBISTDone);
-        if ((status == SDL_PASS) && (isLBISTDone == TRUE))
-        {
-            pInstInfo->doneFlag = LBIST_DONE;
-            /* Need to pull run down to low to clear the done interrupt */
-            (void)SDL_LBIST_stop( pLBISTRegs );
-        }
+        pInstInfo->doneFlag = LBIST_DONE;
+        /* Need to pull run down to low to clear the done interrupt */
+        (void)SDL_LBIST_stop( pLBISTRegs );
     }
     return;
 

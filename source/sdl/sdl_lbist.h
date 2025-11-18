@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -82,7 +82,11 @@ typedef enum {
      * This should be called after running selfTest for SDL_LBIST_TEST and
      * then performing the sequence to switch off the cores
      */
-    SDL_LBIST_TEST_RELEASE
+    SDL_LBIST_TEST_RELEASE,
+    /*!
+     * Invalid LBIST test type
+     */
+    SDL_LBIST_TEST_INVALID
 } SDL_LBIST_testType;
 
 /** @} */

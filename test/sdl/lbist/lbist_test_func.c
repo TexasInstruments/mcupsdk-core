@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -62,6 +62,8 @@
 #define LBIST_POST_ATTEMPTED_TIMEOUT      (2u)
 #define LBIST_POST_NOT_RUN                (3u)
 #define SCICLIENT_SERVICE_WAIT_FOREVER                    (0xFFFFFFFFU)
+
+#define SDL_LBIST_INST                    (0u)
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -674,6 +676,28 @@ int32_t LBIST_runTest(uint32_t coreIndex)
     return (testResult);
 }
 
+/* Run all APIs not exercised by functional test */
+int32_t LBIST_apiTest(uint32_t coreIndex)
+{
+    int32_t testResult = 0;
+    bool isRunning;
+    SDL_lbistInstInfo *pInfo;
+    pInfo = SDL_LBIST_getInstInfo(LBIST_TestHandleArray[coreIndex].instance);
+
+    /* Call SDL APIs not used by functional test */
+
+    /* This call is to test "false" isRunning value for SDL_LBIST_isRunning */
+    testResult = SDL_LBIST_isRunning(pInfo->pLBISTRegs, &isRunning);
+
+    /* LBIST is not expected to be running at this point in the program */
+    if (isRunning)
+    {
+        testResult = SDL_EFAIL;
+    }
+
+    return (testResult);
+}
+
 /* LBIST Functional test */
 int32_t LBIST_funcTest(void)
 {
@@ -690,6 +714,15 @@ int32_t LBIST_funcTest(void)
             {
                 DebugP_log("   LBIST functional test failed %d\n", i);
             }
+        }
+    }
+    if (testResult == 0)
+    {
+        /* API test is enough to be run on one instance */
+        testResult = LBIST_apiTest(SDL_LBIST_INST);
+        if (testResult != 0)
+        {
+            DebugP_log("\r\n  LBIST API test failed\r\n");
         }
     }
     return (testResult);

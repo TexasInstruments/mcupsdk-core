@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -92,23 +92,6 @@ int32_t SDL_LBIST_getMISR(SDL_lbistRegs *pLBISTRegs, uint32_t *pMISRValue)
         regVal |= (muxVal << SDL_LBIST_STAT_OUT_MUX_CTL_SHIFT);
         pLBISTRegs->LBIST_STAT = regVal;
         *pMISRValue  = pLBISTRegs->LBIST_MISR;
-    }
-    return status;
-}
-
-/**
- * Design: PROC_SDL-1039,PROC_SDL-1040
- */
-int32_t SDL_LBIST_getExpectedMISR(const uint32_t *pLBISTSig, uint32_t *pEpectedMISRValue)
-{
-    int32_t status = SDL_PASS;
-    if (pLBISTSig == NULL)
-    {
-        status = SDL_EBADARGS;
-    }
-    else
-    {
-        *pEpectedMISRValue = *pLBISTSig;
     }
     return status;
 }
