@@ -6,7 +6,7 @@
  *
  *  \par
  *  ============================================================================
- *  @n   (C) Copyright 2022, Texas Instruments, Inc.
+ *  @n   (C) Copyright 2022-25, Texas Instruments, Inc.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,7 +65,6 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
     void *localAddr = NULL;
     #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_PBIST_Instance(instance);
-    #endif
 
     /* Disable interrupt */
     if (pInfo->interruptNumber != SDL_PBIST_INTERRUPT_INVALID)
@@ -87,6 +86,7 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
             ret = SDL_EFAIL;
         }
     }
+    #endif
 
     /* Get PBIST register space Pointer */
     if (ret == SDL_PASS)
@@ -121,6 +121,59 @@ static int32_t SDL_PBIST_prepareTest(const SDL_pbistInstInfo *pInfo, SDL_pbistRe
 }
 #endif
 
+#if defined (SOC_AM243X) || defined (SOC_AM64X)
+static int32_t SDL_PBIST_getResult(SDL_PBIST_testType testType, const SDL_pbistRegs *pRegs, bool *pResult)
+{
+    int32_t ret = SDL_PASS;
+    bool PBISTResult;
+
+    /*
+     * Return value is discarded because parameters have
+     * been checked for validity in previous APIs, and
+     * hence this API is guaranteed to return SDL_PASS
+     */
+    SDL_PBIST_checkResult(pRegs, &PBISTResult);
+
+    /* Check the PBIST result */
+    if (testType == SDL_PBIST_TEST)
+    {
+        if (PBISTResult == (bool) true)
+        {
+            *pResult = (bool) true;
+        }
+        else
+        /**
+         * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition is dependent on hardware failure, which is not possible to force in testing
+         * TI_COVERAGE_UNIT_EFFECT For a successful PBIST test, PBISTResult will always be true. This is the expected behaviour
+         */
+        {
+            *pResult = (bool) false;
+            ret = SDL_EFAIL;
+        }
+        /* TI_COVERAGE_GAP_STOP */
+    }
+    /* (testType == SDL_PBIST_NEG_TEST) */
+    else
+    {
+        if (PBISTResult == (bool) false)
+        {
+            *pResult = (bool) true;
+        }
+        else
+        /**
+         * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition is dependent on hardware failure, which is not possible to force in testing
+         * TI_COVERAGE_UNIT_EFFECT For a successful negative PBIST test, PBISTResult will always be false. This is the expected behaviour
+         */
+        {
+            *pResult = (bool) false;
+            ret = SDL_EFAIL;
+        }
+        /* TI_COVERAGE_GAP_STOP */
+    }
+
+    return ret;
+}
+#else
 static int32_t SDL_PBIST_getResult(SDL_PBIST_testType testType, const SDL_pbistRegs *pRegs, bool *pResult)
 {
     int32_t ret = SDL_PASS;
@@ -148,7 +201,88 @@ static int32_t SDL_PBIST_getResult(SDL_PBIST_testType testType, const SDL_pbistR
 
     return ret;
 }
+#endif
 
+#if defined (SOC_AM243X) || defined (SOC_AM64X)
+static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRegs,
+                                 SDL_pbistInstInfo *pInfo, uint32_t timeout,
+                                 bool *pResult)
+{
+    int32_t ret = SDL_PASS;
+    uint32_t numRuns = 1;
+    uint32_t timeoutCount = 0;
+
+    if (testType == SDL_PBIST_TEST)
+    {
+        numRuns = pInfo->numPBISTRuns;
+    }
+    pInfo->doneFlag = PBIST_NOT_DONE;
+
+    /**
+     * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition (ret == SDL_PASS) will get false condition coverage only if there is a hardware failure during PBIST runs
+     * TI_COVERAGE_UNIT_EFFECT For a functional scenario, ret will always be SDL_PASS. This is the expected behaviour
+     */
+    for (uint32_t i = 0; (i < numRuns) && (ret == SDL_PASS); i++)
+    /* TI_COVERAGE_GAP_STOP */
+    {
+        if (testType == SDL_PBIST_TEST)
+        {
+            /*
+             * Return value is discarded for this and the next API because
+             * parameters have been checked for validity in previous APIs,
+             * and hence these ones are guaranteed to return SDL_PASS
+             */
+            SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun[i]);
+        }
+        else /* (testType == SDL_PBIST_NEG_TEST) */
+        {
+            SDL_PBIST_startNeg(pRegs, &pInfo->PBISTNegConfigRun);
+        }
+
+        timeoutCount = timeout;
+        /* Timeout if exceeds time */
+
+        while ((pInfo->doneFlag == PBIST_NOT_DONE)
+                && (timeoutCount > (uint32_t)0))
+        {
+            SDL_PBIST_checkDone(pInfo);
+            timeoutCount--;
+        }
+        if (pInfo->doneFlag == PBIST_NOT_DONE)
+        {
+            ret = SDL_EFAIL;
+        }
+        else
+        {
+            ret = SDL_PBIST_getResult(testType, pRegs, pResult);
+
+            /* Do a Soft Reset */
+            /**
+             * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition (ret == SDL_PASS) will get false coverage only if SDL_PBIST_getResult API return fail, which only occurs in hardware failure conditions
+             * TI_COVERAGE_UNIT_EFFECT For a functional scenario, ret will always be SDL_PASS. This is the expected behaviour
+             */
+            if (ret == SDL_PASS)
+            /* TI_COVERAGE_GAP_STOP */
+            {
+                /*
+                 * Return values are discarded for these APIs because
+                 * pRegs has been checked for validity in previous APIs,
+                 * and hence these ones are guaranteed to return SDL_PASS
+                 */
+                SDL_PBIST_softReset(pRegs);
+
+                /* Execute exit sequence */
+                SDL_PBIST_releaseTestMode(pRegs);
+            }
+        }
+
+        /* reset Done flag so we can run again */
+        pInfo->doneFlag = PBIST_NOT_DONE;
+    }
+
+    return ret;
+}
+#else
 static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRegs,
                                  SDL_pbistInstInfo *pInfo, uint32_t timeout,
                                  bool *pResult)
@@ -245,6 +379,7 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
 
     return ret;
 }
+#endif
 
 static int32_t SDL_PBIST_cleanupTest(pSDL_DPL_HwipHandle PBIST_intrHandle)
 {
