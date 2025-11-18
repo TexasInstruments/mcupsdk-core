@@ -103,6 +103,9 @@ volatile uint32_t esmOutputResult[USE_CASES] = {TEST_CASE_STATUS_NOT_RUN,
 
 volatile uint8_t currTestCase = START_USE_CASE;
 
+/* Flag to indicate callback triggered */
+volatile bool VTM_intrDone = false;
+
 static const char *printTestCaseStepResult(uint32_t result);
 void test_sdl_vtm_test_app_runner(void);
 void VTM_test_printSummary(void);
@@ -199,16 +202,9 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
     deactivateTrigger(esmInstType, esmIntType, intSrc);
 
-    /* Print information to screen */
-    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
-                esmInstType, esmIntType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
-
-    DebugP_log("  ESM instance #%d, ESM interrupt type = %s\n",
-                esmInstType, printEsmIntType(esmIntType));
-
     esmOutputResult[currTestCase]= TEST_CASE_STATUS_COMPLETED_SUCCESS;
+    /* Update flag to indicate callback was triggered */
+    VTM_intrDone = true;
 
     return SDL_PASS;
 }
@@ -279,9 +275,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
             {
                 if (thresholdsReset == 0)
                 {
-                    /* Simulate thresholds as if temperature continues to increase
-                     * toward gt_Thr2 */
-                    vtm_setThresholdsForCriticalTrigger();
+                    /* Don't do anything as we want to simulate further increase of temperature */
 
                     thresholdsReset = 1;
                 }
@@ -360,9 +354,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
             {
                 if (thresholdsReset == 0)
                 {
-                    /* Simulate thresholds as if temperature continues to increase
-                     * toward gt_Thr2 */
-                    vtm_setThresholdsForCriticalTrigger();
+                    /* Don't do anything as we want to simulate further increase of temperature */
 
                     thresholdsReset = 1;
                 }
