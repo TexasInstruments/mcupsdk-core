@@ -59,18 +59,35 @@
 #include <kernel/dpl/DebugP.h>
 
 #include <pbist_test_cfg.h>
-
-/* This is to power up the cores before test and power down afterwards */
-#define POWERUP_CORES_BEFORE_TEST
-#define APP_PBIST_TIMEOUT   (0x400000U)
+#include <sdl/include/hw_types.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+
+/* This is to power up the cores before test and power down afterwards */
+#define PBIST_POWERUP_CORES_BEFORE_TEST
+#define PBIST_APP_TIMEOUT               (0x400000U)
+
+#if defined (SOC_AM64X)
+#define PBIST_PSC_BASE_ADDR             ((uint32_t)0x400A00)
+
+/* The following macro gives the PSC register address of a device */
+#define PBIST_A53_0_ADDR                (PBIST_PSC_BASE_ADDR + 4*CSL_MAIN_LPSC_A53_0)
+
+/* The following macros will be used in modifying PSC register values */
+#define PBIST_PSC_NEXT_MASK             (0x0000003F)
+#define PBIST_PSC_FORCE_OFF             (0x80000001)
+#define PBIST_PSC_PTCMD_ADDR            (0x400120)
+#define PBIST_PSC_PTCMD_TIMEOUT         (1000000U)
+#define PBIST_PSC_PTSTAT_ADDR           (0x400128)
+#endif
+
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 void PBIST_eventHandler( uint32_t instanceId );
+volatile int32_t PBIST_PSCForceOff(uint32_t pscAddr);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -79,6 +96,44 @@ void PBIST_eventHandler( uint32_t instanceId );
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/*
+ * Certain IP(s) are left in a transition state after performing PBIST
+ * tests in AM64x. These cannot be turned off using Sciclient because
+ * they need a force bit to be set for turning off. The following API
+ * is used to perform this task for the affected IPs after PBIST test.
+ */
+#if defined(SOC_AM64X)
+volatile int32_t PBIST_PSCForceOff(uint32_t pscAddr)
+{
+    int32_t pscTimeout = PBIST_PSC_PTCMD_TIMEOUT;
+    uint32_t pscRdValue;
+    int32_t result = SDL_PASS;
+
+    /* Read current value of the register */
+    pscRdValue = HW_RD_REG32(pscAddr);
+    /* Delete bits corresponding to state */
+    pscRdValue &= ~PBIST_PSC_NEXT_MASK;
+    /* Bits to be set for SyncRst state and Force bit */
+    pscRdValue |= PBIST_PSC_FORCE_OFF;
+    /* Write back to the PSC register */
+    HW_WR_REG32(pscAddr,pscRdValue);
+    /* Write 1 to PSC_PTCMD to cause state change */
+    HW_WR_REG32(PBIST_PSC_PTCMD_ADDR,0x1);
+
+    /* Wait until state transition is completed */
+    while(((HW_RD_REG32(PBIST_PSC_PTSTAT_ADDR) & 0x1) != 0) && (pscTimeout>0))
+    {
+        pscTimeout--;
+    }
+
+    /* If the transition wait timed out */
+    if((HW_RD_REG32(PBIST_PSC_PTSTAT_ADDR) & 0x1) != 0)
+    {
+        result = SDL_EFAIL;
+    }
+    return result;
+}
+#endif
 
 int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 {
@@ -93,10 +148,13 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     SDL_pbistRegs *pPBISTRegs;
     bool PBISTResult;
 	SDL_PBIST_testType testType;
-
     uint64_t startTime , testStartTime,  testEndTime, endTime;
     uint64_t prepTime, diffTime, restoreTime;
     int i;
+#if defined(SOC_AM64X)
+    uint32_t pscAddr;
+    bool a53Skip = false;
+#endif
 #ifdef DEBUG
     char inputChar;
 #endif
@@ -234,7 +292,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         }
     }
 
-#ifdef POWERUP_CORES_BEFORE_TEST
+#ifdef PBIST_POWERUP_CORES_BEFORE_TEST
     /* Custom core power restore sequence - needed to allow core to be powered
      * up later by Secondary Bootloader (SBL) */
     if ((testResult == 0) &&
@@ -319,7 +377,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             }
         }
     }
-#endif /* #ifdef POWERUP_CORES_BEFORE_TEST */
+#endif /* #ifdef PBIST_POWERUP_CORES_BEFORE_TEST */
     /* Double check the Power up of Auxilliary modules needed to run test and wait until they
      * are powered up */
     if (testResult == 0)
@@ -477,11 +535,11 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 #endif
             if (runNegTest == true)
             {
-                status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
+                status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, PBIST_APP_TIMEOUT, &PBISTResult);
             }
             else
             {
-                status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
+                status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, PBIST_APP_TIMEOUT, &PBISTResult);
             }
             if (status != SDL_PASS)
             {
@@ -561,7 +619,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         }
     }
 
-#ifdef POWERUP_CORES_BEFORE_TEST
+#ifdef PBIST_POWERUP_CORES_BEFORE_TEST
     if ((testResult == 0) && (PBIST_TestHandleArray[instanceId].procRstNeeded)
                           && (PBIST_TestHandleArray[instanceId].tisciSecDeviceId != 0U))
     {
@@ -631,6 +689,18 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log("  Powering off Device number %d Device Id %x\r\n",
                         i, PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
 #endif
+            /* 
+             * In AM64x, the device TISCI_DEV_A53SS0 is left in a transition state after PBIST tests,
+             * and cannot be powered off by Sciclient. Hence, we check for that and skip it here. *
+             */
+#if defined (SOC_AM64X)
+            if (PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i] == TISCI_DEV_A53SS0)
+            {
+                /* Flag to denote that A53 IP's power off has been skipped in this test */
+                a53Skip = true;
+                continue;
+            }
+#endif
             status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i],
                                                 TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF,
                                                 TISCI_MSG_FLAG_AOP,
@@ -645,6 +715,24 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         }
     }
 
+    /*
+     * Separately power off TISCI_DEV_A53SS0 (SyncRst state) by writing to PSC register
+     * with force bit set. This is required because the A53 IP is in a transition state
+     */
+#if defined (SOC_AM64X)
+    if ((testResult == 0) && (a53Skip))
+    {
+        /* This is the address of the PSC register corresponding to the A53 core */
+        pscAddr = PBIST_A53_0_ADDR;
+
+        status = PBIST_PSCForceOff(pscAddr);
+        if (status != SDL_PASS)
+        {
+            DebugP_log("   A53: Force bit power-off failed\r\n");
+            testResult = -1;
+        }
+    }
+#endif
     /* Custom core power restore sequence - needed to allow core to be powered
      * up properly later */
     if ((testResult == 0) &&
@@ -697,7 +785,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
              testResult = -1;
         }
     }
-#endif /* #ifdef POWERUP_CORES_BEFORE_TEST */
+#endif /* #ifdef PBIST_POWERUP_CORES_BEFORE_TEST */
 
     /* Ensure that cores have been turned off */
     if ((testResult == 0) && (PBIST_TestHandleArray[instanceId].procRstNeeded))
