@@ -44,6 +44,7 @@
 #include <sdl/vtm/v0/sdlr_vtm.h>
 #include "sdl_ip_vtm.h"
 #include <sdl/include/sdl_types.h>
+#include <kernel/dpl/ClockP.h>
 /*=============================================================================
  *   functions
  *===========================================================================*/
@@ -53,7 +54,8 @@
 #define SDL_VTM_VALUES_ARE_UNINITIALIZED    (-1)
 /* Delay for Reg Reads */
 #define SDL_VTM_DOUT_REG_READ_DELAY         (100)
-
+/* Delay (in us) after Reg Writes */
+#define SDL_VTM_REG_WRITE_DELAY             (uint64_t)(10)
 
 /*=============================================================================
  *  global variables
@@ -340,21 +342,26 @@ int32_t SDL_VTM_tsSetCtrl (const SDL_VTM_cfg2Regs          *p_cfg2,
         if ((valid_map & SDL_VTM_TS_CTRL_MAXT_OUTG_ALERT_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_sensor->CTRL, VTM_CFG2_TMPSENS_CTRL_MAXT_OUTRG_EN, maxt_outrg_alert_en);
+            /* Have some delay after Register write */
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TS_CTRL_RESET_CTRL_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_sensor->CTRL, VTM_CFG2_TMPSENS_CTRL_CLRZ, tsReset);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TS_CTRL_SOC_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_sensor->CTRL, VTM_CFG2_TMPSENS_CTRL_SOC, adc_trigger);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TS_CTRL_MODE_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_sensor->CTRL, VTM_CFG2_TMPSENS_CTRL_CONT, mode);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
     }
     return (sdlResult);
@@ -615,18 +622,22 @@ int32_t SDL_VTM_tsSetGlobalCfg (const SDL_VTM_cfg2Regs       *p_cfg2,
         {
             SDL_REG32_FINS(&p_cfg2->MISC_CTRL, VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN, \
                 p_tsGlobal_cfg->any_maxt_outrg_alert_en);
+            /* Have some delay after Register write */
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TSGLOBAL_MAXT_OUTRG_ALERT_THR_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_cfg2->MISC_CTRL2, VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR, \
                 p_tsGlobal_cfg->maxt_outrg_alert_thr);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TSGLOBAL_MAXT_OUTRG_ALERT_THR0_VALID) !=0u)
         {
             SDL_REG32_FINS(&p_cfg2->MISC_CTRL2, VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR0, \
                 p_tsGlobal_cfg->maxt_outrg_alert_thr0);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
 
         if ((valid_map & SDL_VTM_TSGLOBAL_SAMPLES_PER_CNT_VALID) !=0u)

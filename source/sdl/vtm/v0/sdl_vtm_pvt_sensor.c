@@ -83,6 +83,10 @@
 #include <sdl/include/sdl_types.h>
 #include <stdint.h>
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
+#include <kernel/dpl/ClockP.h>
+
+/* Delay (in us) after Reg Writes */
+#define SDL_VTM_REG_WRITE_DELAY             (uint64_t)(10)
 
 extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
@@ -236,7 +240,6 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
                                        int32_t                 low_temp_in_milli_degree_celsius)
 {
     int32_t                 retVal = SDL_EBADARGS;
-    volatile                int32_t i;
     SDL_VTM_adc_code        adc_code_h, adc_code_l;
     uint32_t                value;
     SDL_VTM_Ctrlcfg         ts_ctrl_cfg;
@@ -270,6 +273,8 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
          SDL_REG32_FINS(&value, VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR0, adc_code_l);
          SDL_REG32_FINS(&value, VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR, adc_code_h);
          SDL_REG32_WR(&p_cfg2->MISC_CTRL2,value);
+        /* Have some delay after Register write */
+        ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
 
          /* Step 2 */
          ts_ctrl_cfg.valid_map = SDL_VTM_TS_CTRL_MAXT_OUTG_ALERT_VALID;
@@ -281,16 +286,12 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
 
          if (retVal == SDL_PASS)
          {
-            /* have some delay before write */
-            for (i = 0; i < SDL_VTM_REG_READ_DELAY;)
-            {
-                i = i + 1;
-            }
 
             /* Step 3 */
             SDL_REG32_FINS(&p_cfg2->MISC_CTRL, \
                            VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN, \
                            SDL_VTM_TSGLOBAL_ANY_MAXT_OUTRG_ALERT_ENABLE);
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
          }
     }
     else
@@ -305,7 +306,6 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr( const SDL_VTM_cfg2Regs  *p_cfg2,
 int32_t SDL_VTM_tsSetMaxTOutRgAlertThrDisable(const SDL_VTM_cfg2Regs *p_cfg2, SDL_VTM_InstTs instance)
 {
     int32_t retVal = SDL_EBADARGS;
-    volatile int32_t i;
     SDL_VTM_Ctrlcfg ts_ctrl_cfg;
 
     if (p_cfg2 != NULL_PTR)
@@ -325,16 +325,12 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThrDisable(const SDL_VTM_cfg2Regs *p_cfg2, SD
 
         if (retVal == SDL_PASS)
         {
-            /* have some delay before write */
-            for (i = 0; i < SDL_VTM_REG_READ_DELAY;)
-            {
-                i = i + 1;
-            }
-
             /* Step 2 */
             SDL_REG32_FINS(&p_cfg2->MISC_CTRL,                          \
                            VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN,  \
                            SDL_VTM_TSGLOBAL_ANY_MAXT_OUTRG_ALERT_DISABLE);
+            /* Have some delay after Register write */
+            ClockP_usleep(SDL_VTM_REG_WRITE_DELAY);
         }
     }
     else
