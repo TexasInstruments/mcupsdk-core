@@ -59,7 +59,8 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define APP_PBIST_TIMEOUT   (0x1000U)
+#define PBIST_APP_TIMEOUT   (0x1000U)
+#define PBIST_INVALID_INST  (SDL_PBIST_NUM_INSTANCES)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -84,7 +85,7 @@ static int32_t PBIST_errNegativeTest(void)
     bool PBISTresult;
     SDL_pbistInstInfo *pInfo = NULL;
 
-    sdlRet = SDL_PBIST_selfTest((SDL_PBIST_inst)SDL_PBIST_NUM_INSTANCES, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
+    sdlRet = SDL_PBIST_selfTest((SDL_PBIST_inst)SDL_PBIST_NUM_INSTANCES, SDL_PBIST_TEST, PBIST_APP_TIMEOUT, &PBISTresult);
     if (sdlRet == SDL_PASS)
     {
         DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -93,7 +94,7 @@ static int32_t PBIST_errNegativeTest(void)
 
     if (testResult == 0)
     {
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, (SDL_PBIST_testType)(SDL_PBIST_NEG_TEST + 1), APP_PBIST_TIMEOUT, &PBISTresult);
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, (SDL_PBIST_testType)(SDL_PBIST_NEG_TEST + 1), PBIST_APP_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -103,8 +104,8 @@ static int32_t PBIST_errNegativeTest(void)
 
     if (testResult == 0)
     {
-	/* Note: config may be NULL */
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, NULL);
+	    /* Note: config may be NULL */
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, PBIST_APP_TIMEOUT, NULL);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -114,7 +115,7 @@ static int32_t PBIST_errNegativeTest(void)
 
     if (testResult == 0)
     {
-        sdlRet = SDL_PBIST_selfTest((SDL_PBIST_inst)SDL_PBIST_NUM_INSTANCES, SDL_PBIST_NEG_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
+        sdlRet = SDL_PBIST_selfTest((SDL_PBIST_inst)SDL_PBIST_NUM_INSTANCES, SDL_PBIST_NEG_TEST, PBIST_APP_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -124,7 +125,7 @@ static int32_t PBIST_errNegativeTest(void)
 
     if (testResult == 0)
     {
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_NEG_TEST, APP_PBIST_TIMEOUT, NULL);
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_NEG_TEST, PBIST_APP_TIMEOUT, NULL);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -139,7 +140,7 @@ static int32_t PBIST_errNegativeTest(void)
         /* Force instance info to support interrupt for code coverage */
         pInfo->interruptNumber = 0x1;
         PBIST_TEST1_dplInit();
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, PBIST_APP_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -150,7 +151,7 @@ static int32_t PBIST_errNegativeTest(void)
     if (testResult == 0)
     {
         PBIST_TEST2_dplInit();
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, PBIST_APP_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -161,7 +162,7 @@ static int32_t PBIST_errNegativeTest(void)
     if (testResult == 0)
     {
         PBIST_TEST3_dplInit();
-        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
+        sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, PBIST_APP_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)
         {
             DebugP_log("\r\n  SDL_PBIST_selfTest negative test failed \r\n");
@@ -172,6 +173,101 @@ static int32_t PBIST_errNegativeTest(void)
     /* override the interrupt handler to force "timeout" */
     PBIST_TEST4_dplInit();
     sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, 0x0, &PBISTresult);
+
+#if defined (SOC_AM243X) || defined (SOC_AM64X)
+    if (testResult == 0)
+    {
+        sdlRet = SDL_PBIST_softReset(NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_softReset negative test failed \r\n");
+            testResult = -1;
+        }
+    }
+
+    if (testResult == 0)
+    {
+        pInfo = SDL_PBIST_getInstInfo(APP_PBIST_TEST_NEG_INST);
+        sdlRet = SDL_PBIST_start((SDL_pbistRegs *)PBIST_NEG_TEST_PBIST_CFG_BASE, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_start negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_start(NULL, &pInfo->PBISTConfigRun[0]);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_start negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_start(NULL, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_start negative test failed \r\n");
+            testResult = -1;
+        }
+    }
+
+    if (testResult == 0)
+    {
+        sdlRet = SDL_PBIST_startNeg((SDL_pbistRegs *)PBIST_NEG_TEST_PBIST_CFG_BASE, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_startNeg negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_startNeg(NULL, &pInfo->PBISTNegConfigRun);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_startNeg negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_startNeg(NULL, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_startNeg negative test failed \r\n");
+            testResult = -1;
+        }
+    }
+
+    if (testResult == 0)
+    {
+        sdlRet = SDL_PBIST_checkResult((SDL_pbistRegs *)PBIST_NEG_TEST_PBIST_CFG_BASE, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_checkResult negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_checkResult(NULL, &PBISTresult);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_checkResult negative test failed \r\n");
+            testResult = -1;
+        }
+        sdlRet = SDL_PBIST_checkResult(NULL, NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_checkResult negative test failed \r\n");
+            testResult = -1;
+        }
+    }
+
+    if (testResult == 0)
+    {
+        sdlRet = SDL_PBIST_releaseTestMode(NULL);
+        if (sdlRet == SDL_PASS)
+        {
+            DebugP_log("\r\n  SDL_PBIST_releaseTestMode negative test failed \r\n");
+            testResult = -1;
+        }
+    }
+
+    if (testResult == 0)
+    {
+        SDL_PBIST_checkDone(NULL);
+    }
+#endif
+
     return (testResult);
 }
 
