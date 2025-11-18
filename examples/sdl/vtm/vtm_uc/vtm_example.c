@@ -60,6 +60,8 @@
 #define LT_THR0_DEFAULT          (95000)
 #define GT_THR1_DEFAULT          (105000)
 #define GT_THR2_DEFAULT          (115000)
+#define VTM_ESM_TIMEOUT          (0xFFFFFFFF)
+#define VTM_ESM_LOOP_DELAY       (1)
 #define USE_CASE_STATUS_NOT_RUN           (0u)
 #define USE_CASE_STATUS_COMPLETED_SUCCESS (1u)
 #define USE_CASE_STATUS_COMPLETED_FAILURE (2u)
@@ -80,6 +82,7 @@ static int32_t SDL_VTM_config(void);
 static void setAllVTMTempThr(SDL_VTM_adc_code lt_thr0_adc_code,
                              SDL_VTM_adc_code gt_thr1_adc_code,
                              SDL_VTM_adc_code gt_thr2_adc_code);
+int32_t vtm_setThresholdsForCriticalTrigger(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -89,6 +92,8 @@ static void setAllVTMTempThr(SDL_VTM_adc_code lt_thr0_adc_code,
 extern volatile uint32_t    vtmEventInputTrig[2];
 /* Current Use case being run */
 extern volatile uint8_t     currTestCase;
+/* Flag to indicate callback triggered */
+extern volatile bool        VTM_intrDone;
 uint32_t                    pStatus;
 SDL_ESM_Inst                currEsmInstance;
 
@@ -171,6 +176,7 @@ static int32_t vtmTriggerTh(int32_t lt_thr0_offset,
 {
     int32_t             retVal = 0;
     int32_t             temp_milli_degrees_read;
+    uint32_t            timeout;
     SDL_VTM_InstTs      insTs = SDL_VTM_INSTANCE_TS_0;
     SDL_VTM_adc_code    adc_code_read;
     SDL_VTM_adc_code    adc_code_lt_thr0, adc_code_gt_thr1, adc_code_gt_thr2;
@@ -239,8 +245,32 @@ static int32_t vtmTriggerTh(int32_t lt_thr0_offset,
 
     setAllVTMTempThr(adc_code_lt_thr0, adc_code_gt_thr1, adc_code_gt_thr2);
 
+    timeout = VTM_ESM_TIMEOUT;
+    while((!VTM_intrDone) && (timeout > 0))
+    {
+        /* Wait until interrupts are triggered and handled */
+        timeout--;
+    }
 
-    DebugP_log("Finished VTM threshold setting\r\n");
+    if (timeout > 0)
+    {
+        VTM_intrDone = false;
+        DebugP_log("Finished VTM threshold setting\r\n");
+    }
+    else
+    {
+        retVal = -1;
+    }
+
+    if ((retVal == 0) && (currTestCase == 1) && (gt_thr2_offset > 0))
+    {
+        /* Simulate thresholds as if temperature continues to increase toward gt_Thr2 */
+        retVal = vtm_setThresholdsForCriticalTrigger();
+        if (retVal != 0)
+        {
+            DebugP_log("Error encountered during VTM critical threshold setting\r\n");
+        }
+    }
 
     return (retVal);
 }
