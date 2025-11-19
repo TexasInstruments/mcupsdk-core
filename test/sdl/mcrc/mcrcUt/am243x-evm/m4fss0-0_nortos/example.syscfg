@@ -109,7 +109,7 @@ section1.output_section.create(1);
 section1.output_section[0].$name      = ".vectors";
 section1.output_section[0].palignment = true;
 
-section2.load_memory                  = "M4F_IRAM";
+section2.load_memory                  = "M4F_DRAM";
 section2.group                        = false;
 section2.$name                        = "Text Segments";
 section2.output_section.create(1);
@@ -117,7 +117,7 @@ section2.output_section[0].$name      = ".text";
 section2.output_section[0].palignment = true;
 
 section3.group                                   = false;
-section3.load_memory                             = "M4F_DRAM";
+section3.load_memory                             = "M4F_IRAM";
 section3.$name                                   = "Bss Segment";
 section3.output_section.create(1);
 section3.output_section[0].$name                 = ".bss";
@@ -133,7 +133,7 @@ section4.output_section[0].palignment = true;
 section4.output_section[1].$name      = ".rodata";
 section4.output_section[1].palignment = true;
 
-section5.load_memory                  = "M4F_IRAM";
+section5.load_memory                  = "IPC_VRING_MEM";
 section5.group                        = false;
 section5.$name                        = "Memory and Stack Segments";
 section5.output_section.create(5);

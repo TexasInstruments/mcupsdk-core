@@ -39,6 +39,44 @@
  **/
 
 #include "mcrc_main.h"
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
+
+#define MCRC_128KB_BYTES    (uint32_t)(1024 * 128)
+#define MCRC_1KB_BYTES      (uint32_t)(1024 * 1)
+
+/* Pre calculated CRC values for profiling datasets */
+#define MCRC_128KB_HI       (0x4EB4CABB)
+#define MCRC_128KB_LO       (0x432911AF)
+#define MCRC_1KB_HI         (0x958B7A02)
+#define MCRC_1KB_LO         (0x1871EC9A)
+
+static int32_t mcrcFullProfile(SDL_MCRC_InstType instance, SDL_MCRC_Channel_t channel, SDL_MCRC_DataConfig_t mcrcData,
+                                 SDL_MCRC_Signature_t *crc, uint64_t *profTime)
+{
+    uint64_t profStartTime, profEndTime;
+
+    int32_t testStatus = SDL_PASS;
+    SDL_MCRC_channelReset(instance, channel);
+    SDL_MCRC_config(instance,channel,mcrcData.size , 1U, SDL_MCRC_OPERATION_MODE_FULLCPU);
+    profStartTime = ClockP_getTimeUsec();
+    if ((SDL_MCRC_computeSignCPUmode(instance, channel, &mcrcData, crc)) != SDL_PASS)
+    {
+        testStatus = SDL_EFAIL;
+    }
+    profEndTime = ClockP_getTimeUsec();
+    DebugP_log(" Calculated CRC value is 0x%08x%08x\r\n", crc->regH, crc->regL);
+    if (testStatus != SDL_PASS)
+    {
+        DebugP_log(" mcrcFullProfile API: failure in SDL_MCRC_computeSignCPUmode\r\n");
+        /* To set profTime to 0 because of the failure */
+        profEndTime = profStartTime;
+    }
+    *profTime = profEndTime - profStartTime;
+    return testStatus;
+}
+#endif
 
 #if defined(SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_MCRC_CHANNEL_MAXIMUM 4;
@@ -134,6 +172,80 @@ int32_t sdl_mcrc_posTest(void)
     SDL_MCRC_DataConfig_t mcrcData;
     uint32_t             i, bit_size;
     uint32_t  *pMCRCData;
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    uint32_t *profMCRCData;
+    SDL_MCRC_Signature_t sectSignVal;
+    uint64_t profTime;
+
+    /* Profiling test of SDL_MCRC_computeSignCPUmode API */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        DebugP_log("MCRC Profiling Tests: \r\n");
+        mcrcData.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        mcrcData.pMCRCData = SDL_mcrcProfData;
+        profMCRCData = mcrcData.pMCRCData;
+
+        SDL_MCRC_init(instance,channel,0U,0U);
+        SDL_MCRC_channelReset(instance,channel);
+
+        for (i = 0; i < MCRC_128KB_BYTES/4; i++)
+        {
+            profMCRCData[i] = i;
+        }
+
+        /* For 128KB data size */
+        DebugP_log("Profiling for 128KB dataset\r\n");
+        mcrcData.size = MCRC_128KB_BYTES;
+        testStatus = mcrcFullProfile(instance, channel, mcrcData, &sectSignVal, &profTime);
+        if (testStatus == SDL_PASS)
+        {
+            if (sectSignVal.regH != MCRC_128KB_HI || sectSignVal.regL != MCRC_128KB_LO)
+            {
+                DebugP_log(" Error: MCRC value does not match for 128KB \r\n");
+                testStatus = SDL_EFAIL;
+            }
+            else
+            {
+                DebugP_log(" Calculated and Expected CRC values match for 128KB \r\n");
+            }
+        }
+        if (testStatus == SDL_PASS)
+        {
+            DebugP_log(" MCRC Profiling result: 128KB ~ %dus \r\n", profTime);
+        }
+        else
+        {
+            DebugP_log(" Error in MCRC Profiling run for 128KB \r\n");
+        }
+        DebugP_log("\r\n");
+
+        /* For 1KB data size */
+        DebugP_log("Profiling for 1KB dataset\r\n");
+        mcrcData.size = MCRC_1KB_BYTES;
+        testStatus = mcrcFullProfile(instance, channel, mcrcData, &sectSignVal, &profTime);
+        if (testStatus == SDL_PASS)
+        {
+            if (sectSignVal.regH != MCRC_1KB_HI || sectSignVal.regL != MCRC_1KB_LO)
+            {
+                DebugP_log(" Error: MCRC value does not match for 1KB \r\n");
+                testStatus = SDL_EFAIL;
+            }
+            else
+            {
+                DebugP_log(" Calculated and Expected CRC values match for 1KB \r\n");
+            }
+        }
+        if (testStatus == SDL_PASS)
+        {
+            DebugP_log(" MCRC Profiling result: 1KB ~ %dus \r\n", profTime);
+        }
+        else
+        {
+            DebugP_log(" Error in MCRC Profiling run for 1KB \r\n");
+        }
+        DebugP_log("\r\n");
+    }
+#endif
 
     /* positive test of SDL_MCRC_computeSignCPUmode API */
     if (testStatus == SDL_APP_TEST_PASS)

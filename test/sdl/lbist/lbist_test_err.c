@@ -73,7 +73,6 @@ static int32_t LBIST_errNegativeTest(void)
     int32_t sdlRet;
     SDL_lbistInstInfo *pInfo = SDL_LBIST_getInstInfo(SDL_LBIST_INST);
     SDL_lbistRegs *pLBISTRegs = pInfo->pLBISTRegs;
-    SDL_LBIST_config_t *pConfig;
     bool boolResult;
 
     /* Call SDL API */

@@ -91,7 +91,9 @@ typedef struct sdlmcrcTest_s
 #define SDL_MCRC_REF_SIGN_HIGH    (0xF2C2E9EEU)  /* Reference high 32-bit CRC signautre value */
 #define SDL_MCRC_REF_SIGN_LOW     (0xEBEB19C1U)  /* Reference low 32-bit CRC signautre value */
 #define SDL_MCRC_DATA_SIZE        (20000U)
-
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#define SDL_MCRC_128KB_BYTES      (128*1024)
+#endif
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
@@ -110,7 +112,9 @@ extern int32_t sdl_ip_mcrcPosTest(void);
 /*===========================================================================*/
 /* MCRC Self Test data */
 static uint8_t SDL_mcrcTestData[SDL_MCRC_DATA_SIZE] __attribute__ ((aligned(128))) __attribute__((section(".bss:extMemCache:ramdisk")));
-
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+static uint32_t SDL_mcrcProfData[SDL_MCRC_128KB_BYTES/4] __attribute__ ((aligned(128))) __attribute__((section(".bss:extMemCache:ramdisk")));
+#endif
 #ifdef __cplusplus
 }
 

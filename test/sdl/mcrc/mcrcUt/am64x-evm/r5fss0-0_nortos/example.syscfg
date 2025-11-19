@@ -161,7 +161,7 @@ section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;
 
 section5.$name                                   = "Memory Segments";
-section5.load_memory                             = "MSRAM";
+section5.load_memory                             = "FLASH";
 section5.output_section.create(3);
 section5.output_section[0].$name                 = ".bss";
 section5.output_section[0].palignment            = true;
