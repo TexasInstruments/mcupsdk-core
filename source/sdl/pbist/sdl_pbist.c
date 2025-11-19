@@ -60,11 +60,11 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
                                      pSDL_DPL_HwipHandle *PBIST_intrHandle)
 {
     int32_t ret = SDL_PASS;
-    SDL_DPL_HwipParams intrParams;
 
     void *localAddr = NULL;
     #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_PBIST_Instance(instance);
+    SDL_DPL_HwipParams intrParams;
 
     /* Disable interrupt */
     if (pInfo->interruptNumber != SDL_PBIST_INTERRUPT_INVALID)

@@ -104,7 +104,6 @@ SDL_lbistInstInfo * SDL_LBIST_getInstInfo(uint32_t index)
 
 void SDL_LBIST_eventHandler( void *arg )
 {
-    int32_t status;
     bool isLBISTDone = FALSE;
     SDL_lbistInstInfo *pInstInfo = SDL_LBIST_getInstInfo((uint32_t)LBIST_MCU_M4F);
     SDL_lbistRegs *pLBISTRegs;
