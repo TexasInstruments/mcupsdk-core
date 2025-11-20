@@ -1,4 +1,4 @@
-# Enet Static UDP Example {#EXAMPLE_ENET_CPSW_RAW_UDP}
+# Enet Static UDP Example {#EXAMPLES_ENET_CPSW_RAW_UDP}
 
 [TOC]
 
