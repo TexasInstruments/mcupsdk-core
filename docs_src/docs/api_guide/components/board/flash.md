@@ -22,6 +22,9 @@ the application need not take care of the programming intricacies.
 \cond SOC_AM263PX || SOC_AM261X
 - Supports Nand Flash
 \endcond
+\cond SOC_AM64X || SOC_AM243X
+- Fallback mechanism in case of PHY tuning failure is currently only supported for the 8d_8d_8d protocol configuration
+\endcond
 ## SysConfig Features
 
 @VAR_SYSCFG_USAGE_NOTE
@@ -97,4 +100,5 @@ Flash Erase API
 
 ## API
 
+\ref BOARD_FLASH_MODULE
 \ref BOARD_FLASH_MODULE

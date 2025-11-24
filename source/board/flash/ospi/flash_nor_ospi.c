@@ -948,7 +948,10 @@ static int32_t Flash_norOspiRead(Flash_Config *config, uint32_t offset, uint8_t 
         else
         {
             obj->phyEnable = FALSE;
-            status = Flash_norOspiFallback(config);
+            if(obj->currentProtocol == FLASH_CFG_PROTO_8D_8D_8D)
+            {
+                status = Flash_norOspiFallback(config);
+            }
         }
     }
     else
@@ -1486,7 +1489,10 @@ static int32_t Flash_norOspiPhyTune(Flash_Config* config)
             OSPI_setPhyEnableSuccess(obj->ospiHandle, FALSE);
 
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
-            status = Flash_norOspiFallback(config);
+            if(obj->currentProtocol == FLASH_CFG_PROTO_8D_8D_8D)
+            {
+                status = Flash_norOspiFallback(config);
+            }
 #endif
         }
     }
