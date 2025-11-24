@@ -1279,19 +1279,24 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         /* Set Mode Clocks and Dummy Clocks in Controller and Flash Memory */
         status += Flash_norOspiSetModeDummy(config, obj->ospiHandle);
 
-        /* Set RD Capture Delay by reading ID */
-        uint32_t origBaudRateDiv = 0U;
-        OSPI_getBaudRateDivFromObj(obj->ospiHandle, &origBaudRateDiv);
-        uint32_t readDataCapDelay = origBaudRateDiv;
-        OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
-        status = Flash_norOspiReadId(config);
-
-        while((status != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+        if(obj->currentProtocol == FLASH_CFG_PROTO_4S_4D_4D)
         {
-            readDataCapDelay--;
+            uint32_t readDataCapDelay = 15U;
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
             status = Flash_norOspiReadId(config);
+
+            while((status != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+            {
+                readDataCapDelay--;
+                OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+                status = Flash_norOspiReadId(config);
+            }
         }
+        else
+        {
+            status += Flash_norOspiSetRdDataCaptureDelay(config);
+        }
+
 
         if(status == SystemP_SUCCESS)
         {
@@ -1300,7 +1305,7 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
     }
 
     /* Any flash specific quirks, like hybrid sector config etc. */
-    if(params->quirksFxn != NULL)
+    if((params->quirksFxn != NULL) && (status == SystemP_SUCCESS))
     {
         params->quirksFxn(config);
     }
@@ -1522,21 +1527,50 @@ static int32_t Flash_norOspiFallback(Flash_Config *config)
         /* Set Mode Clocks and Dummy Clocks in Controller and Flash Memory */
         status = Flash_norOspiSetModeDummy(config, obj->ospiHandle);
 
-        /* Set RD Capture Delay by reading ID */
-        uint32_t origBaudRateDiv = 0U;
-        OSPI_getBaudRateDivFromObj(obj->ospiHandle, &origBaudRateDiv);
-        uint32_t readDataCapDelay = origBaudRateDiv;
+        status += Flash_norOspiSetRdDataCaptureDelay(config);
+
+        status += OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+    }
+
+    return status;
+}
+
+
+static int32_t Flash_norOspiSetRdDataCaptureDelay(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
+    uint32_t maxReadDataCapDelay = 0, minReadDataCapDelay = 0;
+
+    /* Set RD Capture Delay by reading ID */
+    uint32_t origBaudRateDiv = 15U;
+    uint32_t readDataCapDelay = origBaudRateDiv;
+
+    while(readDataCapDelay > 0)
+    {
         OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
         status = Flash_norOspiReadId(config);
-
-        while((status != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+        if(status == SystemP_SUCCESS)
         {
-            readDataCapDelay--;
-            OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
-            status = Flash_norOspiReadId(config);
+            if(maxReadDataCapDelay == 0)
+            {
+                maxReadDataCapDelay = readDataCapDelay;
+            }
+            minReadDataCapDelay = readDataCapDelay;
         }
-        
-        status += OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+        readDataCapDelay--;
+    }
+
+    if(maxReadDataCapDelay == 0)
+    {
+        status = SystemP_FAILURE;
+    }
+    else
+    {
+        /* Picking the middle value from a region of passing read data capture delay */
+        readDataCapDelay = (minReadDataCapDelay + maxReadDataCapDelay) / 2;
+        OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+        status = SystemP_SUCCESS;
     }
 
     return status;
