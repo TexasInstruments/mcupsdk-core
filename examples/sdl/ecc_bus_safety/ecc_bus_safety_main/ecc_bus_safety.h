@@ -1,4 +1,4 @@
-/*  Copyright (c) 2022-24 Texas Instruments Incorporated
+/*  Copyright (c) 2022-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -494,6 +494,14 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_RED_Test(void);
 
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_RED_Test(void);
+
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR_RED_Test(void);
+
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_SEC_Test_Polling(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_DED_Test_Polling(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_RED_Test_Polling(void);
@@ -597,6 +605,17 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_Test(void);
 #endif
+#if defined (SOC_AM263PX)
+/* Node MSS_L2_E */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_E_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_E_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_E_SEC_Test(void);
+
+/* Node MSS_L2_F */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_F_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_F_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_F_SEC_Test(void);
+#endif
 
 /* Node MSS_CPSW */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void);
@@ -619,11 +638,13 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void);
-#elif defined (SOC_AM261X)
+#elif defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* Node MSS_MSS_OSPI */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_RED_Test(void);
+#endif
+#if defined (SOC_AM261X)
 /* Node MSS_MSS_USBSS_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_DED_Test(void);

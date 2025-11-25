@@ -88,7 +88,7 @@ extern "C"
 #define SDL_HSM_DMT1_U_BASE                             (0x47F79900U)
 #define SDL_ICSSM0_INTERNAL_U_BASE                      (0x48000000U)
 #define SDL_ICSSM0_ECC_U_BASE                           (0x48100000U)
-#define SDL_QSPI0_U_BASE                                (0x48200000U)
+#define SDL_OSPI0_U_BASE                                (0x48200000U)
 #define SDL_MMC0_U_BASE                                 (0x48300000U)
 #define SDL_GPMC0_CFG_U_BASE                            (0x48400000U)
 #define SDL_CONTROLSS_G0_EPWM0_U_BASE                   (0x50000000U)
