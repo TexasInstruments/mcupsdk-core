@@ -669,6 +669,10 @@ int32_t LBIST_runTest(uint32_t coreIndex)
     DebugP_log("  Delta Cores prep time in micro secs %d \n", (uint32_t)prepTime );
     DebugP_log("  Delta LBIST execution time in micro secs %d \n", (uint32_t)diffTime );
     DebugP_log("  Delta Cores restore time in micro secs %d \n", (uint32_t)restoreTime );
+    if (testResult == 0)
+    {
+        DebugP_log("  Total LBIST time in micro secs %u \n", (uint32_t)(prepTime + diffTime + restoreTime) );
+    }
 
     DebugP_log("  LBIST complete for %s \n",
                 LBIST_TestHandleArray[coreIndex].coreName);
