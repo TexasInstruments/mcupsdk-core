@@ -50,6 +50,7 @@ const section12       = section.addInstance();
 flash1.$name                                    = "CONFIG_FLASH0";
 flash1.enableFlashReset                         = true;
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
+flash1.peripheralDriver.phyEnable               = true;
 flash1.peripheralDriver.baudRateDiv             = 8;
 flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO10";
 flash1.peripheralDriver.OSPI.CSn0.$assign       = "GPIO62";

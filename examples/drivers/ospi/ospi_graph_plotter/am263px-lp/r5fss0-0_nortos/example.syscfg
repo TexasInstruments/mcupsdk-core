@@ -65,6 +65,7 @@ flash1.protocol                           = "8d_8d_8d";
 flash1.fourByteEnableSeq                  = "0";
 flash1.enableFlashReset                   = true;
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
+flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.baudRateDiv       = 8;
 flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
