@@ -189,7 +189,8 @@ Between the lines `JSON Data for the flash` and `All tests have passed`, you
 can see the configuration data for the flash printed as a json. You will see this
 if your flash supports SFDP. In this case, copy this part save it as JSON file,
 this would be useful in Step 2. In fact, the TI Board Default Flash configuration
-is also saved as json.
+is also saved as json. Optional - add a field "flashName" manually that saves the 
+flash name as the SFDP does not provide it.
 
 ## Step 2: Configuring the flash via SysConfig
 
