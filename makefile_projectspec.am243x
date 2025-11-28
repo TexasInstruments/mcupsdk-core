@@ -130,10 +130,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_interrupt_am243x-evm
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
@@ -873,18 +869,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2072,10 +2056,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_interrupt_am243x-evm
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -2815,18 +2795,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4014,10 +3982,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_interrupt_am243x-ev
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
@@ -4757,18 +4721,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  canfd_loopback_interrupt_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- canfd_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- canfd_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  mcspi_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5981,10 +5933,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_interrupt/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcan/canfd_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
