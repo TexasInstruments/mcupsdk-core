@@ -130,7 +130,8 @@ In total there are 15 queues, 4 receive queues for Host and 4 transmit queues fo
         - Contention/Collision queue can only handle a single packet irrespective of size, anything above is dropped.
         - On Tx side, there is no special handling with regards to QoS. Data is copied to one of the four queues based on the queuePriority field \ref ICSS_EMAC_TxArgument structure passed to the \ref ICSS_EMAC_txPacket API.
         - At the moment driver/firmware doesn't support DSCP.
-        
+
+The Queue Management details of the ICSS EMAC Driver are covered here : \ref ICSS_EMAC_QUEUE_MANAGEMENT_DESIGN        
 
 ## Data Path {#ICSS_EMAC_DESIGN_DATA_PATH}
 

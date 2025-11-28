@@ -75,6 +75,10 @@ ICSS-EMAC runs on the host processor, provides a well defined set of APIs to con
 
 \subpage ICSS_EMAC_DESIGN explains the driver design in detail.
 
+## ICSS-EMAC Queue Management Design
+
+\subpage ICSS_EMAC_QUEUE_MANAGEMENT_DESIGN explains the queue management design in detail.
+
 ## Usage
 
 ### Enable ICSS-EMAC in SysConfig
