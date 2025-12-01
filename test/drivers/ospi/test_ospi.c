@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -43,6 +43,9 @@
 #include <kernel/dpl/ClockP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#include "../../source/drivers/ospi/v0/lld/ospi_tuning/ospi_tuning_algo/algo_v1/ospi_phy_tuning.h"
+#endif
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -131,6 +134,10 @@ static float test_ospi_read_in_mb(uint32_t flashOffset, uint32_t readSize);
 static int32_t test_ospi_read_write_test_in_mb(TestData_SizesAttr* testDataCurObj, uint32_t flashOffset, uint32_t dataSize);
 static void test_ospi_gdevcfg_set_flash_protocol(uint32_t givenflashProtocol);
 static void set_test_flash_type(void);
+#endif
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+static void test_ospi_validateOtp(void* args);
+static void test_ospi_fallBack(void* args);
 #endif
 
 /* ========================================================================== */
@@ -312,6 +319,8 @@ static OSPI_Attrs gOspiNmrlAttrs[CONFIG_OSPI_NUM_INSTANCES] =
         .baseAddr             = CSL_FSS0_OSPI0_CTRL_BASE,
         .dataBaseAddr         = CSL_FSS0_DAT_REG1_BASE,
         .intrNum              = 171U,
+        .protocol             = OSPI_PROTO_8D_8D_8D,
+        .inputClkFreq         = 133333333U,
 #endif
 
 #if defined(SOC_AM243X)
@@ -372,6 +381,10 @@ static OSPI_Attrs gOspiNmrlAttrs[CONFIG_OSPI_NUM_INSTANCES] =
     },
 };
 
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+extern OSPI_phyParams gPhyParams;
+#endif
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -390,6 +403,15 @@ void test_main(void *args)
     Drivers_ospiOpen();
 #endif
     UNITY_BEGIN();
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+    if(gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protocol == FLASH_CFG_PROTO_8D_8D_8D)
+    {
+        Board_flashOpen();
+        Board_flashClose();
+        Drivers_ospiClose();
+        Drivers_ospiOpen();
+    }
+#endif
     RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
     Drivers_ospiClose();   
     Drivers_ospiOpen();
@@ -403,6 +425,14 @@ void test_main(void *args)
     board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
 #endif
     RUN_TEST(test_ospi_phy_tuning, 13387, NULL);
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+    RUN_TEST(test_ospi_validateOtp, 15075, NULL);
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+    RUN_TEST(test_ospi_fallBack, 15076, NULL);
+#endif
 #if defined(SOC_AM65X)
     Drivers_ospiClose();
     Drivers_ospiOpen();
@@ -412,7 +442,6 @@ void test_main(void *args)
     RUN_TEST(test_ospi_read_perf, 0, NULL);
 #endif
 
-    
     UNITY_END();
     Drivers_close();
 
@@ -798,3 +827,139 @@ static void test_ospi_read_write_interrupt(void *args)
     }
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 }
+
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+static void test_ospi_validateOtp(void* args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t blk, page;
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
+
+    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+    OSPI_Config *config = (OSPI_Config*)ospiHandle;
+    OSPI_Object *obj = ((OSPI_Config *)ospiHandle)->object;
+
+    if(obj->ospilldObject.protocol == OSPI_PROTO_8D_8D_8D)
+    {
+        OSPI_Attrs attrs;
+        const CSL_ospi_flash_cfgRegs *pReg;
+
+        memcpy((void*)&attrs, config->attrs, sizeof(OSPI_Attrs));
+        pReg = (const CSL_ospi_flash_cfgRegs *)(attrs.baseAddr);
+
+        Drivers_ospiClose();
+
+        attrs.validateOtp = TRUE;
+        const OSPI_Attrs *tempAttrs = config->attrs;
+        config->attrs = &attrs;
+
+        Drivers_ospiOpen();
+        retVal = Board_driversOpen();
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        /* Block erase at the test offset */
+        Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+        retVal = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        retVal += Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_DATA_SIZE);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        TEST_ASSERT_EQUAL_MEMORY(gOspiTestRxBuf, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        /* Set the read delay */
+        CSL_REG32_FINS(&pReg->RD_DATA_CAPTURE_REG,
+                       OSPI_FLASH_CFG_RD_DATA_CAPTURE_REG_DELAY_FLD,
+                       0);
+
+        /* Set TX DLL delay */
+        CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
+                       OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_TX_DLL_DELAY_FLD,
+                       0);
+
+        retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_DATA_SIZE);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        TEST_ASSERT_EQUAL_MEMORY(gOspiTestRxBuf, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        Board_driversClose();
+
+        config->attrs = tempAttrs;
+    }
+}
+
+static void test_ospi_fallBack(void* args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t blk, page;
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
+
+    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+    OSPI_Config *config = (OSPI_Config*)ospiHandle;
+    OSPI_Object *obj = ((OSPI_Config *)ospiHandle)->object;
+
+    if(obj->ospilldObject.protocol == OSPI_PROTO_8D_8D_8D)
+    {
+        OSPI_Attrs attrs;
+        const CSL_ospi_flash_cfgRegs *pReg;
+
+        memcpy((void*)&attrs, config->attrs, sizeof(OSPI_Attrs));
+        pReg = (const CSL_ospi_flash_cfgRegs *)(attrs.baseAddr);
+
+        Drivers_ospiClose();
+
+        attrs.validateOtp = TRUE;
+        const OSPI_Attrs *tempAttrs = config->attrs;
+        config->attrs = &attrs;
+
+        Drivers_ospiOpen();
+        retVal = Board_driversOpen();
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        /* Block erase at the test offset */
+        Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+        retVal = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        retVal += Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_DATA_SIZE);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+        TEST_ASSERT_EQUAL_MEMORY(gOspiTestRxBuf, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        /* Set the read delay */
+        CSL_REG32_FINS(&pReg->RD_DATA_CAPTURE_REG,
+                       OSPI_FLASH_CFG_RD_DATA_CAPTURE_REG_DELAY_FLD,
+                       0);
+
+        /* Set TX DLL delay */
+        CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
+                       OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_TX_DLL_DELAY_FLD,
+                       0);
+
+        gPhyParams.rxTxDllMin= 0;
+        gPhyParams.rxTxDllMax= 0;
+
+        retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_DATA_SIZE);
+
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        TEST_ASSERT_EQUAL_MEMORY(gOspiTestRxBuf, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+
+        gPhyParams.rxTxDllMin= 0;
+        gPhyParams.rxTxDllMax= 127;
+
+        Board_driversClose();
+
+        config->attrs = tempAttrs;
+    }
+}
+#endif
