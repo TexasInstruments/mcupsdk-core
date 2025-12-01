@@ -294,6 +294,19 @@ void DebugP_logZoneRestore(uint32_t logZoneMask);
  */
 void DebugP_shmLogWriterInit(DebugP_ShmLog *shmLog, uint16_t selfCoreId);
 
+
+/**
+ * \brief Enable auto prelude for shared memory log writer
+ */
+void DebugP_shmLogWriterPreludeEnable();
+
+/**
+ * \brief Disable auto prelude for shared memory log writer
+ * 
+ * This is useful for creating structured logs
+ */
+void DebugP_shmLogWriterPreludeDisable();
+
 /**
  * \brief Write a character to shared memory log
  *
