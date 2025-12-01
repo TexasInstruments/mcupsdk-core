@@ -129,7 +129,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secErrorClear(uint32_t busSftyNode)
 {
     int32_t retval = SDL_EFAIL;
     uint32_t node = 0U;
-    uint32_t regVal=0U;
+    uint32_t regVal = 0U;
     SDL_ECC_BUS_SAFETY_Base_Addr_Offset_S baseAddrOffst;
     /* get base address and offset */
     retval = SDL_ECC_BUS_SAFETY_MSS_getRegOffset(busSftyNode,&baseAddrOffst);
@@ -145,26 +145,25 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secErrorClear(uint32_t busSftyNode)
             SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
             0X0U);
 
-        node = busSftyNode;
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE)
         {
             node = busSftyNode - SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE;
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS0), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW0), regVal);
         }
         else
         {
             node = busSftyNode - (SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS1), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L_ERRAGG_STATUS_RAW1), regVal);
         }
 
         retval = SDL_PASS;
@@ -213,7 +212,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedErrorClear(uint32_t busSftyNode)
 {
     int32_t retval = SDL_EFAIL;
     uint32_t node = 0U;
-    uint32_t regVal=0U;
+    uint32_t regVal = 0U;
     SDL_ECC_BUS_SAFETY_Base_Addr_Offset_S baseAddrOffst;
     /* get base address and offset */
     retval = SDL_ECC_BUS_SAFETY_MSS_getRegOffset(busSftyNode,&baseAddrOffst);
@@ -229,26 +228,25 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedErrorClear(uint32_t busSftyNode)
             SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
             0X0U);
 
-        node = busSftyNode;
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE)
         {
             node = busSftyNode - SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE;
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0), regVal);
         }
         else
         {
             node = busSftyNode - (SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1), regVal);
         }
         retval = SDL_PASS;
     }
@@ -294,7 +292,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_getDedErrorStatus(uint32_t busSftyNode , uint32_t
 int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode)
 {
     int32_t retval = SDL_EFAIL;
-    uint32_t regVal=0U;
+    uint32_t regVal = 0U;
     uint32_t node = 0U;
 
     SDL_ECC_BUS_SAFETY_Base_Addr_Offset_S baseAddrOffst;
@@ -314,35 +312,35 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode)
         HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
         SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_SAFE, 0x0U);
 
-        node = busSftyNode;
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE)
         {
+            node = busSftyNode;
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS_RAW);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS_RAW), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_STATUS_RAW),  regVal);
         }
         else if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE)
         {
             node = busSftyNode - SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE;
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS0), regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW0),  regVal);
         }
         else
         {
             node = busSftyNode - (SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS1),  regVal);
             regVal = HW_RD_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1);
-            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1), 
-                        ((regVal) |= (1U << (node))));
+            regVal = (regVal | ((uint32_t)1 << node));
+            HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H_ERRAGG_STATUS_RAW1), regVal);
         }
         retval = SDL_PASS;
     }
@@ -445,29 +443,24 @@ static void SDL_ECC_BUS_SAFETY_MSS_busSftyFitypeSet(SDL_ECC_BUS_SAFETY_busSftyFi
 
 static uint32_t SDL_ECC_BUS_SAFETY_MSS_isReadableNode(uint32_t busSftyNode)
 {
-    /* nodeReadable1 and nodeReadable2 are arranged by bit field for */
-    /* each busSftyNode based on MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG, */
-    /* MSS_VBUSM_SAFETY_H_ERRAGG and MSS_VBUSM_SAFETY_L_ERRAGG       */
-    const uint32_t nodeReadable1 = 0x05F030C0;
-    const uint32_t nodeReadable2 = 0x0000C000;
     uint32_t checkNode = 0U;
     uint32_t testNode = 0U;
     uint32_t retval = SDL_ECC_BUS_SAFETY_MSS_WRITABLE_NODE;
 
     testNode = busSftyNode;
-    if(testNode < 32U)
+    if(testNode < SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE)
     {
-      checkNode = (nodeReadable1) & (1U<<(testNode));
-      if(checkNode != 0U)
+      checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_1_MASK) & ((uint32_t)1<<(testNode));
+      if(checkNode != (uint32_t)0)
       {
         retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
       }
     }
     else
     {
-      testNode = testNode - 32U;
-      checkNode = (nodeReadable2) & (1U<<(testNode));
-      if(checkNode != 0U)
+      testNode = testNode - SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE;
+      checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK) & ((uint32_t)1<<(testNode));
+      if(checkNode != (uint32_t)0)
       {
         retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
       }
@@ -491,7 +484,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, ui
     if ( SDL_PASS == retval)
     {
         /* Check for SEC support on Node */
-        if((bool)((SDL_ECC_BUS_SAFETY_SEC_START_NODE <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_SEC_END_NODE>=busSftyNode))==(bool)1U)
+        if((bool)(SDL_ECC_BUS_SAFETY_SEC_START_NODE <= busSftyNode )==(bool)1U)
         {
             /* Check for  dependency */
             if((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )== (bool)0U)
@@ -575,7 +568,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
     if ( SDL_PASS == retval)
     {
         /* Check for DED support on Node */
-        if((bool)((SDL_ECC_BUS_SAFETY_DED_START_NODE <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_DED_END_NODE>=busSftyNode))==(bool)1U)
+        if((bool)(SDL_ECC_BUS_SAFETY_DED_START_NODE <= busSftyNode )==(bool)1U)
         {
             /* Check for  dependency */
             if(((bool)((SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )) == (bool)0U))

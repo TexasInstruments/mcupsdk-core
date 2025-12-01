@@ -180,6 +180,14 @@ extern "C" {
 #define SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE   (SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE + \
                                                      SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE)
 
+/* nodeReadable1 and nodeReadable2 are arranged by bit field for    */
+/* each busSftyNode based on MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG,    */
+/* MSS_VBUSM_SAFETY_H_ERRAGG and MSS_VBUSM_SAFETY_L_ERRAGG          */
+/* For example 0xxxxxxC0U, here 'C0(0x1100)' means 6th              */
+/* node(CR5A_AXI_RD) and 7th node(CR5B_AXI_RD) are readable         */ 
+#define SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_1_MASK    0x05F030C0U
+#define SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK    0x00000000U
+
 /* Macro defines Ecc Bus Safety Nodes in the MSS Subsystem */
 
 /* Aggregated_VBUSP_error_H nodes                             */
