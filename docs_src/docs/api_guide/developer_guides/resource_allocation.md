@@ -225,7 +225,7 @@ make -s -C tools/sysfw/boardcfg configure-gen SOC=am64x
 ## Rebuilding the board configuration
 
 \if SOC_AM65X
- -- Once the changes are made in the file, we need to generate a hex array corresponding to the file and make sure that the bootloader libraries and the `sciclient_set_boardcfg` application are updated with these changes. For this one can follow \ref BOARCFG_GEN section
+ -- Once the changes are made in the file, we need to generate a hex array corresponding to the file and make sure that the bootloader libraries and the `sciclient_set_boardcfg` application are updated with these changes. For this one can follow \ref BOARDCFG_GEN section
 \else
 - Once the changes are made in the file, there are three steps to be followed:
   - Re-build the `sciclient_ccs_init` example
