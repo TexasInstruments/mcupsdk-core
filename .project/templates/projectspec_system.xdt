@@ -23,7 +23,7 @@
         device="Cortex R.`args.device.getProjectSpecDevice(args.project.board)`"
         outputType="system"
         toolChain="TICLANG"
-        cgtVersion="4.0.3.LTS"
+        cgtVersion="4.0.4.LTS"
         >
         <pathVariable name="`args.sdkName`" path="${COM_TI_`productName`_INSTALL_DIR}" scope="project" />
         % if("readmeDoxygenPageTag" in args.project) {
