@@ -107,10 +107,12 @@ static int32_t MTOG_errNegativeTest(uint32_t instanceIndex)
     }
     if (testResult == SDL_PASS)
     {
-        retVal = SDL_MTOG_setTimeoutVal(regs, SDL_MTOG_VAL_4M_MINUS_1 + 1U);
+        uint32_t mtog_base_addr=0x0u;
+        SDL_MTOG_getBaseaddr(instanceIndex, &mtog_base_addr);
+        retVal = SDL_MTOG_setTimeoutVal((SDL_MTOG_Regs *) mtog_base_addr, SDL_MTOG_VAL_4M_MINUS_1 + 1U);
         if (retVal == SDL_PASS)
         {
-            DebugP_log("\n  SDL_MTOG_setTimeoutVal error test failed on line no: %d \n", __LINE__);
+            DebugP_log("\r\n  SDL_MTOG_setTimeoutVal error test failed on line no: %d \r\n", __LINE__);
             testResult = -1;
         }
     }

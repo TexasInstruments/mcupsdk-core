@@ -149,12 +149,23 @@ static int32_t MTOG_apiTestLocal(uint32_t instanceIndex)
             testResult = 0;
         }
 		else{
-			DebugP_log("\n  SDL_MTOG_getStaticRegisters API test failed on line no: %d \r\n", __LINE__);
+			DebugP_log("\n  SDL_MTOG_getBaseaddr API test failed on line no: %d \r\n", __LINE__);
 			testResult = -1;
 		}
-
     }
-
+    if (testResult == SDL_PASS)
+    {
+        uint32_t testAddr;
+        testResult = SDL_MTOG_getBaseaddr(SDL_INSTANCE_MTOG_MAX + 1U, &testAddr);
+        if (testResult != SDL_PASS)
+        {
+            testResult = 0;
+        }
+		else{
+			DebugP_log("\n  SDL_MTOG_getBaseaddr API test failed on line no: %d \r\n", __LINE__);
+			testResult = -1;
+		}
+    }
     if (testResult == SDL_PASS)
     {
        testResult = SDL_MTOG_reset(SDL_INSTANCE_MCU_MTOG0);
