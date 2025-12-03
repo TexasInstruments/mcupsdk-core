@@ -89,6 +89,11 @@ volatile int32_t PBIST_PSCForceOff(uint32_t pscAddr);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+static uint64_t PBIST_profilingTime = 0;
+#endif
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -144,6 +149,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
     uint64_t startTime , testStartTime,  testEndTime, endTime;
     uint64_t prepTime, diffTime, restoreTime;
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    uint64_t instanceTime;
+#endif
 #ifdef DEBUG
     char inputChar;
 #endif
@@ -881,6 +889,14 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     DebugP_log("  Delta Cores prep time in micro secs %d \r\n", (uint32_t)prepTime );
     DebugP_log("  Delta PBIST execution time in micro secs %d \r\n", (uint32_t)diffTime );
     DebugP_log("  Delta Cores restore time in micro secs %d \r\n", (uint32_t)restoreTime );
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    if (testResult == 0)
+    {
+        instanceTime = prepTime + diffTime + restoreTime;
+        PBIST_profilingTime += instanceTime;
+        DebugP_log("  Total PBIST time for %s in micro secs %u \r\n", PBIST_TestHandleArray[instanceId].testName, (uint32_t)instanceTime );
+    }
+#endif
     DebugP_log(" PBIST complete %s, test index %d\r\n",
                 PBIST_TestHandleArray[instanceId].testName,
                 instanceId);
@@ -1181,6 +1197,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 int32_t PBIST_funcTest(void)
 {
     int32_t    testResult = 0;
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    uint64_t totalProfTime = 0;
+#endif
 
     testResult = PBIST_commonInit();
 
@@ -1204,6 +1223,11 @@ int32_t PBIST_funcTest(void)
 
         if (testResult == 0)
         {
+        #if defined (SOC_AM64X) || defined (SOC_AM243X)
+            DebugP_log("\r\n Total time for PBIST negative tests in microseconds: %llu\r\n", PBIST_profilingTime);
+            totalProfTime += PBIST_profilingTime;
+            PBIST_profilingTime = 0;
+        #endif
             /* Then run the pbist test */
             for (uint32_t i = 0; i < PBIST_NUM_INSTANCE; i++)
             {
@@ -1214,6 +1238,14 @@ int32_t PBIST_funcTest(void)
                     break;
                 }
             }
+        #if defined (SOC_AM64X) || defined (SOC_AM243X)
+            if (testResult == 0)
+            {
+                totalProfTime += PBIST_profilingTime;
+                DebugP_log("\r\n Total time for PBIST positive tests in microseconds: %llu\r\n", PBIST_profilingTime);
+                DebugP_log("\r\n Total time for PBIST test runs in microseconds: %llu\r\n", totalProfTime);
+            }
+        #endif
         }
 #else
         /* Run the test for diagnostics first */
