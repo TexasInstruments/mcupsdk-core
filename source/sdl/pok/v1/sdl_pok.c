@@ -125,8 +125,13 @@ int32_t SDL_POK_getStaticRegisters(SDL_POK_Inst instance,SDL_POK_staticRegs *pSt
     {
         pStaticRegs->trimOV = (SDL_pwrss_trim)0x0u;
     }
+    
+    /**
+     * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition is dependent on HW failure,which is not possible to force in testing
+     * TI_COVERAGE_UNIT_EFFECT If the condition was executed then it would set porBGapOK false.This is expected behaviour
+     */
         pStaticRegs->porBGapOK = (bool) ((SDL_REG32_FEXT(&pCtrlMMRCfgRegs->POR_STAT,MCU_CTRL_MMR_CFG0_POR_STAT_BGOK) == 0x0u)?false:true);
-
+    /* TI_COVERAGE_GAP_STOP */
         pStaticRegs->porModuleStatus = (SDL_por_module_status)SDL_REG32_FEXT(&pCtrlMMRCfgRegs->POR_STAT,MCU_CTRL_MMR_CFG0_POR_STAT_SOC_POR);
 
     }
@@ -166,16 +171,16 @@ static bool SDL_pokIsPPEnabled(SDL_POK_Inst instance)
     SDL_mcuCtrlRegsBase_t    *pBaseAddr = (SDL_mcuCtrlRegsBase_t *) pbaseAddress;
     bool isPPEnabled = (bool)FALSE;
 
-    if((instance <= SDL_LAST_POK_ID) \
-        && (instance >= SDL_FIRST_POK_ID))
-    {
-        (void)SDL_pok_GetShiftsAndMasks(pBaseAddr, instance, &shiftsNMasks);
+    /**
+     * This is a static API and the instance is already validated by
+     * sdlGetErrSig (inside SDL_POK_init) before calling this API
+     */
+    (void)SDL_pok_GetShiftsAndMasks(pBaseAddr, instance, &shiftsNMasks);
 
-        if ((shiftsNMasks.pokEnPPAddr != 0x0u) &&
-            (SDL_REG32_FEXT_RAW(shiftsNMasks.pokEnPPAddr, shiftsNMasks.pokEnPPMask, shiftsNMasks.pokEnPPShift) == SDL_PWRSS_PP_MODE_ENABLE))
-        {
-           isPPEnabled = (bool)TRUE;
-        }
+    if ((shiftsNMasks.pokEnPPAddr != 0x0u) &&
+        (SDL_REG32_FEXT_RAW(shiftsNMasks.pokEnPPAddr, shiftsNMasks.pokEnPPMask, shiftsNMasks.pokEnPPShift) == SDL_PWRSS_PP_MODE_ENABLE))
+    {
+        isPPEnabled = (bool)TRUE;
     }
 
     return isPPEnabled;
@@ -343,11 +348,16 @@ static int32_t SDL_POR_Thres_config_seq(SDL_POK_Inst instance, SDL_POK_config *p
         retVal = SDL_pokSetControl(pBaseAddr,&pokCfg,instance);
     }
 
+    /**
+     * TI_COVERAGE_GAP_START [Statement Coverage] In our current framework, POK_firstTime == true is covered by the first instance of SDL_POK_init,which covered the same condition in SDL_POK_Thres_config_seq
+     * TI_COVERAGE_UNIT_EFFECT This branch can be covered by initiating POR by first instance of SDL_POK_init.This is expected behaviour
+     */
     if (POK_firstTime == (bool)true)
     {
         SDL_pokDisableAll();
         POK_firstTime = false;
     }
+    /* TI_COVERAGE_GAP_STOP */
 
     /* Set to MMR control for POK */
     pokCfg.pokEnSelSrcCtrl = SDL_POK_ENSEL_PRG_CTRL;
