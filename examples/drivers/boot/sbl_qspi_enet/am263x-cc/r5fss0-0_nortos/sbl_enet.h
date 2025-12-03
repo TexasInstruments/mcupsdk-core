@@ -121,7 +121,7 @@ extern void Board_cpswMuxSel(void);
 #define ENETSBL_HEADER_MGC_NUMBER       (0x05B1C00D)
 #define ENETSBL_HEADER_ACK              (0x05B10ACD)
 
-#define BOOTLOADER_MAX_FILE_SIZE        (1294336) /* This has to match the size of MSRAM_2 in linker.cmd */
+#define BOOTLOADER_MAX_FILE_SIZE        (1212416) /* This has to match the size of MSRAM_2 in linker.cmd */
 #define BOOTLOADER_VERIFY_MAX_SIZE      (32*1024)
 
 #define PERIODIC_TICK_MS                (100U) /* 100-ms periodic tick */

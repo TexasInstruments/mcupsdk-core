@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.25.0+4268"}
  */
 
 /**
@@ -47,7 +47,6 @@ const section7        = section.addInstance();
 const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
-const section11       = section.addInstance();
 const enet_cpsw       = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
 const enet_cpsw1      = enet_cpsw.addInstance();
 
@@ -56,8 +55,9 @@ const enet_cpsw1      = enet_cpsw.addInstance();
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
-bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.$name            = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset   = "0x00080000";
+bootloader1.hsmrtImageOffset = "0x00040000";
 
 flash1.$name                               = "CONFIG_FLASH0";
 bootloader1.flashDriver                    = flash1;
@@ -114,24 +114,26 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
+mpu_armv74.attributes        = "Cached+Sharable";
 
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
 mpu_armv75.allowExecute = false;
-mpu_armv75.size         = 12;
-mpu_armv75.baseAddr     = 0x70069000;
 mpu_armv75.attributes   = "NonCached";
+mpu_armv75.baseAddr     = 0x70000000;
+mpu_armv75.size         = 11;
 
-mpu_armv76.$name      = "CONFIG_MPU_REGION5";
-mpu_armv76.baseAddr   = 0xCE000000;
-mpu_armv76.size       = 24;
-mpu_armv76.attributes = "Device";
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.allowExecute = false;
+mpu_armv76.attributes   = "Device";
+mpu_armv76.baseAddr     = 0xCE000000;
+mpu_armv76.size         = 24;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
-general1.svc_stack_size = 256;
-general1.entry_point    = "-e_vectors_sbl";
+general1.stack_size     = 8192;
+general1.heap_size      = 8192;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                                = "MEMORY_REGION_CONFIGURATION";
@@ -153,22 +155,20 @@ region1.memory_region[3].$name               = "MSRAM_VECS";
 region1.memory_region[3].auto                = false;
 region1.memory_region[3].manualStartAddress  = 0x70002000;
 region1.memory_region[3].size                = 0x100;
-region1.memory_region[4].$name               = "MSRAM_0";
-region1.memory_region[4].manualStartAddress  = 0x70002100;
+region1.memory_region[4].$name               = "CPPI_DESC";
 region1.memory_region[4].auto                = false;
-region1.memory_region[4].size                = 0x672E8;
-region1.memory_region[5].$name               = "CPPI_DESC";
+region1.memory_region[4].size                = 0x2000;
+region1.memory_region[5].$name               = "MSRAM_0";
+region1.memory_region[5].manualStartAddress  = 0x70002100;
 region1.memory_region[5].auto                = false;
-region1.memory_region[5].size                = 0x4000;
-region1.memory_region[5].manualStartAddress  = 0x700693E8;
+region1.memory_region[5].size                = 0x872E8;
 region1.memory_region[6].$name               = "MSRAM_HSMRT";
-region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x7007C000;
+region1.memory_region[6].manualStartAddress  = 0x70090000;
 region1.memory_region[6].size                = 0x40000;
 region1.memory_region[7].$name               = "MSRAM_1";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x700BC000;
-region1.memory_region[7].size                = 0x13C000;
+region1.memory_region[7].manualStartAddress  = 0x700D0000;
+region1.memory_region[7].size                = 0x128000;
 region1.memory_region[8].$name               = "MSRAM_2";
 region1.memory_region[8].auto                = false;
 region1.memory_region[8].manualStartAddress  = 0x701F8000;
@@ -190,127 +190,117 @@ section1.run_memory                               = "R5F_VECS";
 section1.$name                                    = "Sbl Initialization Code";
 section1.output_section.create(1);
 section1.output_section[0].$name                  = ".sbl_init_code";
-section1.output_section[0].palignment             = true;
-section1.output_section[0].fill                   = 2882382797;
 section1.output_section[0].input_section.create(1);
 section1.output_section[0].input_section[0].$name = "*(.vectors). = align(8);";
 
-section2.load_memory                  = "MSRAM_VECS";
-section2.group                        = false;
-section2.$name                        = "Vectors";
-section2.output_section.create(1);
-section2.output_section[0].$name      = ".vectors";
+section2.load_memory                  = "MSRAM_0";
+section2.$name                        = "Text Segments";
+section2.output_section.create(7);
+section2.output_section[0].$name      = ".text";
 section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.hwi";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.cache";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.mpu";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text.boot";
+section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".data";
+section2.output_section[5].palignment = true;
+section2.output_section[6].$name      = ".rodata";
+section2.output_section[6].palignment = true;
 
-section3.load_memory                  = "MSRAM_0";
-section3.$name                        = "Text Segments";
-section3.output_section.create(7);
-section3.output_section[0].$name      = ".text";
-section3.output_section[0].palignment = true;
-section3.output_section[1].$name      = ".text.hwi";
-section3.output_section[1].palignment = true;
-section3.output_section[2].$name      = ".text.cache";
-section3.output_section[2].palignment = true;
-section3.output_section[3].$name      = ".text.mpu";
-section3.output_section[3].palignment = true;
-section3.output_section[4].$name      = ".text.boot";
-section3.output_section[4].palignment = true;
-section3.output_section[5].$name      = ".data";
-section3.output_section[5].palignment = true;
-section3.output_section[6].$name      = ".rodata";
-section3.output_section[6].palignment = true;
+section3.load_memory                             = "MSRAM_0";
+section3.group                                   = false;
+section3.$name                                   = "Memory Segments";
+section3.output_section.create(3);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+section3.output_section[0].palignment            = true;
+section3.output_section[1].$name                 = ".sysmem";
+section3.output_section[1].palignment            = true;
+section3.output_section[2].$name                 = ".stack";
+section3.output_section[2].palignment            = true;
 
-section4.load_memory                             = "MSRAM_0";
-section4.group                                   = false;
-section4.$name                                   = "Memory Segments";
-section4.output_section.create(3);
-section4.output_section[0].$name                 = ".bss";
-section4.output_section[0].output_sections_start = "__BSS_START";
-section4.output_section[0].output_sections_end   = "__BSS_END";
-section4.output_section[0].palignment            = true;
-section4.output_section[1].$name                 = ".sysmem";
-section4.output_section[1].palignment            = true;
-section4.output_section[2].$name                 = ".stack";
-section4.output_section[2].palignment            = true;
+section4.load_memory                              = "MSRAM_0";
+section4.$name                                    = "Stack Segments";
+section4.output_section.create(5);
+section4.output_section[0].$name                  = ".irqstack";
+section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section4.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section4.output_section[0].input_section.create(1);
+section4.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section4.output_section[1].$name                  = ".fiqstack";
+section4.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section4.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section4.output_section[1].input_section.create(1);
+section4.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section4.output_section[2].$name                  = ".svcstack";
+section4.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section4.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section4.output_section[2].input_section.create(1);
+section4.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section4.output_section[3].$name                  = ".abortstack";
+section4.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section4.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section4.output_section[3].input_section.create(1);
+section4.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section4.output_section[4].$name                  = ".undefinedstack";
+section4.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section4.output_section[4].input_section.create(1);
+section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.load_memory                              = "MSRAM_0";
-section5.$name                                    = "Stack Segments";
-section5.output_section.create(5);
-section5.output_section[0].$name                  = ".irqstack";
-section5.output_section[0].output_sections_start  = "__IRQ_STACK_START";
-section5.output_section[0].output_sections_end    = "__IRQ_STACK_END";
-section5.output_section[0].input_section.create(1);
-section5.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
-section5.output_section[1].$name                  = ".fiqstack";
-section5.output_section[1].output_sections_start  = "__FIQ_STACK_START";
-section5.output_section[1].output_sections_end    = "__FIQ_STACK_END";
-section5.output_section[1].input_section.create(1);
-section5.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
-section5.output_section[2].$name                  = ".svcstack";
-section5.output_section[2].output_sections_start  = "__SVC_STACK_START";
-section5.output_section[2].output_sections_end    = "__SVC_STACK_END";
-section5.output_section[2].input_section.create(1);
-section5.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
-section5.output_section[3].$name                  = ".abortstack";
-section5.output_section[3].output_sections_start  = "__ABORT_STACK_START";
-section5.output_section[3].output_sections_end    = "__ABORT_STACK_END";
-section5.output_section[3].input_section.create(1);
-section5.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
-section5.output_section[4].$name                  = ".undefinedstack";
-section5.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
-section5.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
-section5.output_section[4].input_section.create(1);
-section5.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+section5.$name                       = "NDK Packet Memory ENET CPPI DESC";
+section5.type                        = "NOLOAD";
+section5.group                       = false;
+section5.load_memory                 = "CPPI_DESC";
+section5.output_section.create(1);
+section5.output_section[0].$name     = ".bss:ENET_CPPI_DESC";
+section5.output_section[0].alignment = 128;
 
-section6.$name                       = "NDK Packet Memory ENET CPPI DESC";
-section6.type                        = "NOLOAD";
-section6.group                       = false;
-section6.load_memory                 = "CPPI_DESC";
+section6.type                    = "NOLOAD";
+section6.group                   = false;
+section6.load_memory             = "MSRAM_1";
+section6.$name                   = "File Buffer to be flashed";
 section6.output_section.create(1);
-section6.output_section[0].$name     = ".bss:ENET_CPPI_DESC";
-section6.output_section[0].alignment = 128;
+section6.output_section[0].$name = ".bss.filebuf";
 
+section7.$name                   = "Scratch pad memory";
 section7.type                    = "NOLOAD";
 section7.group                   = false;
-section7.load_memory             = "MSRAM_1";
-section7.$name                   = "File Buffer to be flashed";
+section7.load_memory             = "MSRAM_2";
 section7.output_section.create(1);
-section7.output_section[0].$name = ".bss.filebuf";
+section7.output_section[0].$name = ".bss.sbl_scratch";
 
-section8.$name                   = "Scratch pad memory";
-section8.type                    = "NOLOAD";
-section8.group                   = false;
-section8.load_memory             = "MSRAM_2";
+section8.load_memory                  = "MSRAM_HSMRT";
+section8.group                        = false;
+section8.$name                        = "Hsmrt";
 section8.output_section.create(1);
-section8.output_section[0].$name = ".bss.sbl_scratch";
+section8.output_section[0].$name      = ".rodata.hsmrt";
+section8.output_section[0].palignment = true;
 
-section9.load_memory                  = "MSRAM_HSMRT";
-section9.group                        = false;
-section9.$name                        = "Hsmrt";
+section9.type                        = "NOLOAD";
+section9.group                       = false;
+section9.$name                       = "SIPC HSM Queue Memory";
+section9.load_memory                 = "MAILBOX_R5F";
 section9.output_section.create(1);
-section9.output_section[0].$name      = ".rodata.hsmrt";
-section9.output_section[0].palignment = true;
+section9.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+section9.output_section[0].alignment = 0;
 
+section10.load_memory                 = "MAILBOX_R5F";
 section10.type                        = "NOLOAD";
 section10.group                       = false;
-section10.$name                       = "SIPC HSM Queue Memory";
-section10.load_memory                 = "MAILBOX_R5F";
+section10.$name                       = "SIPC R5F Queue Memory";
 section10.output_section.create(1);
-section10.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
 section10.output_section[0].alignment = 0;
-
-section11.load_memory                 = "MAILBOX_R5F";
-section11.type                        = "NOLOAD";
-section11.group                       = false;
-section11.$name                       = "SIPC R5F Queue Memory";
-section11.output_section.create(1);
-section11.output_section[0].alignment = 0;
-section11.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
+section10.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 
 enet_cpsw1.$name                        = "CONFIG_ENET_CPSW0";
 enet_cpsw1.RtosVariant                  = "NoRTOS";
 enet_cpsw1.LargePoolPktCount            = 16;
-enet_cpsw1.hostportRxCsumOffloadEn      = false;
 enet_cpsw1.macAddrConfig                = "Manual Entry";
 enet_cpsw1.DisableMacPort2              = true;
 enet_cpsw1.cptsHostRxTsEn               = false;
