@@ -573,6 +573,19 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        if (SDL_ESM_setPinOutMode(SDL_ESM_INSTANCE_MAX, SDL_ESM_LVL_PINOUT) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         /* Test case: PROC_SDL-7440 */
         instance = SDL_ESM_INST_MCU_ESM0;
         if (SDL_ESM_setPinOutMode((SDL_ESM_Inst)instance, 1U) != SDL_EBADARGS)

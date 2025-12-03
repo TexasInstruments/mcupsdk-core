@@ -700,7 +700,33 @@ int32_t sdl_Esm_posTest(void)
 #endif
     }
 
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+#if defined (M4F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_MAX) != SDL_ESM_INTNUMBER_INVALID)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
 
+#if defined (R5F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_MAX) != SDL_ESM_INTNUMBER_INVALID)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntNumber(SDL_ESM_INSTANCE_MAX, SDL_ESM_INT_TYPE_HI) != SDL_ESM_INTNUMBER_INVALID)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
+    }
 
     /* SDL_ESM_enableCfgIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
