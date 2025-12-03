@@ -266,6 +266,31 @@ int32_t sdl_ip_pokNegTest(void)
         return (testStatus);
     }
 
+    /* Test case for negative condition of the branch in SDL_pokSetControl : (pPokCfg->deglitch<= SDL_PWRSS_DEGLITCH_NO_ACTION)>*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        i = POK_TEST_ID;
+        pPokCfg.hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.voltDetMode     = SDL_PWRSS_VOLTAGE_DET_NO_ACTION;
+        pPokCfg.trim            = SDL_PWRSS_TRIM_NO_ACTION;
+        pPokCfg.trimOV          = SDL_PWRSS_TRIM_NO_ACTION;
+        pPokCfg.detectionCtrl   = SDL_POK_GET_DETECTION_VALUE-1;
+        pPokCfg.pokEnSelSrcCtrl = SDL_POK_GET_ENSEL_VALUE-1;
+        pPokCfg.deglitch        = SDL_PWRSS_DEGLITCH_NO_ACTION+1;
+
+        if (SDL_pokSetControl(pBaseAddr, &pPokCfg, i) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+
+        if (testStatus != SDL_APP_TEST_PASS)
+        {
+            DebugP_log("sdlPok_ip_posTest: failure on line no. %d \r\n", __LINE__);
+            return (testStatus);
+        }
+    }
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
 		SDL_pokPorCfg_t pPorCfg;
@@ -995,6 +1020,76 @@ int32_t sdl_ip_pokPosTest(void)
         if (testStatus != SDL_APP_TEST_PASS)
         {
             DebugP_log("sdlPok_ip_posTest: failure on line no. %d \n", __LINE__);
+            return (testStatus);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        i = SDL_POR_VDD_MCU_UV_ID;
+        pPokCfg.hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.voltDetMode     = SDL_PWRSS_VOLTAGE_DET_NO_ACTION;
+        pPokCfg.trim            = SDL_PWRSS_MAX_TRIM_VALUE;
+        pPokCfg.trimOV          = SDL_PWRSS_MAX_TRIM_VALUE;
+        pPokCfg.detectionCtrl   = SDL_POK_GET_DETECTION_VALUE - 1U;
+        pPokCfg.pokEnSelSrcCtrl = SDL_POK_GET_ENSEL_VALUE - 1U;
+        pPokCfg.deglitch        = SDL_PWRSS_DEGLITCH_NO_ACTION;
+
+        if (SDL_pokSetControl(pBaseAddr, &pPokCfg, i) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+        if (testStatus != SDL_APP_TEST_PASS)
+        {
+            DebugP_log("sdlPok_ip_posTest: failure on line no. %d \r\n", __LINE__);
+            return (testStatus);
+        }
+    }
+
+    /*Test case to cover trimOVMask == 0 of SDL_pokSetControl*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        i = SDL_POK_VDDA_PMIC_IN_ID;
+        pPokCfg.hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.voltDetMode     = SDL_PWRSS_VOLTAGE_DET_NO_ACTION;
+        pPokCfg.trim            = SDL_PWRSS_TRIM_NO_ACTION;
+        pPokCfg.trimOV          = SDL_PWRSS_MAX_TRIM_VALUE;
+        pPokCfg.detectionCtrl   = SDL_POK_DETECTION_NO_ACTION;
+        pPokCfg.pokEnSelSrcCtrl = SDL_POK_ENSEL_NO_ACTION;
+        pPokCfg.deglitch        = SDL_PWRSS_DEGLITCH_NO_ACTION;
+
+        if (SDL_pokSetControl(pBaseAddr, &pPokCfg, i) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+        if (testStatus != SDL_APP_TEST_PASS)
+        {
+            DebugP_log("sdlPok_ip_posTest: failure on line no. %d \r\n", __LINE__);
+            return (testStatus);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        i = POK_TEST_ID;
+        pPokCfg.hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
+        pPokCfg.voltDetMode     = SDL_PWRSS_VOLTAGE_DET_NO_ACTION;
+        pPokCfg.trim            = SDL_PWRSS_TRIM_NO_ACTION;
+        pPokCfg.trimOV          = SDL_PWRSS_TRIM_NO_ACTION;
+        pPokCfg.detectionCtrl   =  SDL_POK_GET_DETECTION_VALUE - 1U;
+        pPokCfg.pokEnSelSrcCtrl =  SDL_POK_GET_ENSEL_VALUE - 1U;
+        pPokCfg.deglitch        = SDL_PWRSS_DEGLITCH_NO_ACTION + 1U;
+
+        if (SDL_pokSetControl(pBaseAddr, &pPokCfg, i) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+        if (testStatus != SDL_APP_TEST_PASS)
+        {
+            DebugP_log("sdlPok_ip_posTest: failure on line no. %d \r\n", __LINE__);
             return (testStatus);
         }
     }
