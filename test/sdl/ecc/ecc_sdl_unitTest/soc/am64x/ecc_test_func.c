@@ -51,6 +51,7 @@
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/r5/v0/sdl_r5_utils.h>
 #include <sdl/ecc/sdl_ecc_utils.h>
+#include <sdl/ecc/V0/sdlr_edc_ctl.h>
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
 #include <dpl_interface.h>
@@ -1122,10 +1123,84 @@ static int32_t ECC_sdlFuncTest(void)
 
     DebugP_log("\r\n ECC SDL API tests: starting\n");
 
-    result = ECC_Test_runECC1BitInjectTest();
-    if (result != SDL_PASS) {
-        retVal = -1;
-        DebugP_log("\r\n ECC_Test_runECC1BitInjectTest has failed...\n");
+    if (retVal == SDL_PASS)
+    {
+        SDL_ecc_aggrRegs *pEccEdcAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE));
+        uint32_t ramId = SDL_VTM0_K3VTM_N16FFC_ECCAGGR_K3VTM_N16FFC_CFG_CBASS_CFG_SCR_SCR_EDC_CTRL_0_RAM_ID;
+        uint32_t regOffset = SDL_EDC_CTL_CONTROL;
+        uint32_t pRegVal;
+
+        if (SDL_ecc_aggrReadEDCInterconnectReg(pEccEdcAggrRegs, ramId, regOffset, &pRegVal) != SDL_PASS)
+        {
+            retVal = -1;
+            DebugP_log("\r\n SDL_ecc_aggrReadEDCInterconnectReg has failed...\n");
+        }
+        else
+        {
+            DebugP_log("\r\n SDL_ecc_aggrReadEDCInterconnectReg test complete\n");
+        }
+    }
+
+    if (retVal == SDL_PASS)
+    {
+        SDL_ecc_aggrRegs *pEccEdcAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE));
+        uint32_t ramId = SDL_VTM0_K3VTM_N16FFC_ECCAGGR_K3VTM_N16FFC_CFG_CBASS_CFG_SCR_SCR_EDC_CTRL_0_RAM_ID;
+        uint32_t regOffset = SDL_EDC_CTL_CONTROL;
+        uint32_t pRegVal = SDL_EDC_CTL_CONTROL_ECC_PATTERN_VAL_A;
+
+        if (SDL_ecc_aggrWriteEDCInterconnectReg(pEccEdcAggrRegs, ramId, regOffset, pRegVal) != SDL_PASS)
+        {
+            retVal = -1;
+            DebugP_log("\r\n SDL_ecc_aggrWriteEDCInterconnectReg has failed...\n");
+        }
+        else
+        {
+            DebugP_log("\r\n SDL_ecc_aggrWriteEDCInterconnectReg test complete\n");
+        }
+    }
+
+    if (retVal == SDL_PASS)
+    {
+        SDL_ecc_aggrRegs *pEccEdcAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE));
+        uint32_t ramId = SDL_VTM0_K3VTM_N16FFC_ECCAGGR_K3VTM_N16FFC_CFG_CBASS_CFG_SCR_SCR_EDC_CTRL_0_RAM_ID;
+        bool bEccCheck = true;
+
+        if (SDL_ecc_aggrVerifyConfigEDCInterconnect(pEccEdcAggrRegs, ramId, bEccCheck) != SDL_PASS)
+        {
+            retVal = -1;
+            DebugP_log("\r\n SDL_ecc_aggrVerifyConfigEDCInterconnect has failed...\n");
+        }
+        else
+        {
+            DebugP_log("\r\n SDL_ecc_aggrVerifyConfigEDCInterconnect test complete\n");
+        }
+    }
+
+    if (retVal == SDL_PASS)
+    {
+        SDL_ecc_aggrRegs *pEccEdcAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE));
+        uint32_t ramId = SDL_VTM0_K3VTM_N16FFC_ECCAGGR_K3VTM_N16FFC_CFG_CBASS_CFG_SCR_SCR_EDC_CTRL_0_RAM_ID;
+        SDL_Ecc_AggrIntrSrc intrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
+        SDL_Ecc_AggrEDCErrorSubType subType = SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT;
+        uint32_t numEvents = 3U;
+
+        if (SDL_ecc_aggrSetEDCInterconnectNIntrPending(pEccEdcAggrRegs, ramId, intrSrc, subType, numEvents) != SDL_PASS)
+        {
+            retVal = -1;
+            DebugP_log("\r\n SDL_ecc_aggrSetEDCInterconnectNIntrPending has failed...\n");
+        }
+        else
+        {
+            DebugP_log("\r\n SDL_ecc_aggrSetEDCInterconnectNIntrPending test complete\n");
+        }
+    }
+
+    if (retVal == SDL_PASS) {
+        result = ECC_Test_runECC1BitInjectTest();
+        if (result != SDL_PASS) {
+            retVal = -1;
+            DebugP_log("\r\n ECC_Test_runECC1BitInjectTest has failed...\n");
+        }
     }
 
     if (retVal == SDL_PASS) {
