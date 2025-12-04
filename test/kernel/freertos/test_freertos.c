@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -96,7 +96,7 @@
  * Else there will be assertion failures that occur when an ISR with a priority above
  * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API function.
  */
-#ifdef configMAX_SYSCALL_INTERRUPT_PRIORITY
+#if (configUSE_INTERRUPT_PRIORITY_BASED_CRITICAL_SECTIONS==1) 
 #define PING_INT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY)
 #define PONG_INT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY + 1u)
 #else
