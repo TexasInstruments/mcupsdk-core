@@ -24,6 +24,20 @@ const filedirs = {
     ],
 };
 
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
+};
+
+const r5_macro = {
+    common: [
+        "R5F_CORE",
+    ],
+
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -118,10 +132,12 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
+        build_property.defines = r5_macro;
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;
+        build_property.defines = m4_macro;
     }
 
     return build_property;
