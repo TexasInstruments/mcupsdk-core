@@ -295,7 +295,7 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_prime256v1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP256CurveParams, gPkaEcdsaPrivateP256Key, gPkaEcdsaRandamP256Key, gPkaEcdsaHashP256, &sig);
+    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP256CurveParams, gPkaEcdsaPrivateP256Key, gPkaEcdsaRandamP256Key, gPkaEcdsaHashP256, &sig, 0xFFFFFFFFU);
     TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
@@ -307,7 +307,7 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_prime256v1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP256CurveParams, &gPkaEcdsaPublicP256Key, &sig, gPkaEcdsaHashP256);
+    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP256CurveParams, &gPkaEcdsaPublicP256Key, &sig, gPkaEcdsaHashP256, 0xFFFFFFFFU);
     DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
     t2 = ClockP_getTimeUsec();
@@ -331,7 +331,7 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
     t1 = ClockP_getTimeUsec();
 
     /* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_secp384r1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP384CurveParams, gPkaEcdsaPrivateP384Key, gPkaEcdsaRandamP384Key, gPkaEcdsaHashP384, &sig);
+    status = AsymCrypt_ECDSASign(gPkaHandle, &gPkaEcPrimeP384CurveParams, gPkaEcdsaPrivateP384Key, gPkaEcdsaRandamP384Key, gPkaEcdsaHashP384, &sig, 0xFFFFFFFFU);
     TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
@@ -343,7 +343,7 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
     t1 =ClockP_getTimeUsec();
 
     /* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_secp384r1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP384CurveParams, &gPkaEcdsaPublicP384Key, &sig, gPkaEcdsaHashP384);
+    status = AsymCrypt_ECDSAVerify(gPkaHandle, &gPkaEcPrimeP384CurveParams, &gPkaEcdsaPublicP384Key, &sig, gPkaEcdsaHashP384, 0xFFFFFFFFU);
     TEST_ASSERT_EQUAL_UINT32(ASYM_CRYPT_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();

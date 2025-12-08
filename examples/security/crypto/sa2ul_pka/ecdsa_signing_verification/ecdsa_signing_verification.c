@@ -140,12 +140,12 @@ void ecdsa_signing_verification(void *args)
     DebugP_assert(gAsymCryptHandle != NULL);
 
 	/* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_prime256v1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
-    status = AsymCrypt_ECDSASign(gAsymCryptHandle, &gPkaEcPrimeCurveParams, gPkaEcdsaPrivateKey, gPkaEcdsaRandamKey, gPkaEcdsaHash, &sig);
-    DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
+	   status = AsymCrypt_ECDSASign(gAsymCryptHandle, &gPkaEcPrimeCurveParams, gPkaEcdsaPrivateKey, gPkaEcdsaRandamKey, gPkaEcdsaHash, &sig, 0xFFFFFFFFU);
+	   DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Openssl Command for Verify: openssl dgst -sha256 -verify ecdsa_prime256v1_public.pem -signature ecdsa_sign.bin msg.bin*/
-    status = AsymCrypt_ECDSAVerify(gAsymCryptHandle, &gPkaEcPrimeCurveParams, &gPkaEcdsaPublicKey, &sig, gPkaEcdsaHash);
-    DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
+	   status = AsymCrypt_ECDSAVerify(gAsymCryptHandle, &gPkaEcPrimeCurveParams, &gPkaEcdsaPublicKey, &sig, gPkaEcdsaHash, 0xFFFFFFFFU);
+	   DebugP_assert(ASYM_CRYPT_RETURN_SUCCESS == status);
 
 	/* Close PKA instance, disable PKA engine, deinitialize clocks*/
 	status = AsymCrypt_close(gAsymCryptHandle);
