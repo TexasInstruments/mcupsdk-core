@@ -226,7 +226,7 @@ int main(void)
             #if 1
             if( status == SystemP_SUCCESS)
             {
-                /* enable Phy and Phy pipeline for XIP execution */
+                /* Enable Phy and Phy pipeline for XIP execution */
                 if( OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]) )
                 {
                     status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
@@ -235,6 +235,9 @@ int main(void)
                     status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
                     DebugP_assert(status == SystemP_SUCCESS);
                 }
+                /* Enable Dac mode */
+                status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+                DebugP_assert(status == SystemP_SUCCESS);
             }
             #endif
 

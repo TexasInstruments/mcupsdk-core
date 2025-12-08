@@ -286,7 +286,11 @@ int main(void)
                 Bootloader_profileAddProfilePoint("App_loadImages");
             }
         }
-
+        if(SystemP_SUCCESS == status)
+        {
+            /* Enable Dac mode */
+            status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);   
+        }
 		if(SystemP_SUCCESS == status)
 		{
 			/* Print SBL log as Linux prints log to the same UART port */

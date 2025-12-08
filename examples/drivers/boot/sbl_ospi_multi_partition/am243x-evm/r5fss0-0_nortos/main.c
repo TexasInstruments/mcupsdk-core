@@ -218,6 +218,11 @@ int main(void)
         }
         if(SystemP_SUCCESS == status)
         {
+            /* Enable Dac mode */
+            status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);   
+        }
+        if(SystemP_SUCCESS == status)
+        {
             /* Reset self cluster and run both the CPUs */
             status = Bootloader_socCpuResetReleaseSelf();
         }
