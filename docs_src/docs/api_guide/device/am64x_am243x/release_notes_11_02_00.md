@@ -1,4 +1,4 @@
-# Release Notes 11.01.00 {#RELEASE_NOTES_11_01_00_PAGE}
+# Release Notes 11.02.00 {#RELEASE_NOTES_11_02_00_PAGE}
 
 [TOC]
 
@@ -20,15 +20,13 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-OSPI INDAC read support                                                                         | OSPI
-ECC Functional Test example for single bit errors is added                                      | SDL
+                                                                                                |  
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-OSPI INDAC read support                                                                         | OSPI
-ECC Functional Test example for single bit errors is added                                      | SDL
+                                                                                                |  
 \endcond
 
 ## Device and Validation Information
@@ -54,7 +52,6 @@ Code Composer Studio    | R5F, M4F, A53  | 20.2.0
 SysConfig               | R5F, M4F, A53  | 1.23.0, build 4000
 TI ARM CLANG            | R5F, M4F       | 4.0.1.LTS
 GCC AARCH64             | A53            | 9.2-2019.12
-GCC ARM                 | R5F            | 7-2017-q4-major (AM64x only)
 FreeRTOS Kernel         | R5F, M4F, A53  | 11.1.0
 FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
 Tiny USB                | R5F            | 0.14.0
@@ -82,7 +79,7 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES_11_01_00}
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
@@ -93,10 +90,8 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
 A53 NORTOS support and A53 NORTOS examples                          | DPL, NORTOS
-A53 FreeRTOS (single core) support and A53 FreeRTOS examples        | DPL, FreeRTOS
+A53 FreeRTOS support and A53 FreeRTOS examples                      | DPL, FreeRTOS
 SBL booting A53 NORTOS                                              | Bootloader
-GCC support for R5F for limited examples                            | R5F
-A53 FreeRTOS dual core in SMP mode and A53 SMP FreeRTOS examples    | DPL, FreeRTOS
 A53 FreeRTOS AMP mode and A53 AMP FreeRTOS examples                 | DPL, FreeRTOS
 GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 
@@ -293,85 +288,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> ID
     <th> Head Line
     <th> Module
-    <th> Applicable Releases
     <th> Applicable Devices
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12271, EXT_EP-12271}
-    <td> AM64x: AM243x: ECC: SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR aggregator is failing
-    <td> SDL
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-77, EXT_SITMPUSW-77}
-    <td> Modify Read capture delay logic for Tap Mode
-    <td> OSPI
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-100, EXT_SITMPUSW-100}
-    <td> UART ISR is blocking for long time
-    <td> UART
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-102, EXT_SITMPUSW-102}
-    <td> M4F MCU_I2C not working
-    <td> I2C
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-106, EXT_SITMPUSW-106}
-    <td> OSPI Phy Tuning Data is not written correctly in Flash_norOspiOpen()
-    <td> OSPI
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-129, EXT_SITMPUSW-129}
-    <td> I2C Isr is using all CPU during transfer
-    <td> I2C
-    <td> 11.00.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12336, EXT_EP-12336}
-    <td> Last 1B of payload missing in forwarding scenario
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12715, EXT_EP-12715}
-    <td> Local injection (TX) - Transmission failure due "TX Pkt not available"
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12716, EXT_EP-12716}
-    <td> PRU - Task Manager disable during firmware init
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12717, EXT_EP-12717}
-    <td> Packets reception failure: 10Mbps speed
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12718, EXT_EP-12718}
-    <td> Non-recoverable TX underflow with Bidirectional traffic in 100M MII mode
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
+    <td> TBD
+    <td> TBD
+    <td> TBD
+    <td> TBD
 </tr>
 </table>
 
@@ -382,7 +305,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> ID
     <th> Head Line
     <th> Module
-    <th> Applicable Releases
     <th> Applicable Devices
     <th> Workaround
 </tr>
