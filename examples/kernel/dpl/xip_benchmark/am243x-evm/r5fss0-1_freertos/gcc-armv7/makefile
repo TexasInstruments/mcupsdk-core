@@ -1,6 +1,3 @@
-#
-# Auto generated makefile
-#
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -22,6 +19,7 @@ PROFILE?=release
 ConfigName:=$(PROFILE)
 
 OUTNAME:=xip_benchmark.$(PROFILE).out
+COREOUTNAME:=xip_benchmark.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=xip_benchmark.$(PROFILE).appimage
@@ -65,6 +63,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -105,9 +104,9 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-l:freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:cmsis.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	-l:board.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	-l:cmsis.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -125,9 +124,9 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	cmsis.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	drivers.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	board.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
+	cmsis.am243x.r5f.gcc-armv7.freertos.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
@@ -190,6 +189,7 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  Linking: am243x:r5fss0-1:freertos:gcc-armv7 $@ Done !!!
 	@echo  .
 
+
 clean:
 	@echo  Cleaning: am243x:r5fss0-1:freertos:gcc-armv7 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
@@ -213,6 +213,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.lnkxml
+	$(RM) \*.ossr
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -220,6 +222,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.lnkxml
+	$(RM) *.ossr
 endif
 	$(RMDIR) generated
 
@@ -273,7 +277,12 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
 else
-  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+  UNAME_S = $(shell uname -s)
+  ifeq ($(UNAME_S), Darwin)
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out.mac
+  else
+    XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
