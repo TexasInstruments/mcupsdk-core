@@ -87,7 +87,7 @@ syscfg:
 	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) $(CORES)
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263x_beta --part AM263x --package ZCZ $(CORES)
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM263x_beta --part AM263x --package ZCZ $(CORES)
 
 #
 # Generation of multi-core boot image which can be loaded by Secondary Boot Loader (SBL)
