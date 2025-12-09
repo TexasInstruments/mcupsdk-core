@@ -182,7 +182,7 @@ MMCSD      | R5F, A53       | YES               | Yes          | Raw read/write 
 OSPI       | R5F, A53       | YES               | Yes          | Read direct, Write indirect, Read/Write commands, DMA for read, PHY Mode                   | Interrupt mode not supported
 PCIe       | R5F            | YES               | No           | Buffer Transfer between EP and RC modes. Legacy interrupt                                  | MSI and MSIx capability
 Pinmux     | R5F, M4F, A53  | YES               | No           | Tested with multiple peripheral pinmuxes                                                   | -
-PRUICSS    | R5F            | YES               | No           | Tested with Ethercat, EtherNet/IP, IO-Link, ICSS-EMAC, HDSL, EnDat                         | -
+PRUICSS    | R5F            | YES               | No           | Tested with EtherCAT, EtherNet/IP, IO-Link, ICSS-EMAC, HDSL, EnDat                         | -
 SOC        | R5F, M4F, A53  | YES               | No           | lock/unlock MMRs, get CPU clock, CPU name, clock enable, set frequency, SW Warm/POR Reset, Address Translation  | -
 Sciclient  | R5F, M4F, A53  | YES               | No           | Tested with clock setup, module on/off                                                     | -
 SPINLOCK   | R5F, M4F, A53  | NA                | No           | Lock, unlock HW spinlocks                                                                  | -
@@ -591,10 +591,10 @@ previous SDK version. Also refer to older SDK version release notes to see chang
 earlier SDKs.
 
 The below table captures the list of migration document sections when migrating from one version to another.
-The migration for a partcluar module will be applicable, if you are migrating from older version listed to
+The migration for a particular module will be applicable, if you are migrating from older version listed to
 newer version listed on the table below.
 
 Module       | Migration guide                              | Older version  | Newer version
 -------------|----------------------------------------------|----------------| -----------------
 Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >= 11.01.00
-Networking   | \ref enet_mcupsdk_10_00_update   &zwj;       |   <= 11.00.00  | >= 11.01.00
+Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 11.01.00  | >= 11.02.00
