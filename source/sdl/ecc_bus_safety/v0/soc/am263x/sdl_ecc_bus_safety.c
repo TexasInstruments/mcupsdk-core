@@ -485,7 +485,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, ui
     if ( SDL_PASS == retval)
     {
         /* Check for SEC support on Node */
-        if((bool)(SDL_ECC_BUS_SAFETY_SEC_START_NODE <= busSftyNode )==(bool)1U)
+        if(SDL_ECC_BUS_SAFETY_SEC_START_NODE <= busSftyNode)
         {
             /* Check for  dependency */
             if((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )== (bool)0U)
@@ -569,7 +569,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
     if ( SDL_PASS == retval)
     {
         /* Check for DED support on Node */
-        if((bool)(SDL_ECC_BUS_SAFETY_DED_START_NODE <= busSftyNode )==(bool)1U)
+        if(SDL_ECC_BUS_SAFETY_DED_START_NODE <= busSftyNode)
         {
             /* Check for  dependency */
             if(((bool)((SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )) == (bool)0U))

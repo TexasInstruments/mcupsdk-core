@@ -186,7 +186,7 @@ extern "C" {
 /* For example 0xxxxxxC0U, here 'C0(0x1100)' means 6th              */
 /* node(CR5A_AXI_RD) and 7th node(CR5B_AXI_RD) are readable         */ 
 #define SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_1_MASK    0x05F030C0U
-#define SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK    0x00000000U
+#define SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK    0x00000100U
 
 /* Macro defines Ecc Bus Safety Nodes in the MSS Subsystem */
 
