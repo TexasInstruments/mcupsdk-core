@@ -75,6 +75,7 @@ ch4_syncpulse_max_dur       .set   600*56
 ch5_ticktime                .set   500
 ch5_syncpulse_min_dur       .set   400*56
 ch5_syncpulse_max_dur       .set   600*56
+MIN_PULSE_THRESHOLD .set 50
 
 ; Import the Chip Support Library Register Address defines
     .cdecls C,  NOLIST
@@ -132,7 +133,7 @@ m_process_ch .macro  skip_sample_ch ,ch_current_fall_edge, ch_previous_fall_edge
 ;check if capture event occured on channel 0
 	qbeq	skip_sample_ch, ch_previous_fall_edge,ch_current_fall_edge ;1
     sub     CHx_PULSE_LEN, ch_current_fall_edge, ch_previous_fall_edge ;1
-    qbge	skip_sample_ch, CHx_PULSE_LEN,25
+    qbge	skip_sample_ch, CHx_PULSE_LEN,MIN_PULSE_THRESHOLD
 ; store this falling edge on channel0 as previous falling edge for comparision reference
     mov     ch_previous_fall_edge, ch_current_fall_edge ;
 
