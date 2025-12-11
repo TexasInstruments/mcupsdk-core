@@ -320,6 +320,12 @@ static inline uint32_t HWI_SECTION HwiP_setVimIrqPriMaskRawNonAtomic(uint32_t pr
     oldPriMask = *addr;
     *addr      = priMask;
 
+    /*
+     * Issue DSB and ISB instructions to process pending low-priority ISRs before 
+     * proceeding with further execution.
+     */
+    Hwip_dataAndInstructionBarrier();
+
     return oldPriMask;
 }
 
