@@ -21,6 +21,7 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
                                                                                                 |  
+Example to demonstrate VTM triggered SoC reset is added                                         | SDL
 \endcond
 
 \cond SOC_AM243X
@@ -296,6 +297,18 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> TBD
     <td> TBD
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13056, EXT_EP-13056}
+    <td> VTM module sensor reset sequence modification for reliable functionality
+    <td> SDL
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13057, EXT_EP-13057}
+    <td> SDL DCC Seed Value Calculation Deviates from TRM Guidelines
+    <td> SDL
+    <td> AM64x, AM243x
+</tr>
 </table>
 
 ## Known Issues
@@ -476,6 +489,30 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 11.01.00 onwards
     <td> AM64x, AM243x
     <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12276, EXT_EP-12276}
+    <td> ECC: Firewall related aggregators failures - ECC Aggregators SDL_SMS0_SMS_TIFS_ECC, SDL_SMS0_SMS_HSM_ECC, SDL_SA3_SS0_SA3SS_AM62A_DMSS_ECCAGGR and SDL_SA3_SS0_SA3SS_AM62A_SA_UL_ECC_AGGR fail because of firewall access issues faced by SDL
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> AM64x, AM243x
+    <td> No known workaround
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13067, EXT_EP-13067}
+    <td> AM64x: PBIST: A53 forcebit power off failure in M4F applications
+    <td> SDL
+    <td> 11.02.00 onwards
+    <td> AM64x
+    <td> No known workaround
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13068, EXT_EP-13068}
+    <td> AM64x: AM243x: ECC: Aggregator failures in ecc applications.
+    <td> SDL
+    <td> 11.02.00 onwards
+    <td> AM64x, AM243x
+    <td> No known workaround
 </tr>
 </table>
 

@@ -43,6 +43,48 @@ The module supports below API's for the application
 
 - None
 
+\cond SOC_AM64X || SOC_AM243X
+## Profiling Data
+\cond SOC_AM64X
+<table>
+  <tr>
+    <th>MCRC Mode</th>
+    <th>Data Size</th>
+    <th>Profiling Time</th>
+  </tr>
+  <tr>
+    <td rowspan="2">Full-CPU</td>
+    <td>128 KB</td>
+    <td>18101 us</td>
+  </tr>
+  <tr>
+    <td>1 KB</td>
+    <td>156 us</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the m4fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\cond SOC_AM243X
+<table>
+  <tr>
+    <th>MCRC Mode</th>
+    <th>Data Size</th>
+    <th>Profiling Time</th>
+  </tr>
+  <tr>
+    <td rowspan="2">Full-CPU</td>
+    <td>128 KB</td>
+    <td>18100 us</td>
+  </tr>
+  <tr>
+    <td>1 KB</td>
+    <td>156 us</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the m4fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\endcond
+
 ## Example Usage
 
 The following shows an example of SDL MCRC API usage by the application for Full CPU mode.
