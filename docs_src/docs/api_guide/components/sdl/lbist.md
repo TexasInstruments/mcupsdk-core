@@ -41,6 +41,36 @@ The LBIST Module of the SDL supports execution of the software-initiated LBIST f
 - Call SDL_LBIST_checkResult( ) to know the if the MISR signatures are matching. This API should be called only after SDL_LBIST_checkDone( ) API returns LBIST_DONE.
 - Call SDL_LBIST_selfTest(LBIST_MCU_M4F, SDL_LBIST_TEST_RELEASE ) to release the LBIST test mode.
 
+\cond SOC_AM64X || SOC_AM243X
+## Profiling Data
+\cond SOC_AM64X
+<table>
+  <tr>
+    <th>LBIST Instance</th>
+    <th>Test Time</th>
+  </tr>
+  <tr>
+    <td>M4F</td>
+    <td>4842 us</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the r5fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\cond SOC_AM243X
+<table>
+  <tr>
+    <th>LBIST Instance</th>
+    <th>Test Time</th>
+  </tr>
+  <tr>
+    <td>M4F</td>
+    <td>4848 us</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the r5fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\endcond
+
 ## Example Usage
 
 - None

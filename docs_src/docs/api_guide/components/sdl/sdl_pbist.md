@@ -52,6 +52,74 @@ Supported memory groups
 - The PBIST module uses ESM events to detect completion of the test. The application should not enable these events through SDL_ESM_init in order to prevent interference with the test execution.
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+## Profiling Data
+\cond SOC_AM64X
+<table>
+  <tr>
+    <th>PBIST Instance</th>
+    <th>Negative Test Time</th>
+    <th>Positive Test Time</th>
+    <th>Total Test Time</th>
+  </tr>
+  <tr>
+    <td>Pulsar Instance 1</td>
+    <td>1793 us</td>
+    <td>5646 us</td>
+    <td>7439 us</td>
+  </tr>
+  <tr>
+    <td>MPU PBIST</td>
+    <td>1967 us</td>
+    <td>32086 us</td>
+    <td>34053 us</td>
+  </tr>
+  <tr>
+    <td>Infra PBIST</td>
+    <td>5201 us</td>
+    <td>52092 us</td>
+    <td>57293 us</td>
+  </tr>
+  <tr>
+    <td>**All instances**</td>
+    <td>**8961 us**</td>
+    <td>**89824 us**</td>
+    <td>**98785 us**</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the r5fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\cond SOC_AM243X
+<table>
+  <tr>
+    <th>PBIST Instance</th>
+    <th>Negative Test Time</th>
+    <th>Positive Test Time</th>
+    <th>Total Test Time</th>
+  </tr>
+  <tr>
+    <td>Pulsar Instance 1</td>
+    <td>2037 us</td>
+    <td>5645 us</td>
+    <td>7682 us</td>
+  </tr>
+  <tr>
+    <td>Infra PBIST</td>
+    <td>5203 us</td>
+    <td>52093 us</td>
+    <td>57296 us</td>
+  </tr>
+  <tr>
+    <td>**All instances**</td>
+    <td>**7240 us**</td>
+    <td>**57738 us**</td>
+    <td>**64978 us**</td>
+  </tr>
+</table>
+\note The above numbers were obtained in the r5fss0-0_nortos setting, performance in other settings may vary
+\endcond
+\endcond
+
 ## Example Usage
 
 The following shows an example of SDL PBIST API usage by the application to execute the PBIST test and test-for-diagnostic.
