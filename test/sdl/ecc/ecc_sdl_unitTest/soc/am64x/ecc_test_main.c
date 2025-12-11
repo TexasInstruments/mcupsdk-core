@@ -251,36 +251,73 @@ static int32_t sdlApp_dplInit(void)
     return ret;
 }
 
-static
-int32_t ECC_appTest(uint32_t testId)
+static int32_t ECC_appTest(uint32_t testId)
 {
-    int32_t    testResult;
+    int32_t testResult = SDL_PASS;
 
     switch (testId)
     {
-        case ECC_FUNC_TEST_ID:
-            testResult = ECC_funcTest();
-            DebugP_log("\r\n ECC Functionality Test");
+        case ECC_IP_FUNC_TEST_ID:
             if (testResult == SDL_PASS)
             {
-                DebugP_log("\r\n Passed.\r\n");
+                testResult = ECC_ip_funcTest();
+                DebugP_log("\r\nECC IP Functionality Test\r\n");
+                if (testResult == SDL_PASS)
+                {
+                    DebugP_log("\r\nPassed.\r\n");
+                }
+                else
+                {
+                    DebugP_log("\r\nFailed.\r\n");
+                }
             }
-            else
+            break;
+
+        case ECC_FUNC_TEST_ID:
+            if (testResult == SDL_PASS)
             {
-                DebugP_log("\r\n Failed.\r\n");
+                testResult = ECC_funcTest();
+                DebugP_log("\r\n ECC Functionality Test");
+                if (testResult == SDL_PASS)
+                {
+                    DebugP_log("\r\n Passed.\r\n");
+                }
+                else
+                {
+                    DebugP_log("\r\n Failed.\r\n");
+                }
             }
             break;
 
         case ECC_ERROR_TEST_ID:
-            testResult = ECC_errTest();
-            DebugP_log("\r\n ECC Error Module Test");
             if (testResult == SDL_PASS)
             {
-                DebugP_log("\r\n Passed.\r\n");
+                testResult = ECC_errTest();
+                DebugP_log("\r\n ECC Error Module Test");
+                if (testResult == SDL_PASS)
+                {
+                    DebugP_log("\r\n Passed.\r\n");
+                }
+                else
+                {
+                    DebugP_log("\r\n Failed.\r\n");
+                }
             }
-            else
+            break;
+
+        case ECC_IP_ERROR_TEST_ID:
+            if (testResult == SDL_PASS)
             {
-                DebugP_log("\r\n Failed.\r\n");
+                testResult = ECC_ip_errTest();
+                DebugP_log("\r\nECC IP Error Module Test\r\n");
+                if (testResult == SDL_PASS)
+                {
+                    DebugP_log("\r\nPassed.\r\n");
+                }
+                else
+                {
+                    DebugP_log("\r\nFailed.\r\n");
+                }
             }
             break;
 

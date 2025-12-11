@@ -42,6 +42,8 @@ FILES_common := \
 	ecc_test_func.c \
 	ecc_test_main.c \
 	ecc_test_err.c \
+	ecc_ip_test_err.c \
+	ecc_ip_test_func.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \

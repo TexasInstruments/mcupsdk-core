@@ -9,6 +9,8 @@ const files_m4f = {
         "ecc_test_func.c",
         "ecc_test_main.c",
         "ecc_test_err.c",
+        "ecc_ip_test_err.c",
+        "ecc_ip_test_func.c",
     ],
 };
 
@@ -20,6 +22,8 @@ const files_r5f = {
         "ecc_test_main.c",
         "ecc_test_err.c",
         "ecc_r5_test_err.c",
+        "ecc_ip_test_err.c",
+        "ecc_ip_test_func.c",
     ],
 };
 

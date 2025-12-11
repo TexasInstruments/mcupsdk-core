@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,15 +62,29 @@ extern "C"
 #define SDL_APP_TEST_FAILED         (-(int32_t) (1))
 #define SDL_APP_TEST_PASS           ( (int32_t) (0))
 
+#if defined (M4F_CORE)
 #define  ECC_FUNC_TEST_ID         (0U)
-#define  ECC_ERROR_TEST_ID        (1U)
-#define  ECC_TOTAL_NUM_TESTS      (2U)
+#define  ECC_IP_FUNC_TEST_ID      (1U)
+#define  ECC_ERROR_TEST_ID        (2U)
+#define  ECC_IP_ERROR_TEST_ID     (3U)
+#define  ECC_TOTAL_NUM_TESTS      (4U)
+#endif
+
+#if defined (R5F_CORE)
+#define  ECC_IP_FUNC_TEST_ID      (0U)
+#define  ECC_FUNC_TEST_ID         (1U)
+#define  ECC_ERROR_TEST_ID        (2U)
+#define  ECC_IP_ERROR_TEST_ID     (3U)
+#define  ECC_TOTAL_NUM_TESTS      (4U)
+#endif
 
 /* ========================================================================== */
 /*                 External Function Declarations                             */
 /* ========================================================================== */
 extern int32_t ECC_funcTest(void);
 extern int32_t ECC_errTest(void);
+extern int32_t ECC_ip_funcTest(void);
+extern int32_t ECC_ip_errTest(void);
 
 #ifdef __cplusplus
 }

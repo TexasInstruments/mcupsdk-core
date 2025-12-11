@@ -1122,10 +1122,12 @@ static int32_t ECC_sdlFuncTest(void)
 
     DebugP_log("\r\n ECC SDL API tests: starting\n");
 
-    result = ECC_Test_runECC1BitInjectTest();
-    if (result != SDL_PASS) {
-        retVal = -1;
-        DebugP_log("\r\n ECC_Test_runECC1BitInjectTest has failed...\n");
+    if (retVal == SDL_PASS) {
+        result = ECC_Test_runECC1BitInjectTest();
+        if (result != SDL_PASS) {
+            retVal = -1;
+            DebugP_log("\r\n ECC_Test_runECC1BitInjectTest has failed...\n");
+        }
     }
 
     if (retVal == SDL_PASS) {
