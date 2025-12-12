@@ -309,6 +309,18 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SDL
     <td> AM64x, AM243x
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12719, EXT_EP-12719}
+    <td> Throughput drops to 95.5% with bidirectional mixed traffic
+    <td> Ethernet (ICSSG)
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13075, EXT_EP-13075}
+    <td> Forwarding stall with random size packets at 100% bi-directional 1Gbps load 
+    <td> Ethernet (ICSSG) 
+    <td> AM64x, AM243x
+</tr>
 </table>
 
 ## Known Issues
@@ -463,14 +475,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> FORCE bit not book keeped properly for MCSPI DMA mode of operation
     <td> MCSPI
     <td> 7.3.0 onwards
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12719, EXT_EP-12719}
-    <td> Throughput drops to 95.5% with bidirectional mixed traffic
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
     <td> AM64x, AM243x
     <td> None
 </tr>
