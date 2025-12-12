@@ -1303,6 +1303,13 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         if(status == SystemP_SUCCESS)
         {
             status = Flash_norOspiPhyTune(config);
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+            if(status != SystemP_SUCCESS)
+            {
+                status = Flash_norOspiSetModeDummy(config, obj->ospiHandle);
+                status += Flash_norOspiSetRdDataCaptureDelay(config);
+            }
+#endif
         }
     }
 

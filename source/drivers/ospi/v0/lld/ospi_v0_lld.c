@@ -59,6 +59,9 @@
 #define OSPI_DMA_COPY_SRC_ALIGNMENT   (32U)
 #define OSPI_DMA_COPY_SIZE_ALIGNMENT  (32U)
 
+/** \brief    Pointer copy alignment for flash memcpy */
+#define PTR_COPY_SRC_ALIGNMENT        (sizeof(uintptr_t))
+
 /** \brief    OSPI Command default Length */
 #define CSL_OSPI_CMD_LEN_DEFAULT            (1U)            /*In bytes */
 #define CSL_OSPI_CMD_LEN_EXTENDED           (5U)            /*In bytes */
@@ -1113,6 +1116,60 @@ uint32_t OSPI_lld_getFlashDataBaseAddr(OSPILLD_Handle hOspi)
     return dataBaseAddr;
 }
 
+/* Helper function to safely read from memory-mapped flash
+ * Uses controlled access patterns to avoid issues with optimized memcpy
+ */
+static void OSPI_lld_flashMemcpy(void *dest, const void *src, uint32_t len)
+{
+    uint8_t *pDest = (uint8_t *)dest;
+    uint8_t *pSrc = (uint8_t *)src;
+    uint32_t i;
+
+    /* Step 1: Copy initial bytes to align source address to word boundary */
+    uint32_t srcMisalign = ((uint32_t)pSrc) % PTR_COPY_SRC_ALIGNMENT;
+    uint32_t initBytes = 0U;
+
+    if(srcMisalign != 0U)
+    {
+        initBytes = PTR_COPY_SRC_ALIGNMENT - srcMisalign;
+        if(initBytes > len)
+        {
+            initBytes = len;
+        }
+
+        for(i = 0U; i < initBytes; i++)
+        {
+            *pDest++ = CSL_REG8_RD(pSrc++);
+        }
+    }
+
+    /* Step 2: Copy aligned middle portion as words */
+    uint32_t remaining = len - initBytes;
+    uint32_t destMisalign = ((uint32_t)pDest) % PTR_COPY_SRC_ALIGNMENT;
+
+    if((remaining >= PTR_COPY_SRC_ALIGNMENT) && (destMisalign == 0U))
+    {
+        uint32_t *pDestWord = (uint32_t *)pDest;
+        uint32_t *pSrcWord = (uint32_t *)pSrc;
+        uint32_t words = remaining / PTR_COPY_SRC_ALIGNMENT;
+
+        for(i = 0U; i < words; i++)
+        {
+            *pDestWord++ = CSL_REG32_RD(pSrcWord++);
+        }
+
+        pDest = (uint8_t *)pDestWord;
+        pSrc = (uint8_t *)pSrcWord;
+        remaining = remaining % PTR_COPY_SRC_ALIGNMENT;
+    }
+
+    /* Step 3: Copy remaining dangling bytes */
+    for(i = 0U; i < remaining; i++)
+    {
+        *pDest++ = CSL_REG8_RD(pSrc++);
+    }
+}
+
 /* Different OSPI Read functions */
 int32_t OSPI_lld_readCmd(OSPILLD_Handle hOspi, OSPI_ReadCmdParams *rdParams)
 {
@@ -1227,7 +1284,7 @@ int32_t OSPI_lld_readDirect(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
 
         pSrc = (uint8_t *)(hOspiInit->dataBaseAddr + addrOffset);
 
-        memcpy(pDst, pSrc, trans->count);
+        OSPI_lld_flashMemcpy(pDst, pSrc, trans->count);
     }
     else
     {
@@ -1279,7 +1336,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
                 uint32_t initResidualBytes = OSPI_DMA_COPY_SRC_ALIGNMENT - (((uint32_t)pSrc) % OSPI_DMA_COPY_SRC_ALIGNMENT);
 
                 /* Do CPU copy for the initial residual bytes */
-                memcpy(pDst, pSrc, initResidualBytes);
+                OSPI_lld_flashMemcpy(pDst, pSrc, initResidualBytes);
 
                 tempDst = (uint8_t *)((uint32_t)pDst + initResidualBytes);
                 tempSrc = (uint8_t *)((uint32_t)pSrc + initResidualBytes);
@@ -1294,7 +1351,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
             {
                 tempDst += (remainingBytes - unalignedBytes);
                 tempSrc += (remainingBytes - unalignedBytes);
-                memcpy(tempDst, tempSrc, unalignedBytes);
+                OSPI_lld_flashMemcpy(tempDst, tempSrc, unalignedBytes);
             }
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
             /* Enable PHY Pipeline only if phy is enabled */
@@ -1339,7 +1396,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
         else
         {
             hOspi->currTrans->state = OSPI_TRANSFER_MODE_POLLING;
-            memcpy(pDst, pSrc, trans->count);
+            OSPI_lld_flashMemcpy(pDst, pSrc, trans->count);
         }
     }
     else

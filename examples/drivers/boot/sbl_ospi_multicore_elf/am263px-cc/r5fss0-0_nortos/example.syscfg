@@ -53,10 +53,6 @@ bootloader1.appImageOffset = "0x00081000";
 
 flash1.$name                              = "CONFIG_FLASH0";
 bootloader1.flashDriver                   = flash1;
-flash1.xspiWipRdCmd                       = "0x05";
-flash1.fourByteEnableSeq                  = "0";
-flash1.cmdRd                              = "0x7c";
-flash1.dummy_mask                         = "0xff";
 flash1.enableFlashReset                   = true;
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;

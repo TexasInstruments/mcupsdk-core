@@ -60,9 +60,16 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle);
 
 /**
  * @brief Does the actual reset of the flash on board
- * 
+ *
  */
 void board_flash_reset(OSPI_Handle oHandle);
+
+/**
+ * @brief Get the boot media frequency
+ *
+ * @return int Boot media frequency in Hz
+ */
+int get_boot_media_freq(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -244,9 +251,8 @@ int main(void)
             {
                 if(status == SystemP_SUCCESS)
                 {
-                    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
+                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, get_boot_media_freq());
                     Bootloader_profileAddProfilePoint("SBL End");
                     Bootloader_profilePrintProfileLog();
 
@@ -276,4 +282,19 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle)
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
+}
+
+int get_boot_media_freq()
+{
+    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+    int bootMediaFreq = OSPI_getInputClk(ospiHandle);
+    uint32_t baudDiv = 0;
+    OSPI_getBaudRateDivFromObj(ospiHandle, &baudDiv);
+
+    if(!OSPI_getPhyEnableSuccess(ospiHandle))
+    {
+        bootMediaFreq = bootMediaFreq / baudDiv;
+    }
+
+    return bootMediaFreq;
 }
