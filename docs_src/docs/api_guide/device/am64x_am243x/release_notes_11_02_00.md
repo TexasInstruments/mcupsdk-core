@@ -321,6 +321,16 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Ethernet (ICSSG) 
     <td> AM64x, AM243x
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-270, EXT_SITMPUSW-270}
+    <td> Enabling MAC2MAC/NO-PHY in networking examples gives build error
+    <td> ENET
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-271, EXT_SITMPUSW-271}
+    <td> Enabling Build failure with networking examples from mcu_plus_sdk inside ind_comms_sdk
+    <td> ENET
+</tr>
 </table>
 
 ## Known Issues
