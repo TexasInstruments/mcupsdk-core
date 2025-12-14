@@ -52,6 +52,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${MCU_PLUS_SDK_PATH}/source/usb/synp/lib
             -i${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib
@@ -80,6 +81,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.nortos.debug.lib
                 -lboard.am261x.r5f.ti-arm-clang.nortos.debug.lib
+                -lsdl.am261x.r5f.ti-arm-clang.nortos.debug.lib
                 -lusbd_synp_nortos.am261x.r5f.ti-arm-clang.debug.lib
                 -lusbd_tusb_dfu_nortos.am261x.r5f.ti-arm-clang.debug.lib
                 -lsecurity.am261x.r5f.ti-arm-clang.nortos.debug.lib
@@ -95,6 +97,7 @@
                 -lnortos.am261x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am261x.r5f.ti-arm-clang.nortos.release.lib
                 -lboard.am261x.r5f.ti-arm-clang.nortos.release.lib
+                -lsdl.am261x.r5f.ti-arm-clang.nortos.release.lib
                 -lusbd_synp_nortos.am261x.r5f.ti-arm-clang.release.lib
                 -lusbd_tusb_dfu_nortos.am261x.r5f.ti-arm-clang.release.lib
                 -lsecurity.am261x.r5f.ti-arm-clang.nortos.release.lib

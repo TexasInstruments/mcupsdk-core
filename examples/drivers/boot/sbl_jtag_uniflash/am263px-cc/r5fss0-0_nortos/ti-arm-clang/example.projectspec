@@ -48,6 +48,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${MCU_PLUS_SDK_PATH}/source/middleware/lib
             -i${CG_TOOL_ROOT}/lib
             -m=sbl_jtag_uniflash.${ConfigName}.map
@@ -74,6 +75,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.nortos.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.nortos.debug.lib
+                -lsdl.am263px.r5f.ti-arm-clang.nortos.debug.lib
                 -lmiddleware.am263px.r5f.ti-arm-clang.nortos.debug.lib
                 -llibc.a
                 -llibsysbm.a
@@ -87,6 +89,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.nortos.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.nortos.release.lib
+                -lsdl.am263px.r5f.ti-arm-clang.nortos.release.lib
                 -lmiddleware.am263px.r5f.ti-arm-clang.nortos.release.lib
                 -llibc.a
                 -llibsysbm.a
