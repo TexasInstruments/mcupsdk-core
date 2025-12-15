@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.25.0+4268"}
+ * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -344,16 +344,3 @@ enet_cpsw1.RGMII1.TD2.$suggestSolution                  = "RGMII1_TD2";
 enet_cpsw1.RGMII1.TD3.$suggestSolution                  = "RGMII1_TD3";
 enet_cpsw1.RGMII1.TX_CTL.$suggestSolution               = "RGMII1_TX_CTL";
 enet_cpsw1.RGMII1.TXC.$suggestSolution                  = "RGMII1_TXC";
-enet_cpsw1.RGMII2.$suggestSolution                      = "RGMII2";
-enet_cpsw1.RGMII2.RD0.$suggestSolution                  = "PR0_PRU0_GPIO0";
-enet_cpsw1.RGMII2.RD1.$suggestSolution                  = "PR0_PRU0_GPIO1";
-enet_cpsw1.RGMII2.RD2.$suggestSolution                  = "PR0_PRU0_GPIO2";
-enet_cpsw1.RGMII2.RD3.$suggestSolution                  = "PR0_PRU0_GPIO3";
-enet_cpsw1.RGMII2.RX_CTL.$suggestSolution               = "PR0_PRU0_GPIO4";
-enet_cpsw1.RGMII2.RXC.$suggestSolution                  = "PR0_PRU0_GPIO6";
-enet_cpsw1.RGMII2.TD0.$suggestSolution                  = "PR0_PRU0_GPIO11";
-enet_cpsw1.RGMII2.TD1.$suggestSolution                  = "PR0_PRU0_GPIO12";
-enet_cpsw1.RGMII2.TD2.$suggestSolution                  = "PR0_PRU0_GPIO13";
-enet_cpsw1.RGMII2.TD3.$suggestSolution                  = "PR0_PRU0_GPIO14";
-enet_cpsw1.RGMII2.TX_CTL.$suggestSolution               = "PR0_PRU0_GPIO15";
-enet_cpsw1.RGMII2.TXC.$suggestSolution                  = "PR0_PRU0_GPIO16";
