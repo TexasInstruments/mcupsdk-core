@@ -623,7 +623,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
 #if defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI0_U_BASE, writeData) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI_U_BASE, writeData) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

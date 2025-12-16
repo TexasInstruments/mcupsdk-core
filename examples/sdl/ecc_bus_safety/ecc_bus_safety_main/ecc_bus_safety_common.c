@@ -596,7 +596,17 @@ void test_edmaATransfer(uint32_t busSftyNode, uint32_t dmaCh, uint32_t tcc,uint3
 
 }
 
-#if defined (SOC_AM273X) ||  defined(SOC_AWR294X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#define CSL_MSS_CPSW_U_BASE SDL_CPSW0_U_BASE
+
+void cpsw_transfer_ded()
+{
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP,TX_BUFFER_DESC);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP,RX_BUFFER_DESC);
+}
+#endif
+
+#if defined (SOC_AM273X) ||  defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #if defined (SUBSYS_MSS)
 
 /*Register/Memory Read/Write Functions */
@@ -626,7 +636,6 @@ void cpsw_transfer()
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP, NON_CPU_TX_BUFFER_DESC);
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP, NON_CPU_RX_BUFFER_DESC);
 }
-
 
 void setup_CPSW()
 {
@@ -705,7 +714,7 @@ void setup_CPSW()
     {
         HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP + (i*4), 0x00000000);
     }
-
+#if defined (SOC_AM273X) ||  defined(SOC_AWR294X)
     /*Fill Transmit Data Buffer */
     test_mem_write((MEMORY_TX_BUFFER+0x0000), TxBufferData0, sizeof(TxBufferData0));
 
@@ -713,7 +722,7 @@ void setup_CPSW()
     test_mem_write(TX_BUFFER_DESC, CppiTxPkt0, 16);
     /* Rx CPPI descriptors */
     test_mem_write(RX_BUFFER_DESC, CppiRxPkt0, 16);
-
+#endif
     /*CPDMA_TH_IntMask_Set > bit 0 > thost0_pend_mask > THost Channel 0 Pending Int Mask Write one to enable Int. */
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH_IntMask_Set, 0x00000001);
 

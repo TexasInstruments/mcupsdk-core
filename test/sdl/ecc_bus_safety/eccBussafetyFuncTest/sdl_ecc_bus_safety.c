@@ -4220,13 +4220,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_FI_Global_Main_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_MPU_L2OCRAM_BANK0));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_L2OCRAM_BANK0));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_MPU_L2OCRAM_BANK0));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_L2OCRAM_BANK0));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test(void)
@@ -4238,13 +4238,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_MPU_L2OCRAM_BANK0_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_L2OCRAM_BANK0_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_MPU_L2OCRAM_BANK0_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_A,SDL_L2OCRAM_BANK0_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Main_Test(void)
@@ -4271,13 +4271,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Global_Main_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_MPU_L2OCRAM_BANK1));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_L2OCRAM_BANK1));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_MPU_L2OCRAM_BANK1));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_L2OCRAM_BANK1));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_Test(void)
@@ -4288,13 +4288,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_MPU_L2OCRAM_BANK1_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_L2OCRAM_BANK1_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_MPU_L2OCRAM_BANK1_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_B,SDL_L2OCRAM_BANK1_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Main_Test(void)
@@ -4320,13 +4320,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Global_Main_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_MPU_L2OCRAM_BANK2));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_L2OCRAM_BANK2));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_MPU_L2OCRAM_BANK2));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_L2OCRAM_BANK2));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_Test(void)
@@ -4337,13 +4337,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_SEC_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_MPU_L2OCRAM_BANK2_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_L2OCRAM_BANK2_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_DED_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_MPU_L2OCRAM_BANK2_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_C,SDL_L2OCRAM_BANK2_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_FI_Main_Test(void)
@@ -4370,13 +4370,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_FI_Global_Main_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_MPU_L2OCRAM_BANK3));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_L2OCRAM_BANK3));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_MPU_L2OCRAM_BANK3));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_L2OCRAM_BANK3));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test(void)
@@ -4387,13 +4387,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_1_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_MPU_L2OCRAM_BANK1_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_L2OCRAM_BANK1_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_End_Addr_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_2_MAIN,\
-                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_MPU_L2OCRAM_BANK1_END));
+                                        SDL_ECC_BUS_SAFETY_MSS_L2_D,SDL_L2OCRAM_BANK1_END));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_FI_Main_Test(void)

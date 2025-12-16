@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -11,7 +12,7 @@
 const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1      = edma.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
@@ -48,12 +49,13 @@ debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.size              = 15;
@@ -64,10 +66,9 @@ mpu_armv73.baseAddr          = 0x80000;
 mpu_armv73.size              = 15;
 mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
 
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 22;
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x70000000;
+mpu_armv74.size     = 21;
 
 general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
@@ -126,13 +127,8 @@ region1.memory_region[10].manualStartAddress = 0x44000400;
 region1.memory_region[10].size               = 0x3CE;
 region1.memory_region[10].isShared           = true;
 region1.memory_region[10].shared_cores       = ["r5fss0-1","r5fss1-0","r5fss1-1"];
-region1.memory_region[11].type               = "CUSTOM";
-region1.memory_region[11].$name              = "MSS_CTRL";
 region1.memory_region[11].auto               = false;
-region1.memory_region[11].manualStartAddress = 0x50D00000;
-region1.memory_region[11].size               = 0x4000;
-region1.memory_region[11].isShared           = true;
-region1.memory_region[11].shared_cores       = ["r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[11].$name              = "OCRAM_X";
 
 section1.load_memory             = "R5F_VECS";
 section1.group                   = false;
@@ -140,8 +136,8 @@ section1.$name                   = "Vector Table";
 section1.output_section.create(1);
 section1.output_section[0].$name = ".vectors";
 
-section2.load_memory             = "OCRAM";
 section2.$name                   = "Text Segments";
+section2.load_memory             = "OCRAM";
 section2.output_section.create(5);
 section2.output_section[0].$name = ".text.hwi";
 section2.output_section[1].$name = ".text.cache";
@@ -149,14 +145,14 @@ section2.output_section[2].$name = ".text.mpu";
 section2.output_section[3].$name = ".text.boot";
 section2.output_section[4].$name = ".text:abort";
 
-section3.load_memory             = "OCRAM";
 section3.$name                   = "Code and Read-Only Data";
+section3.load_memory             = "OCRAM";
 section3.output_section.create(2);
 section3.output_section[0].$name = ".text";
 section3.output_section[1].$name = ".rodata";
 
-section4.load_memory             = "OCRAM";
 section4.$name                   = "Data Segment";
+section4.load_memory             = "OCRAM";
 section4.output_section.create(1);
 section4.output_section[0].$name = ".data";
 

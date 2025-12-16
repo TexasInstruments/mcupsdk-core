@@ -46,6 +46,9 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 
+#define SDL_TOP_RCM_LOCK0_KICK0                                   (0x00001008U)
+#define SDL_TOP_RCM_LOCK0_KICK1                                   (0x0000100CU)
+
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
@@ -326,13 +329,13 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_DED_Test,              "TPTC_A1_RD_DED_Test in Interrupt Method",        SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD_RED_Test,              "TPTC_A1_RD_RED_Test in Interrupt Method",        SDL_APP_NOT_RUN },
     #if defined (SOC_AM263X)
-    //{SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test,                    "MSS_QSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
-    //{SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test,                    "MSS_QSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
-    //{SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test,                    "MSS_QSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
+    {SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test,                    "MSS_QSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test,                    "MSS_QSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test,                    "MSS_QSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     #elif defined (SOC_AM263PX) || defined (SOC_AM261X)
-    //{SDL_ECC_BUS_SAFETY_MSS_OSPI_SEC_Test,                    "MSS_OSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
-    //{SDL_ECC_BUS_SAFETY_MSS_OSPI_DED_Test,                    "MSS_OSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
-    {SDL_ECC_BUS_SAFETY_MSS_OSPI_RED_Test,                    "MSS_OSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },//Stuck, debug
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_SEC_Test,                    "MSS_OSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_DED_Test,                    "MSS_OSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_RED_Test,                    "MSS_OSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     #endif
     #if defined (SOC_AM261X)
     {SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_SEC_Test,                "MSS_USBSS_RD_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
@@ -367,7 +370,7 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_SEC_Test,                "ICSSM1_S_SEC_Test in Interrupt  Method",            SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_DED_Test,                "ICSSM1_S_DED_Test in Interrupt  Method",            SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_RED_Test,                "ICSSM1_S_RED_Test in Interrupt  Method",            SDL_APP_NOT_RUN },
-    #else // SOC_AM263X and SOC_AM263PX
+    #else /* SOC_AM263X and SOC_AM263PX */
     {SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_SEC_Test,                 "ICSSM_PDSP0_SEC_Test in Interrupt  Method",        SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_DED_Test,                 "ICSSM_PDSP0_DED_Test in Interrupt  Method",        SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_RED_Test,                 "ICSSM_PDSP0_RED_Test in Interrupt  Method",        SDL_APP_NOT_RUN },
@@ -381,26 +384,22 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_DAP_SEC_Test,                         "DAP_SEC_Test in Interrupt  Method",                SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_DAP_DED_Test,                         "DAP_DED_Test in Interrupt  Method",                SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_DAP_RED_Test,                         "DAP_RED_Test in Interrupt  Method",                SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR_RED_Test,             "MSS_CR5A_AXI_WR_RED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR_RED_Test,             "MSS_CR5B_AXI_WR_RED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR_SEC_Test,             "MSS_CR5A_AXI_WR_SEC_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR_DED_Test,             "MSS_CR5A_AXI_WR_DED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR_SEC_Test,             "MSS_CR5B_AXI_WR_SEC_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR_DED_Test,             "MSS_CR5B_AXI_WR_DED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
-    {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_WR_RED_Test,             "MSS_CR5C_AXI_WR_RED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR_RED_Test,             "MSS_CR5D_AXI_WR_RED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_WR_SEC_Test,             "MSS_CR5C_AXI_WR_SEC_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_WR_DED_Test,             "MSS_CR5C_AXI_WR_DED_Test in Interrupt  Method",    SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR_SEC_Test,             "MSS_CR5D_AXI_WR_SEC_Test in Interrupt Method",     SDL_APP_NOT_RUN },//Need TC
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR_DED_Test,             "MSS_CR5D_AXI_WR_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },//Need TC
-    #endif
     {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_SEC_Test,             "MSS_CR5A_AXI_RD_SEC_Test in Interrupt Method",     SDL_APP_NOT_RUN },
+    /* CR5A_AXI_RD_DED: Callback occurs, but jump out of code */
+    //{SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_DED_Test,             "MSS_CR5A_AXI_RD_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_RED_Test,             "MSS_CR5A_AXI_RD_RED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_SEC_Test,             "MSS_CR5B_AXI_RD_SEC_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_DED_Test,             "MSS_CR5B_AXI_RD_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_RED_Test,             "MSS_CR5B_AXI_RD_RED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD_DED_Test,             "MSS_CR5A_AXI_RD_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },//Callback occurs, but jump out of code
+    #if defined(SOC_AM263PX) || defined (SOC_AM261X)//To be tested on am263x
+    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_SEC_Test,              "MSS_CR5A_AXI_S_SEC_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_DED_Test,              "MSS_CR5A_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    #endif
+    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_RED_Test,              "MSS_CR5A_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    //{SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_SEC_Test,              "MSS_CR5B_AXI_S_SEC_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    //{SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_DED_Test,              "MSS_CR5B_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_RED_Test,              "MSS_CR5B_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
+    #if defined (R5F1_INPUTS)
     #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_SEC_Test,             "MSS_CR5C_AXI_RD_SEC_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD_DED_Test,             "MSS_CR5C_AXI_RD_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
@@ -408,14 +407,6 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_SEC_Test,             "MSS_CR5D_AXI_RD_SEC_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_DED_Test,             "MSS_CR5D_AXI_RD_DED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_RED_Test,             "MSS_CR5D_AXI_RD_RED_Test in Interrupt Method",     SDL_APP_NOT_RUN },
-    #endif
-    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_SEC_Test,              "MSS_CR5A_AXI_S_SEC_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_DED_Test,              "MSS_CR5A_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S_RED_Test,              "MSS_CR5A_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_SEC_Test,              "MSS_CR5B_AXI_S_SEC_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_DED_Test,              "MSS_CR5B_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    {SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_RED_Test,              "MSS_CR5B_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
-    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_SEC_Test,              "MSS_CR5C_AXI_S_SEC_Test in Interrupt Method",      SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_DED_Test,              "MSS_CR5C_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_RED_Test,              "MSS_CR5C_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
@@ -423,12 +414,15 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_DED_Test,              "MSS_CR5D_AXI_S_DED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_RED_Test,              "MSS_CR5D_AXI_S_RED_Test in Interrupt Method",      SDL_APP_NOT_RUN },
     #endif
+    #endif
     #if defined (SOC_AM261X)
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test,                    "MSS_GPMC_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test,                    "MSS_GPMC_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test,                    "MSS_GPMC_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     #endif
     {SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_Test,                    "MSS_L2_A_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    /* L2_A_DED: Callback occurs, but jump out of code */
+    //{SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test,                    "MSS_L2_A_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test,                    "MSS_L2_A_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_Test,                    "MSS_L2_B_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_Test,                    "MSS_L2_B_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
@@ -436,19 +430,18 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_L2_C_SEC_Test,                    "MSS_L2_C_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_C_DED_Test,                    "MSS_L2_C_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_Test,                    "MSS_L2_C_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test,                    "MSS_L2_A_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },//Callback occurs, but jump out of code
     #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     {SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_Test,                    "MSS_L2_D_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_Test,                    "MSS_L2_D_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test,                    "MSS_L2_D_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-#endif
-#if defined (SOC_AM263PX)
+    #endif
+    #if defined (SOC_AM263PX)
     {SDL_ECC_BUS_SAFETY_MSS_L2_E_RED_Test,                    "MSS_L2_E_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_E_SEC_Test,                    "MSS_L2_E_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_E_DED_Test,                    "MSS_L2_E_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_L2_E_SEC_Test,                    "MSS_L2_E_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_L2_E_DED_Test,                    "MSS_L2_E_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_L2_F_RED_Test,                    "MSS_L2_F_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_F_SEC_Test,                    "MSS_L2_F_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_F_DED_Test,                    "MSS_L2_F_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
-    //{SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test,                    "MSS_L2_A_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_L2_F_SEC_Test,                    "MSS_L2_F_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_L2_F_DED_Test,                    "MSS_L2_F_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     #endif
     #if defined(SOC_AM263PX) || defined (SOC_AM261X)
     {SDL_ECC_BUS_SAFETY_MSS_CPSW_SEC_Test,                    "MSS_CPSW_SEC_Test in Interrupt Method",          SDL_APP_NOT_RUN },
@@ -573,7 +566,13 @@ void sdl_ecc_bus_safety_test_main(void *args)
 
     DebugP_log("\n ECC BUS SAFETY  Application\r\n");
 
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+    CacheP_disable(CacheP_TYPE_ALL);
+    #endif
     ecc_bus_safety_testExecute();
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+    CacheP_enable(CacheP_TYPE_ALL);
+    #endif
 }
 
 /* Nothing past this point */

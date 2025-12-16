@@ -727,13 +727,17 @@ extern int32_t SDL_ECC_BUS_SAFETY_DAP_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DAP_RED_Test(void);
 #endif
 
-#if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
+#if defined (SOC_AM273X) ||  defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #if defined (SUBSYS_MSS)
 /* CPSW setup */
 extern void setup_CPSW(void);
 /* CPSW transfer */
 extern void cpsw_transfer(void);
 #endif
+#endif
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+extern void cpsw_transfer_ded();
 #endif
 
 #ifdef __cplusplus

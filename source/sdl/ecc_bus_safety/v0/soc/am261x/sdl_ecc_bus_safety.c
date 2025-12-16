@@ -447,23 +447,22 @@ static uint32_t SDL_ECC_BUS_SAFETY_MSS_isReadableNode(uint32_t busSftyNode)
     uint32_t testNode = 0U;
     uint32_t retval = SDL_ECC_BUS_SAFETY_MSS_WRITABLE_NODE;
 
-    testNode = busSftyNode;
-    if(testNode < SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE)
+    if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE)
     {
-      checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_1_MASK) & ((uint32_t)1<<(testNode));
-      if(checkNode != (uint32_t)0)
-      {
-        retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
-      }
+        checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_1_MASK) & ((uint32_t)1<<(busSftyNode));
+        if(checkNode != (uint32_t)0)
+        {
+            retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
+        }
     }
     else
     {
-      testNode = testNode - SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE;
-      checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK) & ((uint32_t)1<<(testNode));
-      if(checkNode != (uint32_t)0)
-      {
-        retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
-      }
+        testNode = busSftyNode - SDL_MSS_CTRL_MSS_VBUSM_SAFETY_ERRAGG0_SIZE;
+        checkNode = (SDL_ECC_BUS_SAFETY_MSS_NODE_READABLE_2_MASK) & ((uint32_t)1<<(testNode));
+        if(checkNode != (uint32_t)0)
+        {
+            retval = SDL_ECC_BUS_SAFETY_MSS_READABLE_NODE;
+        }
     }
     return retval;
 }
@@ -831,8 +830,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MSS_L2_A_BUS_SAFETY_ERR;
             baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MSS_L2_A_BUS_SAFETY_FI;
             baseAddrOffst->busSftyErrStat       = SDL_MSS_CTRL_MSS_L2_A_BUS_SAFETY_ERR_STAT;
-            baseAddrOffst->nodeEndAddr          = SDL_MPU_L2OCRAM_BANK0_END;
-            baseAddrOffst->nodeStartAddr        = SDL_MPU_L2OCRAM_BANK0;
+            baseAddrOffst->nodeEndAddr          = SDL_L2OCRAM_BANK0_END;
+            baseAddrOffst->nodeStartAddr        = SDL_L2OCRAM_BANK0;
             break;
         }
         /* MSS_L2_B*/
@@ -842,8 +841,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MSS_L2_B_BUS_SAFETY_ERR;
             baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MSS_L2_B_BUS_SAFETY_FI;
             baseAddrOffst->busSftyErrStat       = SDL_MSS_CTRL_MSS_L2_B_BUS_SAFETY_ERR_STAT;
-            baseAddrOffst->nodeEndAddr          = SDL_MPU_L2OCRAM_BANK1_END;
-            baseAddrOffst->nodeStartAddr        = SDL_MPU_L2OCRAM_BANK1;
+            baseAddrOffst->nodeEndAddr          = SDL_L2OCRAM_BANK1_END;
+            baseAddrOffst->nodeStartAddr        = SDL_L2OCRAM_BANK1;
             break;
         }
         /* MSS_L2_C*/
@@ -853,8 +852,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MSS_L2_C_BUS_SAFETY_ERR;
             baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MSS_L2_C_BUS_SAFETY_FI;
             baseAddrOffst->busSftyErrStat       = SDL_MSS_CTRL_MSS_L2_C_BUS_SAFETY_ERR_STAT;
-            baseAddrOffst->nodeEndAddr          = SDL_MPU_L2OCRAM_BANK2_END;
-            baseAddrOffst->nodeStartAddr        = SDL_MPU_L2OCRAM_BANK2;
+            baseAddrOffst->nodeEndAddr          = SDL_L2OCRAM_BANK2_END;
+            baseAddrOffst->nodeStartAddr        = SDL_L2OCRAM_BANK2;
             break;
         }
         /* MSS_MBOX*/
@@ -886,8 +885,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MSS_OSPI_BUS_SAFETY_ERR;
             baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MSS_OSPI_BUS_SAFETY_FI;
             baseAddrOffst->busSftyErrStat       = SDL_MSS_CTRL_MSS_OSPI_BUS_SAFETY_ERR_STAT;
-            baseAddrOffst->nodeEndAddr          = SDL_OSPI0_U_BASE_END;
-            baseAddrOffst->nodeStartAddr        = SDL_OSPI0_U_BASE;
+            baseAddrOffst->nodeEndAddr          = SDL_OSPI_U_BASE_END;
+            baseAddrOffst->nodeStartAddr        = SDL_OSPI_U_BASE;
             break;
         }
         /* MSS_MMC */
