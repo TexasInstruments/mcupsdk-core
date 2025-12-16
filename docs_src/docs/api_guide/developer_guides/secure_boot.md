@@ -70,6 +70,12 @@ For more information, please refer TIFS-MCU documentation
 To make the secure/non-secure differences seamless for the user, a configuration file is provided at `${SDK_INSTALL_PATH}/devconfig/devconfig.mak`.
 In this configuration file, you can set certain options like the device type, keys to be used for signing and encryption etc. By default they will point to the dummy customer MPKs and MEKs but if you're using a production device with your own keys, please change the paths here to point to the right key files. Configuration of this file is currently manual, this will be made configurable by a GUI in an upcoming release.
 
+\cond SOC_AM273X
+Select the Key Version according to the keys being used in the device.
+Update KEY_VERSION variable based on the keys used either 1.1 or 1.2. By default 1.1 key version is set (KEY_VERSION=1.1) in devconfig.mak.
+
+KEY_VERSION is applicable only for HS-FS devices.
+\endcond
 The devconfig.mak file looks something like this:
 
 \cond SOC_AM243X||SOC_AM64X
@@ -211,6 +217,24 @@ endif
 APP_SIGNING_KEY_KEYRING_ID?=0
 APP_ENCRYPTION_KEY_KEYRING_ID?=0
 
+# Macros for multicore-elf genimage.py script
+MCELF_MERGE_SEGMENTS_FLAG?=true
+MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT?=0
+MCELF_IGNORE_CONTEXT_FLAG?=false
+MCELF_XIP_RANGE?=0x60000000:0x68000000
+# Default am263x address translation JSON is in tools/boot/multicore-elf/deviceData/AddrTranslate/am263x.json
+MCELF_ADDR_TRANSLATION_PATH?=none
+
+#Maximum size of a loadable elf segment. 
+#MCELF_MERGE_SEGMENTS_FLAG should be set to false to achieve this effect.
+MCELF_MAX_SEGMENT_SIZE?=8192
+
+ifeq ($(DEVICE),am273x)
+    ifeq ($(DEVICE_TYPE),GP)
+        # Only set KEY_VERSION for HS-FS(GP), not for HSSE
+        KEY_VERSION=1.1
+    endif
+endif
 \endcode
 \endcond
 
@@ -264,6 +288,12 @@ endif
 
 This file will be included in all example makefiles
 
+\cond SOC_AM273X
+If key version not updated accordingly then user might encounter 
+\code
+hsm runtime firmware load failure ...
+\endcode
+\endcond
 ### Signing tool
 
 For signing the binaries, two different scripts are used:
