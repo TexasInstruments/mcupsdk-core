@@ -727,3 +727,5 @@ Module       | Migration guide                              | Older version  | N
 -------------|----------------------------------------------|----------------| -----------------
 Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >= 11.01.00
 Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 11.01.00  | >= 11.02.00
+OSPI_HLD     |  \ref OSPI_HLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
+OSPI_LLD     |  \ref OSPI_LLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
