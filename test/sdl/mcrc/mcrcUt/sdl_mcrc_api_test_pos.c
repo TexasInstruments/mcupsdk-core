@@ -188,6 +188,12 @@ int32_t sdl_mcrc_posTest(void)
         SDL_MCRC_init(instance,channel,0U,0U);
         SDL_MCRC_channelReset(instance,channel);
 
+    #if defined (R5F_CORE)
+        for (i = 0; i < MCRC_1KB_BYTES/4; i++)
+        {
+            profMCRCData[i] = i;
+        }
+    #else
         for (i = 0; i < MCRC_128KB_BYTES/4; i++)
         {
             profMCRCData[i] = i;
@@ -218,7 +224,7 @@ int32_t sdl_mcrc_posTest(void)
             DebugP_log(" Error in MCRC Profiling run for 128KB \r\n");
         }
         DebugP_log("\r\n");
-
+    #endif
         /* For 1KB data size */
         DebugP_log("Profiling for 1KB dataset\r\n");
         mcrcData.size = MCRC_1KB_BYTES;
