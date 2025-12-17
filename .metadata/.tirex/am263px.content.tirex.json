@@ -18995,6 +18995,84 @@
         ],
         "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am263px-cc-dp83826/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am263px-cc-dp83tg720/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
@@ -19530,6 +19608,80 @@
         "description": "A Enet Cli App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cli_app",
         "location": "../../source/networking/enet/core/examples/enet_cli_app/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_cli_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cli App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cli_app",
+        "location": "../../source/networking/enet/core/examples/enet_cli_app/am263px-cc-dp83826/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_cli_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cli App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cli_app",
+        "location": "../../source/networking/enet/core/examples/enet_cli_app/am263px-cc-dp83tg720/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -21413,6 +21565,120 @@
         "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263px-lp-dp83869/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "tsn",
+            "gptp_lwip_cpsw",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gptp Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_lwip_cpsw",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "tsn",
+            "gptp_lwip_cpsw",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gptp Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_lwip_cpsw",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263px-cc-dp83826/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "tsn",
+            "gptp_lwip_cpsw",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gptp Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_lwip_cpsw",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263px-cc-dp83tg720/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
         ],
         "kernel": [
             "freertos"
