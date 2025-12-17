@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.24.1+4189"}
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -64,12 +64,7 @@ bootloader1.hsmrtImageOffset = "0x00040000";
 
 flash1.$name                                    = "CONFIG_FLASH0";
 bootloader1.flashDriver                         = flash1;
-flash1.strDtr_isAddrReg                         = true;
-flash1.strDtr_cmdRegRd                          = "0x85";
-flash1.strDtr_cmdRegWr                          = "0x81";
 flash1.xspiWipRdCmd                             = "0x05";
-flash1.strDtr_shift                             = 255;
-flash1.protocol                                 = "8d_8d_8d";
 flash1.fourByteEnableSeq                        = "0";
 flash1.cmdRd                                    = "0x7c";
 flash1.dummy_mask                               = "0xff";
@@ -354,18 +349,7 @@ enet_cpsw1.DisableMacPort1              = true;
 enet_cpsw1.RtosVariant                  = "NoRTOS";
 enet_cpsw1.macAddrConfig                = "Manual Entry";
 enet_cpsw1.cptsHostRxTsEn               = false;
-enet_cpsw1.RGMII2.RD0.$used             = false;
-enet_cpsw1.RGMII2.RD1.$used             = false;
-enet_cpsw1.RGMII2.RD2.$used             = false;
-enet_cpsw1.RGMII2.RD3.$used             = false;
-enet_cpsw1.RGMII2.RX_CTL.$used          = false;
-enet_cpsw1.RGMII2.RXC.$used             = false;
-enet_cpsw1.RGMII2.TD0.$used             = false;
-enet_cpsw1.RGMII2.TD1.$used             = false;
-enet_cpsw1.RGMII2.TD2.$used             = false;
-enet_cpsw1.RGMII2.TD3.$used             = false;
-enet_cpsw1.RGMII2.TX_CTL.$used          = false;
-enet_cpsw1.RGMII2.TXC.$used             = false;
+enet_cpsw1.RGMII2.$assign               = "RGMII2";
 enet_cpsw1.txDmaChannel[0].$name        = "ENET_DMA_TX_CH0";
 enet_cpsw1.txDmaChannel[0].PacketsCount = 8;
 enet_cpsw1.rxDmaChannel[0].$name        = "ENET_DMA_RX_CH0";
@@ -388,17 +372,15 @@ debug_log.uartLog.UART.$suggestSolution       = "UART0";
 enet_cpsw1.MDIO.$suggestSolution              = "MDIO";
 enet_cpsw1.MDIO.MDC.$suggestSolution          = "MDIO_MDC";
 enet_cpsw1.MDIO.MDIO.$suggestSolution         = "MDIO_MDIO";
-enet_cpsw1.RGMII1.$suggestSolution            = "RGMII2";
-enet_cpsw1.RGMII1.RD0.$suggestSolution        = "PR0_PRU0_GPIO0";
-enet_cpsw1.RGMII1.RD1.$suggestSolution        = "PR0_PRU0_GPIO1";
-enet_cpsw1.RGMII1.RD2.$suggestSolution        = "PR0_PRU0_GPIO2";
-enet_cpsw1.RGMII1.RD3.$suggestSolution        = "PR0_PRU0_GPIO3";
-enet_cpsw1.RGMII1.RX_CTL.$suggestSolution     = "PR0_PRU0_GPIO4";
-enet_cpsw1.RGMII1.RXC.$suggestSolution        = "PR0_PRU0_GPIO6";
-enet_cpsw1.RGMII1.TD0.$suggestSolution        = "PR0_PRU0_GPIO11";
-enet_cpsw1.RGMII1.TD1.$suggestSolution        = "PR0_PRU0_GPIO12";
-enet_cpsw1.RGMII1.TD2.$suggestSolution        = "PR0_PRU0_GPIO13";
-enet_cpsw1.RGMII1.TD3.$suggestSolution        = "PR0_PRU0_GPIO14";
-enet_cpsw1.RGMII1.TX_CTL.$suggestSolution     = "PR0_PRU0_GPIO15";
-enet_cpsw1.RGMII1.TXC.$suggestSolution        = "PR0_PRU0_GPIO16";
-enet_cpsw1.RGMII2.$suggestSolution            = "RGMII1";
+enet_cpsw1.RGMII2.RD0.$suggestSolution        = "PR0_PRU0_GPIO0";
+enet_cpsw1.RGMII2.RD1.$suggestSolution        = "PR0_PRU0_GPIO1";
+enet_cpsw1.RGMII2.RD2.$suggestSolution        = "PR0_PRU0_GPIO2";
+enet_cpsw1.RGMII2.RD3.$suggestSolution        = "PR0_PRU0_GPIO3";
+enet_cpsw1.RGMII2.RX_CTL.$suggestSolution     = "PR0_PRU0_GPIO4";
+enet_cpsw1.RGMII2.RXC.$suggestSolution        = "PR0_PRU0_GPIO6";
+enet_cpsw1.RGMII2.TD0.$suggestSolution        = "PR0_PRU0_GPIO11";
+enet_cpsw1.RGMII2.TD1.$suggestSolution        = "PR0_PRU0_GPIO12";
+enet_cpsw1.RGMII2.TD2.$suggestSolution        = "PR0_PRU0_GPIO13";
+enet_cpsw1.RGMII2.TD3.$suggestSolution        = "PR0_PRU0_GPIO14";
+enet_cpsw1.RGMII2.TX_CTL.$suggestSolution     = "PR0_PRU0_GPIO15";
+enet_cpsw1.RGMII2.TXC.$suggestSolution        = "PR0_PRU0_GPIO16";
