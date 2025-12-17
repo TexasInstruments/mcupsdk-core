@@ -4,11 +4,11 @@
 
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. RPRC image format has been deprecated from this release. Multi Core ELF image format should be used. (\ref MCELF_LANDING).
+\attention 2. RPRC image format has been deprecated from 11.00.00 release. Multi Core ELF image format support should be used.(\ref MCELF_LANDING)
 
 \attention 3. DFU Utils tool is not supported on Mac systems due to a build issue.
 
-\attention 4. SDK has been updated to support CCS Theia Out of Box from this release. Refer to Compatibility section below for changes w.r.t Eclipse.
+\attention 4. SDK has been updated to support CCS Theia Out of Box from 11.00.00 release. Refer to Compatibility section below for changes w.r.t Eclipse.
 
 \attention 5. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
@@ -20,20 +20,10 @@
 
 ## New in this Release
 
-Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|-----------------------------------
-Clock Tree support for PLL and Peripheral clock configuration                                                                                   | Sysconfig
-CCS Theia Support                                                                               | CCS
-Multi Core FreeRTOS IPC Example                                                                 | IPC
-OSPI Phy Graph Plotter Example                                                                  | OSPI
-Rev A Launchpad Support                                                                         | Board
-Rev A SOM Support                                                                               | Board
-Board Level Sysconfig Support                                                                   | Sysconfig
-USB Sysconfig support                                                                           | Sysconfig
-McSPI External Loopback Example                                                                 | McSPI
-USB NCM Class Support                                                                           | USB
-FreeRTOS based CDC Example                                                                      | USB
-SENT Decoder and Encoder Examples                                                               | PRU-IO
+Feature                                                                        | Module
+-------------------------------------------------------------------------------|-----------------------------------
+Enablement of MPU awareness in FreeRTOS                                        | FreeRTOS
+I2C Peripheral LLD example                                                     | I2C
 
 # Modules Not tested/supported in this release
 
@@ -50,14 +40,13 @@ AM261x | R5F             | AM261x SOM Rev A          (referred to as am261x-som 
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 20.3.0
-SysConfig               | R5F            | 1.25.0 build, build 42688
-TI ARM CLANG            | R5F            | 4.0.3.LTS
+Code Composer Studio    | R5F            | 20.4.0
+SysConfig               | R5F            | 1.26.0 build, build 4407
+TI ARM CLANG            | R5F            | 4.0.4.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_1_RELEASE
 Mbed-TLS                | R5F            | 2.13.1
-Uniflash                | R5F            | 9.3.0
-
+Uniflash                | R5F            | 9.4.0
 
 ## Key Features
 
@@ -196,60 +185,60 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> MCUSDK-14055
-    <td> SBL DFU and SBL DFU Uniflash Example failure
-    <td> USB
-    <td> 10.00.01 onwards
-    <td> AM261x
-    <td> Resolved in driver
+    <td> MCUSDK-15024
+    <td> HHV mask is required before setting ADC reference buffers
+    <td> ADC
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Implemented the register programming sequence as per TRM
 </tr>
 <tr>
-    <td> MCUSDK-14502
-    <td> PMIC WDG QA Example not working on AM261x-LP E2 board
-    <td> PMIC
-    <td> 10.02.00 onwards
-    <td> AM261x
-    <td> Fixed in driver by increasing sleep time for waiting to trigger wdg reset
+    <td> MCUSDK-14935
+    <td> MMCSD LLD uses incorrect data type for status check
+    <td> MMCSD
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Resolved in driver code
 </tr>
 <tr>
-    <td> MCUSDK-14547
-    <td> XIP Flashing not supported in SBL JTAG Uniflash example
+    <td> MCUSDK-15130
+    <td> CCS compilation error when adding PBIST to SBL via sysconfig
     <td> SBL
-    <td> 10.00.00 onwards
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed by linking prebuilt SDL libraries to SBL project
+</tr>
+<tr>
+    <td> MCUSDK-14953
+    <td> Load from json not working in CCS Theia
+    <td> Flash
+    <td> 11.00.00 onwards
     <td> AM263Px, AM261x
-    <td> Added XIP flashing support in the example
+    <td> Resolved in CCS 20.4
 </tr>
 <tr>
-    <td> MCUSDK-14609
-    <td> FOTA Example Failure on AM261x SOM
-    <td> OptiFlash
-    <td> 10.02.00 onwards
-    <td> AM261x
-    <td> Resolved by reducing OSPI clock frequency from 166Mhz to 133Mhz
+    <td> MCUSDK-15080
+    <td> Incorrect configuration of xspiWipRdCmd
+    <td> Flash
+    <td> 11.00.00 onwards
+    <td> AM263Px, AM261x
+    <td> Resolved in OSPI driver
 </tr>
 <tr>
-    <td> MCUSDK-14606
-    <td> USB Enumeration fails randomly
-    <td> USB
-    <td> 10.02.00 onwards
-    <td> AM261x
-    <td> -
+    <td> MCUSDK-15148
+    <td> SOC RCM clock configuration static register optimized with O2 compilation flag
+    <td> SOC
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Resolved in SOC RCM driver
 </tr>
 <tr>
-    <td> MCUSDK-14704
-    <td> Adding multiple instances of UART DMA LLD causes failure
-    <td> UART
+    <td> MCUSDK-14933
+    <td> I2C1 to I2C3 communication failing
+    <td> I2C
     <td> 10.02.00 onwards
     <td> AM263x, AM263Px, AM261x
-    <td> Fixed array indexing while assigning dma config
-</tr>
-<tr>
-    <td> MCUSDK-14917
-    <td> "Selected mode" in pinmux.csv.xdt file not being updated correctly in SysCfg
-    <td> Pinmux
-    <td> 10.01.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Fixed in Pinmux CSV template
+    <td> Resolved in I2C driver source code
 </tr>
 <tr>
     <td> PROC_SDL-9179
@@ -258,86 +247,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.02.00 onwards
     <td> AM263Px, AM261x
     <td> Resolved in Source code
-</tr>
-<tr>
-    <td> MCUSDK-14749
-    <td> McSPI: Non Powers of 2 cannot be configured as fifo trigger levels in polling and interrupt mode
-    <td> McSPI
-    <td> 10.02.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Fix in SysCfg Meta file.
-</tr>
-<tr>
-    <td> MCUSDK-13966
-    <td> All UART triggers levels not exposed in SysCfg
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Update SysCfg to show all trigger levels from 1 to 64.
-</tr>
-<tr>
-    <td> MCUSDK-14573
-    <td> Incorrect handling of errata i2310 in UART isr
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Reorder the ISR state machine for handling UART errata correctly.
-</tr>
-<tr>
-    <td> MCUSDK-14706
-    <td> GPIO Qual selection API missing
-    <td> GPIO
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Qual sel API added in pinmux driver
-</tr>
-<tr>
-    <td> MCUSDK-14569
-    <td> UART Errata i2310 is missing a step
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Added IIR register read to clear the interrupt
-</tr>
-<tr>
-    <td> MCUSDK-14620
-    <td> SDK build fails in Mac Machines
-    <td> Build
-    <td> 10.02.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Added GMAC library for MAC into SDK
-</tr>
-<tr>
-    <td> MCUSDK-14659
-    <td> Incorrect RTI clock source mux address for RTI 4 to 7
-    <td> RTI
-    <td> 10.00.00 onwards
-    <td> AM263Px, AM261x
-    <td> Updated to correct mux addresses in SysCfg
-</tr>
-<tr>
-    <td> MCUSDK-13182
-    <td> SysCfg unexpectedly changes OSPI Pin
-    <td> OSPI
-    <td> 10.00.00 onwards
-    <td> AM263Px, AM261x
-    <td> The OSPI pins are locked in SDK examples.
-</tr>
-<tr>
-    <td> MCUSDK-14857, MCUSDK-14731
-    <td> Core 1 unhalted in SBL before FSM Trigger, Memory load
-    <td> SBL
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Skip unhalting core 1 of both clusters in dual core mode
-</tr>
-<tr>
-    <td> MCUSDK-14712
-    <td> OSPI Reset Pin being used before configuration
-    <td> OSPI
-    <td> 10.00.00 onwards
-    <td> AM263Px, AM261x
-    <td> Configure OSPI reset in OSPI open instead of Flash open
 </tr>
 <tr>
     <td> PROC_SDL-9597
@@ -362,38 +271,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 11.00.00 onwards
     <td> AM263x, AM263Px, AM261x
     <td> Cleared the error status in code.
-</tr>
-<tr>
-    <td> MCUSDK-14695
-    <td> SDFM_configComparator has incorrect input in examples
-    <td> SDFM
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Updated example to pass correct value
-</tr>
-<tr>
-    <td> MCUSDK-14696
-    <td> ADC Sysconfig does not seem to generate codes for repeaters
-    <td> ADC
-    <td> 10.00.00 onwards
-    <td> AM263Px, AM261x
-    <td> Fixed syscfg template file to generate trigger repeater code for burst mode
-</tr>
-<tr>
-    <td> MCUSDK-14645
-    <td> Implementation of the ADC_selectSOCExtChannel
-    <td> ADC
-    <td> 10.01.00 onwards
-    <td> AM263Px, AM261x
-    <td> Fixed ADC_selectSOCExtChannel API implementation
-</tr>
-<tr>
-    <td> PROC_SDL-9147
-    <td> VTM Usecase stuck in integrated example
-    <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263Px, AM261x
-    <td> Fixed in integrated example
 </tr>
 <tr>
     <td> PINDSW-9499

@@ -3,15 +3,13 @@
 [TOC]
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. RPRC image format has been deprecated from this release. Multi Core ELF image format support should be used.(\ref MCELF_LANDING)
+\attention 2. RPRC image format has been deprecated from 11.00.00 release. Multi Core ELF image format support should be used.(\ref MCELF_LANDING)
 
 \attention 3. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
-\attention 4. SDK has been updated to support CCS Theia Out of Box from this release. Refer to Compatibility section below for changes w.r.t Eclipse.
+\attention 4. SDK has been updated to support CCS Theia Out of Box from 11.00.00 release. Refer to Compatibility section below for changes w.r.t Eclipse.
 
-\attention 5. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
-
-\attention 6. For customer migrating from any release before SDK 10.00.00 to 10.00.00 or any release after, "DPL CFG" module has to be added in SysCfg in order to enable interrupts during DPL initialization. This module was added in SysCfg for 10.00.00 release to allow configuring Init time Enable/Disable of interrupts for RTOS applications (Default set to enabled).
+\attention 5. For customer migrating from any release before SDK 10.00.00 to 10.00.00 or any release after, "DPL CFG" module has to be added in SysCfg in order to enable interrupts during DPL initialization. This module was added in SysCfg for 10.00.00 release to allow configuring Init time Enable/Disable of interrupts for RTOS applications (Default set to enabled).
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -21,18 +19,15 @@
 
 Feature                                                                        | Module
 -------------------------------------------------------------------------------|-----------------------------------
-Clock Tree Support for PLL and Peripheral Clock configuration                  | SysCfg
-CCS Theia Support                                                              | CCS
-Multi Core FreeRTOS IPC Example                                                | IPC
-Board Level SysCfg support                                                     | SysCfg
-McSPI External Loopback Example                                                | McSPI
+Enablement of MPU awareness in FreeRTOS                                        | FreeRTOS
+I2C Peripheral LLD example                                                     | I2C
 
 ## Device and Validation Information
 
 \cond SOC_AM263X
 SOC   | Supported CPUs  | EVM                                                                          | Host PC
 ------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263x| R5F             | AM263x ControlCard Revision E2  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM263x| R5F             | AM263x ControlCard Revision A  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x-lp in code)           | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 \endcond
 
@@ -40,13 +35,13 @@ AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 20.2.0
-SysConfig               | R5F            | 1.24.2 build, build 4234
-TI ARM CLANG            | R5F            | 4.0.3.LTS
+Code Composer Studio    | R5F            | 20.4.0
+SysConfig               | R5F            | 1.26.0 build, build 4407
+TI ARM CLANG            | R5F            | 4.0.4.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_1_RELEASE
 Mbed-TLS                | R5F            | 2.13.1
-Uniflash                | R5F            | 9.2.0
+Uniflash                | R5F            | 9.4.0
 
 ## Key Features
 
@@ -191,100 +186,44 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> MCUSDK-14749
-    <td> McSPI: Non Powers of 2 cannot be configured as fifo trigger levels in polling and interrupt mode
-    <td> McSPI
-    <td> 10.02.00 onwards
-    <td> AM263x, AM263Px
-    <td> Fix in SysCfg Meta file.
-</tr>
-<tr>
-    <td> MCUSDK-13966
-    <td> All UART triggers levels not exposed in SysCfg
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Update SysCfg to show all trigger levels from 1 to 64.
-</tr>
-<tr>
-    <td> MCUSDK-14573
-    <td> Incorrect handling of errata i2310 in UART isr
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Reorder the ISR state machine for handling UART errata correctly.
-</tr>
-<tr>
-    <td> MCUSDK-14704
-    <td> Adding multiple instances of UART DMA LLD causes failure
-    <td> UART
-    <td> 10.01.00 onwards
-    <td> AM263x, AM263Px
-    <td> SysCfg template update to pass the EDMA handle correctly
-</tr>
-<tr>
-    <td> MCUSDK-14706
-    <td> GPIO Qual selection API missing
-    <td> GPIO
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Qual sel API added in pinmux driver
-</tr>
-<tr>
-    <td> MCUSDK-14569
-    <td> UART Errata i2310 is missing a step
-    <td> UART
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Added IIR register read to clear the interrupt
-</tr>
-<tr>
-    <td> MCUSDK-14620
-    <td> SDK build fails in Mac Machines
-    <td> Build
-    <td> 10.02.00 onwards
-    <td> AM263x, AM263Px
-    <td> Added GMAC library for MAC into SDK
-</tr>
-<tr>
-    <td> MCUSDK-14857, MCUSDK-14731
-    <td> Core 1 unhalted in SBL before FSM Trigger, Memory load
-    <td> SBL
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Skip unhalting core 1 of both clusters in dual core mode
-</tr>
-<tr>
-    <td> MCUSDK-14695
-    <td> SDFM_configComparator has incorrect input in examples
-    <td> SDFM
-    <td> 10.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Updated example to pass correct value
-</tr>
-<tr>
-    <td> MCUSDK-13153
-    <td> Self nesting of interrupts is not working
-    <td> DPL
-    <td> 09.01.00 onwards
-    <td> AM263x, AM263Px
-    <td> Added macros for handling self re-entrant IRQ
-</tr>
-<tr>
-    <td> MCUSDK-11935
-    <td> DPL Low Latency Interrupt Application: controlfnc section missing in linker command
-    <td> DPL
-    <td> 09.00.00 onwards
-    <td> AM263x, AM263Px
-    <td> Added missing .controlfnc section in linker command file of DPL Low Latency Interrupt example
-</tr>
-<tr>
-    <td> MCUSDK-14917
-    <td> "Selected mode" in pinmux.csv.xdt file not being updated correctly in SysCfg
-    <td> Pinmux
-    <td> 10.01.00 onwards
+    <td> MCUSDK-15024
+    <td> HHV mask is required before setting ADC reference buffers
+    <td> ADC
+    <td> 11.00.00 onwards
     <td> AM263x, AM263Px, AM261x
-    <td> Fixed in Pinmux CSV template
+    <td> Implemented the register programming sequence as per TRM
+</tr>
+<tr>
+    <td> MCUSDK-14935
+    <td> MMCSD LLD uses incorrect data type for status check
+    <td> MMCSD
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Resolved in driver code
+</tr>
+<tr>
+    <td> MCUSDK-15130
+    <td> CCS compilation error when adding PBIST to SBL via sysconfig
+    <td> SBL
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed by linking prebuilt SDL libraries to SBL project
+</tr>
+<tr>
+    <td> MCUSDK-15148
+    <td> SOC RCM clock configuration static register optimized with O2 compilation flag
+    <td> SOC
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Resolved in SOC RCM driver
+</tr>
+<tr>
+    <td> MCUSDK-14933
+    <td> I2C1 to I2C3 communication failing
+    <td> I2C
+    <td> 10.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Resolved in I2C driver source code
 </tr>
 <tr>
     <td> PROC_SDL-9597
