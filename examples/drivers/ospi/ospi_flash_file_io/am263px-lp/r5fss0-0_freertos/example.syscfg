@@ -290,4 +290,4 @@ littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution         = "
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution         = "MCAN0_TX";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_CSn0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";

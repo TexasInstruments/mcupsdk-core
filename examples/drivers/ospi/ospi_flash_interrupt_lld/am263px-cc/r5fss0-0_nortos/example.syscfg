@@ -286,7 +286,7 @@ section12.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 ospi1.OSPI.$suggestSolution                 = "OSPI0";
-ospi1.OSPI.RESET_OUT0.$suggestSolution      = "EPWM10_B";
+ospi1.OSPI.RESET_OUT0.$suggestSolution      = "EPWM11_B";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";
 debug_log.uartLog.UART.RXD.$suggestSolution = "MMC_CLK";
 debug_log.uartLog.UART.TXD.$suggestSolution = "MMC_CMD";

@@ -315,4 +315,4 @@ section12.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM10_B";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";
