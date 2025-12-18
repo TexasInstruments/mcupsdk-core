@@ -55,6 +55,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 #define AM263x_SR11    (0x00000003u)
+#define AM263x_SR12    (0x00000004u)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -78,7 +79,8 @@ void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, 
         DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
     }
     else if((ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS) &&
-			(((ptrTopCtrlRegs->EFUSE1_ROW_15)&0xF) == AM263x_SR11))
+			((((ptrTopCtrlRegs->EFUSE1_ROW_15)&0xF) == AM263x_SR11) ||
+             (((ptrTopCtrlRegs->EFUSE1_ROW_15)&0xF) == AM263x_SR12)))
     {
         DebugP_logInfo("Device Type : HSFS  \r\n");
         retVal = Hsmclient_loadHSMRtFirmware(gHSMClient, (uint8_t*)HsmRtFw);
