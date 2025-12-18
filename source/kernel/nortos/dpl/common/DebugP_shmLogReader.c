@@ -38,12 +38,19 @@
 #define DEBUG_SHM_LOG_READER_LINE_BUF_SIZE  (130u)
 
 typedef struct {
-
     uint8_t isCoreShmLogInialized[CSL_CORE_ID_MAX];
-    DebugP_ShmLog *shmLog;
     uint8_t numCores;
-    char lineBuf[DEBUG_SHM_LOG_READER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_THREE]; /* +3 to add \r\n and null char at end of string in worst case */
 
+    /* 
+     * Support yieldable log processing so user can return and perform other tasks e.g. petting watchdog 
+     * 
+     * This is useful in scenarios when:
+     * - Other cores produce logs at a faster rate than the reader can consume them
+     * - The reader has other tasks to perform e.g. petting watchdog, servicing I/O, etc
+     */
+    uint16_t chunkSize; 
+    DebugP_ShmLog *shmLog;
+    char lineBuf[DEBUG_SHM_LOG_READER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_THREE]; /* +3 to add \r\n and null char at end of string in worst case */
 } DebugP_ShmLogReaderCtrl;
 
 DebugP_ShmLogReaderCtrl gDebugShmLogReaderCtrl;
@@ -66,8 +73,19 @@ void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores)
     }
     gDebugShmLogReaderCtrl.shmLog = shmLog;
     gDebugShmLogReaderCtrl.numCores = (uint8_t)numCores;
+    gDebugShmLogReaderCtrl.chunkSize = DebugP_SHM_LOG_READER_CHUNK_SIZE_INF;
 
     DebugP_shmLogReaderTaskCreate();
+}
+
+
+void DebugP_shmLogReaderSetChunkSize(uint16_t chunkSize){
+    gDebugShmLogReaderCtrl.chunkSize = chunkSize;
+}
+
+
+uint16_t DebugP_shmLogReaderGetChunkSize(void){
+    return gDebugShmLogReaderCtrl.chunkSize;
 }
 
 uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
@@ -163,8 +181,10 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
 void DebugP_shmLogRead(void) 
 {
 	uint32_t i;
-
-	for(i=0; i<gDebugShmLogReaderCtrl.numCores; i++)
+    uint32_t linesRead = 0;
+    static uint32_t coreIndex = 0;
+    
+	for(i=coreIndex; i<gDebugShmLogReaderCtrl.numCores; i++)
 	{
 		DebugP_ShmLog *shmLog = &gDebugShmLogReaderCtrl.shmLog[i];
 
@@ -190,9 +210,20 @@ void DebugP_shmLogRead(void)
 				{
 					DebugP_log(gDebugShmLogReaderCtrl.lineBuf);
 				}
+
+                if (gDebugShmLogReaderCtrl.chunkSize != DebugP_SHM_LOG_READER_CHUNK_SIZE_INF){
+                    linesRead++;
+                    if (linesRead >= gDebugShmLogReaderCtrl.chunkSize){
+                        /* Save core index so next invocation we resume log processing from the current core */
+                        coreIndex = i; 
+                        return;
+                    }
+                }
 			} while(strLen != 0U);
 		}
 	}
+    /* All logs processed without exceeding chunk size - reset core index to start from the beginning next invocation */
+    coreIndex = 0; 
 }
 
 void DebugP_shmLogReaderTaskMain(void *args)

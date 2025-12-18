@@ -39,6 +39,7 @@
 
 static DebugP_ShmLog *gDebugShmLogWriter = NULL;
 static const char *gDebugShmLogWriterSelfCoreName = "unknown";
+static uint8_t gDebugShmLogWriterPreludeEnabled = 0;
 
 void DebugP_shmLogWriterPutLine(const uint8_t *buf, uint16_t num_bytes);
 
@@ -49,6 +50,7 @@ void DebugP_shmLogWriterInit(DebugP_ShmLog *shmLog, uint16_t selfCoreId)
     gDebugShmLogWriter->rdIndex = 0;
     gDebugShmLogWriter->wrIndex = 0;
     gDebugShmLogWriter->isValid = DebugP_SHM_LOG_IS_VALID;
+    gDebugShmLogWriterPreludeEnabled = 1;
 }
 
 void DebugP_shmLogWriterPutLine(const uint8_t *buf, uint16_t num_bytes)
@@ -118,7 +120,7 @@ void DebugP_shmLogWriterPutChar(char character)
 static uint8_t lineBuf[DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_TWO]; /* +2 to add \r\n char at end of string in worst case */
 static uint32_t lineBufIndex = 0;
 
-    if(lineBufIndex==0U)
+    if(lineBufIndex==0U && gDebugShmLogWriterPreludeEnabled)
     {
         uint64_t curTime = ClockP_getTimeUsec();
 
@@ -154,3 +156,11 @@ static uint32_t lineBufIndex = 0;
     }
 }
 
+
+void DebugP_shmLogWriterPreludeEnable(){
+    gDebugShmLogWriterPreludeEnabled = 1;
+}
+
+void DebugP_shmLogWriterPreludeDisable(){
+    gDebugShmLogWriterPreludeEnabled = 0;
+}

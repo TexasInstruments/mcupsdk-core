@@ -92,6 +92,16 @@ extern "C" {
  */
 #define DebugP_SHM_LOG_IS_VALID     (0x12345678U)
 
+
+/** \brief Infinite read chunk size for the shared memory reader
+ *
+ * DebugP_shmLogReaderSetChunkSize(DebugP_SHM_LOG_READER_CHUNK_SIZE_INF) 
+ * will make DebugP_shmLogRead() process the entire shared memory log in one go 
+ * or until the end of the shared memory log is reached.
+ */
+#define DebugP_SHM_LOG_READER_CHUNK_SIZE_INF UINT16_MAX
+
+
 /**
  * Macro defines the value of two
  */
@@ -295,6 +305,18 @@ void DebugP_logZoneRestore(uint32_t logZoneMask);
 void DebugP_shmLogWriterInit(DebugP_ShmLog *shmLog, uint16_t selfCoreId);
 
 /**
+ * \brief Enable auto prelude for shared memory log writer
+ */
+void DebugP_shmLogWriterPreludeEnable();
+
+/**
+ * \brief Disable auto prelude for shared memory log writer
+ * 
+ * This is useful for creating structured logs
+ */
+void DebugP_shmLogWriterPreludeDisable();
+
+/**
  * \brief Write a character to shared memory log
  *
  * If shared memory log buffer is full, nothing is written and character gets "dropped"
@@ -323,10 +345,25 @@ void DebugP_uartLogWriterPutChar(char character);
  *
  * The parameter `shmLog` is a array and is indexed using core ID as defined by \ref CSL_CoreID
  *
+ * A single invocation processes up to DebugP_shmLogReaderGetChunkSize() log lines
+ *
  * \param shmLog    [in] Array of addresses of shared memory where the reader should read from.
  * \param numCores  [in] Number of entries in the shmLog array. Typically \ref CSL_CORE_ID_MAX
  */
 void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores);
+
+/** \brief Set the read chunk size for the shared memory reader
+ *
+ * \param readChunkSize [in] The read chunk size in bytes.
+ */
+void DebugP_shmLogReaderSetChunkSize(uint16_t readChunkSize);
+
+
+/** \brief Get the read chunk size for the shared memory reader
+ *
+ * \return The read chunk size in bytes.
+ */
+uint16_t DebugP_shmLogReaderGetChunkSize(void);
 
 /**
  * \brief Reads logs from shared memory.

@@ -195,7 +195,7 @@ const SOC_RcmClkSrcInfo gCLKOUTClkSrcInfoMap =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for MCAN
  */
-static uint16_t gMcanClkSrcValMap[] =
+static const uint16_t gMcanClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -218,7 +218,7 @@ static uint16_t gMcanClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for OSPI
  */
-static uint16_t gOspiClkSrcValMap[] =
+static const uint16_t gOspiClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -241,7 +241,7 @@ static uint16_t gOspiClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for RTI
  */
-static uint16_t gRtiClkSrcValMap[] =
+static const uint16_t gRtiClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -264,7 +264,7 @@ static uint16_t gRtiClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for WDT
  */
-static uint16_t gWdtClkSrcValMap[] =
+static const uint16_t gWdtClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -287,7 +287,7 @@ static uint16_t gWdtClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for McSPI
  */
-static uint16_t gMcSpiClkSrcValMap[] =
+static const uint16_t gMcSpiClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -310,7 +310,7 @@ static uint16_t gMcSpiClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for MMC
  */
-static uint16_t gMmcClkSrcValMap[] =
+static const uint16_t gMmcClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -333,7 +333,7 @@ static uint16_t gMmcClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for ICSSM UART
  */
-static uint16_t gIcssmUartClkSrcValMap[] =
+static const uint16_t gIcssmUartClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -356,7 +356,7 @@ static uint16_t gIcssmUartClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for CPTS
  */
-static uint16_t gCptsClkSrcValMap[] =
+static const uint16_t gCptsClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -402,7 +402,7 @@ static uint16_t gCptsClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for ControlSS PLL
  */
-static uint16_t gControlssPllClkSrcValMap[] =
+static const uint16_t gControlssPllClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
@@ -425,7 +425,7 @@ static uint16_t gControlssPllClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for I2C
  */
-static uint16_t gI2cClkSrcValMap[] =
+static const uint16_t gI2cClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -448,7 +448,7 @@ static uint16_t gI2cClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for LIN
  */
-static uint16_t gLinUartClkSrcValMap[] =
+static const uint16_t gLinUartClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
@@ -471,7 +471,7 @@ static uint16_t gLinUartClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for R5F and SYSCLK
  */
-static uint16_t gR5SysClkSrcValMap[] =
+static const uint16_t gR5SysClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
@@ -494,7 +494,7 @@ static uint16_t gR5SysClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for Trace
  */
-static uint16_t gTraceClkSrcValMap[] =
+static const uint16_t gTraceClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
@@ -517,7 +517,7 @@ static uint16_t gTraceClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for CLKOUT
  */
-static uint16_t gClkoutClkSrcValMap[] =
+static const uint16_t gClkoutClkSrcValMap[] =
 {
     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
@@ -540,7 +540,7 @@ static uint16_t gClkoutClkSrcValMap[] =
  * @details
  *  Mapping Array between Reset Cause Bit and Reset Cause
  */
-static SOC_RcmResetCause gResetBitToResetCause[12U] =
+static const SOC_RcmResetCause gResetBitToResetCause[12U] =
 {
     SOC_RcmResetCause_POWER_ON_RESET,
     SOC_RcmResetCause_WARM_RESET,
@@ -869,7 +869,7 @@ static uint32_t SBL_rcmIsDualCoreSwitchSupported(uint32_t cpuId)
  */
 static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
                                 SOC_RcmPeripheralClockSource clkSource,
-                                uint16_t *clkSrcVal,
+                                volatile uint16_t *clkSrcVal,
                                 volatile uint32_t **clkSrcReg,
                                 volatile uint32_t **clkdDivReg)
 {
@@ -2066,7 +2066,7 @@ int32_t SOC_rcmSetPeripheralClock (SOC_RcmPeripheralId periphId,
                                       uint32_t freqHz)
 {
     volatile uint32_t   *ptrClkSrcReg, *ptrClkDivReg;
-    uint16_t            clkSrcVal;
+    volatile uint16_t   clkSrcVal;
     uint32_t            clkDivisor;
     int32_t             retVal;
     uint32_t            Finp;
