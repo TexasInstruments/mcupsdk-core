@@ -89,6 +89,7 @@ uint32_t gBootloaderSelfCpuList[] = {
 
 uint32_t gR5ss0MemInitDone = FALSE;
 uint32_t gDssMemInitDone = FALSE;
+uint32_t gDssL3MemInitDone = FALSE;
 uint32_t gDssCm4MemInitDone = FALSE;
 uint32_t gR5ss0Core1ImagePresent = FALSE;
 
@@ -229,6 +230,13 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
 {
     int32_t status = SystemP_SUCCESS;
 
+    if (gDssL3MemInitDone == FALSE)
+    {
+            /* This memory is used by some R5F applications as well */
+            SOC_rcmStartMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
+            SOC_rcmWaitMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
+            gDssL3MemInitDone = TRUE;
+    }
     switch(cpuId) {
         case CSL_CORE_ID_R5FSS0_0:
         case CSL_CORE_ID_R5FSS0_1:
@@ -245,8 +253,6 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
         case CSL_CORE_ID_C66SS0:
             if (gDssMemInitDone == FALSE)
             {
-                SOC_rcmStartMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
-                SOC_rcmWaitMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
                 SOC_rcmMemInitDssMailboxMemory();
                 SOC_rcmStartMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 SOC_rcmWaitMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
