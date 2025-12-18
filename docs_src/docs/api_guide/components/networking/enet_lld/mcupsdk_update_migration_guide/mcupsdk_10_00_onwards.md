@@ -1,6 +1,10 @@
 # Version Updates from earlier SDKs to Latest {#enet_mcupsdk_10_00_update}
 [TOC]
 
+\cond SOC_AM273X
+\note To migrate from SDK version 09.02 to 11.02, you must apply all the change sets described in the sections below.
+\endcond
+
 ## While upgrading from 11.01 or earlier to latest SDK
 ### Change Set
 **Change-1**: Sysconfig generated file changes<br>

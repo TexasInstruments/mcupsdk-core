@@ -362,6 +362,14 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> 8.2.0 onwards
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
+<tr>
+	<td> EXT_SITMPUSW-272
+		<td> ENET: TCP Server example requires a second reset to run successfully
+		<td> CPSW
+		<td> 09.02.00 onwards
+		<td> This issue is likely related to the EVM power supply and may not occur on custom-designed boards. As a workaround, add a 0.1 second delay after starting the main task function.
+</tr>
+
 </table>
 
 ## Errata
@@ -545,11 +553,7 @@ earlier SDKs.
 
 ### Ethernet and Networking
 
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
+Module       | Migration guide                              | Older version  | Newer version
+-------------|----------------------------------------------|----------------| -----------------
+Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 09.02.00  | >= 11.02.00
+
