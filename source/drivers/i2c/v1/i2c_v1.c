@@ -113,7 +113,7 @@ static void I2C_LLD_transferCompleteCallback(void *args,
                                              int32_t transferStatus);
 
 static void I2C_LLD_targetTransferCompleteCallback(void *args,
-                                    const I2CLLD_Transaction * targetTxn,
+                                    const I2CLLD_targetTransaction * targetTxn,
                                     int32_t transferStatus);
 
 /* HWI Function */
@@ -666,13 +666,12 @@ static void I2C_LLD_transferCompleteCallback (void * args,
 }
 
 static void I2C_LLD_targetTransferCompleteCallback (void * args,
-                                const I2CLLD_Transaction * targetTxn,
+                                const I2CLLD_targetTransaction * targetTxn,
                                 int32_t transferStatus)
 {
     I2CLLD_Handle lldhandle = (I2CLLD_Handle)args;
     I2C_Config *config;
     I2C_Object *object;
-    I2CLLD_Transaction *lldTargetTxn = (I2CLLD_Transaction *)targetTxn;
 
     if((NULL_PTR != lldhandle) && (NULL_PTR != targetTxn))
     {
@@ -689,24 +688,27 @@ static void I2C_LLD_targetTransferCompleteCallback (void * args,
             }
             else
             {
+                /* For RESTART, need to update transaction - cast away const */
+                I2CLLD_targetTransaction *txn = (I2CLLD_targetTransaction *)targetTxn;
+
                 if((object->i2cParams.transferMode) == I2C_MODE_CALLBACK)
                 {
-                    object->currentTransaction->writeCount = lldTargetTxn->writeCount;
-                    object->currentTransaction->readCount = lldTargetTxn->readCount;
+                    object->currentTransaction->writeCount = txn->writeCount;
+                    object->currentTransaction->readCount = txn->readCount;
                     object->i2cParams.transferCallbackFxn(hldhandle,
                                                     object->currentTransaction,
                                                     transferStatus);
-                    lldTargetTxn->writeBuf = (uint8_t*)object->currentTransaction->writeBuf;
-                    lldTargetTxn->writeCount = object->currentTransaction->writeCount;
-                    lldTargetTxn->readBuf = (uint8_t*)object->currentTransaction->readBuf;
-                    lldTargetTxn->readCount = object->currentTransaction->readCount;
+                    txn->writeBuf = (uint8_t *)object->currentTransaction->writeBuf;
+                    txn->writeCount = object->currentTransaction->writeCount;
+                    txn->readBuf = (uint8_t *)object->currentTransaction->readBuf;
+                    txn->readCount = object->currentTransaction->readCount;
                 }
                 else
                 {
-                    lldTargetTxn->writeBuf = (uint8_t*)(object->currentTransaction->writeBuf);
-                    lldTargetTxn->writeCount = object->currentTransaction->writeCount;
-                    lldTargetTxn->readBuf = (uint8_t*)object->currentTransaction->readBuf;
-                    lldTargetTxn->readCount = object->currentTransaction->readCount;
+                    txn->writeBuf = (uint8_t *)object->currentTransaction->writeBuf;
+                    txn->writeCount = object->currentTransaction->writeCount;
+                    txn->readBuf = (uint8_t *)object->currentTransaction->readBuf;
+                    txn->readCount = object->currentTransaction->readCount;
                 }
             }
         }
@@ -788,25 +790,34 @@ static int32_t I2C_primeTransfer(I2C_Handle handle,
     /* Target Mode */
     else
     {
-        (void)I2C_lld_Transaction_init(&i2cLldHandle->i2ctxn);
-        i2cLldHandle->i2ctxn.writeBuf = (uint8_t*)object->currentTransaction->writeBuf;
-        i2cLldHandle->i2ctxn.writeCount = (uint32_t)object->currentTransaction->writeCount;
-        i2cLldHandle->i2ctxn.readBuf = (uint8_t*)object->currentTransaction->readBuf;
-        i2cLldHandle->i2ctxn.readCount = (uint32_t)object->currentTransaction->readCount;
-
-        (void)I2C_lld_Message_init(&i2cLldHandle->i2cMsg);
-        i2cLldHandle->i2cMsg.txn = &i2cLldHandle->i2ctxn;
-        i2cLldHandle->i2cMsg.txnCount = 1U;
-        i2cLldHandle->i2cMsg.timeout = object->currentTransaction->timeout;
-        i2cLldHandle->i2cMsg.expandSA = object->currentTransaction->expandSA;
-        i2cLldHandle->i2cMsg.controllerMode = false;
-
         if (true == hwAttrs->enableIntr)
         {
-            status = I2C_lld_transferIntr(i2cLldHandle, &(i2cLldHandle->i2cMsg));
+            /* Use dedicated target transfer API for interrupt mode */
+            i2cLldHandle->i2cTargetTransaction.writeBuf = (uint8_t*)object->currentTransaction->writeBuf;
+            i2cLldHandle->i2cTargetTransaction.writeCount = (uint32_t)object->currentTransaction->writeCount;
+            i2cLldHandle->i2cTargetTransaction.readBuf = (uint8_t*)object->currentTransaction->readBuf;
+            i2cLldHandle->i2cTargetTransaction.readCount = (uint32_t)object->currentTransaction->readCount;
+            i2cLldHandle->i2cTargetTransaction.timeout = object->currentTransaction->timeout;
+            i2cLldHandle->i2cTargetTransaction.expandSA = object->currentTransaction->expandSA;
+
+            status = I2C_lld_targetTransferIntr(i2cLldHandle, &(i2cLldHandle->i2cTargetTransaction));
         }
         else
         {
+            /* Use message-based API for polling mode */
+            (void)I2C_lld_Transaction_init(&i2cLldHandle->i2ctxn);
+            i2cLldHandle->i2ctxn.writeBuf = (uint8_t*)object->currentTransaction->writeBuf;
+            i2cLldHandle->i2ctxn.writeCount = (uint32_t)object->currentTransaction->writeCount;
+            i2cLldHandle->i2ctxn.readBuf = (uint8_t*)object->currentTransaction->readBuf;
+            i2cLldHandle->i2ctxn.readCount = (uint32_t)object->currentTransaction->readCount;
+
+            (void)I2C_lld_Message_init(&i2cLldHandle->i2cMsg);
+            i2cLldHandle->i2cMsg.txn = &i2cLldHandle->i2ctxn;
+            i2cLldHandle->i2cMsg.txnCount = 1U;
+            i2cLldHandle->i2cMsg.timeout = object->currentTransaction->timeout;
+            i2cLldHandle->i2cMsg.expandSA = object->currentTransaction->expandSA;
+            i2cLldHandle->i2cMsg.controllerMode = false;
+
             status = I2C_lld_transferPoll(i2cLldHandle, &(i2cLldHandle->i2cMsg));
             object->currentTransaction->status = status;
         }

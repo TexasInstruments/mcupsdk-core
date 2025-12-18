@@ -293,7 +293,7 @@ typedef struct {
 typedef struct {
 
 /** Buffer containing data to be written to controller */
-    const uint8_t                           *writeBuf;
+    uint8_t                                 *writeBuf;
 /** Number of bytes to be written to the controller */
     uint32_t                                writeCount;
 /** Buffer to which data from controller is to be read into */
@@ -358,12 +358,12 @@ typedef void (*I2C_lld_transferCompleteCallback) (void *args,
  *  the I2C driver when used in Target Mode
  *
  *  \param args                         Void Pointer
- *  \param targetTxn                    Pointer to I2CLLD_Transaction
+ *  \param targetTxn                    Pointer to I2CLLD_targetTransaction
  *                                      Object
  *  \param transferStatus               Transfer Status
  */
 typedef void (*I2C_lld_targetTransferCompleteCallback) (void *args,
-                                    const I2CLLD_Transaction * targetTxn,
+                                    const I2CLLD_targetTransaction * targetTxn,
                                     int32_t transferStatus);
 
 /* ========================================================================== */

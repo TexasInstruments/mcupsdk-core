@@ -4,7 +4,7 @@ let device = "am263x";
 
 const files = {
     common: [
-        "i2c_peripheral_transfer.c",
+        "i2c_peripheral_transfer_lld.c",
         "main.c",
     ],
 };
@@ -63,7 +63,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_I2C_PERIPHERAL_TRANSFER";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_I2C_PERIPHERAL_TRANSFER_LLD";
 
 const templates_nortos_r5f =
 [
@@ -71,49 +71,21 @@ const templates_nortos_r5f =
         input: ".project/templates/am263x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "i2c_peripheral_transfer_main",
-        },
-    }
-];
-
-const templates_freertos_r5f =
-[
-    {
-        input: ".project/templates/am263x/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "i2c_peripheral_transfer_main",
+            entryFunction: "i2c_peripheral_transfer_lld_main",
         },
     }
 ];
 
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos", isPartOfSystemProject: false},
 ];
-
-
-const systemProjects = [
-    {
-        name: "i2c_peripheral_transfer",
-        tag: "freertos_nortos",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am263x-lp",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos"},
-        ],
-    },
-];
-
 function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "i2c_peripheral_transfer";
+    property.name = "i2c_peripheral_transfer_lld";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

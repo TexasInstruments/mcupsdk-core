@@ -1617,18 +1617,18 @@ void I2C_lld_targetIsr(void* args)
                     * This is a restart condition, callback to application
                     * to restart read/write
                     */
-                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
-                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
+                    object->currentTargetTransaction->readCount -= object->readCountIdx;
+                    object->currentTargetTransaction->writeCount -= object->writeCountIdx;
 
                     handle->targetTransferCompleteCallback(handle,
-                                                        &(handle->currentMsg->txn[object->currentTxnCount]),
+                                                        object->currentTargetTransaction,
                                                         I2C_STS_RESTART);
 
-                    object->writeBufIdx = object->currentMsg->txn[object->currentTxnCount].writeBuf;
-                    object->writeCountIdx = object->currentMsg->txn[object->currentTxnCount].writeCount;
+                    object->writeBufIdx = object->currentTargetTransaction->writeBuf;
+                    object->writeCountIdx = object->currentTargetTransaction->writeCount;
 
-                    object->readBufIdx = object->currentMsg->txn[object->currentTxnCount].readBuf;
-                    object->readCountIdx = object->currentMsg->txn[object->currentTxnCount].readCount;
+                    object->readBufIdx = object->currentTargetTransaction->readBuf;
+                    object->readCountIdx = object->currentTargetTransaction->readCount;
 
                     handle->state = I2C_TARGET_RESTART_STATE;
 
@@ -1652,11 +1652,11 @@ void I2C_lld_targetIsr(void* args)
                 break;
 
             case I2C_IVR_INTCODE_NACK:
-                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
-                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
+                    object->currentTargetTransaction->readCount -= object->readCountIdx;
+                    object->currentTargetTransaction->writeCount -= object->writeCountIdx;
 
                     handle->targetTransferCompleteCallback(handle,
-                                                        &(handle->currentMsg->txn[object->currentTxnCount]),
+                                                        object->currentTargetTransaction,
                                                         I2C_STS_ERR_NO_ACK);
 
                 I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
@@ -1694,7 +1694,7 @@ void I2C_lld_targetIsr(void* args)
                     }
                     else
                     {
-                        if ((object->currentMsg->txn[object->currentTxnCount].writeCount) != (uint32_t)0U)
+                        if ((object->currentTargetTransaction->writeCount) != (uint32_t)0U)
                         {
                             /* TX buffer empty, send 0 */
                             I2CControllerDataPut(handle->baseAddr, 0U);
@@ -1706,25 +1706,17 @@ void I2C_lld_targetIsr(void* args)
             case I2C_IVR_INTCODE_SCD:
                     I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
                     I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
-                    object->currentMsg->txn[object->currentTxnCount].readCount -= object->readCountIdx;
-                    object->currentMsg->txn[object->currentTxnCount].writeCount -= object->writeCountIdx;
+                    object->currentTargetTransaction->readCount -= object->readCountIdx;
+                    object->currentTargetTransaction->writeCount -= object->writeCountIdx;
 
-                    if(object->currentTxnCount < (object->currentMsg->txnCount - 1U))
-                    {
-                        object->currentTxnCount++;
+                    
+                    handle->targetTransferCompleteCallback(handle,
+                                                        object->currentTargetTransaction,
+                                                        I2C_STS_SUCCESS);
+                    object->currentTargetTransaction = NULL;
+                    handle->state = I2C_STATE_IDLE;
 
-                        (void)I2C_lld_primeTransferIntr(handle, object->currentMsg);
 
-                        object->state = I2C_STATE_BUSY;
-                    }
-                    else
-                    {
-                        handle->targetTransferCompleteCallback(handle,
-                                                            &(handle->currentMsg->txn[object->currentTxnCount]),
-                                                            I2C_STS_SUCCESS);
-                        object->currentMsg = NULL;
-                        handle->state = I2C_STATE_IDLE;
-                    }
                 break;
 
             default:

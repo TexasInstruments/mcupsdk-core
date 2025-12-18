@@ -46,7 +46,6 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
-            -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
             -m=i2c_peripheral_transfer.${ConfigName}.map
             --diag_suppress=10063
@@ -71,7 +70,6 @@
             linkerBuildOptions="
                 -lnortos.am263x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.nortos.debug.lib
-                -lboard.am263x.r5f.ti-arm-clang.nortos.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -83,7 +81,6 @@
             linkerBuildOptions="
                 -lnortos.am263x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.nortos.release.lib
-                -lboard.am263x.r5f.ti-arm-clang.nortos.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
