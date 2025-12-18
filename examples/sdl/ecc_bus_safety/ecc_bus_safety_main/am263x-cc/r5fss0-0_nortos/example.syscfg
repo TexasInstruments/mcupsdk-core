@@ -18,7 +18,6 @@ const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
 const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
-const mpu_armv75      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -70,11 +69,6 @@ mpu_armv73.size     = 15;
 mpu_armv74.$name    = "CONFIG_MPU_REGION3";
 mpu_armv74.baseAddr = 0x70000000;
 mpu_armv74.size     = 21;
-
-mpu_armv75.$name      = "TCMB";
-mpu_armv75.baseAddr   = 0x78100000;
-mpu_armv75.size       = 18;
-mpu_armv75.attributes = "Device";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 

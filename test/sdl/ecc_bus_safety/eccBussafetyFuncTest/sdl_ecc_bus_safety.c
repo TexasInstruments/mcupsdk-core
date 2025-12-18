@@ -5349,13 +5349,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_FI_Global_Main_Test()
 int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_SEC_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_3_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI0_U_BASE));
+                                      SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_3_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI0_U_BASE+64U));
+                                      SDL_ECC_BUS_SAFETY_MSS_OSPI,SDL_OSPI_U_BASE+64U));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_OSPI_RED_Test(void)

@@ -63,6 +63,8 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_RED_test(uint32_t busSftyNode,\
 static int32_t SDL_ECC_BUS_SAFETY_MSS_DED_test(uint32_t busSftyNode ,uint32_t addr);
 /* generalized helper function for sec test on mss */
 static int32_t SDL_ECC_BUS_SAFETY_MSS_SEC_test(uint32_t busSftyNode ,uint32_t addr);
+/* check L2OCRAM RAM bus node*/
+static bool SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(uint32_t busSftyNode);
 #endif
 #endif
 
@@ -2181,6 +2183,26 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_RED_ESM_ApplicationCallbackFunction(SDL_
 #endif
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+
+/* To test L2OCRAM memory test, need to disable cache to  */
+/* avoid code crash as test is running on OCRAM only      */
+static bool SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(uint32_t busSftyNode)
+{
+    bool retVal = false;
+    if((busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_A) || (busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_B) || 
+       #if defined (SOC_AM263PX) 
+       (busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_E) || (busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_F) ||
+       #endif
+       #if defined (SOC_AM263X) || defined (SOC_AM263PX) 
+       (busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_D) || 
+       #endif
+       (busSftyNode == SDL_ECC_BUS_SAFETY_MSS_L2_C))
+    {
+        retVal = true;
+    }
+    return retVal;
+}
+
 /********************************************************************************************************
 *   For Node MSS_L2_A ESM Callback Function
 *********************************************************************************************************/
@@ -4158,7 +4180,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void)
             SDL_ECC_BUS_SAFETY_MSS_CPSW, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
 
-#if defined(SOC_AM261X)
+#if defined (SOC_AM263X) || defined(SOC_AM261X)
 /********************************************************************************************************
 *   For Node MSS_GPMC
 *********************************************************************************************************/
@@ -4171,7 +4193,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_DED,\
-                                        SDL_ECC_BUS_SAFETY_MSS_GPMC,SDL_GPMC0_CFG_U_BASE));
+                                        SDL_ECC_BUS_SAFETY_MSS_GPMC,SDL_GPMC0_CFG_U_BASE+0x64));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test(void)
@@ -5300,7 +5322,15 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_SEC_test(const SDL_ESM_Inst esmInstType,SD
     }
     if (ret_val == SDL_PASS)
     {
+        if(SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(busSftyNode))
+        {
+            CacheP_disable(CacheP_TYPE_L1D);
+        }
         ret_val = SDL_ECC_BUS_SAFETY_MSS_secExecute(busSftyNode,addr,writeData);
+        if(SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(busSftyNode))
+        {
+            CacheP_enable(CacheP_TYPE_L1D);
+        }
         if(ret_val !=SDL_PASS )
         {
             ret_val = SDL_EFAIL;
@@ -5657,7 +5687,15 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_DED_test(const SDL_ESM_Inst esmInstType,SD
     }
     if (ret_val == SDL_PASS)
     {
+        if(SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(busSftyNode))
+        {
+            CacheP_disable(CacheP_TYPE_L1D);
+        }
         ret_val = SDL_ECC_BUS_SAFETY_MSS_dedExecute(busSftyNode,addr,writeData);
+        if(SDL_ECC_BUS_SAFETY_MSS_isL2OCRAMNode(busSftyNode))
+        {
+            CacheP_enable(CacheP_TYPE_L1D);
+        }
         if(ret_val !=SDL_PASS )
         {
            ret_val = SDL_EFAIL;
