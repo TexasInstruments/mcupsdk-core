@@ -177,10 +177,6 @@ typedef struct
     uint32_t romStartAddress;
     /** Pointer of Rom start address */
     uint32_t pRomStartAdd;
-    /** Configure this for insert fault in STC test vector, not used and reserved*/
-    uint32_t faultInsert;
-    /** Configure this for enabling STC diagnostic check, not used and reserved*/
-    uint32_t stcDiagnostic;
     /** Configure scan mode configuration */
     SDL_STC_ScanModeconfig modeConfig;
 

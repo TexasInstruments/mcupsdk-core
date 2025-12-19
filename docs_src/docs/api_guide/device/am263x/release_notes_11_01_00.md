@@ -745,8 +745,8 @@ For FreeRTOS,
 ### SDL PBIST Self test
 VIM Memory groups are added to PBIST self test from this release. Because of this change, Self test (SDL_PBIST_selfTest) API has to be called in polling mode only and interrupt mode is not supported.
 
-### SDL STC unused variables
-faultInsert and stcDiagnostic not used for fault injection. Still, these are not removed to avoid build errors when update to the latest version of the library.
+### SDL STC Configuration
+faultInsert and stcDiagnostic are removed from SDL_STC_Config structure as unused in SDL library.
 
 ### Compiler Options
 
