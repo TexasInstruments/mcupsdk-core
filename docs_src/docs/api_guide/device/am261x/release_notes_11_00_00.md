@@ -654,6 +654,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.02.00 onwards
     <td> -
 </tr>
+<tr>
+    <td> PINDSW-9499
+    <td> Short serial message and enhanced serial message not working in SENT decoder using IEP ECAP example
+    <td> PRU-IO
+    <td> 11.00.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Errata

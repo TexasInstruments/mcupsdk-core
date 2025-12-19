@@ -75,7 +75,6 @@ ch4_syncpulse_max_dur       .set   600*56
 ch5_ticktime                .set   500
 ch5_syncpulse_min_dur       .set   400*56
 ch5_syncpulse_max_dur       .set   600*56
-MIN_PULSE_THRESHOLD .set 50
 
 ; Import the Chip Support Library Register Address defines
     .cdecls C,  NOLIST

@@ -390,6 +390,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263Px, AM261x
     <td> Fixed in integrated example
 </tr>
+<tr>
+    <td> PINDSW-9499
+    <td> Short serial message and enhanced serial message not working in SENT decoder using IEP ECAP example
+    <td> PRU-IO
+    <td> 11.01.00 onwards
+    <td> Fixed the glitch period and disable CCS log 
+</tr>
 </table>
 
 ## Known Issues
@@ -652,13 +659,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Mac OS Support not available for DFU Utils tool
     <td> USB
     <td> 10.02.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> PINDSW-9499
-    <td> Short serial message and enhanced serial message not working in SENT decoder using IEP ECAP example
-    <td> PRU-IO
-    <td> 11.00.00 onwards
     <td> -
 </tr>
 </table>

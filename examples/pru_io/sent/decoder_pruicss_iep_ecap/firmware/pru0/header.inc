@@ -214,6 +214,8 @@ CH3_INTR_BYTE               .set	(0x03)
 CH4_INTR_BYTE               .set	(0x04)
 CH5_INTR_BYTE               .set	(0x05)
 
+;glitch period for pulse detection
+MIN_PULSE_THRESHOLD         .set    (50)
 
 ;(serial message data+crc is stored)
 CH0_SERIAL_MSG_DATA_BASE               .set	(0x80)
