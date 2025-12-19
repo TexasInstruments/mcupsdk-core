@@ -15,6 +15,30 @@ The module supports below API's for the application
 * API to support and induce error on particular node bus.
 * API to support interrupt configuration
 
+Supported nodes
+
+\cond SOC_AM263X
+\imageStyle{am263x_bus.png,width:70%}
+\image html am263x_bus.png "ECC Bus Safety"
+Note:
+* CR5A_AXI_RD_SEC -  Tested in r5fss0-0 core. Similarly CR5B, CR5C, CR5D can be tested in relevant core.
+* L2_A, L2_B, L2_C and L2_D - To be tested by disable cache memory.
+\endcond
+\cond SOC_AM263PX
+\imageStyle{am263px_bus.png,width:70%}
+\image html am263px_bus.png "ECC Bus Safety"
+Note:
+* CR5A_AXI_RD_SEC -  Tested in r5fss0-0 core. Similarly CR5B, CR5C, CR5D can be tested in relevant core.
+* L2_A, L2_B, L2_C, L2_D, L2_E and L2_F - To be tested by disable cache memory.
+\endcond
+\cond SOC_AM261X
+\imageStyle{am261x_bus.png,width:70%}
+\image html am261x_bus.png "ECC Bus Safety"
+Note:
+* CR5A_AXI_RD_SEC -  Tested in r5fss0-0 core. Similarly CR5B, CR5C, CR5D can be tested in relevant core.
+* L2_A, L2_B and L2_C - To be tested by disable cache memory.
+\endcond
+
 ## SysConfig Features
 
 - None

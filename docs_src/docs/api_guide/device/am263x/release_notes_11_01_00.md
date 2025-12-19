@@ -287,20 +287,28 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Fixed in Pinmux CSV template
 </tr>
 <tr>
-    <td> PROC_SDL-9148
-    <td> ECC D-Data fail during release
+    <td> PROC_SDL-9597
+    <td> Watchdog status bits are not clearing properly in SDL_RTI_clearStatus API
     <td> SDL
-    <td> 10.02.00 onwards
-    <td> AM263x, AM263Px
-    <td> Fixed in example
+    <td> 09.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed in library
 </tr>
 <tr>
-    <td> PROC_SDL-9160
-    <td> PBIST does not cover the VIM memories
+    <td> PROC_SDL-9582
+    <td> [SDL] faultInsert and stcDiagnostic not used for fault injection
     <td> SDL
-    <td> 10.02.00 onwards
+    <td> 11.00.00 onwards
     <td> AM263x, AM263Px, AM261x
-    <td> Fixed in Source and Used polling method instead of ISR to cover VIM memory
+    <td> Added documentation as not used the faultInsert and stcDiagnostic.
+</tr>
+<tr>
+    <td> PROC_SDL-9485
+    <td> Interrupt clear missing in ecc_bus_safety example.
+    <td> SDL
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Cleared the error status in code.
 </tr>
 </table>
 
@@ -405,18 +413,25 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-8392
-    <td> In ECC bus safety example, ECC error is not properly cleared at the source.
-    <td> SDL
-    <td> 08.06.00 onwards
-    <td> None
-</tr>
-<tr>
     <td> PROC_SDL-8857
     <td> SDL integrated example does not support ECC Bus Safety.
     <td> SDL
     <td> 10.01.00 onwards
     <td> Use standalone example.
+</tr>
+<tr>
+    <td> PROC_SDL-9596
+    <td> SEC and DED failure in ecc_bus_safety example
+    <td> SDL
+    <td> 11.01.00 onwards
+    <td> For AXI_RD_SEC nodes can test in specific core.
+</tr>
+<tr>
+    <td> PROC_SDL-9617
+    <td> AXI_S SEC and DED failure
+    <td> SDL
+    <td> 11.01.00 onwards
+    <td> For AXI_S node, use CCS to test.
 </tr>
 <tr>
     <td> MCUSDK-14898
@@ -729,6 +744,9 @@ For FreeRTOS,
 
 ### SDL PBIST Self test
 VIM Memory groups are added to PBIST self test from this release. Because of this change, Self test (SDL_PBIST_selfTest) API has to be called in polling mode only and interrupt mode is not supported.
+
+### SDL STC unused variables
+faultInsert and stcDiagnostic not used for fault injection. Still, these are not removed to avoid build errors when update to the latest version of the library.
 
 ### Compiler Options
 
