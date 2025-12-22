@@ -836,6 +836,9 @@ VIM Memory groups are added to PBIST self test from this release. Because of thi
 ### SDL STC Configuration
 faultInsert and stcDiagnostic are removed from SDL_STC_Config structure as unused in SDL library.
 
+### SDL Handler API name update
+Handler API names are added prefix with "SDL_". For example, undefInstructionExptnHandler changed to SDL_undefInstructionExptnHandler.
+
 ### Compiler Options
 
 <table>
