@@ -33,9 +33,6 @@ USB Sysconfig support                                                           
 McSPI External Loopback Example                                                                 | McSPI
 USB NCM Class Support                                                                           | USB
 FreeRTOS based CDC Example                                                                      | USB
-LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
-IET Feature Enablement via Syscfg-GUI                                                           | Networking
-XIP+RL2 support is included in Networking OOB example, referenced in EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT | Networking
 SENT Decoder and Encoder Examples                                                               | PRU-IO
 
 # Modules Not tested/supported in this release
@@ -395,7 +392,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Short serial message and enhanced serial message not working in SENT decoder using IEP ECAP example
     <td> PRU-IO
     <td> 11.01.00 onwards
-    <td> Fixed the glitch period and disable CCS log 
+    <td> Fixed the glitch period and disable CCS log
 </tr>
 </table>
 
@@ -442,27 +439,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM26x: Networking examples show up as "..." on TIREX
     <td> Networking
     <td> 10.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14692
-    <td> Raw HTTP Server example does not work with Static IP
-    <td> Networking
-    <td> 10.02.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14792
-    <td> AM261x LwIP ping app does not work (enet_lwip_cpsw)
-    <td> Networking
-    <td> 10.02.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13896
-    <td> Syscfg does not let you configure ethernet interfaces pinmux independently
-    <td> Networking
-    <td> 10.02.00 onwards
     <td> -
 </tr>
 <tr>

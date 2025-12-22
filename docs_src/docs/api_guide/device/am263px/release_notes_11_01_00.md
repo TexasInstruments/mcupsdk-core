@@ -29,9 +29,6 @@ Multi Core FreeRTOS IPC Example                                                 
 OSPI Phy Graph Plotter Example                                                                  | OSPI
 Board Level Sysconfig Support                                                                   | Sysconfig
 McSPI External Loopback Example                                                                 | McSPI
-SBL over Ethernet                                                                               | Bootloader
-LwIP stack upgrade to STABLE-2_2_1_RELEASE                                                      | Networking
-Ethernet example demonstrating low-latency Raw-UDP traffic prioritization for industrial applications | Networking
 
 # Modules Not tested/supported in this release
 
@@ -41,7 +38,7 @@ Ethernet example demonstrating low-latency Raw-UDP traffic prioritization for in
 
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263Px| R5F             | AM263Px ControlCard Rev B    (referred to as am263px-cc in code). \n         | Windows 10 64b or Ubuntu 18.04 64b or MacOS 
+AM263Px| R5F             | AM263Px ControlCard Rev B    (referred to as am263px-cc in code). \n         | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 AM263Px| R5F             | AM263Px LaunchPad  Rev A    (referred to as am263px-lp in code). \n         | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 
@@ -509,17 +506,17 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14509
-    <td> AM263x/Am263px/AM261x: 10% Packet drop with UDP iperf in 100M bandwidth in 1Gbps FullDuplex linkspeed
-    <td> Networking
-    <td> 10.00.00 onwards
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-14883
     <td> AM263x, AM263Px: SBL: RPRC descoping broke SBL over Ethernet example
     <td> Networking
     <td> 11.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13513
+    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
+    <td> Networking
+    <td> 10.00.01 onwards
     <td> -
 </tr>
 <tr>
@@ -604,7 +601,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Unable to add UART communication port to target configuration in Theia
     <td> Real Time Debug
     <td> 10.02.00 onwards
-    <td> Use the CCXML file from CCS eclipse after updating to correct COM port. 
+    <td> Use the CCXML file from CCS eclipse after updating to correct COM port.
 </tr>
 </table>
 
@@ -719,7 +716,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
 
 One difference between AM263PX-SIP and AM263PX is the in package flash. In SIP board, flash is of Non-RWW in nature whereas, it is of RWW in other case.
 Example \ref EXAMPLES_FLSOPSKD_BENCHMARK is made to work out of box for AM263PX board but need some manual changes to make it work on AM263PX-SIP board.
-Here, to make this example with AM263PX-SIP board, please remove the <code> RUN_XIP_IN_PARALLEL </code> macro. 
+Here, to make this example with AM263PX-SIP board, please remove the <code> RUN_XIP_IN_PARALLEL </code> macro.
 
 ### Compiling examples in MacOS machines
 
@@ -731,8 +728,8 @@ To build SDK examples on a different toolchain, recompile the gmac library by us
     $ make all
 \endcode
 
-- A new library will be created inside mac/dist. 
-- Rename this file to "gmac.arm64-apple-darwin.darwin.dylib". 
+- A new library will be created inside mac/dist.
+- Rename this file to "gmac.arm64-apple-darwin.darwin.dylib".
 
 ### RPRC Image format is Deprecated and Corresponding SBL's are also removed from SDK
 
@@ -774,12 +771,12 @@ Please refer to the updated SDK example makefiles for Infra changes.
 Earlier, flash reset was done in board.c file within application which is now moved
 to SysCfg. If Flash reset logic needs to be added, please enable "Enable Flash Reset API"
 configurable in Flash module. This is by enabled out of box for all SDK Flash examples.
-For custom flash, define the flash reset API in application and add the API name to 
+For custom flash, define the flash reset API in application and add the API name to
 "Flash Reset Function" configurable.
 
 ### Module clock configuration through Clock Tree
 
-Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules. 
+Previously our SDK had a mix of hardcoded clock configurations and limited configuration flexibility through sysconfig for the modules.
 With Clocktree, we now have a clear view of the entire clock tree with configurable components like PLL, DPLL, muxes, dividers added with validity checks.
 Earlier, the Input clock source and frequency for any module was configured through the module view in SysCfg. From now, this has to be done through clocktree.
 
@@ -805,31 +802,31 @@ JS Script for SBL loading on eclipse is updated to "load_sbl_eclipse.js". Please
 
 #### Makefile Changes
 ##### Library Name change on makefile and CCS projects
-From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS. 
-So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the 
-librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries. 
+From 11.00.00 SDK all the libraries are built separately for OS. There are separate libraries available for NoRTOS and FreeROTS.
+So the makefiles needs to be updated accordingly. Please refer the sample changes on the makefile below. These changes are not applicbale for the
+librarries which were already built separately for NoRTOS/FreeRTOS like kernel libraries.
 
-For NoRTOS/baremetal, 
+For NoRTOS/baremetal,
 
 \imageStyle{example_migration1.png,width:40%}
 \image html example_migration1.png "Library name change for NoRTOS example"
 
-For FreeRTOS, 
+For FreeRTOS,
 
 \imageStyle{example_migration2.png,width:40%}
 \image html example_migration2.png "Library name change for FreeRTOS example"
 
 similar change can be done on the CCS project as well
 
-##### OS define on makefile and CCS projects 
-Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project. 
+##### OS define on makefile and CCS projects
+Additional macro OS_NORTOS or OS_FREERTOS should be defined on the makefile or CC project based on the OS of the project.
 
-For NoRTOS/baremetal, 
+For NoRTOS/baremetal,
 
 \imageStyle{example_migration3.png,width:20%}
 \image html example_migration3.png "OS Macro addition for NoRTOS example"
 
-For FreeRTOS, 
+For FreeRTOS,
 
 \imageStyle{example_migration4.png,width:20%}
 \image html example_migration4.png "OS Macro addition for FreeRTOS example"
