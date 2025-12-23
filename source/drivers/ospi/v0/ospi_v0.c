@@ -218,7 +218,7 @@ OSPI_Handle OSPI_open(uint32_t index, const OSPI_Params *openParams)
         ospilldInitHandle->phyConfiguration      = attrs->phyConfiguration;
         ospilldInitHandle->validateOtp           = attrs->validateOtp;
 
-        memcpy(ospilldInitHandle->devDelays,attrs->devDelays, resMemoryCount * sizeof(uint32_t));       
+        memcpy(ospilldInitHandle->devDelays,attrs->devDelays, resMemoryCount * sizeof(uint32_t));
 
         /* If DMA is enabled, program UDMA block copy channel */
         if(OSPI_TRUE == attrs->dmaEnable)
@@ -503,6 +503,25 @@ int32_t OSPI_enableDdrRdCmds(OSPI_Handle handle)
         OSPI_Object *obj = ((OSPI_Config *)handle)->object;
         hOspi = &obj->ospilldObject;
         status = OSPI_lld_enableDdrRdCmds(hOspi);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t OSPI_disableDdrRdCmds(OSPI_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_disableDdrRdCmds(hOspi);
     }
     else
     {

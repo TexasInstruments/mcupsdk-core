@@ -315,6 +315,7 @@ typedef int32_t (*Flash_phyTuneFxn)(Flash_Config *confifg);
 typedef struct Flash_Params_s {
 
     Flash_quirksFxn quirksFxn;
+    Flash_quirksFxn bootQuirksFxn;
     Flash_custProtocolFxn custProtoFxn;
 
 } Flash_Params;

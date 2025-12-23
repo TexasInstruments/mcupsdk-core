@@ -41,6 +41,7 @@ const section11       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 flash1.$name                         = "CONFIG_FLASH0";
+flash1.bootQuirks                    = "Flash_quirkQSPIEarlyFixup";
 flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable    = true;
 flash1.peripheralDriver.phyEnable    = true;

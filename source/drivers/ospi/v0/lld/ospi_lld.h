@@ -329,7 +329,7 @@ extern "C" {
 /**
  *  \anchor OSPI_PHY_Control_Mode
  *  \name OSPI PHY Control Mode
- * 
+ *
  *
  *  Controls the bypass mode of the Initiator and Target DLLs.
  *  If this bit is set, the bypass mode is intended to be used only for debug.
@@ -763,8 +763,8 @@ int32_t OSPI_lld_deInitDma(OSPILLD_Handle hOspi);
  *  \ingroup DRV_OSPI_LLD_MODULE
  *  \defgroup DRV_OSPI_LLD_READ_WRITE_MODULE OSPI Read and Write API's
  *
- *   These APIs try are used for the phy tuning 
- * 
+ *   These APIs try are used for the phy tuning
+ *
  *  @{
  */
 
@@ -872,8 +872,8 @@ int32_t OSPI_lld_writeCmd(OSPILLD_Handle handle, OSPI_WriteCmdParams *wrParams);
  *  \ingroup DRV_OSPI_LLD_MODULE
  *  \defgroup DRV_OSPI_LLD_CALLBACK_API_MODULE OSPI Callback Initialization
  *
- *   These APIs try are used for the phy tuning 
- * 
+ *   These APIs try are used for the phy tuning
+ *
  *  @{
  */
 
@@ -898,8 +898,8 @@ void OSPI_lld_readCompleteCallback(void* args);
  *  \ingroup DRV_OSPI_LLD_MODULE
  *  \defgroup DRV_OSPI_LLD_TRANS_INIT_API_MODULE Transaction Initialization
  *
- *   These APIs try are used for the phy tuning 
- * 
+ *   These APIs try are used for the phy tuning
+ *
  *  @{
  */
 
@@ -936,8 +936,8 @@ void OSPI_lld_writeCmdParams_init(OSPI_WriteCmdParams *wrParams);
  *  \ingroup DRV_OSPI_LLD_MODULE
  *  \defgroup DRV_OSPI_LLD_USER_INTERFACE_API_MODULE User Interface API's
  *
- *   These APIs try are used for the phy tuning 
- * 
+ *   These APIs try are used for the phy tuning
+ *
  *  @{
  */
 
@@ -1025,7 +1025,7 @@ int32_t OSPI_lld_enableSDR(OSPILLD_Handle handle);
  *
  *  \param  handle  An #OSPILLD_Handle returned from an #OSPI_open()
  *
- *  \return #OSPI_SYSTEM_SUCCESS if SDR successfully enabled, else error on failure
+ *  \return #OSPI_SYSTEM_SUCCESS if DDR successfully enabled, else error on failure
  */
 int32_t OSPI_lld_enableDdrRdCmds(OSPILLD_Handle handle);
 
@@ -1257,8 +1257,8 @@ uint32_t OSPI_lld_getFlashDataBaseAddr(OSPILLD_Handle handle);
  *  \ingroup DRV_OSPI_LLD_MODULE
  *  \defgroup DRV_OSPI_LLD_PHY_API_MODULE Generic Phy layer API.
  *
- *   These APIs try are used for the phy tuning 
- * 
+ *   These APIs try are used for the phy tuning
+ *
  *  @{
  */
 
@@ -1659,6 +1659,17 @@ int32_t OSPI_lld_setDelays(OSPILLD_Handle hOspi, uint32_t inputClkFreq);
  *  \return SystemP_SUCCESS on success, error code on failure
  */
 int32_t OSPI_lld_setBaudRateDiv(OSPILLD_Handle hOspi, uint32_t baudRateDiv);
+
+/**
+ *  \brief  This function resets DDR bit in INSTR_RD register for RD commands
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  hOspi  An #OSPILLD_Handle returned from an #OSPI_open()
+ *
+ *  \return #OSPI_SYSTEM_SUCCESS if DDR successfully disabled, else error on failure
+ */
+int32_t OSPI_lld_disableDdrRdCmds(OSPILLD_Handle hOspi);
 
 /** @} */
 

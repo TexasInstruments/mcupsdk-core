@@ -39,10 +39,6 @@
 #include <drivers/bootloader.h>
 #include <kernel/dpl/ClockP.h>
 
-#define DELAY_SEC (1000U)
-
-void flashFixUpQspiBoot(void);
-
 /* This buffer needs to be defined for OSPI boot in case of HS device for
  * image decryption and authentication
  * Incase of am243x-lp only 256kb is available in RAM, so the encrypted image should be
@@ -110,7 +106,7 @@ int main(void)
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
-    
+
     Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
@@ -123,9 +119,6 @@ int main(void)
     DebugP_log("\r\n");
     DebugP_log("Starting OSPI Bootloader ... \r\n");
     #endif
-
-	/* ROM doesn't reset the QSPI flash. So do a flash reset */
-    flashFixUpQspiBoot();
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -156,7 +149,7 @@ int main(void)
             #else
             cfg->enableScratchMem = 0U;
             #endif
-            
+
             if(TRUE == cfg->initICSSCores)
             {
                 status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
@@ -291,22 +284,4 @@ int main(void)
     System_deinit();
 
     return 0;
-}
-
-void flashFixUpQspiBoot(void)
-{
-    uint32_t gpiobaseAddr, pinnum;
-
-	/* Get address after translation translate */
-    gpiobaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-
-    pinnum = CONFIG_GPIO0_PIN;
-
-	/* Drive the GPIO Pin low to assert the reset signal */
-    GPIO_pinWriteLow(gpiobaseAddr, pinnum);
-    ClockP_usleep(DELAY_SEC);
-
-	/* Drive the GPIO Pin high to deassert the reset signal */
-    GPIO_pinWriteHigh(gpiobaseAddr, pinnum);
-    ClockP_usleep(DELAY_SEC);
 }

@@ -153,7 +153,7 @@ static int32_t OSPI_waitWriteSRAMLevel(const CSL_ospi_flash_cfgRegs *pReg,
 static int32_t OSPI_waitIndWriteComplete(const CSL_ospi_flash_cfgRegs *pReg);
 static int32_t OSPI_waitIdle(OSPILLD_Handle hOspi, uint32_t timeOut);
 
-static int32_t OSPI_flashExecCmd(OSPILLD_Handle hOspi, const CSL_ospi_flash_cfgRegs *pReg, 
+static int32_t OSPI_flashExecCmd(OSPILLD_Handle hOspi, const CSL_ospi_flash_cfgRegs *pReg,
                                 uint32_t timeout);
 static void OSPI_readFifoData(uintptr_t indAddr, uint8_t *dest, uint32_t rdLen);
 static void OSPI_writeFifoData(uintptr_t indAddr, const uint8_t *src, uint32_t wrLen);
@@ -164,7 +164,7 @@ static uint32_t OSPI_utilLog2(uint32_t num);
 static uint8_t OSPI_getCmdExt(OSPILLD_Handle hOspi, uint8_t cmd);
 static uint32_t OSPI_lld_calculateTicksForns(const uint32_t refClkhz, const uint32_t nsVal);
 
-/* LLD Parameter Validation */ 
+/* LLD Parameter Validation */
 static inline int32_t OSPI_lld_isFrameFormatValid(uint32_t frmFmt);
 static inline int32_t OSPI_lld_isChipSelectValid(uint32_t chipSelect);
 static inline int32_t OSPI_lld_isDecoderChipSelectValid(uint32_t decChipSelect);
@@ -515,7 +515,7 @@ int32_t OSPI_lld_enableDDR(OSPILLD_Handle hOspi)
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                    OSPI_FLASH_CFG_CONFIG_REG_ENABLE_DTR_PROTOCOL_FLD,
                    TRUE);
-                   
+
     }
     else
     {
@@ -560,6 +560,28 @@ int32_t OSPI_lld_enableDdrRdCmds(OSPILLD_Handle hOspi)
         CSL_REG32_FINS(&pReg->DEV_INSTR_RD_CONFIG_REG,
                    OSPI_FLASH_CFG_DEV_INSTR_RD_CONFIG_REG_DDR_EN_FLD,
                    1);
+    }
+    else
+    {
+        status = OSPI_SYSTEM_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t OSPI_lld_disableDdrRdCmds(OSPILLD_Handle hOspi)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+
+    /* Check if hOspi is NULL */
+    if(hOspi != NULL)
+    {
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
+
+        /* Enable DDR EN commands */
+        CSL_REG32_FINS(&pReg->DEV_INSTR_RD_CONFIG_REG,
+                   OSPI_FLASH_CFG_DEV_INSTR_RD_CONFIG_REG_DDR_EN_FLD,
+                   0);
     }
     else
     {
@@ -1322,7 +1344,7 @@ int32_t OSPI_lld_readDirectDma(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
         /* DMA Copy fails when copying to to certain memory regions. So in this case we switch to normal memcpy
         for copying even if dmaEnable is true. Also do DMA copy only if size > 1KB*/
         uint32_t isDmaCopy = (OSPI_isDmaRestrictedRegion(hOspi, (uint32_t)pDst) == FALSE) &&
-                             (trans->count > OSPI_DMA_COPY_LOWER_LIMIT);     
+                             (trans->count > OSPI_DMA_COPY_LOWER_LIMIT);
 
         if(isDmaCopy == TRUE)
         {
@@ -1592,7 +1614,7 @@ int32_t OSPI_lld_writeCmd(OSPILLD_Handle hOspi, OSPI_WriteCmdParams *wrParams)
 
 int32_t OSPI_lld_writeDirect(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
 {
-    int32_t status = OSPI_SYSTEM_SUCCESS;   
+    int32_t status = OSPI_SYSTEM_SUCCESS;
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
 
     uint8_t *pSrc;
@@ -2005,7 +2027,7 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi)
 
         /* Set initial protocol to be 1s1s1s */
         OSPI_lld_setProtocol(hOspi, OSPI_NOR_PROTOCOL(1,1,1,0));
-    
+
         OSPI_lld_setXferOpCodes(hOspi, 0x03, 0x02);
 
         /* Set address bytes to 3 */
@@ -2015,7 +2037,7 @@ static int32_t OSPI_programInstance(OSPILLD_Handle hOspi)
         hOspi->phyEnableSuccess = FALSE;
 
         OSPI_lld_configResetPin(hOspi,OSPI_RESETPIN_DEDICATED);
-        
+
         /* Enable OSPI Controller */
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                        OSPI_FLASH_CFG_CONFIG_REG_ENB_SPI_FLD,
@@ -2393,7 +2415,7 @@ static uint32_t OSPI_utilLog2(uint32_t num)
 static inline int32_t OSPI_lld_isFrameFormatValid(uint32_t frmFmt)
 {
     int32_t status = OSPI_SYSTEM_FAILURE;
-    
+
     if((frmFmt == OSPI_FF_POL0_PHA0) || (frmFmt == OSPI_FF_POL0_PHA1) || \
        (frmFmt == OSPI_FF_POL1_PHA0) || (frmFmt == OSPI_FF_POL1_PHA1))
        {
@@ -2461,10 +2483,10 @@ void OSPI_lld_isr(void* args)
     uint32_t regVal;
     uint8_t *pDst;
     uint32_t sramLevel = 0U, readBytes = 0U, writeBytes = 0U;
-    
+
     switch (hOspi->currTrans->state)
     {
-    case OSPI_TRANS_IDLE:                   
+    case OSPI_TRANS_IDLE:
         break;
     case OSPI_TRANS_WRITE:
 
@@ -2506,7 +2528,7 @@ void OSPI_lld_isr(void* args)
         regVal = CSL_REG32_RD(&pReg->IRQ_STATUS_REG);
 
         if(hOspi->currTrans->count != 0U &&  hOspi->currTrans->buf != NULL)
-        {            
+        {
             pDst = (uint8_t *) (hOspi->currTrans->buf);
             pDst += hOspi->currTrans->transferOffset;
             if (0U != (regVal & CSL_OSPI_INTR_MASK_IND_XFER))
@@ -2525,7 +2547,7 @@ void OSPI_lld_isr(void* args)
 
                 hOspi->currTrans->transferOffset += readBytes;
                 hOspi->currTrans->count -= readBytes;
-            
+
             }
             if((0U == hOspi->currTrans->count) || (0U != (regVal & CSL_OSPI_FLASH_CFG_IRQ_STATUS_REG_INDIRECT_OP_DONE_FLD_MASK)))
             {
@@ -2538,14 +2560,14 @@ void OSPI_lld_isr(void* args)
                 hOspi->currTrans->state = OSPI_TRANS_IDLE;
                 hOspi->currTrans->status = OSPI_TRANSFER_COMPLETED;
                 hOspi->interruptCallback(args);
-            }            
-        }        
+            }
+        }
         break;
 
     default:
         break;
-    }    
-}       
+    }
+}
 
 static void OSPI_disableInterrupt(OSPILLD_Handle hOspi)
 {

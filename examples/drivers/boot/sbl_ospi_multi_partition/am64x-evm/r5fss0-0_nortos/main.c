@@ -65,8 +65,6 @@
  */
 uint8_t gAppimage[0x800000] __attribute__ ((section (".app"), aligned (4096)));
 
-void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
-
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -169,7 +167,7 @@ int main(void)
     }
 
     System_init();
-    
+
     Bootloader_socOpenFirewalls();
 
     Bootloader_socNotifyFirewallOpen();
@@ -178,11 +176,6 @@ int main(void)
 
     DebugP_log("\r\n");
     DebugP_log("Starting OSPI Multi-Partition Bootloader ... \r\n");
-
-    /* ROM doesn't reset the OSPI flash. This can make the flash initialization
-    troublesome because sequences are very different in Octal DDR mode. So for a
-    moment switch OSPI controller to 8D mode and do a flash reset. */
-    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], gFlashHandle[CONFIG_FLASH0]);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -225,7 +218,7 @@ int main(void)
         if(SystemP_SUCCESS == status)
         {
             /* Enable Dac mode */
-            status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);   
+            status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
         }
         if(SystemP_SUCCESS == status)
         {
@@ -241,15 +234,4 @@ int main(void)
     System_deinit();
 
     return 0;
-}
-
-void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
-{
-    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8,8,8,1));
-    OSPI_enableDDR(oHandle);
-    OSPI_setDualOpCodeMode(oHandle);
-    Flash_reset(fHandle);
-    OSPI_enableSDR(oHandle);
-    OSPI_clearDualOpCodeMode(oHandle);
-    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
