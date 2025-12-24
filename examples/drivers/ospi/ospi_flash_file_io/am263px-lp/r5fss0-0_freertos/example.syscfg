@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.24.1+4189"}
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -46,12 +46,24 @@ const section12       = section.addInstance();
 const divider30       = system.clockTree["OSPI0_CLK_GCM_CLKDIV"];
 divider30.divideValue = 5;
 
-littlefs1.$name                                         = "CONFIG_LITTLEFS0";
-littlefs1.peripheralDriver.$name                        = "CONFIG_FLASH0";
-littlefs1.peripheralDriver.protocol                     = "1s_1s_1s";
-littlefs1.peripheralDriver.enableFlashReset             = true;
-littlefs1.peripheralDriver.peripheralDriver.$name       = "CONFIG_OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_am263px_template0";
+littlefs1.$name                                                     = "CONFIG_LITTLEFS0";
+littlefs1.peripheralDriver.$name                                    = "CONFIG_FLASH0";
+littlefs1.peripheralDriver.protocol                                 = "1s_1s_1s";
+littlefs1.peripheralDriver.enableFlashReset                         = true;
+littlefs1.peripheralDriver.peripheralDriver.$name                   = "CONFIG_OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "OSPI0_CLK";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$assign       = "OSPI0_CSn0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$assign        = "UART1_TXD";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$assign         = "MCAN1_TX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$assign         = "MCAN1_RX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$assign         = "MCAN0_TX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$assign         = "MCAN0_RX";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$assign         = "OSPI0_D3";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$assign         = "OSPI0_D2";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$assign         = "OSPI0_D1";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$assign         = "OSPI0_D0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$assign = "EPWM10_B";
+littlefs1.peripheralDriver.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
@@ -278,16 +290,4 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-littlefs1.peripheralDriver.peripheralDriver.OSPI.$suggestSolution            = "OSPI0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$suggestSolution        = "OSPI0_CLK";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$suggestSolution       = "EPWM11_A";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$suggestSolution        = "UART1_TXD";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$suggestSolution         = "EPWM12_B";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$suggestSolution         = "MCAN1_RX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$suggestSolution         = "EPWM12_A";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$suggestSolution         = "MCAN0_RX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution         = "EPWM13_A";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution         = "MCAN0_TX";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution         = "EPWM11_B";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution         = "OSPI0_CSn0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.$suggestSolution = "OSPI0";
