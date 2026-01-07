@@ -169,6 +169,9 @@ static inline void ICSS_EMAC_portFlush(ICSS_EMAC_Handle icssEmacHandle, uint8_t 
 /* Local function for disabling or enabling the Special Unicast MAC address handling feature and writing the required MAC address. It is called from the IOCTL */
 static inline int32_t ICSS_EMAC_handleSpecialUnicastMACAddress(ICSS_EMAC_Handle icssEmacHandle, uint8_t enableFeature, uint8_t *macAddress);
 
+/* Local function to disable/enable Port forwarding functionality. */
+static inline int32_t ICSS_EMAC_configPortFwdState(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNo, uint8_t portFwdState);
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -771,6 +774,9 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
                     retVal = SystemP_FAILURE;
                     break;
             }
+            break;
+        case ICSS_EMAC_IOCTL_PORT_FWD_CTRL:
+            retVal = ICSS_EMAC_configPortFwdState(icssEmacHandle, portNo, ioctlCmd->command);
             break;
 
         default:
@@ -2820,6 +2826,39 @@ static inline int32_t ICSS_EMAC_handleSpecialUnicastMACAddress(ICSS_EMAC_Handle 
         memcpy((void *)specialUnicastMACAddressPtr, macAddress, 6);
         retVal = SystemP_SUCCESS;
 
+    }
+    return retVal;
+}
+
+static inline int32_t ICSS_EMAC_configPortFwdState(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNo, uint8_t portFwdState)
+{
+    int32_t                     retVal = SystemP_FAILURE;
+    ICSS_EMAC_FwStaticMmap      *pStaticMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwStaticMMap);
+    volatile uint8_t            *portFwdAddressPtr = NULL;
+    PRUICSS_Handle              pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
+    PRUICSS_HwAttrs const       *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+
+    if(portNo == ICSS_EMAC_PORT_1)
+    {
+        portFwdAddressPtr = (uint8_t*)((pruicssHwAttrs->pru0DramBase + pStaticMMap->portForwardStatusOffset));
+    }
+    else if(portNo == ICSS_EMAC_PORT_2)
+    {
+        portFwdAddressPtr = (uint8_t*)((pruicssHwAttrs->pru1DramBase + pStaticMMap->portForwardStatusOffset));
+    }
+    else
+    {
+        return retVal;
+    }
+    if(portFwdState == ICSS_EMAC_IOCTL_PORT_FWD_CTRL_DISABLE_CMD)
+    {
+        *(portFwdAddressPtr) = ICSS_EMAC_IOCTL_PORT_FWD_CTRL_DISABLE_CMD;
+        retVal = SystemP_SUCCESS;
+    }
+    else if(portFwdState == ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD)
+    {
+        *(portFwdAddressPtr) = ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD;
+        retVal = SystemP_SUCCESS;
     }
     return retVal;
 }

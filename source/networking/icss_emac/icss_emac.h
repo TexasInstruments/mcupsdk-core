@@ -411,6 +411,8 @@ extern "C" {
 #define ICSS_EMAC_IOCTL_PORT_FLUSH_CTRL                     (7u)
 /** \brief IOCTL select Special Unicast MAC address APIs command */
 #define ICSS_EMAC_IOCTL_SPECIAL_UNICAST_MAC_CTRL            (8u)
+/** \brief IOCTL select Port Forwarding APIs command */
+#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL                       (9u)
 /** @} */
 
 /**
@@ -467,6 +469,21 @@ extern "C" {
 #define ICSS_EMAC_IOCTL_SPECIAL_UNICAST_MAC_CTRL_DISABLE_CMD                (0u)
 /** \brief IOCTL Special Unicast MAC Enable command*/
 #define ICSS_EMAC_IOCTL_SPECIAL_UNICAST_MAC_CTRL_ENABLE_CMD                 (1u)
+/** @} */
+
+/**
+ *  \anchor ICSS_EMAC_IOCTL_PORT_FWD_CTRL_COMMANDS
+ *  \name ICSS-EMAC Port Forwarding IOCTL Command Options
+ * 
+ *  @{
+ */
+
+/** \brief IOCTL Port Forwarding Disable command*/
+#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_DISABLE_CMD               (0u)
+
+/** \brief IOCTL Port Forwarding Enable command*/
+#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD                (1u)
+
 /** @} */
 
 /**
@@ -537,6 +554,7 @@ typedef struct ICSS_EMAC_FwStaticMmap_s
     uint32_t promiscuousModeOffset;                          /**< promiscuous mode feature control offset */
     uint32_t specialUnicastMACAddrOffset;                    /**< Special Unicast MAC address offset */
     uint32_t specialUnicastMACAddressFeatureEnableOffset;    /**< Special Unicast MAC address feature enable/disable offset */
+    uint32_t portForwardStatusOffset;                        /**< Port Forwarding status offset */
 } ICSS_EMAC_FwStaticMmap;
 
 /**
