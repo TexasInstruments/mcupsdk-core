@@ -1442,14 +1442,14 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
                 SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, SDL_MCRC_TYPE_64BIT);
                 break;
             case SDL_MCRC_CHANNEL_2:
-                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 8U));
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, ((uint32_t)SDL_MCRC_TYPE_64BIT << 8U));
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
-                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 16U));
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, ((uint32_t)SDL_MCRC_TYPE_64BIT << 16U));
                 break;
             case SDL_MCRC_CHANNEL_4:
-                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 24U));
+                SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, ((uint32_t)SDL_MCRC_TYPE_64BIT << 24U));
                 break;
 #endif
             default:
