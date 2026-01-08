@@ -2833,10 +2833,23 @@ static inline int32_t ICSS_EMAC_handleSpecialUnicastMACAddress(ICSS_EMAC_Handle 
 static inline int32_t ICSS_EMAC_configPortFwdState(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNo, uint8_t portFwdState)
 {
     int32_t                     retVal = SystemP_FAILURE;
-    ICSS_EMAC_FwStaticMmap      *pStaticMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwStaticMMap);
+    ICSS_EMAC_FwStaticMmap      *pStaticMMap = NULL;
     volatile uint8_t            *portFwdAddressPtr = NULL;
-    PRUICSS_Handle              pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
-    PRUICSS_HwAttrs const       *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+    PRUICSS_Handle              pruicssHandle = NULL;
+    PRUICSS_HwAttrs const       *pruicssHwAttrs = NULL;
+
+    if ((icssEmacHandle == NULL) || (icssEmacHandle->object == NULL))
+    {
+        return retVal;
+    }
+    
+    pStaticMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwStaticMMap);
+    pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
+    
+    if ((pruicssHandle == NULL) || (pruicssHandle->hwAttrs == NULL))
+    {
+        return retVal;
+    }    
 
     if(portNo == ICSS_EMAC_PORT_1)
     {

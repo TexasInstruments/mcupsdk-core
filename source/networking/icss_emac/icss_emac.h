@@ -478,11 +478,10 @@ extern "C" {
  *  @{
  */
 
-/** \brief IOCTL Port Forwarding Disable command*/
-#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_DISABLE_CMD               (0u)
-
 /** \brief IOCTL Port Forwarding Enable command*/
-#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD                (1u)
+#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD                (0u)
+/** \brief IOCTL Port Forwarding Disable command*/
+#define ICSS_EMAC_IOCTL_PORT_FWD_CTRL_DISABLE_CMD               (1u)
 
 /** @} */
 

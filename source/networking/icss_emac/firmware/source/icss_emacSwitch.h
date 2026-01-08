@@ -490,6 +490,7 @@ SP_INCREMENT_COUNT_OFFSET           .set    STATISTICS_OFFSET + STAT_SIZE + 49  
 SP_COUNTER_UPDATE_INTERVAL_OFFSET   .set    STATISTICS_OFFSET + STAT_SIZE + 53  ;4 bytes
 DISABLE_STORM_PREV_FOR_HOST         .set    STATISTICS_OFFSET + STAT_SIZE + 57  ;1 byte
 
+PORT_FWD_CTRL_OFFSET                .set    0x1FE0                              ;1 byte
 ;***********************************************************************************************************
 ;											                   *
 ;											                   *

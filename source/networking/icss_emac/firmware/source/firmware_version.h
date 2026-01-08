@@ -85,7 +85,7 @@ FIRMWARE_VERSION_MAJOR			.set	0x05
 ; bit23..16	minor version number									;For feature additions to firmware.
 FIRMWARE_VERSION_MINOR			.set	0x05
 ; bit15..0		build number											;For all other minor changes.
-FIRMWARE_VERSION_BUILD			.set	0x0E
+FIRMWARE_VERSION_BUILD			.set	0x0F
     .endif
 
     .if $defined("ICSS_SWITCH_BUILD")
@@ -98,7 +98,7 @@ FIRMWARE_VERSION_MAJOR    		.set        0x03
 ; bit23..16        minor version number
 FIRMWARE_VERSION_MINOR    		.set            0x02
 ; bit15..0        build number
-FIRMWARE_VERSION_BUILD    		.set            0x08
+FIRMWARE_VERSION_BUILD    		.set            0x09
     .endif
 
     .if $defined("ICSS_DUAL_EMAC_BUILD")

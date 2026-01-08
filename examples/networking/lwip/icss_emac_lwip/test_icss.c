@@ -1001,6 +1001,7 @@ int32_t ICSS_EMAC_testLoadPRUFirmware(void)
 int icss_lwip_example(void *args)
 {
     uint32_t                status = SystemP_FAILURE;
+    ICSS_EMAC_IoctlCmd      ioctlParams;
 
     Drivers_open();
     status = Board_driversOpen();
@@ -1026,6 +1027,13 @@ int icss_lwip_example(void *args)
 
     /* Perform the PHY Configuration */
     ICSS_EMAC_testPHYInitConfig();
+
+    /* Enable port forwarding configuration */
+    ioctlParams.command = ICSS_EMAC_IOCTL_PORT_FWD_CTRL_ENABLE_CMD;
+    ICSS_EMAC_ioctl(icssemacHandle2, ICSS_EMAC_IOCTL_PORT_FWD_CTRL, ICSS_EMAC_PORT_1,
+                (void *)&ioctlParams);
+    ICSS_EMAC_ioctl(icssemacHandle2, ICSS_EMAC_IOCTL_PORT_FWD_CTRL, ICSS_EMAC_PORT_2,
+                (void *)&ioctlParams);
 
     /* Start the main loop */
     main_loop(NULL);

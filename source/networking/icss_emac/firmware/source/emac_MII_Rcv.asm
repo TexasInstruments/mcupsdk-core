@@ -595,7 +595,11 @@ CHECK_STP_LEARNING:
     QBNE  SKIP_FORWARDING, RCV_TEMP_REG_1.b0, STP_STATE_FORWARDING
 
 SET_FORWARDING:
+	; Forward packets only if port forwarding is enabled
     .endif ; ICSS_STP_SWITCH
+	LDI		RCV_TEMP_REG_1.w0, PORT_FWD_CTRL_OFFSET
+	LBCO	&RCV_TEMP_REG_1.b0, PRU_DMEM_ADDR, RCV_TEMP_REG_1.w0, 1
+	QBBS	FB_LT_VT, RCV_TEMP_REG_1.b0, 0  ; Port Forwarding bit : 1 -> disabled | 0 -> enabled
     QBBS    FB_NO_CT, R23, 0 ;Xmt_active            ; check if we can set cut-through
     QBBC    FB_NO_CT, R22, 31 ;PACKET_TX_ALLOWED
     QBA        FB_CT_HANDLING

@@ -479,6 +479,9 @@ SP_COUNTER_UPDATE_INTERVAL_DEFAULT  .set    100000000
 STP_INVALID_STATE_OFFSET    .set           STATISTICS_OFFSET + STAT_SIZE + 58 ; number of invalid STP state errors
 ;****************************************************************************
 RX_QUEUE_OVERFLOW_FRAMES_OFFSET     .set    STATISTICS_OFFSET + STAT_SIZE + 62	;4 bytes
+
+PORT_FWD_CTRL_OFFSET                .set    0x1FE0                              ;1 byte
+
 ;***********************************************************************************************************
 ;                                                                                                          *
 ;                                                                                                          *
