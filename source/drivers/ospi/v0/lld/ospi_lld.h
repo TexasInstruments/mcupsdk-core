@@ -1671,6 +1671,20 @@ int32_t OSPI_lld_setBaudRateDiv(OSPILLD_Handle hOspi, uint32_t baudRateDiv);
  */
 int32_t OSPI_lld_disableDdrRdCmds(OSPILLD_Handle hOspi);
 
+/**
+ *  \brief Resets the OSPI controller to operate in 1S-1S-1S mode
+ *
+ *  This function reverts the OSPI controller configuration from advanced modes
+ *  (such as 8D-8D-8D DDR mode) back to the basic single-lane mode (1S-1S-1S).
+ *  It unsets all registers that were configured for high-performance modes,
+ *  allowing the controller to operate in the standard SPI mode.
+ *
+ * \param hOspi  An #OSPILLD_Handle returned from an #OSPI_open()
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t OSPI_lld_set1sProtocol(OSPILLD_Handle hOspi);
+
 /** @} */
 
 #ifdef __cplusplus

@@ -66,6 +66,10 @@ typedef struct {
     uint16_t dummyClksCmd8d;
     /* Number of dummy clock cycles for 8D read operations */
     uint16_t dummyClksRd8d;
+    /* Baud rate divisor for SDR (Single Data Rate) mode */
+    uint32_t sdrBaudRateDiv;
+    /* Protocol configuration for 1S (single) mode */
+    FlashCfg_ProtoEnConfig protoCfg1s;
 }Flash_NorOspiFallBackCfg;
 
 /* Flash specific externs */

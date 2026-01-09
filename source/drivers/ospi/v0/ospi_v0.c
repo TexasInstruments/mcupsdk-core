@@ -1201,3 +1201,22 @@ int32_t OSPI_setBaudRateDiv(OSPI_Handle handle, uint32_t baudRateDiv)
     }
     return status;
 }
+
+int32_t OSPI_set1sProtocol(OSPI_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_set1sProtocol(hOspi);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}

@@ -1545,6 +1545,7 @@ static int32_t Flash_norOspiFallback(Flash_Config *config)
     FlashCfg_ProtoEnConfig *pCfg = &(devCfg->protocolCfg);
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
     Flash_NorOspiFallBackCfg *fCfg = (Flash_NorOspiFallBackCfg *)(config->fallBackCfg);
+    uint32_t tryReset = FLASH_OSPI_TRY_TUNING;
     uint32_t phyTuningOffset = Flash_getPhyTuningOffset(config);
 
     /* Set OSPI frequency to 200Mhz */
@@ -1569,11 +1570,37 @@ static int32_t Flash_norOspiFallback(Flash_Config *config)
         status += Flash_norOspiSetRdDataCaptureDelay(config);
 
         status += OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+
+        if(status != SystemP_SUCCESS)
+        {
+            /* Reset the flash */
+            do{
+                status = Flash_norOspiReset(config);
+                tryReset--;
+            }while((tryReset > 0U) && (status != SystemP_SUCCESS));
+
+            #if defined(SOC_AM64X) || defined(SOC_AM243X)
+                /* Spansion flash devices take upto 90us to reset, sleep for 200us to be safe */
+                ClockP_usleep(200);
+            #endif
+
+            if(status == SystemP_SUCCESS)
+            {
+                /* Set the protocol to 1s1s1s */
+                devCfg->protocolCfg = fCfg->protoCfg1s;
+                OSPI_setBaudRateDiv(obj->ospiHandle, fCfg->sdrBaudRateDiv);
+                OSPI_set1sProtocol(obj->ospiHandle);
+
+                status = Flash_norOspiSetAddressBytes(config, obj->ospiHandle);
+                /* Set Mode Clocks and Dummy Clocks in Controller and Flash Memory */
+                status += Flash_norOspiSetModeDummy(config, obj->ospiHandle);
+                status += OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+            }
+        }
     }
 
     return status;
 }
-
 
 static int32_t Flash_norOspiSetRdDataCaptureDelay(Flash_Config *config)
 {

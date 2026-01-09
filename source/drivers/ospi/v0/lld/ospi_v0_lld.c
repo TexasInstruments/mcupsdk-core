@@ -2716,3 +2716,25 @@ int32_t OSPI_lld_setBaudRateDiv(OSPILLD_Handle hOspi, uint32_t baudRateDiv)
 
     return status;
 }
+
+int32_t OSPI_lld_set1sProtocol(OSPILLD_Handle hOspi)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+
+    if(hOspi != NULL)
+    {
+        OSPI_lld_enableSDR(hOspi);
+        OSPI_lld_disableDdrRdCmds(hOspi);
+        OSPI_lld_clearDualOpCodeMode(hOspi);
+        OSPI_lld_setRdDataCaptureDelay(hOspi, 0);
+        /* Set initial protocol to be 1s1s1s */
+        OSPI_lld_setProtocol(hOspi, OSPI_NOR_PROTOCOL(1,1,1,0));
+        OSPI_lld_setXferOpCodes(hOspi, 0x03, 0x02);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}

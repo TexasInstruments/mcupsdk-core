@@ -333,7 +333,7 @@ static void OSPI_lld_phySetRdDelayTxRxDLL(OSPILLD_Handle hOspi, OSPI_PhyConfig *
 
 
 void OSPI_phyBasicConfig(OSPILLD_Handle hOspi)
-{    
+{
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
 
     uint32_t opMode;
