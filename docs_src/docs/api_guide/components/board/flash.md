@@ -64,6 +64,76 @@ NA
 - DMA for NAND FLASH
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+## Flash Quirks
+
+The flash driver provides quirk functions to handle flash-specific configuration requirements and recovery mechanisms. These quirks ensure proper flash initialization and reliable operation across different flash devices and protocols.
+
+These quirk APIs can be passed to the flash driver via SysConfig in the Flash section as board configurations. This allows board-specific implementations to be plugged into the flash initialization sequence.
+
+### Boot Quirks
+
+Boot quirks are invoked at the start of flash initialization. The primary function of boot quirks is to:
+- Set the flash device into 1s-1s-1s (Single SDR) mode for reliable initial communication
+- If the mode switch fails, attempt to recover the flash based on the recovery mechanism specified in the flash device datasheet
+- Ensure the flash is in a known good state before proceeding with further configuration
+
+This mechanism is critical during boot to recover from potential flash configuration issues that may have occurred during previous operations or power cycles.
+
+For S28HS512T and S25HL512T flash devices, the SDK provides the following boot quirk APIs:
+- `Flash_quirkOSPIEarlyFixup` - Boot quirk for OSPI interface
+- `Flash_quirkQSPIEarlyFixup` - Boot quirk for QSPI interface
+
+The implementation of these APIs is available in `source/board/flash/ospi/flash_nor_ospi.c`. These APIs can be configured in SysConfig as the boot quirk function for the respective flash devices.
+
+#### Example Implementation
+
+\code
+int32_t Flash_myBootQuirk(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_Attrs *attrs = config->attrs;
+
+    /* Your code for handling quirks goes here */
+    /* Set the flash in basic configuration */
+    /* Recovery mechanism as per flash datasheet */
+
+    return status;
+}
+\endcode
+
+### Configuration Quirks
+
+Configuration quirks are invoked at the end of flash initialization. These quirks handle:
+- Flash device-specific configuration requirements
+- Protocol-specific settings and optimizations
+
+Configuration quirks ensure that the flash is properly configured for the intended protocol and operational mode after the initial boot sequence completes.
+
+#### Example Implementation
+
+\code
+int32_t Flash_myConfigQuirk(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_Attrs *attrs = config->attrs;
+
+    /* Your code for handling quirks goes here */
+    /* For example: modify flash timing parameters, handle special initialization, etc. */
+
+    return status;
+}
+\endcode
+
+### Configuring Quirks in SysConfig
+
+The boot quirk and configuration quirk function pointers can be configured in the SysConfig Flash module under board configurations. This allows vendor-specific quirk implementations to be registered during flash initialization without modifying the core flash driver code.
+
+\imageStyle{flash_quirks.png, width:60%}
+\image html drivers/flash_quirks.png "Flash Quirk Functions"
+
+\endcond
+
 ## Important Usage Guidelines
 
 - Typically before writing to an offset, erase the block which corresponds to the offset
