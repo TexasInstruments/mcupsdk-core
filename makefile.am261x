@@ -72,6 +72,8 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_dfu_freertos_r5f.ti-arm-clang usbd_tusb_dfu_freertos_r5f.iar-arm
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_ncm_nortos_r5f.ti-arm-clang usbd_tusb_ncm_nortos_r5f.iar-arm
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_ncm_freertos_r5f.ti-arm-clang usbd_tusb_ncm_freertos_r5f.iar-arm
+	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_vendor_nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_vendor_freertos_r5f.ti-arm-clang
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
@@ -116,6 +118,8 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean usbd_tusb_dfu_freertos_r5f.iar-arm_clean
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean usbd_tusb_ncm_nortos_r5f.iar-arm_clean
 	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean usbd_tusb_ncm_freertos_r5f.iar-arm_clean
+	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_vendor_nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x usbd_tusb_vendor_freertos_r5f.ti-arm-clang_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -750,6 +754,8 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/ncm/am261x-lp/r5fss0-0_nortos/iar-arm [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/iar-arm [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
@@ -840,10 +846,12 @@ BUILD_COMBO_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang usbd_tu
 BUILD_COMBO_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang usbd_tusb_dfu_freertos_r5f.iar-arm
 BUILD_COMBO_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang usbd_tusb_ncm_nortos_r5f.iar-arm
 BUILD_COMBO_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang usbd_tusb_ncm_freertos_r5f.iar-arm
+BUILD_COMBO_usbd_tusb_vendor_nortos = usbd_tusb_vendor_nortos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_tusb_vendor_freertos = usbd_tusb_vendor_freertos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_ai) $(BUILD_COMBO_board) $(BUILD_COMBO_pmic_blackbird) $(BUILD_COMBO_pmic_derby) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freeRTOS_fat-freertos) $(BUILD_COMBO_freeRTOS_fat-nortos) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_hsr_prp_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_synp_nortos) $(BUILD_COMBO_usbd_synp_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_ai) $(BUILD_COMBO_board) $(BUILD_COMBO_pmic_blackbird) $(BUILD_COMBO_pmic_derby) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freeRTOS_fat-freertos) $(BUILD_COMBO_freeRTOS_fat-nortos) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_hsr_prp_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_synp_nortos) $(BUILD_COMBO_usbd_synp_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_vendor_nortos) $(BUILD_COMBO_usbd_tusb_vendor_freertos)
 
 
 # Combine all Pre-built Components
@@ -983,6 +991,12 @@ $(BUILD_COMBO_usbd_tusb_ncm_nortos):
 $(BUILD_COMBO_usbd_tusb_ncm_freertos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am261x.$(subst usbd_tusb_ncm_freertos_,,$@) all
 
+$(BUILD_COMBO_usbd_tusb_vendor_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_nortos.am261x.$(subst usbd_tusb_vendor_nortos_,,$@) all
+
+$(BUILD_COMBO_usbd_tusb_vendor_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_freertos.am261x.$(subst usbd_tusb_vendor_freertos_,,$@) all
+
 
 
 # Various Component Clean Targets
@@ -1027,10 +1041,12 @@ BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_c
 BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean usbd_tusb_dfu_freertos_r5f.iar-arm_clean
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean usbd_tusb_ncm_nortos_r5f.iar-arm_clean
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean usbd_tusb_ncm_freertos_r5f.iar-arm_clean
+BUILD_COMBO_CLEAN_usbd_tusb_vendor_nortos = usbd_tusb_vendor_nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_tusb_vendor_freertos = usbd_tusb_vendor_freertos_r5f.ti-arm-clang_clean
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_ai) $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_pmic_blackbird) $(BUILD_COMBO_CLEAN_pmic_derby) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freeRTOS_fat-freertos) $(BUILD_COMBO_CLEAN_freeRTOS_fat-nortos) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_hsr_prp_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_synp_nortos) $(BUILD_COMBO_CLEAN_usbd_synp_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_ai) $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_pmic_blackbird) $(BUILD_COMBO_CLEAN_pmic_derby) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freeRTOS_fat-freertos) $(BUILD_COMBO_CLEAN_freeRTOS_fat-nortos) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_hsr_prp_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_synp_nortos) $(BUILD_COMBO_CLEAN_usbd_synp_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_vendor_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_vendor_freertos)
 
 
 # Combine all Pre-built Components Clean
@@ -1164,6 +1180,12 @@ $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos):
 $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am261x.$(subst usbd_tusb_ncm_freertos_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_usbd_tusb_vendor_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_nortos.am261x.$(subst usbd_tusb_vendor_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_usbd_tusb_vendor_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_freertos.am261x.$(subst usbd_tusb_vendor_freertos_,,$(subst _clean,,$@)) clean
+
 
 
 # Various Component Scrub Targets
@@ -1208,10 +1230,12 @@ BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_s
 BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_scrub usbd_tusb_dfu_freertos_r5f.iar-arm_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_scrub usbd_tusb_ncm_nortos_r5f.iar-arm_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_scrub usbd_tusb_ncm_freertos_r5f.iar-arm_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_vendor_nortos = usbd_tusb_vendor_nortos_r5f.ti-arm-clang_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_vendor_freertos = usbd_tusb_vendor_freertos_r5f.ti-arm-clang_scrub
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_ai) $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_pmic_blackbird) $(BUILD_COMBO_SCRUB_pmic_derby) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freeRTOS_fat-freertos) $(BUILD_COMBO_SCRUB_freeRTOS_fat-nortos) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_hsr_prp_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_synp_nortos) $(BUILD_COMBO_SCRUB_usbd_synp_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_ai) $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_pmic_blackbird) $(BUILD_COMBO_SCRUB_pmic_derby) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freeRTOS_fat-freertos) $(BUILD_COMBO_SCRUB_freeRTOS_fat-nortos) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_hsr_prp_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_synp_nortos) $(BUILD_COMBO_SCRUB_usbd_synp_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_vendor_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_vendor_freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -1343,6 +1367,12 @@ $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos):
 
 $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am261x.$(subst usbd_tusb_ncm_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_usbd_tusb_vendor_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_nortos.am261x.$(subst usbd_tusb_vendor_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_usbd_tusb_vendor_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.vendor_freertos.am261x.$(subst usbd_tusb_vendor_freertos_,,$(subst _scrub,,$@)) scrub
 
 
 BUILD_COMBO_EXAMPLE_ALL =
@@ -1954,6 +1984,8 @@ BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_iar-arm
 BUILD_COMBO_EXAMPLE_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm
+BUILD_COMBO_EXAMPLE_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang
@@ -3906,6 +3938,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm:
 	$(MAKE) -C examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/iar-arm -f makefile all
 
+ vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -4645,6 +4683,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_iar-arm_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
@@ -6592,6 +6632,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm_clean:
 	$(MAKE) -C examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/iar-arm -f makefile clean
 
+ vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -7331,6 +7377,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_ti-arm-clang_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_nortos_iar-arm_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_decoder_r5f_example_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_decoder_using_iep_capture_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_encoder_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -9277,6 +9325,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  usb_ncm_am261x-lp_r5fss0-0_freertos_iar-arm_scrub:
 	$(MAKE) -C examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/iar-arm -f makefile scrub
+
+ vendor_bulk_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ vendor_bulk_echo_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/usb/device/vendor_bulk_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

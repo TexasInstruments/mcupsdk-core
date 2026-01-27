@@ -165,7 +165,9 @@ function getLibsBuitwihOS() {
         "usbd_tusb_ncm_nortos",
         "usbd_tusb_ncm_freertos",
         "usbd_tusb_rndis_nortos",
-        "usbd_tusb_rndis_freertos"
+        "usbd_tusb_rndis_freertos",
+        "usbd_tusb_vendor_nortos",
+        "usbd_tusb_vendor_freertos"
     ];
 }
 

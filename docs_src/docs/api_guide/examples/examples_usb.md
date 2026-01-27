@@ -10,3 +10,7 @@ This page lists all the examples related to USB.
 -# \subpage EXAMPLES_USB_RNDIS
 \endcond
 
+\cond SOC_AM261X
+-# \subpage EXAMPLES_USB_VENDOR_ECHO
+\endcond
+
