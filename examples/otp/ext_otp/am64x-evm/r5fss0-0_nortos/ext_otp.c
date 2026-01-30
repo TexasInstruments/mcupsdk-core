@@ -228,7 +228,7 @@ int32_t ext_otp_writeMmr(uint32_t mmrIdx, uint32_t mmrVal)
 	}
 	/* Total rowCount number of rows needed */
 	rowEnd = rowStart + rowCount - 1; 
-	rowColEnd = ((rowColStart + MMR_SIZE_BITS) % NUM_BITS_PER_OTP_ROW) - 1; 
+	rowColEnd = ((rowColStart + MMR_SIZE_BITS - 1) % NUM_BITS_PER_OTP_ROW);
 
 	if (rowCount == 2)
 	{
