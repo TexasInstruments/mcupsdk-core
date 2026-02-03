@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -838,6 +838,9 @@ static void MIBSPI_SPIEnable(CSL_mss_spiRegs *ptrMibSpiReg)
 
 static void MIBSPI_SPIDisable(CSL_mss_spiRegs *ptrMibSpiReg)
 {
+    /* Disable DMA request first errate Workaround(i2338)*/
+    CSL_FINS(ptrMibSpiReg->SPIINT0, SPI_SPIINT0_DMAREQEN, 0U);
+
     /* Disable MibSpi multibuffered mode and enable buffer RAM */
     CSL_FINS(ptrMibSpiReg->MIBSPIE, SPI_MIBSPIE_MSPIENA, 0U);
 
