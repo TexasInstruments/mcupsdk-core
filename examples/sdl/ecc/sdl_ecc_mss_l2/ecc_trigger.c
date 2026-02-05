@@ -105,6 +105,11 @@
 #define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00244u)
 #define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0xcu) /*Bank 3*/
+#if defined (SOC_AM263X)
+#define SDL_MSS_L2_BANK_INIT_DONE_CLR               (0xFu)  /* L2 MEM Bank 0 to 3 (bits 0-3) */
+#elif defined (SOC_AM263PX)
+#define SDL_MSS_L2_BANK_INIT_DONE_CLR               (0x3Fu) /* L2 MEM Bank 0 to 5 (bits 0-5) */
+#endif
 #endif
 
 #if defined (SOC_AM261X)
@@ -116,6 +121,7 @@
 #define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00334)
 #define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x6u) /*Bank 2*/
+#define SDL_MSS_L2_BANK_INIT_DONE_CLR               (0x7u)  /* L2 MEM Bank 0 to 2 (bits 0-2) */
 #endif
 
 /* ========================================================================== */
@@ -523,7 +529,7 @@ int32_t ECC_funcTest(void)
 
 #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     /* Clear Done memory*/
-    SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_DONE_ADDR, 0xfu);
+    SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_DONE_ADDR, SDL_MSS_L2_BANK_INIT_DONE_CLR);
 #endif
 
     /* Initialization of MSS L2 memory*/
