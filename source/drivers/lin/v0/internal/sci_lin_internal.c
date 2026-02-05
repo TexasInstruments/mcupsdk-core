@@ -288,9 +288,14 @@ void LIN_HLD_setBaudParams(uint32_t baseAddr, LIN_BaudConfigParams *params)
 void LIN_HLD_setMaxBaudRate(uint32_t baseAddr, uint32_t linClk,
                             uint32_t maxBaud)
 {
-    /* Calculate maximum baud rate Pre-scaler */
+    /* Calculate maximum baud rate Pre-scaler 
+     * MBR = (0.9 * clockVal / baudrate)
+     * where:
+     * - `clockVal` is the clock frequency driving the LIN module.
+     * - `baudrate` is the desired communication baud rate.
+    */
     HW_WR_FIELD32_RAW(  (baseAddr + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK,
-                        CSL_LIN_MBRSR_MBR_SHIFT, (linClk / maxBaud));
+                        CSL_LIN_MBRSR_MBR_SHIFT, (0.9 * linClk / maxBaud));
 }
 
 void LIN_HLD_setFrameLength(uint32_t baseAddr, uint8_t length)

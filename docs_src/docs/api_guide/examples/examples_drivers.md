@@ -394,6 +394,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_LIN_COMMANDER_READ_HLD
    -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_WRITE_HLD
    -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_READ_HLD
+   -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_READ_ADAPT_BAUD_HLD
+   -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_LLD
 \endcond
 -# MCAN
    -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE

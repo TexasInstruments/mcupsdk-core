@@ -104,7 +104,7 @@ void lin_external_main(void)
 
     /* Reaching the Baud of 19200 */
     LIN_setBaudRatePrescaler(APP_LIN_BASE_ADDR, 624U, 0U);
-    LIN_setMaximumBaudRate(APP_LIN_BASE_ADDR, 100000000U);
+    LIN_setMaximumBaudRate(APP_LIN_BASE_ADDR, 192000000, 19200);
 
     /* Set Mask ID so TX/RX match will always happen */
     LIN_setRxMask(APP_LIN_BASE_ADDR, 0xFFU);

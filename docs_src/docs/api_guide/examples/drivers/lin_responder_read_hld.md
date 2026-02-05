@@ -21,7 +21,7 @@ Example Can be run in Polling, Interrupt and DMA mode, The Operating mode is con
  ^              | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/drivers/lin/lin_responder_write
+ Example folder | examples/drivers/lin/lin_responder_read
 
 \endcond
 

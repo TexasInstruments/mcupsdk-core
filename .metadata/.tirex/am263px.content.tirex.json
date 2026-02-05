@@ -9829,6 +9829,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Lin Responder Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "lin_responder_lld",
+        "location": "../../examples/drivers/lin/lin_responder_lld/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "lin",
+            "lin_responder_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Lin Responder Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "lin_responder_lld",
+        "location": "../../examples/drivers/lin/lin_responder_lld/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "lin",
+            "lin_responder_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Lin Responder Read Adapt Baud Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "lin_responder_read_adapt_baud",
+        "location": "../../examples/drivers/lin/lin_responder_read_adapt_baud/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "lin",
+            "lin_responder_read_adapt_baud",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Lin Responder Read Adapt Baud Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "lin_responder_read_adapt_baud",
+        "location": "../../examples/drivers/lin/lin_responder_read_adapt_baud/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "lin",
+            "lin_responder_read_adapt_baud",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Lin Responder Write Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_responder_write",
         "location": "../../examples/drivers/lin/lin_responder_write/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

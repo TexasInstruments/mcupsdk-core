@@ -450,6 +450,7 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
  *
  *  \param  base is the base address of the LIN commander.
  *  \param  clockVal is the device system clock (Hz).
+ *  \param  baudrate is the device baud rate.
  *
  *  In LIN mode only, this function is used to set the maximum baud rate
  *  prescaler used during synchronization phase of a responder module if the
@@ -462,13 +463,18 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
  *
  */
 static inline void
-LIN_setMaximumBaudRate(uint32_t base, uint32_t clockVal)
+LIN_setMaximumBaudRate(uint32_t base, uint32_t clockVal, uint32_t baudrate)
 {
     /* Parameter Validation */
     DebugP_assert(LIN_isBaseValid(base));
 
-    /* Calculate maximum baud rate prescaler */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, (clockVal / 20000U));
+    /* Calculate maximum baud rate prescaler 
+     * MBR = (0.9 * clockVal / baudrate)
+     * where:
+     * - `clockVal` is the clock frequency driving the LIN module.
+     * - `baudrate` is the desired communication baud rate.
+     */
+    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, ( 0.9 * clockVal / baudrate));
 }
 
 /**

@@ -151,6 +151,8 @@ const example_file_list = [
     "examples/drivers/lin/lin_sci_loopback/.project/project.js",
     "examples/drivers/lin/lin_sci_dma/.project/project.js",
     "examples/drivers/lin/lin_loopback_polling/.project/project.js",
+    "examples/drivers/lin/lin_responder_lld/.project/project.js",
+    "examples/drivers/lin/lin_responder_read_adapt_baud/.project/project.js",
     "examples/drivers/lin/lin_responder_write/.project/project.js",
     "examples/drivers/lin/lin_responder_read/.project/project.js",
     "examples/drivers/lin/lin_commander_write/.project/project.js",

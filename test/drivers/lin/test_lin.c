@@ -262,12 +262,12 @@ static void LIN_setLINModeCheck(void *args)
 /* Testcase 2 - Check the LIN_setMaximumBaudRate API */
 static void LIN_setMaximumBaudRateCheck(void *args)
 {
-    LIN_setMaximumBaudRate(CONFIG_LIN1_BASE_ADDR, 120000000U);
+    LIN_setMaximumBaudRate(CONFIG_LIN1_BASE_ADDR, 96000000, 19200);
 
     /* Check if the value was written correctly */
     /* HWREGH(base + LIN_O_MBRSR) */
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_MBRSR)
-        & CSL_LIN_MBRSR_MBR_MASK)>>CSL_LIN_MBRSR_MBR_SHIFT, 6000U, "Maximum Baud Rate Check failed.");
+        & CSL_LIN_MBRSR_MBR_MASK)>>CSL_LIN_MBRSR_MBR_SHIFT, 4500U, "Maximum Baud Rate Check failed.");
 }
 
 /* Testcase 3 - Check the LIN_setMessageFiltering API */

@@ -126,7 +126,7 @@ void LIN_initModule(uint32_t base)
 
     /* Set Baud Rate Settings - 100MHz Device */
     LIN_setBaudRatePrescaler(base, 96U, 11U);
-    LIN_setMaximumBaudRate(base, 100000000U);
+    LIN_setMaximumBaudRate(base, 100000000U, 19200U);
 
     /* Set response field to 1 byte */
     LIN_setFrameLength(base, 1U);
