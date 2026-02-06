@@ -1,7 +1,7 @@
 /*
  * AM64x_RTU_PRU1.cmd
  *
- * Example Linker command file for linking programs built with the C compiler
+ * Example Linker command file for linking programs built with the TI-PRU-CGT
  * on AM64x RTU_PRU1 cores
  *
  */

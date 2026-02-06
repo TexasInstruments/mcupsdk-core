@@ -1,7 +1,7 @@
 /*
  * AM62x_PRU1.cmd
  *
- * Example Linker command file for linking programs built with the C compiler
+ * Example Linker command file for linking programs built with the TI-PRU-CGT
  * on AM62x PRU1 cores
  *
  * Copyright (C) 2021-2022 Texas Instruments Incorporated - https://www.ti.com/

@@ -1,7 +1,7 @@
 /*
  * AM263x_PRU1.cmd
  *
- * Example Linker command file for linking programs built with the C compiler
+ * Example Linker command file for linking programs built with the TI-PRU-CGT
  * on AM263x PRU1 cores
  *
  */
