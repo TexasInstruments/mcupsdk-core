@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2025 Texas Instruments Incorporated
+ *  Copyright (C) 2015-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -113,6 +113,22 @@ extern "C"
  * additional information.
  */
 #define TISCI_MSG_VALUE_DEVICE_HW_STATE_TRANS       2U
+
+/**
+ * Number of words needed for device state bitmap in multiple device query response.
+ * This value is constrained by the sec-proxy message buffer size. Value of 10 words
+ * (40 bytes) allows the complete response structure (header + count + remaining + bitmap)
+ * to fit exactly within the buffer limit. Each device uses 2 bits in the bitmap to
+ * represent its state (OFF, ON, TRANSITIONING).
+ */
+#define TISCI_MSG_DEVICE_BITMAP_WORDS               10U
+
+/**
+ * Maximum device IDs supported in a single multiple device query call.
+ * Calculated as: TISCI_MSG_DEVICE_BITMAP_WORDS * 16 devices per word = 10 * 16 = 160.
+ * Each 32-bit word holds 16 devices (32 bits / 2 bits per device = 16).
+ */
+#define TISCI_MSG_MAX_DEVICE_IDS_MULTIPLE           160U
 
 /**
  * \brief Set the desired state of the device.
@@ -250,6 +266,47 @@ struct tisci_msg_device_drop_powerup_ref_req {
  */
 struct tisci_msg_device_drop_powerup_ref_resp {
     struct tisci_header hdr;
+} __attribute__((__packed__));
+
+/**
+ * \brief Request to get current state of multiple devices in the SoC.
+ *
+ * \param hdr TISCI header
+ *
+ * \param start_device_id
+ * Device ID to begin querying from. Set to 0 for the first batch.
+ * For the next batch, add the count value from the previous response.
+ */
+struct tisci_msg_get_device_multiple_req {
+    struct tisci_header    hdr;
+    uint16_t            start_device_id;
+} __attribute__((__packed__));
+
+/**
+ * \brief Response containing device states as bitmap.
+ *
+ * Returns a bitmap where each device uses 2 bits to represent its state:
+ * 00 = OFF, 01 = ON, 10 = TRANSITIONING, 11 = reserved for future use.
+ * The device state will be present at the index corresponding to the
+ * device ID. If a device ID does not exist at a particular index, the value
+ * at that index will be 0 (OFF).
+ *
+ * \param hdr TISCI header
+ *
+ * \param count
+ * Number of device states included in this response.
+ *
+ * \param remaining
+ * Number of remaining devices that did not fit in this response.
+ *
+ * \param device_state_bitmap
+ * Bitmap indexed by device ID. Each device uses 2 bits.
+ */
+struct tisci_msg_get_device_multiple_resp {
+    struct tisci_header    hdr;
+    uint16_t            count;
+    uint16_t            remaining;
+    uint32_t            device_state_bitmap[TISCI_MSG_DEVICE_BITMAP_WORDS];
 } __attribute__((__packed__));
 
 

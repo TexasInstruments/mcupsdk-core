@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2025 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -76,6 +76,9 @@ extern "C"
 
 /** Indicate that this message is marked secure */
 #define TISCI_MSG_FLAG_SEC    TISCI_BIT(2)
+
+/** Indicates that this request should not be forwarded to DM */
+#define TISCI_MSG_FLAG_REQ_NOTFWD2DM    TISCI_BIT(3)
 
 /**
  * Response flag for a message that indicates success. If this flag is NOT
@@ -159,6 +162,7 @@ struct tisci_sec_header {
 #define TISCI_MSG_GET_DEVICE                    (0x0201U)
 #define TISCI_MSG_SET_DEVICE_RESETS             (0x0202U)
 #define TISCI_MSG_DEVICE_DROP_POWERUP_REF       (0x0203U)
+#define TISCI_MSG_GET_DEVICE_MULTIPLE           (0x0204U)
 
 #define TISCI_MSG_PREPARE_SLEEP                 (0x0300U)
 #define TISCI_MSG_ENTER_SLEEP                   (0x0301U)
@@ -222,6 +226,9 @@ struct tisci_sec_header {
 #define TISCI_MSG_FWL_EXCP_NOTIFICATION         (0x900BU)
 /** Message to open debug firewalls using a certificate */
 #define TISCI_MSG_OPEN_DEBUG_FWLS               (0x900CU)
+/** Message to intialize all the firewalls for a specific dev group */
+#define TISCI_MSG_INIT_FWL_DEVGRP               (0x9046U)
+
 /**
  * Message to write partitioning data and provisioned keys to the keystore
  * memory

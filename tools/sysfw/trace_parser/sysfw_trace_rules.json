@@ -4492,6 +4492,30 @@
                        }
                     ]
                 },
+                "0x19": {
+                    "action_long": "Clock SSC has been Enabled",
+                    "action_short": "CLOCK_ENABLE_SSC",
+                    "msg_data": [
+                        {
+                            "fmt": "%d",
+                            "higher_bit": 21,
+                            "lower_bit": 0,
+                            "name": "Clock ID"
+                        }
+                    ]
+                },
+                "0x1A": {
+                    "action_long": "Clock SSC has been Disabled",
+                    "action_short": "CLOCK_DISABLE_SSC",
+                    "msg_data": [
+                        {
+                            "fmt": "%d",
+                            "higher_bit": 21,
+                            "lower_bit": 0,
+                            "name": "Clock ID"
+                        }
+                    ]
+                },
                 "0x20": {
                     "action_long": "Power Management Initialization",
                     "action_short": "PM_INIT",
@@ -4939,6 +4963,86 @@
                                 "0x22":{
                                     "msg": "Latch clearing sequence failed"
                                 }          
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "0x05": {
+            "action_domain_name": "ATF Low Power Sequence",
+            "action_modifiers": [
+                {
+                    "mask": "0x40",
+                    "modifier_long": "Action failed",
+                    "modifier_short": "FAIL"
+                }
+            ],
+            "actions": {
+                "0x30": {
+                    "action_long": "Low power mode sequence in ATF for K3 Lite Devices",
+                    "action_short": "LPM_ATF_SEQ",
+                    "msg_data": [
+                        {
+                            "fmt": "%X",
+                            "higher_bit": 21,
+                            "lower_bit": 8,
+                            "name": "Sequence number",
+                            "sub_msg" : {
+                                "0x01":{
+                                    "msg": "Secondary core powered off"
+                                },
+                                "0x02":{
+                                    "msg": "TIFS core entered WFI"
+                                },
+                                "0x03":{
+                                    "msg": "Executed DDR seq for RTC plus DDR lpm"
+                                },
+                                "0x04":{
+                                    "msg": "Disabled DDR LPSC"
+                                },
+                                "0x05":{
+                                    "msg": "Saved MAIN PLL"
+                                },
+                                "0x06":{
+                                    "msg": "Disabled MAIN PLL"
+                                },
+                                "0x07":{
+                                    "msg": "PMIC configured to enter RTC plus DDR lpm"
+                                },
+                                "0x08":{
+                                    "msg": "Disabled USB LPSC"
+                                },
+                                "0x09":{
+                                    "msg": "Saved DDR Register Configs"
+                                },
+                                "0x0A":{
+                                    "msg": "Hit ISB during suspend"
+                                },
+                                "0x0B":{
+                                    "msg": "Restored main PLL"
+                                },
+                                "0x0C":{
+                                    "msg": "Enabled DDR LPSC"
+                                },
+                                "0x0D":{
+                                    "msg": "Restored DDR Reg configs"
+                                },
+                                "0x0E":{
+                                    "msg": "Restored USB LPSC"
+                                },
+                                "0x0F":{
+                                    "msg": "Core restore message sent to TIFS"
+                                },
+                                "0x10":{
+                                    "msg": "Done Wakeup SRAM resume sequence"
+                                },
+                                "0xF0":{
+                                    "msg": "LPM Suspend failed"
+                                },
+                                "0xF1":{
+                                    "msg": "LPM Suspend failed as mode is invalid"
+                                }        
                             }
                         }
                     ]
