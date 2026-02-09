@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-23 Texas Instruments Incorporated
+ * Copyright (C) 2021-26 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -92,10 +92,14 @@ extern "C" {
 #define PIN_PULL_DIRECTION              (((uint32_t) 0x1U) << 17U)
 /** \brief Receiver enable */
 #define PIN_INPUT_ENABLE                (((uint32_t) 0x1U) << 18U)
+/** \brief Drive strength */
+#define PIN_DRIVE_STRENGTH(strength)    ((uint32_t)(strength) << 19U)
 /** \brief Driver disable */
 #define PIN_OUTPUT_DISABLE              (((uint32_t) 0x1U) << 21U)
 /** \brief Wakeup enable */
 #define PIN_WAKEUP_ENABLE               (((uint32_t) 0x1U) << 29U)
+
+#define PIN_DRV_STR_FAST                PIN_DRIVE_STRENGTH(2U)
 
 /** \brief Main domain pad config register offset in control module */
 enum Pinmux_MainOffsets
