@@ -1478,6 +1478,17 @@ static void MIBSPI_ISR (void *args)
         if (intVector & 0x1U)
         {
             ptrMibSpiDriver->hwStats.dlenErr++;
+            /* Errata workaround (i2337) where a DLEN error causes repeated retransmissions.
+             * This is only an issue for an IOLPBK mode peripheral in an Analog Loopback configuration. */
+            if ((CSL_FEXT(ptrMibSpiReg->IOLPBKTSTCR,SPI_IOLPBKTSTCR_LPBKTYPE) == MIBSPI_LOOPBK_ANALOG) &&
+                (CSL_FEXT(ptrMibSpiReg->SPIGCR1,SPI_SPIGCR1_MASTER) == CSL_SPI_SPIGCR1_MASTER_SLAVE))
+            {
+                /* Disable SPI */
+                CSL_FINS(ptrMibSpiReg->SPIGCR1, SPI_SPIGCR1_SPIEN, 0U);
+
+                /* Re-enable SPI */
+                CSL_FINS(ptrMibSpiReg->SPIGCR1, SPI_SPIGCR1_SPIEN, 1U);
+            }
         }
         if (intVector & 0x2U)
         {
