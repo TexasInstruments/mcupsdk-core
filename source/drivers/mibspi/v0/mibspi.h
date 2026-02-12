@@ -76,8 +76,19 @@ extern "C" {
 /** \brief A handle that is returned from a #MIBSPI_open() call */
 typedef void *MIBSPI_Handle;
 
-/** \brief MibSPI RAM buffer mode */
-#define MIBSPI_RAM_BUFFER_MODE              (7U)
+/* Workaround for Errata i2339: Fixed by setting BUFMODE to 3U.*/
+
+/** \brief MibSPI RAM buffer mode
+ * 0U Disabled
+ * 1U Skip single transfer mode
+ * 2U Skip overwrite protect mode
+ * 3U Skip single transfer overwrite protect mode
+ * 4U Continuous mode
+ * 5U Suspend Single transfer mode
+ * 6U Suspend overwrite protect mode
+ * 7U Suspend single transfer overwrite protect mode
+ */
+#define MIBSPI_RAM_BUFFER_MODE              (3U)
 
 /** \brief Transfer group used in peripheral mode */
 #define MIBSPI_PERIPHERALMODE_TRANS_GROUP        (0U)
