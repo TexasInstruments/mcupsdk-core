@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -175,6 +175,9 @@ void Bootloader_profilePrintProfileLog(void)
             break ;
         case BOOTLOADER_MEDIA_PCIE:
             bootMediaName = "PCIE";
+            break ;
+        case BOOTLOADER_MEDIA_UART:
+            bootMediaName = "Uart";
             break ;
         default:
             bootMediaName = "undefined";

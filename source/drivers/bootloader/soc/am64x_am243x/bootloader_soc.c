@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -161,7 +161,7 @@ Bootloader_CoreBootInfo gCoreBootInfo[] =
         .tisciProcId    = SCICLIENT_PROCID_A53_CL0_C0,
         .tisciDevId     = TISCI_DEV_A53SS0_CORE_0,
         .tisciClockId   = TISCI_DEV_A53SS0_COREPAC_ARM_CLK_CLK,
-        .defaultClockHz = (uint32_t)(800*1000000),
+        .defaultClockHz = (uint32_t)(1000*1000000),
         .coreName       = "a530-0",
     },
 
@@ -169,7 +169,7 @@ Bootloader_CoreBootInfo gCoreBootInfo[] =
         .tisciProcId    = SCICLIENT_PROCID_A53_CL0_C1,
         .tisciDevId     = TISCI_DEV_A53SS0_CORE_1,
         .tisciClockId   = TISCI_DEV_A53SS0_COREPAC_ARM_CLK_CLK,
-        .defaultClockHz = (uint32_t)(800*1000000),
+        .defaultClockHz = (uint32_t)(1000*1000000),
         .coreName       = "a530-1",
     },
 };
@@ -316,28 +316,6 @@ uint32_t Bootloader_socGetCoreVariant(void)
     }
 
     return coreVariant;
-}
-
-uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)
-{
-    uint32_t cslCoreId = CSL_CORE_ID_MAX;
-    uint32_t i;
-
-    uint32_t rprcCoreIds[CSL_CORE_ID_MAX] =
-    {
-        14U, 4U, 5U, 6U, 7U, 0U, 1U
-    };
-
-    for(i = 0U; i < CSL_CORE_ID_MAX; i++)
-    {
-        if(rprcCoreId == rprcCoreIds[i])
-        {
-            cslCoreId = i;
-            break;
-        }
-    }
-
-    return cslCoreId;
 }
 
 uint32_t Bootloader_socGetSciclientCpuProcId(uint32_t cpuId)
@@ -1367,17 +1345,24 @@ int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint)
     return status;
 }
 
-int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size)
+uint32_t Bootloader_socElfToCslCoreId(uint32_t elfCoreId)
 {
-    return SystemP_SUCCESS;
-}
+    uint32_t cslCoreId = CSL_CORE_ID_MAX;
+    uint32_t i;
 
-int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc)
-{
-    return SystemP_SUCCESS;
-}
+    uint32_t elfCoreIds[CSL_CORE_ID_MAX] =
+    {
+        14U, 4U, 5U, 6U, 7U, 0U, 1U
+    };
 
-int32_t Bootloader_authFinish(void)
-{
-    return SystemP_SUCCESS;
+    for(i = 0U; i < CSL_CORE_ID_MAX; i++)
+    {
+        if(elfCoreId == elfCoreIds[i])
+        {
+            cslCoreId = i;
+            break;
+        }
+    }
+
+    return cslCoreId;
 }

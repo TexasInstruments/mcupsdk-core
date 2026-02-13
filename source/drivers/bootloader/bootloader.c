@@ -61,7 +61,6 @@
 #define ALIGNED_INCREMENT(A,B,C) do{A = (A = A + B, (A % C) > 0 ? A + C - (A % C): A);} while(0)
 
 /*RPRC image ID for linux load only images */
-#define RPRC_LINUX_LOAD_ONLY_IMAGE_ID (21U)
 #define SEGMENT_MAP_NOTE_TYPE (0xBBBB7777)
 
 /** Maximum allowed length of application certificate. */
@@ -1487,7 +1486,7 @@ int32_t Bootloader_parseAndLoadLinuxAppImage(Bootloader_Handle handle, Bootloade
                 for(i=0U; i<mHdrStr.numFiles; i++)
                 {
                     /* Load the load only linux images */
-                    if(mHdrCore[i].coreId == RPRC_LINUX_LOAD_ONLY_IMAGE_ID)
+                    if(mHdrCore[i].coreId == LINUX_LOAD_ONLY_IMAGE_ID)
                     {
                         Bootloader_CpuInfo load_only_image;
                         load_only_image.rprcOffset = mHdrCore[i].imageOffset;

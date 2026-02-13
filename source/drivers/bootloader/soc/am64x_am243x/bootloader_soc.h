@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -190,15 +190,6 @@ int32_t  Bootloader_socCpuSetEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
 uint32_t Bootloader_socTranslateSectionAddr(uint32_t cslCoreId, uint32_t addr);
 
 /**
- * \brief Obtain the CSL core ID of a CPU from its RPRC core ID
- *
- * \param rprcCoreId [in] The RPRC ID of the core
- *
- * \return CSL core ID of a CPU
- */
-uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId);
-
-/**
  * \brief Get the list of self cpus in the SOC.
  *
  * \return List of self cpus ending with an invalid core id
@@ -350,19 +341,13 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
 
 /**
- * \brief API to start streaming boot authentication
+ * \brief Obtain the CSL core ID of a CPU from its MCELF core ID
+ *
+ * \param elfCoreId [in] The ELF ID of the core
+ *
+ * \return CSL core ID of a CPU
  */
-int32_t Bootloader_authStart(uintptr_t startAddr, uint32_t size);
-
-/**
- * \brief API to update the Secure Boot Stream with a new segment
- */
-int32_t Bootloader_authUpdate(uintptr_t startAddr, uint32_t size, uint8_t enc);
-
-/**
- * \brief API to finish streaming boot authentication
- */
-int32_t Bootloader_authFinish(void);
+uint32_t Bootloader_socElfToCslCoreId(uint32_t elfCoreId);
 
 #ifdef __cplusplus
 }

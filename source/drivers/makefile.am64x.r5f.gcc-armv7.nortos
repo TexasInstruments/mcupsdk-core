@@ -15,11 +15,12 @@ LIBNAME:=drivers.am64x.r5f.gcc-armv7.nortos.$(PROFILE).lib
 
 FILES_common := \
     adc.c \
-    bootloader.c \
+    bootloader_mcelf.c \
     bootloader_buf_io.c \
     bootloader_flash.c \
     bootloader_mem.c \
     bootloader_mmcsd_raw.c \
+    bootloader_uart.c \
     bootloader_soc.c \
     bootloader_xmodem.c \
     bootloader_uniflash_common.c \
@@ -135,6 +136,7 @@ FILES_common := \
     watchdog_rti.c \
     watchdog_soc.c \
     gp_timer.c \
+    utils.c \
 
 ASMFILES_common := \
     csl_arm_r5_pmu.S \
@@ -225,6 +227,7 @@ FILES_PATH_common = \
     watchdog/v1 \
     watchdog/v1/soc/am64x_am243x \
     gp_timer/v0 \
+    utils \
     pmu \
     pmu/r5f \
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -83,11 +83,17 @@ extern "C"
 #define BOOTLOADER_MEDIA_BUFIO     (0xB0070005)
 #define BOOTLOADER_MEDIA_PCIE      (0xB0070006)
 #define BOOTLOADER_MEDIA_USB       (0xB0070007)
+#define BOOTLOADER_MEDIA_UART      (0xB0070008)
 
 /**
  * \brief Bootloader buffer enable
  */
 #define BOOTLOADER_SCRATCH_MEM_ENABLE  (1U)
+
+/**
+ * \brief RPRC image ID for linux load only images
+ */
+#define LINUX_LOAD_ONLY_IMAGE_ID (21U)
 
 /**
  * \brief Handle to the Bootloader driver returned by Bootloader_open()
@@ -110,6 +116,9 @@ typedef struct Bootloader_Params_s
 
     uint32_t bufIoDeviceIndex;
     /* Instance index of the IO device driver (UART) */
+
+    char* fileName;
+    /*Pointer to the C string that hold name of file to be opened if the boot media is SD*/
 
 } Bootloader_Params;
 
@@ -238,6 +247,9 @@ typedef struct Bootloader_Config_s
 #include <drivers/bootloader/bootloader_flash.h>
 #include <drivers/bootloader/bootloader_mem.h>
 #include <drivers/bootloader/bootloader_buf_io.h>
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#include <drivers/bootloader/bootloader_uart.h>
+#endif
 
 /**
  * \brief Data structure containing information related to a particular CPU, required for RPRC loading
@@ -521,6 +533,20 @@ uint32_t Bootloader_getBootMedia(Bootloader_Handle handle);
  */
 int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
 
+#if defined(SOC_AM64X)
+/**
+ * \brief API to parse and load MCELF image
+ *
+ * This API parses the MCELF file and loads the loadable segments into xthe respective cores.
+ *
+ * \param handle Bootloader driver handle from \ref Bootloader_open
+ * \param bootImageInfo [in] Data structure of type Bootloader_BootImageInfo which will be filled
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_parseAndLoadMultiCoreELFLinux(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
+#endif
+
 /**
  * \brief API to get the length of an x509 certificate
  *
@@ -543,6 +569,25 @@ uint32_t Bootloader_getX509CertLen(uint8_t *x509_cert_ptr);
  * \return Length of the image 
  */
 uint32_t Bootloader_getMsgLen(uint8_t *x509_cert_ptr, uint32_t x509_cert_size);
+
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+/**
+ * \brief API to parse and load a multicore ELF image for Uart bootmedia
+ *
+ * When the booting is done through boot media like Uart, unlike loading via CCS, the application binaries for each core
+ * applicable are converted into a file format '.elf' and combined together into a multicore elf(.mcelf) binary. The
+ * bootloader needs to read this mcelf file which is being sent in chunks from host side, and load the segments correctly into memories.
+ * This API helps in receiving the multicore elf file meta from host, parsing the multicore elf file meta, requests the program segments from host,
+ * receive and loads the segments for each core from the boot media to the SOC memory.
+ * It also fills the metadata in the bootImageInfo structure passed.
+ *
+ * \param handle        [in] Bootloader driver handle from \ref Bootloader_open
+ * \param bootImageInfo [in] Data structure of type Bootloader_BootImageInfo which will be filled
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_UartParseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
+#endif
 /** @} */
 
 #ifdef __cplusplus
