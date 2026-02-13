@@ -164,6 +164,52 @@ A secure host refers specifically to a host that is configured to communicate wi
 
 \endcond
 
+#### Default Region Configuration for HSM Memory Validation
+
+The HSM firmware validates memory addresses passed in service requests against pre-configured safe memory regions. The following tables show the default memory regions configured for each device and firmware type.
+
+\cond SOC_AM263PX
+
+**AM263Px Default Memory Regions**
+
+*HSFS Firmware*
+
+| Region Name | Start Address | End Address | Permissions |
+|-------------|---------------|-------------|-------------|
+| OC_RAM | 0x70000000 | 0x70300000 | R/W |
+| TCMA | 0x78000000 | 0x78010000 | R/W |
+| TCMB | 0x78100000 | 0x78130000 | R/W |
+
+\endcond
+
+\cond SOC_AM263X
+
+**AM263x Default Memory Regions**
+
+*HSFS Firmware*
+
+| Region Name | Start Address | End Address | Permissions |
+|-------------|---------------|-------------|-------------|
+| OC_RAM | 0x70000000 | 0x70300000 | R/W |
+| TCMA | 0x78000000 | 0x78010000 | R/W |
+| TCMB | 0x78100000 | 0x78130000 | R/W |
+
+\endcond
+
+\cond SOC_AM261X
+
+**AM261x Default Memory Regions**
+
+*HSFS Firmware*
+
+| Region Name | Start Address | End Address | Permissions |
+|-------------|---------------|-------------|-------------|
+| OC_RAM | 0x70000000 | 0x70180000 | R/W |
+| TCMA | 0x78000000 | 0x78040000 | R/W |
+| TCMB | 0x78100000 | 0x78140000 | R/W |
+
+\endcond
+
 
 ### Resources available
 By default, the access to the crypto resources are firewalled on HS-FS devices.
@@ -229,4 +275,3 @@ the drivers only operate in CPU mode of data copy.
 the drivers only operate in CPU mode of data copy.
 
 \endcond
-
