@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,7 +50,7 @@ extern "C"
 #include <kernel/dpl/SystemP.h>
 #include <drivers/sciclient.h>
 #include <kernel/dpl/CpuIdP.h>
-#include <drivers/hw_include/am64x_am243x/cslr_soc_baseaddress.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -96,6 +96,20 @@ extern "C"
  * \brief Switch value for SD card boot mode
  */
 #define SOC_BOOTMODE_MMCSD      (0X36C3)
+
+/**
+ * \brief IO Drive Strength Register offsets
+ */
+#define SOC_H_IO_DRVSTRNGTH0    (0x40C0U)
+#define SOC_H_IO_DRVSTRNGTH1    (0x40C4U)
+#define SOC_V_IO_DRVSTRNGTH0    (0x40D0U)
+#define SOC_V_IO_DRVSTRNGTH1    (0x40D4U)
+
+/**
+ * \brief IO Drive Strength field definitions
+ */
+#define SOC_IO_DRVSTRNGTH_MASK  CSL_MCU_CTRL_MMR_CFG0_H_IO_DRVSTRNGTH0_DRV_STR_MASK
+#define SOC_IO_DRVSTRNGTH_MAX   CSL_MCU_CTRL_MMR_CFG0_H_IO_DRVSTRNGTH0_DRV_STR_MAX
 
 /**
  * \brief Software defined MAGIC number to indicate SRAM firewall open by SBL
@@ -457,6 +471,15 @@ int32_t SOC_isHsDevice(void);
  *  \return Data BaseAddress of the flash
  */
 uint32_t SOC_getFlashDataBaseAddr(void);
+
+/**
+ * \brief Fix fast mode drive strength
+ *
+ * Some devices have all drive strengths hardcoded to the nominal value.
+ * This function updates the drive strength registers on boot to the right
+ * values for fast drive strength. Only fast mode is supported and fixed.
+ */
+void SOC_fixFastDriveStrength(void);
 
 /** @} */
 
