@@ -71,7 +71,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_LIN_RESPONDER_READ_HLD_ADAPT_BAUD_RATE";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_LIN_RESPONDER_READ_ADAPT_BAUD_HLD";
 
 const templates_nortos_r5f =
 [
