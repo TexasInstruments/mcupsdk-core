@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -72,59 +72,8 @@ int32_t App_loadImages(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *b
 
     if(bootHandle != NULL)
     {
-        status = Bootloader_parseMultiCoreAppImage(bootHandle, bootImageInfo);
-
-        /* Load CPUs */
-        /* Do not load M4 when MCU domain is reset isolated */
-        if (!Bootloader_socIsMCUResetIsoEnabled())
-        {
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
-            {
-                bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_M4FSS0_0);
-                Bootloader_profileAddCore(CSL_CORE_ID_M4FSS0_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0]);
-            }
-        }
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-        {
-            bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-            status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_0]));
-        }
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-        {
-            bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-            status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_1]));
-        }
-
-        /* Assume self boot for either of the cores of R50 cluster */
-        uint32_t isSelfBoot = FALSE;
-        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0))
-        {
-            isSelfBoot = TRUE;
-        }
-
-        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
-        {
-            isSelfBoot = TRUE;
-        }
-
-        /* Self cores has to be reset together, so check for both */
-        if(status == SystemP_SUCCESS && (TRUE == isSelfBoot))
-        {
-            /* Set clocks for self cluster */
-            bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-            bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-
-            /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
-            /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
-            status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
-            {
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_1], FALSE);
-            }
-        }
+        status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, bootImageInfo);
     }
-
     return status;
 }
 
@@ -134,12 +83,12 @@ int32_t App_loadLinuxImages(Bootloader_Handle bootHandle, Bootloader_BootImageIn
 
     if(bootHandle != NULL)
     {
-        status = Bootloader_parseAndLoadLinuxAppImage(bootHandle, bootImageInfo);
+        status = Bootloader_parseAndLoadMultiCoreELFLinux(bootHandle, bootImageInfo);
 
         if(status == SystemP_SUCCESS)
         {
             bootImageInfo->cpuInfo[CSL_CORE_ID_A53SS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_A53SS0_0);
-            status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_A53SS0_0]));
+            status = Bootloader_initCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_A53SS0_0]));
         }
     }
 
@@ -272,14 +221,13 @@ int main(void)
             if(bootHandle != NULL)
             {
                 /* Initialize PRU Cores if applicable */
-                Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
-                if(TRUE == cfg->initICSSCores)
+                bootConfig = (Bootloader_Config *)bootHandle;
+                if(TRUE == bootConfig->initICSSCores)
                 {
                     status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
                     DebugP_assert(status == SystemP_SUCCESS);
                 }
 
-                bootConfig = (Bootloader_Config *)bootHandle;
                 bootConfig->scratchMemPtr = gAppimage;
 
                 status = App_loadImages(bootHandle, &bootImageInfo);
@@ -287,6 +235,10 @@ int main(void)
             }
 
         }
+
+        Bootloader_profileAddProfilePoint("CPU Load");
+        Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle) 
+                                             + Bootloader_getMulticoreImageSize(bootHandleLinux));
 
         if(SystemP_SUCCESS == status)
         {
@@ -311,16 +263,10 @@ int main(void)
 
         if(SystemP_SUCCESS == status)
         {
-            /* Load the image on self core now */
-            if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-            {
-                status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-            }
-
             /* Power off the eMMC to leave it in clean state for Linux */
             SOC_moduleClockEnable(TISCI_DEV_MMCSD0, 0);
 
-            status = Bootloader_runSelfCpuWithLinux();
+            status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
         }
 
         Bootloader_close(bootHandle);

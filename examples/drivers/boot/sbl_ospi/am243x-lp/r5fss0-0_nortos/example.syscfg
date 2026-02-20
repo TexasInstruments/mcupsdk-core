@@ -2,8 +2,8 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --part "ALX" --package "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2434" --package "FCCSP (ALX)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @v2CliArgs --device "AM2434" --package "FCCSP (ALX)" --variant "AM2434-E" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -44,12 +44,13 @@ bootloader1.$name               = "CONFIG_BOOTLOADER_FLASH0";
 bootloader1.appImageBaseAddress = "0x60080000";
 
 flash1.$name                         = "CONFIG_FLASH0";
-flash1.bootQuirks                    = "Flash_quirkQSPIEarlyFixup";
 bootloader1.flashDriver              = flash1;
+flash1.bootQuirks                    = "Flash_quirkQSPIEarlyFixup";
 flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable    = true;
 flash1.peripheralDriver.inputClkFreq = 100000000;
 flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.child.$name  = "drivers_ospi_v0_ospi_v0_template0";
 
 gpio1.$name          = "CONFIG_GPIO0";
 gpio1.pinDir         = "OUTPUT";
@@ -128,7 +129,7 @@ region1.memory_region[4].size               = 0x6FF00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70070000;
-region1.memory_region[5].size               = 0x10000;
+region1.memory_region[5].size               = 0x20000;
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x70180000;
 region1.memory_region[6].$name              = "APPIMAGE";

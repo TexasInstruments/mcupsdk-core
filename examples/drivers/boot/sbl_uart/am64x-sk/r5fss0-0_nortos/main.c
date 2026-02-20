@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,10 +45,15 @@
 #define BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
 #define BOOTLOADER_UART_STATUS_APPIMAGE_SIZE_EXCEEDED (0x45584344) /* EXCD */
 
-#define BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS (2)
+#define BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS          (5)
+#define BOOTLOADER_END_OF_FILES_TRANSFER_WORD_LENGTH  (4) /* bytes */
+#define BOOTLOADER_APP_IMAGE_LOADED                   (1)
 
-#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x200000) /* Size of section DDR specified in linker.cmd */
-uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
+#define SCRATCH_BUFFER_SIZE                           (0x2000U) /*Size of binary metadata*/
+
+uint8_t gAppImageBuf[SCRATCH_BUFFER_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
+
+uint8_t gEndOfFilesTransferWord[BOOTLOADER_END_OF_FILES_TRANSFER_WORD_LENGTH] = {0x45,0x4F,0x46,0x54}; /* Contain Magic word Indicating End Of File Transfer(EOFT) */;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -81,16 +86,6 @@ int main(void)
 
         status = Sciclient_boardCfgPm(&boardCfgPrms_pm);
 
-        Sciclient_BoardCfgPrms_t boardCfgPrms_rm =
-        {
-            .boardConfigLow = (uint32_t)0,
-            .boardConfigHigh = 0,
-            .boardConfigSize = 0,
-            .devGrp = DEVGRP_ALL,
-        };
-
-        status = Sciclient_boardCfgRm(&boardCfgPrms_rm);
-
         /* Enable MCU PLL. MCU PLL will not be enabled by DMSC when devGrp is set
         to Main in boardCfg */
         Bootloader_enableMCUPLL();
@@ -111,170 +106,81 @@ int main(void)
 
     if(SystemP_SUCCESS == status)
     {
+        uint32_t fileSize;
+        bool bEndOfTransfer = false;
+
         Bootloader_BootImageInfo bootImageInfo;
-        Bootloader_Params bootParams;
+		Bootloader_Params bootParams;
         Bootloader_Handle bootHandle;
 
-        Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
-
-        bootParams.bufIoTempBuf     = gAppImageBuf;
-        bootParams.bufIoTempBufSize = BOOTLOADER_APPIMAGE_MAX_FILE_SIZE;
+        Bootloader_Params_init(&bootParams);
+        bootParams.memArgsAppImageBaseAddr = (uint32_t)(&gAppImageBuf);
         bootParams.bufIoDeviceIndex = CONFIG_UART0;
-        bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
-
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_0, &bootParams);
 
-        if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
+        /*Loop through all the files*/
+        while(bEndOfTransfer == false)
         {
-            uint32_t fileSize;
-            /* Xmodem Receive */
-            status = Bootloader_xmodemReceive(CONFIG_UART0, gAppImageBuf, BOOTLOADER_APPIMAGE_MAX_FILE_SIZE, &fileSize);
+            /* Receive the image metadata */
+            status = Bootloader_xmodemReceive(CONFIG_UART0, gAppImageBuf, SCRATCH_BUFFER_SIZE, &fileSize);
+            CacheP_wb((void*)gAppImageBuf, (uint32_t)SCRATCH_BUFFER_SIZE, CacheP_TYPE_ALL);
 
-            if(SystemP_SUCCESS == status && fileSize == BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
+            /* Check the end of transfer is reached using receieved chunk*/
+            if(SystemP_SUCCESS == status && memcmp(gAppImageBuf, gEndOfFilesTransferWord, BOOTLOADER_END_OF_FILES_TRANSFER_WORD_LENGTH) == 0)
             {
-                /* A file larger than 384 KB was sent, and xmodem probably dropped bytes */
-                status = SystemP_FAILURE;
+                bEndOfTransfer = true;
 
-                /* Send response to the script that file size exceeded */
-                uint32_t response;
-                response = BOOTLOADER_UART_STATUS_APPIMAGE_SIZE_EXCEEDED;
+                /* Delay 5 seconds for the user to connect to UART before the CPUs start running */
+                ClockP_sleep(BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS);
 
-                Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&response, 4);
-            }
-        }
-
-        if((bootHandle != NULL) && (SystemP_SUCCESS == status))
-        {
-            /* Initialize PRU Cores if applicable */
-            Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
-            if(TRUE == cfg->initICSSCores)
-            {
-                status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
-                DebugP_assert(status == SystemP_SUCCESS);
-            }
-
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
-            /* Load CPUs */
-            /* Do not load M4 when MCU domain is reset isolated */
-            if (!Bootloader_socIsMCUResetIsoEnabled())
-            {
-                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
+                /* Run CPUs */
+                /* Do not run M4 when MCU domain is reset isolated */
+                if (!Bootloader_socIsMCUResetIsoEnabled())
                 {
-                    bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_M4FSS0_0);
-                    status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0]);
+                    if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
+                    {
+                        status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0]);
+                    }
                 }
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_A53SS0_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_0]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_1)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_A53SS0_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_1]);
-            }
-
-            /* Assume self boot for either of the cores of R50 cluster */
-            uint32_t isSelfBoot = FALSE;
-            if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0))
-            {
-                isSelfBoot = TRUE;
-            }
-
-            if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
-            {
-                isSelfBoot = TRUE;
-            }
-
-            /* Self cores has to be reset together, so check for both */
-            if(status == SystemP_SUCCESS && (TRUE == isSelfBoot))
-            {
-                /* Set clocks for self cluster */
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
-                /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
-                if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
+                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
                 {
-                    status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1], FALSE);
+                    status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
                 }
-            }
-            if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
-            {
-                BufIo_sendTransferComplete(CONFIG_UART0);
-            }
-            else if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
-            {
-                uint32_t response = BOOTLOADER_UART_STATUS_LOAD_SUCCESS;
-
-                if(status != SystemP_SUCCESS)
+                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
                 {
-                    response = BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL;
+                    status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
                 }
+                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_0)))
+                {
+                    status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_0]);
+                }
+                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_1)))
+                {
+                    status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_1]);
+                }
+                
+                if(status == SystemP_SUCCESS)
+                {
 
-                Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&response, 4);
+                    status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
+                }
+                /* it should not return here, if it does, then there was some error */
+                Bootloader_close(bootHandle);
             }
+
+            /* File transfer end is not reached*/
             else
             {
-                /* do nothing */
-            }
-
-            /* Delay 2 seconds for the user to connect to UART before the CPUs start running*/
-            ClockP_sleep(BOOTLOADER_UART_CPU_RUN_WAIT_SECONDS);
-
-            /* Run CPUs */
-            /* Do not run M4 when MCU domain is reset isolated */
-            if (!Bootloader_socIsMCUResetIsoEnabled())
-            {
-                if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
+                if(SystemP_SUCCESS == status)
                 {
-                    status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0]);
+                    /* Parse the received metadata ,requests program segment from host and load to load addresses */
+                    Bootloader_UartParseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
                 }
             }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-            {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-            {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_0)))
-            {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_0]);
-            }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_A53SS0_1)))
-            {
-                status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_A53SS0_1]);
-            }
-            if(status == SystemP_SUCCESS)
-            {
-                /* Load the image on self core now */
-                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-                {
-                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-                }
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
-                status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
-            }
 
-            /* it should not return here, if it does, then there was some error */
-            Bootloader_close(bootHandle);
         }
+
     }
     if(status != SystemP_SUCCESS)
     {

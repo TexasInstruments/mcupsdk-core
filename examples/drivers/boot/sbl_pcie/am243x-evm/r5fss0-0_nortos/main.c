@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -322,77 +322,16 @@ int main(void)
                 status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
                 DebugP_assert(status == SystemP_SUCCESS);
             }
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
         }
 
     }
 
     Bootloader_profileAddProfilePoint("Appimage reception via PCIE");
 
-    /* Load appimage */
-    {
-        /* Load CPUs */
-        /* Do not load M4 when MCU domain is reset isolated */
-
-        uint32_t coreVariant = Bootloader_socGetCoreVariant();
-        /*Checks the core variant(Dual/Quad) */
-
-        if (!Bootloader_socIsMCUResetIsoEnabled())
-        {
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_M4FSS0_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0]);
-            }
-        }
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
-        {
-            bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
-            status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
-        }
-        /*Checks the core variant(Dual/Quad) */
-        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) && status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
-        {
-            bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
-            status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
-        }
-
-        /* Assume self boot for either of the cores of R50 cluster */
-        uint32_t isSelfBoot = FALSE;
-        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0))
-        {
-            isSelfBoot = TRUE;
-        }
-        /*Checks the core variant(Dual/Quad) */
-        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) && TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
-        {
-            isSelfBoot = TRUE;
-        }
-
-        /* Self cores has to be reset together, so check for both */
-        if(status == SystemP_SUCCESS && (TRUE == isSelfBoot))
-        {
-            /* Set clocks for self cluster */
-            bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-
-            if((Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
-            {
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-            }
-
-            /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
-            /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
-            status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
-            {
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1], FALSE);
-            }
-        }
-
-        Bootloader_profileAddProfilePoint("CPU Load");
-        Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-        Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_PCIE, 0);
-    }
+    Bootloader_profileAddProfilePoint("CPU Load");
+    Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_PCIE, 0);
 
     if(status == SystemP_SUCCESS)
     {
@@ -424,11 +363,6 @@ int main(void)
         }
         if(status == SystemP_SUCCESS)
         {
-            /* Load the image on self core now */
-            if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-            {
-                status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-            }
             /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
             status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
         }

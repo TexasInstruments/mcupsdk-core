@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM64x" --part "Default" --package "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM6442" --package "FCBGA (ALV)" --variant "AM6442-D" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.26.0+4407"}
  */
 
 /**
@@ -15,7 +16,7 @@ const ddr1            = ddr.addInstance();
 const freertos_fat    = scripting.addModule("/fs/freertos_fat/freertos_fat", {}, false);
 const freertos_fat1   = freertos_fat.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -43,16 +44,20 @@ bootloader1.bootMedia = "MEM";
 
 ddr1.$name = "CONFIG_DDR0";
 
-freertos_fat1.$name                     = "CONFIG_FREERTOS_FAT0";
-freertos_fat1.peripheralDriver.$name    = "CONFIG_MMCSD0";
-freertos_fat1.peripheralDriver.cardType = "SD";
-freertos_fat1.peripheralDriver.phyType  = "SW_PHY";
+freertos_fat1.$name                              = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name             = "CONFIG_MMCSD0";
+freertos_fat1.peripheralDriver.MMCSD_child.$name = "drivers_mmcsd_v0_mmcsd_v0_template0";
 
 debug_log.enableCssLog         = false;
 debug_log.enableUartLog        = true;
 debug_log.enableLogZoneWarning = false;
 debug_log.uartLog.$name        = "CONFIG_UART0";
 debug_log.uartLog.intrEnable   = "DISABLE";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -85,6 +90,7 @@ general1.$name          = "CONFIG_GENERAL0";
 general1.entry_point    = "-e_vectors_sbl";
 general1.irq_stack_size = 4096;
 general1.svc_stack_size = 256;
+general1.heap_size      = 16384;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
@@ -109,11 +115,11 @@ region1.memory_region[4].size               = 0x6FF00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70070000;
-region1.memory_region[5].size               = 0x10000;
+region1.memory_region[5].size               = 0x20000;
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].$name              = "MSRAM_2";
 region1.memory_region[6].manualStartAddress = 0x70180000;
-region1.memory_region[6].size               = 0x60000;
+region1.memory_region[6].size               = 0x70000;
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;

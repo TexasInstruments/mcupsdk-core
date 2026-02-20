@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,16 +89,17 @@ int32_t App_bootCpu(uint32_t bootDrvInstanceId, uint32_t cpuId)
     Bootloader_BootImageInfo_init(&bootImageInfo);
 
     bootHandle = Bootloader_open(bootDrvInstanceId, &bootParams);
-    bootConfig = (Bootloader_Config *)bootHandle;
-    bootConfig->scratchMemPtr = gAppimage;
 
     if(bootHandle != NULL)
     {
-        status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+        bootConfig = (Bootloader_Config *)bootHandle;
+        bootConfig->scratchMemPtr = gAppimage;
+    
+        status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
         if(status == SystemP_SUCCESS)
         {
             bootImageInfo.cpuInfo[cpuId].clkHz = Bootloader_socCpuGetClkDefault(cpuId);
-            status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[cpuId]);
+            status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[cpuId]);
         }
         Bootloader_close(bootHandle);
     }
@@ -116,18 +117,13 @@ int32_t App_bootLoadSelfCpu(uint32_t bootDrvInstanceId, uint32_t cpuId)
 
     Bootloader_Params_init(&bootParams);
     Bootloader_BootImageInfo_init(&bootImageInfo);
-
     bootHandle = Bootloader_open(bootDrvInstanceId, &bootParams);
-    bootConfig = (Bootloader_Config *)bootHandle;
-    bootConfig->scratchMemPtr = gAppimage;
+
     if(bootHandle != NULL)
     {
-        status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
-        if(status == SystemP_SUCCESS)
-        {
-            bootImageInfo.cpuInfo[cpuId].clkHz = Bootloader_socCpuGetClkDefault(cpuId);
-            status = Bootloader_loadSelfCpu( bootHandle, &bootImageInfo.cpuInfo[cpuId], FALSE);
-        }
+        bootConfig = (Bootloader_Config *)bootHandle;
+        bootConfig->scratchMemPtr = gAppimage;
+        status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
         Bootloader_close(bootHandle);
     }
     return status;
