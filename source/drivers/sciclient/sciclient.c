@@ -706,7 +706,8 @@ uint32_t Sciclient_getCurrentContext(uint16_t messageType)
        (TISCI_MSG_WRITE_SWREV == messageType) ||
        (TISCI_MSG_READ_KEYCNT_KEYREV == messageType) ||
        (TISCI_MSG_WRITE_KEYREV == messageType) ||
-       (TISCI_MSG_BOARD_CONFIG_PM == messageType))
+       (TISCI_MSG_BOARD_CONFIG_PM == messageType) ||
+       (TISCI_MSG_OPEN_DEBUG_FWLS == messageType))
     {
         retVal = gSciclientHandle.secureContextId;
     }
