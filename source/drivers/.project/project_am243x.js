@@ -5,11 +5,12 @@ let device = "am243x";
 const files_r5f = {
     common: [
         "adc.c",
-        "bootloader.c",
+        "bootloader_mcelf.c",
         "bootloader_buf_io.c",
         "bootloader_flash.c",
         "bootloader_mem.c",
         "bootloader_mmcsd_raw.c",
+        "bootloader_uart.c",
         "bootloader_soc.c",
         "bootloader_xmodem.c",
 		"bootloader_uniflash_common.c",
@@ -125,6 +126,7 @@ const files_r5f = {
         "watchdog_rti.c",
         "watchdog_soc.c",
         "gp_timer.c",
+        "utils.c"
     ],
 };
 
@@ -263,6 +265,7 @@ const filedirs = {
         "watchdog/v1",
         `watchdog/v1/soc/am64x_am243x`,
         "gp_timer/v0",
+        "utils",
     ],
 };
 
