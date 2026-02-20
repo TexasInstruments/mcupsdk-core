@@ -66,7 +66,7 @@ else
 endif
 % }
 % } else {
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 BOOTIMAGE_NAME:=`args.project.name`.$(PROFILE).appimage
 BOOTIMAGE_NAME_XIP:=`args.project.name`.$(PROFILE).appimage_xip
 % if (args.project.device == "awr294x") {
@@ -74,36 +74,34 @@ BOOTIMAGE_NAME_QSPI:=`args.project.name`.$(PROFILE).appimage_qspi
 % }
 BOOTIMAGE_NAME_SIGNED:=`args.project.name`.$(PROFILE).appimage.signed
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 oeconfig?=None
 
 BOOTIMAGE_NAME_MCELF:=`args.project.name`.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=`args.project.name`.$(PROFILE).mcelf.hs
 % }
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 BOOTIMAGE_RPRC_NAME:=`args.project.name`.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=`args.project.name`.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=`args.project.name`.$(PROFILE).rprc_tmp
 % }
 % if (((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")||(args.project.device == "awr294x") ||(args.project.device == "am263px") || (args.project.device == "am261x"))) {
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).appimage.hs
 % }
 % if(args.project.device == "awr294x"){
 BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
 % }
-% if (!["am263x", "am263px", "am261x", "am65x"].includes(args.project.device)) {
-BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).appimage.hs_fs
+% if (!["am263x", "am263px", "am261x", "am65x", "am273x"].includes(args.project.device)) {
+BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).mcelf.hs_fs
 % }
-% if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 % } else {
 TARGETS := $(BOOTIMAGE_NAME)
 % }
-
-%if (!["am64x", "am243x"].includes(args.project.device)) {
 ifeq ($(DEVICE_TYPE), HS)
-% if (["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
    TARGETS += $(BOOTIMAGE_NAME_MCELF_HS)
 % } else {
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -111,8 +109,11 @@ ifeq ($(DEVICE_TYPE), HS)
 % if(args.project.device == "awr294x") {
    TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
 % }
-endif
+else
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+   TARGETS += $(BOOTIMAGE_NAME_HS_FS)
 % }
+endif
 % }
 % }
 
@@ -559,7 +560,7 @@ clean:
  % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 	$(RM) $(BOOTIMAGE_NAME_MCELF)
 % }
 % }
@@ -593,12 +594,13 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.bin
 	$(RM) \*.lnkxml
 	$(RM) \*.ossr
-% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
+	$(RM) \*.mcelf.hs_fs
 	% }
 % }
 else
@@ -610,12 +612,13 @@ else
 	$(RM) *.bin
 	$(RM) *.lnkxml
 	$(RM) *.ossr
-% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) *.mcelf
 	$(RM) *.mcelf_xip
 	$(RM) *.mcelf-enc
 	$(RM) *.mcelf.hs
+	$(RM) *.mcelf.hs_fs
 	% }
 % }
 endif
@@ -864,7 +867,7 @@ SBL_RUN_ADDRESS=0x41C00100
 SBL_DEV_ID=55
 % }
 
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % }
@@ -875,7 +878,10 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
+% }
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am64x.py
 % }
 
 ifeq ($(OS),Windows_NT)
@@ -905,12 +911,12 @@ MULTI_CORE_IMAGE_PARAMS_XIP = \
 MULTI_CORE_IMAGE_PARAMS_QSPI = $(MULTI_CORE_IMAGE_PARAMS) $(R4_RPRC_PATH)@$(BOOTIMAGE_CORE_ID_r4)
 
 % }
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 $(BOOTIMAGE_NAME): $(OUTNAME)
 % } else {
 $(BOOTIMAGE_NAME_MCELF): $(OUTNAME)
 % }
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
@@ -937,29 +943,36 @@ endif
 	@echo  .
 
 % }
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --xip=$(MCELF_XIP_RANGE)
+	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
+	@echo  .
+
+% }
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_MCELF_HS)
 else
 	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS)
-	$(RM) $(BOOTIMAGE_NAME)-enc
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_MCELF_HS)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
-	$(RM) $(BOOTIMAGE_NAME)
-	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
+	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 else
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 # Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
-% }
-	$(RM) $(BOOTIMAGE_NAME)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+% }
 % }
 % if (args.project.device == "am65x") {
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
@@ -1000,7 +1013,7 @@ else
 % if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_HS) --rsassa_pss
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {	
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_MCELF_HS) --rsassa_pss
 % }
 endif
