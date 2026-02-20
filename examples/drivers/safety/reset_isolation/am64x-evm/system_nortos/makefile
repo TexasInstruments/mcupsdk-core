@@ -14,10 +14,9 @@ PROFILE?=release
 SYSTEM_PROJECT_NAME:=reset_isolation_system
 
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage
-MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(SYSTEM_PROJECT_NAME).$(PROFILE).appimage_xip
-MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf
+MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs
+MULTI_CORE_BOOTIMAGE_NAME_HS_FS:=$(SYSTEM_PROJECT_NAME).$(PROFILE).mcelf.hs_fs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
 CORE_1=--script ../m4fss0-0_nortos/example.syscfg --context m4fss0-0 --output ../m4fss0-0_nortos/ti-arm-clang/generated
@@ -25,6 +24,14 @@ CORE_1=--script ../m4fss0-0_nortos/example.syscfg --context m4fss0-0 --output ..
 CORES = \
     $(CORE_1) \
     $(CORE_0) \
+
+CORE_IMG_ARGS :=
+
+CORE_4_IMG=../r5fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).out
+CORE_IMG_ARGS +=--core-img=4:$(CORE_4_IMG)
+
+CORE_14_IMG=../m4fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).out
+CORE_IMG_ARGS +=--core-img=14:$(CORE_14_IMG)
 
 COREXMLS = \
 	../r5fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).lnkxml\
@@ -40,9 +47,11 @@ corebuild: syscfg
 
 
 postBuild: corebuild
-	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
-	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
+else
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS_FS)
 endif
 
 
@@ -52,6 +61,9 @@ clean:
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_HS_FS)
 
 scrub:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ scrub
@@ -59,12 +71,16 @@ scrub:
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
-	$(RM) \*.appimage.hs
 	$(RM) \*.tmp
 	$(RM) \*.out
 	$(RM) \*.map
 	$(RM) \*.lnkxml
 	$(RM) \*.appimage_xip
+	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
+	$(RM) \*.mcelf-enc
+	$(RM) \*.mcelf.hs
+	$(RM) \*.mcelf.hs_fs
 else
 	$(RM) *.tmp
 	$(RM) *.out
@@ -72,8 +88,12 @@ else
 	$(RM) *.lnkxml
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
-	$(RM) \*.appimage.hs
 	$(RM) *.appimage_xip
+	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
+	$(RM) *.mcelf-enc
+	$(RM) *.mcelf.hs
+	$(RM) *.mcelf.hs_fs
 endif
 
 syscfg:
@@ -101,46 +121,38 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
-MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
-OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am64x.py
 
-MULTI_CORE_APP_PARAMS = \
-    ../r5fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../m4fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
+$(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
+	@echo  Boot multi-core ELF image: $@ ...
 
-MULTI_CORE_APP_PARAMS_XIP = \
-    ../r5fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../m4fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_m4fss0-0) \
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --xip=$(MCELF_XIP_RANGE)
 
-MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
-    ../r5fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc \
-    ../m4fss0-0_nortos/ti-arm-clang/reset_isolation.$(PROFILE).rprc \
+	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
 
-$(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
-
-$(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
-	@echo  Boot multi-core image: $@ ...
-	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS): $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
 else
 	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
-	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)-enc
 endif
-	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
-	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
+endif
+
+$(MULTI_CORE_BOOTIMAGE_NAME_HS_FS): $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
+ifeq ($(DEVICE_TYPE),HS)
 else
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs
-	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
-	@echo Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME).hs_fs Done !!!
+# Sign the appimage for HS-FS using appimage signing script
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS_FS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
+	@echo Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif

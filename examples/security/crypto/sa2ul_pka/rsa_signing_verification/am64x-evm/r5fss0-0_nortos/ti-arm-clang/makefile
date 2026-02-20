@@ -25,16 +25,17 @@ OUTNAME:=rsa_signing_verification.$(PROFILE).out
 COREOUTNAME:=rsa_signing_verification.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=rsa_signing_verification.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=rsa_signing_verification.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=rsa_signing_verification.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=rsa_signing_verification.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=rsa_signing_verification.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=rsa_signing_verification.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=rsa_signing_verification.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=rsa_signing_verification.$(PROFILE).appimage.hs_fs
-TARGETS := $(BOOTIMAGE_NAME)
+oeconfig?=None
 
+BOOTIMAGE_NAME_MCELF:=rsa_signing_verification.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=rsa_signing_verification.$(PROFILE).mcelf.hs
+BOOTIMAGE_NAME_HS_FS:=rsa_signing_verification.$(PROFILE).mcelf.hs_fs
+TARGETS := $(BOOTIMAGE_NAME_MCELF)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_MCELF_HS)
+else
+   TARGETS += $(BOOTIMAGE_NAME_HS_FS)
+endif
 
 FILES_common := \
 	rsa_signing_verification.c \
@@ -209,6 +210,7 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
 	$(RMDIR) generated/
 
 scrub:
@@ -223,6 +225,11 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.bin
 	$(RM) \*.lnkxml
 	$(RM) \*.ossr
+	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
+	$(RM) \*.mcelf-enc
+	$(RM) \*.mcelf.hs
+	$(RM) \*.mcelf.hs_fs
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -232,6 +239,11 @@ else
 	$(RM) *.bin
 	$(RM) *.lnkxml
 	$(RM) *.ossr
+	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
+	$(RM) *.mcelf-enc
+	$(RM) *.mcelf.hs
+	$(RM) *.mcelf.hs_fs
 endif
 	$(RMDIR) generated
 
@@ -280,9 +292,8 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
-MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
-OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am64x.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -301,36 +312,29 @@ MULTI_CORE_IMAGE_PARAMS = \
 MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
-$(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
-ifneq ($(OS),Windows_NT)
-	$(CHMOD) a+x $(XIPGEN_CMD)
-endif
-	$(OUTRPRC_CMD) $(OUTNAME) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
-	$(RM) $(BOOTIMAGE_RPRC_NAME)
-	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0x60000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
-	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+$(BOOTIMAGE_NAME_MCELF): $(OUTNAME)
+	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --xip=$(MCELF_XIP_RANGE)
+	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
+	@echo  .
+
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_MCELF_HS)
 else
 	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS)
-	$(RM) $(BOOTIMAGE_NAME)-enc
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_MCELF_HS)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
-	$(RM) $(BOOTIMAGE_NAME)
-	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
+	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 else
 # Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
-	$(RM) $(BOOTIMAGE_NAME)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
 	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
