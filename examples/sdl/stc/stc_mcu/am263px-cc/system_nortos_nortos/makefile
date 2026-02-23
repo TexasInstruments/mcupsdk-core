@@ -49,6 +49,7 @@ postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
+else
 endif
 
 
@@ -96,6 +97,7 @@ clean:
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF_HS)
 
 scrub:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ scrub
@@ -150,7 +152,7 @@ SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
 
 oeconfig?=None
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):

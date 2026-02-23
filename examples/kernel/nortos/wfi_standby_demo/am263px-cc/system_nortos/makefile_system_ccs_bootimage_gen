@@ -34,7 +34,7 @@ SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
 
 MULTI_CORE_APP_PARAMS = \
 	../wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
@@ -44,12 +44,13 @@ MULTI_CORE_APP_PARAMS_XIP = \
 	../wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 	../wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
 
-CORE_0_IMG=../wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang.out
-CORE_1_IMG=../wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang.out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang.out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
-CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+
+CORE_2_IMG=../wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang/$(PROFILE)/wfi_standby_demo_am263px-cc_r5fss1-0_nortos_ti-arm-clang.out
+CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)
