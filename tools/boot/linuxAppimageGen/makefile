@@ -5,6 +5,9 @@ include config.mak
 
 LINUX_BOOTIMAGE_NAME_HS=$(LINUX_BOOTIMAGE_NAME).hs
 LINUX_BOOTIMAGE_NAME_HS_FS=$(LINUX_BOOTIMAGE_NAME).hs_fs
+LINUX_BOOTIMAGE_NAME_MCELF=linux.mcelf
+LINUX_BOOTIMAGE_NAME_MCELF_HS=$(LINUX_BOOTIMAGE_NAME_MCELF).hs
+LINUX_BOOTIMAGE_NAME_MCELF_HS_FS=$(LINUX_BOOTIMAGE_NAME_MCELF).hs_fs
 
 LD=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-ld
 
@@ -28,13 +31,6 @@ RPRC_LIST = \
 
 ELF_FILE_LIST = $(RPRC_LIST:.rprc=.elf)
 
-COMBINED_APPIMAGE_PARAMS = \
-	$(BOOTIMAGE_CORE_ID_a53ss0-0) $(ATF_RPRC) \
-	$(BOOTIMAGE_CORE_ID_load_only) $(OPTEE_RPRC) \
-	$(BOOTIMAGE_CORE_ID_load_only) $(SPL_RPRC)
-
-BOOTIMAGE_TEMP_OUT_FILE=temp_stdout.txt
-
 BOOTIMAGE_CORE_ID_a53ss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-0 = 4
 BOOTIMAGE_CORE_ID_r5fss0-1 = 5
@@ -44,6 +40,27 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 BOOTIMAGE_CORE_ID_load_only = 21
 SBL_DEV_ID=55
 
+COMBINED_APPIMAGE_PARAMS = \
+	$(BOOTIMAGE_CORE_ID_a53ss0-0) $(ATF_RPRC) \
+	$(BOOTIMAGE_CORE_ID_load_only) $(OPTEE_RPRC) \
+	$(BOOTIMAGE_CORE_ID_load_only) $(SPL_RPRC)
+
+# MCELF parameters - Build core image arguments
+CORE_IMG_ARGS :=
+CORE_0_IMG=$(ATF_ELF)
+CORE_IMG_ARGS += --core-img=$(BOOTIMAGE_CORE_ID_a53ss0-0):$(CORE_0_IMG)
+
+CORE_21_OPTEE_IMG=$(OPTEE_ELF)
+CORE_IMG_ARGS += --core-img=$(BOOTIMAGE_CORE_ID_load_only):$(CORE_21_OPTEE_IMG)
+
+CORE_21_SPL_IMG=$(SPL_ELF)
+CORE_IMG_ARGS += --core-img=$(BOOTIMAGE_CORE_ID_load_only):$(CORE_21_SPL_IMG)
+
+BOOTIMAGE_TEMP_OUT_FILE=temp_stdout.txt
+
+# Default bootimage format is MCELF (can be overridden with BOOTIMAGE_FORMAT=rprc)
+BOOTIMAGE_FORMAT ?= mcelf
+
 ifeq ($(OS),Windows_NT)
 	EXE_EXT=.exe
 endif
@@ -51,6 +68,7 @@ endif
 MULTI_CORE_IMAGE_GEN=$(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/MulticoreImageGen$(EXE_EXT)
 OUTRPRC_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/out2rprc.exe
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am64x.py
 
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
@@ -61,10 +79,20 @@ endif
 #################################################################################
 # Targets
 #################################################################################
+# For MCELF format, define BOOTIMAGE_FORMAT=mcelf
+ifeq ($(BOOTIMAGE_FORMAT),mcelf)
+ifeq ($(DEVICE_TYPE),HS)
+all: $(LINUX_BOOTIMAGE_NAME_MCELF_HS)
+else
+all: $(LINUX_BOOTIMAGE_NAME_MCELF) $(LINUX_BOOTIMAGE_NAME_MCELF_HS_FS)
+endif
+else
+# Default: RPRC format
 ifeq ($(DEVICE_TYPE),HS)
 all: $(LINUX_BOOTIMAGE_NAME_HS)
 else
 all: $(LINUX_BOOTIMAGE_NAME) $(LINUX_BOOTIMAGE_NAME_HS_FS)
+endif
 endif
 
 .INTERMEDIATE: $(RPRC_LIST) $(ELF_FILE_LIST)
@@ -118,9 +146,46 @@ $(OPTEE_ELF):
 $(SPL_ELF):
 	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(SPL_LOAD_ADDR) -e $(SPL_LOAD_ADDR) $(PSDK_LINUX_PREBUILT_IMAGES)/$(SPL_BIN_NAME) -o $(SPL_ELF)
 
+#################################################################################
+# MCELF Targets - Use ELF files directly
+#################################################################################
+ifeq ($(DEVICE_TYPE),HS)
+$(LINUX_BOOTIMAGE_NAME_MCELF).hs: $(ATF_ELF) $(OPTEE_ELF) $(SPL_ELF)
+else
+$(LINUX_BOOTIMAGE_NAME_MCELF): $(ATF_ELF) $(OPTEE_ELF) $(SPL_ELF)
+$(LINUX_BOOTIMAGE_NAME_MCELF_HS_FS): $(ATF_ELF) $(OPTEE_ELF) $(SPL_ELF)
+endif
+	@echo .
+	@echo Creating MCELF image
+	$(PYTHON) $(MCELF_IMAGE_GEN) \
+		$(CORE_IMG_ARGS) \
+		--output=$(LINUX_BOOTIMAGE_NAME_MCELF)>> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(LINUX_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(LINUX_BOOTIMAGE_NAME_MCELF_HS_FS)
+	$(RM) $(LINUX_BOOTIMAGE_NAME_MCELF)
+ifeq ($(DEVICE_TYPE),HS)
+# Sign the MCELF appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(LINUX_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --output $(LINUX_BOOTIMAGE_NAME_MCELF_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(LINUX_BOOTIMAGE_NAME_MCELF) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(LINUX_BOOTIMAGE_NAME_MCELF_HS)
+	$(RM) $(LINUX_BOOTIMAGE_NAME_MCELF)-enc
+endif
+	$(RM) $(LINUX_BOOTIMAGE_NAME_MCELF)
+	$(RM) $(LINUX_BOOTIMAGE_NAME_MCELF_HS_FS)
+endif
+	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+	@echo Combined MCELF boot image: $@ Done !!!
+
+	@echo Copying u-boot.img
+	$(COPY) $(PSDK_LINUX_PREBUILT_IMAGES)/u-boot.img .
+
 clean:
 	@echo Cleaning: $(LINUX_BOOTIMAGE_NAME)
 	$(RM) $(LINUX_BOOTIMAGE_NAME)*
+	$(RM) $(LINUX_BOOTIMAGE_NAME_MCELF)*
 	$(RM) *.elf
 	$(RM) *.rprc
+	$(RM) *.mcelf*
 	$(RM) *.img
