@@ -30,9 +30,9 @@ oeconfig?=None
 BOOTIMAGE_NAME_MCELF:=crypto_dthe_aes_ctr.$(PROFILE).mcelf
 BOOTIMAGE_NAME_MCELF_HS:=crypto_dthe_aes_ctr.$(PROFILE).mcelf.hs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_MCELF_HS)
+else
 endif
 
 FILES_common := \
@@ -225,6 +225,7 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.mcelf_xip
 	$(RM) \*.mcelf-enc
 	$(RM) \*.mcelf.hs
+	$(RM) \*.mcelf.hs_fs
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -238,6 +239,7 @@ else
 	$(RM) *.mcelf_xip
 	$(RM) *.mcelf-enc
 	$(RM) *.mcelf.hs
+	$(RM) *.mcelf.hs_fs
 endif
 	$(RMDIR) generated
 
@@ -283,7 +285,7 @@ SBL_RUN_ADDRESS=0x70002000
 SBL_DEV_ID=55
 
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
