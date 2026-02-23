@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=crypto_dthe_aes_cbc_256.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=crypto_dthe_aes_cbc_256.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=crypto_dthe_aes_cbc_256.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=crypto_dthe_aes_cbc_256.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=crypto_dthe_aes_cbc_256.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

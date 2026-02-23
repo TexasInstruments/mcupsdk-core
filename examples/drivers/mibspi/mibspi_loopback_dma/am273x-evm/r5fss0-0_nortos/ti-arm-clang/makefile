@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=mibspi_loopback_dma.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=mibspi_loopback_dma.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=mibspi_loopback_dma.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=mibspi_loopback_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mibspi_loopback_dma.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

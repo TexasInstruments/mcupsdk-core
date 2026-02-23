@@ -32,6 +32,7 @@ BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/mibspi_loopback_icount.$(PROFILE).appima
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 #

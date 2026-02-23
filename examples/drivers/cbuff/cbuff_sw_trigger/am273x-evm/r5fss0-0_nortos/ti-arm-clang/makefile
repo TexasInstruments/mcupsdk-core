@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=cbuff_sw_trigger.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=cbuff_sw_trigger.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=cbuff_sw_trigger.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=cbuff_sw_trigger.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cbuff_sw_trigger.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

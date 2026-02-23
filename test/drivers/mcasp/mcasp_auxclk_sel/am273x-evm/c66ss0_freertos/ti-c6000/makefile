@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=mcasp_auxclk_sel.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=mcasp_auxclk_sel.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=mcasp_auxclk_sel.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=mcasp_auxclk_sel.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcasp_auxclk_sel.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

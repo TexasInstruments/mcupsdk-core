@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=clock_measurement.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=clock_measurement.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=clock_measurement.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=clock_measurement.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=clock_measurement.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

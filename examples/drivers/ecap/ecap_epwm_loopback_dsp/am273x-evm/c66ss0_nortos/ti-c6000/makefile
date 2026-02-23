@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=ecap_epwm_loopback.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=ecap_epwm_loopback.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ecap_epwm_loopback.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ecap_epwm_loopback.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ecap_epwm_loopback.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

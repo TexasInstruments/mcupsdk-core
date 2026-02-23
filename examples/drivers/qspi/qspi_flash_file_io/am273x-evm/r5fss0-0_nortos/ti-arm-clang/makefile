@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=qspi_flash_file_io.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=qspi_flash_file_io.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=qspi_flash_file_io.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=qspi_flash_file_io.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=qspi_flash_file_io.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

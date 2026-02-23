@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=watchdog_reset_mode.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=watchdog_reset_mode.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=watchdog_reset_mode.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=watchdog_reset_mode.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=watchdog_reset_mode.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=ipc_rpmsg_any_to_any_c66ss0_maincore.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=ipc_rpmsg_any_to_any_c66ss0_maincore.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ipc_rpmsg_any_to_any_c66ss0_maincore.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ipc_rpmsg_any_to_any_c66ss0_maincore.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ipc_rpmsg_any_to_any_c66ss0_maincore.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=dpl_ut_ClockP_nortos.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_ClockP_nortos.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_ClockP_nortos.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=dpl_ut_ClockP_nortos.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dpl_ut_ClockP_nortos.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

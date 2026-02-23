@@ -32,6 +32,7 @@ BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/gpadc_group_channel_read.$(PROFILE).appi
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 #

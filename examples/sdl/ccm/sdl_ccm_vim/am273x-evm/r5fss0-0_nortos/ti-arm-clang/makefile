@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=sdl_vim_example.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=sdl_vim_example.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=sdl_vim_example.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=sdl_vim_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_vim_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

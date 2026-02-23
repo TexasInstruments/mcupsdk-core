@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=AddrTranslateP_null_test.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=AddrTranslateP_null_test.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=AddrTranslateP_null_test.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=AddrTranslateP_null_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=AddrTranslateP_null_test.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

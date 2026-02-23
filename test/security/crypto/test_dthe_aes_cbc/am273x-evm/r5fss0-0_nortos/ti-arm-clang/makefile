@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=test_dthe_aes_cbc.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=test_dthe_aes_cbc.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_dthe_aes_cbc.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=test_dthe_aes_cbc.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_dthe_aes_cbc.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=test_ccm_common.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=test_ccm_common.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_ccm_common.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=test_ccm_common.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_ccm_common.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

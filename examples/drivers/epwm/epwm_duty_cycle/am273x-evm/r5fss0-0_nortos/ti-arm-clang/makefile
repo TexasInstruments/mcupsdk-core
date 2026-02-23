@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=epwm_duty_cycle.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=epwm_duty_cycle.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=epwm_duty_cycle.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=epwm_duty_cycle.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_duty_cycle.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

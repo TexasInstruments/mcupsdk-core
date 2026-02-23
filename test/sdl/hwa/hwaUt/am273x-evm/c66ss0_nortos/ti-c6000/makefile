@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=test_hwaUt.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=test_hwaUt.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_hwaUt.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=test_hwaUt.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_hwaUt.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

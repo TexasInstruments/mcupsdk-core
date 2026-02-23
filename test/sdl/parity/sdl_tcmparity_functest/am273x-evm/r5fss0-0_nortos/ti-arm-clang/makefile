@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=sdl_tcmparity_functest.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=sdl_tcmparity_functest.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=sdl_tcmparity_functest.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=sdl_tcmparity_functest.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_tcmparity_functest.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

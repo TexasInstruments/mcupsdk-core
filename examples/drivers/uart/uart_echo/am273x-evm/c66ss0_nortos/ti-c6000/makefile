@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=uart_echo.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=uart_echo.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=uart_echo.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=uart_echo.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=uart_echo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

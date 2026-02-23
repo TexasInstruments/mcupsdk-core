@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=crc_16bit.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=crc_16bit.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=crc_16bit.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=crc_16bit.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=crc_16bit.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

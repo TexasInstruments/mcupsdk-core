@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=coremark_benchmark.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=coremark_benchmark.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=coremark_benchmark.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=coremark_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=coremark_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

@@ -29,11 +29,10 @@ BOOTIMAGE_RPRC_NAME:=edma_link_transfer.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=edma_link_transfer.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=edma_link_transfer.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=edma_link_transfer.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=edma_link_transfer.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

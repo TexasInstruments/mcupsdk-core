@@ -32,6 +32,7 @@ BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/qspi_flash_dma_lld.$(PROFILE).appimage.h
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 #

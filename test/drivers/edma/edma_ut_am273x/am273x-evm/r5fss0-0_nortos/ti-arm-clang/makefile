@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=test_edma_am273.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=test_edma_am273.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_edma_am273.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=test_edma_am273.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_edma_am273.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

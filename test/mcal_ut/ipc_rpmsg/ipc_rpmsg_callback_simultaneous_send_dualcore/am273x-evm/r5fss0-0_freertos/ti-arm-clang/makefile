@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=ipc_rpmsg_callback_simultaneous_send_dualcore.$(PROFILE).rp
 BOOTIMAGE_RPRC_NAME_XIP:=ipc_rpmsg_callback_simultaneous_send_dualcore.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ipc_rpmsg_callback_simultaneous_send_dualcore.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ipc_rpmsg_callback_simultaneous_send_dualcore.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ipc_rpmsg_callback_simultaneous_send_dualcore.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \

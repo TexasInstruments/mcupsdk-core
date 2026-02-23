@@ -32,11 +32,10 @@ BOOTIMAGE_RPRC_NAME:=hello_world.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=hello_world.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=hello_world.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=hello_world.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hello_world.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
+else
 endif
 
 FILES_common := \
