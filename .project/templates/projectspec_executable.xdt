@@ -101,6 +101,17 @@
                 % }
             % }
         % }
+        % obj = args.project
+        % if (obj.hasOwnProperty('projectspecIncludes')) {
+        % obj = args.project.projectspecIncludes;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            -I`val`
+                % }
+            % }
+        % }
+        % }
         % obj = args.project.cflags;
         % for (prop in obj) {
             % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {

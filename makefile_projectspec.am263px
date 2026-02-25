@@ -1,6 +1,18 @@
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += coremark_benchmark_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -691,6 +703,42 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am263px-cc_icss_m0_pr
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/arc_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/blower_imbalance/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/motor_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/torque_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2739,6 +2787,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += coremark_benchmark_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3429,6 +3489,42 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am263px-cc_icss_m0_pr
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/arc_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/blower_imbalance/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/motor_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/torque_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -5477,6 +5573,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += coremark_benchmark_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -6167,6 +6275,42 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am263px-cc_icss_m0_p
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ arc_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/arc_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ blower_imbalance_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/blower_imbalance/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ fan_blade_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ forecasting_pmsm_rotor_temp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ generic_timeseries_anomalydetection_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ generic_timeseries_classification_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ generic_timeseries_forecasting_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ generic_timeseries_regression_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hvac_indoor_temp_forecast_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ motor_fault_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/motor_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ torque_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/torque_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ washing_machine_load_weighing_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  coremark_benchmark_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -8231,6 +8375,18 @@ help:
 	@echo  .
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
+	@echo  $(MAKE) -s -C examples/ai/arc_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/blower_imbalance/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/fan_blade_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/forecasting_pmsm_rotor_temp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_anomalydetection/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_classification/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_forecasting/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_regression/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/hvac_indoor_temp_forecast/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/motor_fault/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/torque_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/washing_machine_load_weighing/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/benchmarks/dhrystone_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

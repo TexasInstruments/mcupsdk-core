@@ -1,0 +1,12 @@
+#ifndef INPUT_CONFIG_H_
+#define INPUT_CONFIG_H_
+
+#define FE_STACKING_CHANNELS 3
+#define FE_VARIABLES 3
+#define FE_STACKING_FRAME_WIDTH 5
+#define FE_HL 1
+#define FE_FRAME_SIZE 5
+#define FE_FEATURE_SIZE_PER_FRAME 5
+#define FE_NN_OUT_SIZE 1
+
+#endif /* INPUT_CONFIG_H_ */

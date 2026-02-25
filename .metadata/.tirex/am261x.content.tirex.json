@@ -7,6 +7,390 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "AI arc fault detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "arc_fault",
+        "location": "../../examples/ai/arc_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "arc_fault",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI blower imbalance detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "blower_imbalance",
+        "location": "../../examples/ai/blower_imbalance/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "blower_imbalance",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI fan blade anomaly detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fan_blade_anomalydetection",
+        "location": "../../examples/ai/fan_blade_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "fan_blade_anomalydetection",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI PMSM rotor temperature forecasting example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "forecasting_pmsm_rotor_temp",
+        "location": "../../examples/ai/forecasting_pmsm_rotor_temp/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "forecasting_pmsm_rotor_temp",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI generic timeseries anomaly detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "generic_timeseries_anomalydetection",
+        "location": "../../examples/ai/generic_timeseries_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "generic_timeseries_anomalydetection",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI generic timeseries classification example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "generic_timeseries_classification",
+        "location": "../../examples/ai/generic_timeseries_classification/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "generic_timeseries_classification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI generic timeseries forecasting example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "generic_timeseries_forecasting",
+        "location": "../../examples/ai/generic_timeseries_forecasting/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "generic_timeseries_forecasting",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI generic timeseries regression example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "generic_timeseries_regression",
+        "location": "../../examples/ai/generic_timeseries_regression/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "generic_timeseries_regression",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI HVAC indoor temperature forecasting example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "hvac_indoor_temp_forecast",
+        "location": "../../examples/ai/hvac_indoor_temp_forecast/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "hvac_indoor_temp_forecast",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI motor fault detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "motor_fault",
+        "location": "../../examples/ai/motor_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "motor_fault",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI torque measurement example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "torque_measurement",
+        "location": "../../examples/ai/torque_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "torque_measurement",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "AI washing machine load weighing example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
+        "name": "washing_machine_load_weighing",
+        "location": "../../examples/ai/washing_machine_load_weighing/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "washing_machine_load_weighing",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Coremark Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "coremark_benchmark",
         "location": "../../examples/benchmarks/coremark_benchmark/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -22607,8 +22991,8 @@
         "name": "User Guide",
         "location": "../../docs/api_guide_am261x/index.html",
         "devtools": [
-            "AM261-SOM-EVM",
-            "LP-AM261"
+            "LP-AM261",
+            "AM261-SOM-EVM"
         ],
         "mainCategories": [
             [

@@ -31,6 +31,7 @@ help:
 	@echo  .
 	@echo  Library build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am263x ai_r5f.ti-arm-clang.nortos ai_r5f.ti-arm-clang.freertos ai_r5f.ti-arm-clang.freertos_mpu
 	@echo  $(MAKE) -s -f makefile.am263x board_r5f.ti-arm-clang.nortos board_r5f.ti-arm-clang.freertos board_r5f.ti-arm-clang.freertos_mpu
 	@echo  $(MAKE) -s -f makefile.am263x sfo_r5f.ti-arm-clang.nortos sfo_r5f.ti-arm-clang.freertos sfo_r5f.ti-arm-clang.freertos_mpu
 	@echo  $(MAKE) -s -f makefile.am263x drivers_r5f.ti-arm-clang.nortos drivers_r5f.ti-arm-clang.freertos drivers_r5f.ti-arm-clang.freertos_mpu
@@ -63,6 +64,7 @@ help:
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am263x ai_r5f.ti-arm-clang.nortos_clean ai_r5f.ti-arm-clang.freertos_clean ai_r5f.ti-arm-clang.freertos_mpu_clean
 	@echo  $(MAKE) -s -f makefile.am263x board_r5f.ti-arm-clang.nortos_clean board_r5f.ti-arm-clang.freertos_clean board_r5f.ti-arm-clang.freertos_mpu_clean
 	@echo  $(MAKE) -s -f makefile.am263x sfo_r5f.ti-arm-clang.nortos_clean sfo_r5f.ti-arm-clang.freertos_clean sfo_r5f.ti-arm-clang.freertos_mpu_clean
 	@echo  $(MAKE) -s -f makefile.am263x drivers_r5f.ti-arm-clang.nortos_clean drivers_r5f.ti-arm-clang.freertos_clean drivers_r5f.ti-arm-clang.freertos_mpu_clean
@@ -95,6 +97,19 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C examples/ai/arc_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/blower_imbalance/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/dap_default/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/fan_blade_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/forecasting_pmsm_rotor_temp/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_classification/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_forecasting/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_regression/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/washing_machine_load_weighing/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/dhrystone_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -695,6 +710,7 @@ help:
 	@echo  .
 
 # Various Component Targets
+BUILD_COMBO_ai = ai_r5f.ti-arm-clang.nortos ai_r5f.ti-arm-clang.freertos ai_r5f.ti-arm-clang.freertos_mpu
 BUILD_COMBO_board = board_r5f.ti-arm-clang.nortos board_r5f.ti-arm-clang.freertos board_r5f.ti-arm-clang.freertos_mpu
 BUILD_COMBO_sfo = sfo_r5f.ti-arm-clang.nortos sfo_r5f.ti-arm-clang.freertos sfo_r5f.ti-arm-clang.freertos_mpu
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang.nortos drivers_r5f.ti-arm-clang.freertos drivers_r5f.ti-arm-clang.freertos_mpu
@@ -727,7 +743,7 @@ BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freeRTOS_fat-freertos) $(BUILD_COMBO_freeRTOS_fat-nortos) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_ai) $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freeRTOS_fat-freertos) $(BUILD_COMBO_freeRTOS_fat-nortos) $(BUILD_COMBO_littlefs) $(BUILD_COMBO_middleware) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_icss_timesync) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
 
 
 # Combine all Pre-built Components
@@ -743,6 +759,9 @@ libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
+
+$(BUILD_COMBO_ai):
+	$(MAKE) -C source/ai -f makefile.am263x.$(subst ai_,,$@) all
 
 $(BUILD_COMBO_board):
 	$(MAKE) -C source/board -f makefile.am263x.$(subst board_,,$@) all
@@ -834,6 +853,7 @@ $(BUILD_COMBO_tsn_unibase-freertos):
 
 
 # Various Component Clean Targets
+BUILD_COMBO_CLEAN_ai = ai_r5f.ti-arm-clang.nortos_clean ai_r5f.ti-arm-clang.freertos_clean ai_r5f.ti-arm-clang.freertos_mpu_clean
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang.nortos_clean board_r5f.ti-arm-clang.freertos_clean board_r5f.ti-arm-clang.freertos_mpu_clean
 BUILD_COMBO_CLEAN_sfo = sfo_r5f.ti-arm-clang.nortos_clean sfo_r5f.ti-arm-clang.freertos_clean sfo_r5f.ti-arm-clang.freertos_mpu_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang.nortos_clean drivers_r5f.ti-arm-clang.freertos_clean drivers_r5f.ti-arm-clang.freertos_mpu_clean
@@ -866,7 +886,7 @@ BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_c
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freeRTOS_fat-freertos) $(BUILD_COMBO_CLEAN_freeRTOS_fat-nortos) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_ai) $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freeRTOS_fat-freertos) $(BUILD_COMBO_CLEAN_freeRTOS_fat-nortos) $(BUILD_COMBO_CLEAN_littlefs) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_icss_timesync) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
 
 
 # Combine all Pre-built Components Clean
@@ -876,6 +896,9 @@ BUILD_COMBO_PREBUILT_CLEAN_ALL =
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
+
+$(BUILD_COMBO_CLEAN_ai):
+	$(MAKE) -C source/ai -f makefile.am263x.$(subst ai_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_board):
 	$(MAKE) -C source/board -f makefile.am263x.$(subst board_,,$(subst _clean,,$@)) clean
@@ -967,6 +990,7 @@ $(BUILD_COMBO_CLEAN_tsn_unibase-freertos):
 
 
 # Various Component Scrub Targets
+BUILD_COMBO_SCRUB_ai = ai_r5f.ti-arm-clang.nortos_scrub ai_r5f.ti-arm-clang.freertos_scrub ai_r5f.ti-arm-clang.freertos_mpu_scrub
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang.nortos_scrub board_r5f.ti-arm-clang.freertos_scrub board_r5f.ti-arm-clang.freertos_mpu_scrub
 BUILD_COMBO_SCRUB_sfo = sfo_r5f.ti-arm-clang.nortos_scrub sfo_r5f.ti-arm-clang.freertos_scrub sfo_r5f.ti-arm-clang.freertos_mpu_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang.nortos_scrub drivers_r5f.ti-arm-clang.freertos_scrub drivers_r5f.ti-arm-clang.freertos_mpu_scrub
@@ -999,7 +1023,7 @@ BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_s
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freeRTOS_fat-freertos) $(BUILD_COMBO_SCRUB_freeRTOS_fat-nortos) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_ai) $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freeRTOS_fat-freertos) $(BUILD_COMBO_SCRUB_freeRTOS_fat-nortos) $(BUILD_COMBO_SCRUB_littlefs) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_icss_timesync) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -1008,6 +1032,9 @@ BUILD_COMBO_PREBUILT_SCRUB_ALL =
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
+
+$(BUILD_COMBO_SCRUB_ai):
+	$(MAKE) -C source/ai -f makefile.am263x.$(subst ai_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_board):
 	$(MAKE) -C source/board -f makefile.am263x.$(subst board_,,$(subst _scrub,,$@)) scrub
@@ -1099,6 +1126,19 @@ $(BUILD_COMBO_SCRUB_tsn_unibase-freertos):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1689,6 +1729,45 @@ examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/arc_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/blower_imbalance/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/dap_default/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3475,6 +3554,19 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4060,6 +4152,45 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am263x-cc_icss_m0_pru1_fw_ti-pru-
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/arc_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/blower_imbalance/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/dap_default/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5846,6 +5977,19 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6431,6 +6575,45 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am263x-cc_icss_m0_pru1_fw_ti-pru-
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ arc_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/arc_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ blower_imbalance_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/blower_imbalance/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dap_default_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/dap_default/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ fan_blade_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ forecasting_pmsm_rotor_temp_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/forecasting_pmsm_rotor_temp/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ generic_timeseries_anomalydetection_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/generic_timeseries_anomalydetection/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ generic_timeseries_classification_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/generic_timeseries_classification/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/generic_timeseries_forecasting/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/generic_timeseries_regression/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/washing_machine_load_weighing/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

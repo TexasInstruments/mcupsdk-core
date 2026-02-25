@@ -1,6 +1,7 @@
 const common = require("../common.js");
 
 const component_file_list = [
+    "source/ai/.project/project.js",
     "source/board/.project/project.js",
     "source/board/pmic/.project/.blackbird/project.js",
     "source/calibration/.project/project.js",
@@ -44,6 +45,18 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/ai/arc_fault/.project/project.js",
+    "examples/ai/blower_imbalance/.project/project.js",
+    "examples/ai/fan_blade_anomalydetection/.project/project.js",
+    "examples/ai/forecasting_pmsm_rotor_temp/.project/project.js",
+    "examples/ai/generic_timeseries_anomalydetection/.project/project.js",
+    "examples/ai/generic_timeseries_classification/.project/project.js",
+    "examples/ai/generic_timeseries_forecasting/.project/project.js",
+    "examples/ai/generic_timeseries_regression/.project/project.js",
+    "examples/ai/hvac_indoor_temp_forecast/.project/project.js",
+    "examples/ai/motor_fault/.project/project.js",
+    "examples/ai/torque_measurement/.project/project.js",
+    "examples/ai/washing_machine_load_weighing/.project/project.js",    
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/flsopskd_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
