@@ -74,7 +74,6 @@ const libs_a53_smp = {
 
 const cflags_a53 = {
     common: [
-        "-O3",
         "-march=armv8-a"
     ],
 };

@@ -26,7 +26,6 @@ const includes_freertos_a53 = {
 
 const cflags_a53 = {
     common: [
-        "-O3",
         "-march=armv8-a"
     ],
 };
