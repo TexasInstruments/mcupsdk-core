@@ -34,6 +34,7 @@ const section5        = section.addInstance();
 const section6        = section.addInstance();
 const section7        = section.addInstance();
 const section8        = section.addInstance();
+const section9        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -130,17 +131,11 @@ section4.output_section[1].palignment = true;
 section5.load_memory                  = "M4F_IRAM";
 section5.group                        = false;
 section5.$name                        = "Memory and Stack Segments";
-section5.output_section.create(5);
+section5.output_section.create(2);
 section5.output_section[0].$name      = ".sysmem";
 section5.output_section[0].palignment = true;
 section5.output_section[1].$name      = ".stack";
 section5.output_section[1].palignment = true;
-section5.output_section[2].$name      = ".ARM.exidx";
-section5.output_section[2].palignment = true;
-section5.output_section[3].$name      = ".init_array";
-section5.output_section[3].palignment = true;
-section5.output_section[4].$name      = ".fini_array";
-section5.output_section[4].palignment = true;
 
 section6.type                        = "NOLOAD";
 section6.load_memory                 = "USER_SHM_MEM";
@@ -165,6 +160,17 @@ section8.$name                       = "IPC Shared Memory";
 section8.output_section.create(1);
 section8.output_section[0].$name     = ".bss.ipc_vring_mem";
 section8.output_section[0].alignment = 0;
+
+section9.load_memory                 = "M4F_DRAM";
+section9.group                       = false;
+section9.$name                       = "C++ Runtime Sections";
+section9.output_section.create(3);
+section9.output_section[0].$name     = ".ARM.exidx";
+section9.output_section[0].palignment = true;
+section9.output_section[1].$name     = ".init_array";
+section9.output_section[1].palignment = true;
+section9.output_section[2].$name     = ".fini_array";
+section9.output_section[2].palignment = true;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
