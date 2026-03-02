@@ -44,6 +44,12 @@
  *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D1(Pin 12)
  *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D0(Pin 5)
  *
+ *  Please connect pins as described below on AM243x LP.
+ *  SPI0_CS0(J6 Pin 58)    ------------->   SPI3_CS0(J2 Pin 18)
+ *  SPI0_CLK(J5 Pin 47)    ------------->   SPI3_CLK(J1 Pin 7)
+ *  SPI0_D0 (J6 Pin 55)    ------------->   SPI3_D1 (J2 Pin 14)
+ *  SPI0_D1 (J6 Pin 54)    ------------->   SPI3_D0 (J2 Pin 15)
+ * 
  *  Please connect pins as described below on AM263x LP.
  *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
  *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
