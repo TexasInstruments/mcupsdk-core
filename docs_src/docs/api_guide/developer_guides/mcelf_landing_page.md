@@ -8,6 +8,13 @@
 
 \endcond
 
+\cond SOC_AM243X || SOC_AM64X
+
+\note RPRC format has been deprecated from SDK 12.00 release onwards. MCELF is the default application format.
+
+\endcond
+
+
 ## Introduction
 
 Multicore ELF, or MCELF is a new application image format different from the older RPRC format.
@@ -93,6 +100,7 @@ Refer \ref BOOTFLOW_MCELF_BOOT.
 
 - Please refer:
 
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
   - \ref EXAMPLES_DRIVERS_SBL_CAN_MCELF
   - \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_MCELF
 \cond SOC_AM263X
@@ -103,6 +111,20 @@ Refer \ref BOOTFLOW_MCELF_BOOT.
   - \ref EXAMPLES_DRIVERS_SBL_OSPI_FASTBOOT_MCELF
 \endcond
   - \ref EXAMPLES_DRIVERS_SBL_UART_MCELF
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+  - \ref EXAMPLES_DRIVERS_SBL_SD
+  - \ref EXAMPLES_DRIVERS_SBL_OSPI
+  - \ref EXAMPLES_DRIVERS_SBL_UART
+  - \ref EXAMPLES_DRIVERS_SBL_OSPI_MULTI_PARTITION
+  - \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
+  - \ref EXAMPLES_DRIVERS_SBL_PCIE
+\endcond
+\cond SOC_AM64X
+  - \ref EXAMPLES_DRIVERS_SBL_OSPI_LINUX
+  - \ref EXAMPLES_DRIVERS_SBL_EMMC_LINUX
+\endcond
 
 
 ## Limitations

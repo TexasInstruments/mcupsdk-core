@@ -11,6 +11,7 @@ SDK features and tools.
 - \subpage LLD_GUIDE
 - \subpage MEMORY_MAP
 - \subpage BOOTFLOW_GUIDE
+- \subpage MCELF_LANDING
 - \subpage BOOTFLOW_XIP
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE

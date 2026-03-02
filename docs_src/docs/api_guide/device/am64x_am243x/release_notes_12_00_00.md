@@ -1,4 +1,4 @@
-# Release Notes 11.02.00 {#RELEASE_NOTES_11_02_00_PAGE}
+# Release Notes 12.00.00 {#RELEASE_NOTES_12_00_00_PAGE}
 
 [TOC]
 
@@ -6,6 +6,7 @@
 
 \attention 2. A53 support is applicable for AM64x only. It is NOT applicable for AM243x. \n
 
+\attention 3. RPRC image format has been deprecated from this release. Multi Core ELF image format should be used. (\ref MCELF_LANDING).
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless noted otherwise, the SW modules would work in both FreeRTOS and NORTOS environment. \n
@@ -20,7 +21,7 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Example to demonstrate VTM triggered SoC reset is added                                         | SDL
+                                                                                                |  
 \endcond
 
 \cond SOC_AM243X
@@ -79,7 +80,7 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES_11_02_00}
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.

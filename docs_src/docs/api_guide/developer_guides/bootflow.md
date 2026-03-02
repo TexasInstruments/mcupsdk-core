@@ -331,7 +331,7 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \endcond
 
-\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AM243X || SOC_AM64X) 
 ### Booting MCELF application {#BOOTFLOW_MCELF_BOOT}
 
 - In this case, SBL looks for the **multicore elf** image (refer \ref TOOLS_BOOT for more on multicore elf image)
@@ -350,7 +350,7 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \endcond
 
-\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AM243X || SOC_AM64X)
 ### SBL Boot
 
 - An SBL typically does a bunch of SOC specific initializations and proceeds to the application loading.
@@ -379,7 +379,7 @@ Now, as mentioned above, to boot an application with SBL it has to be specially 
 Now, as mentioned above, to boot an application with SBL it has to be specially prepared after it's compiled.
 \endcond
 
-\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X )
 #### Preparing the application for boot
 
 \note To see the exact sequence of steps in which applications and secondary bootloader (SBL) are converted from compiler generated .out files to
@@ -390,7 +390,7 @@ Now, as mentioned above, to boot an application with SBL it has to be specially 
 Shown below are the different steps that are done to convert the compiler+linker generated application `.out` into a format suitable for flashing
 and booting
 
-\cond SOC_AM243X || SOC_AM64X|| SOC_AM65X
+\cond SOC_AM65X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
@@ -421,9 +421,23 @@ and booting
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+- For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
+- The below "post build" steps are then used to convert the application .out into a "flash" friendly format
+
+  - Refer \ref MCELF_LANDING for information on MCELF
+  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+  - This .mcelf file contains metadata and segments along with information like segment type, load address, size, alignment.
+  - The `.mcelf` file is then flashed to the board.
+
+\imageStyle{mcelf_bootflow_post_build_steps_no_xip.png,width:50%}
+\image html mcelf_bootflow_post_build_steps_no_xip.png "Post build steps MCELF"
+
+\endcond
+
 #### Flashing the application for boot
 
-\cond SOC_AM243X || SOC_AM64X || SOC_AM65X
+\cond SOC_AM65X
 - Once the application images (`.appimage` and `.appimage_xip`) are created one needs to copy or flash these
   to a supported boot media so that the application can start executing once the SOC is powered ON
 \endcond
