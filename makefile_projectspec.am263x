@@ -11,7 +11,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_classification_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -648,8 +650,14 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/imu_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2453,7 +2461,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_classification_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3090,8 +3100,14 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/imu_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4895,7 +4911,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_classification_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_forecasting_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += generic_timeseries_regression_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += washing_machine_load_weighing_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -5532,8 +5550,14 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  hvac_indoor_temp_forecast_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ imu_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/imu_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  motor_fault_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ temp_sensor_data_capture_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  torque_measurement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -7353,7 +7377,9 @@ help:
 	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_forecasting/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_regression/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/ai/hvac_indoor_temp_forecast/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/imu_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/ai/temp_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/ai/torque_measurement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/ai/washing_machine_load_weighing/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

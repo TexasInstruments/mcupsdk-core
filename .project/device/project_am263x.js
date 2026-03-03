@@ -44,7 +44,7 @@ const device_defines = {
 const example_file_list = [
     "examples/ai/arc_fault/.project/project.js",
     "examples/ai/blower_imbalance/.project/project.js",
-    "examples/ai/dap_default/.project/project_am263x.js",
+    "examples/ai/dap_default/.project/project.js",
     "examples/ai/fan_blade_anomalydetection/.project/project.js",
     "examples/ai/forecasting_pmsm_rotor_temp/.project/project.js",
     "examples/ai/generic_timeseries_anomalydetection/.project/project.js",
@@ -52,7 +52,9 @@ const example_file_list = [
     "examples/ai/generic_timeseries_forecasting/.project/project.js",
     "examples/ai/generic_timeseries_regression/.project/project.js",
     "examples/ai/hvac_indoor_temp_forecast/.project/project.js",
+    "examples/ai/imu_sensor_data_capture/.project/project.js",
     "examples/ai/motor_fault/.project/project.js",
+    "examples/ai/temp_sensor_data_capture/.project/project.js",
     "examples/ai/torque_measurement/.project/project.js",
     "examples/ai/washing_machine_load_weighing/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",

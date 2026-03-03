@@ -25,6 +25,10 @@ const files_r5f = {
         "led_gpio.c",
         "led_tpic2810.c",
         "nor_spi_sfdp.c",
+        "tida010997.c",
+        "hdc3020.c",
+        "bmi270.c",
+        "bmi270_firmware.c",
     ],
 };
 
@@ -46,6 +50,9 @@ const filedirs = {
         "ram/gpmc",
         "flash/qspi",
         "led",
+        "tida010997",
+        "tida010997/imu",
+        "tida010997/humidity_temperature",
     ],
 };
 

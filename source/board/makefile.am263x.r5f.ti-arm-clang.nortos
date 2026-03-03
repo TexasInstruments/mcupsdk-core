@@ -34,6 +34,10 @@ FILES_common := \
     led_gpio.c \
     led_tpic2810.c \
     nor_spi_sfdp.c \
+    tida010997.c \
+    hdc3020.c \
+    bmi270.c \
+    bmi270_firmware.c \
 
 FILES_PATH_common = \
     eeprom \
@@ -46,6 +50,9 @@ FILES_PATH_common = \
     ram/gpmc \
     flash/qspi \
     led \
+    tida010997 \
+    tida010997/imu \
+    tida010997/humidity_temperature \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

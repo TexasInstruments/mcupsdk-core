@@ -327,6 +327,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "IMU sensor (BMI270 accelerometer) data capture example with DAP for Edge AI Studio integration. CPU is R5FSS0-0 running NORTOS.",
+        "name": "imu_sensor_data_capture",
+        "location": "../../examples/ai/imu_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "imu_sensor_data_capture",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "AI motor fault detection example using feature extraction and neural network inference. CPU is R5FSS0-0 running NORTOS.",
         "name": "motor_fault",
         "location": "../../examples/ai/motor_fault/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -342,6 +374,38 @@
         "subCategories": [
             "ai",
             "motor_fault",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Temperature sensor data capture example with DAP for Edge AI Studio integration. CPU is R5FSS0-0 running NORTOS.",
+        "name": "temp_sensor_data_capture",
+        "location": "../../examples/ai/temp_sensor_data_capture/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "ai",
+            "temp_sensor_data_capture",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
