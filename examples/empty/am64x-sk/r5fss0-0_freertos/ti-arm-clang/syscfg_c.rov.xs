@@ -6,3 +6,6 @@
 var crovFiles = [
     "kernel/freertos/rov/FreeRTOS.rov.js",
 ];
+var objectViewerFiles = [                                
+    "kernel/freertos/rov_theia/FreeRTOS_Theia.rov.js",
+];
