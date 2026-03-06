@@ -85,7 +85,12 @@ PHT           | Program Header Table
   - File offset: offset of the segment start from the ELF header
   - Memory size: Size of segment in memory after loading
   - Flags: If segment is of type Read(R)/Write(W)/Execute(X)
-- The sizes and order of these new segments can be controlled using suitable arguments to the genimage.py script.
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
+- The sizes and order of these new segments can be controlled using suitable arguments to the genimage_am26x.py script.
+\endcond
+\cond SOC_AM243X || SOC_AM64X
+- The sizes and order of these new segments can be controlled using suitable arguments to the genimage_am64x.py script.
+\endcond
 - The first and last segments are the note segments by default. It can be tailored according to the application via the tool.
 - Once segment list is fixed, the Program header table is re-written based on the current segments and then the ELF header is regenerated based on updated PHT.
 

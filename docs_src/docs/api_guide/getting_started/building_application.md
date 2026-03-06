@@ -87,7 +87,7 @@ Shown below are the different steps that are done to convert the compiler+linker
 
   - This .out file can be loaded and run via CCS. Refer \ref CCS_LOAD_RUN
 
-\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X)
+\cond !(SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AM243X || SOC_AM64X)
 ### Generating .appimage binary
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
   - `multiCoreGen` is then used to combine all the RPRC files per CPU into a single `.appimage` file which is a concatenation of the
@@ -100,7 +100,12 @@ Shown below are the different steps that are done to convert the compiler+linker
 
 ### Generating .mcelf binary
   - Refer \ref MCELF_LANDING for information on MCELF
-  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X 
+  - The mcelf image generator script `genimage_am26x.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+\endcond
+\cond SOC_AM243X || SOC_AM64X 
+  - The mcelf image generator script `genimage_am64x.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+\endcond
   - This .mcelf file contains metadata and segments along with information like segment type, load address, size, alignment.
   - The `.mcelf` file is then flashed to the board.
 

@@ -217,11 +217,13 @@ endif
 APP_SIGNING_KEY_KEYRING_ID?=0
 APP_ENCRYPTION_KEY_KEYRING_ID?=0
 
-# Macros for multicore-elf genimage.py script
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+# Macros for multicore-elf genimage_am26x.py script
 MCELF_MERGE_SEGMENTS_FLAG?=true
 MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT?=0
 MCELF_IGNORE_CONTEXT_FLAG?=false
 MCELF_XIP_RANGE?=0x60000000:0x68000000
+\endcond
 # Default am263x address translation JSON is in tools/boot/multicore-elf/deviceData/AddrTranslate/am263x.json
 MCELF_ADDR_TRANSLATION_PATH?=none
 

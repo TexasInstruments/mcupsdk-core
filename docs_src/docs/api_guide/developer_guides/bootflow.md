@@ -426,7 +426,7 @@ and booting
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
 
   - Refer \ref MCELF_LANDING for information on MCELF
-  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+  - The mcelf image generator script `genimage_am64x.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
   - This .mcelf file contains metadata and segments along with information like segment type, load address, size, alignment.
   - The `.mcelf` file is then flashed to the board.
 
