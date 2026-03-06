@@ -6,3 +6,8 @@
 var crovFiles = [
     "kernel/freertos/rov/FreeRTOS.rov.js",
 ];
+%if((device == "am64x") || (device == "am243x") || (device == "am273x")) {                                                                                                           
+var objectViewerFiles = [                                
+    "kernel/freertos/rov_theia/FreeRTOS_Theia.rov.js",
+];
+%}
