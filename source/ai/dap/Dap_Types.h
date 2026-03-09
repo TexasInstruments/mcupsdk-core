@@ -670,6 +670,21 @@ typedef struct
 } Dap_PipelineConfigType;
 
 /**
+ * \brief Data channel type for streaming
+ *
+ * Identifies the data channel for streaming operations.
+ * Maps to \ref Dap_Core_DataChannels values.
+ */
+typedef enum
+{
+    DAP_DATA_CHANNEL_SENSOR_SIGNAL = DAP_CHANNEL_SENSOR_SIGNAL, /**< Sensor signal data channel */
+    DAP_DATA_CHANNEL_INF_SIGNAL    = DAP_CHANNEL_INF_SIGNAL,    /**< Inference signal data channel */
+    DAP_DATA_CHANNEL_INF_RESULT    = DAP_CHANNEL_INF_RESULT,    /**< Inference result data channel */
+    DAP_DATA_CHANNEL_INF_VALUE     = DAP_CHANNEL_INF_VALUE,     /**< Inference value data channel */
+    DAP_DATA_CHANNEL_INF_LOG       = DAP_CHANNEL_INF_LOG        /**< Inference log data channel */
+} Dap_DataChannelType;
+
+/**
  * \brief DAP interface configuration structure
  *
  * Contains all application-provided sensor, model, property, and inference value data.
@@ -712,6 +727,8 @@ typedef struct
     uint32           CurrentSampleCount;
     /** \brief TRUE after stream header has been transmitted */
     boolean          HeaderSent;
+    /** \brief Active streaming channel (\ref Dap_DataChannelType) */
+    uint8            Channel;
     /** \brief TRUE when streaming is active */
     volatile boolean IsActive;
 } Dap_StreamingContextType;

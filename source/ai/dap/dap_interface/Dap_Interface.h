@@ -121,7 +121,7 @@ typedef int32_t     sint32;
 #define DAP_INTERFACE_UPLOAD_ENABLED        (0U)
 
 /** \brief On-device inference capability enabled (1U/0U) */
-#define DAP_INTERFACE_INFERENCE_ENABLED     (0U)
+#define DAP_INTERFACE_INFERENCE_ENABLED     (1U)
 
 /** \brief Attach sequencing metadata when streaming (1U/0U) */
 #define DAP_INTERFACE_USE_SEQUENCE_HEADERS  (1U)

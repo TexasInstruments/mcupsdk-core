@@ -26,6 +26,10 @@ const files_r5f = {
         "nor_spi_sfdp.c",
         "ioexp_tca6424.c",
         "ioexp_tca6416.c",
+        "tida010997.c",
+        "hdc3020.c",
+        "bmi270.c",
+        "bmi270_firmware.c",
     ],
 };
 
@@ -46,6 +50,9 @@ const filedirs = {
         "flash/ospi",
         "led",
         "ioexp",
+        "tida010997",
+        "tida010997/imu",
+        "tida010997/humidity_temperature",
     ],
 };
 

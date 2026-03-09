@@ -4,8 +4,11 @@ let device = "am263x";
 
 const files = {
     common: [
-        "main.c",
         "imu_sensor_data_capture.c",
+        "test_vector.c",
+        "main.c",
+        "feature_extract.c",
+        "feature_extract_am26.c",
     ],
 };
 
@@ -16,6 +19,8 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "../../../../../../source/ai/feature_extract", /* feature_extract */
+        "../../../artifacts", /* artifacts for tvmgen_default.h, mod.a */
     ],
 };
 
@@ -23,7 +28,11 @@ const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source",
         "${MCU_PLUS_SDK_PATH}/source/ai/dap",
+        "${MCU_PLUS_SDK_PATH}/source/ai/feature_extract",
+        "${MCU_PLUS_SDK_PATH}/source/ai/hann",
         "${MCU_PLUS_SDK_PATH}/source/board/tida010997",
+        "../../../artifacts",
+        "../../..",  /* Example base for user_input_config.h */
     ],
 };
 
@@ -31,8 +40,10 @@ const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/cmsis/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/ai/lib",
+        "../../../artifacts",
     ],
 };
 
@@ -41,7 +52,9 @@ const libs_nortos_r5f = {
         "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "cmsis.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "ai.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "mod.a",
     ],
 };
 
@@ -62,6 +75,27 @@ const cflags = {
     common: [
         "-Wno-extern-initializer",
         "-Wno-unused-variable",
+    ],
+};
+
+const projectspecfiles = {
+    common: [
+        "user_input_config.h",
+        "tvmgen_default.h",
+        "mod.a",
+    ],
+};
+
+/* CCS-specific paths - these are only used in projectspec, not in makefile */
+const projectspecIncludes = {
+    common: [
+        "${PROJECT_ROOT}",  /* For copied files: user_input_config.h, tvmgen_default.h */
+    ],
+};
+
+const projectspecLnkPath = {
+    common: [
+        "${PROJECT_ROOT}",  /* For copied mod.a */
     ],
 };
 
@@ -107,6 +141,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.defines = defines;
+    build_property.projectspecfiles = projectspecfiles;
+    build_property.projectspecIncludes = projectspecIncludes;
+    build_property.projectspecLnkPath = projectspecLnkPath;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {

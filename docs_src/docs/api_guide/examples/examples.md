@@ -76,6 +76,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_SECURITY
 -# \subpage EXAMPLES_SDL
 -# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
+-# \subpage EXAMPLES_AI
 \endcond
 
 

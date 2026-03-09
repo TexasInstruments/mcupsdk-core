@@ -121,6 +121,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -C examples/ai/arc_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/blower_imbalance/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/dap_default/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/fan_blade_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/forecasting_pmsm_rotor_temp/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -129,6 +130,7 @@ help:
 	@echo  $(MAKE) -s -C examples/ai/generic_timeseries_regression/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/hvac_indoor_temp_forecast/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/motor_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/ai/temp_sensor_data_capture/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/torque_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/ai/washing_machine_load_weighing/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1329,6 +1331,7 @@ BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
 BUILD_COMBO_EXAMPLE_ALL += arc_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += forecasting_pmsm_rotor_temp_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1337,6 +1340,7 @@ BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_forecasting_am261x-lp_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_ALL += generic_timeseries_regression_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hvac_indoor_temp_forecast_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += washing_machine_load_weighing_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -1979,6 +1983,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/ai/blower_imbalance/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/dap_default/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2002,6 +2009,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/ai/motor_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/ai/torque_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3940,6 +3950,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += arc_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += forecasting_pmsm_rotor_temp_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3948,6 +3959,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_forecasting_am261x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += generic_timeseries_regression_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hvac_indoor_temp_forecast_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += washing_machine_load_weighing_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4585,6 +4597,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/blower_imbalance/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/dap_default/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4608,6 +4623,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/motor_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/ai/torque_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6546,6 +6564,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += arc_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += forecasting_pmsm_rotor_temp_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6554,6 +6573,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_forecasting_am261x-lp_r5fss0
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += generic_timeseries_regression_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hvac_indoor_temp_forecast_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += washing_machine_load_weighing_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -7191,6 +7211,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  blower_imbalance_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/ai/blower_imbalance/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ dap_default_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/dap_default/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  fan_blade_anomalydetection_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/ai/fan_blade_anomalydetection/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -7214,6 +7237,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  motor_fault_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/ai/motor_fault/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ temp_sensor_data_capture_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/ai/temp_sensor_data_capture/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  torque_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/ai/torque_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

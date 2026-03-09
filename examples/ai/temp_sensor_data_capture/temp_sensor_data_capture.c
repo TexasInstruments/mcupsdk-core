@@ -205,7 +205,7 @@ void temp_sensor_data_capture_main(void *args)
             {
                 uint32_t totalSamples = (uint32_t)gSamplesProperty.Value.U16;
 
-                status = Dap_StartSensorStream(&gDapInstance, sampleSizes, sizeof(sampleSizes), totalSamples);
+                status = Dap_StartSensorStream(&gDapInstance, sampleSizes, sizeof(sampleSizes), totalSamples,DAP_DATA_CHANNEL_SENSOR_SIGNAL);
                 if (status == DAP_ERROR_NONE)
                 {
                     streamStarted = TRUE;

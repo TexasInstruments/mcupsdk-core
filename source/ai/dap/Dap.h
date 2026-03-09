@@ -145,7 +145,7 @@ sint32 Dap_SendSensorData(Dap_InstanceType *instancePtr,
  * \return DAP_ERROR_NONE on success, positive error code on failure
  */
 sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sampleSizesBytesPtr, uint32 sampleSizesCount,
-                             uint32 totalSamples);
+                             uint32 totalSamples,Dap_DataChannelType channel);
 
 /**
  * \brief Stream a single sensor sample

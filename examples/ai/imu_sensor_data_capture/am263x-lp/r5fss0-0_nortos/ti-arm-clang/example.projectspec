@@ -33,7 +33,12 @@
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/ai/dap
+            -I${MCU_PLUS_SDK_PATH}/source/ai/feature_extract
+            -I${MCU_PLUS_SDK_PATH}/source/ai/hann
             -I${MCU_PLUS_SDK_PATH}/source/board/tida010997
+            -I../../../artifacts
+            -I../../..
+            -I${PROJECT_ROOT}
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -52,9 +57,12 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/cmsis/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/ai/lib
+            -i../../../artifacts
             -i${CG_TOOL_ROOT}/lib
+            -i${PROJECT_ROOT}
             -m=imu_sensor_data_capture.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
@@ -79,7 +87,9 @@
                 -lnortos.am263x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.nortos.debug.lib
                 -lboard.am263x.r5f.ti-arm-clang.nortos.debug.lib
+                -lcmsis.am263x.r5f.ti-arm-clang.nortos.debug.lib
                 -lai.am263x.r5f.ti-arm-clang.nortos.debug.lib
+                -lmod.a
                 -llibc.a
                 -llibsysbm.a
             "
@@ -92,15 +102,29 @@
                 -lnortos.am263x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.nortos.release.lib
                 -lboard.am263x.r5f.ti-arm-clang.nortos.release.lib
+                -lcmsis.am263x.r5f.ti-arm-clang.nortos.release.lib
                 -lai.am263x.r5f.ti-arm-clang.nortos.release.lib
+                -lmod.a
                 -llibc.a
                 -llibsysbm.a
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../imu_sensor_data_capture.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../test_vector.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../../imu_sensor_data_capture.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../../../../source/ai/feature_extract/feature_extract.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../../../source/ai/feature_extract/feature_extract_am26.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../user_input_config.h" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../artifacts/tvmgen_default.h" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../artifacts/mod.a" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

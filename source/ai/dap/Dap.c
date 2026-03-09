@@ -120,7 +120,7 @@ sint32 Dap_Init(Dap_InstanceType *instancePtr, const Dap_InitParamsType *paramsP
             instancePtr->StreamingContext.TotalSampleCount   = 0U;
             instancePtr->StreamingContext.CurrentSampleCount = 0U;
             instancePtr->StreamingContext.HeaderSent         = FALSE;
-
+            instancePtr->StreamingContext.Channel            = DAP_DATA_CHANNEL_SENSOR_SIGNAL;
             instancePtr->IsInitialized = TRUE;
         }
     }
@@ -283,7 +283,7 @@ sint32 Dap_GetPipelineConfig(const Dap_InstanceType *instancePtr, Dap_PipelineCo
 }
 
 sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sampleSizesBytesPtr, uint32 sampleSizesCount,
-                             uint32 totalSamples)
+                             uint32 totalSamples,Dap_DataChannelType channel)
 {
     sint32                    retVal = DAP_ERROR_NONE;
     uint32                    i;
@@ -311,11 +311,21 @@ sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sample
     {
         retVal = DAP_ERROR_INVALID_PARAMS;
     }
+    else if ((channel < DAP_DATA_CHANNEL_SENSOR_SIGNAL) ||
+
+             (channel > DAP_DATA_CHANNEL_INF_LOG))
+
+    {
+
+        retVal = DAP_ERROR_INVALID_PARAMS;
+
+    }
 #endif /* DAP_CFG_ERROR_CHECK == STD_ON */
 
     if (retVal == DAP_ERROR_NONE)
     {
         ctxPtr = &instancePtr->StreamingContext;
+        // uint8 streamChannel;
 
         for (i = 0U; i < instancePtr->PipelineConfig.SensorCount; i++)
         {
@@ -324,7 +334,7 @@ sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sample
 
         ctxPtr->TotalSampleCount   = totalSamples;
         ctxPtr->CurrentSampleCount = 0U;
-
+        ctxPtr->Channel            = channel;
         /* Calculate total payload length for the header */
         totalPayloadLen = 0U;
         if (totalSamples > 0U)
@@ -332,8 +342,22 @@ sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sample
             for (i = 0U; i < instancePtr->PipelineConfig.SensorCount; i++)
             {
 #if DAP_INTERFACE_USE_SEQUENCE_HEADERS == 1
-                /* [2 SEQ bytes + SIZEOFDATA DATA bytes] per sample*/
-                totalPayloadLen += ((2U + (uint32)sampleSizesBytesPtr[i]) * totalSamples);
+                if ((channel == DAP_DATA_CHANNEL_SENSOR_SIGNAL) || (channel == DAP_DATA_CHANNEL_INF_SIGNAL))
+
+                {
+                    /* [2 SEQ bytes + SIZEOFDATA DATA bytes] per sample */
+                    totalPayloadLen += ((2U + (uint32)sampleSizesBytesPtr[i]) * totalSamples);
+                }
+
+                else
+
+                {
+
+                    /* [SIZEOFDATA DATA bytes] per sample */
+
+                    totalPayloadLen += ((uint32)sampleSizesBytesPtr[i] * totalSamples);
+
+                }
 #else
                 /* [SIZEOFDATA DATA bytes] per sample */
                 totalPayloadLen += ((uint32)sampleSizesBytesPtr[i] * totalSamples);
@@ -341,7 +365,7 @@ sint32 Dap_StartSensorStream(Dap_InstanceType *instancePtr, const uint16 *sample
             }
         }
 
-        retVal = Dap_Core_SendStreamHeader(&instancePtr->LinkInstance, DAP_CHANNEL_SENSOR_SIGNAL, totalPayloadLen);
+        retVal = Dap_Core_SendStreamHeader(&instancePtr->LinkInstance, (uint8)channel, totalPayloadLen);
 
         if (retVal == DAP_ERROR_NONE)
         {
@@ -411,8 +435,12 @@ sint32 Dap_StreamSensorSample(Dap_InstanceType *instancePtr, uint8 sensorIndex, 
         packetIdx = 0U;
 
 #if DAP_INTERFACE_USE_SEQUENCE_HEADERS == 1
-        samplePacket[packetIdx++] = (((sensorId + 1U) << 5U) | ((ctxPtr->SequenceNumber[sensorIndex] >> 8U) & 0x1FU));
-        samplePacket[packetIdx++] = (ctxPtr->SequenceNumber[sensorIndex] & 0xFFU);
+        if ((ctxPtr->Channel == (uint8)DAP_DATA_CHANNEL_SENSOR_SIGNAL) || (ctxPtr->Channel == (uint8)DAP_DATA_CHANNEL_INF_SIGNAL))
+
+        {
+            samplePacket[packetIdx++] = (((sensorId + 1U) << 5U) | ((ctxPtr->SequenceNumber[sensorIndex] >> 8U) & 0x1FU));
+            samplePacket[packetIdx++] = (ctxPtr->SequenceNumber[sensorIndex] & 0xFFU);
+        }
 #endif /* DAP_INTERFACE_USE_SEQUENCE_HEADERS == 1 */
 
         if ((packetIdx + sizeInBytes) < DAP_LINK_BUFFER_SIZE_BYTES)
@@ -434,14 +462,21 @@ sint32 Dap_StreamSensorSample(Dap_InstanceType *instancePtr, uint8 sensorIndex, 
 
     if (retVal == DAP_ERROR_NONE)
     {
-        if (ctxPtr->SequenceNumber[sensorIndex] < DAP_SEQUENCE_NUM_LIMIT)
+#if DAP_INTERFACE_USE_SEQUENCE_HEADERS == 1
+
+        if ((ctxPtr->Channel == (uint8)DAP_DATA_CHANNEL_SENSOR_SIGNAL) || (ctxPtr->Channel == (uint8)DAP_DATA_CHANNEL_INF_SIGNAL))
         {
-            ctxPtr->SequenceNumber[sensorIndex]++;
+            if (ctxPtr->SequenceNumber[sensorIndex] < DAP_SEQUENCE_NUM_LIMIT)
+            {
+                ctxPtr->SequenceNumber[sensorIndex]++;
+            }
+            else
+            {
+                ctxPtr->SequenceNumber[sensorIndex] = 0;
+            }
         }
-        else
-        {
-            ctxPtr->SequenceNumber[sensorIndex] = 0;
-        }
+
+#endif /* DAP_INTERFACE_USE_SEQUENCE_HEADERS == 1 */
 
         ctxPtr->CurrentSampleCount++;
 
@@ -484,9 +519,11 @@ sint32 Dap_StopSensorStream(Dap_InstanceType *instancePtr)
             ctxPtr->CurrentSampleCount = 0U;
             ctxPtr->TotalSampleCount   = 0U;
         }
+        if((instancePtr->StreamingContext.Channel == DAP_CHANNEL_SENSOR_SIGNAL) || (instancePtr->StreamingContext.Channel == DAP_CHANNEL_INF_SIGNAL) )
+        {
+            instancePtr->StreamingContext.IsActive = false;
+        }
 
-        /* Clear streaming flag */
-        ctxPtr->IsActive = FALSE;
     }
 
     return retVal;

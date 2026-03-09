@@ -36,8 +36,11 @@ else
 endif
 
 FILES_common := \
-	main.c \
 	imu_sensor_data_capture.c \
+	test_vector.c \
+	main.c \
+	feature_extract.c \
+	feature_extract_am26.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -49,6 +52,8 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../../../../source/ai/feature_extract \
+	../../../artifacts \
 	generated \
 
 INCLUDES_common := \
@@ -56,7 +61,11 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/ai/dap \
+	-I${MCU_PLUS_SDK_PATH}/source/ai/feature_extract \
+	-I${MCU_PLUS_SDK_PATH}/source/ai/hann \
 	-I${MCU_PLUS_SDK_PATH}/source/board/tida010997 \
+	-I../../../artifacts \
+	-I../../.. \
 	-Igenerated \
 
 DEFINES_common := \
@@ -102,15 +111,19 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/cmsis/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/ai/lib \
+	-Wl,-i../../../artifacts \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lboard.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lcmsis.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-lai.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lmod.a \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -125,15 +138,19 @@ LIBS_NAME = \
 	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	board.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	cmsis.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	ai.am263x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	mod.a \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
+	${MCU_PLUS_SDK_PATH}/source/cmsis/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/ai/lib \
+	../../../artifacts \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
