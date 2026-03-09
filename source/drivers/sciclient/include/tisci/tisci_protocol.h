@@ -398,6 +398,9 @@ struct tisci_sec_header {
 /** Message to Wait for processor status */
 #define TISCI_MSG_PROC_WAIT_STATUS      (0xC401U)
 
+/** Message to re-apply the x509 firewalls */
+#define TISCI_MSG_PROC_AUTH_APPLY_FWLS   (0xC402U)
+
 /** Message to do authenticated boot configuration of a processor */
 #define TISCI_MSG_PROC_AUTH_BOOT        (0xC120U)
 
