@@ -327,10 +327,20 @@ int32_t Firewall_configureSingleRegion(uint32_t firewallId, Firewall_RegionCfg *
 int32_t Firewall_configureRegion(Firewall_Handle handle)
 {
     int32_t status = SystemP_SUCCESS;
-    Firewall_Config *config = (Firewall_Config *)handle;
-    Firewall_Attrs *attrs = config->attrs;
+    Firewall_Attrs *attrs = NULL;
+    Firewall_Config *config = NULL;
 
-    if ((handle == NULL) || (attrs == NULL))
+    if (handle != NULL)
+    {
+        config = (Firewall_Config *)handle;
+        attrs = config->attrs;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if(attrs == NULL)
     {
         status = SystemP_FAILURE;
     }

@@ -221,7 +221,7 @@ OSPI_Handle OSPI_open(uint32_t index, const OSPI_Params *openParams)
         memcpy(ospilldInitHandle->devDelays,attrs->devDelays, resMemoryCount * sizeof(uint32_t));
 
         /* If DMA is enabled, program UDMA block copy channel */
-        if(OSPI_TRUE == attrs->dmaEnable)
+        if((OSPI_TRUE == attrs->dmaEnable) && (dmaConfig != NULL))
         {
             ospilldInitHandle->ospiDmaHandle    = (OSPI_DmaHandle) dmaConfig;
             ospilldInitHandle->ospiDmaChConfig  = (OSPI_DmaChConfig) dmaConfig->ospiDmaArgs;

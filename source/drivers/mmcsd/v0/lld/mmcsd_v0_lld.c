@@ -597,8 +597,11 @@ int32_t MMCSD_lld_deInit(MMCSDLLD_Handle handle)
                                    MMCSD_WAIT_FOREVER);
     }
 
-    /* Change the object state to RESET */
-    object->state = MMCSD_STATE_RESET;
+    if(status != MMCSD_STS_ERR_INVALID_PARAM)
+    {
+        /* Change the object state to RESET */
+        object->state = MMCSD_STATE_RESET;
+    }
 
     return status;
 }

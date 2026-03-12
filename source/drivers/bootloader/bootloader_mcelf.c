@@ -1437,17 +1437,17 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                                                        imgAddr, isAuthRequired);
             }
         }
-    }
-
-    if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
-    {
-        Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
-        
-        /* Disable DAC mode for Flash */
-        flashArgs->enableDacMode = FALSE;
-        if(config->fxns->imgCustomFxn)
+    
+        if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
         {
-            config->fxns->imgCustomFxn(config->args);                    
+            Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
+
+            /* Disable DAC mode for Flash */
+            flashArgs->enableDacMode = FALSE;
+            if(config->fxns->imgCustomFxn)
+            {
+                config->fxns->imgCustomFxn(config->args);                    
+            }
         }
     }
 
@@ -1871,16 +1871,16 @@ int32_t Bootloader_parseAndLoadMultiCoreELFLinux(Bootloader_Handle handle, Bootl
                                                            imgAddr, isAuthRequired);
             }
         }
-    }
-
-    /* Cleanup: Disable DAC mode for flash */
-    if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
-    {
-        Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
-        flashArgs->enableDacMode = FALSE;
-        if(config->fxns->imgCustomFxn)
+        
+        /* Cleanup: Disable DAC mode for flash */
+        if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
         {
-            config->fxns->imgCustomFxn(config->args);
+            Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
+            flashArgs->enableDacMode = FALSE;
+            if(config->fxns->imgCustomFxn)
+            {
+                config->fxns->imgCustomFxn(config->args);
+            }
         }
     }
 

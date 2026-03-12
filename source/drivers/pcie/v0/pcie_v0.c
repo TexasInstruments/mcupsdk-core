@@ -810,7 +810,7 @@ static int32_t Pcie_cfgEP1Bar(Pcie_Handle handle, Pcie_IbAtuCfg ibAtu)
  ****************************************************************************/
 static uint64_t Pcie_aperture2size(uint32_t barAperture)
 {
-    uint64_t size;
+    uint64_t size = 0U;
 
     switch (barAperture)
     {
@@ -7052,7 +7052,7 @@ int32_t Pcie_getMsiRegs (Pcie_Handle handle, Pcie_Location location, Pcie_MsiPar
     Pcie_MsiUp32Reg msiUp32;
     Pcie_MsiDataReg msiData;
 
-    if ((handle != NULL) || (params == NULL))
+    if ((handle != NULL) && (params != NULL))
     {
         pcieCfg = (Pcie_Config *)handle;
     }
