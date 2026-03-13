@@ -310,7 +310,7 @@ void SDL_ESM_loInterruptHandler (void *arg)
         }
         else
         {
-            SDL_ESM_interruptHandler((uint32_t)base_addr, ESM_INTR_PRIORITY_LEVEL_LOW, arg);
+            SDL_ESM_interruptHandler((uint32_t)base_addr, ESM_INTR_PRIORITY_LEVEL_LOW, (void *)esm_inst);
         }
     }
     /* Call common Interrupt handler */
