@@ -299,6 +299,11 @@
         <file path="`file`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
         </file>
         % }
+        % filelist = args.utils.getFileListProjectSpec(args.project.incfiles, args.project.filedirs, args.project.dirPath)
+        % for (file of filelist) {
+        <file path="`file`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
+        </file>
+        % }
         % filelist = args.utils.getFileListProjectSpec(args.project.projectspecfiles, args.project.filedirs, args.project.dirPath)
         % for (file of filelist) {
         <file path="`file`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
