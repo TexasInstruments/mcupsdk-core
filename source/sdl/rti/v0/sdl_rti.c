@@ -219,9 +219,13 @@ int32_t SDL_RTI_clearStatus(SDL_RTI_InstanceType     InstanceType, uint32_t stat
     /* This will assign bass address of given Instance type    */
     sdlResult = SDL_RTI_getBaseaddr(InstanceType, &baseAddr);
 
-    if (sdlResult == SDL_PASS)
+    if ((status == STATUS_VLD) && (sdlResult == SDL_PASS))
     {
-        /* Clear the status */
+        /* If status value == 1, then it clears all the flags to 0 and Clearing
+            of the status flags will deassert the non-maskable interrupt generated
+            due to violation of the DWWD.
+            0h = Leaves the current value unchanged. */
+
         HW_WR_REG32(baseAddr + RTI_RTIWDSTATUS, status);
         sdlResult = SDL_PASS;
     }

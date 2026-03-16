@@ -232,7 +232,11 @@ void ECC_Example_app(void *args)
   	DebugP_log("\r\n ECC UC-1 and UC-2 Test\r\n");
   	if (testResult == SDL_PASS)
     {
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+        DebugP_log("\r\nAll tests have passed. \r\n");
+#else
         DebugP_log("\r\nAll Use_Cases have passed. \r\n");
+#endif
     }
     else
     {

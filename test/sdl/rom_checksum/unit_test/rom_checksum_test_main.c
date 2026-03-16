@@ -62,6 +62,10 @@
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
+#if defined(CODE_COVERAGE)
+extern void __llvm_profile_write_file(void);
+#endif
+void test_sdl_rom_checksum_test_app_runner(void);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -172,6 +176,17 @@ void SDL_ROM_Checksum_test_app()
     }
 }
 
+void test_sdl_rom_checksum_test_app_runner(void) 
+{
+    #ifdef UNITY_INCLUDE_CONFIG_H
+    UNITY_BEGIN();
+    RUN_TEST(SDL_ROM_Checksum_test_app,0,NULL);
+    UNITY_END();
+    #else
+    SDL_ROM_Checksum_test_app();
+    #endif
+}
+
 int32_t rom_checksum_test_main(void)
 {
     Drivers_open();
@@ -180,11 +195,13 @@ int32_t rom_checksum_test_main(void)
     /* Init Dpl */
     sdlApp_dplInit();
     DebugP_log("\nROM Checksum Example Application\r\n");
-    SDL_ROM_Checksum_test_app();
+    test_sdl_rom_checksum_test_app_runner();
 
     Board_driversClose();
 	Drivers_close();
-
+#if defined(CODE_COVERAGE)
+    __llvm_profile_write_file();
+#endif
     return 0;
 }
 
