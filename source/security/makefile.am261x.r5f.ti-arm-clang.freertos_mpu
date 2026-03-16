@@ -19,7 +19,6 @@ FILES_common := \
     dthe_edma.c \
     dthe_sha.c \
     crypto_util.c \
-    rng.c \
     hsmclient.c \
     hsmclient_loadhsmrt.c \
     hsmclient_wait_for_boot_notify.c \
@@ -31,7 +30,6 @@ FILES_PATH_common = \
     security_common/drivers/crypto \
     security_common/drivers/crypto/dthe \
     security_common/drivers/crypto/dthe/dma/edma \
-    security_common/drivers/crypto/rng \
     security_common/drivers/hsmclient \
     security_common/drivers/hsmclient/soc/am261x \
     security_common/drivers/hsmclient/utils \
