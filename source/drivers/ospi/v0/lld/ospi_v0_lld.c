@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1161,7 +1161,7 @@ static void OSPI_lld_flashMemcpy(void *dest, const void *src, uint32_t len)
 
         for(i = 0U; i < initBytes; i++)
         {
-            *pDest++ = CSL_REG8_RD(pSrc++);
+            *pDest++ = *pSrc++;
         }
     }
 
@@ -1171,13 +1171,13 @@ static void OSPI_lld_flashMemcpy(void *dest, const void *src, uint32_t len)
 
     if((remaining >= PTR_COPY_SRC_ALIGNMENT) && (destMisalign == 0U))
     {
-        uint32_t *pDestWord = (uint32_t *)pDest;
-        uint32_t *pSrcWord = (uint32_t *)pSrc;
-        uint32_t words = remaining / PTR_COPY_SRC_ALIGNMENT;
+        uintptr_t *pDestWord = (uintptr_t *)pDest;
+        uintptr_t *pSrcWord = (uintptr_t *)pSrc;
+        uintptr_t words = remaining / PTR_COPY_SRC_ALIGNMENT;
 
         for(i = 0U; i < words; i++)
         {
-            *pDestWord++ = CSL_REG32_RD(pSrcWord++);
+            *pDestWord++ = *pSrcWord++;
         }
 
         pDest = (uint8_t *)pDestWord;
@@ -1188,7 +1188,7 @@ static void OSPI_lld_flashMemcpy(void *dest, const void *src, uint32_t len)
     /* Step 3: Copy remaining dangling bytes */
     for(i = 0U; i < remaining; i++)
     {
-        *pDest++ = CSL_REG8_RD(pSrc++);
+        *pDest++ = *pSrc++;
     }
 }
 
