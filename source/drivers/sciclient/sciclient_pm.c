@@ -648,42 +648,6 @@ int32_t Sciclient_pmDisableWakeup(uint32_t timeout)
     return retVal;
 }
 
-int32_t Sciclient_pmGetWakeupReason(uint8_t   mode[32],
-                                    uint8_t   reason[32],
-                                    uint32_t *time_ms,
-                                    uint32_t  timeout)
-{
-    int32_t retVal = SystemP_SUCCESS;
-
-    struct tisci_msg_wake_reason_resp response = {{0}};
-    struct tisci_msg_wake_reason_req request = {0};
-    Sciclient_ReqPrm_t reqParam ;
-    reqParam.messageType    = (uint16_t) TISCI_MSG_WAKE_REASON;
-    reqParam.flags          = (uint32_t) TISCI_MSG_FLAG_AOP;
-    reqParam.pReqPayload    = (const uint8_t *) &request;
-    reqParam.reqPayloadSize = (uint32_t) sizeof(request);
-    reqParam.timeout        = (uint32_t) timeout;
-
-    Sciclient_RespPrm_t respParam ;
-    respParam.flags           = (uint32_t) 0;   /* Populated by the API */
-    respParam.pRespPayload    = (uint8_t *) &response;
-    respParam.respPayloadSize = (uint32_t) sizeof (response);
-
-    retVal = Sciclient_service(&reqParam, &respParam);
-    if((retVal != SystemP_SUCCESS) ||
-        ((respParam.flags & TISCI_MSG_FLAG_ACK) != TISCI_MSG_FLAG_ACK))
-    {
-        retVal = SystemP_FAILURE;
-    }
-    if (retVal == SystemP_SUCCESS)
-    {
-        (void) memcpy((void *)mode, (void *)response.mode, sizeof (response.mode));
-        (void) memcpy((void *)reason, (void *)response.reason, sizeof (response.reason));
-        *time_ms = (uint32_t)(uintptr_t)time_ms;
-    }
-    return retVal;
-}
-
 int32_t Sciclient_pmDevicePowerOff(uint32_t timeout)
 {
     int32_t retVal = SystemP_SUCCESS;
