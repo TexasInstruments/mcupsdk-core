@@ -27,6 +27,8 @@ USAGE: python uart_bootloader.py [OPTIONS]
 
 -f, --file=          Path to the appimage binary
 
+--soc=               SOC type (e.g., am64x_am243x). When set to am64x_am243x, uses segmented transfer.
+
 --cfg=               Path to the configuration file with the entries of the two flags given above, namely bootloader and file.
                      This file can be used as an alternative to passing the two flags given above.
                      Use either the --cfg flag or the --bootloader and --file flags.
@@ -321,9 +323,10 @@ def main(argv):
     appimage_file = None
     bootloader_file = None
     config_file = None
+    soc = None
 
     try:
-        opts, args = getopt.getopt(argv,"hf:b:p:",["help", "file=","bootloader=","serial-port=","cfg="])
+        opts, args = getopt.getopt(argv,"hf:b:p:",["help", "file=","bootloader=","serial-port=","cfg=","soc="])
     except getopt.GetoptError:
         help()
         sys.exit()
@@ -339,6 +342,8 @@ def main(argv):
             serialport = arg
         elif opt in ("--cfg"):
             config_file = arg
+        elif opt in ("--soc"):
+            soc = arg
 
     status = 0
 
@@ -464,9 +469,24 @@ def main(argv):
             print("")
 
             print("Sending the application {} ...".format(appimage_file))
-            send_status, timetaken = xmodem_send_receive_file(appimage_file, serialport, get_response=True)
+            if(soc != None and soc == "am64x_am243x"):
+                send_status, timetaken = xmodem_send_segments(appimage_file, serialport)
+            else:
+                send_status, timetaken = xmodem_send_receive_file(appimage_file, serialport, get_response=True)
             print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
             print(send_status)
+            print("")
+            if(soc != None and soc == "am64x_am243x"):
+                magic_word_filename = "magic_word_file.dat"
+                magic_word_file     = open(magic_word_filename,"wb")
+                magic_word_bytes    = BOOTLOADER_END_OF_FILES_TRANSFER.to_bytes(BOOTLOADER_END_OF_FILES_TRANSFER_WORD_LENGTH,"big")
+                magic_word_file.write(magic_word_bytes)
+                magic_word_file.close()
+                sendd_status, timetaken = xmodem_send_receive_file(magic_word_filename, serialport, get_response=False)
+                print("")
+                print(" Sent End Of File Transfer message of size {} bytes in {}s.".format( os.path.getsize(magic_word_filename), timetaken))
+                print("")
+                os.remove(magic_word_filename)
             if("SUCCESS" in send_status):
                 print("Connect to UART in 5 seconds to see logs from UART !!!")
 

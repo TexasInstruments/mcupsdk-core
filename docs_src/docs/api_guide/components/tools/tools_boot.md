@@ -442,6 +442,11 @@ r5fss1-1    | 3
   cd ${SDK_INSTALL_PATH}/tools/boot
   python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/default_sbl_uart.cfg
   \endcode
+  \else if SOC_AM64X || SOC_AM243X
+  \code
+  cd ${SDK_INSTALL_PATH}/tools/boot
+  python uart_bootloader.py -p COM<x> --bootloader=sbl_prebuilt/{board}/sbl_uart.release.tiimage --file=< path to multicore application binary > --soc=am64x_am243x
+  \endcode
   \else
     \code
   cd ${SDK_INSTALL_PATH}/tools/boot
