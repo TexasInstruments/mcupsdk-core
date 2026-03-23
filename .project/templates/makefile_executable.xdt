@@ -551,7 +551,7 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME_QSPI_HS)
 % }
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
-% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "awr294x")) {
+% if (args.project.device == "awr294x") {
 	$(RM) $(BOOTIMAGE_NAME_HS)
 	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 % }
@@ -562,6 +562,10 @@ clean:
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 	$(RM) $(BOOTIMAGE_NAME_MCELF)
+%if  ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+	$(RM) $(BOOTIMAGE_NAME_HS_FS)
+	$(RM) $(BOOTIMAGE_NAME_MCELF_HS)
+% }
 % }
 % }
 % if (args.project.syscfgfile) {

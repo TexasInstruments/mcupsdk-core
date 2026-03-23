@@ -70,7 +70,7 @@ BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/$(OUTNAME).mcelf.hs_fs
 % }
 % }
 % if ((["am263x", "am263px", "am261x", "am273x", "am243x", "am64x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
-% if (!["am263x", "am263px", "am261x"].includes(args.project.device)) {
+% if (!["am263x", "am263px", "am261x", "am243x", "am64x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
