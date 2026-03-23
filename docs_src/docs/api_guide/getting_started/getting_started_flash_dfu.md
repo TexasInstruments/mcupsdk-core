@@ -24,24 +24,24 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - Build the hello world application as mentioned in \ref GETTING_STARTED_BUILD
 
-- As part of the build process in the final step a file with extension `.appimage` is generated. This is the file
+- As part of the build process in the final step a file with extension `.mcelf.hs_fs` is generated. This is the file
   we need to flash.
 
   - When building with makefiles and single-core projects, this file can be found here (shown for hello world example),
 
-        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage.hs_fs
+        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf.hs_fs
 
   - When building with CCS and single-core projects, this file can be found here (shown for hello world example),
 
-        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs
+        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs
 
   - When building with makefiles and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
-        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs
+        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf.hs_fs
 
   - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
-        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage.hs_fs
+        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.mcelf.hs_fs
 
   - **NOTE**: The folder name and file name in path can have "release", "Release" or "debug", "Debug" based on the profile that the application is built with.
 
@@ -52,10 +52,10 @@ We can then boot this application without being connected to CCS via JTAG.
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_dfu_ospi.cfg
 \endcond
 
-- Edit below line in the config file to point to your application `.appimage.hs_fs` file.
-  Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
+- Edit below line in the config file to point to your application `.mcelf.hs_fs` file.
+  Give the absolute path to the `.mcelf.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
 
-        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage --operation=flash-sector-write --flash-offset=0x81000
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf --operation=flash-sector-write --flash-offset=0x81000
 
 - This file will additionally also list the flashing application that is run on the EVM and a OSPI flash bootloader that also
   needs to be flashed. You can keep this unchanged if you have not modified these applications.

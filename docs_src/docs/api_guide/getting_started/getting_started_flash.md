@@ -21,7 +21,7 @@ We can then boot this application without being connected to CCS via JTAG.
   - Make sure you have the EVM power cable and UART cable connected as shown in \ref EVM_CABLES
 
 - Build the hello world application as mentioned in \ref GETTING_STARTED_BUILD
-\if (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
+\if (SOC_AM263PX || SOC_AM263X || SOC_AM261X || SOC_AM64X || SOC_AM243X)
 
 - As part of the build process in the final step, files with extension `.mcelf` and `.mcelf_xip` are generated. These are the files
   we need to flash.
@@ -36,19 +36,19 @@ We can then boot this application without being connected to CCS via JTAG.
   - When building with makefiles and single-core projects, this file can be found here (shown for hello world example),
   
 \if (SOC_AM64X || SOC_AM243X)
-        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage.hs_fs
+        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf.hs_fs
 
   - When building with CCS and single-core projects, this file can be found here (shown for hello world example),
 
-        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs
+        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs
 
   - When building with makefiles and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
-        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs
+        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf.hs_fs
 
   - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
-        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage.hs_fs
+        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.mcelf.hs_fs
 \elseif (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.mcelf_xip
@@ -91,9 +91,9 @@ We can then boot this application without being connected to CCS via JTAG.
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 \endcond
 \if (SOC_AM64X || SOC_AM243X)
-- Edit below line in the config file to point to your application `.appimage.hs_fs` file.
-  Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
-      --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs --operation=flash --flash-offset=0x80000
+- Edit below line in the config file to point to your application `.mcelf.hs_fs` file.
+  Give the absolute path to the `.mcelf.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
+      --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf.hs_fs --operation=flash --flash-offset=0x80000
 \elseif (SOC_AM263PX || SOC_AM263X || SOC_AM261X)
 
 Configuration file is `mcelf_sbl_ospi.cfg`
@@ -174,8 +174,8 @@ Configuration file is `mcelf_sbl_ospi.cfg`
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -236,8 +236,8 @@ Configuration file is `mcelf_sbl_ospi.cfg`
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -398,8 +398,8 @@ number of lines used in the protocol is indeed 8.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -460,8 +460,8 @@ number of lines used in the protocol is indeed 8.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.mcelf.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!

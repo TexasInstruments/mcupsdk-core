@@ -280,7 +280,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     that are generated as part of the build.
 
   - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
-    Note the path to the `*.appimage.hs_fs` file that is generated as part of the build.
+    Note the path to the `*.mcelf.hs_fs` file that is generated as part of the build.
    \endif
 - Make sure you have installed python as mention in \ref INSTALL_PYTHON3
 
@@ -321,15 +321,21 @@ UART is used as the transport or interface to send the file to flash to the EVM.
         --flash-writer={path to flash application .tiimage}
         --file={path to OSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
 
-- Edit below line to point to the user application (`.appimage.hs_fs`) file
+- Edit below line to point to the user application (`.mcelf.hs_fs`) file
 
-        --file={path to your application .appimage.hs_fs file} --operation=flash --flash-offset=0x80000
+        --file={path to your application .mcelf.hs_fs file} --operation=flash --flash-offset=0x80000
 \endif
 
 \cond SOC_AM243X || SOC_AM64X || SOC_AM65X
+\if SOC_AM65X
 - Edit below line to point to the user application XIP image (`.appimage_xip`) file. When not using XIP mode, this file input is optional.
 
         --file={path to your application .appimage_xip file} --operation=flash-xip
+\else
+- Edit below line to point to the user application XIP image (`.mcelf_xip`) file. When not using XIP mode, this file input is optional.
+
+        --file={path to your application .mcelf_xip file} --operation=flash-xip
+\endif
 \endcond
 \cond SOC_AM64X || SOC_AM243X
 
@@ -350,9 +356,9 @@ UART is used as the transport or interface to send the file to flash to the EVM.
         --flash-writer={path to flash application .tiimage}
         --file={path to eMMC bootloader .tiimage} --operation=flash-emmc --flash-offset=0x0
 
-- The user application (`.appimage`) file needs to be specified in the configuration file as
+- The user application (`.mcelf.hs_fs`) file needs to be specified in the configuration file as
 
-        --file={path to your application .appimage file} --operation=flash-emmc --flash-offset=0x800000
+        --file={path to your application .mcelf.hs_fs file} --operation=flash-emmc --flash-offset=0x800000
 
 \endcond
 \endcond
@@ -703,11 +709,7 @@ At the top there is a drop down to select the UART COM port which will be used f
   - **Application binary** : You can select the application image to be flashed from this slot. SDK convention is to flash at a 512 KB offset (0x80000). This can be changed, but keep in mind that the bootloader booting this application should be aware of this offset as well. It is a configurable option in the Sysconfig of the bootloader.
 \endif 
 \cond SOC_AM243X || SOC_AM64X || SOC_AM263PX || SOC_AM261X
-\if (SOC_AM263PX || SOC_AM261X)
   - **Application XIP binary** : You can select the XIP component to your application from this slot. These files will be of the format (`*.mcelf_xip`). These files already contain details as to where these need to be flashed, so no need to provide any offset in this case.
-\else
-  - **Application XIP binary** : You can select the XIP component to your application from this slot. These files will be of the format (`*.appimage_xip`). These files already contain details as to where these need to be flashed, so no need to provide any offset in this case.
-\endif
 \endcond
   - **Custom data** : This slot can be used to flash any custom data file at an arbitrary offset. Don't forget to provide the offset
 
@@ -942,7 +944,7 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 - However typically one needs to at least send the below files to flash
   - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.hs_fs.tiimage`). If the OSPI bootloader is
     already flashed previously then this step can be skipped.
-  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
+  - Send your application image multi-core image and flash it at offset 0x80000 (`*.mcelf.hs_fs`).
     The offset 0x80000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it
     will attempt to find a application at this location.
 - After flashing is done, power OFF the EVM
