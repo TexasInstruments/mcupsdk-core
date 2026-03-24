@@ -2849,8 +2849,10 @@ static inline int32_t ICSS_EMAC_configPortFwdState(ICSS_EMAC_Handle icssEmacHand
     if ((pruicssHandle == NULL) || (pruicssHandle->hwAttrs == NULL))
     {
         return retVal;
-    }    
+    }
 
+    pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+    
     if(portNo == ICSS_EMAC_PORT_1)
     {
         portFwdAddressPtr = (uint8_t*)((pruicssHwAttrs->pru0DramBase + pStaticMMap->portForwardStatusOffset));
