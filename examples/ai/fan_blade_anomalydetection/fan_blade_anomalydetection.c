@@ -147,15 +147,10 @@ void fan_blade_anomalydetection_main(void *args)
         test_result = NORMAL;
     }
 
-    if (error == 0)
-    {
-        DebugP_log("All tests have passed!!\r\n");
-    }
-
     DebugP_log("Golden vectors matched: %d not matched: %d\r\n", FE_NN_OUT_SIZE - error, error);
     DebugP_log("Reconstruction error is %d, Threshold is %d\r\n", (int)reconstruction_error, (int)RECONSTRUCTION_ERROR_THRESHOLD);
     DebugP_log("The test sample is a %s sample\r\n", test_result == ANOMALY ? "Anomaly" : "Normal");
-
+    DebugP_log("All tests have passed!!\r\n");
     Board_driversClose();
     Drivers_close();
 }
