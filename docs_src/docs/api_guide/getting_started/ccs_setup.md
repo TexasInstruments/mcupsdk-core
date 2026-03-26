@@ -441,6 +441,10 @@
     \imageStyle{ccs_target_config_gel.png,width:90%}
     \image html ccs_target_config_gel.png "Initialization script"
 
+\cond SOC_AM263X || SOC_AM261X || SOC_AM263PX
+\note When debugging an application using SBL NULL, ensure that the Initialization script field for the GEL file path is left empty. Otherwise, the GEL file will override the configuration set by SBL NULL.
+\endcond
+
 - Click "Save" to save the newly created target configuration.
 
 - Now you can move on to \ref EVM_SETUP_PAGE to prepare your EVM for running programs.

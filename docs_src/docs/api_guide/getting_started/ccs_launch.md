@@ -76,6 +76,10 @@ A quick recap of the steps that need to have been done before you proceed
     \imageStyle{ccs_launch_00.png,width:30%}
     \image html ccs_launch_00.png "Launch Target Configuration"
 
+\cond SOC_AM263X || SOC_AM261X || SOC_AM263PX
+\note When debugging an application with SBL NULL, ensure the Target configuration is created without an Initialization script.
+\endcond
+
 - You will see the @VAR_SOC_NAME target configuration in the "Debug" window as shown below
 
     \imageStyle{ccs_launch_01.png,width:30%}
