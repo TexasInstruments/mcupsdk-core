@@ -72,8 +72,8 @@ sysconfig integration with enet driver is listed:
 
 Impact: The init sequence change impacts both ICSSG and CPSW peripherals on all SoCs
 
-Old Init Sequence                                                                             | New Init Sequence                                                                     |
-:-------------------------------------------------------------------------------------------  | :-------------                                                                        |
+Old Init Sequence (Before SDK version 10.00.00)                                               | New Init Sequence                                                                                      |
+:-------------------------------------------------------------------------------------------  | :-------------                                                                                |
 ![OldInitSequence](OldInitSequence_lanes.png "Old Init Sequence")                               | ![NewInitSequence](NewInitSequence_lanes.png "New Init Sequence")                    |
 1.Set default enet osal configuration: Enet_initOsalCfg()                                       | 1.Implement function EnetApp_updateCpswOpenParams() or EnetApp_updateIcssgOpenParams() depending on peripheral type<br>This function allows application to set any Enet openParams as per application requirement |
 2.Set default enet utils configuration: Enet_initUtilsCfg()                                     | 2.Implement function EnetApp_initLinkArgs which allows application to set mac and phy params for each macPort enabled                                                                                             |
@@ -413,8 +413,10 @@ AppLinkUpPortMask Config      |Syscfg generates function to determine if link is
 [Back To Top](@ref enet_migration_guide_top)
 \endif
 
+\cond !SOC_AM261X
 # Compatibilty Breaks During MCU+ SDK Version Update
 
 ## Updating to version 10.00
 
 \ref enet_mcupsdk_10_00_update
+\endcond
