@@ -86,7 +86,7 @@ PHT           | Program Header Table
   - Memory size: Size of segment in memory after loading
   - Flags: If segment is of type Read(R)/Write(W)/Execute(X)
 \cond SOC_AM263PX || SOC_AM261X || SOC_AM263X
-- The sizes and order of these new segments can be controlled using suitable arguments to the genimage_am26x.py script.
+- The sizes and order of these new segments can be controlled using suitable arguments to the genimage.py script.
 \endcond
 \cond SOC_AM243X || SOC_AM64X
 - The sizes and order of these new segments can be controlled using suitable arguments to the genimage_am64x.py script.

@@ -101,7 +101,7 @@ Shown below are the different steps that are done to convert the compiler+linker
 ### Generating .mcelf binary
   - Refer \ref MCELF_LANDING for information on MCELF
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X 
-  - The mcelf image generator script `genimage_am26x.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
+  - The mcelf image generator script `genimage.py` takes each individual core's .out file as input and combines them to form a .mcelf file.
 \endcond
 \cond SOC_AM243X || SOC_AM64X 
   - The mcelf image generator script `genimage_am64x.py` takes each individual core's .out file as input and combines them to form a .mcelf file.

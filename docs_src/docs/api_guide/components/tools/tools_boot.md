@@ -64,7 +64,7 @@ This section describes the various tools that are used to create boot images for
 \endif
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 <tr>
-    <td>genimage_am26x.py
+    <td>genimage.py
     <td>Python script used to generate multicore elf image from individual core elf images.
 </tr>
 \endcond
@@ -337,7 +337,7 @@ $ cd tools/boot/multicore-elf
 
 $ pip install -r requirements.txt
 
-$ {PYTHON} genimage_am26x.py --core-img={CORE_0_ID}:{core0_app.out} --core-img={CORE_1_ID}:{core1_app.out} --core-img={CORE_2_ID}:{core2_app.out} --core-img={CORE_3_ID}:{core3_app.out} --output={application.mcelf} 
+$ {PYTHON} genimage.py --core-img={CORE_0_ID}:{core0_app.out} --core-img={CORE_1_ID}:{core1_app.out} --core-img={CORE_2_ID}:{core2_app.out} --core-img={CORE_3_ID}:{core3_app.out} --output={application.mcelf} 
 ```
 \endcond
 \cond SOC_AM243X || SOC_AM64X

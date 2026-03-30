@@ -462,11 +462,11 @@ The above is for core R5F0-0. Run the above script for each core to get the tota
 
 ## Building MulticoreELF Binaries with Optishare
 
-MulticcoreELF (\ref MCELF_LANDING) is image format that SDK use to boot from flash. tools/boot/multicore-elf/genimage_am26x.py is the python script that takes in input `.out` file of cores and then provides `.mcelf` and `.mcelf_xip` as the output. The command looks like the follwing when optishare is not enabled:
+MulticcoreELF (\ref MCELF_LANDING) is image format that SDK use to boot from flash. tools/boot/multicore-elf/genimage.py is the python script that takes in input `.out` file of cores and then provides `.mcelf` and `.mcelf_xip` as the output. The command looks like the follwing when optishare is not enabled:
 
 \code 
 
-python3 /home/sanmveg/ti/workarea/mcu_plus_sdk/tools/boot/multicore-elf/genimage_am26x.py  
+python3 /home/sanmveg/ti/workarea/mcu_plus_sdk/tools/boot/multicore-elf/genimage.py  
 --core-img=0:../r5fss0-0_freertos/ti-arm-clang/ipc_notify_echo_optishare.release.out 
 --core-img=1:../r5fss0-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.release.out 
 --core-img=2:../r5fss1-0_nortos/ti-arm-clang/ipc_notify_echo_optishare.release.out 
@@ -479,7 +479,7 @@ python3 /home/sanmveg/ti/workarea/mcu_plus_sdk/tools/boot/multicore-elf/genimage
 To enable optishare, --sso flag is to be passed. 
 
 \code 
-python3 <sdkPath>/tools/boot/multicore-elf/genimage_am26x.py  
+python3 <sdkPath>/tools/boot/multicore-elf/genimage.py  
 --core-img=0:../r5fss0-0_freertos/ti-arm-clang/ipc_notify_echo_optishare.release.optishare.out 
 --core-img=1:../r5fss0-1_nortos/ti-arm-clang/ipc_notify_echo_optishare.release.optishare.out
 --core-img=2:../r5fss1-0_nortos/ti-arm-clang/ipc_notify_echo_optishare.release.optishare.out 
