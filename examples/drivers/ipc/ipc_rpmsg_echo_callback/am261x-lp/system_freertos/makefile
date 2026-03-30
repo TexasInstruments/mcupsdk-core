@@ -166,7 +166,7 @@ SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 oeconfig?=None
 $(MULTI_CORE_BOOTIMAGE_NAME_MCELF):

@@ -44,7 +44,7 @@ BOOTIMAGE_CORE_ID_r5fss1-1 = 3
 SBL_RUN_ADDRESS=0x70002000
 SBL_DEV_ID=55
 
-MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage_am26x.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
