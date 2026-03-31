@@ -744,8 +744,46 @@ int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
 int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
                           SDL_MCRC_Channel_t           channel,
                           SDL_MCRC_SignatureRegAddr_t *pMCRCregAddr);
+
+#if defined(SOC_AM273X) || defined (SOC_AWR294X)
 /**
  * \brief   This API is used to configure the MCRC type for given Channel.
+ *          This API allows full configuration of CRC type, data length, bit/byte swap
+ *          settings for AM273X and AWR294X devices.
+ *
+ * \param   instance        MCRC instance either MCU or Main.
+ * \param   channel         Channel number for which CRC type is to be configured.
+ *                          Values given by #SDL_MCRC_Channel_t.
+ * \param   pConfig         Pointer to CRC configuration structure containing:
+ *                          - type: CRC polynomial type (16/32/64-bit, AUTOSAR, etc.)
+ *                          - dataLen: Data width selection
+ *                          - dataBitSize: Data bit packing size
+ *                          - bitSwap: MSB/LSB bit swap configuration
+ *                          - byteSwap: Byte swap enable/disable
+ *                          Refer struct #SDL_MCRC_Config_t for details.
+ *
+ * \return  status          SDL_PASS:     success
+ *                          SDL_EBADARGS: failure, indicate the bad input arguments
+ *
+ * \note    This API is only available for AM273X and AWR294X devices.
+ *          For other devices, this functionality is not supported.
+ *
+ * \note    Example usage for CRC32 configuration:
+ *          SDL_MCRC_Config_t crcConfig;
+ *          crcConfig.type = SDL_MCRC_TYPE_32BIT;
+ *          crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+ *          crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+ *          crcConfig.bitSwap = SDL_MCRC_BITSWAP_LSB;
+ *          crcConfig.byteSwap = SDL_MCRC_BYTESWAP_ENABLE;
+ *          SDL_MCRC_configCRCType(MSS_MCRC, SDL_MCRC_CHANNEL_1, &crcConfig);
+ */
+int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
+                                SDL_MCRC_Channel_t channel,
+                                const SDL_MCRC_Config_t *pConfig);
+#else
+/**
+ * \brief   This API is used to configure the MCRC type for given Channel.
+ *          Legacy API for devices other than AM273X and AWR294X.
  *
  * \param   instance        MCRC instance either MCU or Main.
  * \param   channel         Channel number
@@ -753,9 +791,12 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
  * \return  status          SDL_PASS:     success
  *                          SDL_EBADARGS: failure, indicate the bad input arguments
  *
+ * \note    This legacy API only supports 64-bit CRC type configuration.
+ *          For AM273X and AWR294X, use the new API signature with SDL_MCRC_Config_t.
  */
 int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
-					 SDL_MCRC_Channel_t       channel);
+                                SDL_MCRC_Channel_t channel);
+#endif
 
 #ifdef _cplusplus
 }
