@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -96,11 +96,280 @@
  };
  #endif
 
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+/**
+ * \brief   Negative test for SDL_MCRC_configCRCType API for AM273X/AWR294X
+ *          Tests all error conditions with proper configuration structure
+ */
+static int32_t sdl_mcrc_configCRCType_negTest(void)
+{
+    int32_t testStatus = SDL_APP_TEST_PASS;
+    SDL_MCRC_InstType instance = MSS_MCRC;
+    SDL_MCRC_Channel_t channel = SDL_MCRC_CHANNEL_1;
+    SDL_MCRC_Config_t crcConfig;
+
+#if defined(C66_INPUTS)
+    instance = DSS_MCRC;
+#endif
+    
+    DebugP_log("\r\nAM273X MCRC configCRCType Negative Tests\r\n");
+    
+    /* Test 1: NULL pointer for pConfig */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_MCRC_configCRCType(instance, channel, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 2: Invalid instance */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_32BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(SDL_MCRC_INVALID, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 3: Invalid channel (channel 3 for AM273X - only 2 channels supported) */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_MCRC_configCRCType(instance, SDL_MCRC_CHANNEL_3, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 4: Invalid channel (channel 4 for AM273X) */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_MCRC_configCRCType(instance, SDL_MCRC_CHANNEL_4, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 5: Invalid channel (out of range - value 5) */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_MCRC_configCRCType(instance, 5U, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 6: Invalid CRC type (out of range) */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_E2EPROFILE + 1U;  /* Invalid type: exceeds max valid type */
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 7: Invalid data length */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_32BIT;
+        crcConfig.dataLen = SDL_MCRC_CTRL0_CH1_DW_SEL_32BIT + 1;  /* Invalid */
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 8: Invalid data bit size */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_32BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_64_BIT ;  /* Invalid */
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 9: Invalid bit swap value */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_32BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_CTRL0_CH1_BIT_SWAP_LSB + 1;  /* Invalid */
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 10: Invalid byte swap value */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = SDL_MCRC_TYPE_32BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_CTRL0_CH1_BTYE_SWAP_ENABLE + 1;  /* Invalid */
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 11: Multiple invalid parameters */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = 0xFFU;  /* Invalid */
+        crcConfig.dataLen = 0xFFU;  /* Invalid */
+        crcConfig.dataBitSize = (SDL_MCRC_DataBitSize)0xFFU;  /* Invalid */
+        crcConfig.bitSwap = 0xFFU;  /* Invalid */
+        crcConfig.byteSwap = 0xFFU;  /* Invalid */
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 12: Test Channel 2 with invalid parameters */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        channel = SDL_MCRC_CHANNEL_2;
+        
+        /* NULL pointer test for channel 2 */
+        if (SDL_MCRC_configCRCType(instance, channel, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    /* Test 13: Channel 2 with invalid CRC type */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        crcConfig.type = 0xFFU;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_32BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_32_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if (SDL_MCRC_configCRCType(instance, channel, &crcConfig) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_mcrc_configCRCType_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        return (testStatus);
+    }
+    
+    DebugP_log("All AM273X configCRCType negative tests passed\r\n");
+    return testStatus;
+}
+#endif /* SOC_AM273X || SOC_AWR294X */
+
 int32_t sdl_mcrc_negTest(void)
 {
     int32_t                       testStatus = SDL_APP_TEST_PASS;
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-	SDL_MCRC_InstType             instance = MCU_MCRC64_0 ;
+    SDL_MCRC_InstType             instance = MCU_MCRC64_0 ;
 #endif
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
@@ -1528,7 +1797,7 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
 
-	if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_getCRCRegAddr(instance,channel, NULL)) != SDL_EBADARGS)
         {
@@ -1542,9 +1811,9 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
 
-	if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
-		SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
+        SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
         if ((SDL_MCRC_getCRCRegAddr(SDL_MCRC_INVALID,channel, &pCRCRegAddr)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -1556,9 +1825,9 @@ int32_t sdl_mcrc_negTest(void)
         DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
-		SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
+        SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
         if ((SDL_MCRC_getCRCRegAddr(instance, 5u, &pCRCRegAddr)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -1571,7 +1840,60 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
 
-	if (testStatus == SDL_APP_TEST_PASS)
+    /* Negative tests for SDL_MCRC_configCRCType API */
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+    /* AM273X/AWR294X specific tests with new API signature */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        SDL_MCRC_Config_t crcConfig;
+        crcConfig.type = SDL_MCRC_TYPE_64BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_64BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_64_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if ((SDL_MCRC_configCRCType(SDL_MCRC_INVALID, channel, &crcConfig)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        SDL_MCRC_Config_t crcConfig;
+        crcConfig.type = SDL_MCRC_TYPE_64BIT;
+        crcConfig.dataLen = SDL_MCRC_DATALENGTH_64BIT;
+        crcConfig.dataBitSize = SDL_MCRC_DATA_64_BIT;
+        crcConfig.bitSwap = SDL_MCRC_BITSWAP_MSB;
+        crcConfig.byteSwap = SDL_MCRC_BYTESWAP_DISABLE;
+        
+        if ((SDL_MCRC_configCRCType(instance, 5u, &crcConfig)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+    
+    /* Run AM273X specific negative tests */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        testStatus = sdl_mcrc_configCRCType_negTest();
+    }
+    
+#else
+    /* Legacy tests for other SOCs */
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_configCRCType(SDL_MCRC_INVALID,channel)) != SDL_EBADARGS)
         {
@@ -1585,7 +1907,7 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
 
-	if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_configCRCType(instance, 5u)) != SDL_EBADARGS)
         {
@@ -1598,6 +1920,7 @@ int32_t sdl_mcrc_negTest(void)
         DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
+#endif
 
     return (testStatus);
 }

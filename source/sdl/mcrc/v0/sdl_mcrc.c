@@ -1433,12 +1433,12 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
     int32_t status = SDL_PASS;
     uint32_t baseAddr;
 
-    /* Updated validation to properly handle all CRC types */
     if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)) ||
         (pConfig == NULL) ||
-        (pConfig->type > SDL_MCRC_TYPE_CASTAGNOLI_ISCSI) ||  /* Allow all valid CRC types */
+        (pConfig->type > SDL_MCRC_TYPE_E2EPROFILE) ||
         (pConfig->dataLen > SDL_MCRC_CTRL0_CH1_DW_SEL_32BIT) ||
         (pConfig->dataBitSize > SDL_MCRC_DATA_64_BIT) ||
+        ((pConfig->dataBitSize == SDL_MCRC_DATA_64_BIT) && (pConfig->dataLen != SDL_MCRC_DATALENGTH_64BIT)) ||
         (pConfig->bitSwap > SDL_MCRC_CTRL0_CH1_BIT_SWAP_LSB) ||
         (pConfig->byteSwap > SDL_MCRC_CTRL0_CH1_BTYE_SWAP_ENABLE))
     {
@@ -1462,16 +1462,10 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
                               SDL_MCRC_CTRL0_CH1_BYTE_SWAP,
                               pConfig->byteSwap);
                 
-                /* Configure CRC type based on polynomial selection 
-                 * Check if it's a standard type (64/16/32-bit or E2E) or extended type
-                 * Standard types use CRC_SEL2 = 0
-                 * Extended types use CRC_SEL2 = 1
-                 */
                 if((pConfig->type == SDL_MCRC_TYPE_64BIT) ||
                    (pConfig->type == SDL_MCRC_TYPE_16BIT) ||
                    (pConfig->type == SDL_MCRC_TYPE_32BIT))
                 {
-                    /* Standard CRC types: 16-bit, 32-bit, 64-bit */
                     HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
                                  SDL_MCRC_CTRL0_CH1_CRC_SEL,
                                  pConfig->type);
@@ -1479,21 +1473,10 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
                                  SDL_MCRC_CTRL0_CH1_CRC_SEL2,
                                  SDL_MCRC_CTRL0_CH1_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
                 }
-                else if (pConfig->type == SDL_MCRC_TYPE_E2EPROFILE)
-                {
-                    /* E2E Profile: CRC_SEL = 0b11, CRC_SEL2 = 0 */
-                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
-                                 SDL_MCRC_CTRL0_CH1_CRC_SEL,
-                                 0x3U);  /* E2E Profile uses 0b11 */
-                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
-                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2,
-                                 SDL_MCRC_CTRL0_CH1_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
-                }
                 else
                 {
-                    /* Extended CRC types: VDA/CAN/SAEJ1850, H2F/AUTOSAR4, CASTAGNOLI/iSCSI 
-                     * These types have values > 3, so mask to get lower 2 bits for CRC_SEL
-                     * and set CRC_SEL2 = 1
+                    /* VDA/CAN/SAEJ1850, H2F/AUTOSAR4, CASTAGNOLI/iSCSI, E2E Profile 4:
+                     * CRC_SEL = lower 2 bits of type, CRC_SEL2 = 1
                      */
                     HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
                                  SDL_MCRC_CTRL0_CH1_CRC_SEL,
@@ -1503,7 +1486,7 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
                                  SDL_MCRC_CTRL0_CH1_CRC_SEL2_VDA_CAN_SAEJ18502_H2F_AUTOSAR4_CASTAGNOLI_ISCSI);
                 }
                 break;
-                
+
             case SDL_MCRC_CHANNEL_2:
                 /* Configure data length */
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
@@ -1529,18 +1512,11 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
                                  SDL_MCRC_CTRL0_CH2_CRC_SEL2,
                                  SDL_MCRC_CTRL0_CH2_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
                 }
-                else if (pConfig->type == SDL_MCRC_TYPE_E2EPROFILE)
-                {
-                    /* E2E Profile: CRC_SEL = 0b11, CRC_SEL2 = 0 */
-                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
-                                 SDL_MCRC_CTRL0_CH2_CRC_SEL,
-                                 0x3U);  /* E2E Profile uses 0b11 */
-                    HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
-                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2,
-                                 SDL_MCRC_CTRL0_CH2_CRC_SEL2_64BIT_16BIT_32BIT_E2EPROFILE);
-                }
                 else
                 {
+                    /* VDA/CAN/SAEJ1850, H2F/AUTOSAR4, CASTAGNOLI/iSCSI, E2E Profile 4:
+                     * CRC_SEL = lower 2 bits of type, CRC_SEL2 = 1
+                     */
                     HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
                                  SDL_MCRC_CTRL0_CH2_CRC_SEL,
                                  ((pConfig->type) & ((SDL_MCRC_Type_t)0x3U)));
