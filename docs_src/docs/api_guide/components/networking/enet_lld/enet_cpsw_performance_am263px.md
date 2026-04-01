@@ -178,6 +178,87 @@ Packet Rate(per sec) | Average Latency(us) | Max Latency(us)
 --------|------------ |------------
 2000 |  561 | 569
 
+# XIP Performance{#networking_xip_performance}
+
+Lwip Application size: 796KB
+
+FLASH: 201KB
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Region</b></td>
+        <td style="text-align: center;"><b>Memory</b></td>
+    </tr>
+    <tr>
+        <td>.text</td>
+        <td>159KB</td>
+    </tr>
+    <tr>
+        <td>.rodata </td>
+        <td>42KB</td>
+    </tr>
+</table>
+
+OCRAM: 595KB
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Region</b></td>
+        <td style="text-align: center;"><b>Memory</b></td>
+    </tr>
+    <tr>
+        <td>.bss</td>
+        <td>471KB</td>
+    </tr>
+    <tr>
+        <td>.sysmem</td>
+        <td>34KB</td>
+    </tr>
+    <tr>
+        <td>.data</td>
+        <td>23KB</td>
+    </tr>
+    <tr>
+        <td>.stack</td>
+        <td>8KB</td>
+    </tr>
+    <tr>
+        <td>misc</td>
+        <td>59KB</td>
+    </tr>
+</table>
+
+
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Board POV</b></td>
+        <td style="text-align: center;"><b>MSRAM - OOB</b></td>
+        <td style="text-align: center;"><b>XIP : text and ro data in flash</b></td>
+        <td style="text-align: center;"><b>Opti-flash: RL2 8KB</b></td>
+        <td style="text-align: center;"><b>Opti-flash: RL2 16KB</b></td>
+        <td style="text-align: center;"><b>Opti-flash: RL2 32KB</b></td>
+        <td style="text-align: center;"><b>Opti-flash: RL2 64KB</b></td>
+        <td style="text-align: center;"><b>Opti-flash: RL2 128KB</b></td>
+    </tr>
+    <tr>
+        <td>UDP Tx </td>
+        <td>262Mbps at 100% CPU load</td>
+        <td>114Mbps at 100% CPU load</td>
+        <td>212Mbps at 100% CPU load</td>
+        <td>249Mbps at 100% CPU load</td>
+        <td>258Mbps at 100% CPU load</td>
+        <td>262Mbps at 100% CPU load</td>
+        <td>262Mbps at 100% CPU load</td>
+    </tr>
+    <tr>
+        <td>UDP Rx</td>
+        <td>116Mbps ~1% pkt drop 92% CPU load</td>
+        <td>39Mbps  ~1% pkt drop 97% CPU load</td>
+        <td>53Mbps  ~1% pkt drop 98% CPU load</td>
+        <td>82Mbps  ~1% pkt drop 99% CPU load</td>
+        <td>110Mbps ~1% pkt drop 90% CPU load</td>
+        <td>110Mbps ~1% pkt drop 88% CPU load</td>
+        <td>116Mbps ~1% pkt drop 92% CPU load</td>
+    </tr>
+</table>
 
 # See Also
 \ref NETWORKING

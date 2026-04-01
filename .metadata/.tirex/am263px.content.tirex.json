@@ -21942,6 +21942,44 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Lwip Cpsw Xip Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_lwip_cpsw_xip",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw_xip/am263px-cc-dp83869/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "lwip",
+            "enet_lwip_cpsw_xip",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am263px-cc-dp83826/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

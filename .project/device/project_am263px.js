@@ -318,6 +318,7 @@ const example_file_list = [
     "source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/.project/project.js",
     "source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/.project/project.js",
     "source/networking/enet/core/examples/lwip/enet_lwip_cpsw/.project/project.js",
+    "source/networking/enet/core/examples/lwip/enet_lwip_cpsw_xip/.project/project.js",
     "source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/.project/project.js",

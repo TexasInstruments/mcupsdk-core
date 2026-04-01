@@ -222,7 +222,7 @@ where \<bw\> is 25M, 50M, 100M, etc\n
      $```iperf -c <evm_ip> -u -b <bw> -r```\n
 where \<bw\> is 25M, 50M, 100M, etc\n
 
-# XIP Performance
+# XIP Performance{#networking_xip_performance}
 
 Lwip Application size: 793KB
 
