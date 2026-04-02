@@ -134,24 +134,35 @@ static err_t LWIPIF_LWIP_EMAC_send(struct netif *netif,
                          struct pbuf *p)
 {
     Lwip2Emac_Handle hLwip2Emac;
+    err_t retVal = ERR_OK;
 
-    /* Get the pointer to the private data */
-    hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+    if(netif == NULL || p == NULL)
+    {
+        retVal = ERR_ARG;
+    }
 
-    /*
-     * When transmitting a packet, the buffer may be deleted before transmission by the
-     * stack. The stack implements a 'ref' feature within the buffers. The following happens
-     * internally:
-     *  If p->ref > 1, ref--;
-     *  If p->ref == 1, free(p);
-     * pbuf_ref(p) increments the ref.
-     */
-    pbuf_ref(p);
+    if(retVal == ERR_OK)
+    {
+        /* Get the pointer to the private data */
+        hLwip2Emac = (Lwip2Emac_Handle)netif->state;
 
-    /* Send the packet from LWIP stack to the translation layer */
-    Lwip2Emac_sendTxPackets(hLwip2Emac,p);
+        /*
+        * When transmitting a packet, the buffer may be deleted before transmission by the
+        * stack. The stack implements a 'ref' feature within the buffers. The following happens
+        * internally:
+        *  If p->ref > 1, ref--;
+        *  If p->ref == 1, free(p);
+        * pbuf_ref(p) increments the ref.
+        */
+        pbuf_ref(p);
+
+        /* Send the packet from LWIP stack to the translation layer */
+        Lwip2Emac_sendTxPackets(hLwip2Emac,p);
+    }
+    
     /*Put a check and return proper status a/c to tx*/
-    return ERR_OK;
+    /*TODO: investigate why changing this causes a Connection reset by the peer (DUT) during TCP Iperf*/
+    return retVal;
 }
 
 /*!
@@ -170,33 +181,43 @@ static err_t LWIPIF_LWIP_EMAC_send(struct netif *netif,
 void LWIPIF_LWIP_EMAC_input(struct netif *netif,
                        struct pbuf *hPbufPacket)
 {
-    Lwip2Emac_Handle hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+    Lwip2Emac_Handle hLwip2Emac;
     struct pbuf* hPbufPacketNew;
     uint32_t bufSize;
+    int32_t status = SystemP_SUCCESS;
 
-    /* Pass the packet to the LwIP stack */
-    if (netif->input(hPbufPacket, netif) != ERR_OK)
+    if(netif == NULL || hPbufPacket == NULL)
     {
-        /*If packet is not passed to LwIP Stack*/
-        LWIP_DEBUGF(NETIF_DEBUG, ("lwipif_input: IP input error\n"));
-        pbuf_free(hPbufPacket);
-        hPbufPacket = NULL;
-    }
-    
-    /*Allocates a PBuf for next incoming packet*/
-    bufSize = PBUF_POOL_BUFSIZE;
-    /*Allocating Pbuf for Rx*/
-    hPbufPacketNew = pbuf_alloc(PBUF_RAW, bufSize, PBUF_POOL);
-    if (hPbufPacketNew != NULL)
-    {
-        hPbufPacketNew->tot_len = hPbufPacketNew->len;
-        hLwip2Emac->rxPbufPkt = hPbufPacketNew;
-    }
-    else
-    {
-        DebugP_log("[LWIPIF_LWIP]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_INPUT failure.!\n");
+        status = SystemP_FAILURE;
     }
 
+    if(status == SystemP_SUCCESS)
+    {
+        hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+
+        /* Pass the packet to the LwIP stack */
+        if (netif->input(hPbufPacket, netif) != ERR_OK)
+        {
+            /*If packet is not passed to LwIP Stack*/
+            LWIP_DEBUGF(NETIF_DEBUG, ("lwipif_input: IP input error\n"));
+            pbuf_free(hPbufPacket);
+            hPbufPacket = NULL;
+        }
+        
+        /*Allocates a PBuf for next incoming packet*/
+        bufSize = PBUF_POOL_BUFSIZE;
+        /*Allocating Pbuf for Rx*/
+        hPbufPacketNew = pbuf_alloc(PBUF_RAW, bufSize, PBUF_POOL);
+        if (hPbufPacketNew != NULL)
+        {
+            hPbufPacketNew->tot_len = hPbufPacketNew->len;
+            hLwip2Emac->rxPbufPkt = hPbufPacketNew;
+        }
+        else
+        {
+            DebugP_log("[LWIPIF_LWIP]ERROR: Rx Pbuf_alloc() in LWIPIF_LWIP_INPUT failure.!\n");
+        }
+    }
 }
 
 /*
@@ -209,20 +230,19 @@ static void LWIPIF_LWIP_EMAC_poll(void *arg0)
 {
     /* Call the driver's periodic polling function */
     volatile bool flag = 1;
-    struct netif* netif = (struct netif*) arg0;
-    Lwip2Emac_Handle hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+    struct netif* netif;
+    Lwip2Emac_Handle hLwip2Emac;
+    SemaphoreP_Object *hpollSem;
 
-    while (flag)
+    if(arg0 != NULL)
     {
-        SemaphoreP_Object *hpollSem = (SemaphoreP_Object *)&hLwip2Emac->pollLinkSemObj;
-        SemaphoreP_pend(hpollSem, SystemP_WAIT_FOREVER);
+        netif = (struct netif*) arg0;
+        hLwip2Emac = (Lwip2Emac_Handle)netif->state;
 
-        if(arg0 != NULL)
+        while (flag)
         {
-            struct netif* netif = (struct netif*) arg0;
-
-            /* Get the pointer to the private data */
-            Lwip2Emac_Handle hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+            hpollSem = (SemaphoreP_Object *)&hLwip2Emac->pollLinkSemObj;
+            SemaphoreP_pend(hpollSem, SystemP_WAIT_FOREVER);
 
             /* Periodic Function to update Link status */
             Lwip2Emac_periodicFxn(hLwip2Emac);
@@ -278,60 +298,74 @@ static int LWIPIF_LWIP_EMAC_start(struct netif *netif)
     int32_t status;
     ClockP_Params clkPrms;
 
-    /* Open the translation layer, It also gets hardware driver handle */
-    hLwip2Emac = Lwip2Emac_open(netif);
-
-    if (NULL != hLwip2Emac)
+    if(netif != NULL)
     {
-        /* Save off a pointer to the translation layer */
-        netif->state = (void *)hLwip2Emac;
+        /* Open the translation layer, It also gets hardware driver handle */
+        hLwip2Emac = Lwip2Emac_open(netif);
 
-        /*Initialize semaphore to call synchronize the poll function with a timer*/
-        status = SemaphoreP_constructBinary(&hLwip2Emac->pollLinkSemObj, 0U);
-        DebugP_assert(status == SystemP_SUCCESS);
-
-        /* Initialize the poll function as a thread */
-        TaskP_Params_init(&params);
-        params.name = "Lwipif_Lwip_emac_poll";
-        params.priority       = LWIP_POLL_TASK_PRI;
-        params.stack          = gLwip2LwipIfPollTaskStack;
-        params.stackSize      = sizeof(gLwip2LwipIfPollTaskStack);
-        params.args           = netif;
-        params.taskMain       = &LWIPIF_LWIP_EMAC_poll;
-
-        status = TaskP_construct(&hLwip2Emac->lwipif2lwipPollTaskObj, &params);
-        DebugP_assert(status == SystemP_SUCCESS);
-
-        ClockP_Params_init(&clkPrms);
-        clkPrms.start     = 0;
-        clkPrms.period    = EMACLWIPAPP_POLL_PERIOD;
-        clkPrms.args      = &hLwip2Emac->pollLinkSemObj;
-        clkPrms.callback  = &LWIPIF_LWIP_EMAC_postPollLink;
-        clkPrms.timeout   = EMACLWIPAPP_POLL_PERIOD;
-
-        /* Creating timer and setting timer callback function*/
-        status = ClockP_construct(&hLwip2Emac->pollLinkClkObj,
-                                  &clkPrms);
-        if (status == SystemP_SUCCESS)
+        if (hLwip2Emac != NULL)
         {
-            /* Set timer expiry time in OS ticks */
-            ClockP_setTimeout(&hLwip2Emac->pollLinkClkObj, EMACLWIPAPP_POLL_PERIOD);
-            ClockP_start(&hLwip2Emac->pollLinkClkObj);
+            /* Save off a pointer to the translation layer */
+            netif->state = (void *)hLwip2Emac;
+
+            /*Initialize semaphore to call synchronize the poll function with a timer*/
+            status = SemaphoreP_constructBinary(&hLwip2Emac->pollLinkSemObj, 0U);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            /* Initialize the poll function as a thread */
+            TaskP_Params_init(&params);
+            params.name = "Lwipif_Lwip_emac_poll";
+            params.priority       = LWIP_POLL_TASK_PRI;
+            params.stack          = gLwip2LwipIfPollTaskStack;
+            params.stackSize      = sizeof(gLwip2LwipIfPollTaskStack);
+            params.args           = netif;
+            params.taskMain       = &LWIPIF_LWIP_EMAC_poll;
+
+            status = TaskP_construct(&hLwip2Emac->lwipif2lwipPollTaskObj, &params);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            ClockP_Params_init(&clkPrms);
+            clkPrms.start     = 0;
+            clkPrms.period    = EMACLWIPAPP_POLL_PERIOD;
+            clkPrms.args      = &hLwip2Emac->pollLinkSemObj;
+            clkPrms.callback  = &LWIPIF_LWIP_EMAC_postPollLink;
+            clkPrms.timeout   = EMACLWIPAPP_POLL_PERIOD;
+
+            /* Creating timer and setting timer callback function*/
+            status = ClockP_construct(&hLwip2Emac->pollLinkClkObj,
+                                    &clkPrms);
+            if (status == SystemP_SUCCESS)
+            {
+                /* Set timer expiry time in OS ticks */
+                ClockP_setTimeout(&hLwip2Emac->pollLinkClkObj, EMACLWIPAPP_POLL_PERIOD);
+                ClockP_start(&hLwip2Emac->pollLinkClkObj);
+            }
+            else
+            {
+                DebugP_assert (status == SystemP_SUCCESS);
+            }
+
+            /*Copy the MAC Address into the network interface object here. */
+            if(hLwip2Emac->emacHandle != NULL)
+            {
+                memcpy(netif->hwaddr, (void*)(&(((ICSS_EMAC_Object *)hLwip2Emac->emacHandle->object)->macId[0])), (uint32_t)6U);
+                netif->hwaddr_len = 6U;
+
+                /* Filter not defined */
+                /* Inform the world that we are operational. */
+                DebugP_log("[LWIPIF_LWIP_EMAC] Interface layer handle is Initialised \r\n");
+
+                retVal = 0;
+            }
+            else
+            {
+                DebugP_log("[LWIPIF_LWIP_EMAC] Failed to initialise Interface layer handle - ICSS_EMAC Handle is NULL \r\n");
+            }
         }
         else
         {
-            DebugP_assert (status == SystemP_SUCCESS);
+            DebugP_log("[LWIPIF_LWIP_EMAC] Failed to initialise Interface layer handle  \r\n");
         }
-
-        /*Copy the MAC Address into the network interface object here. */
-        memcpy(netif->hwaddr, (void*)(&(((ICSS_EMAC_Object *)hLwip2Emac->emacHandle->object)->macId[0])), (uint32_t)6U);
-        netif->hwaddr_len = 6U;
-
-        /* Filter not defined */
-        /* Inform the world that we are operational. */
-        DebugP_log("[LWIPIF_LWIP_EMAC] Interface layer handle is Initialised \r\n");
-
-        retVal = 0;
     }
     else
     {
@@ -355,16 +389,18 @@ static void LWIPIF_LWIP_EMAC_stop(struct netif *netif)
 {
     Lwip2Emac_Handle hLwip2Emac;
 
-    /* Get the pointer to the private data */
-    hLwip2Emac = (Lwip2Emac_Handle)netif->state;
+    if(netif != NULL)
+    {
+        /* Get the pointer to the private data */
+        hLwip2Emac = (Lwip2Emac_Handle)netif->state;
 
-    /* Stop and delete timer */
-    ClockP_stop (&hLwip2Emac->pollLinkClkObj);
-    ClockP_destruct (&hLwip2Emac->pollLinkClkObj);
+        /* Stop and delete timer */
+        ClockP_stop (&hLwip2Emac->pollLinkClkObj);
+        ClockP_destruct (&hLwip2Emac->pollLinkClkObj);
 
-    /* Call low-level close function */
-    Lwip2Emac_close(hLwip2Emac);
-
+        /* Call low-level close function */
+        Lwip2Emac_close(hLwip2Emac);   
+    }
 }
 
 /*!
@@ -381,30 +417,39 @@ static void LWIPIF_LWIP_EMAC_stop(struct netif *netif)
  */
 err_t LWIPIF_LWIP_EMAC_init(struct netif *netif)
 {
+    err_t retVal = ERR_OK;
+
+    if(netif == NULL)
+    {
+        retVal = ERR_ARG;
+    }
+    else
+    {
 #ifdef LWIPIF_CHECKSUM_SUPPORT
-    /* TODO: Add checksum support */
+        /* TODO: Add checksum support */
 #endif
 
-    /* Populate the Network Interface Object */
-    netif->name[0] = IFNAME0;
-    netif->name[1] = IFNAME1;
+        /* Populate the Network Interface Object */
+        netif->name[0] = IFNAME0;
+        netif->name[1] = IFNAME1;
 
-    /*
-     * MTU is i total size of the (IP) packet that can fit into an Ethernet.
-     * For Ethernet it is 1500bytes
-     */
-    netif->mtu = ETH_FRAME_SIZE - ETHHDR_SIZE - VLAN_TAG_SIZE;
+        /*
+        * MTU is i total size of the (IP) packet that can fit into an Ethernet.
+        * For Ethernet it is 1500bytes
+        */
+        netif->mtu = ETH_FRAME_SIZE - ETHHDR_SIZE - VLAN_TAG_SIZE;
 
-    /* Populate the Driver Interface Functions. */
-    netif->remove_callback      = LWIPIF_LWIP_EMAC_stop;
-    netif->output               = etharp_output;
-    netif->linkoutput           = LWIPIF_LWIP_EMAC_send;
-    netif->flags               |= NETIF_FLAG_ETHARP;
+        /* Populate the Driver Interface Functions. */
+        netif->remove_callback      = LWIPIF_LWIP_EMAC_stop;
+        netif->output               = etharp_output;
+        netif->linkoutput           = LWIPIF_LWIP_EMAC_send;
+        netif->flags               |= NETIF_FLAG_ETHARP;
 
-    LWIPIF_LWIP_EMAC_start(netif);
+        LWIPIF_LWIP_EMAC_start(netif);
 
-    DebugP_log("[LWIPIF_LWIP_EMAC] NETIF INIT SUCCESS\r\n");
+        DebugP_log("[LWIPIF_LWIP_EMAC] NETIF INIT SUCCESS\r\n");
+    }
 
-    return ERR_OK;
+    return retVal;
 }
 
