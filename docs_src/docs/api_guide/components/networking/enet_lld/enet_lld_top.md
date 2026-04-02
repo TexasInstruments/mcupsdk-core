@@ -36,3 +36,6 @@
 \cond SOC_AM243X || SOC_AM64X
 - \subpage ICSSG_ETH_TOP
 \endcond
+\cond SOC_AM263PX || SOC_AM263X || SOC_AM261X
+- \subpage enet_interface_selection
+\endcond
