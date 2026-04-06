@@ -58,7 +58,7 @@ void loop_forever(void)
 
 int main(void)
 {
-    int32_t status;
+    volatile int32_t status;
 
     Bootloader_profileReset();
 
