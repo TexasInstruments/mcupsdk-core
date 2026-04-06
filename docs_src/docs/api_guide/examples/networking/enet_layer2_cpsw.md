@@ -80,6 +80,7 @@ This example does the following:
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+ ^              | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
@@ -90,7 +91,8 @@ This example does the following:
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
+ CPU + OS       | r5fss0-0_freertos
+ ^              | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_ADDON_AUTO
  Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
@@ -103,7 +105,8 @@ For support on @VAR_BOARD_NAME_ADDON_AUTO, please refer \ref ETHERNET_ADDON_BOAR
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
+ CPU + OS       | r5fss0-0_freertos
+ ^              | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
@@ -355,6 +358,9 @@ Print statistics
   \imageStyle{layer2_cpsw_example_wireshark_log.png,width:50%}
   \image html layer2_cpsw_example_wireshark_log.png Wireshark log for Layer 2 CPSW Example
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\note "Enet L2 cpsw Menu" options shall not be available for baremetal version of Layer 2 CPSW example
+\endcond
 ## Troubleshooting issues
 
 \cond SOC_AM261X
