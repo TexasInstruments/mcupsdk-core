@@ -126,6 +126,11 @@ typedef struct
     Bootloader_memSection memSection[BOOTLOADER_MAX_RESERVED_SECTIONS];
 } Bootloader_resMemSections;
 
+/* External declaration - defined in generated code for am263x/am263px/am261x */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
+extern Bootloader_resMemSections gResMemSection;
+#endif
+
 /**
  * \brief API to get the scratch memory limits used by SBL. If the application tries to load in this region, it might over write SBL
  */

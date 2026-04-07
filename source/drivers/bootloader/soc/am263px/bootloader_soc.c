@@ -45,13 +45,6 @@ extern HsmClient_t gHSMClient ;
 
 uint32_t gStreamId = 0;
 
-Bootloader_resMemSections gResMemSection =
-{
-    .numSections    = 1,
-    .memSection[0].memStart   = 0x70002000,
-    .memSection[0].memEnd     = 0x70040000,
-};
-
 Bootloader_CoreBootInfo gCoreBootInfo[]                                                                             =
 {
     {
