@@ -349,6 +349,22 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_RTI3,
     /**
+     * \brief   Value specifying RTI4
+     */
+    SOC_RcmPeripheralId_RTI4,
+    /**
+     * \brief   Value specifying RTI5
+     */
+    SOC_RcmPeripheralId_RTI5,
+    /**
+     * \brief   Value specifying RTI6
+     */
+    SOC_RcmPeripheralId_RTI6,
+    /**
+     * \brief   Value specifying RTI7
+     */
+    SOC_RcmPeripheralId_RTI7,
+    /**
      * \brief   Value specifying WDT0
      */
     SOC_RcmPeripheralId_WDT0,

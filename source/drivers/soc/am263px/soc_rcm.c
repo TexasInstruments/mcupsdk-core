@@ -942,6 +942,34 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gRtiClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_RTI4:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->RTI4_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->RTI4_CLK_DIV_VAL);
+            *clkSrcVal = gRtiClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI5:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->RTI5_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->RTI5_CLK_DIV_VAL);
+            *clkSrcVal = gRtiClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI6:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->RTI6_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->RTI6_CLK_DIV_VAL);
+            *clkSrcVal = gRtiClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI7:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->RTI7_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->RTI7_CLK_DIV_VAL);
+            *clkSrcVal = gRtiClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_WDT0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->WDT0_CLK_SRC_SEL);
@@ -2276,6 +2304,58 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             if(enable==0)
             {
                 ptrMSSRCMRegs->RTI3_CLK_GATE = CSL_MSS_RCM_RTI3_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI4:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->RTI4_CLK_GATE = CSL_MSS_RCM_RTI4_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->RTI4_CLK_GATE = CSL_MSS_RCM_RTI4_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI5:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->RTI5_CLK_GATE = CSL_MSS_RCM_RTI5_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->RTI5_CLK_GATE = CSL_MSS_RCM_RTI5_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI6:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->RTI6_CLK_GATE = CSL_MSS_RCM_RTI6_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->RTI6_CLK_GATE = CSL_MSS_RCM_RTI6_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_RTI7:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->RTI7_CLK_GATE = CSL_MSS_RCM_RTI7_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->RTI7_CLK_GATE = CSL_MSS_RCM_RTI7_CLK_GATE_GATED_MASK;
             }
             break;
         }
