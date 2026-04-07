@@ -9,6 +9,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_CRC_FULL_CPU
 -# DDR
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MAIN_ESM
+   -# \subpage EXAMPLES_DRIVERS_DDR_MEMTESTER
 \cond SOC_AM64X
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MCU_ESM
 \endcond
