@@ -1108,7 +1108,6 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for R51 TMU4\r\n");
             DebugP_log(" PBIST complete for R51 TMU5\r\n");
             DebugP_log(" PBIST complete for R51 TMU6\r\n");
-            DebugP_log(" PBIST complete for PBISTROM\r\n");
             DebugP_log(" PBIST complete for ROM0\r\n");
             DebugP_log(" PBIST complete for ROM1\r\n");
             DebugP_log(" PBIST complete for CPSW\r\n");
@@ -1116,7 +1115,6 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for FOTA\r\n");
             DebugP_log(" PBIST complete for ICSSM\r\n");
             DebugP_log(" PBIST complete for MBOX\r\n");
-            DebugP_log(" PBIST complete for MSS_L2_1\r\n");
             DebugP_log(" PBIST complete for MSS_L2_2\r\n");
             DebugP_log(" PBIST complete for MSS_L2_3\r\n");
             DebugP_log(" PBIST complete for MSS_L2_4\r\n");
