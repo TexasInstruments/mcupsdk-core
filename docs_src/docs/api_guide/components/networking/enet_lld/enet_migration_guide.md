@@ -145,7 +145,20 @@ To get DMA channel handle application invokes
 
 [Back To Top](@ref enet_migration_guide_top)
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X || SOC_AM273X || SOC_AM261X
+# Enet DMA channel override Enable {#EnetDmaChOverrideChange}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+Impact: The DMA channel override flag can be enabled through sysconfig for CPDMA devices
+
+DMA Channel Override flag is enabled for ALE to classify packets into different channels based on classification match
+
+Sysconfig Enable DMA channel override Flag                   
+![CPDMASyscfg](DMA_channel_override_syscfg.png "CPDMA Ch syscfg")                            
+
+
+[Back To Top](@ref enet_migration_guide_top)
+\endcond
 # Runtime Control API (Enet_ioctl) change {#EnetIoctlChange}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
