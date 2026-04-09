@@ -280,6 +280,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -688,6 +689,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_controller_mcspi_peripheral/am263x-cc/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_dma_read_write/am263x-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_peripheral_transfer/am263x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263x-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -1292,6 +1295,7 @@ BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1687,6 +1691,8 @@ BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nor
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += i2c_repeated_start_dma_am263x-lp_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += i2c_dma_read_write_am263x-lp_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += i2c_peripheral_transfer_am263x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos
@@ -2282,6 +2288,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3498,6 +3507,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mpu_firewall_services_demo_am263x-cc_system_nortos:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile all
 
+ i2c_repeated_start_dma_am263x-lp_system_nortos:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/system_nortos -f makefile all
+
+ i2c_dma_read_write_am263x-lp_system_nortos:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_read_write/am263x-lp/system_nortos -f makefile all
+
  i2c_peripheral_transfer_am263x-lp_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/i2c/i2c_peripheral_transfer/am263x-lp/system_freertos_nortos -f makefile all
 
@@ -3728,6 +3743,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4122,6 +4138,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263x-cc_system_freert
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_repeated_start_dma_am263x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_dma_read_write_am263x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_peripheral_transfer_am263x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos_clean
@@ -4713,6 +4731,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5929,6 +5950,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mpu_firewall_services_demo_am263x-cc_system_nortos_clean:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile clean
 
+ i2c_repeated_start_dma_am263x-lp_system_nortos_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/system_nortos -f makefile clean
+
+ i2c_dma_read_write_am263x-lp_system_nortos_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_read_write/am263x-lp/system_nortos -f makefile clean
+
  i2c_peripheral_transfer_am263x-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_peripheral_transfer/am263x-lp/system_freertos_nortos -f makefile clean
 
@@ -6159,6 +6186,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6553,6 +6581,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263x-cc_system_freert
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_repeated_start_dma_am263x-lp_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_dma_read_write_am263x-lp_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_peripheral_transfer_am263x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos_scrub
@@ -7144,6 +7174,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  i2c_led_blink_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ i2c_led_blink_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  i2c_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -8359,6 +8392,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  mpu_firewall_services_demo_am263x-cc_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile scrub
+
+ i2c_repeated_start_dma_am263x-lp_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/system_nortos -f makefile scrub
+
+ i2c_dma_read_write_am263x-lp_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_dma_read_write/am263x-lp/system_nortos -f makefile scrub
 
  i2c_peripheral_transfer_am263x-lp_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_peripheral_transfer/am263x-lp/system_freertos_nortos -f makefile scrub

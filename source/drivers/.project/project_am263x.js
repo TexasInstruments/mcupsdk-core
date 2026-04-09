@@ -42,6 +42,7 @@ const files_r5f = {
         "gpmc_nandlike_v0.c",
         "gpmc_norlike_v0.c",
         "i2c_v1.c",
+        "i2c_dma.c",
         "i2c_v1_lld.c",
         "ipc_notify_v1.c",
         "ipc_notify_v1_cfg.c",

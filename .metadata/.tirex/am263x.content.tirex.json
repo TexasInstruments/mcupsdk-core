@@ -6419,6 +6419,171 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_led_blink_dma Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_led_blink_dma",
+        "location": "../../examples/drivers/i2c/i2c_led_blink_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_led_blink_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_repeated_start_dma Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_repeated_start_dma",
+        "location": "../../examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_repeat_start",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_repeated_start_dma Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running NORTOS.",
+        "name": "i2c_repeated_start_dma",
+        "location": "../../examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_repeat_start",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_dma_read_write Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_dma_read_write",
+        "location": "../../examples/drivers/i2c/i2c_dma_read_write/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_read_write",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_dma_read_write Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running NORTOS.",
+        "name": "i2c_dma_read_write",
+        "location": "../../examples/drivers/i2c/i2c_dma_read_write/am263x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_read_write",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A I2c Read Example. CPU is R5FSS0-0 running NORTOS.",
@@ -21602,6 +21767,66 @@
             "drivers",
             "hsmclient",
             "mpu_firewall_services_demo",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_repeated_start_dma Example. This example is intended to be a starting point for new development System project.",
+        "name": "i2c_repeated_start_dma",
+        "location": "../../examples/drivers/i2c/i2c_dma_repeat_start/am263x-lp/system_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_repeat_start",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An i2c_dma_read_write Example. This example is intended to be a starting point for new development System project.",
+        "name": "i2c_dma_read_write",
+        "location": "../../examples/drivers/i2c/i2c_dma_read_write/am263x-lp/system_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_dma_read_write",
             "system_nortos"
         ],
         "mainCategories": [

@@ -181,6 +181,91 @@ extern "C" {
 
 /** @} */
 
+/**
+ * \anchor   I2C_ControllerControl
+ * \name MACROS for I2CControllerControl mask and command values (ICMDR register)
+ * @{
+ */
+
+#define I2C_CFG_MASK_TX                      (CSL_I2C_ICMDR_TRX_MASK)
+#define I2C_CFG_MASK_RX                      (CSL_I2C_ICMDR_TRX_MASK)
+#define I2C_CFG_MASK_STOP                    (CSL_I2C_ICMDR_STP_MASK)
+#define I2C_CFG_MASK_START                   (CSL_I2C_ICMDR_STT_MASK)
+#define I2C_CFG_MASK_RUN_FREE                (CSL_I2C_ICMDR_FREE_MASK)
+#define I2C_CFG_MASK_REPEAT_MODE             (CSL_I2C_ICMDR_RM_MASK)
+#define I2C_CFG_MASK_LOOP_BACK               (CSL_I2C_ICMDR_DLB_MASK)
+#define I2C_CFG_MASK_XA                      (CSL_I2C_ICMDR_XA_MASK)
+
+#define I2C_CFG_CMD_TX                       (CSL_I2C_ICMDR_TRX_MASK)
+#define I2C_CFG_CMD_RX                       (0U)
+#define I2C_CFG_CMD_STOP                     (CSL_I2C_ICMDR_STP_MASK)
+#define I2C_CFG_CMD_START                    (CSL_I2C_ICMDR_STT_MASK)
+#define I2C_CFG_CMD_RUN_FREE_ON              (CSL_I2C_ICMDR_FREE_MASK)
+#define I2C_CFG_CMD_RUN_FREE_OFF             (0U)
+#define I2C_CFG_CMD_REPEAT_MODE_ON           (CSL_I2C_ICMDR_RM_MASK)
+#define I2C_CFG_CMD_REPEAT_MODE_OFF          (0U)
+#define I2C_CFG_CMD_LOOP_BACK_ON             (CSL_I2C_ICMDR_DLB_MASK)
+#define I2C_CFG_CMD_LOOP_BACK_OFF            (0U)
+#define I2C_CFG_CMD_10BIT_ADDRESS            (I2C_CFG_MASK_XA)
+#define I2C_CFG_CMD_7BIT_ADDRESS             (0U)
+
+/** @} */
+
+/**
+ * \anchor   I2C_ControllerIntEnableEx
+ * \name MACROS that can be passed to I2CControllerIntStatusEx and I2CControllerIntClearEx
+ * APIs as int status flag to check and clear interrupt status
+ * @{
+ */
+
+#define I2C_INT_ARBITRATION_LOST            (CSL_I2C_ICSTR_AL_MASK)
+#define I2C_INT_NO_ACK                      (CSL_I2C_ICSTR_NACK_MASK)
+#define I2C_INT_ADRR_READY_ACESS            (CSL_I2C_ICSTR_ARDY_MASK)
+#define I2C_INT_RECV_READY                  (CSL_I2C_ICSTR_ICRRDY_MASK)
+#define I2C_INT_TRANSMIT_READY              (CSL_I2C_ICSTR_ICXRDY_MASK)
+#define I2C_INT_STOP_CONDITION              (CSL_I2C_ICSTR_SCD_MASK)
+#define I2C_INT_ADRR_ZERO                   (CSL_I2C_ICSTR_AD0_MASK)
+#define I2C_INT_ADRR_TARGET                 (CSL_I2C_ICSTR_AAS_MASK)
+#define I2C_INT_TRANSMIT_UNDER_FLOW         (CSL_I2C_ICSTR_XSMT_MASK)
+#define I2C_INT_RECV_OVER_RUN               (CSL_I2C_ICSTR_RSFULL_MASK)
+#define I2C_INT_BUS_BUSY                    (CSL_I2C_ICSTR_BB_MASK)
+#define I2C_INT_NO_ACK_SENT                 (CSL_I2C_ICSTR_NACKSNT_MASK)
+#define I2C_INT_TARGET_DIRECTION            (CSL_I2C_ICSTR_SDIR_MASK)
+
+#define I2C_ALL_INTS                        (   I2C_INT_ARBITRATION_LOST        |   \
+                                                I2C_INT_NO_ACK                  |   \
+                                                I2C_INT_ADRR_READY_ACESS        |   \
+                                                I2C_INT_RECV_READY              |   \
+                                                I2C_INT_TRANSMIT_READY          |   \
+                                                I2C_INT_STOP_CONDITION          |   \
+                                                I2C_INT_ADRR_ZERO               |   \
+                                                I2C_INT_ADRR_TARGET             |   \
+                                                I2C_INT_TRANSMIT_UNDER_FLOW     |   \
+                                                I2C_INT_RECV_OVER_RUN           |   \
+                                                I2C_INT_BUS_BUSY                |   \
+                                                I2C_INT_NO_ACK_SENT             |   \
+                                                I2C_INT_TARGET_DIRECTION            \
+                                            )
+
+#define I2C_INT_MASK_ARBITRATION_LOST       (CSL_I2C_ICIMR_AL_MASK)
+#define I2C_INT_MASK_NO_ACK                 (CSL_I2C_ICIMR_NACK_MASK)
+#define I2C_INT_MASK_ADRR_READY_ACESS       (CSL_I2C_ICIMR_ARDY_MASK)
+#define I2C_INT_MASK_RECV_READY             (CSL_I2C_ICIMR_ICRRDY_MASK)
+#define I2C_INT_MASK_TRANSMIT_READY         (CSL_I2C_ICIMR_ICXRDY_MASK)
+#define I2C_INT_MASK_STOP_CONDITION         (CSL_I2C_ICIMR_SCD_MASK)
+#define I2C_INT_MASK_ADRR_TARGET            (CSL_I2C_ICIMR_AAS_MASK)
+
+#define I2C_ALL_INTS_MASK                   (   I2C_INT_MASK_ARBITRATION_LOST   |   \
+                                                I2C_INT_MASK_NO_ACK             |   \
+                                                I2C_INT_MASK_ADRR_READY_ACESS   |   \
+                                                I2C_INT_MASK_RECV_READY         |   \
+                                                I2C_INT_MASK_TRANSMIT_READY     |   \
+                                                I2C_INT_MASK_STOP_CONDITION     |   \
+                                                I2C_INT_MASK_ADRR_TARGET            \
+                                            )
+
+/** @} */
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -727,6 +812,19 @@ void I2C_lld_controllerIsr(void *args);
  *
  */
 void I2C_lld_targetIsr(void *args);
+
+/* ========================================================================== */
+/*                   Low-level hardware function declarations                 */
+/* ========================================================================== */
+
+void I2CControllerControl(uint32_t baseAddr, uint32_t ctrlMask, uint32_t ctrlCmds);
+void I2CSetDataCount(uint32_t baseAddr, uint32_t count);
+void I2CControllerStart(uint32_t baseAddr);
+void I2CControllerIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CControllerTargetAddrSet(uint32_t baseAddr, uint32_t targetAddr);
+void I2CControllerIntClearEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CModeControl(uint32_t baseAddr, uint32_t ctrlMask, uint32_t ctrlCmds);
+void I2CTargetEnable(uint32_t baseAddr);
 
 #ifdef __cplusplus
 }

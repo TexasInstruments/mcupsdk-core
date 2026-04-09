@@ -47,6 +47,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_I2C_MEMORY_READ_POLLING_LLD
    -# \subpage EXAMPLES_DRIVERS_I2C_TEMPERATURE_INTERRUPT_LLD
    -# \subpage EXAMPLES_DRIVERS_I2C_TEMPERATURE_POLLING_LLD
+
 -# IPC
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
@@ -373,6 +374,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_I2C_PERIPHERAL_TRANSFER
 \cond SOC_AM263X
    -# \subpage EXAMPLES_DRIVERS_I2C_PERIPHERAL_TRANSFER_LLD
+   -# \subpage EXAMPLES_DRIVERS_I2C_LED_BLINK_DMA
+   -# \subpage EXAMPLES_DRIVERS_I2C_DMA_READ_WRITE
+   -# \subpage EXAMPLES_DRIVERS_I2C_DMA_REPEAT_START
 \endcond
 -# IPC
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
