@@ -62,7 +62,20 @@ extern "C" {
 #include <sdl/pbist/v0/sdlr_pbist.h>
 #include <sdl/pbist/v0/soc/sdl_soc_pbist.h>
 
-#define PBIST_MAX_NUM_RUNS    20U
+#define PBIST_MAX_NUM_RUNS                  (18U)
+#define SDL_PBIST_MEM_INS                   (8U)
+#define SDL_PBIST_SELF_TEST_KEY             (0x05U)
+#define SDL_PBIST_MDP_LOGIC_RESET           (0xA5U)
+
+/* define the unlock and lock values for MSS_CTRL, TOP_CTRL */
+#define SDL_CTRL_KICK_LOCK_VAL              (0x00000000U)
+#define SDL_CTRL_KICK0_UNLOCK_VAL           (0x01234567U)
+#define SDL_CTRL_KICK1_UNLOCK_VAL           (0x0FEDCBA8U)
+
+#define SDL_TOP_CTRL_LOCK0_KICK0            (0x00001008U)
+#define SDL_TOP_CTRL_LOCK0_KICK1            (0x0000100CU)
+
+#define SDL_PBIST_MEM_INSTANCE_MAX          (0x08U)
 
 /** ---------------------------------------------------------------------------
  * @brief   This structure contains the different configuration used for PBIST
@@ -166,6 +179,20 @@ typedef struct
     uint32_t RAMT;
 } SDL_PBIST_configNeg;
 
+/** ---------------------------------------------------------------------------
+ * @brief   This structure contains the RAMT and CSR values of TCMB memory
+ *          instances.
+ * ----------------------------------------------------------------------------
+ */
+typedef struct
+{
+    /* RAM Configuration Register */
+    uint32_t regRamtValue;
+
+     /* Chip Select Register */
+    uint32_t reqCsrValue;
+}SDL_PBIST_memCfg;
+
 /**
  *  \brief PBIST Soft reset
  *
@@ -252,6 +279,19 @@ int32_t SDL_PBIST_releaseTestMode(SDL_pbistRegs *pPBISTRegs);
  *
  */
 int32_t SDL_PBIST_Instance (SDL_PBIST_inst instance);
+
+/**
+ *  \brief PBIST TCMB core test
+ *
+ *  This function executes TCMB memory for all R5 cores
+ *
+ *  \param pPBISTRegs      [IN]  Pointer to PBIST registers base
+ *
+ *  \param pMemRegVal      [IN]  Value of TCMB Memory instances
+ *
+ */
+int32_t SDL_PBIST_R5ssCore_TCMB(SDL_pbistRegs *pPBISTRegs, const SDL_PBIST_memCfg *pMemRegVal);
+
 /** @} */
 
 typedef struct

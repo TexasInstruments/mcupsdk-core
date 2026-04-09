@@ -220,22 +220,6 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 .memoryGroupsBitMap = 24u,  /* Choose MSS CR5B ATCM1*/
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
-            {
-                .override           = 0x0u,
-                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-                .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-                .memoryGroupsBitMap = 25u,  /* Choose MSS CR5B BTCM0*/
-                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-            },
-            {
-                .override           = 0x0u,
-                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-                .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-                .memoryGroupsBitMap = 26u,  /* Choose MSS CR5B BTCM1*/
-                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-            },
      },
         #endif
         #if defined (SUBSYS_R5SS1)
@@ -335,22 +319,6 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
               /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
               .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
               .memoryGroupsBitMap = 20u,  /* Choose MSS CR5A ATCM1*/
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {
-              .override           = 0x0u,
-              /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-              /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-              .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-              .memoryGroupsBitMap = 21u,  /* Choose MSS CR5A BTCM0*/
-              .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
-          },
-          {
-              .override           = 0x0u,
-              /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-              /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-              .algorithmsBitMap   = 4u,   /*  Choose ROM - Triple_Read_XOR_Read */
-              .memoryGroupsBitMap = 22u,  /* Choose MSS CR5A BTCM1*/
               .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
           },
           {    /* Dummy Initializer*/

@@ -426,6 +426,8 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for VIM0 R5SS1\r\n");
             DebugP_log(" PBIST complete for VIM1 R5SS1\r\n");
             DebugP_log(" PBIST complete for R5SS1 RAM\r\n");
+            DebugP_log(" PBIST complete for MSS CR5A BTCM0\r\n");
+            DebugP_log(" PBIST complete for MSS CR5A BTCM1\r\n");
             DebugP_log(" PBIST complete for MSS CR5B ATCM0\r\n");
             DebugP_log(" PBIST complete for MSS CR5B ATCM1\r\n");
             DebugP_log(" PBIST complete for MSS CR5B BTCM0\r\n");
@@ -660,6 +662,8 @@ void pbist_main(void *args)
         CacheP_disable(CacheP_TYPE_L1D);
         /* Run test on selected instance */
         testResult = PBIST_runTest(SDL_PBIST_INST_TOP, false);
+        CacheP_enable(CacheP_TYPE_L1P);
+        CacheP_enable(CacheP_TYPE_L1D);
     }
     #if defined (SOC_AM273X) || (SOC_AWR294X)
     #if defined R5F0_INPUTS

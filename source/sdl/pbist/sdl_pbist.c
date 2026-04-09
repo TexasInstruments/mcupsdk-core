@@ -51,6 +51,50 @@
 extern uint32_t gInst;
 #endif
 
+#if defined (SOC_AM263X)
+/* RAMT and CSR register values of PBIST memory instances*/
+SDL_PBIST_memCfg mem_cfg_r5ss0_core0[SDL_PBIST_MEM_INS] = {
+    {0x3400271C, 0x00000027U},
+    {0x3401271C, 0x00000047U},
+    {0x3402271C, 0x00000087U},
+    {0x3403271C, 0x00000107U},
+    {0x3409271C, 0x00002007U},
+    {0x340A271C, 0x00004007U},
+    {0x340B271C, 0x00008007U},
+    {0x340C271C, 0x00010007U}
+};
+SDL_PBIST_memCfg mem_cfg_r5ss0_core1[SDL_PBIST_MEM_INS] = {
+    {0x340D271C, 0x00020007U},
+    {0x340E271C, 0x00040007U},
+    {0x340F271C, 0x00080007U},
+    {0x3410271C, 0x00100007U},
+    {0x3404271C, 0x00000207U},
+    {0x3405271C, 0x00000407U},
+    {0x3406271C, 0x00000807U},
+    {0x3407271C, 0x00001007U}
+};
+SDL_PBIST_memCfg mem_cfg_r5ss1_core0[SDL_PBIST_MEM_INS] = {
+    {0x2400271C, 0x00000027U},
+    {0x2401271C, 0x00000047U},
+    {0x2402271C, 0x00000087U},
+    {0x2403271C, 0x00000107U},
+    {0x2409271C, 0x00002007U},
+    {0x240A271C, 0x00004007U},
+    {0x240B271C, 0x00008007U},
+    {0x340C271C, 0x00010007U}
+};
+SDL_PBIST_memCfg mem_cfg_r5ss1_core1[SDL_PBIST_MEM_INS] = {
+    {0x240D271C, 0x00020007U},
+    {0x240E271C, 0x00040007U},
+    {0x240F271C, 0x00080007U},
+    {0x2410271C, 0x00100007U},
+    {0x2404271C, 0x00000207U},
+    {0x2405271C, 0x00000407U},
+    {0x2406271C, 0x00000807U},
+    {0x2407271C, 0x00001007U}
+};
+#endif /* SOC_AM263X */
+
 /* PBIST test is done by ISR in below SoCs and Polling method */
 /* is used for AM26xx SoCs due to Covering VIM Memory Group   */
 /* as it cannot tested by ISR                                 */
@@ -376,7 +420,27 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
             pInfo->doneFlag = PBIST_NOT_DONE;
         }
     }
-
+#if defined (SOC_AM263X)
+    if (testType == SDL_PBIST_TEST)
+    {
+        if(ret == SDL_PASS)
+        {
+            ret = SDL_PBIST_R5ssCore_TCMB(pRegs, mem_cfg_r5ss0_core0);
+        }
+        if(ret == SDL_PASS)
+        {
+            ret = SDL_PBIST_R5ssCore_TCMB(pRegs, mem_cfg_r5ss0_core1);
+        }
+        if(ret == SDL_PASS)
+        {
+            ret = SDL_PBIST_R5ssCore_TCMB(pRegs, mem_cfg_r5ss1_core0);
+        }
+        if(ret == SDL_PASS)
+        {
+            ret = SDL_PBIST_R5ssCore_TCMB(pRegs, mem_cfg_r5ss1_core1);
+        }
+    }
+#endif /* SOC_AM263X */
     return ret;
 }
 #endif

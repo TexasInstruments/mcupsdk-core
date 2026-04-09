@@ -418,4 +418,134 @@ int32_t SDL_PBIST_releaseTestMode(SDL_pbistRegs *pPBISTRegs)
 
 }
 
+/* Common initialization for PBIST */
+static void PBIST_Common_Init(SDL_pbistRegs *pPBISTRegs)
+{
+    /* TOP_CTRL_unlock() */
+    HW_WR_REG32(SDL_TOP_CTRL_U_BASE + SDL_TOP_CTRL_LOCK0_KICK0, SDL_CTRL_KICK0_UNLOCK_VAL);
+    HW_WR_REG32(SDL_TOP_CTRL_U_BASE + SDL_TOP_CTRL_LOCK0_KICK1, SDL_CTRL_KICK1_UNLOCK_VAL);
+
+    /* MSS_CTRL_unlock() */
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_LOCK0_KICK0, SDL_CTRL_KICK0_UNLOCK_VAL);
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_LOCK0_KICK1, SDL_CTRL_KICK1_UNLOCK_VAL);
+
+    /* MMR to bring PBIST out of reset and Enable clock to MDP + memories */
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_TOP_PBIST_KEY_RST, SDL_PBIST_SELF_TEST_KEY);
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_TOP_PBIST_KEY_RST, SDL_PBIST_MDP_LOGIC_RESET);
+
+    /* TOP_CTRL_lock() */
+    HW_WR_REG32(SDL_TOP_CTRL_U_BASE + SDL_TOP_CTRL_LOCK0_KICK0, SDL_CTRL_KICK_LOCK_VAL);
+    HW_WR_REG32(SDL_TOP_CTRL_U_BASE + SDL_TOP_CTRL_LOCK0_KICK1, SDL_CTRL_KICK_LOCK_VAL);
+
+    /* MSS_CTRL_lock() */
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_LOCK0_KICK0, SDL_CTRL_KICK_LOCK_VAL);
+    HW_WR_REG32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_LOCK0_KICK1, SDL_CTRL_KICK_LOCK_VAL);
+
+    /* Write PACT register */
+    pPBISTRegs->PACT = ((uint32_t)0x1U);
+
+    /* Initialization of Loop registers */
+    pPBISTRegs->L0 = ((uint32_t)0x0U);
+    pPBISTRegs->L1 = ((uint32_t)0x0U);
+    pPBISTRegs->L2 = ((uint32_t)0x0U);
+    pPBISTRegs->L3 = ((uint32_t)0x0U);
+
+    /* Override (algo and rinfo override) */
+    pPBISTRegs->OVER = ((uint32_t)0x9U);
+
+    /* DLR - CONFIG ACCESS */
+    pPBISTRegs->DLR = ((uint32_t)0x10U);
+}
+
+/* Common algorithm programming for PBIST */
+static void PBIST_Program_Algorithm(SDL_pbistRegs *pPBISTRegs)
+{
+    /* Algorithm code for march disturbed increment, single port */
+    /* RF0L to RF15L (Lower registers) */
+    pPBISTRegs->RF0L = ((uint32_t)0x00000001U);  /* RF0L */
+    pPBISTRegs->RF1L = ((uint32_t)0x05100402U);  /* RF1L */
+    pPBISTRegs->RF2L = ((uint32_t)0x00000003U);  /* RF2L */
+    pPBISTRegs->RF3L = ((uint32_t)0x7A400183U);  /* RF3L */
+    pPBISTRegs->RF4L = ((uint32_t)0x00000005U);  /* RF4L */
+    pPBISTRegs->RF5L = ((uint32_t)0x00000006U);  /* RF5L */
+    pPBISTRegs->RF6L = ((uint32_t)0x00000007U);  /* RF6L */
+    pPBISTRegs->RF7L = ((uint32_t)0x00000008U);  /* RF7L */
+    pPBISTRegs->RF8L = ((uint32_t)0x7A400185U);  /* RF8L */
+    pPBISTRegs->RF9L = ((uint32_t)0x64024045U);  /* RF9L */
+    pPBISTRegs->RF10L = ((uint32_t)0x0000000BU); /* RF10L */
+    pPBISTRegs->RF11L = ((uint32_t)0x0000000CU); /* RF11L */
+    pPBISTRegs->RF12L = ((uint32_t)0x7A40018AU); /* RF12L */
+    pPBISTRegs->RF13L = ((uint32_t)0x4402404AU); /* RF13L */
+    pPBISTRegs->RF14L = ((uint32_t)0x7A40018EU); /* RF14L */
+    pPBISTRegs->RF15L = ((uint32_t)0x00000000U); /* RF15L */
+
+    /* RF0U to RF15U (Upper registers) */
+    pPBISTRegs->RF0U = ((uint32_t)0x00003123U);  /* RF0U */
+    pPBISTRegs->RF1U = ((uint32_t)0x00000002U);  /* RF1U */
+    pPBISTRegs->RF2U = ((uint32_t)0x00000000U);  /* RF2U */
+    pPBISTRegs->RF3U = ((uint32_t)0x0000A0A0U);  /* RF3U */
+    pPBISTRegs->RF4U = ((uint32_t)0x0000312BU);  /* RF4U */
+    pPBISTRegs->RF5U = ((uint32_t)0x00000060U);  /* RF5U */
+    pPBISTRegs->RF6U = ((uint32_t)0x00000060U);  /* RF6U */
+    pPBISTRegs->RF7U = ((uint32_t)0x0000A4A4U);  /* RF7U */
+    pPBISTRegs->RF8U = ((uint32_t)0x00000064U);  /* RF8U */
+    pPBISTRegs->RF9U = ((uint32_t)0x00003123U);  /* RF9U */
+    pPBISTRegs->RF10U = ((uint32_t)0x00000060U); /* RF10U */
+    pPBISTRegs->RF11U = ((uint32_t)0x0000A4A4U); /* RF11U */
+    pPBISTRegs->RF12U = ((uint32_t)0x0000A4A4U); /* RF12U */
+    pPBISTRegs->RF13U = ((uint32_t)0x00003123U); /* RF13U */
+    pPBISTRegs->RF14U = ((uint32_t)0x00000060U); /* RF14U */
+    pPBISTRegs->RF15U = ((uint32_t)0x00000001U); /* RF15U */
+}
+
+/**
+ * \brief Configure PBIST for R5SS0/1 Core0/1 TCMB
+ *        Tests multiple memory instances
+ */
+int32_t SDL_PBIST_R5ssCore_TCMB(SDL_pbistRegs *pPBISTRegs, const SDL_PBIST_memCfg *pMemRegVal)
+{
+    int32_t sdlResult = SDL_PASS;
+    bool PBISTResult = FALSE;
+    if ((pPBISTRegs == NULL_PTR) || (pMemRegVal == NULL_PTR))
+    {
+        sdlResult = SDL_EBADARGS;
+    }
+    else
+    {
+        PBIST_Common_Init(pPBISTRegs);
+        PBIST_Program_Algorithm(pPBISTRegs);
+
+        /* Memory Configuration */
+        pPBISTRegs->CMS = ((uint32_t)0x00000000U);
+        pPBISTRegs->CA3 = ((uint32_t)0x00000000U);
+        pPBISTRegs->CA2 = ((uint32_t)0x000003FFU);
+        pPBISTRegs->CA1 = ((uint32_t)0x000003FFU);
+        pPBISTRegs->CA0 = ((uint32_t)0x00000000U);
+        pPBISTRegs->CL3 = ((uint32_t)0x000003FFU);
+        pPBISTRegs->CL2 = ((uint32_t)0x00000009U);
+        pPBISTRegs->CL1 = ((uint32_t)0x00000003U);
+        pPBISTRegs->CL0 = ((uint32_t)0x000000FFU);
+        pPBISTRegs->I3 = ((uint32_t)0x00000000U);
+        pPBISTRegs->I2 = ((uint32_t)0x00000009U);
+        pPBISTRegs->I1 = ((uint32_t)0x00000004U);
+        pPBISTRegs->I0 = ((uint32_t)0x00000001U);
+
+        /* Memory Configuration instance 0-7 */
+        for(uint32_t i = 0; i < SDL_PBIST_MEM_INSTANCE_MAX; i++)
+        {
+            pPBISTRegs->RAMT = (pMemRegVal[i].regRamtValue);
+            pPBISTRegs->CSR = (pMemRegVal[i].reqCsrValue);
+            pPBISTRegs->STR = ((uint32_t)0x00000001U);
+
+            (void)SDL_PBIST_checkResult(pPBISTRegs, &PBISTResult);
+            if(PBISTResult != TRUE)
+            {
+                sdlResult = SDL_EFAIL;
+                break;
+            }
+        }
+    }
+    return sdlResult;
+}
+
 /* Nothing past this point */
