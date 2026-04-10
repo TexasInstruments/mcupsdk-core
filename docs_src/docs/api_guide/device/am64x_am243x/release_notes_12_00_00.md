@@ -19,15 +19,20 @@
 ## New in this Release
 
 \cond SOC_AM64X
-Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|-----------------------------------
-                                                                                                |  
+Feature                                                                                      | Module
+---------------------------------------------------------------------------------------------|-----------------------------------
+ MCELF based bootloader support                                                              | Bootloader
+ Drive strength adjustment capability in SW                                                  | Pinmux
+ A53 core frequency is set to max frequency by default                                       | Bootloader
+ Add flash recovery mechanism                                                                | OSPI
 \endcond
 
 \cond SOC_AM243X
-Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|-----------------------------------
-                                                                                                |  
+Feature                                                                                      | Module
+---------------------------------------------------------------------------------------------|-----------------------------------
+ MCELF based bootloader support                                                              | Bootloader
+ Drive strength adjustment capability in SW                                                  | Pinmux
+ Add flash recovery mechanism                                                                | OSPI
 \endcond
 
 ## Device and Validation Information
@@ -289,127 +294,61 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> ID
     <th> Head Line
     <th> Module
-    <th> Applicable Devices
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-236, EXT_SITMPUSW-236}
-    <td> Incorrect calculation of ptrInput and ptrOutput in the SA2UL_contextProcess
-    <td> Crypto
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-294, EXT_SITMPUSW-294}
+    <td> AM64: dhrystone_benchmark example for A53 core fails in debug mode
+    <td> Benchmarking
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-244, EXT_SITMPUSW-244}
-    <td> Incorrect handling of the donedataLen in the SA2UL_contextProcess
-    <td> Crypto
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-255, EXT_SITMPUSW-255}
+    <td> Sciclient driver uses incorrect context for TISCI_MSG_OPEN_DEBUG_FWLS
+    <td> DM
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-109, EXT_SITMPUSW-109}
-    <td> Wrong comments on HwiP_inISR() API
-    <td> Documentation
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-251, EXT_SITMPUSW-251}
+    <td> MCU+ SDK Example Projects using incorrect ARMv7 MPU Attributes for Peripheral Register Region
+    <td> Examples
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-238, EXT_SITMPUSW-238}
-    <td> Incorrect address size for I2C EEPROM 
-    <td> EEPROM
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-301, EXT_SITMPUSW-301}
+    <td> OSPI_norFlashInit1s1s1s has an implementation of wait for 500 milliseconds instead of microseconds
+    <td> Flash
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-233, EXT_SITMPUSW-233}
-    <td> AM64X : Critical section implementaion in the A53 
-    <td> FreeRTOS
-    <td> AM64x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-282, EXT_SITMPUSW-282}
+    <td> Sysconfig not generating code for GPIO Trigger
+    <td> GPIO
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-239, EXT_SITMPUSW-239}
-    <td> I2C gets hanging on communication errors
-    <td> I2C
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-317, EXT_SITMPUSW-317}
+    <td> C++ code not working as expected on M4F
+    <td> M4FSS
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-117, EXT_SITMPUSW-117}
-    <td> Linux Kernel IPC Examples are broken
-    <td> IPC
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-121, EXT_SITMPUSW-121}
-    <td> FORCE bit not book keeped properly for MCSPI DMA mode of operation
-    <td> MCSPI
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-207, EXT_SITMPUSW-207}
-    <td> Missing -p flag with strip command to reduce the size of *.out
-    <td> Makefiles
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-118, EXT_SITMPUSW-118}
-    <td> OSPI tuning algorithm finds points in noisy region on rare scenarios 
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-318, EXT_SITMPUSW-318}
+    <td> OSPI flash memcpy for 64-bit systems Failing
     <td> OSPI
-    <td> AM64x, AM243x
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-187, EXT_SITMPUSW-187}
-    <td> OSPI DAC Mode Configuration hardcoded and not based on flashsize
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-280, EXT_SITMPUSW-280}
+    <td> OSPI Indac Mode Should Check for odd bytes
     <td> OSPI
-    <td> AM64x, AM243x
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-167, EXT_SITMPUSW-167}
-    <td> SBL OSPI failing with large sized application
-    <td> SBL
-    <td> AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-256, EXT_SITMPUSW-256}
+    <td> Incorrect calculation of rowColEnd in the ext_otp_writeMmr
+    <td> OTP
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-229, EXT_SITMPUSW-229}
-    <td> AM243x-lp/AM243x-evm: Not able to load image of size 1050KB via UART bootloader
-    <td> SBL
-    <td> AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-314, EXT_SITMPUSW-314}
+    <td> ROV view not working
+    <td> ROV
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-226, EXT_SITMPUSW-226}
-    <td> Improve Sysconfig tool tips for all drivers
-    <td> SysConfig
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-116, EXT_SITMPUSW-116}
-    <td> Application gets stuck with Multiple UARTS with DMA enabled
-    <td> UDMA
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-237, EXT_SITMPUSW-237}
-    <td> Application gets stuck with BCDMA and PKTDMA instants
-    <td> UDMA
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13056, EXT_EP-13056}
-    <td> VTM module sensor reset sequence modification for reliable functionality
-    <td> SDL
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13057, EXT_EP-13057}
-    <td> SDL DCC Seed Value Calculation Deviates from TRM Guidelines
-    <td> SDL
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12719, EXT_EP-12719}
-    <td> Throughput drops to 95.5% with bidirectional mixed traffic
-    <td> Ethernet (ICSSG)
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13075, EXT_EP-13075}
-    <td> Forwarding stall with random size packets at 100% bi-directional 1Gbps load 
-    <td> Ethernet (ICSSG) 
-    <td> AM64x, AM243x
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13267, EXT_EP-13267}
+    <td> SDL ESM: Wrong instance argument in SDL_ESM_loInterruptHandler causing misidentification of ESM0 interrupts
+    <td> SDL-ESM
 </tr>
 </table>
 
@@ -420,192 +359,111 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> ID
     <th> Head Line
     <th> Module
-    <th> Applicable Devices
-    <th> Workaround
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-21, EXT_SITMPUSW-21}
-    <td> DMA not working with ADC FIFO 1
-    <td> ADC
-    <td> 7.3.0 onwards
-    <td> AM64x, AM243x
-    <td> Use ADC FIFO 0
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-322, EXT_SITMPUSW-322}
+    <td> IV is set incorrectly in the SA2UL driver
+    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-153, EXT_SITMPUSW-153}
     <td> MCU+ SDK CCS Project Build Generates Invalid/Redundant Boot Image Files
     <td> Build
-    <td> 10.01.00 Onwards
-    <td> AM64x AM243x
-    <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-53, EXT_SITMPUSW-53}
+    <td> Ethernet CPSW example overrides syscfg-GUI ALE configurations
+    <td> CPSW
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-83, EXT_SITMPUSW-83}
     <td> DPL - configure HwiP_MAX_INTERRUPTS based on SOC supported values
     <td> DPL
-    <td> 09.00.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-24, EXT_SITMPUSW-24}
     <td> [SA2UL][PKA] ECDSA Sign/verify not working with P-521 and BrainPool P-512R1 Curves
     <td> ECDSA
-    <td> 08.03.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-81, EXT_SITMPUSW-81}
     <td> MCU+ SDK: EPWM_tbTimebaseClkCfg does not choose the optimal pre-scaler combination
     <td> EPWM
-    <td> 10.00.00 Onwards
-    <td> AM64x AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-251, EXT_SITMPUSW-251}
-    <td> MCU+ SDK Example Projects using incorrect ARMv7 MPU Attributes for Peripheral Register Region
-    <td> Examples
-    <td> 11.01.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-86, EXT_SITMPUSW-86}
     <td> The configurations of GPIO interrupt routers are based on banks rather than individual pins.
     <td> GPIO
-    <td> 09.00.00 Onwards
-    <td> AM64x AM243x
-    <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-325, EXT_SITMPUSW-325}
+    <td> IRQStatus Write To Clear
+    <td> GPTIMER
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-132, EXT_SITMPUSW-132}
+    <td> AM64X: ENET: Enet VLAN ICSSG Example throws assert
+    <td> ICSSG
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-82, EXT_SITMPUSW-82}
     <td> AM64/AM243: M4F core getting hangs when doing IPC with Linux
     <td> IPC
-    <td> 08.06.00 Onwards
-    <td> AM64x AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-260, EXT_SITMPUSW-260}
-    <td> MCSPI Performance Numbers under MCU+ SDK documentation are not updated
-    <td> McSPI
-    <td> 11.01.00 Onwards
-    <td> AM64x AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-263, EXT_SITMPUSW-263}
-    <td> Design choice for Security Handover is not documented
-    <td> MMCSD
-    <td> 11.01.01 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-262, EXT_SITMPUSW-262}
     <td> mmcsd_raw_io_emmc_lld example is not working
     <td> MMCSD
-    <td> 11.01.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-273, EXT_SITMPUSW-273}
     <td> AM64x PCIe as End Point throwing error when changing BAR aperture
     <td> PCIE
-    <td> 08.06.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-26, EXT_SITMPUSW-26}
     <td> AM64X PCIe MSI error when connected to Linux Root Complex
     <td> PCIE
-    <td> 08.06.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-22, EXT_SITMPUSW-22}
-    <td> Pcie_benchmark, Pcie_buf_transfer, Pcie_legacy_irq, Pcie_msi_irq and Pcie_msix_irq are broken on 9.2.1 release"
+    <td> Pcie_benchmark, Pcie_buf_transfer, Pcie_legacy_irq, Pcie_msi_irq and Pcie_msix_irq are broken on 9.2.1 release
     <td> PCIE
-    <td> 09.02.01 Onwards
-    <td> AM64x AM243x
-    <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-263, EXT_SITMPUSW-263}
+    <td> Design choice for Security Handover is not documented
+    <td> SBL
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-300, EXT_SITMPUSW-300}
+    <td> Authentication of appimage fails
+    <td> SBL
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-25, EXT_SITMPUSW-25}
     <td> AM243x/AM64x: last 512KB of memory is not accessible in dev boot mode flow
     <td> SBL
-    <td> 08.04.00 Onwards
-    <td> AM64x AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-111, EXT_SITMPUSW-111}
-    <td> UART DMA LLD Build issue
-    <td> UART
-    <td> 11.02.00 Onwards
-    <td> AM64x AM243x
-    <td> -
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-257, EXT_SITMPUSW-257}
     <td> Roadmap for XIP Secure boot support
     <td> XIP
-    <td> 11.01.00 Onwards
-    <td> AM64x AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-23, EXT_SITMPUSW-23}
-    <td> [Docs] Sysfw RM/PM documentation doesn't specify AM243x
-    <td> Docs
-    <td> 8.0.0 onwards
-    <td> AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-131, EXT_SITMPUSW-131}
-    <td> AM64X/AM243X: ENET: TCP/IP bidirectional throughput drops during iperf testing
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-132, EXT_SITMPUSW-132}
-    <td> AM64X/AM243X: ENET: Enet VLAN ICSSG Example throws assert during channel open
-    <td> Ethernet (ICSSG)
-    <td> 11.01.00 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12276, EXT_EP-12276}
-    <td> ECC: Firewall related aggregators failures - ECC Aggregators SDL_SMS0_SMS_TIFS_ECC, SDL_SMS0_SMS_HSM_ECC, SDL_SA3_SS0_SA3SS_AM62A_DMSS_ECCAGGR and SDL_SA3_SS0_SA3SS_AM62A_SA_UL_ECC_AGGR fail because of firewall access issues faced by SDL
-    <td> SDL
-    <td> 10.01.00 onwards
-    <td> AM64x, AM243x
-    <td> No known workaround
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13067, EXT_EP-13067}
-    <td> AM64x: PBIST: A53 forcebit power off failure in M4F applications
-    <td> SDL
-    <td> 11.02.00 onwards
-    <td> AM64x
-    <td> No known workaround
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13068, EXT_EP-13068}
     <td> AM64x: AM243x: ECC: Aggregator failures in ecc applications.
-    <td> SDL
-    <td> 11.02.00 onwards
-    <td> AM64x, AM243x
-    <td> No known workaround
+    <td> SDL-ECC
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12276, EXT_EP-12276}
+    <td> ECC: Firewall related aggregators failures
+    <td> SDL-ECC
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13067, EXT_EP-13067}
+    <td> AM64x: PBIST: A53 forcebit power off failure in M4F applications
+    <td> SDL-PBIST
 </tr>
 </table>
 
