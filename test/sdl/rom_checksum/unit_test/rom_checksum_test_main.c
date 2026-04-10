@@ -176,6 +176,7 @@ void SDL_ROM_Checksum_test_app()
     }
 }
 
+
 void test_sdl_rom_checksum_test_app_runner(void) 
 {
     #ifdef UNITY_INCLUDE_CONFIG_H

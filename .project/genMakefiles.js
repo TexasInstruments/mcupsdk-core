@@ -119,6 +119,11 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
                 example_make.isBootLoader = true;
             }
 
+            if(property.isInternal === true && property.isSDL === true )
+            {
+                example_make.isSDL = true;
+            }
+            
             buildTarget =` ${property.name}_${buildOption.board}_${buildOption.cpu}_${buildOption.os}_${buildOption.cgt}`;
             buildTargetClean =` ${property.name}_${buildOption.board}_${buildOption.cpu}_${buildOption.os}_${buildOption.cgt}_clean`;
             buildTargetScrub =` ${property.name}_${buildOption.board}_${buildOption.cpu}_${buildOption.os}_${buildOption.cgt}_scrub`;

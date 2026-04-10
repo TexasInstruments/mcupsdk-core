@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM64x" --part "Default" --package "ALV" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM6442" --package "FCBGA (ALV)" --variant "AM6442-D" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.24.2+4234"}
  */
 
 /**
@@ -35,6 +36,7 @@ const section5        = section.addInstance();
 const section6        = section.addInstance();
 const section7        = section.addInstance();
 const section8        = section.addInstance();
+const section9        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -172,6 +174,15 @@ section8.$name                       = "IPC Shared Memory";
 section8.output_section.create(1);
 section8.output_section[0].$name     = ".bss.ipc_vring_mem";
 section8.output_section[0].alignment = 0;
+
+section9.$name                        = "Instrumentation segment";
+section9.load_memory                  = "M4F_DRAM";
+section9.output_section.create(2);
+section9.output_section[0].$name      = "__llvm_prf_cnts";
+section9.output_section[0].palignment = true;
+section9.output_section[1].$name      = "__llvm_prf_bits";
+section9.output_section[1].palignment = true;
+
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

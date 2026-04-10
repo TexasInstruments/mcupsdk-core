@@ -40,6 +40,7 @@ function mergeCgtOptions(project, commonCgtOptions) {
     project = _.cloneDeep(project);
 
     concatArrayPropertiesInObject(project, commonCgtOptions, "cflags", false);
+    concatArrayPropertiesInObject(project, commonCgtOptions, "coverage", false);
     concatArrayPropertiesInObject(project, commonCgtOptions, "arflags", false);
     concatArrayPropertiesInObject(project, commonCgtOptions, "includes", false);
     concatArrayPropertiesInObject(project, commonCgtOptions, "defines", false);

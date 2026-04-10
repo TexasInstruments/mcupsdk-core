@@ -2508,6 +2508,40 @@ sbl-scrub:
 
 
 
+BUILD_COMBO_SDL_ALL =
+# Various Example Targets
+BUILD_COMBO_SDL_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += esm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += esm_test_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += esm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += esm_test_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += dcc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += dcc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += tog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += tog_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += ecc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += ecc_test_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += ecc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += ecc_test_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += lbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_SDL_ALL += rom_checksum_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+
+sdl-unit-tests: $(BUILD_COMBO_SDL_ALL)
+
+.PHONY: $(BUILD_COMBO_SDL_ALL)
+.PHONY: sdl-unit-tests
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub
 .PHONY: libs-private

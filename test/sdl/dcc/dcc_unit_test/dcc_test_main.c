@@ -56,7 +56,9 @@
 /*===========================================================================*/
 /*                         Declarations                                      */
 /*===========================================================================*/
-/* None */
+#if defined(CODE_COVERAGE)
+extern void __llvm_profile_write_file(void);
+#endif
 
 /*===========================================================================*/
 /*                         Macros                                            */
@@ -179,6 +181,9 @@ int32_t test_main(void)
 	Board_driversClose();
 	Drivers_close();
 
+    #if defined(CODE_COVERAGE)
+    __llvm_profile_write_file();
+    #endif
     return 0;
 }
 

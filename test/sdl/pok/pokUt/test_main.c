@@ -68,6 +68,9 @@
 /* Unity functions */
 void test_sdl_pok_baremetal_test_app_runner(void);
 void test_sdl_pok_baremetal_test_app (void);
+#if defined(CODE_COVERAGE)
+extern void __llvm_profile_write_file(void);
+#endif
 
 /*===========================================================================*/
 /*                         Global Variables                                  */
@@ -186,6 +189,9 @@ int32_t test_main(void)
     /* Stop the test and wait here */
 	Board_driversClose();
 	Drivers_close();
+    #if defined(CODE_COVERAGE)
+        __llvm_profile_write_file();
+        #endif
     while (1);
 }
 

@@ -233,6 +233,16 @@ CFLAGS_`prop` := \
 
 	% }
 % }
+% obj = args.project.coverage;
+% for (prop in obj) {
+	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+COVERAGE_`prop` := \
+		% for(let val of obj[prop]) {
+	-D`val` \
+		% }
+
+	% }
+% }
 % obj = args.project.asmflags;
 % for (prop in obj) {
     % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
@@ -370,7 +380,12 @@ endif
 CPPFILES_PATH := $(FILES_PATH_cpp_common) $(FILES_PATH_$(PROFILE))
 CPPFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE)) $(CFLAGS_cpp_common)
 % }
+% if (args.isInstrumentationMode){
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE)) $(COVERAGE_common) $(COVERAGE_$(PROFILE))
+% }
+% else {
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+% }
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
 LIBS_PATH := $(LIBS_PATH_common) $(LIBS_PATH_$(PROFILE))

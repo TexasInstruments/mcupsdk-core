@@ -743,6 +743,26 @@ sbl-hs-scrub:
 %}
 % }
 
+% var sdl_count = 0
+% for (example of args.example_list) {
+%   if(example.isSDL ) {
+%       sdl_count = sdl_count + 1 
+%   }
+% }
+% if (sdl_count > 0) {
+BUILD_COMBO_SDL_ALL =
+# Various Example Targets
+% for (example of args.example_list) {
+%   if(example.isSDL ) {
+BUILD_COMBO_SDL_ALL +=`example.buildTarget`
+%   }
+% }
+
+sdl-unit-tests: $(BUILD_COMBO_SDL_ALL)
+
+.PHONY: $(BUILD_COMBO_SDL_ALL)
+.PHONY: sdl-unit-tests
+% }
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub
 .PHONY: libs-private

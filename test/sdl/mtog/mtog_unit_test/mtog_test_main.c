@@ -72,6 +72,10 @@
 /* ========================================================================== */
 /*                 Internal Function Definitions                              */
 /* ========================================================================== */
+#if defined(CODE_COVERAGE)
+extern void __llvm_profile_write_file(void);
+#endif
+
 #ifdef UNITY_INCLUDE_CONFIG_H
 /*
  *  ======== Unity set up and tear down ========
@@ -205,6 +209,9 @@ void test_main(void *args)
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 1);
 
     test_sdl_mtog_test_app_runner();
+    #if defined(CODE_COVERAGE)
+        __llvm_profile_write_file();
+        #endif
 
 }
 /* Nothing past this point */

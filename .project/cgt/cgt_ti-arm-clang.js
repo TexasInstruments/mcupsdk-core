@@ -106,6 +106,11 @@ const cgt_instrumentation = {
             "-fcoverage-mapping",
         ],
     },
+     coverage: {
+        common: [
+            "CODE_COVERAGE",
+        ],
+    },
 };
 
 function getCgtOptions(cpu, device)
@@ -122,6 +127,9 @@ function getCgtOptions(cpu, device)
     if(cpu.match(/m4f*/))
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_m4f);
+        if(common.isInstrumentationMode()) {
+            cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_instrumentation);
+        }
     }
     return cgtOptions;
 }
