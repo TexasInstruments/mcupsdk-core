@@ -7080,37 +7080,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Gpio Input Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "gpio_input_interrupt",
-        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "drivers",
-            "gpio",
-            "gpio_input_interrupt",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A GPIO LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7156,37 +7125,6 @@
         "compiler": [
             "ticlang"
         ],
-        "subCategories": [
-            "drivers",
-            "gpio",
-            "gpio_led_blink",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A GPIO LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
-        "name": "gpio_led_blink",
-        "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
         "subCategories": [
             "drivers",
             "gpio",
@@ -7505,68 +7443,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
-        "name": "i2c_led_blink",
-        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "drivers",
-            "i2c",
-            "i2c_led_blink",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "i2c_led_blink",
-        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "drivers",
-            "i2c",
-            "i2c_led_blink",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A I2c Led Blink Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_led_blink_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7579,37 +7455,6 @@
         "compiler": [
             "ticlang"
         ],
-        "subCategories": [
-            "drivers",
-            "i2c",
-            "i2c_led_blink_interrupt_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A I2c Led Blink Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "i2c_led_blink_interrupt_lld",
-        "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
         "subCategories": [
             "drivers",
             "i2c",
@@ -12086,37 +11931,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_io/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "drivers",
-            "ospi",
-            "ospi_flash_io",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Ospi Flash File Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -12228,68 +12042,6 @@
         "compiler": [
             "ticlang"
         ],
-        "subCategories": [
-            "drivers",
-            "ospi",
-            "ospi_flash_file_io",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Ospi Flash File Io Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_file_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "drivers",
-            "ospi",
-            "ospi_flash_file_io",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Ospi Flash File Io Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "ospi_flash_file_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
         "subCategories": [
             "drivers",
             "ospi",
@@ -15995,64 +15747,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running FREERTOS.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "empty",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running FREERTOS.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-lp/r5fss0-1_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "empty",
-            "r5fss0-1_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
         "name": "empty",
         "location": "../../examples/empty/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -16177,64 +15871,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "empty",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running NORTOS.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-lp/r5fss0-1_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "empty",
-            "r5fss0-1_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world",
         "location": "../../examples/hello_world/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -16340,64 +15976,6 @@
         "compiler": [
             "ticlang"
         ],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
         "subCategories": [
             "hello_world",
             "r5fss0-0_freertos"
@@ -22339,68 +21917,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A USB Device DFU example CPU is R5FSS0-0 running NORTOS.",
-        "name": "usb_dfu",
-        "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "usb",
-            "device",
-            "dfu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB Device DFU example CPU is R5FSS0-0 running FREERTOS.",
-        "name": "usb_dfu",
-        "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "usb",
-            "device",
-            "dfu",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A USB Device CDC example CPU is R5FSS0-0 running NORTOS.",
         "name": "cdc_echo",
         "location": "../../examples/usb/device/cdc_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -22512,68 +22028,6 @@
         "compiler": [
             "ticlang"
         ],
-        "subCategories": [
-            "usb",
-            "device",
-            "cdc_echo",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB Device CDC example CPU is R5FSS0-0 running NORTOS.",
-        "name": "cdc_echo",
-        "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "usb",
-            "device",
-            "cdc_echo",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB Device CDC example CPU is R5FSS0-0 running FREERTOS.",
-        "name": "cdc_echo",
-        "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
         "subCategories": [
             "usb",
             "device",
@@ -22725,68 +22179,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB Device NCM example CPU is R5FSS0-0 running NORTOS.",
-        "name": "usb_ncm",
-        "location": "../../examples/usb/device/ncm/am261x-lp/r5fss0-0_nortos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "usb",
-            "device",
-            "ncm",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB Device NCM example CPU is R5FSS0-0 running FREERTOS.",
-        "name": "usb_ncm",
-        "location": "../../examples/usb/device/ncm/am261x-lp/r5fss0-0_freertos/iar-arm/example.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [],
-        "subCategories": [
-            "usb",
-            "device",
-            "ncm",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "SENT Decoder Example CPU is R5FSS0-0 running FREERTOS.",
@@ -22893,7 +22285,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -22923,7 +22315,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -22953,7 +22345,7 @@
         ],
         "description": "Demonstrate mpu firewall services and interrupt handling System project.",
         "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-som/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-som/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -22983,7 +22375,7 @@
         ],
         "description": "Demonstrate mpu firewall services and interrupt handling System project.",
         "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-lp/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-lp/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23013,7 +22405,7 @@
         ],
         "description": "A Ipc Notify Echo System Example.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23043,7 +22435,7 @@
         ],
         "description": "A Ipc Notify Echo System Example.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23073,7 +22465,7 @@
         ],
         "description": "A Ipc Notify Echo Optishare System Example.",
         "name": "ipc_notify_echo_optishare",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo_optishare/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo_optishare/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23103,7 +22495,7 @@
         ],
         "description": "A Ipc Rpmsg Echo System Example.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23133,7 +22525,7 @@
         ],
         "description": "A Ipc Rpmsg Echo System Example.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23163,7 +22555,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Callback System Example.",
         "name": "ipc_rpmsg_echo_callback",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_callback/am261x-som/system_freertos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_callback/am261x-som/system_freertos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23193,7 +22585,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Callback System Example.",
         "name": "ipc_rpmsg_echo_callback",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_callback/am261x-lp/system_freertos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo_callback/am261x-lp/system_freertos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23223,7 +22615,7 @@
         ],
         "description": "A Ipc Spinlock Sharedmem System Example.",
         "name": "ipc_spinlock_sharedmem",
-        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23253,7 +22645,7 @@
         ],
         "description": "A Ipc Spinlock Sharedmem System Example.",
         "name": "ipc_spinlock_sharedmem",
-        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23283,7 +22675,7 @@
         ],
         "description": "A Ipc Safeipc Echo System Example.",
         "name": "ipc_safeipc_echo",
-        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23313,7 +22705,7 @@
         ],
         "description": "A Ipc Safeipc Echo System Example.",
         "name": "ipc_safeipc_echo",
-        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_safeipc_echo/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23343,7 +22735,7 @@
         ],
         "description": "A Mcspi External Loopback System Example.",
         "name": "mcspi_external_loopback",
-        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-som/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23373,7 +22765,7 @@
         ],
         "description": "A Mcspi External Loopback System Example.",
         "name": "mcspi_external_loopback",
-        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_external_loopback/am261x-lp/system_freertos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23403,7 +22795,7 @@
         ],
         "description": "An example to demonstrate the working of spinlock System project.",
         "name": "spinlock_example",
-        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23433,7 +22825,7 @@
         ],
         "description": "An example to demonstrate the working of spinlock System project.",
         "name": "spinlock_example",
-        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23463,7 +22855,7 @@
         ],
         "description": "This example shows 4 core support of TMU. System project.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23493,7 +22885,7 @@
         ],
         "description": "This example shows 4 core support of TMU. System project.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-lp/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-lp/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23523,7 +22915,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-som/system_freertos/system.projectspec",
+        "location": "../../examples/empty/am261x-som/system_freertos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23551,7 +22943,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-lp/system_freertos/system.projectspec",
+        "location": "../../examples/empty/am261x-lp/system_freertos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23579,35 +22971,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-lp/system_freertos/system.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "subCategories": [
-            "empty",
-            "system_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-som/system_nortos/system.projectspec",
+        "location": "../../examples/empty/am261x-som/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],
@@ -23635,35 +22999,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-lp/system_nortos/system.projectspec",
-        "devtools": [
-            "LP-AM261"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "subCategories": [
-            "empty",
-            "system_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
-        "name": "empty",
-        "location": "../../examples/empty/am261x-lp/system_nortos/system.projectspec",
+        "location": "../../examples/empty/am261x-lp/system_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "LP-AM261"
         ],
@@ -23691,7 +23027,7 @@
         ],
         "description": "This example verifies STC is Done for R5F0 core followed by R5F1. System project.",
         "name": "sdl_stc",
-        "location": "../../examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos/system.projectspec",
+        "location": "../../examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos/ti-arm-clang/system.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
         ],

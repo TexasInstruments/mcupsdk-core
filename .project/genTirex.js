@@ -41,6 +41,10 @@ function genTirexSystemProjectContent(example, device) {
 
     tirex_content.name = property.name;
     tirex_content.location = common.path.relative(".metadata/.tirex", `${property.dirPath}/${project.board}/system_${project.tag}`) + "/system.projectspec";
+    if (device === "am261x") {
+        project.cgt = project.cgt || "ti-arm-clang";
+        tirex_content.location = common.path.relative(".metadata/.tirex", `${property.dirPath}/${project.board}/system_${project.tag}/${project.cgt}`) + "/system.projectspec";
+    }
     tirex_content.devtools = [ deviceData.getDevToolTirex(project.board) ];
     tirex_content.kernel = [];
     /* Temp fix: TIREX doesn't support multiple compiler for a project. System project doesn't need this. So keep it empty */
@@ -100,7 +104,7 @@ function genTirexExampleContentList(example_file_list, device) {
             let folder_list = common.path.relative("examples", property.dirPath).split("/");
             let tirex_content = {};
 
-            if (gccEnabled == false && buildOption.cgt == "gcc-armv7")
+            if ((gccEnabled == false && buildOption.cgt == "gcc-armv7") || buildOption.cgt == "iar-arm")
                 continue;
 
             tirex_content.resourceType = `project.ccs`;
@@ -174,7 +178,7 @@ function genTirexExampleContentList(example_file_list, device) {
         let systemProjects = require(`../${example}`).getSystemProjects(device);
         for(project of systemProjects) {
 
-            if (gccEnabled == false && project.tag.match(/gcc*/))
+            if ((gccEnabled == false && project.tag.match(/gcc*/)) || (project.cgt == "iar-arm"))
                 continue;
 
             tirex_content = genTirexSystemProjectContent(example, device);
