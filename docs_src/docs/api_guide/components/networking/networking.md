@@ -26,6 +26,8 @@ This document covers driver software architecture, Application Programming Inter
 To know more about the hardware peripherals, please refer to datasheet and Technical Reference Manual (TRM) on the product page:
 - [AM2431](https://www.ti.com/product/AM2431), [AM2432](https://www.ti.com/product/AM2432), [AM2434](https://www.ti.com/product/AM2434)
 - [AM2634](https://www.ti.com/product/AM2634), [AM2634-Q1](https://www.ti.com/product/AM2634-Q1)
+- [AM263P2](https://www.ti.com/product/AM263P2), [AM263P4](https://www.ti.com/product/AM263P4), [AM263P2-Q1](https://www.ti.com/product/AM263P2-Q1), [AM263P4-Q1](https://www.ti.com/product/AM263P4-Q1)
+- [AM2611](https://www.ti.com/product/AM2611), [AM2612](https://www.ti.com/product/AM2612), [AM2612-Q1](https://www.ti.com/product/AM2612-Q1)
 - [AM2732](https://www.ti.com/product/AM2732)
 - [AM6411](https://www.ti.com/product/AM6411), [AM6412](https://www.ti.com/product/AM6412), [AM6421](https://www.ti.com/product/AM6421), [AM6422](https://www.ti.com/product/AM6422), [AM6441](https://www.ti.com/product/AM6441), [AM6442](https://www.ti.com/product/AM6442)
 
@@ -169,6 +171,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 
 \cond SOC_AM243X || SOC_AM263PX || SOC_AM263X || SOC_AM64X
 ### Enet CLI
+- \subpage ENET_CLI
 - \subpage EXAMPLES_ENET_CLI_APP
 \endcond
 
