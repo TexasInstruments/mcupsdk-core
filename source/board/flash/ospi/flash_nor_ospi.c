@@ -35,6 +35,10 @@
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
 #include <kernel/dpl/ClockP.h>
 #endif
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+#include <drivers/hw_include/cslr_fss.h>
+#include <drivers/hw_include/cslr.h>
+#endif
 
 #define FLASH_OSPI_JEDEC_ID_SIZE_MAX (8U)
 #define FLASH_OSPI_TRY_TUNING        (3U)
@@ -57,6 +61,10 @@ static int32_t Flash_norOspiDacModeDisable(Flash_Config *config);
 static int32_t Flash_norOspiSetRdDataCaptureDelay(Flash_Config *config);
 static int32_t Flash_norOspiPhyTune(Flash_Config* config);
 static int32_t Flash_norOspiFallback(Flash_Config *config);
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+static void Flash_norOspiDisxipEnable(void);
+static void Flash_norOspiDisxipDisable(void);
+#endif
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
 int32_t Flash_quirkQSPIEarlyFixup(Flash_Config *config);
 int32_t Flash_quirkOSPIEarlyFixup(Flash_Config *config);
@@ -1003,6 +1011,28 @@ static int32_t Flash_norOspiRead(Flash_Config *config, uint32_t offset, uint8_t 
     return status;
 }
 
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+static void Flash_norOspiDisxipEnable(void)
+{
+    CSL_fss_fsas_genregsRegs *fssRegs =
+        (CSL_fss_fsas_genregsRegs *)CSL_FSS_FSAS_GENREGS_REGS_BASE;
+
+    CSL_REG32_FINS(&fssRegs->SYSCONFIG,
+                   FSS_FSAS_GENREGS_SYSCONFIG_DISXIP,
+                   1U);
+}
+
+static void Flash_norOspiDisxipDisable(void)
+{
+    CSL_fss_fsas_genregsRegs *fssRegs =
+        (CSL_fss_fsas_genregsRegs *)CSL_FSS_FSAS_GENREGS_REGS_BASE;
+
+    CSL_REG32_FINS(&fssRegs->SYSCONFIG,
+                   FSS_FSAS_GENREGS_SYSCONFIG_DISXIP,
+                   0U);
+}
+#endif
+
 static int32_t Flash_norOspiWrite(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
@@ -1027,6 +1057,10 @@ static int32_t Flash_norOspiWrite(Flash_Config *config, uint32_t offset, uint8_t
 
         pageSize = attrs->pageSize;
         chunkLen = pageSize;
+
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+        Flash_norOspiDisxipEnable();
+#endif
 
         for (actual = 0; actual < len; actual += chunkLen)
         {
@@ -1070,6 +1104,10 @@ static int32_t Flash_norOspiWrite(Flash_Config *config, uint32_t offset, uint8_t
                 break;
             }
         }
+
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+        Flash_norOspiDisxipDisable();
+#endif
     }
 
     return status;
@@ -1114,6 +1152,9 @@ static int32_t Flash_norOspiErase(Flash_Config *config, uint32_t blkNum)
     }
     if(SystemP_SUCCESS == status)
     {
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+        Flash_norOspiDisxipEnable();
+#endif
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(SystemP_SUCCESS == status)
@@ -1128,6 +1169,9 @@ static int32_t Flash_norOspiErase(Flash_Config *config, uint32_t blkNum)
     {
         status = Flash_norOspiWaitReady(config, eraseTimeout);
     }
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+    Flash_norOspiDisxipDisable();
+#endif
 
     return status;
 }
@@ -1171,6 +1215,9 @@ static int32_t Flash_norOspiEraseSector(Flash_Config *config, uint32_t sectorNum
     }
     if(SystemP_SUCCESS == status)
     {
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+        Flash_norOspiDisxipEnable();
+#endif
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(SystemP_SUCCESS == status)
@@ -1185,6 +1232,9 @@ static int32_t Flash_norOspiEraseSector(Flash_Config *config, uint32_t sectorNum
     {
         status = Flash_norOspiWaitReady(config, eraseTimeout);
     }
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+    Flash_norOspiDisxipDisable();
+#endif
 
     return status;
 }
