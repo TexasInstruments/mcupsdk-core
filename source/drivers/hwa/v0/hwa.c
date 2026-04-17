@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-26 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,6 +49,20 @@
 {\
      ptrHWADriver = (HWA_Object *)handle;\
 }
+
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+/*
+ * DSS CM4 alignment workaround
+ * The DSS HWA CM4 cannot perform access to address space outside its subsystem if:
+ *  - Not aligned to 32-bit boundary, OR
+ *  - Not a Multiple of 32-bit (e.g., 8/16-bit) access
+ *   
+ *  All external memory accesse must be 32-bit aligned and use 32-bit read/write to ensure proper operation.
+ * */
+
+ #define HWA_CM4_DSS_ADDR_ALIGN_CHECK(addr)  (((uintptr_t)(addr) & 0x03U) == 0U)
+ #define HWA_CM4_DSS_ACCESS_SIZE_CHECK(size)  ((size & 0x03U) == 0U)
+#endif
 
 HWA_InterruptCtx HwaParamsetIntr[SOC_HWA_NUM_PARAM_SETS];
 
@@ -468,6 +482,16 @@ static int32_t HWA_validateParamSetConfig(HWA_Object *ptrHWADriver, HWA_ParamCon
                 /* invalid config */
                 retCode = HWA_EINVAL_PARAMSET_SRCDST_ADDRESS;
            }
+#if defined (SOC_am273x) && defined (CORE_CM4)
+           /* Check 32-bit alignment for source and destination addresses (DSS CM4 errata requirement)
+              CM4 cannot perform access to address space outside its subsystem if not aligned to
+              32-bit boundary or not a multiple of 32-bit. */
+              else if(!HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->source.srcAddr) || !HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->dest.dstAddr))
+              {
+                /* source and destination address must be 32-bit aligned per DSS CM4 errata requirements */
+                retCode = HWA_ENOTALIGNED;
+              }
+#endif
         }
         if (paramConfig->accelMode == HWA_ACCELMODE_FFT)
         {
@@ -3556,6 +3580,18 @@ int32_t HWA_configRam(HWA_Handle handle, uint8_t ramType, uint8_t *data, uint32_
             /* invalid data size */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        else if ((!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t) data)))
+        {
+            /* unaligned address */
+            retCode = HWA_ENOTALIGNED;
+        }
+        else if (!HWA_CM4_DSS_ACCESS_SIZE_CHECK(dataSize))
+        {
+            /* dataSize must be multiple of 32 bits per DSS CM4 errata */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -3655,6 +3691,18 @@ extern int32_t HWA_readRam(HWA_Handle handle, uint8_t ramType, uint8_t *data, ui
             /* invalid data size */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        else if ((!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t) data)))
+        {
+            /* unaligned address */
+            retCode = HWA_ENOTALIGNED;
+        }
+        else if (!HWA_CM4_DSS_ACCESS_SIZE_CHECK(dataSize))
+        {
+            /* dataSize must be multiple of 32 bits per DSS CM4 errata */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -4782,6 +4830,14 @@ extern int32_t HWA_readDCEstimateReg(HWA_Handle handle, cmplx32ImRe_t *pbuf, uin
             /* invalid config */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
+        else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
+        {
+            /* pbuf must be 32-bit aligned per DSS CM4 errata requirements */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -4857,6 +4913,14 @@ extern int32_t HWA_readIntfAccReg(HWA_Handle handle, uint64_t *accBuf, uint8_t t
             /* invalid config */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
+        else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)accBuf))
+        {
+            /* accBuf must be 32-bit aligned per DSS CM4 errata requirements */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -4944,6 +5008,14 @@ extern int32_t HWA_readDCAccReg(HWA_Handle handle, cmplx64ImRe_t *accbuf, uint8_
             /* invalid config */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
+        else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)accBuf))
+        {
+            /* accBuf must be 32-bit aligned per DSS CM4 errata requirements */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -5021,6 +5093,14 @@ int32_t HWA_readCFARPeakCountReg(HWA_Handle handle, uint8_t *pbuf, uint8_t size)
             /* invalid config */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
+        else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
+        {
+            /* pbuf must be 32-bit aligned per DSS CM4 errata requirements */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
@@ -5253,6 +5333,14 @@ extern int32_t HWA_readInterfThreshReg(HWA_Handle handle, uint32_t *pbuf, uint8_
             /* invalid config */
             retCode = HWA_EINVAL;
         }
+#if defined (SOC_AM273x) && defined (CORE_CM4)
+        /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
+        else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
+        {
+            /* pbuf must be 32-bit aligned per DSS CM4 errata requirements */
+            retCode = HWA_ENOTALIGNED;
+        }
+#endif
         else
 #endif
         {
