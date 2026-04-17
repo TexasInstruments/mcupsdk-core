@@ -75,6 +75,63 @@ static inline  void Hwip_restore_fpu_context(void)
 extern "C" {
 #endif
 
+#if defined(SOC_AM273X)
+/*back-2-back nesting issue (AM273x errata i2162 workaround) */
+static void Hwip_dataAndInstructionBarrier(void)
+{
+#if defined(__ICCARM__)
+    __ISB();
+    __DSB();
+#else
+    __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
+    __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
+#endif
+}
+
+/* Get the status of a specific interrupt in VIM_RAW register */
+static uint32_t HWI_SECTION HwiP_get(uint32_t intNum)
+{
+    volatile uint32_t *addr;
+    uint32_t bitPos;
+    uint32_t val;
+
+    addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_RAW(intNum));
+    bitPos = VIM_BIT_POS(intNum);
+
+    val = (*addr) & ((uint32_t)0x1 << bitPos);
+
+    /*
+     * Add delay to ensure posted interrupt is triggered before function returns.
+     */
+    Hwip_dataAndInstructionBarrier();
+
+    return val;
+}
+
+/* Post and clear the dummy interrupt */
+static void HWI_SECTION dummyIrqNest(void)
+{
+    /* Set the interrupt flag of DUMMY IRQ */
+    HwiP_post(HWIP_DUMMY_INTERRUPT_NUM);
+    /* Make sure the dummy interrupt has been set */
+    while(HwiP_get(HWIP_DUMMY_INTERRUPT_NUM) == 0U)
+    {
+        /* Do nothing */
+    }
+    /* Get the interrupt vector */
+    (void)HwiP_getIRQVecAddr();
+    /* Clear the interrupt flag of DUMMY IRQ */
+    HwiP_clearInt(HWIP_DUMMY_INTERRUPT_NUM);
+    /* Wait until it is actually been cleared */
+    while(HwiP_get(HWIP_DUMMY_INTERRUPT_NUM) != 0U)
+    {
+        /* Do nothing */
+    }
+    /* Acknowledge DUMMY IRQ */
+    HwiP_ackIRQ(HWIP_DUMMY_INTERRUPT_NUM);
+}
+#endif
+
 /* Following handlers are set directly in vector table, hence use interrupt attribute */
 #if defined (__ICCARM__)
 void TEXT_HWI HwiP_reserved_handler(void);
@@ -154,6 +211,12 @@ void TEXT_HWI HwiP_irq_handler_c(void)
 {
     int32_t status;
     uint32_t intNum, priority;
+
+    #if defined(SOC_AM273X)
+    /* call dummy interrupt nesting at the beginning of IRQ handler */
+    /* IRQs are already disabled by hardware when entering interrupt handler */
+    dummyIrqNest();
+    #endif
 
     #ifndef HWIP_VIM_VIC_ENABLE
 

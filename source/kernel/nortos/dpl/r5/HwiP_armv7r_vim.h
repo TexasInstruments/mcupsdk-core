@@ -59,6 +59,11 @@ extern "C"
 
 #define HwiP_MAX_PRIORITY       (16u)
 
+#if defined(SOC_AM273X)
+/* Dummy interrupt for back-to-back nested interrupt errata i2162 workaround (AM273x only) */
+#define HWIP_DUMMY_INTERRUPT_NUM    (76u)
+#endif
+
 #define VIM_BIT_POS(j)   ( (j) & 0x1Fu )
 #define VIM_IRQVEC       (0x18u)
 #define VIM_FIQVEC       (0x1Cu)

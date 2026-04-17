@@ -302,6 +302,14 @@ void HWI_SECTION HwiP_init(void)
      * This allows to reload the binary without power cycling the whole SOC
      */
     /* HwiP_enable(); */
+
+    #if defined(SOC_AM273X)
+    /* Back-2-back nesting issue (AM273x errata i2162 workaround) */
+    /* Set dummy interrupt to priority 0 */
+    HwiP_setPri(HWIP_DUMMY_INTERRUPT_NUM, 0x0);
+    /* Enable the dummy interrupt */
+    HwiP_enableInt(HWIP_DUMMY_INTERRUPT_NUM);
+    #endif
 }
 
 #ifdef __cplusplus
