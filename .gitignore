@@ -72,6 +72,7 @@ source/networking/netxduo/netxduo_src
 source/cmsis
 source/commercial
 source/usb/tinyusb/tinyusb-stack
+source/usb/usbx/usbx_src
 docs/industrial_protocol_docs
 mcusdk_tagfile
 __pycache__/

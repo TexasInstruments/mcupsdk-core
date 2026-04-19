@@ -66,7 +66,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
 
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_r5/gnu/inc/",

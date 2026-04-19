@@ -38,7 +38,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx",
-        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic/inc",
     ],
 };
 

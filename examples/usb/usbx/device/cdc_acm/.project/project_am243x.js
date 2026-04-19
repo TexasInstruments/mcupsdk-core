@@ -1,0 +1,145 @@
+let path = require('path');
+
+let device = "am243x";
+
+const files = {
+    common: [
+        "main.c",
+        "usbx_cdc_acm.c",
+        "usb_init_usbx.c",
+        "usb_descriptor.c"
+    ],
+};
+
+/* Relative to where the makefile will be generated
+ * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
+ */
+const filedirs = {
+    common: [
+        "..",       /* core_os_combo base */
+        "../../..", /* Example base */
+    ],
+};
+
+const libdirs = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/lib",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic",
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/core/inc",
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/usbx_device_classes/inc",
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/usbx_network/inc",
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/ports/generic",
+        "${MCU_PLUS_SDK_PATH}/source/usb/usbx/dcd/am243x",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/include",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/common/include",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/common/src",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/device/include",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/device/src",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/soc/am64x_am243x/",
+    ],
+};
+
+const libs = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "filex.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbd_cdn_threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const lnkfiles = {
+    common: [
+        "linker.cmd",
+    ]
+};
+
+const syscfgfile = "../example.syscfg";
+
+const readmeDoxygenPageTag = "EXAMPLES_ECLIPSE_THREADX_FILEX_HELLO_WORLD";
+
+const templates_gcc =
+[
+    {
+        input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "usbx_main",
+        },
+    }
+];
+
+const templates =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "usbx_main",
+        },
+    }
+];
+
+const buildOptionCombos = [
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
+];
+
+function getComponentProperty() {
+    let property = {};
+
+    property.dirPath = path.resolve(__dirname, "..");
+    property.type = "executable";
+    property.name = "usbx_cdc_acm";
+    property.isInternal = false;
+    property.tirexResourceSubClass = [ "example.gettingstarted" ];
+    property.description = "USBX CDC ACM device example"
+    property.buildOptionCombos = buildOptionCombos;
+
+    return property;
+}
+
+function getComponentBuildProperty(buildOption) {
+    let build_property = {};
+
+    build_property.files = files;
+    build_property.filedirs = filedirs;
+    build_property.libdirs = libdirs;
+    build_property.lnkfiles = lnkfiles;
+    build_property.syscfgfile = syscfgfile;
+    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+    build_property.includes = includes;
+    build_property.libdirs = libdirs;
+    build_property.templates = templates;
+    build_property.libs = libs;
+
+    return build_property;
+}
+
+module.exports = {
+    getComponentProperty,
+    getComponentBuildProperty,
+};

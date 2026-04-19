@@ -59,6 +59,8 @@ const component_file_list_threadx = [
     "source/fs/filex/.project/project.js",
     "source/kernel/threadx/.project/project.js",
     "source/networking/netxduo/.project/project.js",
+    "source/usb/usbx/.project/project.js",
+    "source/usb/cdn/.project/project_threadx.js",
 ];
 
 const device_defines = {
@@ -412,6 +414,8 @@ const example_file_list_threadx = [
     "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/.project/project.js",
     "source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/.project/project.js",
     "test/fs/filex/.project/project.js",
+    "examples/usb/usbx/device/cdc_acm/.project/project.js",
+    "examples/usb/usbx/device/mass_storage/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

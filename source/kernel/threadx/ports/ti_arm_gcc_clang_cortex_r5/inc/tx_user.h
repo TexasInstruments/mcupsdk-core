@@ -1,10 +1,11 @@
 /***************************************************************************
- * Copyright (c) 2024 Microsoft Corporation 
- * 
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026-present Eclipse ThreadX contributors
+ *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at
  * https://opensource.org/licenses/MIT.
- * 
+ *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
@@ -38,33 +39,6 @@
 /*    ThreadX library are built with TX_INCLUDE_USER_DEFINE_FILE defined. */
 /*    Note that all the defines in this file may also be made on the      */
 /*    command line when building ThreadX library and application objects. */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020      William E. Lamie        Initial Version 6.0           */
-/*  09-30-2020      Yuxin Zhou              Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*  03-02-2021      Scott Larson            Modified comment(s),          */
-/*                                            added option to remove      */
-/*                                            FileX pointer,              */
-/*                                            resulting in version 6.1.5  */
-/*  06-02-2021      Scott Larson            Added options for multiple    */
-/*                                            block pool search & delay,  */
-/*                                            resulting in version 6.1.7  */
-/*  10-15-2021      Yuxin Zhou              Modified comment(s), added    */
-/*                                            user-configurable symbol    */
-/*                                            TX_TIMER_TICKS_PER_SECOND   */
-/*                                            resulting in version 6.1.9  */
-/*  04-25-2022      Wenhui Xie              Modified comment(s),          */
-/*                                            optimized the definition of */
-/*                                            TX_TIMER_TICKS_PER_SECOND,  */
-/*                                            resulting in version 6.1.11 */
-/*  10-31-2023      Xiuwen Cai              Modified comment(s),          */
-/*                                            added option for random     */
-/*                                            number stack filling,       */
-/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -116,6 +90,11 @@
 #define TX_TIMER_THREAD_STACK_SIZE              ????
 #define TX_TIMER_THREAD_PRIORITY                ????
 */
+
+/* Define the maximum size of a message in the a queue. the Default value is TX_ULONG_16.
+   the new value must be a multiple of ULONG. */
+
+#define TX_QUEUE_MESSAGE_MAX_SIZE              (256UL)
 
 /* Define the common timer tick reference for use by other middleware components. The default
    value is 10ms (i.e. 100 ticks, defined in tx_api.h), but may be replaced by a port-specific
@@ -175,7 +154,7 @@
 
 /* Determine if random number is used for stack filling. By default, ThreadX uses a fixed
    pattern for stack filling. When the following is defined, ThreadX uses a random number
-   for stack filling. This is effective only when TX_ENABLE_STACK_CHECKING is defined.  */ 
+   for stack filling. This is effective only when TX_ENABLE_STACK_CHECKING is defined.  */
 
 /*
 #define TX_ENABLE_RANDOM_NUMBER_STACK_FILLING
@@ -243,6 +222,7 @@
 /*
 #define TX_ENABLE_EVENT_TRACE
 */
+
 
 /* Determine if block pool performance gathering is required by the application. When the following is
    defined, ThreadX gathers various block pool performance information. */

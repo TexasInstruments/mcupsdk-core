@@ -3014,26 +3014,38 @@ static uint32_t handleEp0IrqSetup(CUSBD_PrivateData* dev, uint32_t * ep_sts, CUS
  */
 static void handleEp0IrqIoc(CUSBD_PrivateData* dev, CUSBDMA_DmaChannel *channel) {
 
+  uint32_t not_done = 0u;
     (void) cusbdmaProcessDataXferInt(dev, channel);
 
     if (dev->request != NULL) {
         /* check if actual transfer is done */
         if (dev->request->actual >= dev->request->length) {
             vDbgMsg(USBSSP_DBG_CUSBD_ISR, DBG_FYI, "No more data to transfer on ep0%c\n", ' ');
+        } else {
+            not_done = 1u;
         }
         /* this gets sent even for short packet */
         dev->request->status = 0U;
         if (dev->request->complete != NULL) {
             dev->request->complete(&dev->ep0.ep, dev->request);
+        } else {
         }
-	    if (dev->request->deferStatusStage)  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
+
+
+	    if (dev->request->deferStatusStage) {  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
 		    return;
+	    }
     
     }
 
-    dev->ep0NextState = CH9_EP0_SETUP_PHASE;
-    CPS_UncachedWrite32(&dev->reg->USBR_EP_SEL, 0x00U);
-    CPS_UncachedWrite32(&dev->reg->USBR_EP_CMD, EP_CMD_REQ_CMPL | EP_CMD_ERDY);
+    if(not_done == 0u) {
+      dev->ep0NextState = CH9_EP0_SETUP_PHASE;
+      CPS_UncachedWrite32(&dev->reg->USBR_EP_SEL, 0x00U);
+      CPS_UncachedWrite32(&dev->reg->USBR_EP_CMD, EP_CMD_REQ_CMPL | EP_CMD_ERDY);
+    } else {
+        CPS_UncachedWrite32(&dev->reg->USBR_EP_SEL, 0x00U);
+        CPS_UncachedWrite32(&dev->reg->USBR_EP_CMD, EP_CMD_ERDY);
+    }
 }
 
 

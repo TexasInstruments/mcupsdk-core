@@ -567,6 +567,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_mac_am243x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am243x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am243x-lp_system_nortos_build
@@ -2369,6 +2373,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
 	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
 
+ usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
+ usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec all
+
  benchmark_demo_am243x-evm_system_nortos_build:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile_projectspec all
 
@@ -3053,6 +3069,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am243x-lp_system_nortos_clean
@@ -4855,6 +4875,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
 
+ usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
+ usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec clean
+
  benchmark_demo_am243x-evm_system_nortos_clean:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile_projectspec clean
 
@@ -5539,6 +5571,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_mac_am243x-evm_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_mac_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_switch_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am243x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am243x-lp_system_nortos_export
@@ -7341,6 +7377,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  enet_netxduo_icssg_switch_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
 	$(MAKE) -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
 
+ usbx_cdc_acm_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ usbx_cdc_acm_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/usbx/device/cdc_acm/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ usbx_mass_storage_am243x-evm_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
+ usbx_mass_storage_am243x-lp_r5fss0-0_threadx_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/usbx/device/mass_storage/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec export
+
  benchmark_demo_am243x-evm_system_nortos_export:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile_projectspec export
 
@@ -8066,6 +8114,10 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_mac/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/netxduo/enet_netxduo_icssg_switch/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/usbx/device/cdc_acm/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/usbx/device/cdc_acm/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/usbx/device/mass_storage/am243x-evm/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/usbx/device/mass_storage/am243x-lp/r5fss0-0_threadx/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

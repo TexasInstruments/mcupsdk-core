@@ -298,7 +298,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd \
@@ -308,7 +308,6 @@ DEFINES_common := \
     -DSOC_AM243X \
     -DLX_NAND_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1 \
     -DLX_NOR_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1 \
-    -DFX_ENABLE_FAULT_TOLERANT=1 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

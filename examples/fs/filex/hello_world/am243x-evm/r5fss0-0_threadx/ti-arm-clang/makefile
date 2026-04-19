@@ -61,7 +61,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx \
-	-I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc \
+	-I${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic \
 	-Igenerated \
 
 DEFINES_common := \
