@@ -303,7 +303,7 @@ const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
-        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
@@ -315,7 +315,6 @@ const defines = {
     common : [
         "LX_NAND_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1",
         "LX_NOR_ENABLE_CONTROL_BLOCK_FOR_DRIVER_INTERFACE=1",
-        "FX_ENABLE_FAULT_TOLERANT=1"
     ]
 };
 
@@ -329,7 +328,6 @@ const cflags = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: device, cpu: "r5f", cgt: "gcc-armv7"},
 ];
 
 function getComponentProperty() {

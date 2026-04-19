@@ -1,0 +1,579 @@
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_GCC_ARMV7_PATH)
+
+CC=$(CGT_GCC_ARMV7_PATH)/bin/arm-none-eabi-gcc
+AR=$(CGT_GCC_ARMV7_PATH)/bin/arm-none-eabi-gcc-ar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=usbx.am243x.r5f.gcc-armv7.$(PROFILE).lib
+
+FILES_common := \
+    ux_dcd_sim_slave_address_set.c \
+    ux_dcd_sim_slave_endpoint_create.c \
+    ux_dcd_sim_slave_endpoint_destroy.c \
+    ux_dcd_sim_slave_endpoint_reset.c \
+    ux_dcd_sim_slave_endpoint_stall.c \
+    ux_dcd_sim_slave_endpoint_status.c \
+    ux_dcd_sim_slave_frame_number_get.c \
+    ux_dcd_sim_slave_function.c \
+    ux_dcd_sim_slave_initialize.c \
+    ux_dcd_sim_slave_initialize_complete.c \
+    ux_dcd_sim_slave_state_change.c \
+    ux_dcd_sim_slave_transfer_abort.c \
+    ux_dcd_sim_slave_transfer_request.c \
+    ux_dcd_sim_slave_transfer_run.c \
+    ux_device_class_dpump_activate.c \
+    ux_device_class_dpump_change.c \
+    ux_device_class_dpump_deactivate.c \
+    ux_device_class_dpump_entry.c \
+    ux_device_class_dpump_initialize.c \
+    ux_device_class_dpump_read.c \
+    ux_device_class_dpump_read_run.c \
+    ux_device_class_dpump_thread.c \
+    ux_device_class_dpump_write.c \
+    ux_device_class_dpump_write_run.c \
+    ux_device_stack_alternate_setting_get.c \
+    ux_device_stack_alternate_setting_set.c \
+    ux_device_stack_class_register.c \
+    ux_device_stack_class_unregister.c \
+    ux_device_stack_clear_feature.c \
+    ux_device_stack_configuration_get.c \
+    ux_device_stack_configuration_set.c \
+    ux_device_stack_control_request_process.c \
+    ux_device_stack_descriptor_send.c \
+    ux_device_stack_disconnect.c \
+    ux_device_stack_endpoint_stall.c \
+    ux_device_stack_get_status.c \
+    ux_device_stack_host_wakeup.c \
+    ux_device_stack_initialize.c \
+    ux_device_stack_interface_delete.c \
+    ux_device_stack_interface_get.c \
+    ux_device_stack_interface_set.c \
+    ux_device_stack_interface_start.c \
+    ux_device_stack_microsoft_extension_register.c \
+    ux_device_stack_set_feature.c \
+    ux_device_stack_tasks_run.c \
+    ux_device_stack_transfer_abort.c \
+    ux_device_stack_transfer_all_request_abort.c \
+    ux_device_stack_transfer_request.c \
+    ux_device_stack_transfer_run.c \
+    ux_device_stack_uninitialize.c \
+    ux_hcd_sim_host_asynchronous_endpoint_create.c \
+    ux_hcd_sim_host_asynchronous_endpoint_destroy.c \
+    ux_hcd_sim_host_asynch_queue_process.c \
+    ux_hcd_sim_host_asynch_schedule.c \
+    ux_hcd_sim_host_controller_disable.c \
+    ux_hcd_sim_host_ed_obtain.c \
+    ux_hcd_sim_host_ed_td_clean.c \
+    ux_hcd_sim_host_endpoint_reset.c \
+    ux_hcd_sim_host_entry.c \
+    ux_hcd_sim_host_frame_number_get.c \
+    ux_hcd_sim_host_frame_number_set.c \
+    ux_hcd_sim_host_initialize.c \
+    ux_hcd_sim_host_interrupt_endpoint_create.c \
+    ux_hcd_sim_host_isochronous_endpoint_create.c \
+    ux_hcd_sim_host_isochronous_td_obtain.c \
+    ux_hcd_sim_host_iso_queue_process.c \
+    ux_hcd_sim_host_iso_schedule.c \
+    ux_hcd_sim_host_least_traffic_list_get.c \
+    ux_hcd_sim_host_periodic_endpoint_destroy.c \
+    ux_hcd_sim_host_periodic_schedule.c \
+    ux_hcd_sim_host_periodic_tree_create.c \
+    ux_hcd_sim_host_port_reset.c \
+    ux_hcd_sim_host_port_status_get.c \
+    ux_hcd_sim_host_regular_td_obtain.c \
+    ux_hcd_sim_host_request_bulk_transfer.c \
+    ux_hcd_sim_host_request_control_transfer.c \
+    ux_hcd_sim_host_request_interupt_transfer.c \
+    ux_hcd_sim_host_request_isochronous_transfer.c \
+    ux_hcd_sim_host_request_transfer.c \
+    ux_hcd_sim_host_timer_function.c \
+    ux_hcd_sim_host_transaction_schedule.c \
+    ux_hcd_sim_host_transfer_abort.c \
+    ux_hcd_sim_host_transfer_run.c \
+    ux_hcd_sim_host_uninitialize.c \
+    ux_host_class_dpump_activate.c \
+    ux_host_class_dpump_configure.c \
+    ux_host_class_dpump_deactivate.c \
+    ux_host_class_dpump_endpoints_get.c \
+    ux_host_class_dpump_entry.c \
+    ux_host_class_dpump_ioctl.c \
+    ux_host_class_dpump_read.c \
+    ux_host_class_dpump_write.c \
+    ux_host_stack_bandwidth_check.c \
+    ux_host_stack_bandwidth_claim.c \
+    ux_host_stack_bandwidth_release.c \
+    ux_host_stack_class_call.c \
+    ux_host_stack_class_device_scan.c \
+    ux_host_stack_class_get.c \
+    ux_host_stack_class_instance_create.c \
+    ux_host_stack_class_instance_destroy.c \
+    ux_host_stack_class_instance_get.c \
+    ux_host_stack_class_instance_verify.c \
+    ux_host_stack_class_interface_scan.c \
+    ux_host_stack_class_register.c \
+    ux_host_stack_class_unregister.c \
+    ux_host_stack_configuration_descriptor_parse.c \
+    ux_host_stack_configuration_enumerate.c \
+    ux_host_stack_configuration_instance_create.c \
+    ux_host_stack_configuration_instance_delete.c \
+    ux_host_stack_configuration_interface_get.c \
+    ux_host_stack_configuration_interface_scan.c \
+    ux_host_stack_configuration_set.c \
+    ux_host_stack_delay_ms.c \
+    ux_host_stack_device_address_set.c \
+    ux_host_stack_device_configuration_activate.c \
+    ux_host_stack_device_configuration_deactivate.c \
+    ux_host_stack_device_configuration_get.c \
+    ux_host_stack_device_configuration_reset.c \
+    ux_host_stack_device_configuration_select.c \
+    ux_host_stack_device_descriptor_read.c \
+    ux_host_stack_device_get.c \
+    ux_host_stack_device_remove.c \
+    ux_host_stack_device_resources_free.c \
+    ux_host_stack_device_string_get.c \
+    ux_host_stack_endpoint_instance_create.c \
+    ux_host_stack_endpoint_instance_delete.c \
+    ux_host_stack_endpoint_reset.c \
+    ux_host_stack_endpoint_transfer_abort.c \
+    ux_host_stack_enum_thread_entry.c \
+    ux_host_stack_hcd_register.c \
+    ux_host_stack_hcd_thread_entry.c \
+    ux_host_stack_hcd_transfer_request.c \
+    ux_host_stack_hcd_unregister.c \
+    ux_host_stack_hnp_polling_thread_entry.c \
+    ux_host_stack_initialize.c \
+    ux_host_stack_interfaces_scan.c \
+    ux_host_stack_interface_endpoint_get.c \
+    ux_host_stack_interface_instance_create.c \
+    ux_host_stack_interface_instance_delete.c \
+    ux_host_stack_interface_set.c \
+    ux_host_stack_interface_setting_select.c \
+    ux_host_stack_new_configuration_create.c \
+    ux_host_stack_new_device_create.c \
+    ux_host_stack_new_device_get.c \
+    ux_host_stack_new_endpoint_create.c \
+    ux_host_stack_new_interface_create.c \
+    ux_host_stack_rh_change_process.c \
+    ux_host_stack_rh_device_extraction.c \
+    ux_host_stack_rh_device_insertion.c \
+    ux_host_stack_role_swap.c \
+    ux_host_stack_tasks_run.c \
+    ux_host_stack_transfer_request.c \
+    ux_host_stack_transfer_request_abort.c \
+    ux_host_stack_transfer_run.c \
+    ux_host_stack_uninitialize.c \
+    ux_system_error_handler.c \
+    ux_system_initialize.c \
+    ux_system_tasks_run.c \
+    ux_system_uninitialize.c \
+    ux_trace_event_insert.c \
+    ux_trace_event_update.c \
+    ux_trace_object_register.c \
+    ux_trace_object_unregister.c \
+    ux_utility_debug_callback_register.c \
+    ux_utility_debug_log.c \
+    ux_utility_delay_ms.c \
+    ux_utility_descriptor_pack.c \
+    ux_utility_descriptor_parse.c \
+    ux_utility_error_callback_register.c \
+    ux_utility_event_flags_create.c \
+    ux_utility_event_flags_delete.c \
+    ux_utility_event_flags_get.c \
+    ux_utility_event_flags_set.c \
+    ux_utility_long_get.c \
+    ux_utility_long_get_big_endian.c \
+    ux_utility_long_put.c \
+    ux_utility_long_put_big_endian.c \
+    ux_utility_memory_allocate.c \
+    ux_utility_memory_allocate_add_safe.c \
+    ux_utility_memory_allocate_mulc_safe.c \
+    ux_utility_memory_allocate_mulv_safe.c \
+    ux_utility_memory_byte_pool_create.c \
+    ux_utility_memory_byte_pool_search.c \
+    ux_utility_memory_compare.c \
+    ux_utility_memory_copy.c \
+    ux_utility_memory_free.c \
+    ux_utility_memory_free_block_best_get.c \
+    ux_utility_memory_set.c \
+    ux_utility_mutex_create.c \
+    ux_utility_mutex_delete.c \
+    ux_utility_mutex_off.c \
+    ux_utility_mutex_on.c \
+    ux_utility_pci_class_scan.c \
+    ux_utility_pci_read.c \
+    ux_utility_pci_write.c \
+    ux_utility_physical_address.c \
+    ux_utility_semaphore_create.c \
+    ux_utility_semaphore_delete.c \
+    ux_utility_semaphore_get.c \
+    ux_utility_semaphore_put.c \
+    ux_utility_set_interrupt_handler.c \
+    ux_utility_short_get.c \
+    ux_utility_short_get_big_endian.c \
+    ux_utility_short_put.c \
+    ux_utility_short_put_big_endian.c \
+    ux_utility_string_length_check.c \
+    ux_utility_string_length_get.c \
+    ux_utility_string_to_unicode.c \
+    ux_utility_thread_create.c \
+    ux_utility_thread_delete.c \
+    ux_utility_thread_identify.c \
+    ux_utility_thread_relinquish.c \
+    ux_utility_thread_resume.c \
+    ux_utility_thread_schedule_other.c \
+    ux_utility_thread_sleep.c \
+    ux_utility_thread_suspend.c \
+    ux_utility_timer_create.c \
+    ux_utility_timer_delete.c \
+    ux_utility_unicode_to_string.c \
+    ux_utility_virtual_address.c \
+    ux_device_class_audio10_control_process.c \
+    ux_device_class_audio20_control_process.c \
+    ux_device_class_audio_activate.c \
+    ux_device_class_audio_change.c \
+    ux_device_class_audio_control_request.c \
+    ux_device_class_audio_deactivate.c \
+    ux_device_class_audio_entry.c \
+    ux_device_class_audio_feedback_get.c \
+    ux_device_class_audio_feedback_set.c \
+    ux_device_class_audio_feedback_task_function.c \
+    ux_device_class_audio_feedback_thread_entry.c \
+    ux_device_class_audio_frame_write.c \
+    ux_device_class_audio_initialize.c \
+    ux_device_class_audio_interrupt_send.c \
+    ux_device_class_audio_interrupt_task_function.c \
+    ux_device_class_audio_interrupt_thread_entry.c \
+    ux_device_class_audio_ioctl.c \
+    ux_device_class_audio_read_frame_free.c \
+    ux_device_class_audio_read_frame_get.c \
+    ux_device_class_audio_read_task_function.c \
+    ux_device_class_audio_read_thread_entry.c \
+    ux_device_class_audio_reception_start.c \
+    ux_device_class_audio_sample_read16.c \
+    ux_device_class_audio_sample_read24.c \
+    ux_device_class_audio_sample_read32.c \
+    ux_device_class_audio_sample_read8.c \
+    ux_device_class_audio_speed_get.c \
+    ux_device_class_audio_stream_get.c \
+    ux_device_class_audio_tasks_run.c \
+    ux_device_class_audio_transmission_start.c \
+    ux_device_class_audio_unitialize.c \
+    ux_device_class_audio_write_frame_commit.c \
+    ux_device_class_audio_write_frame_get.c \
+    ux_device_class_audio_write_task_function.c \
+    ux_device_class_audio_write_thread_entry.c \
+    ux_device_class_ccid_activate.c \
+    ux_device_class_ccid_auto_seq_done.c \
+    ux_device_class_ccid_auto_seq_start.c \
+    ux_device_class_ccid_control_abort.c \
+    ux_device_class_ccid_control_request.c \
+    ux_device_class_ccid_deactivate.c \
+    ux_device_class_ccid_entry.c \
+    ux_device_class_ccid_hardware_error.c \
+    ux_device_class_ccid_icc_insert.c \
+    ux_device_class_ccid_icc_remove.c \
+    ux_device_class_ccid_initialize.c \
+    ux_device_class_ccid_notify_task_run.c \
+    ux_device_class_ccid_notify_thread_entry.c \
+    ux_device_class_ccid_response.c \
+    ux_device_class_ccid_runner_task_run.c \
+    ux_device_class_ccid_runner_thread_entry.c \
+    ux_device_class_ccid_tasks_run.c \
+    ux_device_class_ccid_thread_entry.c \
+    ux_device_class_ccid_time_extension.c \
+    ux_device_class_ccid_uninitialize.c \
+    ux_device_class_cdc_acm_activate.c \
+    ux_device_class_cdc_acm_bulkin_thread.c \
+    ux_device_class_cdc_acm_bulkout_thread.c \
+    ux_device_class_cdc_acm_control_request.c \
+    ux_device_class_cdc_acm_deactivate.c \
+    ux_device_class_cdc_acm_entry.c \
+    ux_device_class_cdc_acm_initialize.c \
+    ux_device_class_cdc_acm_ioctl.c \
+    ux_device_class_cdc_acm_read.c \
+    ux_device_class_cdc_acm_read_run.c \
+    ux_device_class_cdc_acm_tasks_run.c \
+    ux_device_class_cdc_acm_unitialize.c \
+    ux_device_class_cdc_acm_write.c \
+    ux_device_class_cdc_acm_write_run.c \
+    ux_device_class_cdc_acm_write_with_callback.c \
+    ux_device_class_cdc_ecm_activate.c \
+    ux_device_class_cdc_ecm_bulkin_thread.c \
+    ux_device_class_cdc_ecm_bulkout_thread.c \
+    ux_device_class_cdc_ecm_change.c \
+    ux_device_class_cdc_ecm_control_request.c \
+    ux_device_class_cdc_ecm_deactivate.c \
+    ux_device_class_cdc_ecm_entry.c \
+    ux_device_class_cdc_ecm_initialize.c \
+    ux_device_class_cdc_ecm_interrupt_thread.c \
+    ux_device_class_cdc_ecm_uninitialize.c \
+    ux_device_class_cdc_ecm_write.c \
+    ux_device_class_dfu_activate.c \
+    ux_device_class_dfu_control_request.c \
+    ux_device_class_dfu_deactivate.c \
+    ux_device_class_dfu_entry.c \
+    ux_device_class_dfu_initialize.c \
+    ux_device_class_dfu_state_get.c \
+    ux_device_class_dfu_state_sync.c \
+    ux_device_class_dfu_tasks_run.c \
+    ux_device_class_dfu_thread.c \
+    ux_device_class_dfu_uninitialize.c \
+    ux_device_class_hid_activate.c \
+    ux_device_class_hid_control_request.c \
+    ux_device_class_hid_deactivate.c \
+    ux_device_class_hid_descriptor_send.c \
+    ux_device_class_hid_entry.c \
+    ux_device_class_hid_event_get.c \
+    ux_device_class_hid_event_set.c \
+    ux_device_class_hid_initialize.c \
+    ux_device_class_hid_interrupt_thread.c \
+    ux_device_class_hid_read.c \
+    ux_device_class_hid_read_run.c \
+    ux_device_class_hid_receiver_event_free.c \
+    ux_device_class_hid_receiver_event_get.c \
+    ux_device_class_hid_receiver_initialize.c \
+    ux_device_class_hid_receiver_tasks_run.c \
+    ux_device_class_hid_receiver_thread.c \
+    ux_device_class_hid_receiver_uninitialize.c \
+    ux_device_class_hid_report_get.c \
+    ux_device_class_hid_report_set.c \
+    ux_device_class_hid_tasks_run.c \
+    ux_device_class_hid_uninitialize.c \
+    ux_device_class_pima_activate.c \
+    ux_device_class_pima_control_request.c \
+    ux_device_class_pima_data.c \
+    ux_device_class_pima_deactivate.c \
+    ux_device_class_pima_device_info_send.c \
+    ux_device_class_pima_device_prop_desc_get.c \
+    ux_device_class_pima_device_prop_value_get.c \
+    ux_device_class_pima_device_prop_value_set.c \
+    ux_device_class_pima_device_reset.c \
+    ux_device_class_pima_entry.c \
+    ux_device_class_pima_event_get.c \
+    ux_device_class_pima_event_set.c \
+    ux_device_class_pima_initialize.c \
+    ux_device_class_pima_interrupt_thread.c \
+    ux_device_class_pima_objects_number_send.c \
+    ux_device_class_pima_object_add.c \
+    ux_device_class_pima_object_data_get.c \
+    ux_device_class_pima_object_data_send.c \
+    ux_device_class_pima_object_delete.c \
+    ux_device_class_pima_object_handles_send.c \
+    ux_device_class_pima_object_info_get.c \
+    ux_device_class_pima_object_info_send.c \
+    ux_device_class_pima_object_props_supported_get.c \
+    ux_device_class_pima_object_prop_desc_get.c \
+    ux_device_class_pima_object_prop_value_get.c \
+    ux_device_class_pima_object_prop_value_set.c \
+    ux_device_class_pima_object_references_get.c \
+    ux_device_class_pima_object_references_set.c \
+    ux_device_class_pima_partial_object_data_get.c \
+    ux_device_class_pima_response_send.c \
+    ux_device_class_pima_storage_format.c \
+    ux_device_class_pima_storage_id_send.c \
+    ux_device_class_pima_storage_info_get.c \
+    ux_device_class_pima_thread.c \
+    ux_device_class_pima_uninitialize.c \
+    ux_device_class_printer_activate.c \
+    ux_device_class_printer_control_request.c \
+    ux_device_class_printer_deactivate.c \
+    ux_device_class_printer_entry.c \
+    ux_device_class_printer_initialize.c \
+    ux_device_class_printer_ioctl.c \
+    ux_device_class_printer_read.c \
+    ux_device_class_printer_read_run.c \
+    ux_device_class_printer_soft_reset.c \
+    ux_device_class_printer_uninitialize.c \
+    ux_device_class_printer_write.c \
+    ux_device_class_printer_write_run.c \
+    ux_device_class_rndis_activate.c \
+    ux_device_class_rndis_bulkin_thread.c \
+    ux_device_class_rndis_bulkout_thread.c \
+    ux_device_class_rndis_control_request.c \
+    ux_device_class_rndis_deactivate.c \
+    ux_device_class_rndis_entry.c \
+    ux_device_class_rndis_initialize.c \
+    ux_device_class_rndis_interrupt_thread.c \
+    ux_device_class_rndis_msg_initialize.c \
+    ux_device_class_rndis_msg_keep_alive.c \
+    ux_device_class_rndis_msg_query.c \
+    ux_device_class_rndis_msg_reset.c \
+    ux_device_class_rndis_msg_set.c \
+    ux_device_class_rndis_uninitialize.c \
+    ux_device_class_rndis_write.c \
+    ux_device_class_storage_activate.c \
+    ux_device_class_storage_control_request.c \
+    ux_device_class_storage_csw_send.c \
+    ux_device_class_storage_deactivate.c \
+    ux_device_class_storage_entry.c \
+    ux_device_class_storage_format.c \
+    ux_device_class_storage_get_configuration.c \
+    ux_device_class_storage_get_performance.c \
+    ux_device_class_storage_get_status_notification.c \
+    ux_device_class_storage_initialize.c \
+    ux_device_class_storage_inquiry.c \
+    ux_device_class_storage_mode_select.c \
+    ux_device_class_storage_mode_sense.c \
+    ux_device_class_storage_prevent_allow_media_removal.c \
+    ux_device_class_storage_read.c \
+    ux_device_class_storage_read_capacity.c \
+    ux_device_class_storage_read_disk_information.c \
+    ux_device_class_storage_read_dvd_structure.c \
+    ux_device_class_storage_read_format_capacity.c \
+    ux_device_class_storage_read_toc.c \
+    ux_device_class_storage_report_key.c \
+    ux_device_class_storage_request_sense.c \
+    ux_device_class_storage_start_stop.c \
+    ux_device_class_storage_synchronize_cache.c \
+    ux_device_class_storage_tasks_run.c \
+    ux_device_class_storage_test_ready.c \
+    ux_device_class_storage_thread.c \
+    ux_device_class_storage_uninitialize.c \
+    ux_device_class_storage_verify.c \
+    ux_device_class_storage_write.c \
+    ux_device_class_video_activate.c \
+    ux_device_class_video_change.c \
+    ux_device_class_video_control_request.c \
+    ux_device_class_video_deactivate.c \
+    ux_device_class_video_entry.c \
+    ux_device_class_video_initialize.c \
+    ux_device_class_video_ioctl.c \
+    ux_device_class_video_max_payload_get.c \
+    ux_device_class_video_read_payload_free.c \
+    ux_device_class_video_read_payload_get.c \
+    ux_device_class_video_read_task_function.c \
+    ux_device_class_video_read_thread_entry.c \
+    ux_device_class_video_reception_start.c \
+    ux_device_class_video_stream_get.c \
+    ux_device_class_video_tasks_run.c \
+    ux_device_class_video_transmission_start.c \
+    ux_device_class_video_uninitialize.c \
+    ux_device_class_video_write_payload_commit.c \
+    ux_device_class_video_write_payload_get.c \
+    ux_device_class_video_write_task_function.c \
+    ux_device_class_video_write_thread_entry.c \
+    ux_dcd_am243x.c \
+    usb_wrapper_usbx.c \
+
+ASMFILES_common := \
+
+FILES_PATH_common = \
+    ${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/core/src \
+    ${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/usbx_device_classes/src \
+    ${MCU_PLUS_SDK_PATH}/source/usb/usbx/dcd/am243x \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/arm-none-eabi/include \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/core/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/usbx_device_classes/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/usbx/usbx_src/common/usbx_network/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/usbx/ports/generic \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_r5/gnu/inc/ \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/usbx/dcd/am243x \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/include \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/common/include \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/common/src \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/device/include \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/device/src \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/core_driver/ \
+    -I${MCU_PLUS_SDK_PATH}/source/usb/cdn/soc/am64x_am243x/ \
+
+DEFINES_common := \
+    -DSOC_AM243X \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -Wall \
+    -Werror \
+    -mthumb \
+    -g \
+    -Wno-unused-function \
+    -Wno-enum-compare \
+    -Wno-uninitialized \
+    -Wno-address-of-packed-member \
+    -Wno-int-to-pointer-cast \
+    -Wno-stringop-truncation \
+    -fgnu89-inline \
+    -Wno-pointer-to-int-cast \
+    -Wno-unused-variable \
+    -Wno-unused-but-set-variable \
+    -fdata-sections \
+    -ffunction-sections \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -O2 \
+
+ARFLAGS_common := \
+    cr \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am243x/gcc-armv7/$(PROFILE)/r5f/usbx/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(file > $(LIBDIR)/file_list, $(addprefix $(OBJDIR), $(OBJS)))
+	$(AR) $(ARFLAGS) $@ @$(LIBDIR)/file_list
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

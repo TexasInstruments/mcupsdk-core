@@ -298,7 +298,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd \

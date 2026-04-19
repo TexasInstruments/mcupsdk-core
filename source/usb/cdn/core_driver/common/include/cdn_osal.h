@@ -42,6 +42,7 @@
 #define OPT_OS_PICO       5  ///< Raspberry Pi Pico SDK
 #define OPT_OS_RTTHREAD   6  ///< RT-Thread
 #define OPT_OS_RTX4       7  ///< Keil RTX 4
+#define OPT_OS_THREADX    8  ///< Eclipse ThreadX
 
 /* Return immediately*/
 #define OSAL_TIMEOUT_NOTIMEOUT     (0)
@@ -58,6 +59,8 @@ typedef void (*osal_task_func_t)( void * );
   #include "cdn_osal_none.h"
 #elif CFG_TUSB_OS == OPT_OS_FREERTOS
   #include "cdn_osal_freertos.h"
+#elif CFG_TUSB_OS == OPT_OS_THREADX
+  #include "cdn_osal_threadx.h"
 #elif CFG_TUSB_OS == OPT_OS_MYNEWT
   #include "osal_mynewt.h"
 #elif CFG_TUSB_OS == OPT_OS_PICO

@@ -190,7 +190,7 @@ all: $(LIBDIR)/$(LIBNAME)
 $(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
 	@echo  .
 	@echo  Archiving: $(LIBNAME) to $@ ...
-% if (args.project.name == "netxduo") {
+% if ((args.project.name == "netxduo") || (args.project.name == "usbx")) {
 	$(file > $(LIBDIR)/file_list, $(addprefix $(OBJDIR), $(OBJS)))
 	$(AR) $(ARFLAGS) $@ @$(LIBDIR)/file_list
 % } else {

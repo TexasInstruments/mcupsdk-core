@@ -36,7 +36,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/levelx_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_mmcsd",
         "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_levelx",
-        "${MCU_PLUS_SDK_PATH}/source/fs/filex/filex_src/ports/generic/inc",
+        "${MCU_PLUS_SDK_PATH}/source/fs/filex/ports/generic",
 
     ],
 };
@@ -97,9 +97,7 @@ const templates =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am243x-evm", os: "threadx"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am243x-lp", os: "threadx"}
 ];
 
 function getComponentProperty() {

@@ -162,12 +162,12 @@ uint32_t ClockP_isActive(ClockP_Object *handle)
 
 void ClockP_Params_init(ClockP_Params *params)
 {
-	params->start = 0;
+    params->start = 0;
     params->timeout = 0;
     params->period = 0;
     params->callback = NULL;
     params->args = NULL;
-	params->name = "Clock (DPL)";
+    params->name = "Clock (DPL)";
 
 }
 
