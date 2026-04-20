@@ -48,6 +48,8 @@ const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.h
 
 extern HsmClient_t gHSMClient ;
 
+extern uint32_t gMcuLbistTestStatus;
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -71,7 +73,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 
 int main(void)
 {
-    int32_t status;
+    int32_t status = SystemP_SUCCESS;
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
@@ -86,16 +88,35 @@ int main(void)
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
-    
-    /* 
-        Request the HSM ROM to load the HSMRT image onto itself. 
-    */
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+    if(gMcuLbistTestStatus == 0U)
+    {
+        /*
+            Request the HSM ROM to load the HSMRT image onto itself.
+        */
+        Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+        Bootloader_socInitL2MailBoxMemory();
+        Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+        status = Keyring_init(&gHSMClient);
+        DebugP_assert(status == SystemP_SUCCESS);
+    }
+
+    if(gMcuLbistTestStatus == 1U)
+    {
+        gMcuLbistTestStatus = 0U;
+    }
+    else
+    {
+        gMcuLbistTestStatus = 1U;
+    }
+    /* Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over.*/
+    SDL_lbist_selftest();
+
+    if(gMcuLbistTestStatus == 0U)
+    {
+        DebugP_log("STC Test Complete ... \r\n");
+    }
 
     DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 

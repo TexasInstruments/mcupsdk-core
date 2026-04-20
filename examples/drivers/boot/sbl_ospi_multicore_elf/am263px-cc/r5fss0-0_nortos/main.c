@@ -51,6 +51,8 @@ extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
 
 extern HsmClient_t gHSMClient;
 
+extern uint32_t gMcuLbistTestStatus;
+
 /**
  * @brief Reset that flash to start from known default state.
  * 
@@ -93,7 +95,7 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 
 int main(void)
 {
-    int32_t status;
+    int32_t status = SystemP_SUCCESS;
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
     Bootloader_socSetAutoClock();
@@ -103,20 +105,39 @@ int main(void)
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
     
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    if(gMcuLbistTestStatus == 0U)
+    {
+        Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+        Bootloader_socInitL2MailBoxMemory();
+        Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+        status = Keyring_init(&gHSMClient);
+        DebugP_assert(status == SystemP_SUCCESS);
 
-    /* ROM doesn't reset the OSPI flash. This can make the flash initialization
-    troublesome because sequences are very different in Octal DDR mode. So for a
-    moment switch OSPI controller to 8D mode and do a flash reset. */
-    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
-    status = Board_driversOpen();
-    DebugP_assert(status == SystemP_SUCCESS); 
-    Bootloader_profileAddProfilePoint("Board_driversOpen");
+        /* ROM doesn't reset the OSPI flash. This can make the flash initialization
+        troublesome because sequences are very different in Octal DDR mode. So for a
+        moment switch OSPI controller to 8D mode and do a flash reset. */
+        flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
+        status = Board_driversOpen();
+        DebugP_assert(status == SystemP_SUCCESS);
+        Bootloader_profileAddProfilePoint("Board_driversOpen");
+    }
+
+    if(gMcuLbistTestStatus == 1U)
+    {
+        gMcuLbistTestStatus = 0U;
+    }
+    else
+    {
+        gMcuLbistTestStatus = 1U;
+    }
+    /* Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over.*/
+    SDL_lbist_selftest();
+
+    if(gMcuLbistTestStatus == 0U)
+    {
+        DebugP_log("STC Test Complete ... \r\n");
+    }
 
     DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
 
