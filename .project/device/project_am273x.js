@@ -46,6 +46,7 @@ const example_file_list = [
     "examples/drivers/crc/crc_16bit/.project/project.js",
     "examples/drivers/csirx/csirx_internal_capture/.project/project.js",
     "examples/drivers/dsplib/add32/.project/project.js",
+    "examples/drivers/dsp_load_test/.project/project.js",
     "examples/drivers/ecap/ecap_epwm_loopback/.project/project.js",
     "examples/drivers/ecap/ecap_epwm_loopback_dsp/.project/project.js",
     "examples/drivers/edma/edma_chain_transfer/.project/project.js",

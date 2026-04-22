@@ -562,6 +562,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A DSP load test example that runs DSP_fft32x32 in a tight loop to achieve >90% C66x CPU load. CPU load is reported periodically via TaskP_loadGetTotalCpuLoad. CPU is C66SS0 running FREERTOS.",
+        "name": "dsp_load_test",
+        "location": "../../examples/drivers/dsp_load_test/am273x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "dsp_load_test",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_epwm_loopback",
         "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
