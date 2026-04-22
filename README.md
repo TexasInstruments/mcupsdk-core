@@ -64,8 +64,7 @@ that need to be cloned and are listed below:
 - [TIFS-Common](https://github.com/TexasInstruments/tifs-mcu-common)
 - [Multi-Core ELF](https://github.com/TexasInstruments/multicore-elf)
 
-We use the [repo tool](https://gerrit.googlesource.com/git-repo) to clone and manage
-multiple repositories. To setup the repo tool, navigate to [repo tool setup](#repo-tool-setup) section.
+We use [West tool](https://docs.zephyrproject.org/latest/develop/west/index.html) and [repo tool](https://gerrit.googlesource.com/git-repo) to clone and manage multiple repositories.
 
 Prebuilt SDK installers  for specific devices are available at below links. Please note that installers are packaged specific to each device to reduce size.
 
@@ -103,7 +102,7 @@ Note that these are the versions on which SDK has been validated. Higher version
 
 ### Clone and build from GIT
 
-### West tool Setup
+#### West tool Setup
 
 MCU+ SDK has multiple components (in multiple repositories) and dependencies (like compiler, CCS and other tools). 
 We utilize [West tool](https://docs.zephyrproject.org/latest/develop/west/index.html) from the Zephyr project to manage these multiple repositories. 
@@ -111,6 +110,7 @@ West serves as an alternative to Google's repo tool. We are transitioning to Wes
 For those using West to clone the repository, the repo tool setup is unnecessary. Follow the steps below to set up the West tool:
 
 Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Download) and is in your OS path.
+Recommended to use west v1.5.0 or above
 
 Do the following in terminal
 - Linux:
@@ -134,6 +134,12 @@ To clone the repositories using West tool, do below in your workarea folder:
  For example, {device}/dev.yml. We are providing the link for cloning dependent repositories for 
  all devices in the /dev.yml file below.
 
+For AM64X, AM243X and AM273X 
+```bash
+west init -m https://github.com/TexasInstruments/mcupsdk-manifests.git --mr main --mf all/dev.yml
+```
+
+For other devices
 ```bash
 west init -m https://github.com/TexasInstruments/mcupsdk-manifests.git --mr mcupsdk_west --mf all/dev.yml
 ```
@@ -145,7 +151,7 @@ west update
 
 This should clone all the repositories required for MCU+ SDK development. Now proceed to [Download and Install dependencies](#downloading-and-installing-dependencies) section
 
-#### Repo Tool Setup (Deprecated in the next release)
+#### Repo Tool Setup
 
 MCU+ SDK has multiple components (in multiple repositories) and dependencies
 (like compiler, CCS and other tools). We use repo tool from Google to manage these
@@ -173,13 +179,14 @@ Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Dow
   source ~/.bashrc
   ```
 
-#### Cloning The Repositories - Repo (Deprecated in the next release)
-
+#### Cloning The Repositories - Repo
 To clone the repositories using repo tool, do below in your workarea folder:
 
 Note that depending on the SoC you're working with, the components you clone might be
 slightly different. So please choose the manifest folder according to the SoC of your
 interest. For example, we are showing for am263x below.
+
+`Note`: Repo tool is not supported for AM64X, AM243X and AM273X devices.
 
 ```bash
 repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m am263x/dev.xml -b main
