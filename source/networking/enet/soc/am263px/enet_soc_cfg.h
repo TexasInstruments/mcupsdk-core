@@ -152,6 +152,11 @@ extern "C" {
 /*! \brief Number of CPSW ESTFn modules */
 #define ENET_CFG_CPSW_ESTF_NUM                      (CPSW_STATS_MACPORT_MAX)
 
+/*! \brief Number of CPSW GENn modules */
+#define ENET_CFG_CPSW_GENF_NUM                      (2U)
+
+/*! \brief Number of CPSW Hardware push events */
+#define ENET_CFG_CPSW_HWPUSH_NUM                    (8U)
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */

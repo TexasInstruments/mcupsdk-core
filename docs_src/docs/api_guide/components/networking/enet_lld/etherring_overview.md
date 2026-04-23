@@ -69,14 +69,23 @@ Ether-Ring functionality is achieved using hardware configuration with assistanc
 <div style="display: flex; align-items: center;">
     <div style="flex: 1; text-align: left; max-width: 65%;">
         <ul>
-            <li><strong>Custom Header Data</strong>: Ethernet packets contain custom header data to facilitate duplicate rejection.</li>
-            <li><strong>Look-up Table</strong>: The look-up table stores key with tuples of {Source Mac Address ,Sequence Number} and Entries denoting the count of packet received.</li>
-            <li><strong>Duplicate Rejection</strong>: Duplicate packets are rejected using look-up table Entries.</li>
-            <li><strong>Periodic Look-up table clearance</strong>: Look-up table entries are periodically cleared to receive original Ethernet packets in case of single point wire failure.</li>
+            <li><strong>Packet Detection Flow</strong>: SequenceID-based duplicate detection using per-node state tracking. Each node maintains last accepted sequence number and 64-bit history bitmap.</li>
+            <li><strong>Per-node State</strong>: Tracks recSeqNum (last accepted sequence), seqHistory (64-bit bitmap), and initialization flag for each data stream identified by MAC address.</li>
+            <li><strong>Five Detection Cases</strong>:
+                <ol>
+                    <li>In-Order/Future Packet (seqDiff > 0) - Accept and shift window forward</li>
+                    <li>Out-of-Order Within Window (seqDiff < 0) - Check bitmap for prior receipt</li>
+                    <li>Too Old/Beyond Window - Reject as stale duplicate</li>
+                    <li>Exact Duplicate (seqDiff = 0) - Reject immediate duplicate</li>
+                    <li>Large Forward Gap - Reject as potential desynchronization</li>
+                </ol>
+            </li>
+            <li><strong>Wraparound Handling</strong>: 8-bit sequence numbers wrap at 256 with signed arithmetic boundary adjustment.</li>
+            <li><strong>Statistics Tracking</strong>: Maintains counts for original packets, duplicates rejected, and out-of-order packets accepted.</li>
         </ul>
     </div>
     <div style="flex: 1; text-align: right; max-width: 75%;">
-        <img src="etherring_duplicate_rejection.png" alt="CAN to Ethernet" style="width: 90%;">
+        <img src="etherring_pkt_detection_flow.png" alt="Packet Detection Flow" style="width: 110%;">
     </div>
 </div>
 

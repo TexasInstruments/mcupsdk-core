@@ -5,17 +5,15 @@
 # Introduction
 This example application illustrates the configuration and usage of Ether-Ring topology with 4 nodes connected in loop where each node works as central compute, zone left,
 zone right and zone tail.
-The example application enables both MAC ports by default and each node is connected to it's neighbouring node in a loop. This application uses Concurrence execution of gPTP IEEE 802.1AS stack and IEEE 802.1 Qbv (EST) configuration and Ether-ring (‘802.1CB-like’) to support Packet Duplication, Ring Termination in Hardware and Duplicate Rejection in Software.
+The example application enables both MAC ports by default and each node is connected to it's neighbouring node in a loop. This application uses Concurrence execution of gPTP IEEE 802.1AS stack and IEEE 802.1 Qbv (EST) configuration and Ether-ring to support Packet Duplication, Ring Termination in Hardware and Duplicate Rejection in Software.
 
 The example application opens two DMA TX channels and two DMA RX channels.  The TX0 and RX0 DMA channel will be used by the application to send the Class-A and Class-D stream packets via Ether-Ring Driver. The TX0 and RX0 DMA channel will be used for GPTP.
 
 The application will also open the both MAC port and will wait until the port gets
 link up with neighbouring node. The application waits for GPTP synchronization to happen and then applies the EST Schedule on both MAC ports. 
-
 The application uses \ref ENET_MOD_TAS API for EST configuration ,\ref ENET_CPSW_TSN_GPTP for gPTP and \ref ENET_DMA_API
-API for packet transmission.
 
-\note This application only provides the Etherring Functionality. But the Performance will be acheived in further releases.
+API for packet transmission.
 
 # Ether-Ring overview
 Please refer **[here](\ref ETHERRING_OVERVIEW)** for Ether-Ring overview
@@ -26,7 +24,7 @@ Typically, the application's parameters that a developer may want to change are:
 
 - **Number of Nodes**.  By default the example application configures the etherring for 4 Nodes,
 but the user can choose to update the number of nodes in etherring using
-  `MAX_NODES_IN_LOOP = 4` in `config.h`.
+  `NODES_COUNT_IN_ETHERRING = 4` in `config.h`.
 - **Number of Class A Streams**.  By default the number of Class A Streams are configured as 1 for each Node.
 User can update the configuration bye changes `NUM_CLASSA_STREAMS` in `config.h`.
 - **Class A Payload Length**.  Class A payload length is configured as 1000 be default and user can update
@@ -42,7 +40,7 @@ User can update the configuration bye changes `NUM_CLASSA_STREAMS` in `config.h`
 
 The Application creates Class-A, Class-D stream RTOS tasks which creates the 802.1Q Ethernet Multicast packet with 
 stream configuration and calls "EtherRing_submitTxPktQ" API from Ether-Ring Driver. "EtherRing_submitTxPktQ" creates a custom 
-802.1 CB-like header(4 bytes) which consists of CB-like Ethertype(0xF1C1), unique sequence ID for each Ethernet packet and adds the CB-like Header to the packet sent from application without modifying the payload using zero-copy (using Transmit Scatter-Gather feature of HW). The packet is submitted to DMA and CPSW duplicates the multicast packet and sent it to both MAC ports.
+Custom header(4 bytes) which consists of CB-like Ethertype(0x88B5), unique sequence ID for each Ethernet packet and adds the custom Header to the packet sent from application without modifying the payload using zero-copy (using Transmit Scatter-Gather feature of HW). The packet is submitted to DMA and CPSW duplicates the multicast packet and sent it to both MAC ports.
 
   \image html etherring_tx.png Ether-Ring Transmit Flow  width=60%
 
@@ -90,6 +88,77 @@ hostPortCfg->rxVlanRemapEn     = true;
 hostPortCfg->rxDscpIPv4RemapEn = true;
 hostPortCfg->rxDscpIPv6RemapEn = true;
 \endcode
+
+## Application Startup Flow - EST, GENF, and Traffic Generation
+
+The application follows a coordinated startup sequence using GPTP synchronization, EST scheduling, and hardware pulse generation:
+
+### Phase 1: Initialization & GPTP Synchronization
+All nodes initialize networking stack and wait for GPTP (802.1AS) clock synchronization:
+- GPTP daemon exchanges timing messages across ring topology
+- Nodes transition through states: INITIALIZING → SYNCING → LOCKED
+- Once synchronized, all nodes share common wall-clock time reference
+
+### Phase 2: EST Gate Scheduling (gBaseTime Reference)
+After GPTP reaches LOCKED state, the EST schedule is applied:
+- EST gate control lists applied on both CPSW MAC ports
+- Gates scheduled starting at `gBaseTime` (default: 30,000,000,000 ns = 30 seconds)
+- Gate windows define when each priority queue (Class A, Class D, Best Effort) can transmit
+- All nodes' gates open/close at same wall-clock time due to GPTP synchronization
+- See EST schedule table above for gate mask timing (125μs intervals)
+
+### Phase 3: GENF0 Enable (Immediate)
+- GENF0 (General Function 0) configured for 50MHz reference pulse (4 clocks = 80ns)
+- Starts immediately after EST configuration
+- Provides general timing reference used by EST for gate transition synchronization
+
+### Phase 4: GENF1 Enable (gBaseTime - 20μs)
+- GENF1 (General Function 1) configured for 125μs pulse interval (25000*2 clocks)
+- **Starts 20 microseconds BEFORE gBaseTime** to pre-trigger traffic generation
+- **Reason**: Allows packet preparation and transmission to complete before EST gate closes
+- Ensures packets meet scheduled transmission deadline and gate window efficiency
+- Generates periodic pulses that trigger stream task wake-ups
+
+### Phase 5: RTI Timer & Periodic Traffic Generation
+- Real-Time Interrupt (RTI) timer created with GENF1 pulse as clock source
+- GENF1 interrupt fires every 125μs → wakes stream generation tasks
+- Stream tasks for each enabled stream:
+  - Allocate packets from free queue
+  - Fill packet with StreamId (sequence number at offset 30 bytes) + payload
+  - Submit to CPSW TX queue (respects EST gate status)
+  - **Class A streams**: up to 1000 packets per test cycle
+  - **Class D streams**: up to 125 packets per test cycle (lower priority, reduced load)
+
+### Phase 6: RX Processing & EtherRing Duplicate Detection
+- RX task collects arriving packets from network
+- EtherRing module performs sequence-based duplicate detection:
+  - Tracks StreamId (sequence number) in 64-packet sliding window per stream
+  - **Rejects exact duplicates** from ring redundancy artifacts
+  - **Accepts out-of-order packets** within history window
+- RX timestamps stored for jitter and latency analysis
+- Final output prints RX/TX packet counts and latency statistics
+
+### Application Startup Sequence
+
+<CENTER>
+<table>
+<caption>Startup Phase Timeline</caption>
+<tr><th>Phase <th>Timing <th>Event Description
+<tr><td>1 <td>t=0 <td>GPTP Synchronization begins
+<tr><td>1 <td>t=~3s <td>GPTP reaches LOCKED state (all nodes synchronized)
+<tr><td>2 <td>t=~5s <td>EST gate control lists applied to both MAC ports
+<tr><td>2 <td>t=~5s <td>EST schedule reference set to gBaseTime (30,000,000,000 ns)
+<tr><td>3 <td>t=~5s <td>GENF0 enabled (50MHz, immediate operation)
+<tr><td>4 <td>t=(gBaseTime - 20μs) <td>GENF1 enabled (125μs pulse interval begins)
+<tr><td>4 <td>t=(gBaseTime - 20μs) <td>RTI Timer created with GENF1 as clock source
+<tr><td>5 <td>t=(gBaseTime - 20μs) <td>Stream TX tasks begin execution
+<tr><td>5 <td>t=gBaseTime <td>EST gates OPEN for Class A and Class D queues
+<tr><td>5 <td>t=gBaseTime + 20μs <td>Packets transmitted within EST gate window
+<tr><td>5 <td>t=(gBaseTime + interval) <td>EST gates CLOSE, packets complete transmission
+<tr><td>6 <td>Continuous <td>RX task receives packets and performs EtherRing deduplication
+<tr><td>6 <td>Continuous <td>Timestamps logged for latency and jitter analysis
+</table>
+</CENTER>
 
 ## RX Host Time stamping
 RX Host time stamping is enabled from syscfg to measure the jitter in latency for the Received packets and 
@@ -366,6 +435,8 @@ INF:cbase:Successfully configure TAS
 WRN:gptp:000018-746101:md_pdelay_resp_sm_recv_req: port=2, expected SeqID=10723, but received=10724
 Starting the Stream Traffic
 RxTs and CurrentTs values stored
+
+----------ETHERRING DEMONSTRATION COMPLETED----------
 [RXTS]: 29954385101
 [RXTS]: 29954510117
 [RXTS]: 29954635123
@@ -381,18 +452,22 @@ RxTs and CurrentTs values stored
 [RXTS]: 29955885143
 [RXTS]: 29956010069
 [RXTS]: 29956135075
-[RXTS]: 29956260086
-[RXTS]: 29956385097
-[RXTS]: 29956510113
-[RXTS]: 29956635119
-[RXTS]: 29956760130
-[RXTS]: 29956885126
-[RXTS]: 29957010072
-[RXTS]: 29957135078
-
-
-
-----------ETHERRING DEMONSTRATION COMPLETED----------
+[LAT]: 31248385523
+[LAT]: 31248509968
+[LAT]: 31248635684
+[LAT]: 31248760014
+[LAT]: 31248885115
+[LAT]: 31249010280
+[LAT]: 31249185376
+[LAT]: 31249260041
+[LAT]: 31249385041
+[LAT]: 31249510402
+[LAT]: 31249675958
+[LAT]: 31249759993
+[LAT]: 31249885083
+[LAT]: 31250010974
+[RX] Packet Count of stream0: 30000 
+[TX] Packet Count of stream0: 30000 
 
 
 \endcode

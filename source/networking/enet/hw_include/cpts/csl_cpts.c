@@ -47,7 +47,7 @@
 #define CSL_CPTS_NUM_TS_GENF    (1U)
 #define CSL_CPTS_NUM_TS_ESTF    (1U)
 #elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
-#define CSL_CPTS_NUM_TS_GENF    (1U)
+#define CSL_CPTS_NUM_TS_GENF    (2U)
 #define CSL_CPTS_NUM_TS_ESTF    (2U)
 #else
 #define CSL_CPTS_NUM_TS_GENF    (sizeof(pCptsRegs->TS_GENF) / sizeof(CSL_cptsRegs_TS_GENF))
