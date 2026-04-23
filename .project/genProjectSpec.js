@@ -302,6 +302,18 @@ function genProjectSpecExample(device) {
                     `${project.dirPath}/sysconfig_generated_files.ipcf`,
                     args);
             }
+            else if(project.cgt == "gcc-aarch64") {
+                common.convertTemplateToFile(
+                        `.project/templates/projectspec_${project.type}.xdt`,
+                        `${project.dirPath}/example.projectspec`,
+                        args);
+            }
+            else if(project.cgt == "ti-c6000") {
+                common.convertTemplateToFile(
+                        `.project/templates/projectspec_${project.type}.xdt`,
+                        `${project.dirPath}/example.projectspec`,
+                        args);
+            }
 
             if("syscfgfile" in args.project) {
                 common.convertTemplateToFile(
