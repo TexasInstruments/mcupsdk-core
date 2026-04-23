@@ -2867,7 +2867,11 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
 
 int32_t SOC_rcmSetR5Clock(uint32_t r5FreqHz, uint32_t sysClkFreqHz, uint32_t cpuId)
 {
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
+
     SOC_rcmsetR5SysClock(r5FreqHz, sysClkFreqHz, cpuId);
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
     return SystemP_SUCCESS;
 }
@@ -2900,6 +2904,8 @@ void SOC_rcmR5ConfigLockStep(uint32_t cpuId)
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
     uint32_t regVal;
 
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
+
     if (cpuId == CSL_CORE_ID_R5FSS0_0)
     {
         regVal = mssCtrl->R5SS0_CONTROL;
@@ -2911,12 +2917,16 @@ void SOC_rcmR5ConfigLockStep(uint32_t cpuId)
     {
         DebugP_logError("Config Lockstep failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmR5ConfigDualCore(uint32_t cpuId)
 {
     uint32_t regVal;
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     if (cpuId == CSL_CORE_ID_R5FSS0_1)
     {
@@ -2939,11 +2949,15 @@ void SOC_rcmR5ConfigDualCore(uint32_t cpuId)
     {
         DebugP_logError("Dual Config mode failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmStartMemInitTCMA(uint32_t cpuId)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1))
     {
@@ -2960,11 +2974,15 @@ void SOC_rcmStartMemInitTCMA(uint32_t cpuId)
     {
         DebugP_logError("CPU TCM Init failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmWaitMemInitTCMA(uint32_t cpuId)
 {
     CSL_mss_ctrlRegs*        mssCtrl;
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
     if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1))
@@ -2979,11 +2997,15 @@ void SOC_rcmWaitMemInitTCMA(uint32_t cpuId)
     {
         DebugP_logError("CPU TCM Init failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmStartMemInitTCMB(uint32_t cpuId)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1))
     {
@@ -2999,11 +3021,15 @@ void SOC_rcmStartMemInitTCMB(uint32_t cpuId)
     {
         DebugP_logError("CPU TCM Init failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmWaitMemInitTCMB(uint32_t cpuId)
 {
     CSL_mss_ctrlRegs*        mssCtrl;
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
     if ((cpuId == CSL_CORE_ID_R5FSS0_0) || (cpuId == CSL_CORE_ID_R5FSS0_1))
@@ -3020,28 +3046,41 @@ void SOC_rcmWaitMemInitTCMB(uint32_t cpuId)
     {
         DebugP_logError("CPU TCM Init failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmMemInitMailboxMemory(void)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
+
     CSL_FINS(mssCtrl->MAILBOXRAM_MEM_INIT, MSS_CTRL_MAILBOXRAM_MEM_INIT_MEM0_INIT, 1);
     while (CSL_FEXT(mssCtrl->MAILBOXRAM_MEM_INIT_DONE, MSS_CTRL_MAILBOXRAM_MEM_INIT_DONE_MEM0_DONE) != 1);
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmMemInitL2Memory(void)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL();
 
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
+
     /* MemInit for L2-Bank2 */
     CSL_FINS(mssCtrl->L2IOCRAM_MEM_INIT, MSS_CTRL_L2IOCRAM_MEM_INIT_PARTITION2, 1);
     while (CSL_FEXT(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION2) != 1);
     CSL_FINS(mssCtrl->L2OCRAM_MEM_INIT_DONE, MSS_CTRL_L2OCRAM_MEM_INIT_DONE_PARTITION2, 1);
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmCoreR5FUnhalt(uint32_t cpuId)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     if (cpuId == CSL_CORE_ID_R5FSS0_1)
     {
@@ -3052,6 +3091,8 @@ void SOC_rcmCoreR5FUnhalt(uint32_t cpuId)
     {
         DebugP_logError("R5F Core Unhalt failed\r\n");
     }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
 void SOC_rcmR5SS0PowerOnReset(void)
@@ -3059,6 +3100,8 @@ void SOC_rcmR5SS0PowerOnReset(void)
     uint32_t regVal;
     CSL_mss_rcmRegs *ptrRCMRegs;
     ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_RCM_PARTITION0);
 
     regVal = ptrRCMRegs->R5SS0_RST2ASSERTDLY;
     CSL_FINS(regVal, MSS_RCM_R5SS0_RST2ASSERTDLY_R5SS_CORE0_COUNT, 0x0);
@@ -3074,6 +3117,8 @@ void SOC_rcmR5SS0PowerOnReset(void)
     CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE0, 0x7);
     CSL_FINS(regVal, MSS_RCM_R5SS0_RST_WFICHECK_EN_R5_CORE1, 0x7);
     ptrRCMRegs->R5SS0_RST_WFICHECK = regVal;
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_RCM_PARTITION0);
 }
 
 void SOC_rcmR5SS0TriggerReset(void)
@@ -3081,9 +3126,13 @@ void SOC_rcmR5SS0TriggerReset(void)
     uint32_t regVal;
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();
 
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
+
     regVal = mssCtrl->R5SS0_CONTROL;
     CSL_FINS(regVal, MSS_CTRL_R5SS0_CONTROL_RESET_FSM_TRIGGER, 0x7);
     mssCtrl->R5SS0_CONTROL = regVal;
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 
     /* execute wfi inside a loop to clear any pending interrupts, and reset core0 and core 1 */
 #if defined(__ARM_ARCH_7R__) || defined(__ARM7R__)
