@@ -677,11 +677,11 @@ static void I2C_LLD_targetTransferCompleteCallback (void * args,
     {
         I2C_Handle hldhandle = (I2C_Handle)lldhandle->args;
 
-        config = (I2C_Config *) hldhandle;
-        object = config->object;
-
         if(NULL != hldhandle)
         {
+            config = (I2C_Config *) hldhandle;
+            object = config->object;
+
             if(transferStatus != I2C_STS_RESTART)
             {
                 I2C_completeCurrTransfer(hldhandle, transferStatus);
