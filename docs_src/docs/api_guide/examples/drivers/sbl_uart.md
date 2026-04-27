@@ -84,6 +84,12 @@ Since this is a bootloader and is used as a SOC initialization binary, the examp
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 
+\cond SOC_AM64X || SOC_AM243X
+
+\note From release 12.00.00 onwards, when configuring the SBL UART bootloader in syscfg, ensure that the boot media is set to **UART** and not SOC_Memory. This configuration is required for proper UART bootloader operation.
+
+\endcond
+
 # See Also
 
 \ref DRIVERS_BOOTLOADER_PAGE
