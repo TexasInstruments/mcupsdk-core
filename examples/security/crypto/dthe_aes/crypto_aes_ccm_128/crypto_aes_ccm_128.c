@@ -169,6 +169,9 @@ void crypto_aes_ccm_128_main(void *args)
     DTHE_AES_Params         aesParams;
     uint32_t                aesResult[APP_CRYPTO_AES_CCM_128_INOUT_LENGTH];
 
+    Drivers_open();
+    Board_driversOpen();
+
     /* opens DTHe driver */
     handle = DTHE_open(0);
     DebugP_assert(handle != NULL);
@@ -315,6 +318,9 @@ void crypto_aes_ccm_128_main(void *args)
     }
 
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    Board_driversClose();
+    Drivers_close();
 
     return;
 }
