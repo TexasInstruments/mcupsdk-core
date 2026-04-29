@@ -59,6 +59,8 @@ FILES_common := \
     ospi_udma_lld.c \
     ospi_phy_tuning.c \
     pinmux.c \
+    pruicss_g_v0.c \
+    pruicss_g_v0_cfg.c \
     sciclient.c \
     sciclient_pm.c \
     sciclient_rm.c \
@@ -128,6 +130,8 @@ FILES_PATH_common = \
     qos \
     qos/v0 \
     pinmux/am64x_am243x \
+    pruicss/g_v0 \
+    pruicss/soc/am64x_am243x \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \
