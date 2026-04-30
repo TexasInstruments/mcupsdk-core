@@ -169,6 +169,11 @@ extern "C" {
 #define HWA_PARAMSET_POLLINGNOTALLOWED                  (HWA_ERRNO_BASE - 35)
 /** \brief Error Code: Invalid argument: for CFAR config in common register - CFAR_DET_THR */
 #define HWA_EINVAL_COMMON_REGISTER_CFAR_DET_THR         (HWA_ERRNO_BASE - 36)
+
+#if defined (SOC_AM273X)
+/** \brief Error Code: Invalid argument: src or dst buffer spans M1+M2 memory boundary (EDMA errata:i2288 - AM273x) */
+#define HWA_EINVAL_PARAMSET_SRCDST_BUFFER_CROSSES_M1M2 (HWA_ERRNO_BASE - 37)
+#endif
 /** @} */
 
 /** \brief Number of RX channels in pre-processing block */
@@ -1749,6 +1754,16 @@ typedef struct HWA_AccelModeCompress_t {
  *
  *  HWA paramset config parameters that are used with the HWA_ConfigParamSet() call.
  *
+ *  \note   EDMA Errata Workaround (M1+M2 Boundary Crossing):
+ *          Source and destination buffers MUST NOT span the M1/M2 memory boundary.
+ *          HWA accelerator memory is divided into 8 banks (M0-M7) of 16KB each.
+ *          - M0/M1 share TPTC slave endpoint A
+ *          - M2/M3 share TPTC slave endpoint B (different from A)
+ *          - Single EDMA TR cannot access multiple endpoints
+ *          - Crossing M1->M2 boundary violates TPTC spec and causes data corruption
+ *          - If buffer must span M1/M2, split into 2 chained TRs via application/EDMA driver
+ *          - Validation checks: (srcAddr >> 15) must equal ((srcAddr + bufferSize - 1) >> 15)
+ *                               (dstAddr >> 15) must equal ((dstAddr + bufferSize - 1) >> 15)
  */
 typedef struct HWA_ParamConfig_t {
      uint8_t            triggerMode;                /**<  4 bit value: See \ref HWA_TRIG_MODE macros for correct values.

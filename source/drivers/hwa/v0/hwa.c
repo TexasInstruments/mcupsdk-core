@@ -50,13 +50,13 @@
      ptrHWADriver = (HWA_Object *)handle;\
 }
 
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
 /*
  * DSS CM4 alignment workaround
  * The DSS HWA CM4 cannot perform access to address space outside its subsystem if:
  *  - Not aligned to 32-bit boundary, OR
  *  - Not a Multiple of 32-bit (e.g., 8/16-bit) access
- *   
+ *
  *  All external memory accesse must be 32-bit aligned and use 32-bit read/write to ensure proper operation.
  * */
 
@@ -64,6 +64,48 @@
  #define HWA_CM4_DSS_ACCESS_SIZE_CHECK(size)  ((size & 0x03U) == 0U)
 #endif
 
+#if defined (SOC_AM273X)
+/*
+ * HWA Memory Bank Organization (EDMA M1+M2 Boundary Crossing Errata Workaround - AM273x)
+ *
+ * HWA has 8 memory banks of 16KB each (128KB total):
+ * - Each bank is 16KB (2^14 = 0x4000 bytes)
+ * - ACCEL_MEM0/M1: accessible via TPTC slave endpoint A
+ * - ACCEL_MEM2/M3: accessible via TPTC slave endpoint B (different from A)
+ * - ACCEL_MEM4/M5/M6/M7: additional banks
+ *
+ * EDMA Errata: Single TR cannot span different slave endpoints.
+ * Crossing M1->M2 boundary violates TPTC spec and may cause data corruption.
+ *
+ * Bit 15-14 extract bank ID:
+ *   0x0000-0x3FFF = M0 (bits 15:14 = 00)
+ *   0x4000-0x7FFF = M1 (bits 15:14 = 01)
+ *   0x8000-0xBFFF = M2 (bits 15:14 = 10)
+ *   0xC000-0xFFFF = M3 (bits 15:14 = 11)
+ *
+ * Endpoint boundaries:
+ *   M0/M1 (bits 15:14 = 00 or 01) -> TPTC Endpoint A
+ *   M2/M3 (bits 15:14 = 10 or 11) -> TPTC Endpoint B
+ */
+
+#define HWA_ACCEL_MEM_BANK_SIZE_SHIFT    (14U)  /* 16KB = 2^14 */
+#define HWA_ACCEL_MEM_BANK_SIZE          (0x4000U)
+#define HWA_ACCEL_MEM_ENDPOINT_A_MASK    (0x00004000U)  /* M0/M1 mask */
+#define HWA_ACCEL_MEM_ENDPOINT_B_MASK    (0x00008000U)  /* M2/M3 mask */
+
+/*
+ * This is to extract endpoint from HWA address
+ * Returns 0 for M0/M1 (endpoint A), 1 for M2/M3 (endpoint B)
+ */
+#define HWA_GET_MEMORY_ENDPOINT(addr)    (((addr) >> (HWA_ACCEL_MEM_BANK_SIZE_SHIFT + 1)) & 0x1U)
+
+/*
+ * This is to check if address range spans M1+M2 boundary
+ * True if start and end are in different endpoints
+ */
+#define HWA_BUFFER_SPANS_M1M2_BOUNDARY(startAddr, size) \
+    (HWA_GET_MEMORY_ENDPOINT(startAddr) != HWA_GET_MEMORY_ENDPOINT((startAddr) + (size) - 1U))
+#endif
 HWA_InterruptCtx HwaParamsetIntr[SOC_HWA_NUM_PARAM_SETS];
 
 /* TPCC_A, TPCC_B, and TPCC_C all have the same mapping for HWA_DMA */
@@ -482,16 +524,42 @@ static int32_t HWA_validateParamSetConfig(HWA_Object *ptrHWADriver, HWA_ParamCon
                 /* invalid config */
                 retCode = HWA_EINVAL_PARAMSET_SRCDST_ADDRESS;
            }
-#if defined (SOC_am273x) && defined (CORE_CM4)
-           /* Check 32-bit alignment for source and destination addresses (DSS CM4 errata requirement)
-              CM4 cannot perform access to address space outside its subsystem if not aligned to
-              32-bit boundary or not a multiple of 32-bit. */
-              else if(!HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->source.srcAddr) || !HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->dest.dstAddr))
-              {
-                /* source and destination address must be 32-bit aligned per DSS CM4 errata requirements */
-                retCode = HWA_ENOTALIGNED;
-              }
+           else
+           {
+#if defined (SOC_AM273X)
+               /* EDMA Errata Workaround: Check if source or destination buffer spans M1+M2 boundary
+                  (Errata: Any EDMA transfer that spans M1+M2 memories may result in data corruption)
+                  M1+M2 boundary crossing is NOT allowed because they are on different TPTC slave endpoints.
+                  Source buffer size = srcAcnt * srcBcnt * (sample_size_in_bytes, typically 4 for complex)
+                  Destination buffer size = dstAcnt * (typically srcAcnt for FFT mode)
+                  Note: srcAcnt and dstAcnt are in samples (minus 1), so actual count = srcAcnt+1, dstAcnt+1 */
+               {
+                   uint32_t srcEnd = paramConfig->source.srcAddr + ((paramConfig->source.srcAcnt + 1U) * (paramConfig->source.srcBcnt + 1U) * 4U) - 1U;
+                   uint32_t dstEnd = paramConfig->dest.dstAddr + ((paramConfig->dest.dstAcnt + 1U) * 4U) - 1U;
+
+                   if (((paramConfig->source.srcAddr >> 15U) != (srcEnd >> 15U)) ||
+                       ((paramConfig->dest.dstAddr >> 15U) != (dstEnd >> 15U)))
+                   {
+                        /* Source or destination buffer crosses M1/M2 boundary (different TPTC endpoints)
+                           This violates TPTC spec as single TR cannot access multiple slave endpoints.
+                           Workaround: Application must split into 2 chained TRs.
+                           Bit 15 is the endpoint selector: 0=M0/M1 (endpoint A), 1=M2/M3 (endpoint B) */
+                        retCode = HWA_EINVAL_PARAMSET_SRCDST_BUFFER_CROSSES_M1M2;
+                   }
+               }
 #endif
+
+#if defined (SOC_AM273X) && defined (CORE_CM4)
+               /* Check 32-bit alignment for source and destination addresses (DSS CM4 errata requirement)
+                  CM4 cannot perform access to address space outside its subsystem if not aligned to
+                  32-bit boundary or not a multiple of 32-bit. */
+               if(!HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->source.srcAddr) || !HWA_CM4_DSS_ADDR_ALIGN_CHECK(paramConfig->dest.dstAddr))
+               {
+                    /* source and destination address must be 32-bit aligned per DSS CM4 errata requirements */
+                    retCode = HWA_ENOTALIGNED;
+               }
+#endif
+           }
         }
         if (paramConfig->accelMode == HWA_ACCELMODE_FFT)
         {
@@ -3580,7 +3648,7 @@ int32_t HWA_configRam(HWA_Handle handle, uint8_t ramType, uint8_t *data, uint32_
             /* invalid data size */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         else if ((!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t) data)))
         {
             /* unaligned address */
@@ -3691,7 +3759,7 @@ extern int32_t HWA_readRam(HWA_Handle handle, uint8_t ramType, uint8_t *data, ui
             /* invalid data size */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         else if ((!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t) data)))
         {
             /* unaligned address */
@@ -4830,7 +4898,7 @@ extern int32_t HWA_readDCEstimateReg(HWA_Handle handle, cmplx32ImRe_t *pbuf, uin
             /* invalid config */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
         else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
         {
@@ -4913,7 +4981,7 @@ extern int32_t HWA_readIntfAccReg(HWA_Handle handle, uint64_t *accBuf, uint8_t t
             /* invalid config */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
         else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)accBuf))
         {
@@ -5008,7 +5076,7 @@ extern int32_t HWA_readDCAccReg(HWA_Handle handle, cmplx64ImRe_t *accbuf, uint8_
             /* invalid config */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
         else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)accBuf))
         {
@@ -5093,7 +5161,7 @@ int32_t HWA_readCFARPeakCountReg(HWA_Handle handle, uint8_t *pbuf, uint8_t size)
             /* invalid config */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
         else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
         {
@@ -5333,7 +5401,7 @@ extern int32_t HWA_readInterfThreshReg(HWA_Handle handle, uint32_t *pbuf, uint8_
             /* invalid config */
             retCode = HWA_EINVAL;
         }
-#if defined (SOC_AM273x) && defined (CORE_CM4)
+#if defined (SOC_AM273X) && defined (CORE_CM4)
         /* Check 32-bit alignment for external memory access (DSS CM4 requirement) */
         else if (!HWA_CM4_DSS_ADDR_ALIGN_CHECK((uintptr_t)pbuf))
         {
