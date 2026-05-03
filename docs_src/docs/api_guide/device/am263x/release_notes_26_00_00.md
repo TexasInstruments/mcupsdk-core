@@ -226,28 +226,20 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Resolved in I2C driver source code
 </tr>
 <tr>
-    <td> PROC_SDL-9597
-    <td> Watchdog status bits are not clearing properly in SDL_RTI_clearStatus API
+    <td> PROC_SDL-9862
+    <td> Incorrect PBIST flow in AM263x for TCM region
     <td> SDL
-    <td> 09.02.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Fixed in library
+    <td> 11.01.00 onwards
+    <td> AM263x
+    <td> Added workaround for TCMB incorrect PBIST flow in code.
 </tr>
 <tr>
-    <td> PROC_SDL-9582
-    <td> [SDL] faultInsert and stcDiagnostic not used for fault injection
+    <td> PROC_SDL-9800
+    <td> SBL OSPI example not working when we integrate LBIST Selftest code into it
     <td> SDL
-    <td> 11.00.00 onwards
+    <td> 11.01.00 onwards
     <td> AM263x, AM263Px, AM261x
-    <td> Added documentation as not used the faultInsert and stcDiagnostic.
-</tr>
-<tr>
-    <td> PROC_SDL-9485
-    <td> Interrupt clear missing in ecc_bus_safety example.
-    <td> SDL
-    <td> 11.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Cleared the error status in code.
+    <td> Added MCU_LBIST syscfg support in OSPI example
 </tr>
 </table>
 

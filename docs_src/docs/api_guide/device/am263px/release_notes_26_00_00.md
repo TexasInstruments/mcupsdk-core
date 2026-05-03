@@ -254,28 +254,28 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Resolved in I2C driver source code
 </tr>
 <tr>
-    <td> PROC_SDL-9597
-    <td> Watchdog status bits are not clearing properly in SDL_RTI_clearStatus API
+    <td> PROC_SDL-9800
+    <td> SBL OSPI example not working when we integrate LBIST Selftest code into it
     <td> SDL
-    <td> 09.02.00 onwards
+    <td> 11.01.00 onwards
     <td> AM263x, AM263Px, AM261x
-    <td> Fixed in library
+    <td> Added MCU_LBIST syscfg support in OSPI example
 </tr>
 <tr>
-    <td> PROC_SDL-9582
-    <td> [SDL] faultInsert and stcDiagnostic not used for fault injection
+    <td> PROC_SDL-9795
+    <td> PBIST is performing multiple times for L2_1 Memory i.e. in ROM and SDL
     <td> SDL
-    <td> 11.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Added documentation as not used the faultInsert and stcDiagnostic.
+    <td> 11.01.00 onwards
+    <td> AM263Px
+    <td> Removed PBISTROM and MSS_L2_1 in SDL code as redundant when compare ROM test.
 </tr>
 <tr>
-    <td> PROC_SDL-9485
-    <td> Interrupt clear missing in ecc_bus_safety example.
+    <td> PROC_SDL-9702
+    <td> MSS_L2 memory not cleared for bank 4 and 5
     <td> SDL
-    <td> 11.00.00 onwards
-    <td> AM263x, AM263Px, AM261x
-    <td> Cleared the error status in code.
+    <td> 11.01.00 onwards
+    <td> AM263Px
+    <td> Fixed in example.
 </tr>
 </table>
 
