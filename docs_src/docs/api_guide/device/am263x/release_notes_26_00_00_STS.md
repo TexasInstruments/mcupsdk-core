@@ -1,4 +1,4 @@
-# Release Notes 26.00.00 {#RELEASE_NOTES_26_00_00_PAGE}
+# Release Notes 26.00.00.STS {#RELEASE_NOTES_26_00_00_PAGE}
 
 [TOC]
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
@@ -17,10 +17,14 @@
 
 ## New in this Release
 
-Feature                                                                        | Module
--------------------------------------------------------------------------------|-----------------------------------
-Enablement of MPU awareness in FreeRTOS                                        | FreeRTOS
-I2C Peripheral LLD example                                                     | I2C
+Feature                                                                                      | Module
+---------------------------------------------------------------------------------------------|-----------------------------------
+I2C DMA transfer support with driver and example                                            | I2C
+Configurable SBL restricted memory region                                                  | SBL
+Feature Extraction library for AI applications                                              | AI
+AI Examples: Arc fault detection, Motor fault detection, Time series classification/regression | AI
+Sensor BoosterPack integration for Edge AI                                                  | AI
+Device Agent Protocol (DAP) for Edge AI Studio communication                                | AI
 
 ## Device and Validation Information
 
@@ -35,13 +39,13 @@ AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | 20.4.0
-SysConfig               | R5F            | 1.26.0 build, build 4407
+Code Composer Studio    | R5F            | 20.5.0
+SysConfig               | R5F            | 1.25.0 build, build 4565
 TI ARM CLANG            | R5F            | 4.0.4.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_1_RELEASE
 Mbed-TLS                | R5F            | 2.13.1
-Uniflash                | R5F            | 9.4.0
+Uniflash                | R5F            | 9.5.0
 
 ## Key Features
 
@@ -224,6 +228,38 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.02.00 onwards
     <td> AM263x, AM263Px, AM261x
     <td> Resolved in I2C driver source code
+</tr>
+<tr>
+    <td> MCUSDK-15240
+    <td> LIN adaptive baud rate failure
+    <td> LIN
+    <td> 11.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Fixed clock selection and max baud rate computation for adaptive baud rate feature
+</tr>
+<tr>
+    <td> MCUSDK-15105
+    <td> FreeRTOS interrupt priority failures
+    <td> FreeRTOS
+    <td> 11.01.00 onwards
+    <td> AM263x
+    <td> Added DSB and ISB instructions after restoring interrupt priority mask
+</tr>
+<tr>
+    <td> MCUSDK-15045
+    <td> SOC RCM register access lock and unlock protection
+    <td> SOC
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Implemented lock and unlock protection for MSS_CTRL and RCM register operations
+</tr>
+<tr>
+    <td> MCUSDK-14967
+    <td> FSM trigger failure due to pending RTI interrupts
+    <td> SBL
+    <td> 11.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Add WFI loop inside the FSM trigger API to clear pending interrupts
 </tr>
 <tr>
     <td> PROC_SDL-9862
@@ -554,6 +590,18 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> XBAR
     <td> Open
 </tr>
+<tr>
+    <td> i2427
+    <td> SDL: RAM SEC can cause spurious RAM writes resulting in L2 and MBOX memory corruption
+    <td> ECC
+    <td> Workaround added as an example in examples/sdl/ecc/
+</tr>
+<tr>
+    <td> i2499
+    <td> SDL: Incorrect data returned to master on single error detection during burst read
+    <td> ECC
+    <td> Workaround added as an example in examples/sdl/ecc/
+</tr>
 </table>
 
 ## Limitations
@@ -579,6 +627,159 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
     <td> -
 </tr>
+</table>
+
+## Release Types
+
+AM26xx SDK releases follow a tiered support model with three release types: Early Adopter (EA), Short Term Support (STS), and Long Term Support (LTS). Each release type serves different customer needs and provides varying levels of support, quality assurance, and maintenance.
+
+### How to Identify Release Type
+
+The release type for each AM26xx SDK release can be identified through the following methods:
+
+Release Notes Introduction Section: Every release note’s Introduction section will specify the release type (EA, STS, or LTS) for that particular release.
+
+### EA (Early Adopter)
+
+Early Adopter releases are intended for customers who want early access to new features and capabilities before they are fully validated. These releases allow customers to evaluate new functionality and provide feedback during the development cycle.
+
+Example Use Cases:
+- Early evaluation of new features
+- Proof-of-concept development
+- Providing feedback to the development team
+- Planning for future integration
+
+### STS (Short Term Support)
+
+Short Term Support releases provide a stable platform with validated features suitable for development and integration activities. These releases offer improved quality assurance compared to EA releases but are not intended for production deployment.
+
+Example Use Cases:
+- Development and integration activities
+- System validation and testing
+- Pre-production evaluation
+- Feature completeness verification
+
+### LTS (Long Term Support)
+
+Long Term Support releases are production-ready releases that provide the highest level of quality assurance, safety certification support, and long-term maintenance. These releases are recommended for production deployment in automotive and safety-critical applications.
+
+Example Use Cases:
+- Production deployment
+- Safety-critical applications
+- Automotive production systems
+- Applications requiring long-term stability and support
+
+### Release Type Comparison
+
+<table>
+<tr>
+  <th style="text-align: left;">Topic</th>
+  <th style="text-align: left;">EA (Early Adopter)</th>
+  <th style="text-align: left;">STS (Short Term Support)</th>
+  <th style="text-align: left;">LTS (Long Term Support)</th>
+</tr>
+<tr>
+  <td>Quality</td>
+  <td>Baseline Quality</td>
+  <td>Baseline Quality (new features)</td>
+  <td>Functional Safety (if applicable)</td>
+</tr>
+<tr>
+  <td>Testing</td>
+  <td>Best Effort</td>
+  <td>>95% pass</td>
+  <td>>95% pass</td>
+</tr>
+<tr>
+  <td>Safety CSP</td>
+  <td>NA</td>
+  <td>NA</td>
+  <td>Yes (if FSQ)</td>
+</tr>
+<tr>
+  <td>Safety Certification</td>
+  <td>NA</td>
+  <td>NA</td>
+  <td>Yes (Internal / External)</td>
+</tr>
+<tr>
+  <td>Maintenance</td>
+  <td>No</td>
+  <td>No</td>
+  <td>Will maintain until next LTS release</td>
+</tr>
+<tr>
+  <td>Bug Fix / Patch Release</td>
+  <td>No</td>
+  <td>Bugs that are prioritized will be fixed in the next release; no backporting to STS releases</td>
+  <td>Bug fixes on the LTS maintenance branch will be prioritized based on the severity of the bug</td>
+</tr>
+<tr>
+  <td>Feature Addition</td>
+  <td>Yes</td>
+  <td>Yes</td>
+  <td>New features will be added in an LTS release, but post LTS release, new features will not be backported to the LTS maintenance branch</td>
+</tr>
+<tr>
+  <td>Production Ready</td>
+  <td>No</td>
+  <td>Not recommended for Production</td>
+  <td>Recommended for Production</td>
+</tr>
+</table>
+
+## CI/CD Strategy
+
+AM26xx SDK is also available on GitHub.
+- AM263X - https://github.com/TexasInstruments/mcu_plus_sdk_am263x/
+- AM263PX - https://github.com/TexasInstruments/mcu_plus_sdk_am263px/
+- AM261X - https://github.com/TexasInstruments/mcu_plus_sdk_am261x/
+
+These GitHub repositories provide early access to the latest features, fixes, and improvements as they are developed.
+
+Disclaimer: The GitHub repositories contains software that is not fully tested and may include bugs, errors, or defects that could cause system instability or unexpected behavior. Always review and validate code before use in any application.
+
+Official releases are published under the Releases section of the GitHub repository. These correspond to the versioned releases documented in these release notes and have undergone the quality and testing criteria.
+
+## Software Bill of Materials
+
+<table>
+    <tr>
+        <th style="text-align: left;">Component Type</th>
+        <th style="text-align: left;">Component Name</th>
+        <th style="text-align: left;">Production or Reference</th>
+        <th style="text-align: left;">Process Compliance</th>
+        <th style="text-align: left;">Certification</th>
+        <th style="text-align: left;">Distribution</th>
+    </tr>
+    <tr>
+        <td>Tools</td>
+        <td>${SDK_INSTALL_PATH}/tools/*</td>
+        <td>Reference</td>
+        <td>Demo Quality</td>
+        <td>No</td>
+        <td>github</td>
+    <tr>
+        <td>Documentation</td>
+        <td>${SDK_INSTALL_PATH}/docs/*</td>
+        <td>Reference</td>
+        <td>Baseline Quality</td>
+        <td>No</td>
+        <td>github</td>
+    <tr>
+        <td>Source</td>
+        <td>${SDK_INSTALL_PATH}/source/*</td>
+        <td>Production</td>
+        <td>Baseline Quality</td>
+        <td>No</td>
+        <td>github</td>
+    <tr>
+        <td>Examples</td>
+        <td>${SDK_INSTALL_PATH}/examples/*</td>
+        <td>Reference</td>
+        <td>Demo Quality</td>
+        <td>No</td>
+        <td>github</td>
 </table>
 
 ## Upgrade and Compatibility Information
