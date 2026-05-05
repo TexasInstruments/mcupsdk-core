@@ -151,8 +151,10 @@ typedef enum rtiClockSource
     /**< to select clock frequency of 12 MHz */
     RTI_CLOCK_SOURCE_32KHZ = 3U,
     /**< to select clock frequency of 32KHz */
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     RTI_CLOCK_SOURCE_200MHZ = 4U,
     /**< to select clock frequency of 200 MHz */
+#endif
 }rtiClockSource_t;
 
 /*===========================================================================*/

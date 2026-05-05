@@ -66,9 +66,11 @@ static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
         case RTI_CLOCK_SOURCE_32KHZ:
             clkFreqKHz = (uint32_t) RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ;
             break;
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
         case RTI_CLOCK_SOURCE_200MHZ:
             clkFreqKHz = (uint32_t) RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ;
             break;
+#endif
         default:
             break;
     }

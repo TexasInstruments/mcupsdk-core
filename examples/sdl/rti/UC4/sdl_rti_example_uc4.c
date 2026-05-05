@@ -217,7 +217,11 @@ int32_t SDL_RTI_exampleTest(void)
     isrFlag = RTI_NO_INTERRUPT;
 
     /* Configure RTI parameters */
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ, RTI_WDT_TIMEOUT);
+#else
+    pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ, RTI_WDT_TIMEOUT);
+#endif
     pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_50_PERCENT;
     pConfig.SDL_RTI_dwwdReaction   = RTI_DWWD_REACTION_GENERATE_NMI;
 
@@ -403,9 +407,11 @@ static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
         case RTI_CLOCK_SOURCE_32KHZ:
             clkFreqKHz = (uint32_t) RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ;
             break;
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
         case RTI_CLOCK_SOURCE_200MHZ:
             clkFreqKHz = (uint32_t) RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ;
             break;
+#endif
         default:
             break;
     }
