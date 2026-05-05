@@ -117,27 +117,33 @@ int32_t OSPI_dmaOpen(OSPILLD_Handle hOspi)
 
                 if(status == SystemP_SUCCESS)
                 {
-                    status += EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-                        dmaCh, tcc, param, EDMA_OSPI_EVT_QUEUE_NO);
-
-                    if(isEdmaInterruptEnabled == TRUE)
+                    if( TRUE != EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                        dmaCh, tcc, param, EDMA_OSPI_EVT_QUEUE_NO))
                     {
-                        /* Register interrupt */
-                        edmaIntrObject->tccNum = tcc;
-                        edmaIntrObject->cbFxn  = &OSPI_edmaIsrFxn;
-                        edmaIntrObject->appData = (void *) hOspi;
-                        status = EDMA_registerIntr(ospiEdmaHandle, edmaIntrObject);
+                        status = SystemP_FAILURE;
                     }
+                    
+                    if(status == SystemP_SUCCESS)
+                    {
+                        if(isEdmaInterruptEnabled == TRUE)
+                        {
+                            /* Register interrupt */
+                            edmaIntrObject->tccNum = tcc;
+                            edmaIntrObject->cbFxn  = &OSPI_edmaIsrFxn;
+                            edmaIntrObject->appData = (void *) hOspi;
+                            status = EDMA_registerIntr(ospiEdmaHandle, edmaIntrObject);
+                        }
 
-                    /* Store the EDMA paramters and handle*/
-                    edmaParams->edmaBaseAddr = baseAddr;
-                    edmaParams->edmaRegionId = regionId;
-                    edmaParams->edmaParam = param;
-                    edmaParams->edmaChainParam = chainParam;
-                    edmaParams->edmaChId = dmaCh;
-                    edmaParams->edmaChainChId = dmaChainCh;
-                    edmaParams->edmaTcc = tcc;
-                    edmaParams->isIntEnabled = isEdmaInterruptEnabled;
+                        /* Store the EDMA paramters and handle*/
+                        edmaParams->edmaBaseAddr = baseAddr;
+                        edmaParams->edmaRegionId = regionId;
+                        edmaParams->edmaParam = param;
+                        edmaParams->edmaChainParam = chainParam;
+                        edmaParams->edmaChId = dmaCh;
+                        edmaParams->edmaChainChId = dmaChainCh;
+                        edmaParams->edmaTcc = tcc;
+                        edmaParams->isIntEnabled = isEdmaInterruptEnabled;
+                    }
                 }
                 if(status != SystemP_SUCCESS)
                 {
