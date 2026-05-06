@@ -48,8 +48,8 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
-#include "ecc_main.h"
 #include <sdl/dpl/sdl_dpl.h>
+#include <dpl_interface.h>
 
 #if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>

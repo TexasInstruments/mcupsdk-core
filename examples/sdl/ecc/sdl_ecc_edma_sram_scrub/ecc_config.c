@@ -56,7 +56,6 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define ESM_REGISTERS                                   ((volatile SDL_esmRegs *) CSL_TOP_ESM_U_BASE)
 
 #define SDL_MSS_L2_MEM_INIT_ADDR                        (SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_L2IOCRAM_MEM_INIT)
 #define SDL_MSS_L2_MEM_INIT_DONE_ADDR                   (SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_L2OCRAM_MEM_INIT_DONE)

@@ -46,7 +46,6 @@
 #include "edma_rti_sram_scrub.h"
 #include <drivers/soc.h>
 #include <kernel/dpl/HwiP.h>
-#include <sdl/esm/v0/v0_0/sdlr_esm.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */

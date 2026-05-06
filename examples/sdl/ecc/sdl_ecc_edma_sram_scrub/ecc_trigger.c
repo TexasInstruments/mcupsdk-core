@@ -48,7 +48,6 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
-#include "ecc_main.h"
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
 

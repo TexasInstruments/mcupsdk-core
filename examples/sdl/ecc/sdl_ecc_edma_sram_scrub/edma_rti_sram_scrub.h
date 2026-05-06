@@ -35,7 +35,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-
+#include <sdl/esm/sdlr_esm.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -80,5 +80,6 @@ void     App_serviceSecInterrupt(void);
 bool     ECCAGG_writeRegister(uint8_t endpointId, uint16_t registerOffset, uint32_t val);
 uint32_t ECCAGG_readRegister(uint8_t endpointId, uint16_t registerOffset);
 void     ESM_init(void);
+int32_t  ECC_funcTest(void);
 
 #endif /* _EDMA_RTI_SRAM_SCRUB_H_ */

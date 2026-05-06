@@ -61,7 +61,6 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include "edma_rti_sram_scrub.h"
-#include "ecc_main.h"
 #include "string.h"
 #include <sdl/include/sdl_types.h>
 
