@@ -25,6 +25,7 @@ Feature Extraction library for AI applications                                  
 AI Examples: Arc fault detection, Motor fault detection, Time series classification/regression | AI
 Sensor BoosterPack integration for Edge AI                                                  | AI
 Device Agent Protocol (DAP) for Edge AI Studio communication                                | AI
+Baremetal Layer-2 packet transfer and reception example                                     | Networking
 
 ## Device and Validation Information
 
@@ -277,6 +278,30 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px, AM261x
     <td> Added MCU_LBIST syscfg support in OSPI example
 </tr>
+<tr>
+    <td> MCUSDK-13513
+    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
+    <td> Networking
+    <td> 10.00.01 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed the unstability on the lwip interface layer
+</tr>
+<tr>
+    <td> MCUSDK-15334
+    <td> AM26x: Build errors for networking examples in CCS
+    <td> Networking
+    <td> 11.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added linker failure related files to CCS projectspec build
+</tr>
+<tr>
+    <td> MCUSDK-15232
+    <td> AM26x: NORTOS LwIP example does not handle second port operations
+    <td> Networking
+    <td> 11.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added Netif for the second port
+</tr>
 </table>
 
 ## Known Issues
@@ -478,11 +503,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Use the CCXML file from CCS eclipse after updating to correct COM port.
 </tr>
 <tr>
-    <td> MCUSDK-13513
-    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
+    <td> MCUSDK-14644
+    <td> EST Timestamp verification is failing after link down event
     <td> Networking
-    <td> 10.00.01 onwards
-    <td> -
+    <td> 11.00.00 onwards
+    <td> Re-apply the EST configuration post link-up
 </tr>
 </table>
 

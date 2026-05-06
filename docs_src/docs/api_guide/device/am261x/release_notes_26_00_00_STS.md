@@ -30,6 +30,7 @@ AI Examples: Arc fault detection, Motor fault detection, Time series classificat
 Sensor BoosterPack integration for Edge AI                                                  | AI
 Device Agent Protocol (DAP) for Edge AI Studio communication                                | AI
 IAR compiler support                                               | Build
+Baremetal Layer-2 packet transfer and reception example                                     | Networking
 
 # Modules Not tested/supported in this release
 
@@ -294,6 +295,46 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263Px, AM261x
     <td> Fixed the glitch period and disable CCS log
 </tr>
+<tr>
+    <td> MCUSDK-13513
+    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
+    <td> Networking
+    <td> 10.00.01 onwards
+    <td> AM263Px, AM261x
+    <td> Fixed the unstability on the lwip interface layer
+</tr>
+<tr>
+    <td> MCUSDK-15051
+    <td> ENET: am261x: UDP client example not working in CCS boot mode
+    <td> Networking
+    <td> 11.00.00 onwards
+    <td> AM261x
+    <td> Removed XIP+RL2 code from the example
+</tr>
+<tr>
+    <td> MCUSDK-15334
+    <td> AM26x: Build errors for networking examples in CCS
+    <td> Networking
+    <td> 11.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added linker failure related files to CCS projectspec build
+</tr>
+<tr>
+    <td> MCUSDK-15232
+    <td> AM26x: NORTOS LwIP example does not handle second port operations
+    <td> Networking
+    <td> 11.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added Netif for the second port
+</tr>
+<tr>
+    <td> MCUSDK-15178
+    <td> AM261x: DOC: Missing detailed custom board enablement guide
+    <td> Networking
+    <td> 11.01.00 onwards
+    <td> AM261x
+    <td> Added Documentation
+</tr>
 </table>
 
 ## Known Issues
@@ -328,24 +369,10 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13513
-    <td> AM263Px, AM261x: UDP IPERF TX is unstable with 100Mbps link speed
-    <td> Networking
-    <td> 10.00.01 onwards
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-14950
     <td> AM26x: Networking examples show up as "..." on TIREX
     <td> Networking
     <td> 10.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-15051
-    <td> ENET: am261x: UDP client example not working in CCS boot mode
-    <td> Networking
-    <td> 11.00.00 onwards
     <td> -
 </tr>
 <tr>
@@ -564,6 +591,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> USB
     <td> 10.02.00 onwards
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14644
+    <td> EST Timestamp verification is failing after link down event
+    <td> Networking
+    <td> 11.00.00 onwards
+    <td> Re-apply the EST configuration post link-up
 </tr>
 </table>
 
