@@ -440,6 +440,27 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> None
 </tr>
 <tr>
+    <td> PROC_SDL-9670
+    <td> ECC injection addresses for different banks in TCMB memory are not correct
+    <td> SDL
+    <td> 11.00.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9700
+    <td> The ESM callback is happening even before ECC injection for ATCM and BTCM memories
+    <td> SDL
+    <td> 11.00.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9896
+    <td> Removal of incorrect DCC examples
+    <td> SDL
+    <td> 11.01.00 onwards
+    <td> None
+</tr>
+<tr>
     <td> MCUSDK-14898
     <td> SDL apps fails on other than RFSS0-0 with SBL
     <td> SBL, SDL

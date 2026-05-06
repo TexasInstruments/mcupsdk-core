@@ -471,6 +471,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
+    <td> PROC_SDL-9820
+    <td> End of Conversion bit (EOCZ) is not using for reading temperature sensor results in SDL_VTM_getTemp API for AM26x controllers
+    <td> SDL
+    <td> 11.01.00 onwards
+    <td> None
+</tr>
+<tr>
     <td> MCUSDK-13652
     <td> Readelf throws warning while parsing RS note
     <td> SBL, QSPI
