@@ -73,6 +73,11 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_INTEGRATED_MCAN
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX
+-# ECC
+   -# \subpage EXAMPLES_SDL_ECC_EDMA_SRAM_SCRUB
+\endcond
+
 \cond  SOC_AM263PX || SOC_AM261X
 -# TMU_ROM_CHECKSUM
    -# \subpage EXAMPLES_SDL_TMU_ROM_CHECKSUM

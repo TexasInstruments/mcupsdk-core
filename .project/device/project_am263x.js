@@ -319,8 +319,6 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_ecc_r5_d-tag/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
-    "examples/sdl/ecc/sdl_ecc_pru_scrubber/.project/project.js",
-    "examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/.project/project.js",
     "examples/sdl/rti/UC1/.project/project.js",
     "examples/sdl/rti/UC2/.project/project.js",
     "examples/sdl/rti/UC3/.project/project.js",

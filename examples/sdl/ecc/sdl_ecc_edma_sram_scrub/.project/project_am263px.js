@@ -80,7 +80,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_SDL_ECC";
+const readmeDoxygenPageTag = "EXAMPLES_SDL_ECC_EDMA_SRAM_SCRUB";
 
 const templates_nortos_r5f =
 [

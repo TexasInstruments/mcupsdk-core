@@ -342,8 +342,6 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
-    "examples/sdl/ecc/sdl_ecc_pru_scrubber/.project/project.js",
-    "examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5_atcm0/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
     "examples/sdl/pbist/pbist_mcu/.project/project.js",
