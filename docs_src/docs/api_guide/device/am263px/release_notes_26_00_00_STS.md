@@ -19,6 +19,7 @@
 
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
+[TUV Functional Safety certification received for SDL](https://www.ti.com/lit/fs/sffs714b/sffs714b.pdf?ts=1778236283450&ref_url=https%253A%252F%252Fwww.ti.com%252Fsitesearch%252Fen-us%252Fdocs%252Funiversalsearch.tsp%253FlangPref%253Den-US%2526nr%253D233%2526searchTerm%253DTUV+Certificate+AM263x+SDL) | SDL
 I2C DMA transfer support with driver and example                                            | I2C
 Configurable SBL restricted memory region                                                   | SBL
 Feature Extraction library for AI applications                                              | AI
@@ -485,13 +486,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14883
-    <td> AM263x, AM263Px: SBL: RPRC descoping broke SBL over Ethernet example
-    <td> Networking
-    <td> 11.00.00 onwards
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-14582
     <td> Flash: Incorrect flash name after Loading Flash JSON
     <td> OSPI
@@ -581,6 +575,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Networking
     <td> 11.00.00 onwards
     <td> Re-apply the EST configuration post link-up
+</tr>
+<tr>
+    <td> MCUSDK-15145
+    <td> SBL over Ethernet example broken
+    <td> Networking
+    <td> 11.00.00 onwards
+    <td> -
 </tr>
 </table>
 
@@ -674,13 +675,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> i2427
     <td> SDL: RAM SEC can cause spurious RAM writes resulting in L2 and MBOX memory corruption
     <td> ECC
-    <td> Workaround added as an example in examples/sdl/ecc/
+    <td> Workaround added as an example in examples/sdl/ecc/ (EDMA case only; PRU fix is ongoing)
 </tr>
 <tr>
     <td> i2499
     <td> SDL: Incorrect data returned to master on single error detection during burst read
     <td> ECC
-    <td> Workaround added as an example in examples/sdl/ecc/
+    <td> Workaround added as an example in examples/sdl/ecc/ (EDMA case only; PRU fix is ongoing)
 </tr>
 </table>
 

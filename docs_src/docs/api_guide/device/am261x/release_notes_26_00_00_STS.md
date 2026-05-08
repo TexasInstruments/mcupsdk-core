@@ -22,6 +22,7 @@
 
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
+[TUV Functional Safety certification received for SDL](https://www.ti.com/lit/fs/sffs714b/sffs714b.pdf?ts=1778236283450&ref_url=https%253A%252F%252Fwww.ti.com%252Fsitesearch%252Fen-us%252Fdocs%252Funiversalsearch.tsp%253FlangPref%253Den-US%2526nr%253D233%2526searchTerm%253DTUV+Certificate+AM263x+SDL) | SDL
 I2C DMA transfer support with driver and example                                            | I2C
 Configurable SBL restricted memory region                                                  | SBL
 USB generic bulk device transfer example                                                    | USB
@@ -279,6 +280,14 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px, AM261x
     <td> Add WFI loop inside the FSM trigger API to clear pending interrupts
 </tr>
+<tr>
+    <td> MCUSDK-15543
+    <td> OSPI DMA mode fails
+    <td> SBL
+    <td> 11.01.00 onwards
+    <td> AM261x
+    <td> Update status based on true/false not direct add in ospi_edma_lld.c
+</tr> 
 <tr>
     <td> PROC_SDL-9800
     <td> SBL OSPI example not working when we integrate LBIST Selftest code into it
@@ -598,6 +607,20 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Networking
     <td> 11.00.00 onwards
     <td> Re-apply the EST configuration post link-up
+</tr>
+<tr>
+    <td> MCUSDK-15550
+    <td> Adding PSRAM in SBL Null syscfg causes the SBL boot up to fail
+    <td> SBL
+    <td> 11.00.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-15551
+    <td> Adding PSRAM in SBL OSPI syscfg causes the SBL boot up to fail
+    <td> SBL
+    <td> 11.00.00 onwards
+    <td> None
 </tr>
 </table>
 
