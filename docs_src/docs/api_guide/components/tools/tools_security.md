@@ -646,7 +646,9 @@ public_key=FORMAT:HEX,OCT:b502e951a5f5ed4bc99191511b530597d3a2d356d0f83887a54253
 
 \endcond
 
+\cond !SOC_AM64X && !SOC_AM243X
 ##  Boot time calculator tool
 
 Checkout the secure boot time calculator tool <a href="../boottime_calculator/index.html">here</a>.
+\endcond
 
