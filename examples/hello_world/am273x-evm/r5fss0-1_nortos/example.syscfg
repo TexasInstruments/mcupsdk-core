@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM273x" --part "Default" --package "ZCE" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2732-Q1" --package "NFBGA (ZCE)" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.27.0+4565"}
  */
 
 /**
@@ -10,7 +11,7 @@
  */
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -198,9 +199,9 @@ section6.output_section.create(3);
 section6.output_section[0].$name      = ".ARM.exidx";
 section6.output_section[0].palignment = true;
 section6.output_section[1].$name      = ".init_array";
-section6.output_section[1].palignment            = true;
+section6.output_section[1].palignment = true;
 section6.output_section[2].$name      = ".fini_array";
-section6.output_section[2].palignment            = true;
+section6.output_section[2].palignment = true;
 
 section7.$name                       = "BSS DSS L3";
 section7.load_memory                 = "DSS_L3";

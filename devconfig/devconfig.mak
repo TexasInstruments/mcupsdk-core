@@ -58,7 +58,13 @@ endif
 ENC_ENABLED?=no
 
 # Encryption option for SBL (yes/no)
-ENC_SBL_ENABLED?=yes
+# NOTE: Disabled by default. Enable only when encryption keys are programmed
+# into the device eFUSEs. Enabling this OOB on HSSE devices without programmed
+# keys will cause boot failures.
+ENC_SBL_ENABLED?=no
+
+# SBL and BOARDCFG software revision (used with --swrv/--sw-rev signing args)
+SBL_SWREV?=1
 
 # Debug Enable (yes/no)
 DBG_ENABLED?=no

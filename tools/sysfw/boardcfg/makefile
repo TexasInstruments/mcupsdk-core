@@ -137,9 +137,9 @@ DEVGRP_MAIN=1
 DEVGRP_MCU=2
 
 $(APP_NAME): $(HEXFILES)
-	$(PYTHON) $(BLOB_GEN) --sw-rev 1 --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG) --bcfg-rm $(BCFG_RM) --bcfg-pm $(BCFG_PM) --bcfg-sec $(BCFG_SEC) --output-file $(BCFG_BLOB_FILE)
+	$(PYTHON) $(BLOB_GEN) --sw-rev $(SBL_SWREV) --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG) --bcfg-rm $(BCFG_RM) --bcfg-pm $(BCFG_PM) --bcfg-sec $(BCFG_SEC) --output-file $(BCFG_BLOB_FILE)
 ifeq ($(SOC),$(filter $(SOC), am64x_am243x))
-	$(PYTHON) $(BLOB_GEN) --sw-rev 1 --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG_LINUX) --bcfg-rm $(BCFG_RM_LINUX) --bcfg-pm $(BCFG_PM_LINUX) --bcfg-sec $(BCFG_SEC_LINUX) --output-file $(BCFG_BLOB_LINUX_FILE)
+	$(PYTHON) $(BLOB_GEN) --sw-rev $(SBL_SWREV) --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG_LINUX) --bcfg-rm $(BCFG_RM_LINUX) --bcfg-pm $(BCFG_PM_LINUX) --bcfg-sec $(BCFG_SEC_LINUX) --output-file $(BCFG_BLOB_LINUX_FILE)
 endif
 
 sysfw_hex_header:
