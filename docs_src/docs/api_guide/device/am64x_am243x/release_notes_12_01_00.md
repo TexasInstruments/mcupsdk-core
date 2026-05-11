@@ -167,34 +167,7 @@ Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes
 
 ### SOC Device Drivers
 
-Peripheral | Supported CPUs | SysConfig Support |DMA Supported | Key features tested                                                                        | Key features not tested / NOT supported
------------|----------------|-------------------|--------------|--------------------------------------------------------------------------------------------|----------------------------------------
-ADC        | R5F, A53       | YES               | Yes          | Single conversion (one-shot mode), interrupt mode, DMA mode                                | Continuous conversion not tested
-CRC        | R5F            | YES               | No           | CRC in full CPU mode                                                                       | -
-DDR        | R5F            | YES               | No           | Tested LPDDR4 at 400MHz frequency.                                                         | -
-ECAP       | R5F, A53       | YES               | No           | Frequency, Duty cycle, interrupt mode                                                      | -
-EPWM       | R5F, A53       | YES               | No           | Different Frequency, Duty cycle, interrupt mode, Deadband and chopper module               | Tripzone module not tested
-EQEP       | R5F, A53       | YES               | No           | Signal Frequency and Direction, interrupt mode                                             | -
-FSI (RX/TX)| R5F            | YES               | No           | RX, TX, polling, interrupt mode, single/dual lanes                                         | -
-GPIO       | R5F, M4F, A53  | YES               | No           | Basic input/output, GPIO as interrupt                                                      | -
-GTC        | R5F, A53       | NA                | No           | Enable GTC, setting FID (Frequency indicator)                                              | -
-I2C        | R5F, M4F, A53  | YES               | No           | Controller mode, basic read/write, polling and interrupt mode                              | Target mode not supported. M4F not tested due to EVM limitation
-IPC Notify | R5F, M4F, A53  | YES               | No           | Low latency IPC between RTOS/NORTOS CPUs                                                   | -
-IPC Rpmsg  | R5F, M4F, A53  | YES               | No           | RPMessage protocol based IPC for all R5F, M4F, A53 running NORTOS/FreeRTOS/Linux           | -
-MCAN       | R5F, A53       | YES               | No           | RX, TX, interrupt and polling mode                                                         | -
-MCSPI      | R5F, M4F, A53  | YES               | Yes          | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                       | -
-MDIO       | R5F            | NA                | No           | Register read/write, link status and link interrupt enable API                             | -
-MMCSD      | R5F, A53       | YES               | Yes          | Raw read/write and file I/O on MMCSD0 eMMC, and MMCSD1 SD. eMMC tested till HS SDR mode (8-bit data, 52 MHz), SD tested till SD HS mode (4-bit, 25 MHz)  | Interrupt mode not tested
-OSPI       | R5F, A53       | YES               | Yes          | Read direct, Write indirect, Read/Write commands, DMA for read, PHY Mode                   | Interrupt mode not supported
-PCIe       | R5F            | YES               | No           | Buffer Transfer between EP and RC modes. Legacy interrupt                                  | MSI and MSIx capability
-Pinmux     | R5F, M4F, A53  | YES               | No           | Tested with multiple peripheral pinmuxes                                                   | -
-PRUICSS    | R5F            | YES               | No           | Tested with EtherCAT, EtherNet/IP, IO-Link, ICSS-EMAC, HDSL, EnDat                         | -
-SOC        | R5F, M4F, A53  | YES               | No           | lock/unlock MMRs, get CPU clock, CPU name, clock enable, set frequency, SW Warm/POR Reset, Address Translation  | -
-Sciclient  | R5F, M4F, A53  | YES               | No           | Tested with clock setup, module on/off                                                     | -
-SPINLOCK   | R5F, M4F, A53  | NA                | No           | Lock, unlock HW spinlocks                                                                  | -
-UART       | R5F, M4F, A53  | YES               | Yes          | Basic read/write, polling, interrupt mode,                                                 | HW flow control not tested. DMA mode not supported
-UDMA       | R5F, A53       | YES               | Yes          | Basic memory copy, SW trigger, Chaining                                                    | -
-WDT        | R5F, A53       | YES               | No           | Interrupt after watchdog expiry                                                            | Reset not supported
+Please refer to \ref BUILDSHEET for SOC Device Drivers support across different CPUs.
 
 ### Software Diagnostic Library (SDL)
 \cond SOC_AM243X
