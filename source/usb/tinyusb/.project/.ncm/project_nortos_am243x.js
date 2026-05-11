@@ -105,6 +105,7 @@ const includes = {
 
 const defines = {
     common: [
+        "NO_SYS=1",
     ],
     debug: [
     ],

@@ -102,6 +102,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DNO_SYS=1 \
     -DOS_NORTOS \
 
 DEFINES_debug := \
