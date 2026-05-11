@@ -44,6 +44,7 @@ FILES_common := \
     timers.c \
     queue.c \
     list.c \
+    stream_buffer.c \
     heap_3.c \
     FreeRTOS_POSIX_clock.c \
     FreeRTOS_POSIX_mqueue.c \

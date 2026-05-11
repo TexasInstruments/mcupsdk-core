@@ -37,6 +37,7 @@ const files_r5f_common = {
         "timers.c",
         "queue.c",
         "list.c",
+        "stream_buffer.c",
         "heap_3.c",
         // picked from freertos "posix"
         "FreeRTOS_POSIX_clock.c",
@@ -112,6 +113,7 @@ const files_m4f = {
         "timers.c",
         "queue.c",
         "list.c",
+        "stream_buffer.c",
         "heap_3.c",
         // picked from freertos "posix"
         "FreeRTOS_POSIX_clock.c",
