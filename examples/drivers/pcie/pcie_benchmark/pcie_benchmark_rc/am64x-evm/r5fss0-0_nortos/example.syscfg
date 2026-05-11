@@ -66,7 +66,7 @@ mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
-mpu_armv71.attributes        = "NonCached";
+mpu_armv71.attributes        = "Device";
 
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.size              = 15;
