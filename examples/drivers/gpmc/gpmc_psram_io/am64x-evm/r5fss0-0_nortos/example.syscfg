@@ -108,7 +108,7 @@ mpu_armv79.$name        = "CONFIG_MPU_REGION8";
 mpu_armv79.baseAddr     = 0x50000000;
 mpu_armv79.size         = 27;
 mpu_armv79.allowExecute = false;
-mpu_armv79.attributes   = "Device";
+mpu_armv79.attributes   = "NonCached";
 
 mpu_armv710.$name      = "CONFIG_MPU_REGION9";
 mpu_armv710.baseAddr   = 0x80000000;
