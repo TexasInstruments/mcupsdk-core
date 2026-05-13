@@ -70,7 +70,12 @@ See also \ref KERNEL_FREERTOS_PAGE, \ref KERNEL_NORTOS_PAGE for list of unsuppor
     ----------|--------------------------|---------------------------
     R5F       | 0  .. 511                | 0 (highest) .. 15 (lowest)
     M4F       | 15 ..  79                | 0 (highest) ..  7 (lowest)
-    A53       | 0 ..  255                | 0 (highest) ..  15 (lowest)
+    A53       | 0 ..  255                | 0 (highest) .. 14 (lowest)
+
+- \note For ARM A53, the effective lowest usable interrupt priority is 14 (not 15).
+  The GIC Priority Mask Register (`ICC_PMR_EL1`) is initialized to 15 in `HwiP_init`,
+  which masks all interrupts at priority level 15 or lower. Therefore, priority 15
+  should not be used.
 \endcond
 
 \cond SOC_AM62X
