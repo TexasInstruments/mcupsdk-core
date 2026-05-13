@@ -1402,6 +1402,75 @@ int32_t Flash_quirkSpansionUNHYSADisable(Flash_Config *config)
     return status;
 }
 
+int32_t Flash_quirkSpansionUNHYSAEnable(Flash_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint8_t regData = 0x00;
+    Flash_DevConfig *devCfg = config->devConfig;
+
+    /* Read UNHYSA bit from CFR3V */
+    status = Flash_norOspiRegRead(config, 0x65, 0x00800004, &regData);
+    if(status != SystemP_SUCCESS)
+    {
+        /* Failed to read CFR3V */
+        return status;
+    }
+
+    /* If UNHYSA bit is set */
+    if((regData & ((uint8_t)(1 << 3))) == 8)
+    {
+        /* Clear UNHYSA bit */
+        regData &= ~(1 << 3);
+
+        /* Write new value to CFR3N and CFR3V */
+        status = Flash_norOspiRegWrite(config, 0x71, 0x04, regData);
+
+        if (status == SystemP_SUCCESS)
+        {
+            /* Wait for write command to finish */
+            Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+        }
+        else
+        {
+            /* Failed to write to CFR3N and CFR3V */
+            return status;
+        }
+    }
+
+    /* Top Address Range selection for 4KB Sector Block */
+    regData = 0x0;
+    /* Read TB4KBS bit from CFR1V */
+    status = Flash_norOspiRegRead(config, 0x65, 0x00800002, &regData);
+    if(status != SystemP_SUCCESS)
+    {
+        /* Failed to read CFR1V */
+        return status;
+    }
+
+    /* If TB4KBS bit is NOT set */
+    if ((regData & ((uint8_t)(1 << 2))) == 0)
+    {
+        /* Set TB4KBS Bit */
+        regData |= (1 << 2);
+        
+        /* Write new value to CFR1N and CFR1V */
+        status = Flash_norOspiRegWrite(config, 0x71, 0x02, regData);
+
+        if (status == SystemP_SUCCESS)
+        {
+            /* Wait for write command to finish */
+            Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+        }
+        else
+        {
+            /* Failed to write to CFR1N and CFR1V */
+            return status;
+        }
+    }
+
+    return status;
+}
+
 static int32_t Flash_norOspiDacModeEnable(Flash_Config *config)
 {
     int32_t status = SystemP_SUCCESS;
