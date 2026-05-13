@@ -1373,12 +1373,19 @@ static void Flash_norOspiClose(Flash_Config *config)
 
 int32_t Flash_quirkSpansionUNHYSADisable(Flash_Config *config)
 {
+    Flash_DevConfig *devCfg = config->devConfig;
     int32_t status = SystemP_SUCCESS;
     uint8_t regData = 0x00;
     uint32_t write = 0;
 
     /* Hybrid Sector Disable */
+    /* Read UNHYSA bit from CFR3V */
     status = Flash_norOspiRegRead(config, 0x65, 0x00800004, &regData);
+    if(status != SystemP_SUCCESS)
+    {
+        /* Failed to read CFR3V */
+        return status;
+    }
 
     if(status == SystemP_SUCCESS)
     {
@@ -1396,7 +1403,18 @@ int32_t Flash_quirkSpansionUNHYSADisable(Flash_Config *config)
 
     if(write)
     {
+        /* Write new value to CFR3N and CFR3V */
         status = Flash_norOspiRegWrite(config, 0x71, 0x04, regData);
+        if (status == SystemP_SUCCESS)
+        {
+            /* Wait for write command to finish */
+            Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+        }
+        else
+        {
+            /* Failed to write to CFR3N and CFR3V */
+            return status;
+        }
     }
 
     return status;
