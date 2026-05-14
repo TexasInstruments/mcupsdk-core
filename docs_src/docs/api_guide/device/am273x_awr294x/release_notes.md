@@ -4,6 +4,9 @@
 
 Refer the below pages for release specific information,
 
+\cond (SOC_AM273X) 
+- \subpage RELEASE_NOTES_12_00_00_PAGE
+\endcond
 - \subpage RELEASE_NOTES_11_02_00_PAGE
 - \subpage RELEASE_NOTES_09_02_00_PAGE
 - \subpage RELEASE_NOTES_09_01_00_PAGE
