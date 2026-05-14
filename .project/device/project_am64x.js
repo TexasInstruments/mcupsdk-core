@@ -262,6 +262,7 @@ const example_file_list = [
     "examples/sdl/ecc/.project/project.js",
     "examples/sdl/ecc_r5f_cache/.project/project.js",
     "examples/sdl/ecc_sec/.project/project.js",
+    "examples/sdl/ecc_tcm/.project/project.js",
     "examples/sdl/vtm/vtm_reset/.project/project.js",
     "examples/sdl/vtm/vtm_uc/.project/project.js",
     "test/sdl/mcrc/mcrcUt/.project/project.js",

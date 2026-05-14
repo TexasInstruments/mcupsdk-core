@@ -255,6 +255,7 @@ const example_file_list = [
     "examples/sdl/ecc/.project/project.js",
     "examples/sdl/ecc_r5f_cache/.project/project.js",
     "examples/sdl/ecc_sec/.project/project.js",
+    "examples/sdl/ecc_tcm/.project/project.js",
     "examples/sdl/stog_r5f/.project/project.js",
     "examples/sdl/rom_checksum/.project/project.js",
     "test/sdl/dcc/dcc_unit_test/.project/project.js",
