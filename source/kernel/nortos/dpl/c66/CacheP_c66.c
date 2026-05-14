@@ -37,6 +37,11 @@
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/DebugP.h>
+#include <drivers/soc.h>
+
+#ifdef SOC_AM273X
+extern void SOC_rcmConfigureDspL2Mpu(void);
+#endif
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -143,6 +148,10 @@ void CacheP_init(void)
         mar = &gCacheMarRegion[i];
         CacheP_setMar(mar->baseAddr, mar->size, mar->value);
     }
+
+#ifdef SOC_AM273X
+    SOC_rcmConfigureDspL2Mpu();
+#endif
 
     return;
 }

@@ -3149,6 +3149,27 @@ void SOC_rcmC66xStart(void)
     CSL_FINS(ptrRCMRegs->DSP_PD_CTRL, DSS_RCM_DSP_PD_CTRL_DSP_PD_CTRL_PROC_HALT, 0x0);
 }
 
+/* L2MPPA[0] offset from DSP_ICFG base (physical 0x0184A200, DSP local 0x1800000+0x4A200) */
+#define SOC_L2MPPA_BASE_OFFSET  (0x4A200U)
+
+void SOC_rcmConfigureDspL2Mpu(void)
+{
+    uint32_t i;
+    volatile uint32_t *l2mppa_base;
+
+    l2mppa_base = (volatile uint32_t *)(CSL_DSP_ICFG_U_BASE + SOC_L2MPPA_BASE_OFFSET);
+
+    for (i = 0; i < 24; i++)
+    {
+        l2mppa_base[i] = 0x0000FFFFU;
+    }
+
+    for (i = 24; i < 32; i++)
+    {
+        l2mppa_base[i] = 0x00000000U;
+    }
+}
+
 void SOC_rcmR5ConfigLockStep(void)
 {
     CSL_mss_ctrlRegs *mssCtrl = SOC_rcmGetBaseAddressMSSCTRL ();

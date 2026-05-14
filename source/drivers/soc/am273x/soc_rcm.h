@@ -778,12 +778,21 @@ void SOC_clearWarmResetCause(void);
   *  \brief Start memory initialization for DSS_CM4 RAM
   */
  void SOC_rcmStartMemInitM4Ram(void);
- 
+
  /**
   *  \brief Wait memory initialization to complete for DSS_CM4 RAM
   */
  void SOC_rcmWaitMeminitM4Ram(void);
- 
+
+/**
+ * \brief Configure DSP L2 Memory Protection Unit
+ *
+ * Sets L2MPPA[0-23]=0x0000FFFF (valid space access), L2MPPA[24-31]=0x00000000 (reserved blocked).
+ * L2MPPA bit 7 is sticky, reads as 0x00000080 but functionally blocks all reserved space access.
+ * Must be called from DSP C66x core only, early in startup.
+ */
+void SOC_rcmConfigureDspL2Mpu(void);
+
 /** @} */
 
 #ifdef __cplusplus

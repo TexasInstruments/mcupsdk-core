@@ -62,6 +62,7 @@ extern "C"
 
 #if defined (SOC_AM273X)
 #include <drivers/soc/am273x/soc.h>
+#include <drivers/soc/am273x/soc_rcm.h>
 #endif
 
 #if defined (SOC_AWR294X)
