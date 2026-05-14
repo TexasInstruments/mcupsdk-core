@@ -7294,6 +7294,41 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "DSP L2 Memory Protection Unit test CPU is C66SS0 running NORTOS.",
+        "name": "dsp_l2mpu_test",
+        "location": "../../test/drivers/mpu/dsp_l2mpu_test/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "..",
+            "test",
+            "drivers",
+            "mpu",
+            "dsp_l2mpu_test",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "A simple \"clock, measurement\" Example.  System project.",

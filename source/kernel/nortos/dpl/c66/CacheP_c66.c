@@ -150,6 +150,7 @@ void CacheP_init(void)
     }
 
 #ifdef SOC_AM273X
+    /* Errata i2341: Unallocated space access to DSP L2 causing aliasing and parity error workaround. */
     SOC_rcmConfigureDspL2Mpu();
 #endif
 

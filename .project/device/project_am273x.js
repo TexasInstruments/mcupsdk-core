@@ -223,6 +223,7 @@ const example_file_list = [
     "test/drivers/mibspi/mibspi_peripheral/.project/project.js",
     "test/drivers/mibspi/mibspi_analog_loopback/.project/project.js",
     "test/drivers/mpu_firewall/mpu_firewall_test_am273x/.project/project.js",
+    "test/drivers/mpu/dsp_l2mpu_test/.project/project.js",
     "test/drivers/soc/soc_r5f/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/.project/project.js",
