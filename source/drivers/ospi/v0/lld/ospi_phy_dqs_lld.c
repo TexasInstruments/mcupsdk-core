@@ -700,6 +700,7 @@ void OSPI_lld_phyGetTuningData(uint32_t *tuningData, uint32_t *tuningDataSize)
 int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint8_t arrays[5][128][128])
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;
+    int32_t readStatus = OSPI_SYSTEM_SUCCESS;
     OSPI_PhyConfig searchPoint;
     uint32_t rdDelay;
     uint8_t rxDll, txDll;
@@ -723,8 +724,8 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
 
                 OSPI_lld_phySetRdDelayTxRxDLL(hOspi, &searchPoint);
 
-                status = OSPI_lld_phyReadAttackVector(hOspi, flashOffset);
-                if(status == OSPI_SYSTEM_SUCCESS)
+                readStatus = OSPI_lld_phyReadAttackVector(hOspi, flashOffset);
+                if(readStatus == OSPI_SYSTEM_SUCCESS)
                 {
                     arrays[rdDelay][txDll][rxDll] = 1;
                 }
@@ -739,7 +740,7 @@ int32_t OSPI_lld_phyTuneGrapher(OSPILLD_Handle hOspi, uint32_t flashOffset, uint
     /* Disable PHY */
     OSPI_lld_disablePhy(hOspi);
 
-    return OSPI_SYSTEM_SUCCESS;
+    return status;
 }
 
 int32_t OSPI_lld_phyFindOTP2(OSPILLD_Handle handle, uint32_t flashOffset, OSPI_PhyConfig *otp)
