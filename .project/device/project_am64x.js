@@ -139,6 +139,7 @@ const example_file_list = [
     "examples/drivers/ospi/ospi_flash_interrupt/.project/project.js",
     "examples/drivers/ospi/ospi_flash_interrupt_lld/.project/project.js",
     "examples/drivers/ospi/ospi_flash_dma_lld/.project/project.js",
+    "examples/drivers/ospi/ospi_phy_grapher_uart/.project/project.js",
     "examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/.project/project.js",
     "examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/.project/project.js",
