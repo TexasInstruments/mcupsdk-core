@@ -1192,12 +1192,127 @@ static int32_t Flash_norOspiReset(Flash_Config *config)
     return status;
 }
 
+static int32_t Flash_setDefaultCfr4x(Flash_Config *config)
+{
+    Flash_DevConfig *devCfg = config->devConfig;
+    Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
+    int32_t status = SystemP_SUCCESS;
+    uint8_t cfr4 = 0U;
+
+    if((devCfg->protocolCfg.protoCfg.cmdRegRd == 0x00)
+        || (devCfg->protocolCfg.protoCfg.cmdRegWr == 0x00)
+        || (obj->currentProtocol != FLASH_CFG_PROTO_8D_8D_8D))
+    {
+        return SystemP_FAILURE;
+    }
+
+    status = Flash_norOspiRegRead(config, devCfg->protocolCfg.protoCfg.cmdRegRd, 0x00800005, &cfr4);
+    if (status != SystemP_SUCCESS)
+    {
+        return status;
+    }
+
+    if (cfr4 == 0xA8)
+    {
+        /* Already set to default values */
+        return status;
+    }
+
+    /* Write default values of CFR4N as in datasheet (0xA8) */
+    status = Flash_norOspiRegWrite(config, devCfg->protocolCfg.protoCfg.cmdRegWr, 0x05, 0xA8);
+    if (status == SystemP_SUCCESS)
+    {
+        status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+    }
+    else
+    {
+        /* Failed to write to CFR4N and CFR4V */
+        return status;
+    }
+
+    return status;
+}
+
+static int32_t Flash_recover(Flash_Config *config)
+{
+    Flash_DevConfig *devCfg = config->devConfig;
+    int32_t status = SystemP_SUCCESS;
+    uint32_t waitResetTimeout = devCfg->flashBusyTimeout;
+
+    /* Perform flash reset */
+    status = Flash_norOspiReset(config);
+    if (status != SystemP_SUCCESS)
+    {
+        /* Recovery reset failed */
+        return SystemP_FAILURE;
+    }
+
+    /* Make sure to loop at least once */
+    if (waitResetTimeout == 0) {
+        waitResetTimeout = 1;
+    }
+
+    /* Loop to wait for the reset to finish (it takes tSR ~ 90us) */
+    while (waitResetTimeout > 0)
+    {
+        status = Flash_norOspiReadId(config);
+
+        /* ReadId should be successful once software reset is successful */
+        if (status == SystemP_SUCCESS)
+        {
+            break;
+        }
+
+        --waitResetTimeout;
+    }
+
+    return status;
+}
+
+/* Safeboot check expects on boot that read id is successful and status
+ * register 1 value is 0x00 */
+static uint8_t Flash_corrupted(Flash_Config *config)
+{
+    Flash_DevConfig *devCfg = config->devConfig;
+    int32_t status = SystemP_SUCCESS;
+    uint8_t statusRegister1 = 0U;
+
+    /* Probe #1 : Try to read SPI JEDEC ID */
+    status = Flash_norOspiReadId(config);
+    if (status != SystemP_SUCCESS)
+    {
+        return 1U;
+    }
+
+    /* Probe #2 : raw SPI status read */
+    status = Flash_norOspiCmdRead(config,
+                                devCfg->cmdRdsr,
+                                OSPI_CMD_INVALID_ADDR,
+                                0U,
+                                0U,
+                                &statusRegister1,
+                                1U);
+    if(status != SystemP_SUCCESS)
+    {
+        return 1U;
+    }
+
+
+    if (statusRegister1 != 0x00)
+    {
+        return 1U;
+    }
+
+    return 0U;
+}
+
 static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 {
     int32_t status = SystemP_SUCCESS;
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
     Flash_Attrs *attrs = config->attrs;
     int32_t attackVectorStatus = SystemP_FAILURE;
+    uint8_t performRecovery = 0U;
 
     obj->ospiHandle = OSPI_getHandle(attrs->driverInstance);
 
@@ -1211,9 +1326,6 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         /* Set device size and addressing bytes */
         OSPI_setDeviceSize(obj->ospiHandle, attrs->pageSize, attrs->blockSize);
 
-        /* Set command opcode extension type */
-        OSPI_setCmdExtType(obj->ospiHandle, config->devConfig->cmdExtType);
-
         /* Set initial number of address bytes */
         if(config->devConfig->addrByteSupport == 2)
         {
@@ -1226,6 +1338,16 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 
         /* Set current protocol as 1s1s1s */
         obj->currentProtocol = FLASH_CFG_PROTO_1S_1S_1S;
+
+        /* Check whether flash is in a corrupted state (perform SafeBoot)*/
+        performRecovery = Flash_corrupted(config);
+        if (performRecovery)
+        {
+            status += Flash_recover(config);
+        }
+
+        /* Set command opcode extension type */
+        OSPI_setCmdExtType(obj->ospiHandle, config->devConfig->cmdExtType);
 
         /* Now configure the flash for the selected protocol */
         status += Flash_norOspiSetProtocol(config, obj->ospiHandle, params);
@@ -1253,6 +1375,13 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
             status = Flash_norOspiReadId(config);
         }
+
+        if (performRecovery)
+        {
+            /* Set default value to CFR4N */
+            status += Flash_setDefaultCfr4x(config);
+        }
+
         /* Enable PHY if attack vector present and PHY mode is enabled */
         obj->phyEnable = FALSE;
         uint32_t phyTuningOffset = Flash_getPhyTuningOffset(config);
