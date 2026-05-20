@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM243x_ALX_beta" --part "ALX" --package "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2434" --package "FCCSP (ALX)" --variant "AM2434-E" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.27.0+4565"}
  */
 
 /**
@@ -13,7 +14,7 @@ const mcspi1          = mcspi.addInstance();
 const mcspi2          = mcspi.addInstance();
 const mcspi3          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -56,20 +57,23 @@ mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
 mcspi1.mcspiChannel[1].$name = "CONFIG_MCSPI_CH2";
 mcspi1.mcspiChannel[2].$name = "CONFIG_MCSPI_CH3";
 
-mcspi2.$name                 = "CONFIG_MCSPI1";
-mcspi2.sdkInfra              = "LLD";
-mcspi2.transferCallbackFxn   = "MCSPI_lld_transferCallback";
-mcspi2.errorCallbackFxn      = "MCSPI_lld_errorCallback";
-mcspi2.inputSelect           = "0";
-mcspi2.intrEnable            = "DMA";
-mcspi2.transferMode          = "CALLBACK";
-mcspi2.mode                  = "MULTI_CONTROLLER";
-mcspi2.SPI.$assign           = "SPI3";
-mcspi2.child.$name           = "drivers_mcspi_v0_mcspi_v0_template_lld0";
+mcspi2.$name                       = "CONFIG_MCSPI1";
+mcspi2.sdkInfra                    = "LLD";
+mcspi2.transferCallbackFxn         = "MCSPI_lld_transferCallback";
+mcspi2.errorCallbackFxn            = "MCSPI_lld_errorCallback";
+mcspi2.inputSelect                 = "0";
+mcspi2.intrEnable                  = "DMA";
+mcspi2.transferMode                = "CALLBACK";
+mcspi2.mode                        = "MULTI_CONTROLLER";
+mcspi2.SPI.$assign                 = "SPI3";
+mcspi2.child.$name                 = "drivers_mcspi_v0_mcspi_v0_template_lld0";
 mcspi2.mcspiChannel.create(3);
-mcspi2.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
-mcspi2.mcspiChannel[1].$name = "CONFIG_MCSPI_CH5";
-mcspi2.mcspiChannel[2].$name = "CONFIG_MCSPI_CH6";
+mcspi2.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH1";
+mcspi2.mcspiChannel[0].CSn.$assign = "PRG0_PRU0_GPO17";
+mcspi2.mcspiChannel[1].$name       = "CONFIG_MCSPI_CH5";
+mcspi2.mcspiChannel[1].CSn.$assign = "PRG0_PRU0_GPO15";
+mcspi2.mcspiChannel[2].$name       = "CONFIG_MCSPI_CH6";
+mcspi2.mcspiChannel[2].CSn.$assign = "PRG1_PRU1_GPO19";
 
 mcspi3.$name                 = "CONFIG_MCSPI2";
 mcspi3.transferMode          = "CALLBACK";
@@ -308,9 +312,6 @@ mcspi1.mcspiChannel[2].CSn.$suggestSolution = "SPI0_CS1";
 mcspi2.SPI.CLK.$suggestSolution             = "PRG0_PRU0_GPO16";
 mcspi2.SPI.D0.$suggestSolution              = "PRG0_PRU0_GPO13";
 mcspi2.SPI.D1.$suggestSolution              = "PRG0_PRU0_GPO14";
-mcspi2.mcspiChannel[0].CSn.$suggestSolution = "PRG1_PRU1_GPO19";
-mcspi2.mcspiChannel[1].CSn.$suggestSolution = "PRG0_PRU0_GPO15";
-mcspi2.mcspiChannel[2].CSn.$suggestSolution = "PRG0_PRU0_GPO17";
 mcspi3.SPI.$suggestSolution                 = "SPI2";
 mcspi3.SPI.CLK.$suggestSolution             = "UART1_TXD";
 mcspi3.SPI.D0.$suggestSolution              = "UART0_RXD";
