@@ -59,8 +59,6 @@
 #define HIGH_PRIO_INT                   (2U)
 #define GET_EVENT_GROUP(event)          ((event) / 32U)
 #define GET_EVENT_BIT(event)            ((event) % 32U)
-#define SDL_ESM_HI_PRI_RESETVAL         (0xFFFFFFFFU)
-#define SDL_ESM_LOW_PRI_RESETVAL        (0xFFFFFFFFU)
 
 /* ========================================================================== */
 /*                  Function Declarations                                     */
@@ -80,7 +78,7 @@ void ESM_highPriorityISR(void* args);
 static void disableESM()
 {
     // Reset module
-    ESM_REGISTERS->SFT_RST = SDL_ESM_SFT_RST_KEY_MASK;
+    ESM_REGISTERS->SFT_RST = CSL_ESM_SFT_RST_KEY_MASK;
 
     // Disable configuration, high, low and critical interrupts
     ESM_REGISTERS->EN = ESM_EN_DISABLE_VALUE;
@@ -178,8 +176,8 @@ void ESM_configRegisterCorruptionISR(void* args)
 {
     (void)(args);
 
-    ESM_REGISTERS->ERR_STS |= SDL_ESM_ERR_STS_MSK_MASK; // Clear interrupt for all event groups
-    ESM_REGISTERS->EOI |= (CFG_ERR_INT & SDL_ESM_EOI_KEY_MASK);
+    ESM_REGISTERS->ERR_STS |= CSL_ESM_ERR_STS_MSK_MASK; // Clear interrupt for all event groups
+    ESM_REGISTERS->EOI |= (CFG_ERR_INT & CSL_ESM_EOI_KEY_MASK);
 }
 
 void ESM_lowPriorityISR(void* args)
@@ -194,7 +192,7 @@ void ESM_lowPriorityISR(void* args)
     }
     else 
     {
-        uint32_t levelInterrupt = (interruptStatus & SDL_ESM_LOW_PRI_LVL_MASK);
+        uint32_t levelInterrupt = (interruptStatus & CSL_ESM_LOW_PRI_LVL_MASK);
 
         // service interrupt based on source
         switch(levelInterrupt)
@@ -210,7 +208,7 @@ void ESM_lowPriorityISR(void* args)
         // clear interrupt bit
         ESM_REGISTERS->ERR_GRP[GET_EVENT_GROUP((uint8_t)levelInterrupt)].STS |= (1UL << GET_EVENT_BIT((uint8_t)levelInterrupt));
         
-        ESM_REGISTERS->EOI |= (LOW_PRIO_INT & SDL_ESM_EOI_KEY_MASK);
+        ESM_REGISTERS->EOI |= (LOW_PRIO_INT & CSL_ESM_EOI_KEY_MASK);
     }
 }
 
@@ -226,7 +224,7 @@ void ESM_highPriorityISR(void* args)
     }
     else 
     {
-        uint32_t levelInterrupt = (interruptStatus & SDL_ESM_HI_PRI_LVL_MASK);
+        uint32_t levelInterrupt = (interruptStatus & CSL_ESM_HI_PRI_LVL_MASK);
 
         // service interrupt based on source
         switch(levelInterrupt)
@@ -240,7 +238,7 @@ void ESM_highPriorityISR(void* args)
 
         // clear interrupt bit
         ESM_REGISTERS->ERR_GRP[GET_EVENT_GROUP((uint8_t)levelInterrupt)].STS |= (1UL << GET_EVENT_BIT((uint8_t)levelInterrupt));
-        ESM_REGISTERS->EOI |= (HIGH_PRIO_INT & SDL_ESM_EOI_KEY_MASK);
+        ESM_REGISTERS->EOI |= (HIGH_PRIO_INT & CSL_ESM_EOI_KEY_MASK);
     }
 }
 

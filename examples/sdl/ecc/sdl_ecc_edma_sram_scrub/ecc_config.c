@@ -49,20 +49,11 @@
 #include <kernel/dpl/TimerP.h>
 #include <dpl_interface.h>
 #include <drivers/soc.h>
-#if defined(SOC_AM263X)
-#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
-#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
 
-#define SDL_MSS_L2_MEM_INIT_ADDR                        (SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_L2IOCRAM_MEM_INIT)
-#define SDL_MSS_L2_MEM_INIT_DONE_ADDR                   (SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_L2OCRAM_MEM_INIT_DONE)
-#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR                 (SDL_ECC_AGG_R5SS0_CORE0_U_BASE+SDL_MSS_ECC_AGGA_ERROR_STATUS1)
-#define SDL_ECC_MSS_L2_BANK_MEM_INIT                    (0x0CU) /*Bank 3*/
-#define SDL_EXAMPLE_ECC_AGGR                            SDL_SOC_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                          SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
 /* ECC Agg SEC Enable defines */
 #define APP_ECC_AGGR_SEC_ENABLE_SET_REG0_ADDR           (CSL_ECC_AGG_TOP_U_BASE + CSL_MSS_ECC_AGG_MSS_SEC_ENABLE_SET_REG0)
 
@@ -92,31 +83,10 @@
                                                         CSL_MSS_ECC_AGG_MSS_ERROR_STATUS1_CLR_CTRL_REG_ERR_MASK)
 #define APP_ECC_AGGR_ERROR_STATUS3_CLEAR_VAL            (CSL_MSS_ECC_AGG_MSS_ERROR_STATUS3_CLR_SVBUS_TIMEOUT_ERR_MASK)
 
-
-#define ECC_SEC_INT                                     (19U)
-#define ECC_DED_INT                                     (20U)
-
-#define ESM_GROUPS                                      (4U)
-
-// ESM EN enable interrupt value
-#define ESM_EN_ENABLE_VALUE                             (0b1111)
-#define CFG_ERR_INT                                     (0U)
-#define LOW_PRIO_INT                                    (1U)
-#define HIGH_PRIO_INT                                   (2U)
-
-#define ESM_REGISTERS                                   ((volatile SDL_esmRegs *) CSL_TOP_ESM_U_BASE)
-#define GET_EVENT_GROUP(event)                          ((event) / 32U)
-#define GET_EVENT_BIT(event)                            ((event) % 32U)
-
-#define SDL_ESM_HI_PRI_RESETVAL                         (0xFFFFFFFFU)
-#define SDL_ESM_LOW_PRI_RESETVAL                        (0xFFFFFFFFU)
-
 /* SRAM Banks Vector ID defines */
 #define APP_SRAM_BANK_0_VECTOR_ID                       (0U)
 #define APP_SRAM_BANK_1_VECTOR_ID                       (1U)
 #define APP_SRAM_BANK_2_VECTOR_ID                       (2U)
-
-#define SDL_MSS_L2_MAX_MEM_SECTIONS                     (1U)
 
 #define ECC_VECTOR_REG_ADDR                             (CSL_ECC_AGG_TOP_U_BASE + CSL_MSS_ECC_AGG_MSS_ECC_VECTOR)
 /* ========================================================================== */
@@ -153,42 +123,6 @@ static inline uint32_t App_getEccStatusPendVal(uint32_t bankIdx);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
-                                            SDL_ESM_IntType esmIntrType,
-                                            uint32_t grpChannel,
-                                            uint32_t index,
-                                            uint32_t intSrc,
-                                            uintptr_t *arg)
-{
-    int32_t retVal = 0;
-    const uint32_t interruptStatus = ESM_REGISTERS->LOW_PRI;
-
-    // Interrupt is no longer asserted
-    if(interruptStatus == SDL_ESM_LOW_PRI_RESETVAL)
-    { 
-        retVal = 1; 
-    }
-    else 
-    {
-        uint32_t levelInterrupt = (interruptStatus & SDL_ESM_LOW_PRI_LVL_MASK);
-
-        // service interrupt based on source
-        switch(levelInterrupt)
-        {
-            case ECC_SEC_INT:
-                App_serviceSecInterrupt();
-                break;
-            default:
-                // shouldn't enter here
-                break;
-        }
-
-        // clear interrupt bit
-        ESM_REGISTERS->ERR_GRP[GET_EVENT_GROUP((uint8_t)levelInterrupt)].STS |= (1UL << GET_EVENT_BIT((uint8_t)levelInterrupt));
-        ESM_REGISTERS->EOI |= (LOW_PRIO_INT & SDL_ESM_EOI_KEY_MASK);
-    }
-return retVal;
-}
 
 void App_configEccEsm(void)
 {

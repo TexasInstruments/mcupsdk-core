@@ -338,6 +338,8 @@ const example_file_list = [
     "examples/real_time_debug/.project/project.js",
     "examples/sdl/dcc/dcc_modes1/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_edma_sram_scrub/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",

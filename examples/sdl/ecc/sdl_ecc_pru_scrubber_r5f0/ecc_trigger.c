@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2026 Texas Instruments Incorporated
+ *   Copyright (c) Texas Instruments Incorporated 2022-2026
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,22 +50,33 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
-#include "edma_rti_sram_scrub.h"
 
-
+#if defined(SOC_AM263X)
+#include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
 /* delay for 1us*/
-#define DELAY                                       (1U)
-#define SDL_MSS_L2_MAX_MEM_SECTIONS                 (1U)
+#define DELAY 1
+
+/* This macro shows how many ESM events are configured*/
+#define SDL_ESM_MAX_MSS_EXAMPLE_AGGR                (2u)
+#define SDL_MSS_L2_MAX_MEM_SECTIONS                 (1u)
 
 #if defined(SOC_AM263X) || defined(SOC_AM263PX)
-#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70000A00U) /*MSS_L2_SLV0 address*/
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70000008u) /*MSS_L2_SLV0 address*/
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_SOC_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_RAM_ID
-#define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x0CU) /*Bank 3 and 2*/
+
+#define SDL_MSS_L2_MEM_INIT_ADDR                    (0x50D00240u)
+#define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00244u)
+#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
+#define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0xcu) /*Bank 3*/
 #endif
 
 /* ========================================================================== */
@@ -85,7 +96,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
 };
 
 /* ========================================================================== */
-/*                  Function Declarations                                     */
+/*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
 /* ECC_Example_init function */
@@ -106,6 +117,19 @@ int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
+    if (retValue == 0) {
+        SDL_cleartcmStatusRegs(0x7);
+        /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of MSS L2 ECC: result = %d\r\n", result);
+
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of MSS L2 ECC Memory is complete \r\n");
+        }
+    }
 
     if (retValue == 0) {
         /* Initialize ECC */
@@ -153,38 +177,11 @@ int32_t ECC_Test_run_MSS_L2RAMB_1BitInjectTest(void)
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
-        ;
+
     }
 
     return retVal;
 }/* End of ECC_Test_run_MSS_L2RAMB_1BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_sdlFuncTest
- *
- * @brief   Execute ECC sdl function test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- **********************************************************************/
-static int32_t ECC_sdlFuncTest(void)
-{
-    int32_t result;
-    int32_t retVal = 0;
-
-    if (retVal == 0)
-    {
-        /*Inject ECC Single bit error*/
-        result = ECC_Test_run_MSS_L2RAMB_1BitInjectTest();
-
-        if (result != SDL_PASS) 
-        {
-            retVal = -1;
-        }
-    }
-    return retVal;
-}
 
 /*********************************************************************
  * @fn      sdlApp_dplInit
@@ -204,6 +201,7 @@ static int32_t sdlApp_dplInit(void)
     {
         DebugP_log("\r\nError: Init Failed\r\n");
     }
+
     return ret;
 }
 
@@ -221,7 +219,6 @@ int32_t ECC_funcTest(void)
     /*Clearing any old interrupt presented*/
     SDL_REG32_WR(SDL_ECC_AGGR_ERROR_STATUS1_ADDR, 0xF0Fu);
 
-
     /*Initializing required modules*/
     testResult = ECC_Example_init();
 
@@ -230,6 +227,8 @@ int32_t ECC_funcTest(void)
         DebugP_log("\r\nECC Safety Example tests: unsuccessful\r\n");
         return SDL_EFAIL;
     }
+    /*Inject ECC Single bit error*/
+    testResult = ECC_Test_run_MSS_L2RAMB_1BitInjectTest();
 
     return (testResult);
 }

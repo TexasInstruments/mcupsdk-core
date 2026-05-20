@@ -67,14 +67,8 @@
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-volatile uint8_t gBufferCpy[APP_CHUNK_SIZE_BYTES] __attribute__((aligned(64U), section(".data.tcma"))) = { 0U };
-volatile bool edmaReadWrongData = false;
-volatile uint8_t CB_Complete =0x00;
-
-/* ========================================================================== */
-/*                 External Function Declarations                             */
-/* ========================================================================== */
-extern int32_t ECC_Test_run_MSS_L2RAMB_1BitInjectTest(void);
+volatile bool    edmaReadWrongData = false;
+volatile uint8_t esmCallBackStatus =0x00;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -101,9 +95,7 @@ void App_serviceSecInterrupt(void)
                 /* Read and compare the data with EDMA read buffer */
                 uint8_t* edmaBuffAddr = App_getEdmaBuffAddr();
 
-               memcpy((void*)gBufferCpy, edmaBuffAddr, APP_CHUNK_SIZE_BYTES);
-
-                if(memcmp((void*)gBufferCpy, (void*)edmaChunkStartAddr, APP_CHUNK_SIZE_BYTES) != 0)
+                if(memcmp((void*)edmaBuffAddr, (void*)edmaChunkStartAddr, APP_CHUNK_SIZE_BYTES) != 0)
                 {
                     /* Data mismatch - EDMA read the wrong data - Scrub successful. */
                     
@@ -118,7 +110,7 @@ void App_serviceSecInterrupt(void)
                 /* RESET the device. CPU may have read wrong data */
             }
 
-            CB_Complete = 0xFF;
+            esmCallBackStatus = 0xFF;
             /* Disable ESM event to print the edmaReadWrongData status */
             ESM_REGISTERS->EN = ESM_EN_DISABLE_VALUE;
         }
@@ -145,7 +137,7 @@ void ecc_main(void *args)
     {
         /*Inject ECC Single bit error*/
         ECC_Test_run_MSS_L2RAMB_1BitInjectTest();
-        while(CB_Complete == 0x00)
+        while(esmCallBackStatus == 0x00)
         {
             ;
         }
@@ -158,7 +150,7 @@ void ecc_main(void *args)
         {
             DebugP_log("RESET the device. CPU may have read wrong data ...\r\n");
         }
-        CB_Complete = 0x00;
+        esmCallBackStatus = 0x00;
 
         /* Enable back ESM event once print the edmaReadWrongData status */
         ESM_REGISTERS->EN = ESM_EN_ENABLE_VALUE;
