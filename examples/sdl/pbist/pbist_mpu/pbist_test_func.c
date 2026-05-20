@@ -69,19 +69,26 @@
 #define PBIST_APP_TIMEOUT               (0x400000U)
 
 #if defined (SOC_AM64X)
-#define PBIST_PSC_BASE_ADDR             ((uint32_t)0x400A00)
-
-/* The following macro gives the PSC register address of a device */
-#define PBIST_A53_0_ADDR                (PBIST_PSC_BASE_ADDR + 4*CSL_MAIN_LPSC_A53_0)
+#if defined (R5F_CORE)
+#define PBIST_PSC_BASE_ADDR             ((uint32_t)0x00400000)
+#else
+#define PBIST_PSC_BASE_ADDR             ((uint32_t)0x80400000)
+#endif
 
 /* The following macros will be used in modifying PSC register values */
 #define PBIST_PSC_NEXT_MASK             (0x0000003F)
 #define PBIST_PSC_FORCE_OFF             (0x80000001)
-#define PBIST_PSC_PTCMD_ADDR            (0x400120)
+#define PBIST_PSC_MDCTL_OFFSET          (0xA00)
+#define PBIST_PSC_MDCTL_ADDR            (PBIST_PSC_BASE_ADDR + PBIST_PSC_MDCTL_OFFSET)
+#define PBIST_PSC_PTCMD_OFFSET          (0x120)
+#define PBIST_PSC_PTCMD_ADDR            (PBIST_PSC_BASE_ADDR + PBIST_PSC_PTCMD_OFFSET)
 #define PBIST_PSC_PTCMD_TIMEOUT         (1000000U)
-#define PBIST_PSC_PTSTAT_ADDR           (0x400128)
+#define PBIST_PSC_PTSTAT_OFFSET         (0x128)
+#define PBIST_PSC_PTSTAT_ADDR           (PBIST_PSC_BASE_ADDR + PBIST_PSC_PTSTAT_OFFSET)
 #endif
 
+/* The following macro gives the PSC register address of a device */
+#define PBIST_A53_0_ADDR                (PBIST_PSC_MDCTL_ADDR + 4*CSL_MAIN_LPSC_A53_0)
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
