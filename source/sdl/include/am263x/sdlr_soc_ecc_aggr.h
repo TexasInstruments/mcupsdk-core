@@ -97,7 +97,7 @@ extern "C"
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_INJECT_TYPE                                                   (0U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_ACCESSIBLE                                                    (1U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_ROW_WIDTH                                                     (64U)
-#define SDL_SOC_ECC_AGGR_MAILBOX_ECC_RAM_SIZE                                                      (524288U)
+#define SDL_SOC_ECC_AGGR_MAILBOX_ECC_RAM_SIZE                                                      (16384U)
 
 
 #define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID                                                        (5U)
