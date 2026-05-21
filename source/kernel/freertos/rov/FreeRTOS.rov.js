@@ -340,35 +340,24 @@ function TaskInstance()
 
 function getTaskFreeStackSize(stackBase, currentTaskSP)
 {
-    let readSize = 4;
     let skipSize = 128;
 
     /*
         * We don't know the size of the task stack, so look every n bytes :(
         */
-    let stackData = Program.fetchArray(
-        {
-            type: 'xdc.rov.support.ScalarStructs.S_UChar',
-            isScalar: true
-        }, stackBase, readSize);
 
+    let stackData = Program.fetchFromAddr(stackBase, "uint32_t");
     let index = stackBase;
 
     /*
         * Find the first non-0xa5.
         */
-    while ((stackData[0] == 0xa5) &&
-           (stackData[1] == 0xa5) &&
-           (stackData[2] == 0xa5) &&
-           (stackData[3] == 0xa5) &&
-           (index < currentTaskSP)
-        ) {
+    while (stackData == 0xa5a5a5a5) {
         index += skipSize;
-        let stackData = Program.fetchArray(
-            {
-                type: 'xdc.rov.support.ScalarStructs.S_UChar',
-                isScalar: true
-            }, index, readSize);
+        if(index < currentTaskSP) {
+            break;
+        }
+        stackData = Program.fetchFromAddr(index, "uint32_t");
     }
 
     if (stackBase >= index)
