@@ -26,6 +26,90 @@
 - Due to the design constraint maximum DMA PKTDMA_0 TX/RX channels each can be used is 3 per R5F core.
   So in case of MCSPI instance with DMA mode enabled can use atmost 3 CS in multi-controller mode.
 
+## DMA Transfer Size Limitation (12-bit Counter)
+
+**Maximum McSPI DMA transfer: 4,095 WORDS per transaction**
+
+The McSPI DMA transfer counter is a **12-bit field** that tracks the number of **words** (not bytes) to transfer. A word is defined by the configured data width.
+
+### Transfer Counter Architecture
+
+**Counter field:** 12-bit register (0x000 to 0xFFF = 0 to 4,095 decimal)
+
+**Important:** Attempting a transfer count of 4,096 or higher causes register overflow:
+- 4,096 decimal = 0x1000 (requires 13 bits)
+- Overflow wraps to 0x000
+- Transfer fails and system may hang
+
+### Word Definition and Byte Conversion
+
+The **word** size depends on the SPIDAT0 WL[3:0] field (word length in bits):
+
+| Data Width | Word Size | bufWidthShift | Formula |
+|------------|-----------|---------------|---------|
+| 1-8 bits   | 1 byte    | 0             | bytes = count × 1 |
+| 9-16 bits  | 2 bytes   | 1             | bytes = count × 2 |
+| 17-32 bits | 4 bytes   | 2             | bytes = count × 4 |
+
+### Maximum Transfer Sizes
+
+**Since counter max = 4,095 words:**
+
+| Data Width | Max Words | Max Bytes |
+|------------|-----------|-----------|
+| 8-bit      | 4,095     | **4,095 bytes** |
+| 16-bit     | 4,095     | **8,190 bytes** |
+| 32-bit     | 4,095     | **16,380 bytes** |
+
+### Calculation Method
+
+```
+Total bytes = transaction->count × (1 << bufWidthShift)
+           OR
+Total bytes = transaction->count << bufWidthShift
+```
+
+**Example:**
+- Data width: 8-bit (bufWidthShift = 0)
+- Count: 4,095 words
+- Total bytes: 4,095 << 0 = 4,095 bytes
+
+- Data width: 16-bit (bufWidthShift = 1)
+- Count: 4,095 words
+- Total bytes: 4,095 << 1 = 8,190 bytes
+
+- Data width: 8-bit (bufWidthShift = 0)
+- Count: 4,096 words
+- Total bytes: 4,096 << 0 = 4,096 bytes  **OVERFLOW**
+
+### Workaround for Large Transfers
+
+For transfers exceeding 4,095 words:
+
+1. **Split into multiple transactions** (each ≤ 4,095 words)
+2. **Use transaction chaining** if available
+3. **Loop-based approach** for sequential transfers
+
+### Implementation Detail:
+
+The DMA transfer size validation is performed in all DMA API functions:
+- `#MCSPI_lld_writeDma()`
+- `#MCSPI_lld_readDma()`
+- `#MCSPI_lld_readWriteDma()`
+
+The driver validates that the transaction count does not exceed 4,095 words.
+
+**Validation formula used in driver:**
+```c
+uint32_t transferBytes = count << bufWidthShift;
+if (transferBytes > MCSPI_DMA_MAX_TRANSFER_BYTES)  // 4095
+{
+    return MCSPI_INVALID_PARAM;  // Reject transfer
+}
+```
+
+If the limit is exceeded, the API returns `MCSPI_INVALID_PARAM` status.
+
 \endcond
 ## Usage Overview
 

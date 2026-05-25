@@ -81,6 +81,40 @@ has been completed, the UART driver calls a user-provided callback function.
 Callback mode is supported in the execution context of tasks and
 hardware interrupt routines.
 
+\cond !SOC_AM62X
+## DMA Transfer Size Limitation (12-bit Counter)
+
+**Maximum UART DMA transfer: 4,095 bytes per transaction**
+
+When using UART in DMA mode, the transfer is limited by the 12-bit transfer counter in the PDMA hardware.
+
+### 12-bit Counter Limitation
+
+**Counter field:** 12-bit register (0x000 to 0xFFF = 0 to 4,095 decimal)
+
+**Important:** Attempting a transfer count of 4,096 or higher causes register overflow:
+- 4,096 decimal = 0x1000 (requires 13 bits)
+- Overflow wraps to 0x000
+- Transfer fails and system may hang
+
+### Maximum Transfer Size
+
+For UART (typically 8-bit data):
+- Max count register value: 4,095
+- Max bytes per transaction: **4,095 bytes**
+
+### Validation in Driver
+
+When submitting DMA transfers via UART LLD API:
+```c
+if (transferSizeInBytes > 4095)
+{
+    // Split transfer into multiple transactions
+    // Attempting in single transaction will fail
+}
+```
+
+\endcond
 \cond !SOC_AM62X && !SOC_AM65X
 ## Important Usage Guidelines
 

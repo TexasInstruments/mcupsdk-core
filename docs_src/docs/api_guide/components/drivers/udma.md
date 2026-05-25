@@ -41,6 +41,109 @@ to setup and initiate DMA transfers.
 -  UDMA driver doesn't manage/allocate the descriptor and RA memory. The caller need to allocate and provide the required memory.
 -  UDMA driver doesn't use any global variables. All the required object memory like channel, driver instance, event etc should be allocated by the caller
 
+\cond SOC_AM64X || SOC_AM243X
+## PDMA Transfer Size Limitation (12-bit Counter)
+
+**Maximum PDMA transfer: 4,095 words per transaction**
+
+When performing DMA transfers to/from PDMA-serviced peripherals (McSPI, UART, ADC, MCAN, McASP), the transfer is limited by the 12-bit transfer counter in the PDMA hardware.
+
+### Understanding the 12-bit Counter Limitation
+
+The transfer counter field is **12 bits wide**, limiting the maximum count to **4,095 decimal (0xFFF hexadecimal)**.
+
+**Important:** The counter tracks **WORDS**, not bytes. The relationship between words and bytes depends on the configured data width.
+
+### Word to Bytes Conversion
+
+A **word** is a configurable unit of data:
+- **8-bit word length:** 1 word = 1 byte
+- **16-bit word length:** 1 word = 2 bytes
+- **32-bit word length:** 1 word = 4 bytes
+
+### Maximum Transfer Sizes by Data Width
+
+| Data Width | Word Size | Max Words | Max Bytes | Register Value |
+|------------|-----------|-----------|-----------|-----------------|
+| 8-bit  | 1 byte  | 4,095 | **4,095 bytes** | 0xFFF |
+| 16-bit | 2 bytes | 4,095 | **8,190 bytes** | 0xFFF |
+| 32-bit | 4 bytes | 4,095 | **16,380 bytes** | 0xFFF |
+
+### Danger Zone: Register Overflow
+
+**Attempting a transfer exceeding the 12-bit limit causes hardware overflow:**
+
+```
+Transfer attempt: 4,096 bytes with 8-bit data
+  → Word count needed: 4,096 (decimal)
+  → Hex representation: 0x1000 (requires 13 bits)
+  → Register overflow: Wraps to 0x000
+  → Result: Transfer fails, system may hang
+```
+
+### Peripheral-Specific Examples
+
+**McSPI 8-bit data transfer:**
+- Element size: 1 byte
+- Max count register value: 4,095
+- Max bytes: 4,095
+
+**McSPI 16-bit data transfer:**
+- Element size: 2 bytes
+- Max count register value: 4,095
+- Max bytes: 8,190
+
+**UART (typically 8-bit):**
+- Element size: 1 byte
+- Max count register value: 4,095
+- Max bytes: 4,095
+
+### Workaround for Large Transfers (> 4,095 words)
+
+To transfer data exceeding the PDMA limit:
+
+1. **Split into multiple transactions:**
+   - Each transaction ≤ 4,095 words
+   - Manage peripheral address appropriately
+   - Handle synchronization between transfers
+
+2. **Use DMA Chaining (if available):**
+   - Link multiple TR descriptors
+   - Automatic transition between transfers
+   - Minimal software overhead
+
+3. **Manual Loop-based Transfer:**
+   - Submit transfers one at a time
+   - Poll for completion or use interrupts
+   - Update source/destination addresses
+
+### Example Calculation
+
+**Transferring 10,000 bytes via McSPI (8-bit data):**
+```
+Total bytes needed: 10,000
+Max per transaction: 4,095
+Transactions required: ceil(10,000 / 4,095) = 3 transactions
+
+Transaction 1: 4,095 bytes (count = 4,095)
+Transaction 2: 4,095 bytes (count = 4,095)
+Transaction 3: 1,810 bytes (count = 1,810)
+```
+
+### Validation in Driver
+
+When submitting DMA transfers via UDMA API:
+```c
+// For PDMA peripheral with 8-bit data width
+if (transferSizeInBytes > 4095)
+{
+    // Split transfer or use chaining
+    // Attempting in single transaction will fail
+}
+```
+
+\endcond
+
 ## DMSS Overview
 
 The primary goal of the Data Movement Subsystem (DMSS) is to ensure that data can be efficiently transferred from a producer to a consumer so that the real time requirements of the system can be met.

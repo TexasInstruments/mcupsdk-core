@@ -30,6 +30,148 @@
 - Due to the design constraint maximum DMA PKTDMA_0 TX/RX channels each can be used is 3 per R5F core.
   So in case of MCSPI instance with DMA mode enabled can use atmost 3 CS in multi-controller mode.
 
+## DMA Transfer Size Limitation (12-bit Counter)
+
+**Maximum McSPI DMA transfer: 4,095 WORDS per transaction**
+
+When using MCSPI in DMA mode, the transfer is limited by the 12-bit transfer counter in the PDMA hardware. The counter tracks the number of **words** (not bytes) to transfer.
+
+### 12-bit Counter Limitation
+
+**Counter field:** 12-bit register (0x000 to 0xFFF = 0 to 4,095 decimal)
+
+**CRITICAL - Register Overflow Risk:** Attempting a transfer count of 4,096 or higher causes register overflow:
+```
+4,096 decimal = 0x1000 (requires 13 bits)
+              ↓ register overflow ↓
+Wraps to 0x000 → Transfer FAILS → System may HANG
+```
+
+### Understanding Words vs. Bytes
+
+The transaction->count field specifies the number of **WORDS** to transfer.
+A word size depends on #MCSPI_Transaction.dataSize:
+
+| Data Width | Word = | bufWidthShift |
+|------------|--------|---------------|
+| 1-8 bits   | 1 byte | 0 |
+| 9-16 bits  | 2 bytes| 1 |
+| 17-32 bits | 4 bytes| 2 |
+
+### Byte Conversion Formula
+
+```c
+Total bytes = transaction->count << bufWidthShift
+```
+
+### Maximum Transfer Sizes by Data Width
+
+| Data Width | Max Words | Calculation | Max Bytes |
+|------------|-----------|-------------|-----------|
+| 8-bit  | 4,095 | count << 0 | **4,095 bytes** |
+| 16-bit | 4,095 | count << 1 | **8,190 bytes** |
+| 32-bit | 4,095 | count << 2 | **16,380 bytes** |
+
+### Real-World Examples
+
+**Example 1: 8-bit data, transfer 1,000 bytes**
+```c
+transaction.dataSize = 8;
+transaction.count = 1000;  // 1000 words = 1000 bytes
+// Total bytes: 1000 << 0 = 1000 bytes (< 4095)  PASS
+```
+
+**Example 2: 16-bit data, transfer 5,000 bytes**
+```c
+transaction.dataSize = 16;
+transaction.count = 2500;  // 2500 words = 5000 bytes
+// Total bytes: 2500 << 1 = 5000 bytes (< 8190)  PASS
+```
+
+**Example 3: 8-bit data, transfer 5,000 bytes (FAILS)**
+```c
+transaction.dataSize = 8;
+transaction.count = 5000;  // 5000 words = 5000 bytes
+// Total bytes: 5000 << 0 = 5000 bytes (> 4095) FAIL
+// API returns: MCSPI_TRANSFER_INVALID_PARAM
+```
+
+### API Validation Behavior
+
+When calling #MCSPI_transfer() in DMA mode, the driver validates:
+
+```c
+uint32_t transferBytes = transaction->count << bufWidthShift;
+
+if (transferBytes > 4095)  // 12-bit limit (0xFFF max)
+{
+    return MCSPI_TRANSFER_INVALID_PARAM;
+}
+else
+{
+    // Proceed with transfer
+}
+```
+
+### Workaround for Large Transfers (> 4,095 words)
+
+To transfer data exceeding the limit, split into multiple transactions:
+
+```c
+// Example: Transfer 10,000 bytes with 8-bit data width
+uint32_t totalWords = 10000;  // For 8-bit: words = bytes
+uint32_t wordIndex = 0;
+uint32_t maxWordsPerTransfer = 4095;  // 12-bit limit
+
+MCSPI_Transaction transaction;
+MCSPI_Transaction_init(&transaction);
+transaction.dataSize = 8;
+transaction.csDisable = FALSE;  // Keep CS asserted between transfers
+
+while (wordIndex < totalWords)
+{
+    uint32_t wordsRemaining = totalWords - wordIndex;
+    uint32_t wordsToTransfer = (wordsRemaining > maxWordsPerTransfer) ?
+                               maxWordsPerTransfer : wordsRemaining;
+
+    // Last chunk: deassert CS
+    if ((wordIndex + wordsToTransfer) >= totalWords)
+    {
+        transaction.csDisable = TRUE;
+    }
+
+    // Configure chunk
+    transaction.count = wordsToTransfer;
+    transaction.txBuf = &txBuffer[wordIndex];
+    transaction.rxBuf = &rxBuffer[wordIndex];
+
+    // Transfer
+    int32_t status = MCSPI_transfer(handle, &transaction);
+    if (status != MCSPI_TRANSFER_COMPLETED)
+    {
+        DebugP_log("Transfer failed at word offset %u\r\n", wordIndex);
+        break;
+    }
+
+    wordIndex += wordsToTransfer;
+}
+```
+
+### For 16-bit or 32-bit Data
+
+When using wider data widths, the word count calculation differs:
+
+```c
+// 16-bit data: 10,000 bytes transfer
+uint32_t totalBytes = 10000;
+uint32_t totalWords = totalBytes / 2;  // 5000 words
+uint32_t maxWordsPerTransfer = 4095;   // Hardware limit
+
+// Split into:
+//   - 4095 words (8190 bytes)
+//   - 905 words  (1810 bytes)
+```
+
 \endcond
 ## Usage Overview
 

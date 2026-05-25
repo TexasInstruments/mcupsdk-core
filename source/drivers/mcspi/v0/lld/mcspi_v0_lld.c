@@ -1233,6 +1233,7 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
             transaction->txBuf   = txBuf;
             transaction->rxBuf   = rxBuf;
 
+            /* Validate channel first before array access */
             status = MCSPI_lld_isParameterValid(count);
             status += MCSPI_lld_isParameterValid(timeout);
             status += MCSPI_lld_isChannelValid(transaction->channel);
@@ -1246,7 +1247,19 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
             if(TRUE != hMcspiInit->chObj[transaction->channel].isOpen)
             {
                 /* Channel not configured */
-                status += MCSPI_TRANSFER_FAILED;
+                status = MCSPI_TRANSFER_FAILED;
+            }
+
+            /* Get channel object after validation */
+            chNum = transaction->channel;
+            chObj = &hMcspiInit->chObj[chNum];
+
+            /* Check DMA transfer size limitation (4095 bytes max) */
+            uint8_t currentShift = MCSPI_getBufWidthShift(transaction->dataSize);
+            uint32_t transferBytes = count << currentShift;
+            if(transferBytes > MCSPI_DMA_MAX_TRANSFER_BYTES)
+            {
+                status = MCSPI_INVALID_PARAM;
             }
         }
         else
@@ -1257,9 +1270,7 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
 
     if (MCSPI_STATUS_SUCCESS == status)
     {
-        /* Reset counter and other params */
-        chNum = transaction->channel;
-        chObj = &hMcspiInit->chObj[chNum];
+        /* Reset counter and other params (chNum and chObj already set above) */
         chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
         chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
         chObj->curTxWords  = 0U;
@@ -1268,7 +1279,7 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
         /* Initialize channel dataSize */
         MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
                             transaction->csDisable);
-                
+
         if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
         {
             /* Enable FIFO*/

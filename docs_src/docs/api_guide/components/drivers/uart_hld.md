@@ -133,6 +133,63 @@ clock cycles w.r.o device/baudrate dependent. This mode can be used when
 the exact number of bytes to be read is not known.
 
 \cond !SOC_AM62X
+## DMA Transfer Size Limitation (12-bit Counter)
+
+**Maximum UART DMA transfer: 4,095 bytes per transaction**
+
+When using UART in DMA mode, the transfer is limited by the 12-bit transfer counter in the PDMA hardware. The counter tracks the number of **bytes** to transfer.
+
+### 12-bit Counter Limitation
+
+**Counter field:** 12-bit register (0x000 to 0xFFF = 0 to 4,095 decimal)
+
+**CRITICAL - Register Overflow Risk:** Attempting a transfer count of 4,096 or higher causes register overflow:
+```
+4,096 decimal = 0x1000 (requires 13 bits)
+              ↓ register overflow ↓
+Wraps to 0x000 → Transfer FAILS → System may HANG
+```
+
+### Maximum Transfer Size
+
+For UART (typically 8-bit data):
+- Max count register value: 4,095
+- Max bytes per transaction: **4,095 bytes**
+
+### Workaround for Large Transfers (> 4,095 bytes)
+
+To transfer data exceeding the limit, split into multiple transactions:
+
+```c
+// Example: Transfer 10,000 bytes via UART DMA
+uint32_t totalBytes = 10000;
+uint32_t byteIndex = 0;
+uint32_t maxBytesPerTransfer = 4095;  // 12-bit limit
+
+UART_Transaction transaction;
+
+while (byteIndex < totalBytes)
+{
+    uint32_t bytesRemaining = totalBytes - byteIndex;
+    uint32_t bytesToTransfer = (bytesRemaining > maxBytesPerTransfer) ?
+                               maxBytesPerTransfer : bytesRemaining;
+
+    UART_Transaction_init(&transaction);
+    transaction.count = bytesToTransfer;
+    transaction.buf = &buffer[byteIndex];
+    transaction.timeout = timeout;
+
+    int32_t status = UART_write(handle, &transaction);
+    if (status != UART_TRANSFER_STATUS_SUCCESS)
+    {
+        DebugP_log("UART write failed at byte offset %u\r\n", byteIndex);
+        break;
+    }
+
+    byteIndex += bytesToTransfer;
+}
+```
+
 ## Important Usage Guidelines
 
 - In case of DMA mode, as R5F core is not Cache Coherent, Cache Writeback is required if R5F writes to the buffers.

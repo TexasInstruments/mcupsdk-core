@@ -381,6 +381,28 @@ typedef uint32_t (*MCSPI_clockGet) (void);
 /** Maximuum Clock Divider supported */
 #define MCSPI_MAX_CLK_DIVIDER_SUPPORTED   (4096U)
 
+/** Maximum DMA transfer size limitation - 4095 bytes
+ *
+ *  Most PDMA-serviced peripherals follow X-Y transfer pattern where:
+ *    X = bytes per burst (McSPI data width in bytes)
+ *    Y = number of bursts (McSPI transfer counter, 12-bit field: 0-4095)
+ *
+ *  For McSPI DMA transfers:
+ *    X is derived from SPIDAT0 WL[3:0] (word length in bits):
+ *      1-8 bits   -> X = 1 byte (bufWidthShift = 0)
+ *      9-16 bits  -> X = 2 bytes (bufWidthShift = 1)
+ *      17-32 bits -> X = 4 bytes (bufWidthShift = 2)
+ *    Y = transaction->count (word count)
+ *
+ *  Total bytes transferred = Y << bufWidthShift
+ *  Constraint: Y <= 4095 (12-bit counter limit), so:
+ *    Y=4095, X=1 byte  -> max 4095 bytes
+ *    Y=4095, X=2 bytes -> max 8190 bytes
+ *    Y=4095, X=4 bytes -> max 16380 bytes
+ *
+ */
+#define MCSPI_DMA_MAX_TRANSFER_BYTES      (4095U)
+
 /* ========================================================================== */
 /*                       Advanced Macros & Typedefs                           */
 /* ========================================================================== */

@@ -243,6 +243,10 @@ void test_mcspi_loopback_dma_with_csdisable(void *args);
 void test_mcspi_loopback_dma_with_toggled_csdisable(void *args);
 # endif
 void test_mcspi_loopback_multimaster_dma(void *args);
+#if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+void test_mcspi_dma_loopback_transfer(void *args);
+void test_mcspi_dma_loopback_transfer_4096bytes_negative(void *args);
+#endif
 #endif
 #if defined(SOC_AM65X)
 void test_mcspi_mcu_mcspi1_detach(void);
@@ -444,6 +448,12 @@ void test_main(void *args)
 # endif
     test_mcspi_set_params(&testParams, 2397);
     RUN_TEST(test_mcspi_loopback_multimaster_dma,  2397, (void*)&testParams);
+#endif
+#if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+    test_mcspi_set_params(&testParams, 6432);
+    RUN_TEST(test_mcspi_dma_loopback_transfer, 6432, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 6432);
+    RUN_TEST(test_mcspi_dma_loopback_transfer_4096bytes_negative, 6432, (void*)&testParams);
 #endif
     test_mcspi_set_params(&testParams, 1009);
     RUN_TEST(test_mcspi_loopback_simultaneous, 1009, (void*)&testParams);
@@ -3362,5 +3372,259 @@ void test_mcspi_mcu_mcspi1_detach(void){
     CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 0 */
     kickAddr++;
     CSL_REG32_WR(kickAddr, CTRLMMR_KICK_LOCK_VAL);      /* KICK 1 */
+}
+#endif
+
+#if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+/*
+ * SITSW-6432: MCSPI DMA Positive Test - Valid 128-byte transfer
+ * Tests DMA loopback within 4095-byte limit (12-bit DMA counter)
+ * Requires: Single MCSPI controller with DMA enabled (uses CONFIG_MCSPI2)
+ * Syscfg: MCSPI2 DMA mode, single channel, D0 pad loopback, ~50MHz clock
+ */
+void test_mcspi_dma_loopback_transfer(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            i;
+    int32_t             transferOK;
+    MCSPI_Transaction   spiTransaction;
+    MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
+    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    MCSPI_Config       *config;
+    MCSPI_Attrs        *attrParams;
+    MCSPI_Handle        mcspiHandle;
+    uint8_t            *tempTxPtr8 = NULL, *tempRxPtr8 = NULL;
+
+    DebugP_log("[MCSPI] DMA Loopback Transfer Test (SITSW-6432) started ...\r\n");
+
+    /* Memset Buffers */
+    memset(&gMcspiTxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBufferDma[0U]));
+    memset(&gMcspiRxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBufferDma[0U]));
+
+    /* Close existing handle and reconfigure for DMA */
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
+
+    config = &gMcspiConfig[CONFIG_MCSPI2];
+    attrParams = (MCSPI_Attrs *)config->attrs;
+    attrParams->operMode                    = MCSPI_OPER_MODE_DMA;
+    mcspiOpenParams->transferMode           = MCSPI_TRANSFER_MODE_CALLBACK;
+    mcspiOpenParams->transferCallbackFxn    = test_mcspi_callback;
+    mcspiOpenParams->mcspiDmaIndex          = 0;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI2, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gMcspiTransferDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    /* Initialize TX buffer with known data (8-bit) */
+    tempTxPtr8 = (uint8_t *) &gMcspiTxBufferDma[0U];
+    tempRxPtr8 = (uint8_t *) &gMcspiRxBufferDma[0U];
+
+    for (i = 0U; i < APP_MCSPI_MSGSIZE; i++)
+    {
+        *tempTxPtr8++ = i + 1U;
+        *tempRxPtr8++ = 0U;
+    }
+
+    /* Writeback buffer */
+    CacheP_wb(&gMcspiTxBufferDma[0U], sizeof(gMcspiTxBufferDma), CacheP_TYPE_ALLD);
+    CacheP_wb(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+
+    /* Initiate transfer */
+    spiTransaction.channel  = gConfigMcspi2ChCfg[0U].chNum;
+    spiTransaction.dataSize = 8U;
+    spiTransaction.csDisable = TRUE;
+    spiTransaction.count    = APP_MCSPI_MSGSIZE / (spiTransaction.dataSize / 8);
+    spiTransaction.txBuf    = (void *)gMcspiTxBufferDma;
+    spiTransaction.rxBuf    = (void *)gMcspiRxBufferDma;
+    spiTransaction.args     = NULL;
+
+    transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI2], &spiTransaction);
+    TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for transfer completion */
+        SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("McSPI Clock %d Hz\r\n", gConfigMcspi2ChCfg[0U].bitRate);
+    DebugP_log("Data Width %u, Transfer Size %u bytes\r\n", spiTransaction.dataSize, APP_MCSPI_MSGSIZE);
+    DebugP_log("----------------------------------------------------------\r\n");
+
+    /* Invalidate cache */
+    CacheP_inv(&gMcspiRxBufferDma[0U], sizeof(gMcspiRxBufferDma), CacheP_TYPE_ALLD);
+
+    /* Compare data */
+    tempTxPtr8 = (uint8_t *) &gMcspiTxBufferDma[0U];
+    tempRxPtr8 = (uint8_t *) &gMcspiRxBufferDma[0U];
+    for(i = 0U; i < APP_MCSPI_MSGSIZE; i++)
+    {
+        if(*tempTxPtr8++ != *tempRxPtr8++)
+        {
+            status = SystemP_FAILURE;   /* Data mismatch */
+            DebugP_log("Data Mismatch at offset %d\r\n", i);
+            break;
+        }
+    }
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gMcspiTransferDoneSem);
+    }
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
+
+    if(SystemP_SUCCESS == status)
+    {
+        DebugP_log("[MCSPI] DMA Loopback Transfer Test: PASSED\r\n");
+    }
+    else
+    {
+        DebugP_log("[MCSPI] DMA Loopback Transfer Test: FAILED\r\n");
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    return;
+}
+#endif
+
+#if (CONFIG_MCSPI_NUM_INSTANCES > 2)
+/*
+ * SITSW-6432: MCSPI DMA Negative Test - Invalid 4096-byte transfer rejection
+ * Validates that transfers exceeding 4095-byte limit are rejected with error
+ * Requires: Single MCSPI controller with DMA enabled (uses CONFIG_MCSPI2)
+ * Syscfg: MCSPI2 DMA mode, single channel, D0 pad loopback, ~50MHz clock
+ */
+void test_mcspi_dma_loopback_transfer_4096bytes_negative(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            i;
+    int32_t             transferOK;
+    uint32_t            transferRejected = 0U;
+    MCSPI_Transaction   spiTransaction;
+    MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
+    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    MCSPI_Config       *config;
+    MCSPI_Attrs        *attrParams;
+    MCSPI_Handle        mcspiHandle;
+    uint8_t            *tempTxPtr8 = NULL, *tempRxPtr8 = NULL;
+    uint8_t            gMcspiTxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+    uint8_t            gMcspiRxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+
+    DebugP_log("[MCSPI] DMA 4096-byte Negative Test (SITSW-6432) started ...\r\n");
+
+    /* Memset Buffers */
+    memset(&gMcspiTxBuffer4096[0U], 0, 4096);
+    memset(&gMcspiRxBuffer4096[0U], 0, 4096);
+
+    /* Close existing handle and reconfigure for DMA */
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
+
+    config = &gMcspiConfig[CONFIG_MCSPI2];
+    attrParams = (MCSPI_Attrs *)config->attrs;
+    attrParams->operMode                    = MCSPI_OPER_MODE_DMA;
+    mcspiOpenParams->transferMode           = MCSPI_TRANSFER_MODE_CALLBACK;
+    mcspiOpenParams->transferCallbackFxn    = test_mcspi_callback;
+    mcspiOpenParams->mcspiDmaIndex          = 0;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI2, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+    gMcspiHandle[CONFIG_MCSPI2] = mcspiHandle;  /* Update global handle */
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gMcspiTransferDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    /* Initialize TX buffer with known data (8-bit) */
+    tempTxPtr8 = (uint8_t *) &gMcspiTxBuffer4096[0U];
+    tempRxPtr8 = (uint8_t *) &gMcspiRxBuffer4096[0U];
+
+    for (i = 0U; i < 4096; i++)
+    {
+        *tempTxPtr8++ = i & 0xFF;
+        *tempRxPtr8++ = 0U;
+    }
+
+    /* Writeback buffer */
+    CacheP_wb(&gMcspiTxBuffer4096[0U], 4096, CacheP_TYPE_ALLD);
+    CacheP_wb(&gMcspiRxBuffer4096[0U], 4096, CacheP_TYPE_ALLD);
+
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("Attempting 4096-byte transfer (exceeds 4095-byte limit)...\r\n");
+    DebugP_log("----------------------------------------------------------\r\n");
+
+    /* Initiate transfer with 4096 bytes - should be rejected */
+    spiTransaction.channel  = gConfigMcspi2ChCfg[0U].chNum;
+    spiTransaction.dataSize = 8U;
+    spiTransaction.csDisable = TRUE;
+    spiTransaction.count    = 4096 / (spiTransaction.dataSize / 8);  /* 4096 bytes */
+    spiTransaction.txBuf    = (void *)gMcspiTxBuffer4096;
+    spiTransaction.rxBuf    = (void *)gMcspiRxBuffer4096;
+    spiTransaction.args     = NULL;
+
+    transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI2], &spiTransaction);
+
+    /* Check if transfer was rejected (negative value indicates error) */
+    if (transferOK < 0)
+    {
+        /* Transfer correctly rejected for exceeding 4095-byte limit */
+        DebugP_log("[MCSPI] DMA transfer correctly rejected for 4096 bytes (exceeds limit)\r\n");
+        DebugP_log("[MCSPI] Transfer returned error code: %d\r\n", transferOK);
+        status = SystemP_SUCCESS;
+        transferRejected = 1U;  /* Mark that transfer was rejected early */
+    }
+    else if (transferOK == SystemP_SUCCESS)
+    {
+        /* If transfer initiated, wait for completion or timeout */
+        if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+        {
+            /* Wait with timeout to avoid hang */
+            status = SemaphoreP_pend(&gMcspiTransferDoneSem, 1000U); /* 1 second timeout */
+            if (status != SystemP_SUCCESS)
+            {
+                DebugP_logError("[MCSPI] DMA 4096-byte transfer timeout or blocked\r\n");
+                status = SystemP_FAILURE;
+            }
+            else
+            {
+                /* Unexpected: transfer completed for 4096 bytes */
+                DebugP_logError("[MCSPI] ERROR: 4096-byte transfer completed unexpectedly!\r\n");
+                status = SystemP_FAILURE;
+            }
+        }
+    }
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gMcspiTransferDoneSem);
+    }
+
+    /* Close and reset to polled mode to avoid DMA cleanup errors when transfer was rejected */
+    if (transferRejected == 1U)
+    {
+        /* Transfer was rejected: reset to polled mode before close to avoid DMA deinit errors */
+        attrParams->operMode = MCSPI_OPER_MODE_POLLED;
+        mcspiOpenParams->transferMode = MCSPI_TRANSFER_MODE_BLOCKING;
+    }
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
+
+    if(SystemP_SUCCESS == status)
+    {
+        DebugP_log("[MCSPI] DMA 4096-byte Negative Test: PASSED\r\n");
+    }
+    else
+    {
+        DebugP_log("[MCSPI] DMA 4096-byte Negative Test: FAILED\r\n");
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    return;
 }
 #endif
