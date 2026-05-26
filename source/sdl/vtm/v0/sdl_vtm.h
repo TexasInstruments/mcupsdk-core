@@ -191,7 +191,7 @@ int32_t SDL_VTM_initTs(SDL_VTM_InstTs instance, const SDL_VTM_configTs *pConfig)
  *                                 If instance is invalid: SDL_EBADARGS
  *                                 Success: SDL_PASS
  */
-int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal);
+int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, int32_t *pTempVal);
 
 /**
  *  \brief Read VTM Temperature sensor status

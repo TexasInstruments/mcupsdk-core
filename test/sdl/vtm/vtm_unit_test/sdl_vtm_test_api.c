@@ -69,7 +69,7 @@ SDL_VTM_configTs SDL_VTM_configTempSense =
 int32_t sdlVTM_apiTest(void)
 {
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-    uint32_t                         tempVal;
+    int32_t                         tempVal;
     int32_t                            i, sdlResult;
     SDL_VTM_configTs                 tsConfig;
     SDL_VTM_configVd                 vdConfig;

@@ -196,7 +196,7 @@ int32_t SDL_VTM_initTs(SDL_VTM_InstTs instance, const SDL_VTM_configTs *pConfig)
  /**
  * Design: PROC_SDL-1165,PROC_SDL-1303,PROC_SDL-1304
  */
-int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal)
+int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, int32_t *pTempVal)
 {
     const SDL_VTM_cfg1Regs      *p_cfg1;
 	uint32_t baseAddr;
@@ -218,7 +218,7 @@ int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal)
     {
         adc_code = SDL_VTM_getAdcCode(p_sensor);
         sdlResult = SDL_VTM_tsConvADCToTemp (adc_code, instance, &p_milli_degree_temp_val);
-        *pTempVal = (uint32_t) p_milli_degree_temp_val;
+        *pTempVal = p_milli_degree_temp_val;
     }
     return (sdlResult);
 }

@@ -1,4 +1,4 @@
-# Release Notes 12.00.00 {#RELEASE_NOTES_12_00_00_PAGE}
+# Release Notes 12.01.00 {#RELEASE_NOTES_12_01_00_PAGE}
 
 [TOC]
 
@@ -71,7 +71,7 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 <table>
     <tr>
         <td>Version</td>
-        <td>12.00.02</td>
+        <td>12.01.02</td>
     </tr>
     <tr>
         <td>Release Notes</td>
@@ -85,7 +85,7 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES_12_00_00}
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
@@ -588,3 +588,4 @@ Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >
 Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 11.01.00  | >= 11.02.00
 OSPI_HLD     |  \ref OSPI_HLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
 OSPI_LLD     |  \ref OSPI_LLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
+VTM (SDL)    |  SDL_VTM_getTemp API now takes int32_t pointer instead of uint32_t   |   <= 12.00.00  | >= 12.01.00

@@ -235,7 +235,7 @@ int32_t sdlVTM_errTest(void)
     SDL_VTM_configTs                  	tsConfig;
     int32_t                          	testResult = SDL_APP_TEST_PASS;
     int32_t                          	sdlResult;
-    uint32_t                          	tempVal;
+    int32_t                          	tempVal;
     SDL_VTM_Stat_val                  	statVal;
     SDL_VTM_Stat_read_ctrl              rdCtrl;
     SDL_VTM_staticRegsVd              	vdStaticRegs;
