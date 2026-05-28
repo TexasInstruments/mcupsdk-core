@@ -453,7 +453,7 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 6432);
     RUN_TEST(test_mcspi_dma_loopback_transfer_4095bytes_positive, 15698, (void*)&testParams);
     test_mcspi_set_params(&testParams, 6432);
-    RUN_TEST(test_mcspi_dma_loopback_transfer_4096bytes_negative, 6432, (void*)&testParams);
+    RUN_TEST(test_mcspi_dma_loopback_transfer_4096bytes_negative, 15699, (void*)&testParams);
 #endif
     test_mcspi_set_params(&testParams, 1009);
     RUN_TEST(test_mcspi_loopback_simultaneous, 1009, (void*)&testParams);
@@ -3395,6 +3395,10 @@ void test_mcspi_dma_loopback_transfer_4095bytes_positive(void *args)
     MCSPI_Handle        mcspiHandle;
     uint8_t            *tempTxPtr8 = NULL, *tempRxPtr8 = NULL;
 
+    /* 4096-byte DMA Loopback Test Buffers (MCUSDK-15698) */
+    uint8_t      gMcspiTxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+    uint8_t      gMcspiRxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+
     DebugP_log("[MCSPI] DMA Loopback Transfer Test (MCUSDK-15698) started ...\r\n");
 
     /* Memset Buffers */
@@ -3495,7 +3499,7 @@ void test_mcspi_dma_loopback_transfer_4095bytes_positive(void *args)
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
 /*
- * SITSW-6432: MCSPI DMA Negative Test - Invalid 4096-byte transfer rejection
+ * MCUSDK-15699: MCSPI DMA Negative Test - Invalid 4096-byte transfer rejection
  * Validates that transfers exceeding 4095-byte limit are rejected with error
  * Requires: Single MCSPI controller with DMA enabled (uses CONFIG_MCSPI2)
  * Syscfg: MCSPI2 DMA mode, single channel, D0 pad loopback, ~50MHz clock
@@ -3513,10 +3517,10 @@ void test_mcspi_dma_loopback_transfer_4096bytes_negative(void *args)
     MCSPI_Attrs        *attrParams;
     MCSPI_Handle        mcspiHandle;
     uint8_t            *tempTxPtr8 = NULL, *tempRxPtr8 = NULL;
-    uint8_t            gMcspiTxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
-    uint8_t            gMcspiRxBuffer4096[4096] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+    uint8_t            gMcspiTxBuffer4096[5000] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+    uint8_t            gMcspiRxBuffer4096[5000] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 
-    DebugP_log("[MCSPI] DMA 4096-byte Negative Test (SITSW-6432) started ...\r\n");
+    DebugP_log("[MCSPI] DMA 4096-byte Negative Test (MCUSDK-15699) started ...\r\n");
 
     /* Memset Buffers */
     memset(&gMcspiTxBuffer4096[0U], 0, 4096);
