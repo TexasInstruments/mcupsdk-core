@@ -244,7 +244,7 @@ void test_mcspi_loopback_dma_with_toggled_csdisable(void *args);
 # endif
 void test_mcspi_loopback_multimaster_dma(void *args);
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
-void test_mcspi_dma_loopback_transfer(void *args);
+void test_mcspi_dma_loopback_transfer_4095bytes_positive(void *args);
 void test_mcspi_dma_loopback_transfer_4096bytes_negative(void *args);
 #endif
 #endif
@@ -451,7 +451,7 @@ void test_main(void *args)
 #endif
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
     test_mcspi_set_params(&testParams, 6432);
-    RUN_TEST(test_mcspi_dma_loopback_transfer, 6432, (void*)&testParams);
+    RUN_TEST(test_mcspi_dma_loopback_transfer_4095bytes_positive, 15698, (void*)&testParams);
     test_mcspi_set_params(&testParams, 6432);
     RUN_TEST(test_mcspi_dma_loopback_transfer_4096bytes_negative, 6432, (void*)&testParams);
 #endif
@@ -3377,12 +3377,12 @@ void test_mcspi_mcu_mcspi1_detach(void){
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
 /*
- * SITSW-6432: MCSPI DMA Positive Test - Valid 128-byte transfer
+ * MCUSDK-15698: MCSPI DMA Positive Test - Valid 4095-byte transfer
  * Tests DMA loopback within 4095-byte limit (12-bit DMA counter)
  * Requires: Single MCSPI controller with DMA enabled (uses CONFIG_MCSPI2)
  * Syscfg: MCSPI2 DMA mode, single channel, D0 pad loopback, ~50MHz clock
  */
-void test_mcspi_dma_loopback_transfer(void *args)
+void test_mcspi_dma_loopback_transfer_4095bytes_positive(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            i;
@@ -3395,11 +3395,11 @@ void test_mcspi_dma_loopback_transfer(void *args)
     MCSPI_Handle        mcspiHandle;
     uint8_t            *tempTxPtr8 = NULL, *tempRxPtr8 = NULL;
 
-    DebugP_log("[MCSPI] DMA Loopback Transfer Test (SITSW-6432) started ...\r\n");
+    DebugP_log("[MCSPI] DMA Loopback Transfer Test (MCUSDK-15698) started ...\r\n");
 
     /* Memset Buffers */
-    memset(&gMcspiTxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBufferDma[0U]));
-    memset(&gMcspiRxBufferDma[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBufferDma[0U]));
+    memset(&gMcspiTxBuffer4096[0U], 0, 4095);
+    memset(&gMcspiRxBuffer4096[0U], 0, 4095);
 
     /* Close existing handle and reconfigure for DMA */
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
