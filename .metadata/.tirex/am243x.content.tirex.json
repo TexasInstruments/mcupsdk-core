@@ -16917,6 +16917,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies MCRC in auto cpu modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mcrc_auto_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_auto_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies CRC in full CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
         "name": "mcrc_full_cpu",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -16967,6 +17000,39 @@
             "mcrc",
             "mcrc_full_cpu",
             "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MCRC in semi cpu modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mcrc_semi_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDS243EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_semi_cpu",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [

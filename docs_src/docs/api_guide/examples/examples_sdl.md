@@ -3,21 +3,8 @@
 This page lists all the examples related to usage of SDL.
 
 \cond SOC_AM64X || SOC_AM243X
--# MCRC
-   -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
--# ESM
-   -# \subpage EXAMPLES_SDL_MCU_ESM
--# STOG
-   -# \subpage EXAMPLES_SDL_STOG
--# VTM
-   -# \subpage EXAMPLES_SDL_VTM
-   -# \subpage EXAMPLES_SDL_VTM_RESET
--# POK
-   -# \subpage EXAMPLES_SDL_POK
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
--# MTOG
-   -# \subpage EXAMPLES_SDL_MTOG
 -# ECC
    -# \subpage EXAMPLES_SDL_ECC
 -# ECC_R5F_CACHE
@@ -26,12 +13,27 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_ECC_SEC
 -# ECC TCM
    -# \subpage EXAMPLES_SDL_R5F_ECC_TCM
--# RTI
-   -# \subpage EXAMPLES_SDL_RTI
+-# ESM
+   -# \subpage EXAMPLES_SDL_MCU_ESM
+-# MCRC
+   -# \subpage EXAMPLES_SDL_MCRC_AUTO_CPU
+   -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
+   -# \subpage EXAMPLES_SDL_MCRC_SEMI_CPU
+-# MTOG
+   -# \subpage EXAMPLES_SDL_MTOG
 -# PBIST
    -# \subpage EXAMPLES_SDL_PBIST
+-# POK
+   -# \subpage EXAMPLES_SDL_POK
+-# STOG
+   -# \subpage EXAMPLES_SDL_STOG
 -# ROM_CHECKSUM
    -# \subpage EXAMPLES_SDL_ROM_CHECKSUM
+-# RTI
+   -# \subpage EXAMPLES_SDL_RTI
+-# VTM
+   -# \subpage EXAMPLES_SDL_VTM
+   -# \subpage EXAMPLES_SDL_VTM_RESET
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X

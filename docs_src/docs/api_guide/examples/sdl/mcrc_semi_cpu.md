@@ -41,6 +41,17 @@ Use Cases
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/mcrc/mcrc_semi_cpu/
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -153,5 +164,45 @@ MCRC Semi Mode Computation Time: 12us
 Test Name: MCRC_semiCPU_mode  PASSED
 
  All tests have passed.
+\endcode
+\endcond
+
+\cond (SOC_AM64X || SOC_AM243X)
+\code
+ MCRC Test Application
+
+
+MCRC Semi_CPU mode : starting
+
+
+MCRC SEMI CPU mode on Channel 1: Transfer Test Started...
+
+Calculating Reference MCRC signature Value.
+ MCRC signature value : 0x474b7cf03d4145dU
+MCRC Full Mode Computation Time: 1329us
+MCRC Semi CPU interrupt status : 1
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x474b7cf003d4145dU
+
+UDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 1329us
+
+MCRC SEMI CPU mode on Channel 2: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x474b7cf03d4145dU
+MCRC Semi CPU interrupt status : 100
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x474b7cf003d4145dU
+
+UDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 1329us
+
+Test Name: MCRC_semiCPU_mode  PASSED 
+
+ All tests have passed. 
 \endcode
 \endcond
