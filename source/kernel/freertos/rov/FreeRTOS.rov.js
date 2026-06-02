@@ -354,7 +354,7 @@ function getTaskFreeStackSize(stackBase, currentTaskSP)
         */
     while (stackData == 0xa5a5a5a5) {
         index += skipSize;
-        if(index < currentTaskSP) {
+        if(index >= currentTaskSP) {
             break;
         }
         stackData = Program.fetchFromAddr(index, "uint32_t");
