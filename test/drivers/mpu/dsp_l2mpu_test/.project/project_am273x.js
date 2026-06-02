@@ -25,6 +25,7 @@ const includepaths = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
+        "../..",    /* Board base */
         "../../..", /* Example base */
     ],
 };
@@ -67,7 +68,8 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "dsp_l2mpu_test";
-    property.isInternal = false;
+    property.isInternal = true;
+    property.skipProjectSpec = true;
     property.description = "DSP L2 Memory Protection Unit test"
     property.buildOptionCombos = buildOptionCombos;
 
