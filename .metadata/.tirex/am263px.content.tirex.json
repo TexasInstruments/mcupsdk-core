@@ -22874,7 +22874,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for PRU Scrubber CPU is R5FSS0-0 running FREERTOS.",
         "name": "sdl_ecc_pru_scrubber",
-        "location": "../../examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_pru_scrubber/am263px/sdl_ecc_pru_scrubber_r5f0/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -22887,6 +22887,8 @@
         "subCategories": [
             "sdl",
             "ecc",
+            "sdl_ecc_pru_scrubber",
+            "am263px",
             "sdl_ecc_pru_scrubber_r5f0",
             "r5fss0-0_freertos"
         ],

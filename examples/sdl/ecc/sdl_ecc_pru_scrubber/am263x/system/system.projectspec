@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+	<import spec="../sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt/example.projectspec"/>
+    <import spec="../sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec"/>
+    <project
+        name="sdl_ecc_pru_scrubber_system"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+            Debug,
+            Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        device="Cortex R.AM263x"
+        outputType="system"
+        toolChain="TICLANG"
+        cgtVersion="4.0.4.LTS"
+        >
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="system.xml" action="copy" openOnCreation="true"/>
+        <file path="makefile_system_ccs_bootimage_gen" action="copy" openOnCreation="false"/>
+        <configuration name="Debug"
+        ></configuration>
+        <configuration name="Release"
+        ></configuration>
+    </project>
+</projectSpec>

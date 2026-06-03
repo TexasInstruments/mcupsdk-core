@@ -2297,10 +2297,10 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sdl_ecc_pru_scrubber_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  sdl_ecc_pru_scrubber_pru0_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
  sdl_rti_example_uc1_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/rti/UC1/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -4779,10 +4779,10 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sdl_ecc_pru_scrubber_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  sdl_ecc_pru_scrubber_pru0_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
  sdl_rti_example_uc1_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/rti/UC1/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -7261,10 +7261,10 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sdl_ecc_pru_scrubber_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  sdl_ecc_pru_scrubber_pru0_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
  sdl_rti_example_uc1_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/rti/UC1/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -8019,8 +8019,8 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_icssm/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_r5f0/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_pru_scrubber/am263x/sdl_ecc_pru_scrubber_pru0/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC2/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

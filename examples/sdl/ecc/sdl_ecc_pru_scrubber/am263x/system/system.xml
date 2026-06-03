@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <project configuration="@match" id="project_0" name="sdl_ecc_pru_scrubber_pru0_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt">
+    </project>
+    <core id="ICSSM_PRU_0" project="project_0"/>
+    <project configuration="@match" id="project_1" name="sdl_ecc_pru_scrubber_am263x-cc_r5fss0-0_freertos_ti-arm-clang">
+    </project>
+    <core id="Cortex_R5_0" project="project_1"/>
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+        
+    </postBuildSteps>
+
+</system>
