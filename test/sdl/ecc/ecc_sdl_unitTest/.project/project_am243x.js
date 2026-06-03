@@ -149,7 +149,6 @@ function getComponentProperty() {
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
-    property.isSDL = true;
 
     return property;
 }
@@ -176,6 +175,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.templates = templates_nortos_r5f;
         build_property.defines = r5_macro;
         build_property.asmfiles = asmfiles_r5f;
+        build_property.isSDL = true;
     }
 
     return build_property;

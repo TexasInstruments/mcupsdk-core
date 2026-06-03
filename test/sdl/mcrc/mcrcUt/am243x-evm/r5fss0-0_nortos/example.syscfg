@@ -241,7 +241,7 @@ section11.output_section[0].$name     = ".bss.nocache";
 section11.output_section[0].alignment = 0;
 
 section12.$name                        = "Instrumentation segment";
-section12.load_memory                  = "MSRAM";
+section12.load_memory                  = "R5F_TCMA";
 section12.output_section.create(2);
 section12.output_section[0].$name      = "__llvm_prf_cnts";
 section12.output_section[0].palignment = true;

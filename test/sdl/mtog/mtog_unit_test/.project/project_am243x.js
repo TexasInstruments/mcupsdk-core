@@ -80,8 +80,6 @@ function getComponentProperty() {
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
-    property.isSDL = true;
-
     return property;
 }
 
@@ -98,6 +96,8 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;
+        build_property.isSDL = true;
+
     }
 
     return build_property;

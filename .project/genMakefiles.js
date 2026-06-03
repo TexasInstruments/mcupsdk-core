@@ -100,6 +100,7 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
         for(buildOption of property.buildOptionCombos) {
 
             let makefileOutPath = common.path.makeExampleOutPath(property.dirPath, buildOption);
+            let build_property = require(`../${example}`).getComponentBuildProperty(buildOption);
 
             let example_make = {};
             let buildTarget = {};
@@ -119,7 +120,7 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
                 example_make.isBootLoader = true;
             }
 
-            if(property.isInternal === true && property.isSDL === true )
+            if(property.isInternal === true && build_property.isSDL === true )
             {
                 example_make.isSDL = true;
             }

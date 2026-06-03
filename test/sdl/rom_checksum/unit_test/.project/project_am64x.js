@@ -92,7 +92,6 @@ function getComponentProperty(device) {
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
-    property.isSDL = true;
 
     return property;
 }
@@ -113,6 +112,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
 		build_property.defines = r5_macro;
+        build_property.isSDL = true;
     }
 
     return build_property;
