@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-26 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -843,7 +843,7 @@ static int32_t Flash_norOspiSetProtocol(Flash_Config *config, OSPI_Handle ospiHa
 
                 case FLASH_CFG_PROTO_8S_8S_8S:
                 case FLASH_CFG_PROTO_8D_8D_8D:
-                    /* Set Octal Enable Bit. Set 444 mode. Set commands, mode and dummy cycle if needed */
+                    /* Set Octal Enable Bit. Set 888 mode. Set commands, mode and dummy cycle if needed */
                     /* Set OE bit */
                     if(config->skipHwInit == FALSE)
                     {
