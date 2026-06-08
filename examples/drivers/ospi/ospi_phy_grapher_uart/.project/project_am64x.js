@@ -43,7 +43,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_ospi_phy_grapher_uart";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_PHY_GRAPHER_UART";
 
 const templates_nortos_r5f =
 [
