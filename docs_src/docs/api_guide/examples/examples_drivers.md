@@ -100,6 +100,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
+\cond SOC_AM64X || SOC_AM243X
+   -# \subpage EXAMPLES_DRIVERS_OSPI_PHY_GRAPHER_UART
+\endcond
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_EP
