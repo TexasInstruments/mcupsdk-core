@@ -91,7 +91,7 @@ typedef struct {
     volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */
     volatile uint32_t PWML_PIN_CNTR;             /* Error PWM Low Counter Value Register */
     volatile uint32_t PWML_PIN_CNTR_PRE;         /* Error PWM Low Counter Value Pre-Load Register */
-    volatile uint8_t  Resv_1024[944];
+    volatile uint8_t  Resv_1024[928];
     SDL_esmRegs_ERR_GRP ERR_GRP[32];
 } SDL_esmRegs;
 

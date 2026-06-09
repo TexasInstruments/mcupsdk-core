@@ -48,6 +48,7 @@
 #define MASK_BIT (1u)
 #define STATUS_NUM (1u)
 #define SDL_ESM_EN_KEY_ENBALE_VAL (0xFU)
+#define SDL_ESM_ERR_GROUP0_ADDR   (0x52D00400U)
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
@@ -174,6 +175,14 @@ int32_t sdl_Esm_posTest(void)
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
 		}
+#if defined (SOC_AM263X)
+        val  = HW_RD_REG32(SDL_ESM_ERR_GROUP0_ADDR);
+        if(staticRegs.ERR_GRP[0].RAW != val)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
+#endif
     }
 
     /* SDL_ESM_registerECCCallback API test */
