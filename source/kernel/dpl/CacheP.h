@@ -57,7 +57,11 @@ extern "C" {
  * Actual CPU defined cache line can be smaller that this value, this define
  * is a utility macro to keep application portable across different CPU's.
  */
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#define CacheP_CACHELINE_ALIGNMENT   (32U)
+#else
 #define CacheP_CACHELINE_ALIGNMENT   (128U)
+#endif
 
 /**
  *  \anchor CacheP_Type
