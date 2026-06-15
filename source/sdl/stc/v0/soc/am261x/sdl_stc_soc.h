@@ -113,7 +113,11 @@ static uint32_t SDL_STC_baseAddress[SDL_STC_NUM_INSTANCES] = {(uint32_t)SDL_R5SS
 #define MSS_RCM_BaseAddress         (SDL_MSS_RCM_U_BASE)
 #define MSS_CTRL_BaseAddress        (SDL_MSS_CTRL_U_BASE)
 
-
+#define SDL_LOCK0_KICK0             (0x00001008U)
+#define SDL_LOCK0_KICK1             (0x0000100CU)
+#define SDL_KICK_LOCK_VAL           (0x00000000U)
+#define SDL_KICK0_UNLOCK_VAL        (0x01234567U)
+#define SDL_KICK1_UNLOCK_VAL        (0x0FEDCBA8U)
 
 
 

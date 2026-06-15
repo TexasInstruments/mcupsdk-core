@@ -46,7 +46,26 @@
 
 #include <sdl/stc/v0/sdl_stc.h>
 
+/********************************************************************************************************
+*   Static Functions
+*********************************************************************************************************/
+static void SDL_MMR_Unlock(uint32_t baseAddr)
+{
+    volatile uint32_t  *kickAddr;
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
+    SDL_REG32_WR(kickAddr, SDL_KICK0_UNLOCK_VAL);      /* KICK 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
+    SDL_REG32_WR(kickAddr, SDL_KICK1_UNLOCK_VAL);      /* KICK 1 */
+}
 
+static void SDL_MMR_Lock(uint32_t baseAddr)
+{
+    volatile uint32_t  *kickAddr;
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
+    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
+    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 1 */
+}
 
 /********************************************************************************************************
 *   API for getting the status of specified STC instance
@@ -63,7 +82,9 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
     if (instance < SDL_STC_INVALID_INSTANCE)
     {
 
+        SDL_MMR_Unlock(SDL_MSS_RCM_U_BASE);
         stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_STATUS, SDL_MSS_STC_RESET);
+        SDL_MMR_Lock(SDL_MSS_RCM_U_BASE);
 
             /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];
@@ -212,9 +233,11 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
         /* Configure this Register for R5F to be in low power mode (WFI)mode*/
         /* Provide override WFI signal to STC indicating processor idle state*/
 
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_FORCE_WFI ,SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE,
                 SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
 
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
         /* run asm( "nop") opration for delay*/
         (void)SDL_STC_delay(count);
         sdlResult = SDL_PASS;
@@ -233,7 +256,9 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
 
 static void SDL_STC_resetCauseClearR5F0(void)
 {
+    SDL_MMR_Unlock(SDL_MSS_RCM_U_BASE);
     HW_WR_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_CAUSE_CLR, SDL_MSS_STC_RESET_CLEAR, SDL_MSS_STC_RESET_CLEAR_ENABLE);
+    SDL_MMR_Lock(SDL_MSS_RCM_U_BASE);
 }
 
 /********************************************************************************************************

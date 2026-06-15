@@ -120,39 +120,30 @@ int main(void)
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
+#if (MCU_LBIST_ENABLED == 1U)
     if(gMcuLbistTestStatus == 0U)
     {
+#endif
         Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
         Bootloader_profileAddProfilePoint("LoadHsmRtFw");
         Bootloader_socInitL2MailBoxMemory();
 
         // status = Keyring_init(&gHSMClient);
         // DebugP_assert(status == SystemP_SUCCESS);
-
-        /* ROM doesn't reset the OSPI flash. This can make the flash initialization
-        troublesome because sequences are very different in Octal DDR mode. So for a
-        moment switch OSPI controller to 8D mode and do a flash reset. */
-        flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
-        status = Board_driversOpen();
-        DebugP_assert(status == SystemP_SUCCESS);
-        Bootloader_profileAddProfilePoint("Board_driversOpen");
+#if (MCU_LBIST_ENABLED == 1U)
     }
-
-    if(gMcuLbistTestStatus == 1U)
-    {
-        gMcuLbistTestStatus = 0U;
-    }
-    else
-    {
-        gMcuLbistTestStatus = 1U;
-    }
-    /* Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over.*/
+    /* By default this function is empty and can be enabled by MCU_LBIST in syscfg.
+    Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over. */
     SDL_lbist_selftest();
+#endif
 
-    if(gMcuLbistTestStatus == 0U)
-    {
-        DebugP_log("STC Test Complete ... \r\n");
-    }
+    /* ROM doesn't reset the OSPI flash. This can make the flash initialization
+    troublesome because sequences are very different in Octal DDR mode. So for a
+    moment switch OSPI controller to 8D mode and do a flash reset. */
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
+    status = Board_driversOpen();
+    DebugP_assert(status == SystemP_SUCCESS);
+    Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     DebugP_log("\r\nStarting OSPI Bootloader ... \r\n");
 

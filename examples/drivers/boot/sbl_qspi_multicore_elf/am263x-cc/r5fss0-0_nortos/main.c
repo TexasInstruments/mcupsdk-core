@@ -89,8 +89,10 @@ int main(void)
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
+#if (MCU_LBIST_ENABLED == 1U)
     if(gMcuLbistTestStatus == 0U)
     {
+#endif
         /*
             Request the HSM ROM to load the HSMRT image onto itself.
         */
@@ -100,23 +102,12 @@ int main(void)
 
         status = Keyring_init(&gHSMClient);
         DebugP_assert(status == SystemP_SUCCESS);
+#if (MCU_LBIST_ENABLED == 1U)
     }
-
-    if(gMcuLbistTestStatus == 1U)
-    {
-        gMcuLbistTestStatus = 0U;
-    }
-    else
-    {
-        gMcuLbistTestStatus = 1U;
-    }
-    /* Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over.*/
+    /* By default this function is empty and can be enabled by MCU_LBIST in syscfg.
+    Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over. */
     SDL_lbist_selftest();
-
-    if(gMcuLbistTestStatus == 0U)
-    {
-        DebugP_log("STC Test Complete ... \r\n");
-    }
+#endif
 
     DebugP_log("\r\n[SBL] Starting QSPI Bootloader ... \r\n");
 
