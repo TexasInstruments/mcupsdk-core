@@ -36,13 +36,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <sdl/sdl_ecc.h>
-#include <drivers/esm/v1/cslr_esm.h>
 
 #if defined(SOC_AM263X)
+#include <sdl/esm/v0/v0_0/sdlr_esm.h>
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include <sdl/include/am263x/sdlr_mss_ecc_agga.h>
 #endif
 #if defined(SOC_AM263PX)
+#include <sdl/esm/v2/v2_0/sdlr_esm.h>
 #include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 #include <sdl/include/am263px/sdlr_mss_ecc_agga.h>
 #endif
@@ -63,7 +64,7 @@
 #define APP_CHUNK_SIZE_BITS                 (4U * 64U)
 #define APP_CHUNK_SIZE_BYTES                (APP_CHUNK_SIZE_BITS / 8U)
 
-#define ESM_REGISTERS                       ((volatile CSL_esmRegs *) CSL_TOP_ESM_U_BASE)
+#define ESM_REGISTERS                       ((volatile SDL_esmRegs *) SDL_TOP_ESM_U_BASE)
 
 #define SDL_MSS_L2_MEM_INIT_DONE_ADDR                   (SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_L2OCRAM_MEM_INIT_DONE)
 #define SDL_ECC_AGGR_ERROR_STATUS1_ADDR                 (SDL_ECC_AGG_R5SS0_CORE0_U_BASE+SDL_MSS_ECC_AGGA_ERROR_STATUS1)

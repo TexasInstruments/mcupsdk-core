@@ -80,6 +80,7 @@ This page lists all the examples related to usage of SDL.
 \cond SOC_AM263X || SOC_AM263PX
 -# ECC
    -# \subpage EXAMPLES_SDL_ECC_EDMA_SRAM_SCRUB
+   -# \subpage EXAMPLES_SDL_ECC_PRU_SCRUBBER
 \endcond
 
 \cond  SOC_AM263PX || SOC_AM261X
