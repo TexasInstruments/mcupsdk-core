@@ -316,6 +316,7 @@ const example_file_list = [
     "test/drivers/mcspi/mcspi_eeprom_dma/.project/project.js",
     "test/drivers/mcspi/mcspi_controller_peripheral/.project/project.js",
     "test/drivers/mcspi/mcspi_controller_peripheral_dma/.project/project.js",
+    "test/drivers/mcspi/mcspi_loopback_dma/.project/project.js",
     "test/drivers/mmcsd/mmcsd/.project/project.js",
     "test/drivers/mmcsd/mmcsd_emmc_interrupt/.project/project.js",
     "test/drivers/mmcsd/mmcsd_emmc_polling/.project/project.js",

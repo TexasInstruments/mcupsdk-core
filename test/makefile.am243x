@@ -120,6 +120,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_eeprom/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_eeprom_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mmcsd/mmcsd/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mmcsd/mmcsd_emmc_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mmcsd/mmcsd_emmc_interrupt/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -554,6 +556,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_eeprom_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -1073,6 +1077,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/mmcsd/mmcsd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1963,6 +1973,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_eeprom_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2477,6 +2489,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mmcsd/mmcsd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3367,6 +3385,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am243x-evm_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_eeprom_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mmcsd_emmc_interrupt_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -3881,6 +3901,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mcspi_eeprom_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_loopback_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_loopback_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mmcsd_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mmcsd/mmcsd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
