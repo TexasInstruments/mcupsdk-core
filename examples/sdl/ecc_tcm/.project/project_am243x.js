@@ -94,7 +94,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ecc_tcm_app";
+    property.name = "ecc_tcm";
     property.isInternal = false;
     property.description = "This example verifies ECC inject operations in single and double bits for R5F cache"
     property.buildOptionCombos = buildOptionCombos;

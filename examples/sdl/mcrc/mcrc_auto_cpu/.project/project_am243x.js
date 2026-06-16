@@ -76,7 +76,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sdl_mcrc_auto_cpu_example";
+    property.name = "mcrc_auto";
     property.isInternal = false;
     property.description = "This example verifies MCRC in auto cpu modes of operation"
     property.buildOptionCombos = buildOptionCombos;

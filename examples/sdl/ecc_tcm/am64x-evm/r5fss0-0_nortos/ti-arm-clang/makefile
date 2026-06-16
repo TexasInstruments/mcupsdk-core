@@ -21,15 +21,15 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ecc_tcm_app.$(PROFILE).out
-COREOUTNAME:=ecc_tcm_app.$(PROFILE).optishare.out
+OUTNAME:=ecc_tcm.$(PROFILE).out
+COREOUTNAME:=ecc_tcm.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=ecc_tcm_app.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=ecc_tcm_app.$(PROFILE).mcelf.hs
-BOOTIMAGE_NAME_HS_FS:=ecc_tcm_app.$(PROFILE).mcelf.hs_fs
+BOOTIMAGE_NAME_MCELF:=ecc_tcm.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=ecc_tcm.$(PROFILE).mcelf.hs
+BOOTIMAGE_NAME_HS_FS:=ecc_tcm.$(PROFILE).mcelf.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_MCELF_HS)
@@ -222,7 +222,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang ecc_tcm_app ...
+	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang ecc_tcm ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -351,12 +351,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for ecc_tcm_app.$(PROFILE) ...
+	@echo Creating Coverage Report for ecc_tcm.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ecc_tcm_app.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecc_tcm_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ecc_tcm_app.$(PROFILE).profdata > coverage/ecc_tcm_app.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ecc_tcm_app.$(PROFILE).profdata.json --output-json=coverage/ecc_tcm_app.$(PROFILE).analysis.json --output=../ecc_tcm_app.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ecc_tcm.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecc_tcm.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ecc_tcm.$(PROFILE).profdata > coverage/ecc_tcm.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ecc_tcm.$(PROFILE).profdata.json --output-json=coverage/ecc_tcm.$(PROFILE).analysis.json --output=../ecc_tcm.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

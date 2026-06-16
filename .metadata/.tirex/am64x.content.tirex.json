@@ -19205,7 +19205,7 @@
             "example.general"
         ],
         "description": "This example verifies MCRC in auto cpu modes of operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_mcrc_auto_cpu_example",
+        "name": "mcrc_auto",
         "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19304,7 +19304,7 @@
             "example.general"
         ],
         "description": "This example verifies MCRC in semi cpu modes of operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_mcrc_semi_cpu_example",
+        "name": "mcrc_semi_cpu",
         "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -20314,7 +20314,7 @@
             "example.general"
         ],
         "description": "This example verifies ECC inject operations in single and double bits for R5F cache CPU is R5FSS0-0 running NORTOS.",
-        "name": "ecc_tcm_app",
+        "name": "ecc_tcm",
         "location": "../../examples/sdl/ecc_tcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"

@@ -77,7 +77,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sdl_mcrc_semi_cpu_example";
+    property.name = "mcrc_semi_cpu";
     property.isInternal = false;
     property.description = "This example verifies MCRC in semi cpu modes of operation"
     property.buildOptionCombos = buildOptionCombos;

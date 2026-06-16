@@ -1818,10 +1818,10 @@ BUILD_COMBO_EXAMPLE_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am64x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -1850,7 +1850,7 @@ BUILD_COMBO_EXAMPLE_ALL += ecc_sec_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecc_sec_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecc_sec_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_reset_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -3464,7 +3464,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ext_otp_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+ mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
@@ -3473,7 +3473,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+ mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
@@ -3560,7 +3560,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ecc_sec/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+ ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ecc_tcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
@@ -4155,10 +4155,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4187,7 +4187,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_sec_app_am64x-evm_m4fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_sec_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_sec_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_reset_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -5796,7 +5796,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ext_otp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
@@ -5805,7 +5805,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
@@ -5892,7 +5892,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc_sec/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc_tcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
@@ -6487,10 +6487,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6519,7 +6519,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_sec_app_am64x-evm_m4fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_sec_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_sec_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_reset_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -8128,7 +8128,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ext_otp_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_mcrc_auto_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
@@ -8137,7 +8137,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_mcrc_semi_cpu_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ mcrc_semi_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  tog_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
@@ -8224,7 +8224,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ecc_sec_app_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ecc_sec/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ecc_tcm/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  vtm_reset_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:

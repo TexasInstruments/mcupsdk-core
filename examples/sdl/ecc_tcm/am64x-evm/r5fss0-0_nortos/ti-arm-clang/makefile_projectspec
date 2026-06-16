@@ -4,7 +4,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME=ecc_tcm_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+PROJECT_NAME=ecc_tcm_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 
 all:
 	$(CCS_ECLIPSE) -workspace $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccs.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

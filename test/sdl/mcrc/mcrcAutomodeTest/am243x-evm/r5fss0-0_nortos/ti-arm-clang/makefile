@@ -21,15 +21,15 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_sdl_mcrc_auto.$(PROFILE).out
-COREOUTNAME:=test_sdl_mcrc_auto.$(PROFILE).optishare.out
+OUTNAME:=sdl_mcrc_auto_test_app.$(PROFILE).out
+COREOUTNAME:=sdl_mcrc_auto_test_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=test_sdl_mcrc_auto.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=test_sdl_mcrc_auto.$(PROFILE).mcelf.hs
-BOOTIMAGE_NAME_HS_FS:=test_sdl_mcrc_auto.$(PROFILE).mcelf.hs_fs
+BOOTIMAGE_NAME_MCELF:=sdl_mcrc_auto_test_app.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=sdl_mcrc_auto_test_app.$(PROFILE).mcelf.hs
+BOOTIMAGE_NAME_HS_FS:=sdl_mcrc_auto_test_app.$(PROFILE).mcelf.hs_fs
 TARGETS := $(BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_MCELF_HS)
@@ -223,7 +223,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:r5fss0-0:nortos:ti-arm-clang test_sdl_mcrc_auto ...
+	@echo  Scrubing: am243x:r5fss0-0:nortos:ti-arm-clang sdl_mcrc_auto_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -350,12 +350,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_sdl_mcrc_auto.$(PROFILE) ...
+	@echo Creating Coverage Report for sdl_mcrc_auto_test_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_sdl_mcrc_auto.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_sdl_mcrc_auto.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_sdl_mcrc_auto.$(PROFILE).profdata > coverage/test_sdl_mcrc_auto.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_sdl_mcrc_auto.$(PROFILE).profdata.json --output-json=coverage/test_sdl_mcrc_auto.$(PROFILE).analysis.json --output=../test_sdl_mcrc_auto.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_mcrc_auto_test_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_mcrc_auto_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_mcrc_auto_test_app.$(PROFILE).profdata > coverage/sdl_mcrc_auto_test_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_mcrc_auto_test_app.$(PROFILE).profdata.json --output-json=coverage/sdl_mcrc_auto_test_app.$(PROFILE).analysis.json --output=../sdl_mcrc_auto_test_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

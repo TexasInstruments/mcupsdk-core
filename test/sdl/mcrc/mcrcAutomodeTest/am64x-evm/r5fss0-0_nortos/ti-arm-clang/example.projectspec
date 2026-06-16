@@ -11,7 +11,7 @@
 
     <project
         title="Sdl Mcrc Auto Mode Test"
-        name = "test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang"
+        name = "sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -51,7 +51,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=sdl_mcrc_auto_cpu_example.${ConfigName}.map
+            -m=sdl_mcrc_auto_test_app.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs

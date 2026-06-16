@@ -308,10 +308,10 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
-BUILD_COMBO_EXAMPLE_ALL += test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += esm_func_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -505,7 +505,7 @@ examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
- test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+ sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/mcrc/mcrcAutomodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
@@ -514,7 +514,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+ sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/mcrc/mcrcSemimodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
@@ -1051,10 +1051,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += esm_func_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -1243,7 +1243,7 @@ examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
- test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/mcrc/mcrcAutomodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
@@ -1252,7 +1252,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/mcrc/mcrcSemimodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
@@ -1789,10 +1789,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += esm_func_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -1981,7 +1981,7 @@ examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
- test_sdl_mcrc_auto_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sdl_mcrc_auto_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/mcrc/mcrcAutomodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
@@ -1990,7 +1990,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- test_sdl_mcrc_semi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ sdl_mcrc_semi_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/mcrc/mcrcSemimodeTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:

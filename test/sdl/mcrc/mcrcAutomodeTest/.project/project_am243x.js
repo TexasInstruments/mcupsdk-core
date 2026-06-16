@@ -85,7 +85,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "test_sdl_mcrc_auto";
+    property.name = "sdl_mcrc_auto_test_app";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.description = "MCRC Auto Mode Test"
