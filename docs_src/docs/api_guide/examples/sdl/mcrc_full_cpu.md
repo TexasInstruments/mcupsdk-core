@@ -60,6 +60,10 @@ Use Cases
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
+\cond SOC_AM64X || SOC_AM243X
+\note 64 bit data writes during MCRC calculation will not be atomic due to limitations caused by the configuration of device memory - including the MCRC register space. If the user desires atomicity of register writes during CRC calculation, the recommended software workaround is to disable all interrupts before a write and re-enable them afterwards.
+\endcond
+
 # See Also
 
 \ref SDL_MCRC_PAGE
