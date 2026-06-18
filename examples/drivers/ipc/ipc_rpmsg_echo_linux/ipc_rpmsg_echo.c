@@ -124,7 +124,6 @@ RPMessage_Object gIpcAckReplyMsgObject;
 #define IPC_RPMESSAGE_TASK_STACK_SIZE  (8*1024U)
 uint8_t gIpcTaskStack[IPC_RPMESSAGE_NUM_RECV_TASKS][IPC_RPMESSAGE_TASK_STACK_SIZE] __attribute__((aligned(32)));
 TaskP_Object gIpcTask[IPC_RPMESSAGE_NUM_RECV_TASKS];
-
 /* number of iterations of message exchange to do */
 uint32_t gMsgEchoCount = 100000u;
 /* non-Linux cores that exchange messages among each other */
@@ -154,9 +153,18 @@ uint32_t gRemoteCoreId[] = {
 };
 #endif
 
+volatile uint32_t gShutdownRemotecoreID = 0u;
 volatile uint8_t gShutdown = 0u;
-volatile uint8_t gShutdownRemotecoreID = 0u;
 volatile uint8_t gIpcAckReplyMsgObjectPending = 0u;
+volatile uint8_t gRecvTaskExitCounter = 0u;
+
+static inline void IPCApp_putCPUInWFI(void)
+{
+#if (__ARM_ARCH_PROFILE == 'R') ||  (__ARM_ARCH_PROFILE == 'M')
+    /* For ARM R and M cores*/
+    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
+#endif
+}
 
 void ipc_recv_task_main(void *args)
 {
@@ -202,24 +210,26 @@ void ipc_recv_task_main(void *args)
             SystemP_WAIT_FOREVER);
         DebugP_assert(status==SystemP_SUCCESS);
     }
+    gRecvTaskExitCounter++;
+    if (gRecvTaskExitCounter >= IPC_RPMESSAGE_NUM_RECV_TASKS)
+    {
+                /* Follow the sequence for graceful shutdown for the last recv task */
+        DebugP_log("[IPC RPMSG ECHO] Closing all drivers and going to WFI ... !!!\r\n");
+        if(gShutdownRemotecoreID)
+        {
+            /* ACK the shutdown message */
+            IpcNotify_sendMsg(gShutdownRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK, 1u);
+        }
 
-    DebugP_log("[IPC RPMSG ECHO] Closing all drivers and going to WFI ... !!!\r\n");
+        /* Close the drivers */
+        Drivers_close();
 
-    /* Close the drivers */
-    Drivers_close();
+        /* deinit system */
+        System_deinit();
 
-    /* ACK the suspend message */
-    IpcNotify_sendMsg(gShutdownRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK, 1u);
-
-    /* Disable interrupts */
-    HwiP_disable();
-#if (__ARM_ARCH_PROFILE == 'R') ||  (__ARM_ARCH_PROFILE == 'M')
-    /* For ARM R and M cores*/
-    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
-#endif
-#if defined(BUILD_C7X)
-    asm("    IDLE");
-#endif
+        IPCApp_putCPUInWFI();
+    }
+    
     vTaskDelete(NULL);
 }
 
@@ -361,22 +371,28 @@ void ipc_rpmsg_create_recv_tasks(void)
 
     status = TaskP_construct(&gIpcTask[1], &taskParams);
     DebugP_assert(status == SystemP_SUCCESS);
+
+}
+
+static void ipc_trigger_shutdown(void)
+{
+    gShutdown = 1u;
+    RPMessage_unblock(&gIpcRecvMsgObject[0]);
+    RPMessage_unblock(&gIpcRecvMsgObject[1]);
+
+    if (gIpcAckReplyMsgObjectPending == 1u)
+        RPMessage_unblock(&gIpcAckReplyMsgObject);
 }
 
 void ipc_rp_mbox_callback(uint32_t remoteCoreId, uint16_t clientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if (clientId == IPC_NOTIFY_CLIENT_ID_RP_MBOX)
     {
+        /* Shutdown request from the remotecore */
         if (msgValue == IPC_NOTIFY_RP_MBOX_SHUTDOWN)
         {
-            /* Suspend request from the remotecore */
-            gShutdown = 1u;
             gShutdownRemotecoreID = remoteCoreId;
-            RPMessage_unblock(&gIpcRecvMsgObject[0]);
-            RPMessage_unblock(&gIpcRecvMsgObject[1]);
-
-            if (gIpcAckReplyMsgObjectPending == 1u)
-                RPMessage_unblock(&gIpcAckReplyMsgObject);
+            ipc_trigger_shutdown();
         }
     }
 }
