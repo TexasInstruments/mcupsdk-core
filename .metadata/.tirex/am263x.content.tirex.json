@@ -7312,6 +7312,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A I2c Peripheral Probe Read Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_peripheral_probe_read_lld",
+        "location": "../../examples/drivers/i2c/i2c_peripheral_probe_read_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_peripheral_probe_read_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A I2c Peripheral Transfer Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "i2c_peripheral_transfer",
         "location": "../../examples/drivers/i2c/i2c_peripheral_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

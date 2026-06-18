@@ -35,7 +35,6 @@ I2C1 can be connected to I2C3 with following jumper Connections.
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
- ^              | 
  Toolchain      | ti-arm-clang
  Boards         | @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/i2c/i2c_peripheral_transfer_lld

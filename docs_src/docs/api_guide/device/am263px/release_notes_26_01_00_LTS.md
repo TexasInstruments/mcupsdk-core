@@ -205,6 +205,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> AM263x, AM263Px, AM261x
     <td> Fixed in example
 </tr>
+<tr>
+    <td> MCUSDK-15576
+    <td> I2C Target doesn't work with 0 write size interaction
+    <td> I2C
+    <td> 26.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated source code
+</tr>
 </table>
 
 ## Known Issues

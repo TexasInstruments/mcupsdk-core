@@ -325,6 +325,10 @@ int32_t I2C_lld_init(I2CLLD_Handle handle)
         /* Specify the idle state for this I2C peripheral */
         obj->state = I2C_STATE_IDLE;
 
+        /* Initialize probe detection flag: 1U = no prior master WRITE seen yet.
+         * Set to 0U by RRDY, reset to 1U at end of every AAS. */
+        obj->detectReadProbe = 1U;
+
     }
 
     return status;
@@ -1609,7 +1613,16 @@ void I2C_lld_targetIsr(void* args)
                         handle->writeCountIdx--;
                         handle->writeBufIdx++;
                     }
-
+                    else
+                    {
+                        /* SDIR=0: master WRITE (slave RX) .
+                         * SDIR=1: master READ (slave TX). */
+                        if ((object->detectReadProbe == 1U) &&
+                            ((intStat & I2C_INT_TARGET_DIRECTION) != 0U))
+                        {
+                            I2CControllerDataPut(handle->baseAddr, 0U);
+                        }
+                    }
                 }
                 else if (object->state == I2C_TARGET_XFER_STATE)
                 {
@@ -1649,6 +1662,7 @@ void I2C_lld_targetIsr(void* args)
                     /* Control should not come here. Sphurious interrupt clear it. */
                 }
                 I2CControllerIntClearEx(handle->baseAddr, I2C_INT_ADRR_TARGET);
+                object->detectReadProbe = 1U;
                 break;
 
             case I2C_IVR_INTCODE_NACK:
@@ -1668,6 +1682,7 @@ void I2C_lld_targetIsr(void* args)
                 break;
 
             case I2C_IVR_INTCODE_RRDY:
+                object->detectReadProbe = 0U;
                 /* Read from Rx register only when current transaction is ongoing */
                 if ((handle->readCountIdx) != (uint32_t)0U)
                 {
@@ -1704,6 +1719,7 @@ void I2C_lld_targetIsr(void* args)
                 break;
 
             case I2C_IVR_INTCODE_SCD:
+                    object->detectReadProbe = 1U;
                     I2CControllerIntDisableEx(handle->baseAddr, I2C_ALL_INTS_MASK);
                     I2CControllerIntClearEx(handle->baseAddr, I2C_ALL_INTS);
                     object->currentTargetTransaction->readCount -= object->readCountIdx;
