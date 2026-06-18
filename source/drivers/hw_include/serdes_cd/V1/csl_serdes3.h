@@ -167,6 +167,7 @@ typedef uint32_t CSL_SerdesLaneEnableStatus;
 #define CSL_SERDES_LANE_ENABLE_PERIPHERAL_BASE_NOT_SET     (2U)
 #define CSL_SERDES_LANE_ENABLE_ITERATION_MODE_NOT_SET      (3U)
 #define CSL_SERDES_LANE_ENABLE_SIG_UNDETECTED              (4U)
+#define CSL_SERDES_LANE_ENABLE_PLL_UNLOCKED                (5U)
 
 typedef uint32_t CSL_SerdesPhyType;
 #define CSL_SERDES_PHY_TYPE_PCIe            (0U)

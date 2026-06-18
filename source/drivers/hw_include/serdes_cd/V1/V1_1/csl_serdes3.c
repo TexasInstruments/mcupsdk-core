@@ -450,6 +450,27 @@ CSL_SerdesLaneEnableStatus CSL_serdesLaneEnable
 
     CSL_serdesCycleDelay(100);
 
+
+    /** The PCIe subsystem operation is completely dependent upon the availability of the clock from the PLL that is
+     * inside the SERDES. All registers in the PCIe controller located in the core clock domain need the PLL to be
+     * in lock and properly configured.
+     * Refer chapter 12.2.2.4.6.2 PCIe Transaction Limitations of AM64x/AM243x TRM (REV. H.)
+     */
+    uint32_t pllstat;
+    uint32_t retries = 1000;
+    do
+    {
+        pllstat = CSL_serdesGetPLLStatus(serdesLaneEnableParams->baseAddr,
+                                            serdesLaneEnableParams->laneMask,
+                                            serdesLaneEnableParams->serdesInstance);
+        CSL_serdesCycleDelay(100);
+    }while((pllstat == CSL_SERDES_STATUS_PLL_NOT_LOCKED) && (--retries));
+
+    if(retries <= 0)
+    {
+        status = CSL_SERDES_LANE_ENABLE_PLL_UNLOCKED;
+    }
+
 	return status;
 }
 
