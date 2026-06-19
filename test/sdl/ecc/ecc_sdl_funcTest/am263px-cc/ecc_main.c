@@ -109,6 +109,58 @@ void tearDown(void)
 }
 #endif
 
+static uint32_t SDL_getPartitionID(uint32_t baseAddr)
+{
+    uint32_t partition = 0;
+    switch(baseAddr)
+    {
+        case SDL_MSS_CTRL_U_BASE:
+             partition = MSS_CTRL_PARTITION0;
+             break;
+        case SDL_MSS_RCM_U_BASE:
+             partition = MSS_RCM_PARTITION0;
+             break;
+        case SDL_TOP_CTRL_U_BASE:
+             partition = TOP_CTRL_PARTITION0;
+             break;
+        case SDL_TOP_RCM_U_BASE:
+             partition = TOP_RCM_PARTITION0;
+             break;
+        default:
+             /* No action and MMRs cannot be Unlocked */
+             break;
+    }
+    return partition;
+}
+
+/* Integrator need to decide unlock/lock the protected register 
+   or any other action and weak function is implemented in sdl lib 
+   and can override by updating this function. */
+void SDL_MMR_Unlock(uint32_t baseAddr)
+{
+    uint32_t partition = 0;
+    partition = SDL_getPartitionID(baseAddr);
+
+  /* Disabling interrupts to prevent from any interrupt fires between 
+     the unlock and the write MMRs, another task/ISR could re-lock 
+     the MMR, causing the write to silently fail or fault */
+    HwiP_disable();
+
+    /* Unlock Protected Peripheral Control Registers before write values */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, partition);
+}
+
+void SDL_MMR_Lock(uint32_t baseAddr)
+{
+    uint32_t partition = 0;
+    partition = SDL_getPartitionID(baseAddr);
+
+    /* Lock Protected Registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, partition);
+
+    /* Enable HW interrupt*/
+    HwiP_enable();
+}
 
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -140,6 +192,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     if(((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
        (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR)) && ((intSrc != 0x33) && (intSrc != 0x35)))
     {
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         /* Clear DED MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS);
@@ -155,6 +208,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
         /* Clear SEC RAW MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
         rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
     }
@@ -162,6 +216,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     if(((eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) ||
        (eccmemtype == SDL_R5FSS1_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS1_CORE0_ECC_AGGR)) && ((intSrc != 0x3B) && (intSrc != 0x3D)))
     {
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         /* Clear DED MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
         rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_UNCORR_ERRAGG_STATUS);
@@ -177,6 +232,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
         /* Clear SEC RAW MSS_CTRL register*/
         SDL_REG32_WR(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
         rd_data = SDL_REG32_RD(SDL_R5SS1_CPU0_ECC_CORR_ERRAGG_STATUS);
         printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
     }

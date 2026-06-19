@@ -44,11 +44,6 @@
 
 /* Below macros are used to enable VTM warm reset. */
 #define SDL_MSS_TOPRCM_WARM_RST_CFG                            (0x53200044U)
-#define SDL_TOP_RCM_LOCK0_KICK0                                (0x00001008U)
-#define SDL_TOP_RCM_LOCK0_KICK1                                (0x0000100CU)
-#define KICK_LOCK_VAL                                          (0x00000000U)
-#define KICK0_UNLOCK_VAL                                       (0x01234567U)
-#define KICK1_UNLOCK_VAL                                       (0x0FEDCBA8U)
 
 #define SDL_TOP_RCM_WARM_RESET_CONFIG_TSENSE0_RST_EN_MASK      (0x00000700U)
 #define SDL_TOP_RCM_WARM_RESET_CONFIG_TSENSE0_RST_EN_SHIFT     (0x00000008U)
@@ -617,8 +612,6 @@ int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_staticRegsTs *pStaticRegs)
  */
 int32_t SDL_VTM_enableESMWarmReset(SDL_VTM_InstTs instance)
 {
-    uint32_t            baseAddr;
-    volatile uint32_t  *kickAddr;
     int32_t sdlResult = SDL_PASS;
 
     if(instance > SDL_VTM_INSTANCE_TS_1)
@@ -630,11 +623,7 @@ int32_t SDL_VTM_enableESMWarmReset(SDL_VTM_InstTs instance)
 
         /* Unlock CONTROLSS_CTRL registers */
         /* Unlock TOP_RCM */
-        baseAddr = (uint32_t) SDL_TOP_RCM_U_BASE;
-        kickAddr = (volatile uint32_t *) (baseAddr + SDL_TOP_RCM_LOCK0_KICK0);
-        SDL_REG32_WR(kickAddr, KICK0_UNLOCK_VAL);      /* KICK 0 */
-        kickAddr = (volatile uint32_t *) (baseAddr + SDL_TOP_RCM_LOCK0_KICK1);
-        SDL_REG32_WR(kickAddr, KICK1_UNLOCK_VAL);      /* KICK 1 */
+        SDL_MMR_Unlock(SDL_TOP_RCM_U_BASE);
 
         switch (instance)
         {
@@ -657,10 +646,7 @@ int32_t SDL_VTM_enableESMWarmReset(SDL_VTM_InstTs instance)
 
         /* Lock CONTROLSS_CTRL registers */
         /* Lock TOP_RCM */
-        kickAddr = (volatile uint32_t *) (baseAddr + SDL_TOP_RCM_LOCK0_KICK0);
-        SDL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 0 */
-        kickAddr = (volatile uint32_t *) (baseAddr + SDL_TOP_RCM_LOCK0_KICK1);
-        SDL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 1 */
+        SDL_MMR_Lock(SDL_TOP_RCM_U_BASE);
     }
     return sdlResult;
 }

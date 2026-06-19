@@ -67,14 +67,6 @@ extern "C" {
 #define SDL_PBIST_SELF_TEST_KEY             (0x05U)
 #define SDL_PBIST_MDP_LOGIC_RESET           (0xA5U)
 
-/* define the unlock and lock values for MSS_CTRL, TOP_CTRL */
-#define SDL_CTRL_KICK_LOCK_VAL              (0x00000000U)
-#define SDL_CTRL_KICK0_UNLOCK_VAL           (0x01234567U)
-#define SDL_CTRL_KICK1_UNLOCK_VAL           (0x0FEDCBA8U)
-
-#define SDL_TOP_CTRL_LOCK0_KICK0            (0x00001008U)
-#define SDL_TOP_CTRL_LOCK0_KICK1            (0x0000100CU)
-
 #define SDL_PBIST_MEM_INSTANCE_MAX          (0x08U)
 
 /** ---------------------------------------------------------------------------

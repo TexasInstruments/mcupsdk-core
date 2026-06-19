@@ -52,6 +52,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <sdl/include/sdl_types.h>
+#include <sdl/include/sdlr.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc_bus_safety.h>
 #include <sdl/esm/sdlr_esm.h>

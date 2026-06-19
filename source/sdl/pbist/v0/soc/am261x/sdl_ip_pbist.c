@@ -60,6 +60,7 @@
 
 static void SDL_MSS_enableTopPbist (void)
 {
+    SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
     /* Enable the TOP PBIST Self-Test Key */
     HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_TOP_PBIST_KEY_RST, \
          SDL_MSS_CTRL_TOP_PBIST_KEY_RST_PBIST_ST_KEY, \
@@ -69,10 +70,12 @@ static void SDL_MSS_enableTopPbist (void)
     HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_TOP_PBIST_KEY_RST, \
          SDL_MSS_CTRL_TOP_PBIST_KEY_RST_PBIST_ST_RST, \
         SDL_MSS_TOP_PBIST_MDP_LOGIC_RESET);
+    SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 }
 
 static void SDL_MSS_disableTopPbist (void)
 {
+    SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
     /* Disable the Top PBIST Self-Test Key and assert reset
      * to PBIST controller and MDP logic
      */
@@ -82,6 +85,7 @@ static void SDL_MSS_disableTopPbist (void)
     HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE+SDL_MSS_CTRL_TOP_PBIST_KEY_RST, \
       SDL_MSS_CTRL_TOP_PBIST_KEY_RST_PBIST_ST_RST, \
       0U);
+    SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 }
 
 static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t memGroupIndex, uint8_t status)

@@ -49,23 +49,6 @@
 /********************************************************************************************************
 *   Static Functions
 *********************************************************************************************************/
-static void SDL_MMR_Unlock(uint32_t baseAddr)
-{
-    volatile uint32_t  *kickAddr;
-    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
-    SDL_REG32_WR(kickAddr, SDL_KICK0_UNLOCK_VAL);      /* KICK 0 */
-    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
-    SDL_REG32_WR(kickAddr, SDL_KICK1_UNLOCK_VAL);      /* KICK 1 */
-}
-
-static void SDL_MMR_Lock(uint32_t baseAddr)
-{
-    volatile uint32_t  *kickAddr;
-    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
-    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 0 */
-    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
-    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 1 */
-}
 
 /********************************************************************************************************
 *   API for getting the status of specified STC instance

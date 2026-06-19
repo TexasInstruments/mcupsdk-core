@@ -55,6 +55,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include "sdl_ecc_bus_safety_hw.h"
+#include <sdl/include/soc_config.h>
 #include <sdl/ecc_bus_safety/v0/soc/sdl_ecc_bus_safety_soc.h>
 
 #ifdef _cplusplus

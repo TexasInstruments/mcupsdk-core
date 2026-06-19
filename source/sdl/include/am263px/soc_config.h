@@ -56,6 +56,18 @@ extern "C"
 #define IP_VERSION_TMU_ROMCHECKSUM_V0
 #define IP_VERSION_TOG_V0
 #define IP_VERSION_VTM_V1
+
+/* Unlock and Lock values for MSS_CTRL, TOP_CTRL, MSS_RCM and TOP_RCM */
+#define SDL_LOCK0_KICK0             (0x00001008U)
+#define SDL_LOCK0_KICK1             (0x0000100CU)
+#define SDL_KICK_LOCK_VAL           (0x00000000U)
+#define SDL_KICK0_UNLOCK_VAL        (0x01234567U)
+#define SDL_KICK1_UNLOCK_VAL        (0x0FEDCBA8U)
+
+/* baseAddr - MSS_CTRL, TOP_CTRL, MSS_RCM and TOP_RCM*/
+void SDL_MMR_Unlock(uint32_t baseAddr);
+void SDL_MMR_Lock(uint32_t baseAddr);
+
 #ifdef __cplusplus
 }
 #endif

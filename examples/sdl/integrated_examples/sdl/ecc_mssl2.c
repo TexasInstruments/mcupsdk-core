@@ -304,6 +304,7 @@ int32_t ECC_MSSL2_test(void)
     SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_DONE_ADDR, 0xfu);
 #endif
 
+    SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
     /* Initialization of MSS L2 memory*/
     SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_ADDR, SDL_ECC_MSS_L2_BANK_MEM_INIT);
 
@@ -314,6 +315,7 @@ int32_t ECC_MSSL2_test(void)
 
     /*Clearing any old interrupt presented*/
     SDL_REG32_WR(SDL_ECC_AGGR_ERROR_STATUS1_ADDR, 0xF0Fu);
+    SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 
 
     if (testResult != SDL_PASS)

@@ -145,6 +145,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secErrorClear(uint32_t busSftyNode)
             SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
             0X0U);
 
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE)
         {
             node = busSftyNode - SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE;
@@ -165,6 +166,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secErrorClear(uint32_t busSftyNode)
             regVal = (regVal | ((uint32_t)1 << node));
             HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_L1_ERRAGG_STATUS_RAW), regVal);
         }
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 
         retval = SDL_PASS;
     }
@@ -228,6 +230,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedErrorClear(uint32_t busSftyNode)
             SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
             0X0U);
 
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_VBUSM_ERRAGG0_SIZE)
         {
             node = busSftyNode - SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE;
@@ -248,6 +251,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedErrorClear(uint32_t busSftyNode)
             regVal = (regVal | ((uint32_t)1 << node));
             HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H1_ERRAGG_STATUS_RAW), regVal);
         }
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
         retval = SDL_PASS;
     }
     else
@@ -312,6 +316,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode)
         HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
         SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_SAFE, 0x0U);
 
+        SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
         if(busSftyNode < SDL_MSS_CTRL_MSS_VBUSP_SAFETY_H_ERRAGG_SIZE)
         {
             node = busSftyNode;
@@ -342,6 +347,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode)
             regVal = (regVal | ((uint32_t)1 << node));
             HW_WR_REG32((SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_MSS_VBUSM_SAFETY_H1_ERRAGG_STATUS_RAW), regVal);
         }
+        SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
         retval = SDL_PASS;
     }
     else

@@ -40,6 +40,8 @@
 
 #include <stdint.h>
 #include "sdl_dpl.h"
+#include <sdl/include/sdlr.h>
+#include <sdl/include/soc_config.h>
 #include <sdl/include/sdl_types.h>
 
 /**
@@ -224,3 +226,33 @@ int32_t SDL_DPL_globalRestoreInterrupts(uintptr_t key)
 
     return ret;
 }
+
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
+/* This function is not related to DPL implementation and defined here
+   as this is common function across SDL */
+
+/* baseAddr - MSS_CTRL, TOP_CTRL, MSS_RCM and TOP_RCM*/
+__attribute__((weak)) void SDL_MMR_Unlock(uint32_t baseAddr)
+{
+    /* Unlock Protected Registers */
+    volatile uint32_t  *kickAddr;
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
+    SDL_REG32_WR(kickAddr, SDL_KICK0_UNLOCK_VAL);      /* KICK 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
+    SDL_REG32_WR(kickAddr, SDL_KICK1_UNLOCK_VAL);      /* KICK 1 */
+}
+
+/* This function is not related to DPL implementation and defined here
+   as this is common function across SDL */
+
+/* baseAddr - MSS_CTRL, TOP_CTRL, MSS_RCM and TOP_RCM*/
+__attribute__((weak)) void SDL_MMR_Lock(uint32_t baseAddr)
+{
+    /* Lock Protected Registers */
+    volatile uint32_t  *kickAddr;
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK0);
+    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 0 */
+    kickAddr = (volatile uint32_t *) (baseAddr + SDL_LOCK0_KICK1);
+    SDL_REG32_WR(kickAddr, SDL_KICK_LOCK_VAL);      /* KICK 1 */
+}
+#endif

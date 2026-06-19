@@ -124,6 +124,7 @@ volatile static bool esmEccError = false;
 
 void ecc_btcm_clearESM(void)
 {
+    SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
     /* Clear DED MSS_CTRL register*/
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
     /* Clear DED RAW MSS_CTRL register*/
@@ -133,6 +134,7 @@ void ecc_btcm_clearESM(void)
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
     /* Clear SEC RAW MSS_CTRL register*/
     SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+    SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 
     esmEccError = true;
 }

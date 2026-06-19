@@ -839,7 +839,7 @@ int32_t SDL_ESM_isEnableIntr(uint32_t baseAddr, uint32_t intrSrc, uint32_t *pEnS
  *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
- * \param   intrNum         Interrupt Number to diable
+ * \param   intrNum         Interrupt Number to disable
  *
  * \return                  SDL_PASS - success
  * @n                       SDL_EBADARGS - API fails due to bad input arguments

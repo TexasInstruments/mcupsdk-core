@@ -90,10 +90,12 @@ int32_t ParityDMA_clear(void)
 {
     int32_t retVal = SDL_PASS;
 
+	SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
 	/* setting control register to clear TPCC status */
 	SDL_REG32_WR(SDL_R5FSS0_CORE0_TPCC0_PARITY_CTRL, clearstatusbit);
 	/* clearing error aggregator status bit  */
 	SDL_REG32_WR(SDL_TPCC0_ERRAGG_STATUS, clearerraggbit);
+	SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 
 	paritydma_esmError = true;
 
@@ -115,11 +117,13 @@ int32_t ParityDMA_test(void)
 	int32_t result= SDL_PASS;
     uint32_t mask=0u;
 
+	SDL_MMR_Unlock(SDL_MSS_CTRL_U_BASE);
     /* masking TPCC0 error aggregator  */
 	SDL_REG32_WR(SDL_TPCC0_ERRAGG_MASK,errormask);
 	/* unmasking TPCC0_ERRAGG_MASK register  */
 	mask = errorunmask & SDL_REG32_RD(SDL_TPCC0_ERRAGG_MASK);
 	SDL_REG32_WR(SDL_TPCC0_ERRAGG_MASK,mask);
+    SDL_MMR_Lock(SDL_MSS_CTRL_U_BASE);
 
 	if (retVal == 0)
     {

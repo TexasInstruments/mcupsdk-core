@@ -67,6 +67,7 @@ extern "C"
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdlr.h>
 #include <sdl/stc/v0/soc/sdl_soc_stc.h>
+#include <sdl/include/soc_config.h>
 #include <sdl/soc.h>
 
 
