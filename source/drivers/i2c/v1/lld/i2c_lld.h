@@ -531,11 +531,6 @@ typedef struct {
     I2CLLD_targetTransaction                i2cTargetTransaction;
 /** Pointer to be used by application to store miscellaneous data */
     void*                                   args;
-/** Tracks whether a master WRITE (RRDY) has been received since the last AAS.
- *  1U = no write received yet (unsolicited READ probe possible).
- *  0U = master wrote to us (STOP-START or RESTART read sequence).
- *  Per-instance field replacing the former static local variable. */
-    uint32_t                                detectReadProbe;
 
 }I2CLLD_Object, *I2CLLD_Handle;
 
