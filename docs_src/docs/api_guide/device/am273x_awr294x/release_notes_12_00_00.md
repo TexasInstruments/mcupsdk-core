@@ -531,7 +531,3 @@ earlier SDKs.
 ## Previous Release Notes
 
 \ref RELEASE_NOTES_11_02_00_PAGE "Release Notes 11.02.00"
-
----
-
-**Date:** May 18, 2026
