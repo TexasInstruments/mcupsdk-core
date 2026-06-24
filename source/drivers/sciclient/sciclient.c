@@ -698,16 +698,30 @@ uint32_t Sciclient_getCurrentContext(uint16_t messageType)
        (TISCI_MSG_SEC_HANDOVER == messageType) ||
        (TISCI_MSG_BOARD_CONFIG == messageType) ||
        (TISCI_MSG_BOARD_CONFIG_RM == messageType) ||
+       (TISCI_MSG_BOARD_CONFIG_PM == messageType) ||
        (TISCI_MSG_BOARD_CONFIG_SECURITY == messageType) ||
        (TISCI_MSG_KEY_WRITER == messageType) ||
        (TISCI_MSG_READ_OTP_MMR == messageType) ||
        (TISCI_MSG_WRITE_OTP_ROW == messageType) ||
+       (TISCI_MSG_LOCK_OTP_ROW == messageType) ||
+       (TISCI_MSG_SOFT_LOCK_OTP_WRITE_GLOBAL == messageType) ||
+       (TISCI_MSG_GET_OTP_ROW_LOCK_STATUS == messageType) ||
        (TISCI_MSG_READ_SWREV == messageType) ||
        (TISCI_MSG_WRITE_SWREV == messageType) ||
        (TISCI_MSG_READ_KEYCNT_KEYREV == messageType) ||
        (TISCI_MSG_WRITE_KEYREV == messageType) ||
-       (TISCI_MSG_BOARD_CONFIG_PM == messageType) ||
-       (TISCI_MSG_OPEN_DEBUG_FWLS == messageType))
+       (TISCI_MSG_OPEN_DEBUG_FWLS == messageType) ||
+       (TISCI_MSG_DISABLE_JTAG_UNLOCK == messageType) ||
+       (TISCI_MSG_DISABLE_JTAG_UNLOCK_CHECK == messageType) ||
+       (TISCI_MSG_CRYPTO_GET_DKEK == messageType) ||
+       (TISCI_MSG_CRYPTO_SET_DKEK == messageType) ||
+       (TISCI_MSG_CRYPTO_RELEASE_DKEK == messageType) ||
+       (TISCI_MSG_CRYPTO_GET_DSMEK == messageType) ||
+       (TISCI_MSG_CRYPTO_SET_DSMEK == messageType) ||
+       (TISCI_MSG_CRYPTO_RELEASE_DSMEK == messageType) ||
+       (TISCI_MSG_KEYRING_IMPORT == messageType) ||
+       (TISCI_MSG_ALLOW_FWL_CTRL_READ == messageType) ||
+       (TISCI_MSG_FORBID_FWL_CTRL_READ == messageType))
     {
         retVal = gSciclientHandle.secureContextId;
     }
