@@ -147,7 +147,7 @@ The flowchart shown above shows the sequence in very broad strokes. A detailed d
 
 - PRU posts an Rx interrupt to the ARM interrupt controller. For EMAC, each PRU has a separate Rx interrupt, the configuration for which is done in the application (details in \ref ICSS_EMAC_DESIGN_INTERRUPTS).
 - The interrupt triggers the ISR `ICSS_EMAC_rxInterruptHandler` which in turn posts a semaphore `rxSemaphoreObject` to signal `RxTask` task to empty the Rx queues.
-- The `RxTask` function goes through all the queues, extracts the port/queue number and provides it to an API which copies data from ICSS-EMAC queue buffers memory region (in MSRAM) to application buffers (`destAddress` mentioned in \ref ICSS_EMAC_RxArgument). Please check the code for `ICSS_EMAC_pollPkt` function in `${SDK_INSTALL_PATH}/source/networking/icss_emac/source/icss_emac.c` file for more details.
+- The `RxTask` function goes through all the queues, extracts the port/queue number and provides it to an API which copies data from ICSS-EMAC queue buffers memory region (in MSRAM) to application buffers (`destAddress` mentioned in \ref ICSS_EMAC_RxArgument). Please check the code for `ICSS_EMAC_pollPkt` function in `${SDK_INSTALL_PATH}/source/networking/icss_emac_lld/icss_emac/source/icss_emac.c` file for more details.
 
 In `ICSS_EMAC_pollPkt`, function `ICSS_EMAC_rxPktInfo2` goes through each queue one at a time, extracts the port and queue number information for every packet and provides it to functions below. Based on the priority of the packet which is decided by the queue number (refer to \ref ICSS_EMAC_DESIGN_QOS), driver decides to either forward it to TCP/IP stack, done by `rxNRTCallBack` or give it to the `rxRTCallBack` function (if it is registered).
 

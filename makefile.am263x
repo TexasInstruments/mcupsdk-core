@@ -805,10 +805,10 @@ $(BUILD_COMBO_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am263x.$(subst mathlib_,,$@) all
 
 $(BUILD_COMBO_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263x.$(subst icss_emac_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263x.$(subst icss_emac_,,$@) all
 
 $(BUILD_COMBO_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$@) all
 
 $(BUILD_COMBO_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am263x.$(subst enet-cpsw_,,$@) all
@@ -820,7 +820,7 @@ $(BUILD_COMBO_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263x.$(subst lwipif-cpsw-nortos_,,$@) all
 
 $(BUILD_COMBO_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$@) all
 
 $(BUILD_COMBO_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$@) all
@@ -942,10 +942,10 @@ $(BUILD_COMBO_CLEAN_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am263x.$(subst mathlib_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263x.$(subst icss_emac_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263x.$(subst icss_emac_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am263x.$(subst enet-cpsw_,,$(subst _clean,,$@)) clean
@@ -957,7 +957,7 @@ $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263x.$(subst lwipif-cpsw-nortos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$(subst _clean,,$@)) clean
@@ -1078,10 +1078,10 @@ $(BUILD_COMBO_SCRUB_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am263x.$(subst mathlib_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263x.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263x.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am263x.$(subst enet-cpsw_,,$(subst _scrub,,$@)) scrub
@@ -1093,7 +1093,7 @@ $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263x.$(subst lwipif-cpsw-nortos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$(subst _scrub,,$@)) scrub

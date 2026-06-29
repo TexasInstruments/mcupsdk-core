@@ -913,7 +913,7 @@ $(BUILD_COMBO_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263px.$(subst lwipif-cpsw-nortos_,,$@) all
 
 $(BUILD_COMBO_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$@) all
 
 $(BUILD_COMBO_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263px.$(subst lwip-freertos_,,$@) all
@@ -934,13 +934,13 @@ $(BUILD_COMBO_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263px.$(subst lwip-contrib-nortos_,,$@) all
 
 $(BUILD_COMBO_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263px.$(subst icss_emac_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263px.$(subst icss_emac_,,$@) all
 
 $(BUILD_COMBO_hsr_prp_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$@) all
 
 $(BUILD_COMBO_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$@) all
 
 $(BUILD_COMBO_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am263px.$(subst mbedtls_,,$@) all
@@ -1062,7 +1062,7 @@ $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263px.$(subst lwipif-cpsw-nortos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263px.$(subst lwip-freertos_,,$(subst _clean,,$@)) clean
@@ -1083,13 +1083,13 @@ $(BUILD_COMBO_CLEAN_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263px.$(subst lwip-contrib-nortos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263px.$(subst icss_emac_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263px.$(subst icss_emac_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_hsr_prp_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am263px.$(subst mbedtls_,,$(subst _clean,,$@)) clean
@@ -1210,7 +1210,7 @@ $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos):
 	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am263px.$(subst lwipif-cpsw-nortos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am263px.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263px.$(subst lwip-freertos_,,$(subst _scrub,,$@)) scrub
@@ -1231,13 +1231,13 @@ $(BUILD_COMBO_SCRUB_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263px.$(subst lwip-contrib-nortos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am263px.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am263px.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_hsr_prp_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.hsr_prp_icss_emac.am263px.$(subst hsr_prp_icss_emac_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am263px.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_mbedtls):
 	$(MAKE) -C source/networking/mbedtls_library -f makefile.am263px.$(subst mbedtls_,,$(subst _scrub,,$@)) scrub

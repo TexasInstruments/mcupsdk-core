@@ -4,7 +4,7 @@ This list describes the differences between ICSS-EMAC driver of MCU+ SDK and ICS
 
 ## API changes
 
-There are changes in API names, structure names and macro names. All names begin with `ICSS_EMAC_` now. In PDK driver, user had to include multiple header files from the driver. In MCU+ SDK, only a single include file is needed, which is `${SDK_INSTALL_PATH}/source/networking/icss_emac/icss_emac.h`. From the user point of view, IOCTL, Rx and Tx related API usage is same as in PDK. The initialization code for icss-emac has changed, and is described in the points below. All the APIs from PDK driver are not included, only the ones used in the networking libraries are added in the MCU+ SDK's driver. The changes in API names are listed below.
+There are changes in API names, structure names and macro names. All names begin with `ICSS_EMAC_` now. In PDK driver, user had to include multiple header files from the driver. In MCU+ SDK, only a single include file is needed, which is `${SDK_INSTALL_PATH}/source/networking/icss_emac_lld/icss_emac/icss_emac.h`. From the user point of view, IOCTL, Rx and Tx related API usage is same as in PDK. The initialization code for icss-emac has changed, and is described in the points below. All the APIs from PDK driver are not included, only the ones used in the networking libraries are added in the MCU+ SDK's driver. The changes in API names are listed below.
 
 <table>
     <tr>

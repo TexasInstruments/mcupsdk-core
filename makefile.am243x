@@ -768,13 +768,13 @@ $(BUILD_COMBO_enet-icssg):
 	$(MAKE) -C source/networking/enet -f makefile.icssg.am243x.$(subst enet-icssg_,,$@) all
 
 $(BUILD_COMBO_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am243x.$(subst icss_emac_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am243x.$(subst icss_emac_,,$@) all
 
 $(BUILD_COMBO_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$@) all
 
 $(BUILD_COMBO_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$@) all
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$@) all
 
 $(BUILD_COMBO_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am243x.$(subst lwip-freertos_,,$@) all
@@ -961,13 +961,13 @@ $(BUILD_COMBO_CLEAN_enet-icssg):
 	$(MAKE) -C source/networking/enet -f makefile.icssg.am243x.$(subst enet-icssg_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am243x.$(subst icss_emac_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am243x.$(subst icss_emac_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am243x.$(subst lwip-freertos_,,$(subst _clean,,$@)) clean
@@ -1153,13 +1153,13 @@ $(BUILD_COMBO_SCRUB_enet-icssg):
 	$(MAKE) -C source/networking/enet -f makefile.icssg.am243x.$(subst enet-icssg_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac):
-	$(MAKE) -C source/networking/icss_emac -f makefile.am243x.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac -f makefile.am243x.$(subst icss_emac_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_emac_lwip_if):
-	$(MAKE) -C source/networking/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_emac/lwipif -f makefile.am243x.$(subst icss_emac_lwip_if_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_icss_timesync):
-	$(MAKE) -C source/networking/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
+	$(MAKE) -C source/networking/icss_emac_lld/icss_timesync -f makefile.am243x.$(subst icss_timesync_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am243x.$(subst lwip-freertos_,,$(subst _scrub,,$@)) scrub

@@ -35,19 +35,19 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f
             -I${MCU_PLUS_SDK_PATH}/source/networking
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lwipif/inc
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/source
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include/lwip
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/icss_emac
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/source
-            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/icss_dual_emac
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/source
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/icss_switch
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -65,9 +65,9 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
-            -i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib
+            -i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lib
             -i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib
-            -i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/lib
+            -i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lwipif/lib
             -i${CG_TOOL_ROOT}/lib
             -m=icss_emac_lwip.${ConfigName}.map
             --diag_suppress=10063

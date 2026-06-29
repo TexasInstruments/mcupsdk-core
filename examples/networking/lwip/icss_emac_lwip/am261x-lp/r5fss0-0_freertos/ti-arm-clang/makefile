@@ -60,19 +60,19 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/networking \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lwipif/inc \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/source \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include/lwip \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/icss_emac \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/source \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/icss_dual_emac \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/source \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/firmware/icss_switch \
 	-Igenerated \
 
 DEFINES_common := \
@@ -117,9 +117,9 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lwipif/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -156,9 +156,9 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib \
+	${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/lib \
+	${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_lld/icss_emac/lwipif/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

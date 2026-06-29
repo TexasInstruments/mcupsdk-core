@@ -2,7 +2,7 @@
 #include <string.h>
 
 //! [icss_timesync_include]
-#include <networking/icss_timesync/icss_timeSync_init.h>
+#include <networking/icss_emac_lld/icss_timesync/icss_timeSync_init.h>
 //! [icss_timesync_include]
 
 PRUICSS_Handle      pruicssHandle;
