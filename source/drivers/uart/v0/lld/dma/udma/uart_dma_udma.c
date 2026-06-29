@@ -330,10 +330,6 @@ static int32_t UART_udmaDeInitCh(Udma_ChHandle chHandle,
     status = Udma_chDisable(chHandle, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
     DebugP_assert(UDMA_SOK == status);
 
-    /* UnRegister Event */
-    status = Udma_eventUnRegister(eventHandle);
-    DebugP_assert(UDMA_SOK == status);
-
     /* Flush any pending request from the free queue */
     while(temp == TRUE)
     {
@@ -347,6 +343,10 @@ static int32_t UART_udmaDeInitCh(Udma_ChHandle chHandle,
             temp = FALSE;
         }
     }
+
+    /* UnRegister Event */
+    status = Udma_eventUnRegister(eventHandle);
+    DebugP_assert(UDMA_SOK == status);
 
     /* Close channel */
     status = Udma_chClose(chHandle);

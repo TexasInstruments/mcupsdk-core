@@ -384,10 +384,6 @@ static int32_t MCSPI_udmaDeInitCh(Udma_ChHandle chHandle,
         DebugP_assert(UDMA_SOK == udmaStatus);
     }
 
-    /* UnRegister Event */
-    udmaStatus = Udma_eventUnRegister(eventHandle);
-    DebugP_assert(UDMA_SOK == udmaStatus);
-
     if(isChEnabled == MCSPI_UDMA_CHANNEL_ENABLE)
     {
         /* Flush any pending request from the free queue */
@@ -403,7 +399,12 @@ static int32_t MCSPI_udmaDeInitCh(Udma_ChHandle chHandle,
                 break;
             }
         }
+
     }
+
+    /* UnRegister Event */
+    udmaStatus = Udma_eventUnRegister(eventHandle);
+    DebugP_assert(UDMA_SOK == udmaStatus);
 
     /* Close channel */
     udmaStatus = Udma_chClose(chHandle);
