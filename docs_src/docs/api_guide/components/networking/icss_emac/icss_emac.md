@@ -122,7 +122,7 @@ ICSS-EMAC runs on the host processor, provides a well defined set of APIs to con
 ### Including the header file
 
 Include the below file to access the APIs
-\snippet Icss_emac_sample.c icss_emac_include
+\snippet icss_emac_sample.c icss_emac_include
 
 ### Initializing the Handle
 
@@ -136,17 +136,17 @@ Include the below file to access the APIs
 
 - Please see \ref ICSS_EMAC_Params for information on which members are mandatory. If mandatory options are not passed, DebugP_assert will fail in \ref ICSS_EMAC_open.
 
-\snippet Icss_emac_sample.c icss_emac_open
+\snippet icss_emac_sample.c icss_emac_open
 
 ### Sending a Packet
 
-\snippet Icss_emac_sample.c icss_emac_tx
+\snippet icss_emac_sample.c icss_emac_tx
 
 ### Receiving a Packet
 
 \ref ICSS_EMAC_rxPktGet is the API used for receving packets. Refer \ref ICSS_EMAC_DESIGN_DATA_PATH_RX for more details. Following is an example usage:
 
-\snippet Icss_emac_sample.c icss_emac_rx
+\snippet icss_emac_sample.c icss_emac_rx
 
 ### IOCTL
 
@@ -161,7 +161,7 @@ The API for IOCTL is \ref ICSS_EMAC_ioctl. An IOCTL call uses two parameters to 
 
 For example, to disable receive functionality on a port, following code is used.
 
-\snippet Icss_emac_sample.c icss_emac_ioctl
+\snippet icss_emac_sample.c icss_emac_ioctl
 
 ## Dependencies
 

@@ -57,13 +57,13 @@ Delay Request/Response based Ordinary Clock and Transparent Clock support is pro
 ### Including the header file
 
 Include the below file to access the APIs
-\snippet Icss_timesync_sample.c icss_timesync_include
+\snippet icss_timesync_sample.c icss_timesync_include
 
 ### Initializing the Handle
 
 \ref TimeSync_drvInit should be called initialize the driver. It does everything and returns a value indicating whether initialization succeeded or failed. The driver call does not allocate the memory it needs. Therefore the allocation must be done by the application.
 
-\snippet Icss_timesync_sample.c icss_timesync_open
+\snippet icss_timesync_sample.c icss_timesync_open
 
 The variables shown in the code above do not show the full list of configurable variables and structures for which memory should be allocated. Please check all members inside \ref TimeSync_ParamsHandle structure.
 
