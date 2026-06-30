@@ -57,6 +57,7 @@ at it's core. To build the SDK successfully, there are other repositories
 that need to be cloned and are listed below:
 
 - [Ethernet Low Level Driver (ENET LLD)](https://github.com/TexasInstruments/mcupsdk-enet-lld)
+- [ICSS EMAC Low Level Driver](https://github.com/TexasInstruments/icss-emac-lld)
 - [FreeRTOS-Kernel](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-Kernel)
 - [FreeRTOS-POSIX](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-POSIX)
 - [FreeRTOS-FAT](https://github.com/TexasInstruments/mcupsdk-FreeRTOS-FAT)
