@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2025 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -246,6 +246,24 @@ struct tisci_boardcfg_extended_otp {
 
 #define MAX_NUM_DKEK_ALLOWED_HOSTS (4U)
 
+#ifdef CONFIG_ENABLE_FWL_DEVGRP_REINIT
+/**
+ * \brief Access configuration for DKEK
+ * \param subhdr Magic and size for integrity check
+ * \param allowed_hosts ID's of hosts allowed to use DKEK. Use TISCI_HOST_ID_ALL if any host is allowed
+ * \param allow_dkek_export_tisci If DKEK can be exported via TISCI interface to hosts. Set to 0x5A to allow.
+ * \param fwl_reinit_devgrp_opt 0 = disable the fwl_reinit_devgrp API
+ *                           0x5A = enable the fwl_reinit_devgrp API
+ * \param rsvd Reserved field for future use. Set to 0.
+ */
+struct tisci_boardcfg_dkek {
+    struct tisci_boardcfg_substructure_header    subhdr;
+    uint8_t                    allowed_hosts[MAX_NUM_DKEK_ALLOWED_HOSTS];
+    uint8_t                    allow_dkek_export_tisci;
+    uint8_t                    fwl_reinit_devgrp_opt;
+    uint8_t                    rsvd[2];
+} __attribute__((__packed__));
+#else
 /**
  * \brief Access configuration for DKEK
  * \param subhdr Magic and size for integrity check
@@ -259,6 +277,7 @@ struct tisci_boardcfg_dkek {
     uint8_t                    allow_dkek_export_tisci;
     uint8_t                    rsvd[3];
 } __attribute__((__packed__));
+#endif
 
 /**
  * \brief Configuration of SA2UL resources
