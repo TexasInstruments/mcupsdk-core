@@ -55,8 +55,8 @@ const libdirs_freertos = {
 const includes_nortos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/ncm_config",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/lib/networking",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/usb/",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include/",
@@ -69,8 +69,8 @@ const includes_freertos_r5f_common = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/ncm_config",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/lib/networking",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/usb/",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include/",

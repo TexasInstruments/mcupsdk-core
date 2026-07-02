@@ -35,7 +35,7 @@
         <path>$PROJ_DIR$/syscfg</path>
         <path>$MCU_PLUS_SDK_PATH$/source</path>
         <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/config/nortos/am261x/dfu_config</path>
-        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack/src</path>
+        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack_0.20.0/src</path>
     </includePath>
 
     <defines>

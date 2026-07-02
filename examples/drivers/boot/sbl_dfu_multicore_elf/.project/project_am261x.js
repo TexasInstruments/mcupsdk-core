@@ -39,8 +39,8 @@ const libdirs_nortos = {
 const includes_nortos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/dfu_config",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src/device",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src/device",
         "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };

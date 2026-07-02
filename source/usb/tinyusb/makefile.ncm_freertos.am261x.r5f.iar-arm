@@ -61,17 +61,17 @@ FILES_common := \
     err.c \
 
 FILES_PATH_common = \
-    ../tinyusb/tinyusb-stack/src \
-    ../tinyusb/tinyusb-stack/src/common \
-    ../tinyusb/tinyusb-stack/src/device \
-    ../tinyusb/tinyusb-stack/src/class/net \
+    ../tinyusb/tinyusb-stack_0.20.0/src \
+    ../tinyusb/tinyusb-stack_0.20.0/src/common \
+    ../tinyusb/tinyusb-stack_0.20.0/src/device \
+    ../tinyusb/tinyusb-stack_0.20.0/src/class/net \
     ../tinyusb/portable/am261x \
     ../synp/ \
     ../synp/dwc3/ \
     ../synp/include \
     ../synp/soc/ \
     ../synp/soc/am261x \
-    ../tinyusb/tinyusb-stack/lib/networking \
+    ../tinyusb/tinyusb-stack_0.20.0/lib/networking \
     ../../networking/lwip/lwip-stack/src/core \
     ../../networking/lwip/lwip-stack/src/api \
     ../../networking/lwip/lwip-stack/src/core/ipv4 \
@@ -80,7 +80,7 @@ FILES_PATH_common = \
     ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
 
 THIRD_PARTY_FILE_common := \
-    tinyusb-stack/ \
+    tinyusb-stack_0.20.0/ \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
@@ -90,16 +90,16 @@ INCLUDES_common := \
     -I../../kernel/freertos/FreeRTOS-Kernel/include \
     -I../../kernel/freertos/config/am261x/r5f \
     -I../tinyusb/config/freertos/am261x/ncm_config \
-    -I../tinyusb/tinyusb-stack/src \
-    -I../tinyusb/tinyusb-stack/src/common \
-    -I../tinyusb/tinyusb-stack/src/device \
-    -I../tinyusb/tinyusb-stack/src/class/net \
+    -I../tinyusb/tinyusb-stack_0.20.0/src \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/common \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/device \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/class/net \
     -I../synp/ \
     -I../synp/dwc3/ \
     -I../synp/include \
     -I../synp/soc/ \
     -I../synp/soc/am261x \
-    -I../tinyusb/tinyusb-stack/lib/networking \
+    -I../tinyusb/tinyusb-stack_0.20.0/lib/networking \
     -I../../networking/lwip/lwip-stack/src/include \
     -I../../networking/lwip/lwip-stack/src/include/ipv4 \
     -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
@@ -130,6 +130,7 @@ CFLAGS_common := \
     -e \
     --endian=little \
     --silent \
+    --diag_suppress=Pe111 \
 
 CFLAGS_cpp_common := \
 

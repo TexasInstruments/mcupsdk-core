@@ -80,7 +80,7 @@ extern  usb_handle_t usb_handle;
  *------------------------------------------------------------------*/
 
 /* Initialize controller to device mode */
-void dcd_init (uint8_t rhport)
+bool dcd_init (uint8_t rhport, const tusb_rhport_init_t* rh_init)
 {
   TU_LOG2("[dcd_init]\n");
 
@@ -89,7 +89,7 @@ void dcd_init (uint8_t rhport)
   usb_handle.dwc_usb3_dev = dwc_usb3_driver_init(usb_handle.cfg_base);
   /* Enable USB_OTG_MAIN0_INT interrupt so that enumeration process can start */
   USB_configureInterrupt(USB_OTG_MAIN0_INT);
-  return;
+  return usb_handle.dwc_usb3_dev != NULL;
 }
 
 /* Enable device interrupt */

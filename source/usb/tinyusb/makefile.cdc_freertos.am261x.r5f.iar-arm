@@ -25,16 +25,19 @@ FILES_common := \
     no_os_gadget.c \
 
 FILES_PATH_common = \
-    ../tinyusb/tinyusb-stack/src \
-    ../tinyusb/tinyusb-stack/src/common \
-    ../tinyusb/tinyusb-stack/src/device \
-    ../tinyusb/tinyusb-stack/src/class/cdc \
+    ../tinyusb/tinyusb-stack_0.20.0/src \
+    ../tinyusb/tinyusb-stack_0.20.0/src/common \
+    ../tinyusb/tinyusb-stack_0.20.0/src/device \
+    ../tinyusb/tinyusb-stack_0.20.0/src/class/cdc \
     ../tinyusb/portable/am261x \
     ../synp/ \
     ../synp/include \
     ../synp/soc/ \
     ../synp/soc/am261x \
     ../synp/dwc3/ \
+
+THIRD_PARTY_FILE_common := \
+    tinyusb-stack_0.20.0/ \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
@@ -44,10 +47,10 @@ INCLUDES_common := \
     -I../../kernel/freertos/FreeRTOS-Kernel/include \
     -I../../kernel/freertos/config/am261x/r5f \
     -I../tinyusb/config/freertos/am261x/cdc_config \
-    -I../tinyusb/tinyusb-stack/src \
-    -I../tinyusb/tinyusb-stack/src/common \
-    -I../tinyusb/tinyusb-stack/src/device \
-    -I../tinyusb/tinyusb-stack/src/class/cdc \
+    -I../tinyusb/tinyusb-stack_0.20.0/src \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/common \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/device \
+    -I../tinyusb/tinyusb-stack_0.20.0/src/class/cdc \
     -I../synp/ \
     -I../synp/dwc3/ \
     -I../synp/include \
@@ -78,6 +81,7 @@ CFLAGS_common := \
     -e \
     --endian=little \
     --silent \
+    --diag_suppress=Pe111 \
 
 CFLAGS_cpp_common := \
 
@@ -99,6 +103,7 @@ ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 ASMFLAGS := $(ASMFLAGS_common)
+THIRD_PARTY_FILE_PATH := $(THIRD_PARTY_FILE_common)
 ifeq ($(CPLUSPLUS_BUILD), yes)
 CFLAGS += $(CFLAGS_cpp_common)
 endif
@@ -118,7 +123,9 @@ vpath %.S $(FILES_PATH)
 
 $(OBJDIR)/%.obj %.obj: %.c
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
+	$(CC) $(CFLAGS) \
+    $(foreach file, $(THIRD_PARTY_FILE_PATH), $(if $(findstring $(file), $<), --no_warnings)) \
+    $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: $(LIBNAME): $<

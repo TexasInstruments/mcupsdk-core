@@ -53,7 +53,7 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/dfu_config \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src \
 	-Igenerated \
 
 DEFINES_common := \

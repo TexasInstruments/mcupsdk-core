@@ -56,8 +56,8 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/ncm_config \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/lib/networking \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/usb/ \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include/ \

@@ -35,8 +35,8 @@
         <path>$PROJ_DIR$/syscfg</path>
         <path>$MCU_PLUS_SDK_PATH$/source</path>
         <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/config/nortos/am261x/ncm_config</path>
-        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack/src</path>
-        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack/lib/networking</path>
+        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack_0.20.0/src</path>
+        <path>$MCU_PLUS_SDK_PATH$/source/usb/tinyusb/tinyusb-stack_0.20.0/lib/networking</path>
         <path>$MCU_PLUS_SDK_PATH$/source/networking/lwip/lwip-stack/src/include</path>
         <path>$MCU_PLUS_SDK_PATH$/source/networking/lwip/lwip-config/am261x/usb/</path>
         <path>$MCU_PLUS_SDK_PATH$/source/networking/lwip/lwip-port/include/</path>

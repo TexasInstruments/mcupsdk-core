@@ -67,6 +67,7 @@ source/networking/lwip/lwip-stack
 source/security/security_common
 source/sysconfig/
 source/usb/tinyusb/tinyusb-stack
+source/usb/tinyusb/tinyusb-stack_0.20.0
 docs/industrial_protocol_docs
 mcusdk_tagfile
 __pycache__/

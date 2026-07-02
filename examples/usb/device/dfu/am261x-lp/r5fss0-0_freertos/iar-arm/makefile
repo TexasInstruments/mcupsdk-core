@@ -55,7 +55,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/dfu_config \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/IAR/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/IAR_ARM/ARM_CR5F \
 	-Igenerated \

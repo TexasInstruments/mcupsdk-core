@@ -21,10 +21,10 @@ const files = {
 
 const filedirs = {
     common: [
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/cdc",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/cdc",
         "../tinyusb/portable/am261x",
         "../synp/",
         "../synp/include",
@@ -34,6 +34,13 @@ const filedirs = {
     ],
 };
 
+// Suppress warnings in this directories
+const third_party_filedirs = {
+    common: [
+        "tinyusb-stack_0.20.0/",
+    ]
+}
+
 const includes_common = {
     common: [
         "../../drivers/hw_include",
@@ -42,10 +49,10 @@ const includes_common = {
         "../../kernel/freertos/FreeRTOS-Kernel/include",
         "../../kernel/freertos/config/am261x/r5f",
         "../tinyusb/config/freertos/am261x/cdc_config",
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/cdc",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/cdc",
         "../synp/",
         "../synp/dwc3/",
         "../synp/include",
@@ -87,6 +94,7 @@ const cflags_ti_arm_clang = {
 
 const cflags_iar_arm = {
     common: [
+         "--diag_suppress=Pe111"
     ],
 };
 
@@ -121,6 +129,7 @@ function getComponentBuildProperty(buildOption) {
     } else if(buildOption.cgt.match(/iar-arm*/)) {
         build_property.includes = includes_iar_arm;
         build_property.cflags = cflags_iar_arm;
+        build_property.third_party_files = third_party_filedirs;
     }
 
     return build_property;

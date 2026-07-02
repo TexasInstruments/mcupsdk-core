@@ -55,8 +55,8 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am261x/ncm_config \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/src \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack_0.20.0/lib/networking \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/usb/ \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include/ \

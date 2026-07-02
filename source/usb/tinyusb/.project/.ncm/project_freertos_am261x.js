@@ -60,17 +60,17 @@ const files = {
 
 const filedirs = {
     common: [
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/net",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/net",
         "../tinyusb/portable/am261x",
         "../synp/",
         "../synp/dwc3/",
         "../synp/include",
         "../synp/soc/",
         "../synp/soc/am261x",
-        "../tinyusb/tinyusb-stack/lib/networking",
+        "../tinyusb/tinyusb-stack_0.20.0/lib/networking",
 
         "../../networking/lwip/lwip-stack/src/core",
 		"../../networking/lwip/lwip-stack/src/api",
@@ -84,7 +84,7 @@ const filedirs = {
 // Suppress warnings in this directories
 const third_party_filedirs = {
     common: [
-        "tinyusb-stack/",
+        "tinyusb-stack_0.20.0/",
     ]
 }
 
@@ -96,16 +96,16 @@ const includes_common = {
         "../../kernel/freertos/FreeRTOS-Kernel/include",
         "../../kernel/freertos/config/am261x/r5f",
         "../tinyusb/config/freertos/am261x/ncm_config",
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/net",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/net",
         "../synp/",
         "../synp/dwc3/",
         "../synp/include",
         "../synp/soc/",
         "../synp/soc/am261x",
-        "../tinyusb/tinyusb-stack/lib/networking",
+        "../tinyusb/tinyusb-stack_0.20.0/lib/networking",
         "../../networking/lwip/lwip-stack/src/include",
 		"../../networking/lwip/lwip-stack/src/include/ipv4",
 		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
@@ -149,6 +149,7 @@ const cflags_ti_arm_clang = {
 
 const cflags_iar_arm = {
     common: [
+        "--diag_suppress=Pe111"
     ],
 };
 

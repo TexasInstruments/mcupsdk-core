@@ -21,10 +21,10 @@ const files = {
 
 const filedirs = {
     common: [
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/cdc",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/cdc",
         "../tinyusb/portable/am261x",
         "../synp/",
         "../synp/include",
@@ -34,16 +34,23 @@ const filedirs = {
     ],
 };
 
+// Suppress warnings in this directories
+const third_party_filedirs = {
+    common: [
+        "tinyusb-stack_0.20.0/",
+    ]
+}
+
 const includes = {
     common: [
         "../../drivers/hw_include",
         "../../drivers/hw_include/am261x",
         "../../drivers/soc/am261x",
         "../tinyusb/config/nortos/am261x",
-        "../tinyusb/tinyusb-stack/src",
-        "../tinyusb/tinyusb-stack/src/common",
-        "../tinyusb/tinyusb-stack/src/device",
-        "../tinyusb/tinyusb-stack/src/class/cdc",
+        "../tinyusb/tinyusb-stack_0.20.0/src",
+        "../tinyusb/tinyusb-stack_0.20.0/src/common",
+        "../tinyusb/tinyusb-stack_0.20.0/src/device",
+        "../tinyusb/tinyusb-stack_0.20.0/src/class/cdc",
         "../tinyusb/config/nortos/am261x/cdc_config",
         "../synp/",
         "../synp/dwc3/",
@@ -104,6 +111,7 @@ function getComponentBuildProperty(buildOption) {
     }
     else if(buildOption.cgt.match(/iar-arm*/)) {
         build_property.cflags = cflags_iar_arm;
+        build_property.third_party_files = third_party_filedirs;
     }
 
     return build_property;
