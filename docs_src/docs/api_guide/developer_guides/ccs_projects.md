@@ -286,6 +286,7 @@ section provides basic instructions and tips on using CCS projects.
 
 - After import, one can browse and build the individual CPU specific projects as before
 - You can also build the system project which will in turn build the grouped CPU projects.
+- **Important**: For system projects, it is recommended to build the system project as a whole (rather than individual CPU projects separately) to ensure all CPUs are synchronized and dependencies between CPU-specific binaries are properly managed.
 
     \imageStyle{ccs_projects_10.png,width:50%}
     \image html ccs_projects_10.png "System Project View"
