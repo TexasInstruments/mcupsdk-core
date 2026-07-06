@@ -25,6 +25,7 @@ Feature                                                                         
  Drive strength adjustment capability in SW                                                  | Pinmux
  A53 core frequency is set to max frequency by default                                       | Bootloader
  Add flash recovery mechanism                                                                | OSPI
+ ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
 \endcond
 
 \cond SOC_AM243X
@@ -33,6 +34,7 @@ Feature                                                                         
  MCELF based bootloader support                                                              | Bootloader
  Drive strength adjustment capability in SW                                                  | Pinmux
  Add flash recovery mechanism                                                                | OSPI
+ ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
 \endcond
 
 ## Device and Validation Information
@@ -562,3 +564,4 @@ Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 11.01.00  | >
 OSPI_HLD     |  \ref OSPI_HLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
 OSPI_LLD     |  \ref OSPI_LLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
 VTM (SDL)    |  SDL_VTM_getTemp API now takes int32_t pointer instead of uint32_t   |   <= 12.00.00  | >= 12.01.00
+ICSS-EMAC    |  \ref ICSS_EMAC_SOURCE_PATH_CHANGE    &zwj;      |   <= 12.00.00  | >= 12.01.00

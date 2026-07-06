@@ -77,6 +77,30 @@ There are changes in API names, structure names and macro names. All names begin
 
 - Time based Interrupt Pacing support is not available in MCU+ SDK driver.
 
+\cond SOC_AM261X || SOC_AM263X || SOC_AM263PX 
+## Source Path Change (MCU+ SDK >= 26.01.00) {#ICSS_EMAC_SOURCE_PATH_CHANGE}
+\endcond
+
+\cond SOC_AM243X || SOC_AM64X
+## Source Path Change (MCU+ SDK >= 12.01.00) {#ICSS_EMAC_SOURCE_PATH_CHANGE}
+\endcond
+
+\cond SOC_AM261X || SOC_AM263X || SOC_AM263PX 
+Starting from the MCU+ SDK version 26.01.00, the ICSS-EMAC and ICSS TimeSync driver sources are now located under `source/networking/icss_emac_lld/`.
+\endcond
+
+\cond SOC_AM243X || SOC_AM64X
+Starting from the MCU+ SDK version 12.01.00, the ICSS-EMAC and ICSS TimeSync driver sources are now located under `source/networking/icss_emac_lld/`.
+\endcond
+
+If you are using these sources directly (for example, in custom application builds or library compilation),
+update your include paths and source file references as follows:
+
+- `source/networking/icss_emac` → `source/networking/icss_emac_lld/icss_emac`
+- `source/networking/icss_timesync` → `source/networking/icss_emac_lld/icss_timesync`
+
+No API changes are introduced by this path change.
+
 ## See Also
 
 \ref NETWORKING_ICSS_EMAC_MODULE

@@ -19,7 +19,7 @@
 
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
-TBD                                                                                          | TBD
+ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
 
 
 # Modules Not tested/supported in this release
@@ -729,6 +729,19 @@ Official releases are published under the Releases section of the GitHub reposit
 </table>
 
 ## Upgrade and Compatibility Information
+
+This section lists changes which could affect user applications developed using older SDK versions.
+Read this carefully to see if you need to do any changes in your existing application when migrating to this SDK version relative to
+previous SDK version. Also refer to older SDK version release notes to see changes in earlier SDKs.
+
+The below table captures the list of migration document sections when migrating from one version to another.
+The migration for a particular module will be applicable, if you are migrating from older version listed to
+newer version listed on the table below.
+
+Module       | Migration guide                              | Older version  | Newer version
+-------------|----------------------------------------------|----------------| -----------------
+ICSS-EMAC    |  \ref ICSS_EMAC_SOURCE_PATH_CHANGE    &zwj;      |   <= 25.02.00  | >= 26.01.00
+
 ### How to run FOTA examples on AM263PX-SIP board
 
 One difference between AM263PX-SIP and AM263PX is the in package flash. In SIP board, flash is of Non-RWW in nature whereas, it is of RWW in other case.

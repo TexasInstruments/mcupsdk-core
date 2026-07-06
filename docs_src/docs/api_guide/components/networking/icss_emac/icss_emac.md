@@ -175,6 +175,10 @@ ICSS-EMAC is dependent on the Application/Transport layer for proper functioning
 
 \subpage ICSS_EMAC_DEBUG_GUIDE covers the most obvious use cases and debug scenarios encountered while using ICSS-EMAC.
 
+## Migration Guide
+
+\subpage ICSS_EMAC_MIGRATION_GUIDE covers migration from PDK to MCU+ SDK and source path changes between SDK versions.
+
 ## API
 
 \ref NETWORKING_ICSS_EMAC_MODULE
