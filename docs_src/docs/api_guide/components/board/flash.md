@@ -149,6 +149,9 @@ The boot quirk and configuration quirk function pointers can be configured in th
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263PX || SOC_AM261X
 - The `sbl_ospi` will be typically flashed at location 0x00000000 in the flash memory. So applications using flash should refrain from using this offset. Similarly, the starting of the last block of the flash is used for storing attackVector patterns later used for PHY tuning. So avoid using this offset as well.
 \endcond
+\cond SOC_AM64X || SOC_AM243X 
+- **MPU Configuration for AM243x and AM64x**: The 0x60000000 memory region must be configured with appropriate MPU settings to enable flash write operations. By default, ensure the MPU ARMv7 settings for this region are configured as **Cached** with **supervisor read and write permissions**. Incorrect MPU settings (e.g., read-only permission) will result in flash write errors.
+\endcond
 \cond SOC_AM263X
 - The `sbl_qspi` will be typically flashed at location 0x00000000 in the flash memory. So applications using flash should refrain from using this offset.
 \endcond
