@@ -419,6 +419,14 @@ typedef enum SOC_RcmPeripheralId_e
      * \brief   Value specifying LIN3_UART3
      */
     SOC_RcmPeripheralId_LIN3_UART3,
+    /**
+     * \brief   Value specifying LIN4_UART4
+     */
+    SOC_RcmPeripheralId_LIN4_UART4,
+    /**
+     * \brief   Value specifying LIN5_UART5
+     */
+    SOC_RcmPeripheralId_LIN5_UART5,
 }SOC_RcmPeripheralId;
 /** @} */
 

@@ -1175,6 +1175,20 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gLinUartClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_LIN4_UART4:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->LIN4_UART4_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->LIN4_UART4_CLK_DIV_VAL);
+            *clkSrcVal = gLinUartClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_LIN5_UART5:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->LIN5_UART5_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->LIN5_UART5_CLK_DIV_VAL);
+            *clkSrcVal = gLinUartClkSrcValMap[clkSource];
+            break;
+        }
         default:
         {
             *clkSrcReg  = NULL;
@@ -2853,6 +2867,32 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             if(enable==0)
             {
                 ptrMSSRCMRegs->UART3_CLK_GATE = CSL_MSS_RCM_UART3_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_LIN4_UART4:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->UART4_CLK_GATE = CSL_MSS_RCM_UART4_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->UART4_CLK_GATE = CSL_MSS_RCM_UART4_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_LIN5_UART5:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->UART5_CLK_GATE = CSL_MSS_RCM_UART5_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->UART5_CLK_GATE = CSL_MSS_RCM_UART5_CLK_GATE_GATED_MASK;
             }
             break;
         }
