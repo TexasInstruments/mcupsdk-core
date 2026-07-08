@@ -721,7 +721,9 @@ uint32_t Sciclient_getCurrentContext(uint16_t messageType)
        (TISCI_MSG_CRYPTO_RELEASE_DSMEK == messageType) ||
        (TISCI_MSG_KEYRING_IMPORT == messageType) ||
        (TISCI_MSG_ALLOW_FWL_CTRL_READ == messageType) ||
-       (TISCI_MSG_FORBID_FWL_CTRL_READ == messageType))
+       (TISCI_MSG_FORBID_FWL_CTRL_READ == messageType) ||
+       (TISCI_MSG_GET_KEY_WRITER_TYPE == messageType) ||
+       (TISCI_MSG_SET_KEY_WRITER_TYPE == messageType)) 
     {
         retVal = gSciclientHandle.secureContextId;
     }
