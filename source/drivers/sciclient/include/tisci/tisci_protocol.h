@@ -376,6 +376,12 @@ struct tisci_sec_header {
 /* Keywriter lite TISCI message to write keys from a buffer  */
 #define TISCI_MSG_KEY_WRITER_LITE               (0x9045U)
 
+/* Message to get the programmed key writer type */
+#define TISCI_MSG_GET_KEY_WRITER_TYPE           (0x9047U)
+
+/* Message to program the key writer type */
+#define TISCI_MSG_SET_KEY_WRITER_TYPE           (0x9048U)
+
 /******************************************************/
 
 /* Processor Control APIs */
