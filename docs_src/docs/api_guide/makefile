@@ -15,7 +15,7 @@ all:
 
 
 clean:
-	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_.free$(DOC_COMBO).freertos_clean
+	$(MAKE) -C $(MCU_PLUS_SDK_PATH)/test -f makefile.$(DEVICE) doxy_samples_$(DOC_COMBO).freertos_clean
 	$(RMDIR) $(API_GUIDE_OUT_DIR)
 
 help:

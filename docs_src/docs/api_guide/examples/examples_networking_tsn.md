@@ -1,0 +1,11 @@
+#  TSN examples on CPSW {#EXAMPLES_NETWORKING_TSN}
+
+This page lists all the TSN examples on CPSW
+
+\cond SOC_AM243X || SOC_AM64X
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+-# \subpage EXAMPLES_ENET_CPSW_TSN_LWIP_GPTP
+-# \subpage EXAMPLES_ENET_CPSW_TSN_EST
+\endcond
