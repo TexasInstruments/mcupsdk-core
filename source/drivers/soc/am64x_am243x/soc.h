@@ -101,9 +101,9 @@ extern "C"
  * \brief IO Drive Strength Register offsets
  */
 #define SOC_H_IO_DRVSTRNGTH0    (0x40C0U)
-#define SOC_H_IO_DRVSTRNGTH1    (0x40C4U)
+#define SOC_H_IO_DRVSTRNGTH2    (0x40C8U)
 #define SOC_V_IO_DRVSTRNGTH0    (0x40D0U)
-#define SOC_V_IO_DRVSTRNGTH1    (0x40D4U)
+#define SOC_V_IO_DRVSTRNGTH2    (0x40D8U)
 
 /**
  * \brief IO Drive Strength field definitions

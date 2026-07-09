@@ -1274,8 +1274,8 @@ void SOC_fixFastDriveStrength(void)
         val = SOC_IO_DRVSTRNGTH_MAX;
     }
 
-    reg = CSL_REG32_RD(base + SOC_H_IO_DRVSTRNGTH1);
-    CSL_REG32_WR(base + SOC_H_IO_DRVSTRNGTH1, (reg & ~SOC_IO_DRVSTRNGTH_MASK) | val);
+    reg = CSL_REG32_RD(base + SOC_H_IO_DRVSTRNGTH2);
+    CSL_REG32_WR(base + SOC_H_IO_DRVSTRNGTH2, (reg & ~SOC_IO_DRVSTRNGTH_MASK) | val);
 
     /* V Drive strength: add 2 to default value (cap at max) */
     val = (CSL_REG32_RD(base + SOC_V_IO_DRVSTRNGTH0) & SOC_IO_DRVSTRNGTH_MASK);
@@ -1285,8 +1285,8 @@ void SOC_fixFastDriveStrength(void)
         val = SOC_IO_DRVSTRNGTH_MAX;
     }
 
-    reg = CSL_REG32_RD(base + SOC_V_IO_DRVSTRNGTH1);
-    CSL_REG32_WR(base + SOC_V_IO_DRVSTRNGTH1, (reg & ~SOC_IO_DRVSTRNGTH_MASK) | val);
+    reg = CSL_REG32_RD(base + SOC_V_IO_DRVSTRNGTH2);
+    CSL_REG32_WR(base + SOC_V_IO_DRVSTRNGTH2, (reg & ~SOC_IO_DRVSTRNGTH_MASK) | val);
 
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MCU, 1);
 }
