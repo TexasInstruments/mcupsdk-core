@@ -702,13 +702,13 @@ int32_t SDL_MCRC_channelReset(SDL_MCRC_InstType instance,
  */
 int32_t SDL_MCRC_getPSASig(SDL_MCRC_InstType     instance,
                            SDL_MCRC_Channel_t    channel,
-                           SDL_MCRC_Signature_t *pPSAsign)
+                           SDL_MCRC_Signature_t *pPSAsig)
 {
     int32_t status = SDL_PASS;
     uint32_t baseAddr;
 
     if ((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)    ||
-        (pPSAsign == (NULL_PTR)))
+        (pPSAsig == (NULL_PTR)))
     {
         status = SDL_EBADARGS;
     }
@@ -717,21 +717,21 @@ int32_t SDL_MCRC_getPSASig(SDL_MCRC_InstType     instance,
         switch (channel)
         {
             case SDL_MCRC_CHANNEL_1:
-                pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH1);
-                pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL1);
+                pPSAsig->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH1);
+                pPSAsig->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL1);
                 break;
             case SDL_MCRC_CHANNEL_2:
-                pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH2);
-                pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL2);
+                pPSAsig->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH2);
+                pPSAsig->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL2);
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
-                pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH3);
-                pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL3);
+                pPSAsig->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH3);
+                pPSAsig->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL3);
                 break;
             case SDL_MCRC_CHANNEL_4:
-                pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH4);
-                pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL4);
+                pPSAsig->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH4);
+                pPSAsig->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL4);
                 break;
 #endif
             default:
