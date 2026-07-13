@@ -70,13 +70,6 @@
 #define SDL_LOCAL_EXCEPTION_DED_ERROR SDL_ESM_ECC_PARAM_MCU_CPU0_DED_ERROR
 #endif
 
-void SDL_EXCEPTION_undefInstructionExptnHandler(void *param);
-void SDL_EXCEPTION_swIntrExptnHandler(void *param);
-void SDL_EXCEPTION_prefetchAbortExptnHandler(void *param);
-void SDL_EXCEPTION_dataAbortExptnHandler(void *param);
-void SDL_EXCEPTION_irqExptnHandler(void *param);
-void SDL_EXCEPTION_fiqExptnHandler(void *param);
-
 static SDL_EXCEPTION_Instance_t SDL_EXCEPTION_instance;
 
 /*********************************************************************

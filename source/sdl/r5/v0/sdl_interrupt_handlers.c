@@ -57,7 +57,7 @@
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void SDL_undefInstructionExptnHandler(void)
 #else
-void undefInstructionExptnHandler(void)
+__attribute__((interrupt("UNDEF"), section(".text.hwi"), aligned(32))) void undefInstructionExptnHandler(void)
 #endif
 {
     /* Call registered call back */
@@ -79,7 +79,7 @@ void undefInstructionExptnHandler(void)
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void SDL_swIntrExptnHandler(void)
 #else
-void swIntrExptnHandler(void)
+__attribute__((interrupt("SWI"), section(".text.hwi"), aligned(32))) void swIntrExptnHandler(void)
 #endif
 {
     /* Call registered call back */
@@ -123,7 +123,7 @@ void prefetchAbortExptnHandler(void)
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void SDL_dataAbortExptnHandler(void)
 #else
-void dataAbortExptnHandler(void)
+__attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32))) void dataAbortExptnHandler(void)
 #endif
 {
     /* Call registered call back */
@@ -145,7 +145,7 @@ void dataAbortExptnHandler(void)
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void SDL_irqExptnHandler(void)
 #else
-void irqExptnHandler(void)
+__attribute__((interrupt("IRQ"), section(".text.hwi"), aligned(32))) void irqExptnHandler(void)
 #endif
 {
     /* Call registered call back */
@@ -167,7 +167,7 @@ void irqExptnHandler(void)
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void SDL_fiqExptnHandler(void)
 #else
-void fiqExptnHandler(void)
+__attribute__((interrupt("FIQ"), section(".text.hwi"), aligned(32))) void fiqExptnHandler(void)
 #endif
 {
     /* Call registered call back */

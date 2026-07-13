@@ -156,7 +156,7 @@ __attribute__((interrupt("FIQ"), section(".text.hwi"), aligned(32)))     void SD
 #else
 __attribute__((interrupt("UNDEF"), section(".text.hwi"), aligned(32)))   void undefInstructionExptnHandler(void);
 __attribute__((interrupt("SWI"), section(".text.hwi"), aligned(32)))     void swIntrExptnHandler(void);
-__attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void prefetchAbortExptnHandler(void);
+void prefetchAbortExptnHandler(void);
 __attribute__((interrupt("ABORT"), section(".text.hwi"), aligned(32)))   void dataAbortExptnHandler(void);
 __attribute__((interrupt("IRQ"), section(".text.hwi"), aligned(32)))     void irqExptnHandler(void);
 __attribute__((interrupt("FIQ"), section(".text.hwi"), aligned(32)))     void fiqExptnHandler(void);
