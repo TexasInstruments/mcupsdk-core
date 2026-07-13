@@ -971,10 +971,10 @@ int32_t sdl_Esm_posTest(void)
 return (testStatus);
 }
 
-static uint32_t arg;
+static uint32_t gArg;
 void  esm_init_appcb(SDL_ESM_Inst esmType)
 {
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
     SDL_ErrType_t result;
     result = SDL_ESM_init(esmType, &ESM_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction,ptr);
         if (result != SDL_PASS) {

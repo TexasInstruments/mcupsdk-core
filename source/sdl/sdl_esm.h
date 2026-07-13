@@ -116,23 +116,23 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pConfi
  *
  * \brief   SDL ESM API to clear the nError pin for the specified ESM instance
  *
- * \param   instance: ESM Instance
+ * \param   esmInstType: ESM Instance
  *
  * \return  SDL_PASS if nError pin status is successfully cleared.
- *          SDL_EBADARGS if instance is invalid.
+ *          SDL_EBADARGS if esmInstType is invalid.
  */
-int32_t SDL_ESM_clrNError(SDL_ESM_Inst instance);
+int32_t SDL_ESM_clrNError(SDL_ESM_Inst esmInstType);
 
 /** ============================================================================
  *
  * \brief   SDL ESM API to set the nError pin for the specified ESM instance
  *
- * \param   instance: ESM Instance
+ * \param   esmInstType: ESM Instance
  *
  * \return  SDL_PASS if nError pin status is successfully set.
- *          SDL_EBADARGS if instance is invalid.
+ *          SDL_EBADARGS if esmInstType is invalid.
  */
-int32_t SDL_ESM_setNError(SDL_ESM_Inst instance);
+int32_t SDL_ESM_setNError(SDL_ESM_Inst esmInstType);
 
 /** ============================================================================
  *

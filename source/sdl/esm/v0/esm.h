@@ -846,7 +846,7 @@ int32_t SDL_ESM_isEnableIntr(uint32_t baseAddr, uint32_t intrSrc, uint32_t *pEnS
  *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
- * \param   intrNum         Interrupt Number to disable
+ * \param   group           Group Interrupt Number to disable
  *
  * \return                  SDL_PASS - success
  * @n                       SDL_EBADARGS - API fails due to bad input arguments
@@ -864,12 +864,12 @@ int32_t SDL_ESM_isEnableIntr(uint32_t baseAddr, uint32_t intrSrc, uint32_t *pEnS
        uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
        uint32_t            intrNum = 0u;
        int32_t             sdlRet;
-       sdlRet = SDL_ESM_disableCfgIntr (baseAddr, intrNum);
+       sdlRet = SDL_ESM_disableCfgIntr (baseAddr, group);
 
    @endverbatim
  *
  */
-int32_t SDL_ESM_disableCfgIntr(uint32_t baseAddr, uint32_t intrNum);
+int32_t SDL_ESM_disableCfgIntr(uint32_t baseAddr, uint32_t group);
 
 /**
  * \brief   This API is used to enable the configuration interrupt.

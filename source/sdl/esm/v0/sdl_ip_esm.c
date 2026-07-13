@@ -549,13 +549,13 @@ int32_t SDL_ESM_disableCfgIntr(uint32_t baseAddr, uint32_t group)
 /**
  *  Design: PROC_SDL-1089,PROC_SDL-1090
  */
-int32_t SDL_ESM_enableIntr(uint32_t baseAddr, uint32_t intrSrc)
+int32_t SDL_ESM_enableIntr(uint32_t baseAddr, uint32_t intrNum)
 {
     int32_t  retVal;
     uint32_t regVal;
 
     if ( (baseAddr == ((uint32_t) (0u)))   ||
-         (intrSrc  >= ESM_MAX_NUM_INTRS) )
+         (intrNum  >= ESM_MAX_NUM_INTRS) )
     {
         retVal = SDL_EBADARGS;
     }
@@ -567,11 +567,11 @@ int32_t SDL_ESM_enableIntr(uint32_t baseAddr, uint32_t intrSrc)
     if (retVal == SDL_PASS)
     {
         regVal  = HW_RD_REG32(baseAddr +
-                SDL_ESM_ERR_GRP_INTR_EN_SET(intrSrc / ESM_NUM_INTR_PER_GRP));
-        regVal &= ~((uint32_t) 0x1U << (intrSrc % ESM_NUM_INTR_PER_GRP));
-        regVal |= ((uint32_t) 0x1U << (intrSrc % ESM_NUM_INTR_PER_GRP));
+                SDL_ESM_ERR_GRP_INTR_EN_SET(intrNum / ESM_NUM_INTR_PER_GRP));
+        regVal &= ~((uint32_t) 0x1U << (intrNum % ESM_NUM_INTR_PER_GRP));
+        regVal |= ((uint32_t) 0x1U << (intrNum % ESM_NUM_INTR_PER_GRP));
         HW_WR_REG32(baseAddr +
-                SDL_ESM_ERR_GRP_INTR_EN_SET(intrSrc / ESM_NUM_INTR_PER_GRP),
+                SDL_ESM_ERR_GRP_INTR_EN_SET(intrNum / ESM_NUM_INTR_PER_GRP),
                 regVal);
     }
     return (retVal);
