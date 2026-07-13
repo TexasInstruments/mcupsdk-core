@@ -44,6 +44,7 @@
 /* ========================================================================== */
 #include <stdint.h>
 #include "tog_test_main.h"
+#include <sdl/stog/v0/sdl_ip_tog.h>
 
 
 /* ========================================================================== */
@@ -61,8 +62,6 @@
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-
-extern int32_t SDL_TOG_getIntrCountInternal( uint32_t baseAddr, SDL_TOG_IntrSrc intrSrc, uint32_t *pIntrCnt );
 
 static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
 {

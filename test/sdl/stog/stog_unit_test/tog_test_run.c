@@ -182,7 +182,7 @@ uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[Hwi
 #endif
 
 #define TOG_TEST_TIMEOUTVAL 0x10000U
-static uint32_t arg;
+static uint32_t gArg;
 volatile bool handlerFlag __attribute__((section(".data:TOG_test"))) = false;
 
 
@@ -355,7 +355,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
 {
     SDL_TOG_Inst instance;
     SDL_TOG_config cfg;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
     int32_t status = SDL_PASS;
     int32_t result = 0;
     volatile uint32_t timeoutCount = 0;

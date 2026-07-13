@@ -58,7 +58,7 @@ __attribute((section(".text:ESMApp_Handlers"))) int32_t SDL_ESM_applicationCallb
 __attribute((section(".text:TOG_test"))) void TOG_eventHandler(uint32_t instanceIndex);
 
 #define TOG_TEST_TIMEOUTVAL 0x10000U
-static uint32_t arg;
+static uint32_t gArg;
 
 volatile bool handlerFlag __attribute__((section(".data:TOG_test"))) = false;
 #if defined (R5F_CORE)
@@ -236,7 +236,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
 {
     SDL_TOG_Inst instance;
     SDL_TOG_config cfg;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
     int32_t status = SDL_PASS;
     int32_t result = 0;
     instance = instanceIndex;

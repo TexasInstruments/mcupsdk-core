@@ -198,7 +198,7 @@ uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[Hwi
 
 #define TOG_TEST_TIMEOUTVAL 0x10000U
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-static uint32_t arg;
+static uint32_t gArg;
 #endif
 volatile bool handlerFlag __attribute__((section(".data:TOG_test"))) = false;
 #if defined (M4F_CORE)
@@ -439,7 +439,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     SDL_TOG_Inst instance;
     SDL_TOG_config cfg;
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
 #endif
     int32_t status = SDL_PASS;
     int32_t result = 0;
