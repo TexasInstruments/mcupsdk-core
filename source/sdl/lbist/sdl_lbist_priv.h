@@ -69,7 +69,7 @@ typedef struct
 } SDL_lbistInstInfo;
 
 
-SDL_lbistInstInfo * SDL_LBIST_getInstInfo(uint32_t instance);
+SDL_lbistInstInfo * SDL_LBIST_getInstInfo(uint32_t index);
 
 void SDL_LBIST_eventHandler(void *arg);
 
