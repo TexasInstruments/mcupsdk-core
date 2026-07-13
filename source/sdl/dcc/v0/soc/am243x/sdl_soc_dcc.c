@@ -48,6 +48,9 @@
 int32_t SDL_DCC_getBaseaddr(SDL_DCC_Inst instance,
                             uint32_t *baseAddr)
 {
+    static uint32_t SDL_DCC_baseAddress[SDL_DCC_MAX_INSTANCE] = {SDL_DCC0_BASE, SDL_DCC1_BASE, SDL_DCC2_BASE, SDL_DCC3_BASE, SDL_DCC4_BASE, \
+                                                                 SDL_DCC5_BASE, \
+                                                                 SDL_MCU_DCC0_BASE};
     int32_t status = SDL_PASS;
     uint32_t size = 0;
 
