@@ -243,7 +243,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    uint32_t index,
                                                    uint32_t intSrc,
                                                    void *arg);
-static uint32_t arg;
+static uint32_t gArg;
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 extern int32_t SDL_ESM_applicationCallbackFunction (SDL_ESM_Inst instance, int32_t grpChannel, int32_t vecNum, void *arg);
 #endif
@@ -307,7 +307,7 @@ void test_sdl_rti_baremetal_test_app (void)
 
 
 #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
 #endif
 
     DebugP_log("\n RTI Example Test Application\r\n");
