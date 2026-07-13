@@ -136,7 +136,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    uint32_t index,
                                                    uint32_t intSrc,
                                                    void *arg);
-static uint32_t arg;
+static uint32_t gArg;
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/
@@ -179,7 +179,7 @@ void test_sdl_pok_baremetal_test_app (void)
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
     int32_t    sdlRet;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
 
 
     /* Init dpl */
