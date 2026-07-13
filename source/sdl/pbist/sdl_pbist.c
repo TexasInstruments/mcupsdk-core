@@ -266,7 +266,7 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
      * TI_COVERAGE_GAP_START [Branch Coverage] The branch condition (ret == SDL_PASS) will get false condition coverage only if there is a hardware failure during PBIST runs
      * TI_COVERAGE_UNIT_EFFECT For a functional scenario, ret will always be SDL_PASS. This is the expected behaviour
      */
-    for (uint32_t i = 0; (i < numRuns) && (ret == SDL_PASS); i++)
+    for (uint32_t i = 0; i < numRuns; i++)
     /* TI_COVERAGE_GAP_STOP */
     {
         if (testType == SDL_PBIST_TEST)
@@ -322,6 +322,12 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
 
         /* reset Done flag so we can run again */
         pInfo->doneFlag = PBIST_NOT_DONE;
+
+        /* Exit loop on any failure */
+        if (ret != SDL_PASS)
+        {
+            break;
+        }
     }
 
     return ret;
