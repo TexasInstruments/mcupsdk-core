@@ -94,7 +94,6 @@ extern volatile uint32_t    vtmEventInputTrig[2];
 extern volatile uint8_t     currTestCase;
 /* Flag to indicate callback triggered */
 extern volatile bool        VTM_intrDone;
-uint32_t                    pStatus;
 SDL_ESM_Inst                currEsmInstance;
 
 
