@@ -301,7 +301,7 @@ static SDL_ECC_InitConfig_t ECC_Test_AGGR1A0ECCInitConfig =
 };
 
 
-static uint32_t arg;
+static uint32_t gArg;
 /*********************************************************************
 * @fn      ECC_Example_init
 *
@@ -312,7 +312,7 @@ static uint32_t arg;
 int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
     SDL_ErrType_t result;
 
     #if defined (R5F_CORE)

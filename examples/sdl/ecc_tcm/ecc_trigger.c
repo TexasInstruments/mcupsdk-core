@@ -153,7 +153,7 @@ static SDL_ECC_InitConfig_t ECC_Test_AGGR0A0ECCInitConfig =
     /**< Sub type list  */
 };
 
-static uint32_t arg;
+static uint32_t gArg;
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
@@ -187,7 +187,7 @@ int32_t ECC_Example_init (void);
 int32_t ECC_Example_init (void)
 {
     int32_t retValue = SDL_APP_TEST_PASS;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
     SDL_ErrType_t result;
 
     /* Initialise exception handler

@@ -88,7 +88,7 @@
 /* ========================================================================== */
 
 volatile uint32_t ram_Id = 0;
-static uint32_t arg;
+static uint32_t gArg;
 volatile uint8_t SDL_ECC_cache_ddata[SDL_ECC_CACHE_ARRAY_SIZE]__attribute__((section(".DATA_Cache.buffer")));
 
 int32_t ECC_Memory_init(SDL_Test_EccConfig test_config);
@@ -161,7 +161,7 @@ int32_t ECC_Memory_init (SDL_Test_EccConfig test_config)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&gArg;
 
     /* Initialize exception handler */
     ECC_Test_exceptionInit();
