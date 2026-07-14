@@ -20,6 +20,7 @@
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
 ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
+ICSS-EMAC: Added `pruRstIsoStatusParams` field to `ICSS_EMAC_Params` and `ICSS_EMAC_getResetIsolationStatus()` API for PRU reset isolation support. Reset isolation requires firmware support — do not enable unless the PRU firmware explicitly supports it. Supported on AM243x and AM64x only. | Networking
 
 
 # Modules Not tested/supported in this release
