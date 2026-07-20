@@ -79,11 +79,11 @@ Mbed-TLS                | R5F            | mbedtls-2.13.1
     </tr>
     <tr>
         <td>Release Notes</td>
-        <td>[LINK](https://software-dl.ti.com/tisci/esd/12_00_02/release_notes/release_notes.html)</td>
+        <td>[LINK](https://software-dl.ti.com/tisci/esd/12_01_02/release_notes/release_notes.html)</td>
     </tr>
     <tr>
         <td>User Guide</td>
-        <td>[LINK](https://software-dl.ti.com/tisci/esd/12_00_02/1_intro/TISCI.html)</td>
+        <td>[LINK](https://software-dl.ti.com/tisci/esd/12_01_02/1_intro/TISCI.html)</td>
     </tr>
 </table>
 
