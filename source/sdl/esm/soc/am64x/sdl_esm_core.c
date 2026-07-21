@@ -44,13 +44,6 @@
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/dpl/sdl_dpl.h>
 
-
-/*
- * Design: PROC_SDL-1068
- */
-static SDL_ESM_Instance_t SDL_ESM_instance_MCU;
-static SDL_ESM_Instance_t SDL_ESM_instance_MAIN;
-
 /** ================================================================================
  *
  * \brief        Check that ESM instance type is valid for this device, and fill the
@@ -139,6 +132,12 @@ bool SDL_ESM_getMaxNumEvents(const SDL_ESM_Inst esmInstType,
 bool SDL_ESM_selectEsmInst(const SDL_ESM_Inst esmInstType,
                            SDL_ESM_Instance_t **pEsmInstancePtr)
 {
+    /*
+    * Design: PROC_SDL-1068
+    */
+    static SDL_ESM_Instance_t SDL_ESM_instance_MCU;
+    static SDL_ESM_Instance_t SDL_ESM_instance_MAIN;
+
     bool instValid = ((bool)true);
 
     switch(esmInstType)

@@ -47,10 +47,6 @@
 #define MASK_BIT (1u)
 #define STATUS_NUM (1u)
 
-
-static pSDL_DPL_HwipHandle SDL_ESM_HiHwiPHandle;
-static pSDL_DPL_HwipHandle SDL_ESM_LoHwiPHandle;
-static pSDL_DPL_HwipHandle SDL_ESM_CfgHwiPHandle;
 /**
  * Design: PROC_SDL-1058,PROC_SDL-1059
  */
@@ -134,7 +130,7 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
  * Design: PROC_SDL-1062,PROC_SDL-1063
  */
 /* Verifies the written config against the provided configuration */
-int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pCofnig)
+int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pConfig)
 {
     uint32_t intStatus;
     uint32_t esmMaxNumevents;
@@ -177,11 +173,11 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pCofni
 
                 SDLRet = SDL_ESM_isEnableIntr(esmInstBaseAddr, intNum, &intStatus);
 
-                enableWr = ((pCofnig->enableBitmap[i] & (((uint32_t)MASK_BIT)<<j)) != 0u)?1u:0u;
+                enableWr = ((pConfig->enableBitmap[i] & (((uint32_t)MASK_BIT)<<j)) != 0u)?1u:0u;
 
                 if (intStatus == enableWr)
                 {
-                    intrPriorityLvlWr = ((pCofnig->priorityBitmap[i]
+                    intrPriorityLvlWr = ((pConfig->priorityBitmap[i]
                                                                   & (((uint32_t)1u)<<j)) != 0u)?1u:0u;
                     (void)SDL_ESM_getIntrPriorityLvl(esmInstBaseAddr,
                                                         intNum,
@@ -200,7 +196,7 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pCofni
 
                 if (SDLRet == SDL_PASS)
                 {
-                    enableWr = ((pCofnig->errorpinBitmap[i]
+                    enableWr = ((pConfig->errorpinBitmap[i]
                                  & (((uint32_t)MASK_BIT)<<j)) != 0u)?1u:0u;
                     SDLRet = SDL_ESM_getInfluenceOnErrPin(esmInstBaseAddr,
                                                           intNum,
@@ -234,13 +230,13 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, const SDL_ESM_config *pCofni
  * Design: PROC_SDL-1056,PROC_SDL-1057
  */
 /* Function used to clear the nERROR pin */
-int32_t SDL_ESM_clrNError(SDL_ESM_Inst esmInstType)
+int32_t SDL_ESM_clrNError(SDL_ESM_Inst instance)
 {
     int32_t            result;
     uint32_t           esmInstBaseAddr;
     uint32_t           status;
 
-    if (SDL_ESM_getBaseAddr(esmInstType, &esmInstBaseAddr) == ((bool)false))
+    if (SDL_ESM_getBaseAddr(instance, &esmInstBaseAddr) == ((bool)false))
     {
         result = SDL_EBADARGS;
     }
@@ -262,12 +258,12 @@ int32_t SDL_ESM_clrNError(SDL_ESM_Inst esmInstType)
  * Design: PROC_SDL-1054,PROC_SDL-1055
  */
 /*      Function sets the nERROR pin active.    */
-int32_t SDL_ESM_setNError(SDL_ESM_Inst esmInstType)
+int32_t SDL_ESM_setNError(SDL_ESM_Inst instance)
 {
     uint32_t esmInstBaseAddr;
     int32_t retVal;
 
-    if (((esmInstType != SDL_ESM_INSTANCE_MAX) && (SDL_ESM_getBaseAddr(esmInstType, &esmInstBaseAddr) == ((bool)true))))
+    if (((instance != SDL_ESM_INSTANCE_MAX) && (SDL_ESM_getBaseAddr(instance, &esmInstBaseAddr) == ((bool)true))))
     {
         /* Set Force Error output */
         retVal = SDL_ESM_setMode(esmInstBaseAddr, ESM_OPERATION_MODE_ERROR_FORCE);
@@ -295,6 +291,9 @@ int32_t SDL_ESM_setNError(SDL_ESM_Inst esmInstType)
 
 static SDL_Result Esmhandlerinit(SDL_ESM_Inst esmInstType)
 {
+    static pSDL_DPL_HwipHandle SDL_ESM_HiHwiPHandle;
+    static pSDL_DPL_HwipHandle SDL_ESM_LoHwiPHandle;
+    static pSDL_DPL_HwipHandle SDL_ESM_CfgHwiPHandle;
     SDL_Result result = SDL_EBADARGS;
     int32_t intNumHi, intNumLo, intNumCfg;
     SDL_DPL_HwipParams intrParams;
@@ -563,15 +562,15 @@ static SDL_Result ESM_init (const SDL_ESM_Inst esmInstType,
 /**
  * Design: PROC_SDL-1064,PROC_SDL-1065
  */
-int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitmap[],
-                                    SDL_ESM_applicationCallback callBack,
+int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst instance, uint32_t eventBitmap[],
+                                    SDL_ESM_applicationCallback eccCallback,
                                     void *callbackArg)
 {
     uint8_t i;
     SDL_Result result = SDL_PASS;
     SDL_ESM_Instance_t *SDL_ESM_Instance;
 
-    if (SDL_ESM_selectEsmInst(esmInstType, &SDL_ESM_Instance) == ((bool)false))
+    if (SDL_ESM_selectEsmInst(instance, &SDL_ESM_Instance) == ((bool)false))
     {
         result = SDL_EFAIL;
     }
@@ -581,7 +580,7 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
         {
             SDL_ESM_Instance->eccenableBitmap[i] = eventBitmap[i];
         }
-        SDL_ESM_Instance->eccCallBackFunction = callBack;
+        SDL_ESM_Instance->eccCallBackFunction = eccCallback;
         SDL_ESM_Instance->eccCallBackFunctionArg = callbackArg;
     }
 
@@ -590,15 +589,15 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
 /**
  * Design: PROC_SDL-1066,PROC_SDL-1067
  */
-int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitmap[],
-                                      SDL_ESM_applicationCallback callBack,
-                                      void *callbackArg)
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst instance, uint32_t eventBitmap[],
+                                    SDL_ESM_applicationCallback ccmCallback,
+                                    void *callbackArg)
 {
     uint32_t i;
     SDL_Result result = SDL_PASS;
     SDL_ESM_Instance_t *SDL_ESM_Instance_CCM;
 
-    if(SDL_ESM_selectEsmInst(esmInstType, &SDL_ESM_Instance_CCM) == ((bool)false))
+    if(SDL_ESM_selectEsmInst(instance, &SDL_ESM_Instance_CCM) == ((bool)false))
     {
         result = SDL_EFAIL;
     }
@@ -607,7 +606,7 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
     {
         SDL_ESM_Instance_CCM->ccmenableBitmap[i] = eventBitmap[i];
     }
-    SDL_ESM_Instance_CCM->ccmCallBackFunction = callBack;
+    SDL_ESM_Instance_CCM->ccmCallBackFunction = ccmCallback;
     SDL_ESM_Instance_CCM->ccmCallBackFunctionArg = callbackArg;
 
     return result;

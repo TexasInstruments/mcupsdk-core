@@ -289,7 +289,7 @@ int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode)
  *         This API is used by other SDL modules and not by the application
  *
  * \param   instance: ESM Instance
- * \param   eventBitMap: Bitmap for ESM error event of interest for this callback.
+ * \param   eventBitmap: Bitmap for ESM error event of interest for this callback.
  *                       Array of uint32_t type with each bit representing one
  *                       ESM error event.
  * \param   eccCallback: Pointer to the callback to be called by the ESM Handler
@@ -300,7 +300,7 @@ int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode)
  *          SDL_EBADARGS if invalid argument is passed.
  *          SDL_EFAIL if other failure.
  */
-int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst instance, uint32_t eventBitMap[],
+int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst instance, uint32_t eventBitmap[],
                                     SDL_ESM_applicationCallback eccCallback,
                                     void *callbackArg);
 
@@ -325,7 +325,7 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst instance, uint32_t eventBitMap[
  *          SDL_EBADARGS if invalid argument is passed.
  *          SDL_EFAIL if other failure.
  */
-int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst instance, uint32_t eventBitMap[],
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst instance, uint32_t eventBitmap[],
                                     SDL_ESM_applicationCallback ccmCallback,
                                     void *callbackArg);
 
@@ -386,7 +386,7 @@ void SDL_ESM_configInterruptHandler(void *arg);
  *
  * \return  Interrupt Number or SDL_ESM_INTNUMBER_INVALID error
  */
-int32_t SDL_ESM_getIntNumber(SDL_ESM_Inst esmInstType,
+int32_t SDL_ESM_getIntNumber(const SDL_ESM_Inst esmInstType,
                               SDL_ESM_IntType esmIntType);
 
 

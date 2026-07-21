@@ -78,7 +78,7 @@ typedef struct {
  *
  * \return       true: if valid instance type; false if not valid instance type
  */
-bool SDL_ESM_getBaseAddr(SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr);
+bool SDL_ESM_getBaseAddr(const SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr);
 
 /** ================================================================================
  *
@@ -90,7 +90,7 @@ bool SDL_ESM_getBaseAddr(SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr);
  *
  * \return       true: if valid instance type; false if not valid instance type
  */
-bool SDL_ESM_selectEsmInst(SDL_ESM_Inst esmInstType,
+bool SDL_ESM_selectEsmInst(const SDL_ESM_Inst esmInstType,
                            SDL_ESM_Instance_t **pEsmInstancePtr);
 
 /** ================================================================================

@@ -580,14 +580,14 @@ int32_t SDL_ESM_enableIntr(uint32_t baseAddr, uint32_t intrNum)
 /**
  *  Design: PROC_SDL-1091,PROC_SDL-1092
  */
-int32_t SDL_ESM_disableIntr(uint32_t baseAddr, uint32_t intrSrc)
+int32_t SDL_ESM_disableIntr(uint32_t baseAddr, uint32_t intrNum)
 {
     int32_t  retVal;
     uint32_t regVal = 0x0U;
 
 
     if ( (baseAddr == ((uint32_t) (0u)))   ||
-         (intrSrc  >= ESM_MAX_NUM_INTRS) )
+         (intrNum  >= ESM_MAX_NUM_INTRS) )
     {
         retVal = SDL_EBADARGS;
     }
@@ -598,9 +598,9 @@ int32_t SDL_ESM_disableIntr(uint32_t baseAddr, uint32_t intrSrc)
 
     if (retVal == SDL_PASS)
     {
-        regVal = ((uint32_t) 0x1U << (intrSrc % ESM_NUM_INTR_PER_GRP));
+        regVal = ((uint32_t) 0x1U << (intrNum % ESM_NUM_INTR_PER_GRP));
         HW_WR_REG32(baseAddr +
-            SDL_ESM_ERR_GRP_INTR_EN_CLR(intrSrc / ESM_NUM_INTR_PER_GRP),
+            SDL_ESM_ERR_GRP_INTR_EN_CLR(intrNum / ESM_NUM_INTR_PER_GRP),
             regVal);
      }
      return retVal;
@@ -853,19 +853,19 @@ int32_t SDL_ESM_writeEOI(uint32_t baseAddr, esmIntrType_t intrType)
 /**
  *  Design: PROC_SDL-1109,PROC_SDL-1110
  */
-int32_t SDL_ESM_getRevisionId(uint32_t baseAddr, esmRevisionId_t *revId)
+int32_t SDL_ESM_getRevisionId(uint32_t baseAddr, esmRevisionId_t *pRevId)
 {
     uint32_t regVal;
     int32_t  retVal = SDL_EBADARGS;
     if (baseAddr != ((uint32_t) (0u)))
     {
         regVal  = HW_RD_REG32(baseAddr + SDL_ESM_PID);
-        revId->scheme = HW_GET_FIELD(regVal, SDL_ESM_PID_SCHEME);
-        revId->func   = HW_GET_FIELD(regVal, SDL_ESM_PID_FUNC);
-        revId->rtlRev = HW_GET_FIELD(regVal, SDL_ESM_PID_RTL);
-        revId->major  = HW_GET_FIELD(regVal, SDL_ESM_PID_MAJOR);
-        revId->custom = HW_GET_FIELD(regVal, SDL_ESM_PID_CUSTOM);
-        revId->minor  = HW_GET_FIELD(regVal, SDL_ESM_PID_MINOR);
+        pRevId->scheme = HW_GET_FIELD(regVal, SDL_ESM_PID_SCHEME);
+        pRevId->func   = HW_GET_FIELD(regVal, SDL_ESM_PID_FUNC);
+        pRevId->rtlRev = HW_GET_FIELD(regVal, SDL_ESM_PID_RTL);
+        pRevId->major  = HW_GET_FIELD(regVal, SDL_ESM_PID_MAJOR);
+        pRevId->custom = HW_GET_FIELD(regVal, SDL_ESM_PID_CUSTOM);
+        pRevId->minor  = HW_GET_FIELD(regVal, SDL_ESM_PID_MINOR);
         retVal = SDL_PASS;
     }
     return retVal;
@@ -874,17 +874,17 @@ int32_t SDL_ESM_getRevisionId(uint32_t baseAddr, esmRevisionId_t *revId)
 /**
  *  Design: PROC_SDL-1111,PROC_SDL-1112
  */
-int32_t SDL_ESM_getInfo(uint32_t baseAddr, esmInfo_t *info)
+int32_t SDL_ESM_getInfo(uint32_t baseAddr, esmInfo_t *pInfo)
 {
     uint32_t regVal;
     int32_t  retVal = SDL_EBADARGS;
     if (baseAddr != ((uint32_t) (0u)))
     {
         regVal  = HW_RD_REG32(baseAddr + SDL_ESM_INFO);
-        info->lastRstType = HW_GET_FIELD(regVal, SDL_ESM_INFO_LAST_RESET);
-        info->plsGrpNum   = HW_GET_FIELD(regVal, SDL_ESM_INFO_PULSE_GROUPS);
-        info->lvlGrpNum   = (HW_GET_FIELD(regVal, SDL_ESM_INFO_GROUPS) -
-                             HW_GET_FIELD(regVal, SDL_ESM_INFO_PULSE_GROUPS));
+        pInfo->lastRstType = HW_GET_FIELD(regVal, SDL_ESM_INFO_LAST_RESET);
+        pInfo->plsGrpNum   = HW_GET_FIELD(regVal, SDL_ESM_INFO_PULSE_GROUPS);
+        pInfo->lvlGrpNum   = (HW_GET_FIELD(regVal, SDL_ESM_INFO_GROUPS) -
+                              HW_GET_FIELD(regVal, SDL_ESM_INFO_PULSE_GROUPS));
         retVal = SDL_PASS;
     }
     return retVal;
