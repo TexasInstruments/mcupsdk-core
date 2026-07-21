@@ -65,62 +65,6 @@
 
 SDL_ecc_aggrRegs * SDL_ECC_aggrTransBaseAddressTable[SDL_ECC_MEMTYPE_MAX];
 
-#if defined (M4F_CORE)
-/* Event BitMap for ECC ESM callback for MAIN */
-uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
-{
-  0xfffffb0fu, 0xf7c0000fu, 0xffbffd8fu, 0x00008f80u,
-  0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-};
-
-/* Event BitMap for ECC ESM callback for MCU */
-uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
-{
-    0xffffffffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-};
-#endif
-
-#if defined (R5F_CORE)
-/* Event BitMap for ECC ESM callback for MAIN */
-uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
-{
-  0xfffffb0fu, 0xffc000efu, 0xffbffd8fu, 0x00008f80u,
-  0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-  0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-};
-
-/* Event BitMap for ECC ESM callback for MCU */
-uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
-{
-    0xfffffff8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-};
-#endif
-
 #define M4_LOCAL_ADDER (0x44201000u)
 /** ---------------------------------------------------------------------------
  * @brief This enumerator defines the values for ecc self test flag
@@ -165,7 +109,7 @@ static SDL_ECC_Instance_t SDL_ECC_instance[SDL_ECC_Base_Address_TOTAL_ENTRIES];
 
 /* Local functions */
 static int32_t SDL_ECC_getRamId(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType memSubType,
-                           uint32_t *ramIdP, uint32_t *pRAMIdType);
+                           uint32_t *pRAMId, uint32_t *pRAMIdType);
 static int32_t SDL_ECC_getAggregatorType(SDL_ECC_MemType eccMemType,
                            SDL_ECC_MemSubType memSubType, uint32_t *pIinjectOnly);
 static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrRegs **pEccAggr);
@@ -173,7 +117,7 @@ static int32_t SDL_ECC_memoryRefresh(uint32_t *memAddr, size_t size);
 static void SDL_ECC_triggerAccessForEcc(const uint32_t *pMemoryAccessAddr);
 
 static int32_t SDL_ECC_getMemConfig(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType memSubType,
-                               SDL_MemConfig_t *memConfig);
+                               SDL_MemConfig_t *pMemConfig);
 static int32_t SDL_ECC_getEDCCheckerGroupConfig(SDL_ECC_MemType eccMemType,
                                                    SDL_ECC_MemSubType memSubType,
                                                    uint32_t chkGrp,
@@ -274,9 +218,102 @@ static int32_t SDL_ECC_mapRatEccAggrBaseAddress(SDL_ecc_aggrRegs * const eccAggr
  *
  * \return  error Source or SDL_ECC_INVALID_ERROR_SOURCE in case of error
  */
+/** @} */
+/**
+ *  \addtogroup SDL_ECC_aggrBaseAddressTable
+ *  @{
+ */
 /* Returns index >= 0 if successful, otherwise returns -1 if failure */
 static int32_t SDL_ECC_mapEccAggrReg(SDL_ECC_MemType eccMemType, SDL_ecc_aggrRegs **ppEccAggr)
 {
+#if defined(SOC_AM64X)
+    static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_Base_Address_TOTAL_ENTRIES] =
+    {
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PSRAMECC0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD1_ECC_AGGR_RXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ADC0_ECC_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGGR1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGGR0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_SA2_UL0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_DMASS0_ECCAGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD1_ECC_AGGR_TXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PRU_ICSSG1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PRU_ICSSG0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K2_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_FSS0_OSPI0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_CPSW0_ECC_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_GICSS0_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PCIE0_CORE_ECC_AGGR0_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PCIE0_CORE_ECC_AGGR1_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_USB0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PDMA1_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_DMSC0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K1_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K0_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K3_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K5_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K4_ECC_AGGR_REGS_BASE )),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K7_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K6_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCU_M4FSS0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PDMA0_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD0_ECC_AGGR_RXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD0_ECC_AGGR_TXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS1_CORE0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS0_CORE0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_COMPUTE_CLUSTER0_CORE0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_COMPUTE_CLUSTER0_SS_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_COMPUTE_CLUSTER0_CORE1_ECC_AGGR_BASE)),
+    };
+#endif
+
+#if defined(SOC_AM243X)
+    static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_Base_Address_TOTAL_ENTRIES] =
+    {
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PSRAMECC0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD1_ECC_AGGR_RXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ADC0_ECC_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGGR1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGGR0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_SA2_UL0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_DMASS0_ECCAGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD1_ECC_AGGR_TXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PRU_ICSSG1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PRU_ICSSG0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K2_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_FSS0_OSPI0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_CPSW0_ECC_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_GICSS0_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PCIE0_CORE_ECC_AGGR0_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PCIE0_CORE_ECC_AGGR1_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_USB0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PDMA1_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_DMSC0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K1_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K0_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K3_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K5_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K4_ECC_AGGR_REGS_BASE )),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K7_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSRAM_256K6_ECC_AGGR_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCU_M4FSS0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PDMA0_REGS_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD0_ECC_AGGR_RXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MMCSD0_ECC_AGGR_TXMEM_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_VTM0_ECCAGGR_CFG_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS1_CORE0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS1_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS0_CORE0_ECC_AGGR_BASE)),
+        ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_R5FSS0_ECC_AGGR_BASE)),
+    };
+#endif
     int32_t retVal = SDL_PASS;
     SDL_ecc_aggrRegs *eccAggrRegs;
     int32_t mapIdx;
@@ -798,14 +835,14 @@ int32_t SDL_ECC_getErrorInfo(SDL_ECC_MemType eccMemType, SDL_Ecc_AggrIntrSrc int
  *
  * \return  SDL_PASS : Success; SDL_EFAIL for failures
  */
-int32_t SDL_ECC_ackIntr(SDL_ECC_MemType eccMemType, SDL_Ecc_AggrIntrSrc errorSrc)
+int32_t SDL_ECC_ackIntr(SDL_ECC_MemType eccMemType, SDL_Ecc_AggrIntrSrc intrSrc)
 {
     int32_t retVal = SDL_PASS;
     SDL_ecc_aggrRegs *eccAggrRegs;
 
     (void)SDL_ECC_getAggrBaseAddr(eccMemType, &eccAggrRegs);
 
-    retVal = SDL_ecc_aggrAckIntr(eccAggrRegs, errorSrc);
+    retVal = SDL_ecc_aggrAckIntr(eccAggrRegs, intrSrc);
 
     return retVal;
 }
@@ -868,6 +905,59 @@ int32_t SDL_ECC_clearNIntrPending(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType
  */
 int32_t SDL_ECC_initEsm (const SDL_ESM_Inst esmInstType)
 {
+#if defined (M4F_CORE)
+    /* Event BitMap for ECC ESM callback for MAIN */
+    static uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
+    {
+        0xfffffb0fu, 0xf7c0000fu, 0xffbffd8fu, 0x00008f80u,
+        0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    };
+
+    /* Event BitMap for ECC ESM callback for MCU */
+    static uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
+    {
+        0xffffffffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    };
+#elif defined (R5F_CORE)
+    /* Event BitMap for ECC ESM callback for MAIN */
+    static uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
+    {
+        0xfffffb0fu, 0xffc000efu, 0xffbffd8fu, 0x00008f80u,
+        0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    };
+
+    /* Event BitMap for ECC ESM callback for MCU */
+    static uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
+    {
+        0xfffffff8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    };
+#endif
 
     if (esmInstType == SDL_ESM_INST_MAIN_ESM0)
     {
@@ -1099,12 +1189,13 @@ int32_t SDL_ECC_initMemory (SDL_ECC_MemType eccMemType,
  * @return  None
 
  */
-/* Read value to trigger ECC error injection */
-volatile uint32_t testLocationValue;
 
-static void SDL_ECC_triggerAccessForEcc(const uint32_t *pMemoryAccessAddr)
+static void SDL_ECC_triggerAccessForEcc(const uint32_t *memoryAccessAddr)
 {
-   testLocationValue = *(pMemoryAccessAddr);
+    /* Read value to trigger ECC error injection */
+    static volatile uint32_t testLocationValue;
+    testLocationValue = *(memoryAccessAddr);
+    (void)testLocationValue;
 }
 
 /** ============================================================================
@@ -1254,13 +1345,13 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
  *
  * \param1  bitMask: Input bitmask
  * \param2  startBitLocation: Bit location to start from
- * \param3  pPbitLocation: Pointer to Next location of 1b found
+ * \param3  bitLocation: Pointer to Next location of 1b found
  *
  * \return  SDL_PASS : Success; SDL_EFAIL for failures
  */
 static int32_t SDL_ECC_getBitLocation(uint32_t bitMask,
                                          uint32_t startBitLocation,
-                                         uint32_t *pPbitLocation)
+                                         uint32_t *bitLocation)
 {
     int32_t result = SDL_PASS;
     uint32_t bitCount;
@@ -1272,7 +1363,7 @@ static int32_t SDL_ECC_getBitLocation(uint32_t bitMask,
          for (bitCount=startBitLocation; bitCount < BITS_PER_WORD; bitCount++) {
              if ((bitMask
                  & (((uint32_t)1u) << bitCount)) != 0u  ) {
-                 *pPbitLocation = bitCount;
+                 *bitLocation = bitCount;
                  break;
              }
          }
