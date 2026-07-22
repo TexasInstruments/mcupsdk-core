@@ -19,8 +19,6 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_NETWORKING_ICSS
 ### Enet TSN Examples on FreeRTOS
 -# \subpage EXAMPLES_NETWORKING_TSN
-### LLDP Example on FreeRTOS
--# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond SOC_AM64X
@@ -38,8 +36,6 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_NETWORKING_ICSS
 ### Time-Sensitive Networking (TSN) Examples on FreeRTOS
 -# \subpage EXAMPLES_NETWORKING_TSN
-### LLDP Example on FreeRTOS
--# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond  SOC_AM263X
