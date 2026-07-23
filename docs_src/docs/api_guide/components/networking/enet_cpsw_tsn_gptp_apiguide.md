@@ -458,5 +458,8 @@ gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_FREQ_OFFSET_IIR_ALPHA_STABL
 For all parameters related to interval, the minimum interval can be configured for gPTP is 7.8125ms. The reason for that minimum interval is the implementation uses a base timer which has minimum period is 7.8125ms. Thus, increasing the interval parameters like `sync-interval` which is not a multiple of 7.8125ms may produce inaccurate interval of sending sync message.Or reducing interval of sync message below 7.8125ms is not possible. And the same limitation applied for all remaining interval parameters.
 
 # See Also
+\cond SOC_AM243X || SOC_AM64X || SOC_AM273X
+\ref ENET_CPSW_TSN_ARCH_GUIDE — gPTP/AVB design, hardware interaction, and EST/CBS/IET configuration via uniconf
+\endcond
 
 \ref NETWORKING

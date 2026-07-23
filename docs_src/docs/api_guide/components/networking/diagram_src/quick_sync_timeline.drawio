@@ -1,0 +1,133 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="qs1">
+    <mxGraphModel dx="1768" dy="614" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="480" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=13;" value="&lt;i&gt;QUICK_SYNC_ALGO = 0, Frequency and Phase loop runs together&lt;/i&gt;" vertex="1">
+          <mxGeometry height="10" width="455" x="265" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=13;" value="&lt;i&gt;QUICK_SYNC_ALGO = 1&lt;/i&gt;,&amp;nbsp;&lt;i&gt;phase loop held off until frequency locks&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="600" x="267.5" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-18" edge="1" parent="1" source="2clJtZ0pqK__EJOX5n-G-65" style="endArrow=none;dashed=1;html=1;strokeColor=#9673a6;strokeWidth=2;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="732.5" y="935" as="sourcePoint" />
+            <mxPoint x="732.5" y="1035" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#9673a6;fontSize=10;" value="&lt;i&gt;&lt;b&gt;rate_is_stable becomes true here&lt;br&gt;(3 consecutive Syncs within FREQ_OFFSET_STABLE_PPB)&lt;/b&gt;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="40" width="330" x="667.5" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;dashed=1;fontSize=11;align=left;spacingLeft=8;fontColor=#666666;" value="&lt;i&gt;Phase loop: skipped&lt;/i&gt;" vertex="1">
+          <mxGeometry height="35" width="450" x="282.5" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;" value="&lt;b&gt;Phase&lt;/b&gt;: converging" vertex="1">
+          <mxGeometry height="35" width="200" x="732.5" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-27" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="357.5" y="770" as="sourcePoint" />
+            <mxPoint x="357.5" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #1" vertex="1">
+          <mxGeometry height="30" width="60" x="327.5" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-29" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="477.5" y="770" as="sourcePoint" />
+            <mxPoint x="477.5" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-30" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #2" vertex="1">
+          <mxGeometry height="30" width="60" x="447.5" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-31" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="610" y="770" as="sourcePoint" />
+            <mxPoint x="610" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #3" vertex="1">
+          <mxGeometry height="30" width="60" x="580" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-46" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="730" y="770" as="sourcePoint" />
+            <mxPoint x="730" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-47" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #4" vertex="1">
+          <mxGeometry height="30" width="60" x="700" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-48" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="837.5" y="770" as="sourcePoint" />
+            <mxPoint x="837.5" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-49" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #5" vertex="1">
+          <mxGeometry height="30" width="60" x="807.5" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;" value="&lt;b&gt;Frequency Loop - &lt;/b&gt;Error Converging" vertex="1">
+          <mxGeometry height="35" width="650" x="275" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;" value="&lt;b&gt;Phase Loop&lt;/b&gt;: Error converging &lt;i&gt;(can be perturbed by freq. steps)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="35" width="650" x="275" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-58" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="357.5" y="990" as="sourcePoint" />
+            <mxPoint x="357.5" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-59" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #1" vertex="1">
+          <mxGeometry height="30" width="60" x="327.5" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-60" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="477.5" y="990" as="sourcePoint" />
+            <mxPoint x="477.5" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-61" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #2" vertex="1">
+          <mxGeometry height="30" width="60" x="447.5" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-62" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="610" y="990" as="sourcePoint" />
+            <mxPoint x="610" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-63" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #3" vertex="1">
+          <mxGeometry height="30" width="60" x="580" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-65" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #4" vertex="1">
+          <mxGeometry height="30" width="60" x="700" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-66" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="837.5" y="990" as="sourcePoint" />
+            <mxPoint x="837.5" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-67" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sync Msg #5" vertex="1">
+          <mxGeometry height="30" width="60" x="807.5" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;Error Stable&lt;/span&gt;" vertex="1">
+          <mxGeometry height="35" width="200" x="732.5" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;" value="&lt;b&gt;Frequency Loop - &lt;/b&gt;Error&amp;nbsp;converging" vertex="1">
+          <mxGeometry height="35" width="450" x="282.5" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="2clJtZ0pqK__EJOX5n-G-68" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeWidth=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="940" y="800" as="sourcePoint" />
+            <mxPoint x="255" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

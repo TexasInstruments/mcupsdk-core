@@ -1,0 +1,55 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="servo1">
+    <mxGraphModel dx="975" dy="603" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sv-sync" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontSize=12;fontStyle=1;" value="Sync + Follow_Up received" vertex="1">
+          <mxGeometry height="30" width="170" x="95" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-4" edge="1" parent="1" source="sv-delta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="sv-phase">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-delta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;" value="&lt;i&gt;dts&amp;nbsp; &amp;nbsp; = mts - lts&amp;nbsp;&amp;nbsp;(Instantaneous phase gap)&lt;br&gt;&lt;/i&gt;&lt;div style=&quot;&quot;&gt;&lt;i&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;dlts&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp; &amp;nbsp;= lts - last_lts&amp;nbsp;&amp;nbsp;(Local time diff)&lt;/span&gt;&lt;/i&gt;&lt;/div&gt;&lt;i&gt;dmts = mts - last_mts&amp;nbsp;&amp;nbsp;(Master time diff)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="90" width="240" x="60" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-e-sync-delta" edge="1" parent="1" source="sv-sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="sv-delta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-5" edge="1" parent="1" source="sv-phase" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="sv-freq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-6" edge="1" parent="1" source="sv-phase" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sv-setoffset" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-phase" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="&lt;b&gt;PHASE LOOP&lt;/b&gt;&lt;br&gt;&lt;i&gt;set_phase_offsetGM()&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="360" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-7" edge="1" parent="1" source="sv-freq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sv-setadj" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-freq" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="&lt;b&gt;FREQUENCY LOOP&lt;/b&gt;&lt;br&gt;&lt;i&gt;IIR Filters rate (dmts / dlts)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="600" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-setoffset" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="&lt;i&gt;&lt;b&gt;gptpclock_setoffset64()&lt;/b&gt;&lt;/i&gt;&lt;br&gt;(phase step / jump)" vertex="1">
+          <mxGeometry height="60" width="170" x="360" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-setadj" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="&lt;i&gt;&lt;b&gt;gptpclock_setadj()&lt;/b&gt;&lt;/i&gt;&lt;br&gt;(ppb rate adjustment)" vertex="1">
+          <mxGeometry height="60" width="170" x="600" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-hwclock" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" value="CPSW CPTS Clock" vertex="1">
+          <mxGeometry height="60" width="380" x="380" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;i&gt;&lt;b&gt;computeGmRateRatio()&lt;/b&gt;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="150" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-2" edge="1" parent="1" source="sv-setoffset" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.173;entryY=-0.027;entryDx=0;entryDy=0;entryPerimeter=0;" target="sv-hwclock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SPW6f_OH_cqdz5av6RQY-3" edge="1" parent="1" source="sv-setadj" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.801;entryY=0.007;entryDx=0;entryDy=0;entryPerimeter=0;" target="sv-hwclock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

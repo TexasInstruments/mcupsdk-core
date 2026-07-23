@@ -1,0 +1,43 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="freqsm1">
+    <mxGraphModel dx="1414" dy="875" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="360" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fs-unstable" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" value="RATE_UNSTABLE&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;IIR With FREQ_OFFSET_IIR_ALPHA_START_VALUE&lt;/span&gt;&lt;br&gt;&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="160" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="fs-stable" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" value="RATE_STABLE&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i style=&quot;font-weight: normal;&quot;&gt;IIR with FREQ_OFFSET_IIR_ALPHA_STABLE_VALUE&lt;br&gt;&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="220" x="600" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="fs-e-fwd" edge="1" parent="1" source="fs-unstable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="fs-stable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="60" />
+              <mxPoint x="710" y="60" />
+            </Array>
+            <mxPoint x="710" y="125" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fs-l-fwd" connectable="0" parent="fs-e-fwd" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;i&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;|ppb| &amp;lt;&amp;nbsp; FREQ_OFFSET_STABLE_PPB&lt;/font&gt;&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0026" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fs-e-back" edge="1" parent="1" source="fs-stable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#b85450;fontColor=#b85450;" target="fs-unstable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="290" />
+              <mxPoint x="270" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fs-l-back" connectable="0" parent="fs-e-back" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#b85450;" value="&lt;i&gt;|ppb| &amp;gt; FREQ_OFFSET_TIMELEAP_MAX_JUMP_PPB&lt;br&gt;(&quot;timeleap_past&quot; / &quot;timeleap_future&quot;, start over)&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0038" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

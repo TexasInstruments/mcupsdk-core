@@ -1,0 +1,43 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="uc1">
+    <mxGraphModel dx="1178" dy="169" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1160" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-10" edge="1" parent="1" source="RIEJTJqoPBvZPh6KZF5f-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RIEJTJqoPBvZPh6KZF5f-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="&lt;b&gt;Application&lt;/b&gt;&lt;br&gt;YDBI_SET_ITEM -&amp;nbsp;&lt;br&gt;&lt;i&gt;EST Config&lt;br&gt;CBS Config&amp;nbsp;&amp;nbsp;&lt;br&gt;IET Config&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="195" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-9" edge="1" parent="1" source="RIEJTJqoPBvZPh6KZF5f-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="RIEJTJqoPBvZPh6KZF5f-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;tsn_uniconf&lt;/b&gt; &lt;br&gt;SimpleDB&lt;br&gt;YANG-modeled key/value store" vertex="1">
+          <mxGeometry height="80" width="220" x="445" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-11" edge="1" parent="1" source="RIEJTJqoPBvZPh6KZF5f-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="854.71" y="840" as="sourcePoint" />
+            <mxPoint x="854.71" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="&lt;b&gt;uc_hwal&lt;/b&gt;&lt;br&gt;tc_hw_action() / cbs_hw_action() /&lt;br&gt;TAS + preemption handlers" vertex="1">
+          <mxGeometry height="80" width="220" x="745" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;tsn_combase&lt;/b&gt;&lt;br&gt;&lt;i&gt;TAS&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; white-space: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20parent%3D%221%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfillColor%3D%23e1d5e7%3BstrokeColor%3D%239673a6%3BfontSize%3D11%3BfontStyle%3D1%3B%22%20value%3D%22CPSW%20hardware%26%2310%3BTAS%20gate%20registers%20%2F%20CBS%20idle-slope%20credit%20counters%20%2F%20MAC%20preemption%20bits%22%20vertex%3D%221%22%3E%3CmxGeometry%20height%3D%2260%22%20width%3D%22220%22%20x%3D%22320%22%20y%3D%22300%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%&lt;/span&gt;, CBS, IET Abstraction&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="220" x="745" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Enet LLD&lt;/b&gt;&lt;br&gt;&lt;i&gt;TAS, CBS, IET IOCTLs&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="220" x="745" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;CPSW&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;i&gt;(TAS, CBS, MAC Registers)&lt;/i&gt;&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="220" x="745" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="RIEJTJqoPBvZPh6KZF5f-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;i&gt;Write Config&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="370" y="810" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

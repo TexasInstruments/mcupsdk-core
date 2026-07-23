@@ -1,0 +1,63 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="phasesm1">
+    <mxGraphModel dx="1178" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1160" pageHeight="420" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ps-start" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" value="&lt;i&gt;OFFSET_START_ADJ&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;offsetGM = dts&lt;/span&gt;&lt;br&gt;&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="190" x="130" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="ps-unstable" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" value="OFFSET_UNSTABLE_ADJ&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i&gt;&amp;nbsp;&lt;span style=&quot;font-weight: normal;&quot;&gt;IIR with PHASE_OFFSET_IIR_ALPHA_START_VALUE&lt;/span&gt;&lt;br&gt;&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="460" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ps-stable" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" value="OFFSET_STABLE_ADJ&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;IIR with PHASE_OFFSET_IIR_ALPHA_STABLE_VALUE&lt;/span&gt;&lt;br&gt;&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="230" x="890" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ps-e1" edge="1" parent="1" source="ps-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ps-unstable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ps-l1" connectable="0" parent="ps-e1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;i&gt;Sync Message&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps-e2" edge="1" parent="1" source="ps-unstable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ps-stable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ps-l2" connectable="0" parent="ps-e2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;i&gt;&amp;lt; PHASE_STABLE_CRITERION (10us)&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps-e3" edge="1" parent="1" source="ps-stable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#b85450;fontColor=#b85450;" target="ps-unstable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1005" y="320" />
+              <mxPoint x="570" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps-l3" connectable="0" parent="ps-e3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#b85450;" value="&lt;i&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; &amp;gt;= PHASE_UNSTABLE_CRITERION&amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;/b&gt;&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps-e4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#9673a6;fontColor=#9673a6;" target="ps-start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="60" />
+              <mxPoint x="225" y="60" />
+            </Array>
+            <mxPoint x="570" y="170" as="sourcePoint" />
+            <mxPoint x="160" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps-l4" connectable="0" parent="ps-e4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#9673a6;" value="&lt;i&gt;&lt;b&gt;new GM?&amp;nbsp; &amp;gt;= PHASE_NEWGM_CRITERION (1ms)&lt;/b&gt;&lt;br&gt;&lt;/i&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
