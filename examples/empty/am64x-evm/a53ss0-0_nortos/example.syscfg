@@ -31,7 +31,7 @@ mmu_armv82.size      = 0x200000;
 mmu_armv82.attribute = "MAIR7";
 
 mmu_armv83.$name     = "CONFIG_MMU_REGION2";
-mmu_armv83.vAddr     = 0x80000000;
-mmu_armv83.pAddr     = 0x80000000;
+mmu_armv83.vAddr     = 0x82000000;
+mmu_armv83.pAddr     = 0x82000000;
 mmu_armv83.size      = 0x80000000;
 mmu_armv83.attribute = "MAIR7";

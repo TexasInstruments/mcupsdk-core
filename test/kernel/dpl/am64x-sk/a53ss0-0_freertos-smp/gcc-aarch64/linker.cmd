@@ -6,7 +6,7 @@ __TI_HEAP_SIZE = 131072;
 
 MEMORY
 {
-    DDR : ORIGIN =  0x80000000, LENGTH = 0x2000000
+    DDR : ORIGIN =  0x82000000, LENGTH = 0x2000000
 
     /* shared memory segments */
     /* On A53,

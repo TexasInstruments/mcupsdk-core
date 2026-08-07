@@ -47,8 +47,8 @@ mmu_armv83.size      = 0x10000;
 mmu_armv83.attribute = "MAIR4";
 
 mmu_armv84.$name     = "CONFIG_MMU_REGION3";
-mmu_armv84.vAddr     = 0x80000000;
-mmu_armv84.pAddr     = 0x80000000;
+mmu_armv84.vAddr     = 0x82000000;
+mmu_armv84.pAddr     = 0x82000000;
 mmu_armv84.size      = 0x80000000;
 mmu_armv84.attribute = "MAIR7";
 

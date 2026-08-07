@@ -6,7 +6,7 @@
 
     let isSingleCore = true;
     let useDdr = true;
-    let addrBaseDdr = 0x82000000;
+    let addrBaseDdr = 0x84000000;
     let codeDataSizeDdr = 0x1000000;
 
     /* if no options given use defaults */
