@@ -992,7 +992,11 @@ endif
 % }
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
+% if ((args.project.device == "am64x") && (args.project.cpu == "a53ss0-0") && (args.project.os == "freertos-smp")) {
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_a53ss0-0):$(OUTNAME) --core-img=$(BOOTIMAGE_CORE_ID_a53ss0-1):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --xip=$(MCELF_XIP_RANGE)
+%} else {
 	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --xip=$(MCELF_XIP_RANGE)
+%}
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
