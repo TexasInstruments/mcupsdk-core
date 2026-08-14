@@ -12,10 +12,12 @@ Below sections describe in detail about what and how to use these cores:
 - \subpage COMPONENT_PRU_GUIDE_INTRO
 - \subpage COMPONENT_PRU_GUIDE_PROG
 - \subpage COMPONENT_PRU_GUIDE_LIBS
+- \subpage COMPONENT_PRU_C_LOADING_GUIDE
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 - \subpage COMPONENT_PRU_GUIDE_INTRO
 - \subpage COMPONENT_PRU_GUIDE_PROG
 - \subpage COMPONENT_PRU_GUIDE_LIBS
+- \subpage COMPONENT_PRU_C_LOADING_GUIDE
 \endcond
