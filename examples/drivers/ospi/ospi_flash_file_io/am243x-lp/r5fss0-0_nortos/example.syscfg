@@ -40,9 +40,11 @@ const section11       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-littlefs1.$name                                   = "CONFIG_LITTLEFS0";
-littlefs1.peripheralDriver.$name                  = "CONFIG_FLASH0";
-littlefs1.peripheralDriver.peripheralDriver.$name = "CONFIG_OSPI0";
+littlefs1.$name                                         = "CONFIG_LITTLEFS0";
+littlefs1.peripheralDriver.$name                        = "CONFIG_FLASH0";
+littlefs1.peripheralDriver.bootQuirks                   = "Flash_quirkQSPIEarlyFixup";
+littlefs1.peripheralDriver.peripheralDriver.$name       = "CONFIG_OSPI0";
+littlefs1.peripheralDriver.peripheralDriver.child.$name = "drivers_ospi_v0_ospi_v0_template0";
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_LOG";
