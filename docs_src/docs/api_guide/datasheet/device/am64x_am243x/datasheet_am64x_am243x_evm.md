@@ -124,17 +124,17 @@ appimage is allocated in OCRAM, so it's limited. This is not the case in OSPI.
 
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
-Code/Data fully cached                  |    24004
-Code/Data not cached                    |    47857
-Code/Data not cached 1 of 10 iterations |    26389
+Code/Data fully cached                  |    24005
+Code/Data not cached                    |    47818
+Code/Data not cached 1 of 10 iterations |    26386
 
 - MEMCPY operation
 
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
-Code/Data fully cached                  |    1564
-Code/Data not cached                    |    3535
-Code/Data not cached 1 of 10 iterations |    1772
+Code/Data fully cached                  |    1565
+Code/Data not cached                    |    4070
+Code/Data not cached 1 of 10 iterations |    1826
 
 ### MCAN performance
 
@@ -162,9 +162,9 @@ CAN FD EXTENDED FORMAT  | 1                         | 5                   |  46 
 
 Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time  | Interrupt mode (Mbps) Throughput / Transfer time | Dma mode (Mbps) Throughput / Transfer time
 ----------------|-----------------------|-------------------------------|-------------------------------|-------------------------------
- 400		| 08			| 10.57 Mbps / 302.81 us 	| 23.57 Mbps / 135.76 us 	|  0.91 Mbps / 3502.12 us
- 200		| 16			| 21.55 Mbps / 148.51 us 	| 31.18 Mbps / 102.62 us 	|  0.95 Mbps / 3358.21 us
- 100		| 32			| 38.56 Mbps / 82.98 us 	| 37.16 Mbps / 86.12 us 	|  0.97 Mbps / 3286.31 us
+ 400		| 08			| 10.57 Mbps / 302.82 us 	| 23.59 Mbps / 135.66 us 	|  0.91 Mbps / 3502.10 us
+ 200		| 16			| 21.54 Mbps / 148.58 us 	| 31.18 Mbps / 102.63 us 	|  0.95 Mbps / 3358.21 us
+ 100		| 32			| 38.50 Mbps / 83.12 us 	| 37.15 Mbps / 86.14 us 	|  0.97 Mbps / 3286.30 us
 
 
 - Theoretically for 400 Bytes at 50MHz time required for clocks is 64us.
@@ -287,25 +287,25 @@ Local Core  | Remote Core | Average Message Latency (us)
  r5f0-0	| r5f0-1	|  0.80
  r5f0-0	| r5f1-0	|  0.86
  r5f0-0	| r5f1-1	|  0.92
- r5f0-0	| a530-0	|  1.03
+ r5f0-0	| a530-0	|  1.00
  r5f0-0	| a530-1	|  0.00
 
 
 #### IPC RPMSG
 
-- 10000 messages are sent and average one way message latency is measured
+- 1000 messages are sent and average one way message latency is measured
 
 Local Core  | Remote Core | Message Size | Average Message Latency (us)
 ------------|-------------|--------------|------------------------------
- r5f0-0	| r5f0-1	| 32	| 8.609
- r5f0-0	| r5f0-1	| 64	| 11.141
- r5f0-0	| r5f0-1	| 112	| 14.970
- r5f0-0	| m4f0-0	| 32	| 17.766
- r5f0-0	| m4f0-0	| 64	| 23.682
- r5f0-0	| m4f0-0	| 112	| 32.675
- r5f0-0	| a530-0	| 32	| 7.873
- r5f0-0	| a530-0	| 64	| 9.296
- r5f0-0	| a530-0	| 112	| 11.473
+ r5f0-0	| r5f0-1	| 32	| 8.600
+ r5f0-0	| r5f0-1	| 64	| 11.137
+ r5f0-0	| r5f0-1	| 112	| 14.952
+ r5f0-0	| m4f0-0	| 32	| 17.769
+ r5f0-0	| m4f0-0	| 64	| 23.678
+ r5f0-0	| m4f0-0	| 112	| 32.677
+ r5f0-0	| a530-0	| 32	| 7.466
+ r5f0-0	| a530-0	| 64	| 8.888
+ r5f0-0	| a530-0	| 112	| 11.045
 
 ### MATHLIB
 
@@ -316,14 +316,14 @@ Local Core  | Remote Core | Message Size | Average Message Latency (us)
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed
 Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
-sin 		|0.0000007150	| 52			| 52.203999 		| 765			| 278.556000		|
-cos  		|0.0000002870	| 66			| 66.015999 		| 971			| 280.813995		|
-sincos sin  	|0.0000001790	| 79			| 79.103996 		| 467			| 275.118011		|
+sin 		|0.0000007150	| 52			| 52.222000		| 714			| 278.449982		|
+cos  		|0.0000002870	| 66			| 66.022003 		| 928			| 280.562012		|
+sincos sin  	|0.0000001790	| 79			| 79.103996 		| 467			| 275.104004		|
 sincos cos	|0.0000001900	|			|			|			|			|
-asin 		|0.0000003430	| 74			| 74.000000 		| 1225			| 431.264008		|
-acos 		|0.0000004770	| 76			| 76.096001 		| 565			| 384.160004		|
-atan 		|0.0000005360	| 80			| 80.001999 		| 652			| 372.014008		|
-atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
+asin 		|0.0000003430	| 74			| 74.000000 		| 1215			| 431.350006		|
+acos 		|0.0000004770	| 76			| 76.096001 		| 1024			| 385.503998		|
+atan 		|0.0000005360	| 80			| 80.001999 		| 918			| 373.298004		|
+atan2 		|0.0000007150	| 117			| 104.702003 		| 1165			| 481.536011  |
 
 ### SA2UL
 
@@ -335,8 +335,8 @@ atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
 - OS used                   : nortos
 | ECDSA            | Sign/sec  | Verify/sec  | Sign and verify/sec |
 |------------------|-----------|-------------|---------------------|
-| 2048 | 631 | 8771 | 589 |
-| 4096 | 97 | 2770 | 94 |
+| 2048 | 632 | 8849 | 589 |
+| 4096 | 97 | 2793 | 94 |
 
 ### SHA
 
@@ -347,20 +347,20 @@ atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
 - CPU with operating speed  : R5F with 800MHZ
 | SHA | Size | Performance (Mbps) |
 |-----|------|-------------|
-| 512 | 32.00 KB | 2036.504885 |
-| 512 | 16.00 KB | 1803.412218 |
-| 512 | 8.00 KB | 1394.679719 |
-| 512 | 4.00 KB | 946.299906 |
-| 512 | 2.00 KB | 570.995426 |
-| 512 | 1024.00 B | 328.303777 |
-| 512 | 512.00 B | 173.983222 |
-| 256 | 32.00 KB | 1575.656852 |
-| 256 | 16.00 KB | 1400.136198 |
-| 256 | 8.00 KB | 1139.211681 |
-| 256 | 4.00 KB | 821.278862 |
-| 256 | 2.00 KB | 529.284445 |
-| 256 | 1024.00 B | 311.187085 |
-| 256 | 512.00 B | 168.942050 |
+| 512 | 32.00 KB | 2040.944391 |
+| 512 | 16.00 KB | 1809.980495 |
+| 512 | 8.00 KB | 1413.479996 |
+| 512 | 4.00 KB | 967.749557 |
+| 512 | 2.00 KB | 581.121703 |
+| 512 | 1024.00 B | 338.075832 |
+| 512 | 512.00 B | 180.212286 |
+| 256 | 32.00 KB | 1589.919865 |
+| 256 | 16.00 KB | 1412.546980 |
+| 256 | 8.00 KB | 1154.082194 |
+| 256 | 4.00 KB | 837.173059 |
+| 256 | 2.00 KB | 538.217057 |
+| 256 | 1024.00 B | 321.617510 |
+| 256 | 512.00 B | 174.446337 |
 
 ### PKA ECDSA
 
@@ -370,7 +370,7 @@ atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
 - OS used                   : nortos
 | ECDSA            | Sign/sec  | Verify/sec  | Sign and verify/sec |
 |------------------|-----------|-------------|---------------------|
-| 256 | 1135 | 693 | 430 |
+| 256 | 1136 | 693 | 430 |
 | 384 | 585 | 349 | 218 |
 
 ### AES
@@ -382,48 +382,48 @@ atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
 - CPU with operating speed  : R5F with 800MHZ
 | Key Length | operation  | Size | Performance (Mbps) |
 |-------------|------------|------|-------------|
-| 128 | GHASH generation | 0.03 MB | 11004.050792 |
-| 128 | Encryption | 0.03 MB | 959.154066 |
-| 128 | Decryption | 0.03 MB | 1222.080942 |
-| 128 | GHASH generation | 0.02 MB | 7113.812754 |
-| 128 | Encryption | 0.02 MB | 884.836927 |
-| 128 | Decryption | 0.02 MB | 1131.564975 |
-| 128 | GHASH generation | 0.01 MB | 3634.326910 |
-| 128 | Encryption | 0.01 MB | 780.097607 |
-| 128 | Decryption | 0.01 MB | 974.947932 |
-| 128 | GHASH generation | 0.00 MB | 1908.861866 |
-| 128 | Encryption | 0.00 MB | 645.468200 |
-| 128 | Decryption | 0.00 MB | 782.753061 |
-| 128 | GHASH generation | 0.00 MB | 976.909890 |
-| 128 | Encryption | 0.00 MB | 478.557085 |
-| 128 | Decryption | 0.00 MB | 555.884473 |
-| 128 | GHASH generation | 1024.00 B | 488.709918 |
-| 128 | Encryption | 1024.00 B | 310.995112 |
-| 128 | Decryption | 1024.00 B | 352.211533 |
-| 128 | GHASH generation | 512.00 B | 248.204817 |
-| 128 | Encryption | 512.00 B | 188.192051 |
-| 128 | Decryption | 512.00 B | 201.376598 |
-| 256 | GHASH generation | 0.03 MB | 14435.242291 |
-| 256 | Encryption | 0.03 MB | 865.894011 |
-| 256 | Decryption | 0.03 MB | 1061.951276 |
-| 256 | GHASH generation | 0.02 MB | 7234.552229 |
-| 256 | Encryption | 0.02 MB | 794.959933 |
-| 256 | Decryption | 0.02 MB | 993.082547 |
-| 256 | GHASH generation | 0.01 MB | 3655.103179 |
-| 256 | Encryption | 0.01 MB | 708.372853 |
-| 256 | Decryption | 0.01 MB | 870.303111 |
-| 256 | GHASH generation | 0.00 MB | 1863.538779 |
-| 256 | Encryption | 0.00 MB | 593.126230 |
-| 256 | Decryption | 0.00 MB | 713.258782 |
-| 256 | GHASH generation | 0.00 MB | 988.625735 |
-| 256 | Encryption | 0.00 MB | 448.784496 |
-| 256 | Decryption | 0.00 MB | 522.032818 |
-| 256 | GHASH generation | 1024.00 B | 502.885206 |
-| 256 | Encryption | 1024.00 B | 298.882656 |
-| 256 | Decryption | 1024.00 B | 336.237238 |
-| 256 | GHASH generation | 512.00 B | 245.361288 |
-| 256 | Encryption | 512.00 B | 177.826016 |
-| 256 | Decryption | 512.00 B | 195.117304 |
+| 128 | GHASH generation | 0.03 MB | 11486.837925 |
+| 128 | Encryption | 0.03 MB | 959.399790 |
+| 128 | Decryption | 0.03 MB | 1229.481978 |
+| 128 | GHASH generation | 0.02 MB | 7314.795954 |
+| 128 | Encryption | 0.02 MB | 892.671008 |
+| 128 | Decryption | 0.02 MB | 1142.575703 |
+| 128 | GHASH generation | 0.01 MB | 3844.599252 |
+| 128 | Encryption | 0.01 MB | 785.438420 |
+| 128 | Decryption | 0.01 MB | 987.378293 |
+| 128 | GHASH generation | 0.00 MB | 1969.970692 |
+| 128 | Encryption | 0.00 MB | 651.953543 |
+| 128 | Decryption | 0.00 MB | 797.299188 |
+| 128 | GHASH generation | 0.00 MB | 1034.996841 |
+| 128 | Encryption | 0.00 MB | 493.252550 |
+| 128 | Decryption | 0.00 MB | 577.460569 |
+| 128 | GHASH generation | 1024.00 B | 520.622815 |
+| 128 | Encryption | 1024.00 B | 328.106539 |
+| 128 | Decryption | 1024.00 B | 367.086764 |
+| 128 | GHASH generation | 512.00 B | 266.601578 |
+| 128 | Encryption | 512.00 B | 195.653212 |
+| 128 | Decryption | 512.00 B | 211.474669 |
+| 256 | GHASH generation | 0.03 MB | 15472.568983 |
+| 256 | Encryption | 0.03 MB | 866.101422 |
+| 256 | Decryption | 0.03 MB | 1065.745154 |
+| 256 | GHASH generation | 0.02 MB | 7424.072501 |
+| 256 | Encryption | 0.02 MB | 802.412036 |
+| 256 | Decryption | 0.02 MB | 1000.053409 |
+| 256 | GHASH generation | 0.01 MB | 3893.131358 |
+| 256 | Encryption | 0.01 MB | 719.809987 |
+| 256 | Decryption | 0.01 MB | 877.586957 |
+| 256 | GHASH generation | 0.00 MB | 2003.087033 |
+| 256 | Encryption | 0.00 MB | 603.337246 |
+| 256 | Decryption | 0.00 MB | 725.617959 |
+| 256 | GHASH generation | 0.00 MB | 1009.955309 |
+| 256 | Encryption | 0.00 MB | 459.579243 |
+| 256 | Decryption | 0.00 MB | 536.235323 |
+| 256 | GHASH generation | 1024.00 B | 527.920090 |
+| 256 | Encryption | 1024.00 B | 314.005079 |
+| 256 | Decryption | 1024.00 B | 352.135834 |
+| 256 | GHASH generation | 512.00 B | 265.327935 |
+| 256 | Encryption | 512.00 B | 185.433762 |
+| 256 | Decryption | 512.00 B | 206.191795 |
 
 ### RSA ENCRYPT DECRYPT
 
@@ -434,10 +434,10 @@ atan2 		|0.0000007150	| 117			| 104.702003 		| 608			| 480.313995		|
 - Software/Application used : test_sa2ul_rsa
 | Key Length | operation  | Size | Performance(Mbps) |
 |-------------|------------|------|-------------|
-| 2048 | Encryption | 256.00 B | 0.263871 |
-| 2048 | Decryption | 256.00 B | 1.294870 |
-| 4096 | Encryption | 512.00 B | 0.512152 |
-| 4096 | Decryption | 512.00 B | 0.400639 |
+| 2048 | Encryption | 256.00 B | 0.486476 |
+| 2048 | Decryption | 256.00 B | 1.295378 |
+| 4096 | Encryption | 512.00 B | 0.555125 |
+| 4096 | Decryption | 512.00 B | 0.400660 |
 
 ### USB
 

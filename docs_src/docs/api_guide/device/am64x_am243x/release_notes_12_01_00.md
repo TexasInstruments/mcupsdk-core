@@ -21,24 +21,27 @@
 \cond SOC_AM64X
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
- MCELF based bootloader support                                                              | Bootloader
- Drive strength adjustment capability in SW                                                  | Pinmux
- A53 core frequency is set to max frequency by default                                       | Bootloader
- Add flash recovery mechanism                                                                | OSPI
- ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
- ICSS-EMAC: Added `pruRstIsoStatusParams` field to `ICSS_EMAC_Params` and `ICSS_EMAC_getResetIsolationStatus()` API for PRU reset isolation support. Reset isolation requires firmware support — do not enable unless the PRU firmware explicitly supports it. Supported on AM243x and AM64x only. | Networking
- Enhanced documentation for Enet - CPSW                                                      | ENET
+ A53 core frequency set to maximum by default                                                |
+ Bootloader
+ IPC RPMsg Linux example: Added remote core shutdown feature                                 |
+ IPC
+ New example: Added OSPI PHY Grapher based on UART                                           |
+ OSPI
+ New example: Added MCRC Auto and Semi CPU Mode                                              |
+ SDL
+ New example: Added R5F TCM ECC memory test                                                  |
+ SDL
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
- MCELF based bootloader support                                                              | Bootloader
- Drive strength adjustment capability in SW                                                  | Pinmux
- Add flash recovery mechanism                                                                | OSPI
- ICSS-EMAC and ICSS TimeSync driver sources are now at `source/networking/icss_emac_lld/` . Check \ref ICSS_EMAC_SOURCE_PATH_CHANGE &zwj; for the migration guide | Networking
- ICSS-EMAC: Added `pruRstIsoStatusParams` field to `ICSS_EMAC_Params` and `ICSS_EMAC_getResetIsolationStatus()` API for PRU reset isolation support. Reset isolation requires firmware support — do not enable unless the PRU firmware explicitly supports it. Supported on AM243x and AM64x only. | Networking
- Enhanced documentation for Enet - CPSW                                                      | ENET
+ New example: Added OSPI PHY Grapher based on UART                                           |
+ OSPI
+ New example: Added MCRC Auto and Semi CPU Mode                                              |
+ SDL
+ New example: Added R5F TCM ECC memory test                                                  |
+ SDL
 \endcond
 
 ## Device and Validation Information
@@ -275,59 +278,29 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Module
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-294, EXT_SITMPUSW-294}
-    <td> AM64: dhrystone_benchmark example for A53 core fails in debug mode
-    <td> Benchmarking
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-263, EXT_SITMPUSW-263}
+    <td> Design choice for Security Handover is not documented
+    <td> Documentation
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-255, EXT_SITMPUSW-255}
-    <td> Sciclient driver uses incorrect context for TISCI_MSG_OPEN_DEBUG_FWLS
-    <td> DM
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-251, EXT_SITMPUSW-251}
-    <td> MCU+ SDK Example Projects using incorrect ARMv7 MPU Attributes for Peripheral Register Region
-    <td> Examples
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-301, EXT_SITMPUSW-301}
-    <td> OSPI_norFlashInit1s1s1s has an implementation of wait for 500 milliseconds instead of microseconds
-    <td> Flash
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-282, EXT_SITMPUSW-282}
-    <td> Sysconfig not generating code for GPIO Trigger
-    <td> GPIO
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-317, EXT_SITMPUSW-317}
-    <td> C++ code not working as expected on M4F
-    <td> M4FSS
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-318, EXT_SITMPUSW-318}
-    <td> OSPI flash memcpy for 64-bit systems Failing
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-338, EXT_SITMPUSW-338}
+    <td> Flash writes fail if offset / address is not block aligned
     <td> OSPI
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-280, EXT_SITMPUSW-280}
-    <td> OSPI Indac Mode Should Check for odd bytes
-    <td> OSPI
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-329, EXT_SITMPUSW-329}
+    <td> Incorrect Value of UART_EFR2_TIMEOUT_BEHAVE_MASK
+    <td> UART
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-256, EXT_SITMPUSW-256}
-    <td> Incorrect calculation of rowColEnd in the ext_otp_writeMmr
-    <td> OTP
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13067, EXT_EP-13067}
+    <td> AM64x: PBIST: A53 forcebit power off failure in M4F applications
+    <td> SDL-PBIST
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-314, EXT_SITMPUSW-314}
-    <td> ROV view not working
-    <td> ROV
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13267, EXT_EP-13267}
-    <td> SDL ESM: Wrong instance argument in SDL_ESM_loInterruptHandler causing misidentification of ESM0 interrupts
-    <td> SDL-ESM
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13576, EXT_EP-13576}
+    <td> Need to enable the POK bandgap bit for reference voltage
+    <td> SDL-POK
 </tr>
 </table>
 
@@ -340,9 +313,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Module
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-322, EXT_SITMPUSW-322}
-    <td> IV is set incorrectly in the SA2UL driver
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-347, EXT_SITMPUSW-347}
+    <td> QoS DDR docs are wrong
     <td> -
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-353, EXT_SITMPUSW-353}
+    <td> UART DMA ring mem is not allocated from separated pool, causing unwanted CacheP_inv on other areas
+    <td> Baseport
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-153, EXT_SITMPUSW-153}
@@ -350,24 +328,44 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Build
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-53, EXT_SITMPUSW-53}
-    <td> Ethernet CPSW example overrides syscfg-GUI ALE configurations
-    <td> CPSW
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-83, EXT_SITMPUSW-83}
-    <td> DPL - configure HwiP_MAX_INTERRUPTS based on SOC supported values
-    <td> DPL
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-322, EXT_SITMPUSW-322}
+    <td> IV is set incorrectly in the SA2UL driver
+    <td> Crypto
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-24, EXT_SITMPUSW-24}
     <td> [SA2UL][PKA] ECDSA Sign/verify not working with P-521 and BrainPool P-512R1 Curves
-    <td> ECDSA
+    <td> Crypto
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-354, EXT_SITMPUSW-354}
+    <td> Udma_defaultVirtToPhyFxn does not takes the compiler dependency into account
+    <td> DMA
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-351, EXT_SITMPUSW-351}
+    <td> AM64X : ClockP_usleep function is not working properly in FreeRTOS
+    <td> DPL
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-346, EXT_SITMPUSW-346}
+    <td> ENET-ICSS: Low Tx throughput for TCP iperf bidirectional tests
+    <td> ENET_ICSS
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-350, EXT_SITMPUSW-350}
+    <td> ENET-LLD: UDP iperf parameters ignored by DUT
+    <td> ENET_ICSS
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-81, EXT_SITMPUSW-81}
     <td> MCU+ SDK: EPWM_tbTimebaseClkCfg does not choose the optimal pre-scaler combination
     <td> EPWM
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-348, EXT_SITMPUSW-348}
+    <td> PRIMASK Implementation based critical sections
+    <td> FreeRTOS
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-86, EXT_SITMPUSW-86}
@@ -378,11 +376,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-325, EXT_SITMPUSW-325}
     <td> IRQStatus Write To Clear
     <td> GPTIMER
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-132, EXT_SITMPUSW-132}
-    <td> AM64X: ENET: Enet VLAN ICSSG Example throws assert
-    <td> ICSSG
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-82, EXT_SITMPUSW-82}
@@ -410,11 +403,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> PCIE
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-263, EXT_SITMPUSW-263}
-    <td> Design choice for Security Handover is not documented
-    <td> SBL
-</tr>
-<tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-300, EXT_SITMPUSW-300}
     <td> Authentication of appimage fails
     <td> SBL
@@ -425,11 +413,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-257, EXT_SITMPUSW-257}
-    <td> Roadmap for XIP Secure boot support
-    <td> XIP
-</tr>
-<tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13068, EXT_EP-13068}
     <td> AM64x: AM243x: ECC: Aggregator failures in ecc applications.
     <td> SDL-ECC
@@ -438,11 +421,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12276, EXT_EP-12276}
     <td> ECC: Firewall related aggregators failures
     <td> SDL-ECC
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-13067, EXT_EP-13067}
-    <td> AM64x: PBIST: A53 forcebit power off failure in M4F applications
-    <td> SDL-PBIST
 </tr>
 </table>
 
@@ -563,6 +541,10 @@ newer version listed on the table below.
 
 Module       | Migration guide                              | Older version  | Newer version
 -------------|----------------------------------------------|----------------| -----------------
+ICSS-EMAC    | Include paths - Update build configs to use source/networking/icss_emac_lld/ | <= 12.00.00  | >= 12.01.00
+SDL VTM      | Recompile any code calling SDL_VTM_getTemp() (buffer type changed)           |
+<= 12.00.00  | >= 12.01.00
+Bootloader RPRC | Migrate to MCELF format; RPRC is deprecated | <= 12.00.00  | >= 12.01.00
 Examples     |  \ref EXAMPLE_MIGRATION_11_01_00  &zwj;      |   <= 11.00.00  | >= 11.01.00
 Networking   |  \ref enet_mcupsdk_10_00_update   &zwj;      |   <= 11.01.00  | >= 11.02.00
 OSPI_HLD     |  \ref OSPI_HLD_MIGRATION_GUIDE    &zwj;      |   <= 11.01.00  | >= 11.02.00
