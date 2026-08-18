@@ -701,7 +701,7 @@ endif
 
 syscfg-gui:
 %   if ( args_compiler == "gcc" ){
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device `args.syscfg.device` --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/ --compiler `args_compiler` `args.project.syscfgfile`
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device `args.syscfg.device` --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/ --compiler `args_compiler` `args.project.syscfgfile`
 %    } else{
 	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device `args.syscfg.device` --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/  `args.project.syscfgfile`
 %    }

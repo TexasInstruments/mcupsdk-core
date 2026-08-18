@@ -242,7 +242,7 @@ syscfg: ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM243x_ALV_beta --context r5fss0-1 --part ALV --package ALV --output generated/ --compiler gcc ../example.syscfg
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM243x_ALV_beta --context r5fss0-1 --part ALV --package ALV --output generated/ --compiler gcc ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
