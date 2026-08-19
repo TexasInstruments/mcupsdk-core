@@ -1383,13 +1383,13 @@ int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
 
 int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
                           SDL_MCRC_Channel_t           channel,
-                          SDL_MCRC_SignatureRegAddr_t *pCRCRegAddr)
+                          SDL_MCRC_SignatureRegAddr_t *pMCRCregAddr)
 {
     int32_t status = SDL_PASS;
     uint32_t baseAddr;
 
     if ((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)   ||
-            (pCRCRegAddr == (NULL_PTR)))
+            (pMCRCregAddr == (NULL_PTR)))
     {
         status = SDL_EBADARGS;
     }
@@ -1398,21 +1398,21 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
         switch (channel)
         {
             case SDL_MCRC_CHANNEL_1:
-                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH1);
-                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL1);
+                pMCRCregAddr->regH = (baseAddr + SDL_MCRC_REGH1);
+                pMCRCregAddr->regL = (baseAddr + SDL_MCRC_REGL1);
                 break;
             case SDL_MCRC_CHANNEL_2:
-                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH2);
-                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL2);
+                pMCRCregAddr->regH = (baseAddr + SDL_MCRC_REGH2);
+                pMCRCregAddr->regL = (baseAddr + SDL_MCRC_REGL2);
                 break;
 #if defined(SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             case SDL_MCRC_CHANNEL_3:
-                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH3);
-                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL3);
+                pMCRCregAddr->regH = (baseAddr + SDL_MCRC_REGH3);
+                pMCRCregAddr->regL = (baseAddr + SDL_MCRC_REGL3);
                 break;
             case SDL_MCRC_CHANNEL_4:
-                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH4);
-                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL4);
+                pMCRCregAddr->regH = (baseAddr + SDL_MCRC_REGH4);
+                pMCRCregAddr->regL = (baseAddr + SDL_MCRC_REGL4);
                 break;
 #endif
             default:

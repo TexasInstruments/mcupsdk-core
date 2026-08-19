@@ -730,36 +730,6 @@ int32_t SDL_VTM_tsGetThresholds (const SDL_VTM_cfg1Regs   *p_cfg1,
                                 SDL_VTM_tsThrVal         *p_thr_val);
 
 /**
- *  \brief VTM Temperature ADC code to Temperature conversion
- *
- *  \param adc_code                 [IN]   10 Bit ADC code
- *  \param instance         [IN]  VTM Temperature sensor instance
- *  \param p_milli_degree_temp_val  [OUT]  Pointer to Temperature in milli degree celcius
- *
- *  \return The SDL error code for the API.
- *                                 Success      : SDL_PASS
- *                                 Invalid Args : SDL_EBADARGS
- */
-int32_t SDL_VTM_tsConvADCToTemp (SDL_VTM_adc_code        adc_code,
-                                SDL_VTM_InstTs 				instance,
-                                int32_t                 *p_milli_degree_temp_val);
-
-/**
- *  \brief VTM Temperature to ADC code conversion
- *
- *  \param milli_degree_temp_val    [IN]   Temperature in milli degree celcius
- *  \param instance                 [IN]   VTM Temperature sensor instance
- *  \param p_adc_code               [OUT]  Pointer to 10 Bit ADC code
- *
- *  \return The SDL error code for the API.
- *                                 Success      : SDL_PASS
- *                                 Invalid Args : SDL_EBADARGS
- */
-int32_t SDL_VTM_tsConvTempToAdc (int32_t milli_degree_temp_val,
-                                 SDL_VTM_InstTs instance,
-                                 SDL_VTM_adc_code *p_adc_code);
-
-/**
  *  \brief VTM Temperature Sensor Maximum Temperature Out of Range Alert threshold
  *
  *  This function sets the "high temperature threshold" and "low temperature threshold"
@@ -775,16 +745,16 @@ int32_t SDL_VTM_tsConvTempToAdc (int32_t milli_degree_temp_val,
  *
  *  \param p_cfg2            					[IN]    Pointer to the VTM configuration2 structure
  *  \param instance         					[IN]  VTM Temperature sensor instance
- *  \param high_temp_in_milli_degree_celcius    [IN]   high temperature in milli degree celcius
- *  \param low_temp_in_milli_degree_celcius     [IN]   low temperature in milli degree celcius
+ *  \param high_temp_in_milli_degree_celsius    [IN]   high temperature in milli degree celsius
+ *  \param low_temp_in_milli_degree_celsius     [IN]   low temperature in milli degree celsius
  *  \return The CSL error code for the API.
  *                                 Success      : SDL_PASS
  *                                 Invalid Args : SDL_EBADARGS
  */
 int32_t SDL_VTM_tsSetMaxTOutRgAlertThr(const SDL_VTM_cfg2Regs    	*p_cfg2,
                                       SDL_VTM_InstTs 				instance,
-                                      int32_t               high_temp_in_milli_degree_celcius,
-                                      int32_t               low_temp_in_milli_degree_celcius);
+                                      int32_t               high_temp_in_milli_degree_celsius,
+                                      int32_t               low_temp_in_milli_degree_celsius);
 
 /**
  *  \brief VTM Temperature Sensor Maximum Temperature Out of Range Alert threshold

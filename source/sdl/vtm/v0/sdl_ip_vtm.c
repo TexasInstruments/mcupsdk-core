@@ -43,6 +43,7 @@
 #include <stdint.h>
 #include <sdl/vtm/v0/sdlr_vtm.h>
 #include "sdl_ip_vtm.h"
+#include "sdl_ip_vtm_priv.h"
 #include <sdl/include/sdl_types.h>
 #include <kernel/dpl/ClockP.h>
 /*=============================================================================
@@ -140,7 +141,8 @@ SDL_VTM_adc_code SDL_VTM_getAdcCode(const SDL_VTM_cfg1Regs_TMPSENS    *p_sensor)
     volatile        int32_t  i;
 
     /* have some delay before read */
-    for (i = 0; i < SDL_VTM_DOUT_REG_READ_DELAY;)
+    i = 0;
+    while (i < SDL_VTM_DOUT_REG_READ_DELAY)
     {
         i = i + 1;
     }
@@ -148,7 +150,8 @@ SDL_VTM_adc_code SDL_VTM_getAdcCode(const SDL_VTM_cfg1Regs_TMPSENS    *p_sensor)
                 VTM_CFG1_TMPSENS_STAT_DATA_OUT);
 
     /* have some delay before read */
-    for (i = 0; i < SDL_VTM_DOUT_REG_READ_DELAY;)
+    i = 0;
+    while (i < SDL_VTM_DOUT_REG_READ_DELAY)
     {
         i = i + 1;
     }
@@ -156,7 +159,8 @@ SDL_VTM_adc_code SDL_VTM_getAdcCode(const SDL_VTM_cfg1Regs_TMPSENS    *p_sensor)
                 VTM_CFG1_TMPSENS_STAT_DATA_OUT);
 
     /* have some delay before read */
-    for (i = 0; i < SDL_VTM_DOUT_REG_READ_DELAY;)
+    i = 0;
+    while (i < SDL_VTM_DOUT_REG_READ_DELAY)
     {
         i = i + 1;
     }
@@ -491,7 +495,7 @@ int32_t SDL_VTM_tsSetThresholds (const SDL_VTM_cfg1Regs        *p_cfg1,
  /**
  * Design: PROC_SDL-1164,PROC_SDL-1334,PROC_SDL-1335
  */
-int32_t SDL_VTM_tsGetThresholds (const SDL_VTM_cfg1Regs   *p_cfg,
+int32_t SDL_VTM_tsGetThresholds (const SDL_VTM_cfg1Regs   *p_cfg1,
                                 SDL_VTM_InstTs                 instance,
                                 SDL_VTM_tsThrVal         *p_thr_val)
 {
@@ -502,13 +506,13 @@ int32_t SDL_VTM_tsGetThresholds (const SDL_VTM_cfg1Regs   *p_cfg,
     /* argument checks */
     if(((uint32_t)instance >= SDL_VTM_TS_MAX_NUM)   ||
         (p_thr_val      == NULL_PTR)             ||
-        (p_cfg          == NULL_PTR))
+        (p_cfg1         == NULL_PTR))
     {
         sdlResult = SDL_EBADARGS;
     }
     else
     {
-        pVtmTSRegs = &p_cfg->TMPSENS[instance];
+        pVtmTSRegs = &p_cfg1->TMPSENS[instance];
 
         /* Set defaults for MISRA Compliance */
         p_thr_val->ltTh0 = (SDL_VTM_adc_code)(-1);

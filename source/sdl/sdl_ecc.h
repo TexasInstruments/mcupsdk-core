@@ -559,28 +559,6 @@ int32_t SDL_ECC_clearNIntrPending(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType
                                   SDL_Ecc_AggrIntrSrc intrSrc,
                                   SDL_Ecc_AggrEDCErrorSubType subType, uint32_t numEvents);
 
-/** ============================================================================
- *
- * \brief   Application provided external callback function for ECC handling
- *          Called inside the reference functions when ECC errors occur.
- *          NOTE: This is application supplied and not part of the SDL
- *          If not supplied by application this will result in an linker error
- *
- * \param  eccMemType: ECC Memory Type
- * \param  errorSrc: Error source for the ECC error event.
- * \param  address: Address at which the ECC error occurred.
- * \param  ramId: RAM ID at which the ECC error occurred.
- * \param  bitErrorOffset: Offset at which the ECC error occurred.
- * \param  bitErrorGroup: group checker that reported the error
- *         (Interconnect ECC type only).
- *
- */
-void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
-                                         uint32_t errorSrc,
-                                         uint32_t address,
-                                         uint32_t ramId,
-                                         uint64_t bitErrorOffset,
-                                         uint32_t bitErrorGroup);
 #if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
 /** ============================================================================
  *

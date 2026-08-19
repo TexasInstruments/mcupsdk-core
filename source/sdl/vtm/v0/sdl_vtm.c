@@ -43,6 +43,8 @@
 #include <stdint.h>
 #include <sdl/sdl_vtm.h>
 #include <sdl/include/sdl_types.h>
+#include <sdl/vtm/v0/sdl_ip_vtm_priv.h>
+#include <sdl/vtm/v0/sdl_vtm_pvt_sensor.h>
 
 /*=============================================================================
  *  internal macros
@@ -50,12 +52,6 @@
 #define SDL_VTM_VALUES_ARE_UNINITIALIZED    (-1)
 /* Delay for Reg Reads */
 #define SDL_VTM_DOUT_REG_READ_DELAY         (100)
-
-/*=============================================================================
- *  global variables
- *===========================================================================*/
-extern int32_t gNumTempSensors;
-extern int32_t gNumCoreVoltageDomains;
 
 /*=============================================================================
  *  Internal functions

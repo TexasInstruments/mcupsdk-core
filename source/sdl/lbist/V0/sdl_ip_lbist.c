@@ -99,7 +99,7 @@ int32_t SDL_LBIST_getMISR(SDL_lbistRegs *pLBISTRegs, uint32_t *pMISRValue)
 /**
  * Design: PROC_SDL-1021,PROC_SDL-1022
  */
-int32_t SDL_LBIST_programConfig(SDL_lbistRegs *pLBISTRegs, const SDL_LBIST_config_t * const pConfig )
+int32_t SDL_LBIST_programConfig(SDL_lbistRegs *pLBISTRegs, const SDL_LBIST_config_t *pConfig)
 {
     int32_t status = SDL_PASS;
 

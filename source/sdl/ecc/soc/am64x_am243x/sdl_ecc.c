@@ -114,8 +114,14 @@ static int32_t SDL_ECC_getAggregatorType(SDL_ECC_MemType eccMemType,
                            SDL_ECC_MemSubType memSubType, uint32_t *pIinjectOnly);
 static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrRegs **pEccAggr);
 static int32_t SDL_ECC_memoryRefresh(uint32_t *memAddr, size_t size);
-static void SDL_ECC_triggerAccessForEcc(const uint32_t *pMemoryAccessAddr);
+static void SDL_ECC_triggerAccessForEcc(const uint32_t *memoryAccessAddr);
 
+void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
+                                         uint32_t errorSrc,
+                                         uint32_t address,
+                                         uint32_t ramId,
+                                         uint64_t bitErrorOffset,
+                                         uint32_t bitErrorGroup);
 static int32_t SDL_ECC_getMemConfig(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType memSubType,
                                SDL_MemConfig_t *pMemConfig);
 static int32_t SDL_ECC_getEDCCheckerGroupConfig(SDL_ECC_MemType eccMemType,

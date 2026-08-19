@@ -128,11 +128,11 @@ int32_t SDL_POK_getStaticRegisters(SDL_POK_Inst instance,SDL_POK_staticRegs *pSt
  * \brief   POK module configuration API
  *
  * \param   instance: Instance of POK
- * \param   pConfig: Pointer to the configuration structure
+ * \param   pPokCfg: Pointer to the configuration structure
  *
  * \return  SDL_PASS for success. SDL Error Code for Failure.
  */
-int32_t SDL_POK_init(SDL_POK_Inst instance, SDL_POK_config *pConfig);
+int32_t SDL_POK_init(SDL_POK_Inst instance, SDL_POK_config *pPokCfg);
 
 /**
  *
@@ -141,12 +141,12 @@ int32_t SDL_POK_init(SDL_POK_Inst instance, SDL_POK_config *pConfig);
  *          and returns the verification status.
  *
  * \param   instance: Instance of POK
- * \param   pConfig: Pointer to the configuration structure
+ * \param   pPokCfg: Pointer to the configuration structure
  *
  * \return  SDL_PASS if configuration is verified to match.
  *          SDL Error Code for Failure.
  */
-int32_t SDL_POK_verifyConfig(SDL_POK_Inst instance, SDL_POK_config *pConfig);
+int32_t SDL_POK_verifyConfig(SDL_POK_Inst instance, SDL_POK_config *pPokCfg);
 
 /**
  *

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *  Copyright (C) 2026 Texas Instruments Incorporated - http://www.ti.com/
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,43 +32,36 @@
  */
 
 /**
- *  \file     sdl_tog_soc.c
+ *  \file  sdl_ip_vtm_priv.h
  *
- *  \brief    This file contains the soc-specific implementation of the API's present in the
- *            device abstraction layer file of TOG.
+ *  \brief Private internal declarations for VTM implementation.
+ *         This header should NOT be included by application code.
+ *
+ *  \details Provides internal global variables shared between VTM implementation
+ *           files. Test code may include this for white-box testing.
  */
 
+#ifndef SDL_IP_VTM_PRIV_H_
+#define SDL_IP_VTM_PRIV_H_
+
 #include <stdint.h>
-#include <stdbool.h>
-#include <sdl/include/sdl_types.h>
-#include <sdl/include/hw_types.h>
-#include <sdl/dpl/sdl_dpl.h>
-#include <sdl/stog/v0/soc/sdl_tog_soc.h>
 
-int32_t SDL_TOG_getBaseaddr(SDL_TOG_Inst instance,
-                            uint32_t *baseAddr)
-{
-    static uint32_t SDL_TOG_baseAddress[SDL_TOG_MAX_INSTANCE+1U] =
-    {
-        SDL_MCU_TIMEOUT0_CFG_BASE
-    };
-    int32_t status = SDL_PASS;
-    uint32_t size = 0;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    if (baseAddr == NULL)
-    {
-        status = SDL_EBADARGS;
-    }
-    else
-    {
-        *baseAddr = SDL_TOG_baseAddress[instance];
-    }
+/**
+ * \brief Global count of temperature sensors
+ */
+extern int32_t gNumTempSensors;
 
-    if (status == SDL_PASS)
-    {
-        *baseAddr = (uint32_t)SDL_DPL_addrTranslate((uint64_t)*baseAddr, size);
-    }
+/**
+ * \brief Global count of core voltage domains
+ */
+extern int32_t gNumCoreVoltageDomains;
 
-    return (status);
+#ifdef __cplusplus
 }
+#endif
 
+#endif /* SDL_IP_VTM_PRIV_H_ */

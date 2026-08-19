@@ -199,7 +199,7 @@ typedef enum{
 
 }SDL_POK_InstanceType;
 
-bool SDL_POK_getBaseaddr(SDL_POK_InstanceType instance, uint32_t *pbaseAddress);
+bool SDL_POK_getBaseaddr(SDL_POK_InstanceType instance, uint32_t *pBaseAddress);
 
 
 
