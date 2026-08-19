@@ -79,7 +79,6 @@
 #include <stdbool.h>
 #include <sdl/include/soc_config.h>
 #include "sdl_vtm_pvt_sensor.h"
-#include "sdl_pvt_sensor_lut.h"
 #include <sdl/include/sdl_types.h>
 #include <stdint.h>
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
