@@ -97,7 +97,7 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-volatile  SDL_RTI_configParms     pConfig;
+volatile  SDL_RTI_configParms     gRtiUc4Config;
   uint32_t rtiModule = SDL_RTI_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -426,23 +426,23 @@ static void IntrDisable(uint32_t intsrc)
 #if defined (SOC_AM261X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-    RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+    RTIAppExpiredDwwdService(rtiModule, gRtiUc4Config.SDL_RTI_dwwdWindowSize);
 #elif defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined(R5F0_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
-    RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+    RTIAppExpiredDwwdService(rtiModule, gRtiUc4Config.SDL_RTI_dwwdWindowSize);
 #endif
 #if defined(R5F1_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT2, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT2, intrStatus);
-    RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+    RTIAppExpiredDwwdService(rtiModule, gRtiUc4Config.SDL_RTI_dwwdWindowSize);
 #endif
 #endif
 #if defined (SOC_AWR294X) || defined (SOC_AM273X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-  	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+  	RTIAppExpiredDwwdService(rtiModule, gRtiUc4Config.SDL_RTI_dwwdWindowSize);
 #endif
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
@@ -454,7 +454,7 @@ static void IntrDisable(uint32_t intsrc)
 #if defined (R5F_CORE)
 	SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+	RTIAppExpiredDwwdService(rtiModule, gRtiUc4Config.SDL_RTI_dwwdWindowSize);
 #endif
 #endif
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)

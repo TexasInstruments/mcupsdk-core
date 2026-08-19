@@ -73,6 +73,7 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
 	SDL_TOG_Inst instance;
 	instance = instanceIndex;
 	uint32_t intrCnt;
+    uint32_t baseAddr = 0U;
 	sdlResult = SDL_TOG_init((SDL_TOG_MAX_INSTANCE+1), NULL);
 	if (sdlResult == SDL_PASS)
 	{
@@ -467,7 +468,16 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
     }
     if (testResult == 0)
     {
-        sdlResult = SDL_TOG_getIntrCountInternal(SDL_TOG_baseAddress[instance], SDL_TOG_INTRSRC_COMMAND_TIMEOUT, &intrCnt);
+        sdlResult = SDL_TOG_getBaseaddr(instance, &baseAddr);
+        if (sdlResult != SDL_PASS)
+        {
+            DebugP_log("\n  SDL_TOG_getBaseaddr failed on line no: %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+    if (testResult == 0)
+    {
+        sdlResult = SDL_TOG_getIntrCountInternal(baseAddr, SDL_TOG_INTRSRC_COMMAND_TIMEOUT, &intrCnt);
         if (sdlResult == SDL_PASS)
         {
             DebugP_log("\n  SDL_TOG_getIntrCountInternal negative test failed on line no: %d \n", __LINE__);
@@ -476,7 +486,7 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
     }
     if (testResult == 0)
     {
-        sdlResult = SDL_TOG_getIntrCountInternal(SDL_TOG_baseAddress[instance], SDL_TOG_INTRSRC_TRANSACTION_TIMEOUT, NULL);
+        sdlResult = SDL_TOG_getIntrCountInternal(baseAddr, SDL_TOG_INTRSRC_TRANSACTION_TIMEOUT, NULL);
         if (sdlResult == SDL_PASS)
         {
             DebugP_log("\n  SDL_TOG_getIntrCountInternal negative test failed on line no: %d \n", __LINE__);
@@ -485,7 +495,7 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
     }
     if (testResult == 0)
     {
-        sdlResult = SDL_TOG_getIntrCountInternal(SDL_TOG_baseAddress[instance], 10U, &intrCnt);
+        sdlResult = SDL_TOG_getIntrCountInternal(baseAddr, 10U, &intrCnt);
         if (sdlResult == SDL_PASS)
         {
             DebugP_log("\n  SDL_TOG_getIntrCountInternal negative test failed on line no: %d \n", __LINE__);
@@ -494,7 +504,7 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
     }
     if (testResult == 0)
     {
-        sdlResult = SDL_TOG_getIntrCountInternal(SDL_TOG_baseAddress[instance], 0U, &intrCnt);
+        sdlResult = SDL_TOG_getIntrCountInternal(baseAddr, 0U, &intrCnt);
         if (sdlResult == SDL_PASS)
         {
             DebugP_log("\n  SDL_TOG_getIntrCountInternal negative test failed on line no: %d \n", __LINE__);

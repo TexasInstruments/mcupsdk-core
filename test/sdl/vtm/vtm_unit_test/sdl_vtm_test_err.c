@@ -40,8 +40,8 @@
 #include "sdl_vtm_test_main.h"
 
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-extern int32_t gNumTempSensors;
-extern int32_t gNumCoreVoltageDomains;
+#include <sdl/vtm/v0/sdl_ip_vtm_priv.h>
+#include <sdl/vtm/v0/sdl_vtm_pvt_sensor.h>
 #endif
 
 #if defined (SOC_AM263PX) || defined (SOC_AM261X)

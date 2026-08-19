@@ -44,8 +44,7 @@
 #define GT_THR2_DEFAULT          (115000)
 
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-extern int32_t gNumTempSensors;
-extern int32_t gNumCoreVoltageDomains;
+#include <sdl/vtm/v0/sdl_ip_vtm_priv.h>
 #endif
 
 #if defined (SOC_AM263PX) || defined (SOC_AM261X)

@@ -56,6 +56,7 @@
 #include "event_trig.h"
 #include "ti_dpl_config.h"
 #include <sdl/sdl_vtm.h>
+#include <sdl/vtm/v0/sdl_vtm_pvt_sensor.h>
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/sdl_esm.h>
 #include <sdl/esm/v0/esm.h>

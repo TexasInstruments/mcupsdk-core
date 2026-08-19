@@ -50,7 +50,7 @@
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
 
-	SDL_RTI_configParms     pConfig;
+	SDL_RTI_configParms     gRtiFuncTestConfig;
     uint32_t rtiModule = SDL_WDT_BASE;
 
 /* ========================================================================== */
@@ -159,15 +159,15 @@ int32_t SDL_RTI_funcTest(void)
     isrFlag = RTI_NO_INTERRUPT;
 
     /* Configure RTI parameters */
-    pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_32KHZ, RTI_WDT_TIMEOUT);
-    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_100_PERCENT;
-    pConfig.SDL_RTI_dwwdReaction   = RTI_DWWD_REACTION_GENERATE_NMI;
+    gRtiFuncTestConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_32KHZ, RTI_WDT_TIMEOUT);
+    gRtiFuncTestConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_100_PERCENT;
+    gRtiFuncTestConfig.SDL_RTI_dwwdReaction   = RTI_DWWD_REACTION_GENERATE_NMI;
 
 	#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	/* Select RTI module clock source */
     RTISetClockSource(rtiModule, RTI_CLOCK_SOURCE_32KHZ);
 	#endif
-    retVal = SDL_RTI_config(SDL_INSTANCE_RTI, &pConfig);
+    retVal = SDL_RTI_config(SDL_INSTANCE_RTI, &gRtiFuncTestConfig);
 
     if (retVal == SDL_EFAIL)
     {
@@ -175,7 +175,7 @@ int32_t SDL_RTI_funcTest(void)
     }
 
     /* Verify the config */
-    retVal = SDL_RTI_verifyConfig(SDL_INSTANCE_RTI, &pConfig);
+    retVal = SDL_RTI_verifyConfig(SDL_INSTANCE_RTI, &gRtiFuncTestConfig);
 
     if (retVal == SDL_EFAIL)
     {
@@ -233,7 +233,7 @@ int32_t SDL_RTI_funcTest(void)
 
 
     if ((retVal == SDL_PASS) &&
-        (pConfig.SDL_RTI_dwwdWindowSize != RTI_DWWD_WINDOWSIZE_100_PERCENT))
+        (gRtiFuncTestConfig.SDL_RTI_dwwdWindowSize != RTI_DWWD_WINDOWSIZE_100_PERCENT))
     {
         /* RTI is serviced in closed window. Generates DWWD violation.
          * Closed window violation cant be generated for 100% window size.
@@ -338,11 +338,11 @@ static void IntrDisable(uint32_t intsrc)
 #elif defined (R5F_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_MSS_WDT, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_MSS_WDT, intrStatus);
-	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+	RTIAppExpiredDwwdService(rtiModule, gRtiFuncTestConfig.SDL_RTI_dwwdWindowSize);
 #elif defined (C66_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_DSS_WDT, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_DSS_WDT, intrStatus);
-    RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+    RTIAppExpiredDwwdService(rtiModule, gRtiFuncTestConfig.SDL_RTI_dwwdWindowSize);
 #endif
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)

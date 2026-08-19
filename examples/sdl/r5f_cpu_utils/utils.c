@@ -60,8 +60,8 @@
 /*===========================================================================*/
 
 /* Declaration of Global structure to contain all register values*/
-SDL_R5FCPU_StaticRegs  pCPUStaticRegs;
-SDL_R5MPU_staticRegs   pMPUStaticRegs;
+SDL_R5FCPU_StaticRegs  gCPUStaticRegs;
+SDL_R5MPU_staticRegs   gMPUStaticRegs;
 
 int32_t  sdl_apiTest(void);
 void    print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs);
@@ -106,19 +106,19 @@ int32_t sdl_apiTest(void)
     int32_t sdlResult = SDL_EBADARGS;
     uint32_t SDL_MPU_region;
     /*Read all R5F cpu static registers*/
-    sdlResult = SDL_CPU_staticRegisterRead(&pCPUStaticRegs);
+    sdlResult = SDL_CPU_staticRegisterRead(&gCPUStaticRegs);
 
     for(SDL_MPU_region = 0; SDL_MPU_region < SDL_MPU_REGION_MAX; SDL_MPU_region++)
     {
-        SDL_R5MPU_readStaticRegisters(&pMPUStaticRegs, SDL_MPU_region);
+        SDL_R5MPU_readStaticRegisters(&gMPUStaticRegs, SDL_MPU_region);
         DebugP_log("The MPU Register read started for MPU REGION -> 0x%d \r\n\n",SDL_MPU_region);
 
-        DebugP_log("The SCTLR register value  is  0x%x \r\n",pMPUStaticRegs.sysControlReg);
-        DebugP_log("The MPUIR register value  is  0x%x \r\n",pMPUStaticRegs.mpuTypeReg);
-        DebugP_log("The RGNR register value  is  0x%x \r\n",pMPUStaticRegs.regionId);
-        DebugP_log("The MPURbaseAddr register value  is  0x%x \r\n",pMPUStaticRegs.baseAddr);
-        DebugP_log("The MPURsize register value  is  0x%x \r\n",pMPUStaticRegs.size);
-        DebugP_log("The MPURaccessControl register value  is  0x%x \r\n\n",pMPUStaticRegs.accessPermission);
+        DebugP_log("The SCTLR register value  is  0x%x \r\n",gMPUStaticRegs.sysControlReg);
+        DebugP_log("The MPUIR register value  is  0x%x \r\n",gMPUStaticRegs.mpuTypeReg);
+        DebugP_log("The RGNR register value  is  0x%x \r\n",gMPUStaticRegs.regionId);
+        DebugP_log("The MPURbaseAddr register value  is  0x%x \r\n",gMPUStaticRegs.baseAddr);
+        DebugP_log("The MPURsize register value  is  0x%x \r\n",gMPUStaticRegs.size);
+        DebugP_log("The MPURaccessControl register value  is  0x%x \r\n\n",gMPUStaticRegs.accessPermission);
     }
 
     if (sdlResult==SDL_PASS)
@@ -132,7 +132,7 @@ int32_t sdl_apiTest(void)
         sdlResult = SDL_EBADARGS;
     }
     /*Print All register values*/
-    print_CPU_RegisterValue(&pCPUStaticRegs);
+    print_CPU_RegisterValue(&gCPUStaticRegs);
 
     return sdlResult;
 

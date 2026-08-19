@@ -50,6 +50,7 @@
 #include <drivers/sciclient.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/sdl_vtm.h>
+#include <sdl/vtm/v0/sdl_vtm_pvt_sensor.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_esm.h>
 #include <sdl/vtm/v0/sdl_ip_vtm.h>

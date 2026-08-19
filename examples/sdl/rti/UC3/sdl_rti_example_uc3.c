@@ -93,7 +93,7 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-SDL_RTI_configParms     pConfig;
+SDL_RTI_configParms     gRtiUc3Config;
 uint32_t rtiModule = SDL_RTI_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */

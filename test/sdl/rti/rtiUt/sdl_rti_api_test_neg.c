@@ -375,7 +375,15 @@ int32_t SDL_RTI_negTest()
 *     Coverage test case for SDL_RTI_getWindowSize
 *******************************************************************************************/
 
-    baseAddr = SDL_RTI_baseAddress[SDL_INSTANCE_RTI];
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        sdlRet = SDL_RTI_getBaseaddr(SDL_INSTANCE_RTI, &baseAddr);
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_RTI_getBaseaddr failed on line no: %d \r\n", __LINE__);
+        }
+    }
 
     if (testStatus == SDL_APP_TEST_PASS)
     {

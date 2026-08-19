@@ -98,7 +98,7 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-  SDL_RTI_configParms     pConfig;
+  SDL_RTI_configParms     gRtiUc1Config;
   uint32_t rtiModule = SDL_WDT_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -444,7 +444,7 @@ static void IntrDisable(uint32_t intsrc)
     #elif defined (SOC_AWR294X) || (SOC_AM273X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+	RTIAppExpiredDwwdService(rtiModule, gRtiUc1Config.SDL_RTI_dwwdWindowSize);
     #endif
 	#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
