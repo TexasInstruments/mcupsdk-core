@@ -21,27 +21,19 @@
 \cond SOC_AM64X
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
- A53 core frequency set to maximum by default                                                |
- Bootloader
- IPC RPMsg Linux example: Added remote core shutdown feature                                 |
- IPC
- New example: Added OSPI PHY Grapher based on UART                                           |
- OSPI
- New example: Added MCRC Auto and Semi CPU Mode                                              |
- SDL
- New example: Added R5F TCM ECC memory test                                                  |
- SDL
+A53 core frequency set to maximum by default                                                | Bootloader
+IPC RPMsg Linux example: Added remote core shutdown feature                                 | IPC
+New example: Added OSPI PHY Grapher based on UART                                           | OSPI
+New example: Added MCRC Auto and Semi CPU Mode                                              | SDL
+New example: Added R5F TCM ECC memory test                                                  | SDL
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                      | Module
 ---------------------------------------------------------------------------------------------|-----------------------------------
- New example: Added OSPI PHY Grapher based on UART                                           |
- OSPI
- New example: Added MCRC Auto and Semi CPU Mode                                              |
- SDL
- New example: Added R5F TCM ECC memory test                                                  |
- SDL
+New example: Added OSPI PHY Grapher based on UART                                           | OSPI
+New example: Added MCRC Auto and Semi CPU Mode                                              | SDL
+New example: Added R5F TCM ECC memory test                                                  | SDL
 \endcond
 
 ## Device and Validation Information
